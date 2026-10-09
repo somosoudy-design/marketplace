@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22.22.0
+          # the script needs no dependencies; without this setup-node looks for pnpm (packageManager field)
+          package-manager-cache: false
 
       - name: Revisar el APK
         run: node tools/eas/verify-apk.mjs "$(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-verify-request | tail -1)"
