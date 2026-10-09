@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { forgetImports, settingsSnapshot } from '../tests/support/db';
+import { forgetImports, settingsSnapshot, withDayGap } from '../tests/support/db';
 import { signIn } from './helpers';
 
 // Parameters are edited with forms that say what each value means and refuse what the database would refuse;
@@ -43,6 +43,7 @@ test('parameters are edited with forms that explain each value and refuse invali
 test('the importer suggests a price only after the pricing rule is reviewed', async ({ page }) => {
   const restore = await settingsSnapshot(['pricing.import']);
   const base = `https://www.amazon.com/dp/B0SUGERIDO${Date.now()}`;
+  const expireGap = await withDayGap(); // demo rates: gap 1,5 %
   try {
     await signIn(page, 'admin@example.com');
     const openDraft = async (n: number) => {
@@ -54,25 +55,29 @@ test('the importer suggests a price only after the pricing rule is reviewed', as
     await openDraft(1);
     await expect(page.getByTestId('import-suggestion')).toContainText('la regla de precio aún no está revisada');
 
-    // the operator reviews the rule: 30 % margin, 10 USD per kg, 2 USD handling, prices ending in ,99
+    // the operator reviews the rule: 30 % margin on the landed cost, 10 USD per kg, 2 USD logistics, prices ending in ,99
     await page.goto('/admin/configuracion?tab=settings');
     await page.getByTestId('setting-per-kg').fill('10');
     await page.getByTestId('setting-fixed').fill('2');
     await page.getByRole('switch', { name: 'Regla revisada y lista para usar' }).click();
-    await expect(page.getByTestId('pricing-preview')).toContainText('$33,99');
+    // 20 + 5 freight (0,5 kg) + 2 = 27 landed; +30 % = 35,10 in divisas; × 1,015 = 35,63 -> $35,99 BCV
+    await expect(page.getByTestId('pricing-preview')).toContainText('$35,10 en divisas');
+    await expect(page.getByTestId('pricing-preview')).toContainText('$35,99');
     await page.getByTestId('settings-save-pricing').click();
-    await expect(page.getByText('Precio sugerido para importaciones: cambios guardados')).toBeVisible();
+    await expect(page.getByText('Regla de precios: cambios guardados')).toBeVisible();
 
     await openDraft(2);
     await expect(page.getByTestId('import-suggestion')).toContainText('Escribe el costo');
     await page.getByTestId('import-cost').fill('40');
-    // 40 + 12 margin + 5 freight (0,5 kg) + 2 handling = 59 -> 59,99
-    await expect(page.getByTestId('import-suggestion')).toContainText('$59,99');
+    // 40 + 5 freight + 2 logistics = 47; +30 % = 61,10 in divisas; × 1,015 = 62,02 -> $62,99 BCV
+    await expect(page.getByTestId('import-suggestion')).toContainText('$62,99');
+    await expect(page.getByTestId('import-suggestion')).toContainText('$61,10 en divisas');
     await page.getByTestId('import-use-suggestion').click();
-    await expect(page.getByLabel('Nuestro precio de venta (USD)')).toHaveValue('59.99');
+    await expect(page.getByLabel('Nuestro precio de venta (USD)')).toHaveValue('62.99');
     await expect(page.getByTestId('import-suggestion')).toContainText('En uso');
   } finally {
     await restore();
+    await expireGap();
     await forgetImports(base);
   }
 });

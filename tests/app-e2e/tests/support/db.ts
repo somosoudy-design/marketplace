@@ -213,3 +213,57 @@ export async function forgetImports(urlPrefix: string) {
     await c.end();
   }
 }
+
+/**
+ * Takes the day's gap with the demo rates (refreshed first: P2P only counts for two hours), as the hourly job would,
+ * and returns a function that expires every snapshot taken since, so other tests quote without a gap. With the seed
+ * rates (BCV 100, P2P 101,50) the gap is 1,5 %.
+ */
+export async function withDayGap() {
+  const c = new pg.Client({ connectionString: databaseUrl() });
+  await c.connect();
+  try {
+    await c.query(`select public.dev_refresh_demo_rates()`);
+    const { rows: [s] } = await c.query(`select (public.take_pricing_snapshot('prueba de interfaz') ->> 'id')::bigint as id`);
+    return async () => {
+      const e = new pg.Client({ connectionString: databaseUrl() });
+      await e.connect();
+      try {
+        await e.query(`update public.pricing_snapshots set taken_at = now() - interval '2 hours', valid_until = now() - interval '1 hour' where id >= $1`, [s.id]);
+      } finally {
+        await e.end();
+      }
+    };
+  } finally {
+    await c.end();
+  }
+}
+
+/** A product of Casa Lumen (store of tiendas@example.com) at $10 to try prices on; returns its id and its removal. */
+export async function lumenProduct(title: string) {
+  const c = new pg.Client({ connectionString: databaseUrl() });
+  await c.connect();
+  try {
+    const { rows: [p] } = await c.query(
+      `insert into public.products (store_id, category_id, slug, title, origin, availability, moderation_status, weight_kg)
+       select s.id, (select id from public.categories where slug = 'hogar'), 'prueba-precio-' || floor(random() * 1e9)::text, $1, 'seller', 'available', 'published', 0.5
+         from public.stores s where s.name = 'Casa Lumen' returning id`,
+      [title],
+    );
+    await c.query(`insert into public.product_variants (product_id, title, price_usd, stock) values ($1, 'Única', 10, 5)`, [p.id]);
+    return {
+      id: p.id as string,
+      remove: async () => {
+        const d = new pg.Client({ connectionString: databaseUrl() });
+        await d.connect();
+        try {
+          await d.query(`delete from public.products where id = $1`, [p.id]);
+        } finally {
+          await d.end();
+        }
+      },
+    };
+  } finally {
+    await c.end();
+  }
+}

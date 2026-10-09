@@ -31,6 +31,18 @@ arriba de la bitácora, con este formato:
 - Siguiente: recorrido con cuenta cuando Oliver desactive «Confirm email»; cierre del hito D en Android.
 - Último commit: el checkpoint «Maestro visitor flow passes on the real APK» en `claude/marketplace-v1`.
 
+## Relevo 2026-10-09 22:30Z → 2026-10-10 00:05Z (Claude, sesión en la nube)
+
+- Pedido de Oliver: Android, panel publicado, push, imágenes a Storage, motor de precios. Se detuvo por créditos.
+- Hecho: panel publicado en https://kora-panel.expo.app (EAS Hosting) con `panel-api`; capturas del emulador visibles
+  en la rama `ci/capturas`; recorrido con cuenta en el APK hasta cotización y cancelación; imágenes demo del proyecto
+  de pruebas movidas a Storage (`assets-mirror`); motor de precios en base (aplicado), núcleo, panel y app
+  (`docs/PRECIOS.md`); arreglos: texto «Reembolsado» en pedidos cancelados sin pago, barra superior de la ficha,
+  ayudante `signUp` de las pruebas de funciones.
+- Pruebas (local): db 82/82, e2e 8/8, funciones 16/16, núcleo 50/50, app 21 (+1 omitida a propósito), panel 9/9 (con
+  servidor) y 8/8 en la exportación estática (antes de la ficha de costos), catálogo remoto 11/11.
+- Falta: EAS Update + emulador (rev. 12), push Android, decidir repo privado. Ver `ESTADO_ACTUAL.md`.
+
 ## Bitácora anterior (de `docs/CONTINUIDAD.md`)
 
 Todas las entradas son de Claude en la sesión de la nube del proyecto «TIENDA ONLINE», dirigido por Oliver.

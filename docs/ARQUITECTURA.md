@@ -23,7 +23,7 @@ apps/mobile/src/components   ui/ (Text, Button, Badge, Card, States, Bars…), c
 apps/mobile/src/lib          auth, supabase, query (caché y modo sin conexión), session-storage, hooks
 apps/admin/src/app           rutas del panel; components/ con ui.tsx, Shell, Crud, Settings…
 supabase/migrations          24 migraciones (`20261009000100` … `20261009233831`)
-supabase/functions           rates-sync, push-dispatch, panel-api, payments-start, binance-pay-webhook, paypal-webhook
+supabase/functions           rates-sync, push-dispatch, panel-api, assets-mirror (copia única), payments-start, binance-pay-webhook, paypal-webhook
 supabase/remote-demo         catálogo demo para el proyecto remoto y el script para quitarlo
 tools/supabase-remote        archivos SQL para el SQL Editor cuando el conector no sirve
 ```
@@ -118,6 +118,16 @@ sesión» mientras la app muestra una cuenta, la app vuelve al modo visitante (`
 - **Tasas:** fuentes en `exchange_rate_sources` (BCV, DolarApi, Binance P2P referencial, Kraken USD/USDT,
   manual). `ingest_rate` rechaza saltos > 25% salvo que un admin fuerce un valor revisado. Las cotizaciones
   (`payment_quotes`) congelan tasa con vencimiento; si la tasa está vencida no se cotiza.
+- **Motor comercial de precios** (`docs/PRECIOS.md`, migración `20261009233831`): costos por variante
+  (`variant_costs`) y estructura por producto (`product_costs`: origen, flete, gastos, margen, `auto_price`), solo
+  visibles para la tienda y los administradores; se escriben con `set_product_costs`. La brecha del día
+  (`pricing_snapshots`: BCV, P2P, USDT por dólar) la toma `ensure_pricing_snapshot()` cada hora si hace falta, o un
+  admin con `take_pricing_snapshot()`; cada brecha nueva recalcula los precios que siguen al costo
+  (`_reprice_from_costs`). Precio principal = terminación(costo puesto × (1 + margen) × (1 + brecha)) en dólares BCV.
+  Los métodos con `price_basis = 'divisas'` (USD y USDT) cotizan con el factor BCV ÷ P2P de la brecha vigente y el
+  pago acredita la base completa en dólares BCV; sin brecha vigente cotizan el precio principal. La app lee
+  `pricing_today()` (solo para mostrar). `packages/core/src/pricing.ts` repite las fórmulas y
+  `tests/db-tests/test/db/pricing.test.ts` comprueba que la base y el núcleo dan lo mismo.
 - **Pagos manuales** (Pago Móvil, transferencia VES, Zelle, USDT TRC-20, efectivo): instrucciones
   configurables, referencia y comprobante, verificación por admin. **Automáticos** (Binance Pay, PayPal):
   `integration_status = pending_credentials`; el admin no puede cambiar ese estado ni habilitarlos sin
@@ -201,7 +211,8 @@ sesión» mientras la app muestra una cuenta, la app vuelve al modo visitante (`
 - **Reclamos:** conversación comprador–tienda; el comprador puede escalar cuando la tienda respondió o pasó
   `claims.seller_response_hours` (48) sin respuesta; escalar deja un mensaje en la conversación y avisa a la
   tienda. Un solo reclamo abierto por entrega.
-- **Storage:** buckets públicos `catalog` y `stores` (ruta `<store_id>/...`, solo jpeg/png/webp) y privados
+- **Storage:** buckets públicos `catalog` y `stores` (ruta `<store_id>/...`; el catálogo demo usa `demo/...`, también en el
+  proyecto de pruebas desde el 2026-10-09; solo jpeg/png/webp) y privados
   `payment-proofs` y `claims` (carpeta del usuario; jpeg/png/webp/pdf). En el cliente sube siempre `await file.arrayBuffer()` con `contentType`
   (el shim local rechaza multipart).
 

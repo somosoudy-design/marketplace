@@ -1,5 +1,5 @@
 'use client';
-import { AVAILABILITY, computeImportPrice, type Availability } from '@kora/core';
+import { AVAILABILITY, priceFromCost, type Availability, type PriceBreakdown } from '@kora/core';
 import { providerName, type ExtractedProduct } from '@kora/core/import';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink, Globe, ImagePlus, Plus, Trash2 } from 'lucide-react';
@@ -11,6 +11,7 @@ import { Badge, Button, Card, Empty, ErrorBox, Field, Input, Loading, Notice, Pa
 import { ago, money } from '@/lib/format';
 import { useCategoriesIndex, useStoresIndex } from '@/lib/hooks';
 import { apiPost, db, kora, run } from '@/lib/kora';
+import { gapRates, pct, useGap } from '@/lib/pricing';
 
 type ImportStatus = 'pending' | 'extracted' | 'manual_required' | 'failed' | 'published';
 interface ImportRow {
@@ -244,7 +245,11 @@ function DraftEditor({
   const sensitive = catOptions.find((c) => c.id === d.categoryId)?.sensitive;
   const num = (s: string) => s.trim().replace(',', '.');
   const pricing = useImportPricing();
-  const suggestion = pricing.rule && d.cost.trim() && !errors.cost && !errors.weight ? computeImportPrice(num(d.cost), num(d.weight), pricing.rule) : null;
+  const gap = useGap();
+  // the BCV price needs the day's gap; without one only what the product must bring in divisas is known
+  const suggestion = pricing.rule && d.cost.trim() && !errors.cost && !errors.weight
+    ? priceFromCost({ cost_usd: num(d.cost), weight_kg: num(d.weight) }, pricing.rule, gap.current ? gapRates(gap.current) : { bcv: 1, usdt_ves: 1 })
+    : null;
 
   const create = useMutation({
     mutationFn: async () => {
@@ -257,7 +262,7 @@ function DraftEditor({
         if (error) throw new Error(`No se pudo subir la imagen ${n + 1}: ${error.message}`);
         uploaded.push({ path, alt: d.title.trim(), rightsConfirmed: true });
       }
-      return apiPost<{ productId: string }>('/api/import/publish', {
+      const published = await apiPost<{ productId: string }>('/api/import/publish', {
         importId: d.importId,
         product: {
           store_id: d.storeId,
@@ -273,6 +278,16 @@ function DraftEditor({
         variants: d.variants.map((v) => ({ title: v.title.trim(), sku: v.sku.trim(), price_usd: v.price.trim() ? num(v.price) : num(d.price) })),
         images: [...included.map((i) => ({ url: i.url, alt: d.title.trim(), rightsConfirmed: i.rights })), ...uploaded],
       });
+      // the cost enters the price engine: the product follows its cost and the day's gap when its price is the suggested one
+      if (d.cost.trim() && !errors.cost) {
+        const variants = await run<{ id: string }[]>(db('product_variants').select('id').eq('product_id', published.productId));
+        await kora().api.seller.setProductCosts(
+          published.productId,
+          { source: d.provider === 'amazon' ? 'amazon' : 'proveedor', source_url: d.url, auto_price: !!suggestion?.gap_pct && Number(num(d.price)) === Number(suggestion.price_usd) && !!gap.current },
+          variants.map((v) => ({ variant_id: v.id, cost_usd: Number(num(d.cost)) })),
+        );
+      }
+      return published;
     },
     onSuccess: (r) => onCreated(r.productId, d.title.trim()),
     onError: toast.error,
@@ -338,7 +353,7 @@ function DraftEditor({
           <Input inputMode="decimal" className="tabular" value={d.weight} onChange={(e) => set('weight', e.target.value)} />
         </Field>
         <div className="md:col-span-2">
-          <SuggestedPrice loading={pricing.isPending} configured={!!pricing.rule} hasCost={!!d.cost.trim() && !errors.cost} suggestion={suggestion} weight={num(d.weight)} current={num(d.price)} onUse={(v) => set('price', v)} />
+          <SuggestedPrice loading={pricing.isPending || gap.isPending} configured={!!pricing.rule} hasGap={!!gap.current} hasCost={!!d.cost.trim() && !errors.cost} suggestion={suggestion} weight={num(d.weight)} current={num(d.price)} onUse={(v) => set('price', v)} />
         </div>
         <Field label="Nuestro precio de venta (USD)" error={tried ? errors.price : null}>
           <Input inputMode="decimal" className="tabular" placeholder="0.00" value={d.price} onChange={(e) => set('price', e.target.value)} />
@@ -455,11 +470,12 @@ function ImageTile({ src, remote, include, rights, onInclude, onRights }: { src:
   );
 }
 
-function SuggestedPrice({ loading, configured, hasCost, suggestion, weight, current, onUse }: {
+function SuggestedPrice({ loading, configured, hasGap, hasCost, suggestion, weight, current, onUse }: {
   loading: boolean;
   configured: boolean;
+  hasGap: boolean;
   hasCost: boolean;
-  suggestion: ReturnType<typeof computeImportPrice> | null;
+  suggestion: PriceBreakdown | null;
   weight: string;
   current: string;
   onUse: (price: string) => void;
@@ -473,14 +489,28 @@ function SuggestedPrice({ loading, configured, hasCost, suggestion, weight, curr
     );
   }
   if (!hasCost || !suggestion) return <p className="pb-2 text-[13px] text-ink-3" data-testid="import-suggestion">Escribe el costo para ver el precio sugerido.</p>;
+  const breakdown = (
+    <p className="text-ink-3">
+      costo {money(suggestion.cost_usd, 'USD')} + flete {money(suggestion.freight_usd, 'USD')} ({weight.replace('.', ',')} kg) + gastos {money(suggestion.logistics_usd, 'USD')} + margen {money(suggestion.margin_usd, 'USD')} = {money(suggestion.target_divisas_usd, 'USD')} en divisas
+    </p>
+  );
+  if (!hasGap) {
+    return (
+      <div className="w-full rounded-[14px] bg-sunken px-4 py-2.5 text-[13px] text-ink-2" data-testid="import-suggestion">
+        <p>Debe dejar <span className="tabular font-bold text-ink">{money(suggestion.target_divisas_usd, 'USD')}</span> en divisas. Sin brecha del día no hay precio a tasa BCV: tómala en <Link className="font-semibold text-brand" href="/admin/tasas">Tasas</Link>.</p>
+        {breakdown}
+      </div>
+    );
+  }
   const using = Number(current) === Number(suggestion.price_usd);
   return (
     <div className="flex w-full items-center justify-between gap-3 rounded-[14px] bg-sunken px-4 py-2.5" data-testid="import-suggestion">
       <div className="text-[13px] text-ink-2">
-        <p>Precio sugerido <span className="tabular text-[15px] font-bold text-ink">{money(suggestion.price_usd, 'USD')}</span></p>
-        <p className="text-ink-3">
-          costo {money(suggestion.cost_usd, 'USD')} + margen {money(suggestion.markup_usd, 'USD')} + flete {money(suggestion.freight_usd, 'USD')} ({weight.replace('.', ',')} kg) + manejo {money(suggestion.fixed_usd, 'USD')}
+        <p>
+          Precio sugerido <span className="tabular text-[15px] font-bold text-ink">{money(suggestion.price_usd, 'USD')}</span> a tasa BCV · con Zelle o USDT{' '}
+          {money(suggestion.price_divisas_usd, 'USD')} (brecha {pct(suggestion.gap_pct)})
         </p>
+        {breakdown}
       </div>
       {using ? <Badge tone="success">En uso</Badge> : <Button size="sm" variant="secondary" onClick={() => onUse(suggestion.price_usd)} data-testid="import-use-suggestion">Usar</Button>}
     </div>

@@ -1,12 +1,12 @@
 // Builds the demo catalog for a hosted Supabase project (the one the test APK uses), and the script that takes
 // it out again. Unlike supabase/seed.sql it creates no users, no orders and no demo exchange rates: testers sign
-// up themselves and prices are converted with the live rates. Images are served from this public repository,
-// pinned to the commit that last changed them, because the hosted project's storage buckets start empty.
+// up themselves and prices are converted with the live rates. Images are Storage paths (buckets catalog and
+// stores, folder demo/), the same files as supabase/seed-assets; they are uploaded to the project once
+// (docs/ENTORNO.md, «Imágenes del catálogo demo»). The repository can be private: nothing is served from GitHub.
 //
 //   node tools/demo-assets/build-remote-catalog.mjs
 //   -> supabase/remote-demo/catalogo-demo.sql        (run once; refuses to run twice)
 //   -> supabase/remote-demo/quitar-catalogo-demo.sql (deletes it, or hides it if orders already use it)
-import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -16,12 +16,9 @@ import { catalogSql, q } from './catalog-sql.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '../..');
 const outDir = join(root, 'supabase/remote-demo');
-const REPO = 'somosoudy-design/marketplace';
 
-const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
-const sha = git('log', '-1', '--format=%H', '--', 'supabase/seed-assets');
-if (!git('branch', '-r', '--contains', sha)) throw new Error(`commit ${sha} with the images is not on GitHub yet: push it first`);
-const asset = (bucket, path) => `https://raw.githubusercontent.com/${REPO}/${sha}/supabase/seed-assets/${bucket}/${path}`;
+// the Storage path inside its bucket, as in the local seed (catalog/demo/…, stores/demo/…)
+const asset = (_bucket, path) => path;
 
 // payment methods (fictitious receiving details) and logistics (demo tariffs) from the local seed config;
 // its demo exchange rates and the order-number prefix stay local only
@@ -47,7 +44,7 @@ const load = `-- ===============================================================
 -- tariffs and payment methods with FICTITIOUS receiving details. Every store, product, image, carrier, rate
 -- and pickup point is flagged is_demo, and the app labels them as demonstration.
 -- No users, no passwords, no orders, no exchange rates (the live rates apply).
--- Images: github.com/${REPO} at commit ${sha.slice(0, 12)}.
+-- Images: Supabase Storage, buckets catalog and stores, folder demo/ (upload supabase/seed-assets first).
 -- Remove with quitar-catalogo-demo.sql.
 -- =====================================================================
 begin;
@@ -121,4 +118,4 @@ commit;
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'catalogo-demo.sql'), load);
 writeFileSync(join(outDir, 'quitar-catalogo-demo.sql'), remove);
-console.log(`wrote supabase/remote-demo/ (catalog ${(load.length / 1024).toFixed(0)} KB, images at ${sha.slice(0, 12)})`);
+console.log(`wrote supabase/remote-demo/ (catalog ${(load.length / 1024).toFixed(0)} KB, images as Storage paths)`);

@@ -66,6 +66,11 @@ Cuentas de demostración (**solo local**, clave `Demo-1234`): `admin@example.com
 
 ## 4. App móvil
 
+En un contenedor nuevo hay que crear `apps/mobile/.env.local` y `apps/admin/.env.local` (no se versionan) con la clave
+`anon` de `.local/keys.env`; sin ellos la versión web dice «Falta configurar el backend» y las suites de interfaz
+fallan. Si el archivo se crea después de una exportación, Metro guarda la versión sin variables: exportar con
+`cd apps/mobile && npx expo export --platform web --clear`.
+
 ```bash
 cp apps/mobile/.env.example apps/mobile/.env.local   # pega la anon key de .local/keys.env
 pnpm --filter @kora/mobile start                     # Expo; "a" Android, "i" iOS, "w" web
@@ -307,6 +312,32 @@ Luego, en el panel de Supabase:
 
 En «Marketplace» ya están hechos los pasos 1, 4, 5 y las plantillas; faltan los clics de Oliver de
 `docs/ESTADO_ACTUAL.md` («Pendiente de Oliver»).
+
+## 12 bis. Imágenes del catálogo demo y repositorio privado
+
+Desde el 2026-10-09 las imágenes del catálogo demo del proyecto de pruebas están en Supabase Storage (buckets
+`catalog` y `stores`, carpeta `demo/`), no en `raw.githubusercontent.com`. Se copiaron con la función
+`assets-mirror` (solo acepta archivos de este repositorio, solo con la clave de tareas), invocada desde SQL:
+
+```sql
+select public.invoke_edge_function('assets-mirror', '{"items":[{"bucket":"catalog","path":"demo/x.webp","source":"https://raw.githubusercontent.com/somosoudy-design/marketplace/<sha>/supabase/seed-assets/catalog/demo/x.webp"}]}');
+select status_code, content from net._http_response order by id desc limit 1;
+```
+
+`supabase/remote-demo/catalogo-demo.sql` ya genera rutas de Storage. En un proyecto nuevo, las imágenes se suben
+una vez desde `supabase/seed-assets` (por ejemplo `npx supabase storage cp -r --experimental
+supabase/seed-assets/catalog/demo ss:///catalog/demo` y lo mismo para `stores`, con el proyecto enlazado).
+
+**Pasar el repositorio a privado** (lo decide Oliver; nada en la app ni en el panel depende ya de que sea público):
+
+| Qué | Efecto | Qué hacer |
+|---|---|---|
+| Imágenes | Ninguno: están en Storage | — |
+| GitHub Actions | En privado, el plan gratuito da 2.000 minutos al mes. Un APK ocupa ~20 min (espera a EAS), el emulador ~9, una actualización ~2, el panel ~2 | Vigilar Settings › Billing; pedir APK y emulador solo cuando haga falta |
+| Emulador (KVM) | Los runners de repos privados pueden diferir de los públicos | Tras el cambio, correr una vez «APK en emulador»; si falla por KVM, se ajusta el workflow |
+| EAS (APK, actualizaciones, panel) | Ninguno: el workflow sube el código desde el runner y usa `EXPO_TOKEN` | — |
+| Kevin y Heisber | Necesitan ser colaboradores para ver el repositorio | Settings › Collaborators (P2.3) |
+| `audit_log` | Conserva direcciones viejas de GitHub en el historial; no se muestran | — |
 
 ## 13. Respaldo y recuperación
 

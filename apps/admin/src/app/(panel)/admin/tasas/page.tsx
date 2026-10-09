@@ -6,6 +6,7 @@ import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Dialog, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Table, Tabs, Td, Textarea, Toggle } from '@/components/ui';
 import { ago, dateTime, money, RATE_SOURCE_LABEL } from '@/lib/format';
 import { apiPost, db, kora, rpc, run } from '@/lib/kora';
+import { inForce, pct, useGap } from '@/lib/pricing';
 
 const PAIRS = ['USD/VES', 'USDT/VES', 'USD/USDT'] as const;
 type Pair = (typeof PAIRS)[number];
@@ -45,6 +46,7 @@ export default function RatesPage() {
         description="Los precios se guardan en USD. La tasa solo se aplica al cotizar un pago y queda registrada en él; las deudas futuras nunca se congelan en bolívares."
         actions={<><Button variant="secondary" icon={RefreshCw} loading={sync.isPending} onClick={() => sync.mutate()}>Consultar fuentes ahora</Button><Button onClick={() => setManual(true)}>Fijar tasa manual</Button></>}
       />
+      <GapCard />
       <Tabs value={pair} onChange={setPair} items={PAIRS.map((p) => ({ value: p, label: p }))} />
       {sync.data ? (
         <div className="mb-5 flex flex-col gap-2">
@@ -164,5 +166,51 @@ function ManualDialog({ open, onClose, pair, current }: { open: boolean; onClose
         <Field label="Motivo"><Textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="BCV no publicó hoy; tasa tomada de la publicación oficial del día anterior." /></Field>
       </div>
     </Dialog>
+  );
+}
+
+/**
+ * The day's gap (docs/PRECIOS.md): BCV and Binance P2P as they were taken, what Zelle/USDT pay against the BCV
+ * price, and the button to take it now from the rates in force (it also reprices the products that follow their cost).
+ */
+function GapCard() {
+  const gap = useGap();
+  const qc = useQueryClient();
+  const toast = useToast();
+  const take = useMutation({
+    mutationFn: () => kora().api.admin.takePricingSnapshot('Tomada desde el panel'),
+    onSuccess: (r) => {
+      qc.invalidateQueries({ queryKey: ['pricing-snapshots'] });
+      toast.ok(`Brecha del día ${pct(r.gap_pct)}.${r.repriced ? ` ${r.repriced === 1 ? '1 precio actualizado' : `${r.repriced} precios actualizados`} según su costo.` : ''}`);
+    },
+    onError: toast.error,
+  });
+  const c = gap.current;
+  const last = gap.data?.[0];
+  return (
+    <Card
+      className="mb-5"
+      title="Brecha del día"
+      actions={<Button size="sm" variant="secondary" loading={take.isPending} onClick={() => take.mutate()} data-testid="gap-take">Actualizar brecha ahora</Button>}
+    >
+      {gap.isPending ? <Loading rows={2} /> : gap.isError ? <ErrorBox error={gap.error} onRetry={() => gap.refetch()} /> : c ? (
+        <div className="grid gap-4 sm:grid-cols-4" data-testid="gap-current">
+          <div><p className="text-[12px] font-bold uppercase tracking-wide text-ink-3">Brecha</p><p className="tabular text-[26px] font-extrabold">{pct(c.gap_pct)}</p></div>
+          <div><p className="text-[12px] font-bold uppercase tracking-wide text-ink-3">Dólar BCV</p><p className="tabular text-[17px] font-bold">{money(c.bcv_rate, 'VES')}</p><p className="text-[12px] text-ink-3">{RATE_SOURCE_LABEL[c.bcv_source] ?? c.bcv_source}</p></div>
+          <div><p className="text-[12px] font-bold uppercase tracking-wide text-ink-3">USDT (P2P)</p><p className="tabular text-[17px] font-bold">{money(c.usdt_ves_rate, 'VES')}</p><p className="text-[12px] text-ink-3">{RATE_SOURCE_LABEL[c.usdt_source] ?? c.usdt_source}</p></div>
+          <div>
+            <p className="text-[12px] font-bold uppercase tracking-wide text-ink-3">Zelle y USDT pagan</p>
+            <p className="tabular text-[17px] font-bold text-success">{pct((1 - Number(c.bcv_rate) / Number(c.usdt_ves_rate)) * 100)} menos</p>
+            <p className="text-[12px] text-ink-3">Tomada {ago(c.taken_at)} · vale hasta {dateTime(c.valid_until)}</p>
+          </div>
+        </div>
+      ) : (
+        <Notice tone="warning" title="Sin brecha vigente">
+          {last && !inForce(last) ? `La última (${pct(last.gap_pct)}) venció ${ago(last.valid_until)}. ` : ''}
+          Mientras no haya una, Zelle y USDT cobran el precio principal y los precios que siguen al costo no cambian. Se toma sola cada hora
+          si hace falta; si falla, revisa que las tasas BCV y P2P estén al día.
+        </Notice>
+      )}
+    </Card>
   );
 }

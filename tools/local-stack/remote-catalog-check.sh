@@ -24,7 +24,7 @@ echo "· remote demo catalog against migrations only"
 
 q -f "$LOAD"
 expect "loads 5 stores" "$(q -c "select count(*) from stores where is_demo")" 5
-expect "every image is a pinned GitHub URL" "$(q -c "select count(*) from product_images where path not like 'https://raw.githubusercontent.com/%/supabase/seed-assets/catalog/%'")" 0
+expect "every image is a Storage path, none on GitHub" "$(q -c "select (select count(*) from product_images where path not like 'demo/%') + (select count(*) from stores where logo_path not like 'demo/%' or cover_path not like 'demo/%')")" 0
 expect "creates no users or members" "$(q -c "select (select count(*) from auth.users) + (select count(*) from store_members)")" 0
 expect "adds no exchange rates" "$(q -c "select count(*) from exchange_rates")" 0
 expect "second load refused" "$(q -f "$LOAD" 2>&1 | grep -c 'ya está cargado')" 1

@@ -1,6 +1,7 @@
 // Runs the edge function handlers in-process against the local stack (pnpm test:functions).
 // Third parties (Binance Pay, PayPal, Expo, rate sources) are replaced by fakes: these tests prove our side
 // of each contract, not that the providers accept it. Nothing here touches a real provider or real money.
+import { createHandler as assetsMirror, SOURCE_PREFIX } from '../assets-mirror/handler.ts';
 import { createHandler as binanceWebhook } from '../binance-pay-webhook/handler.ts';
 import { createHandler as paymentsStart } from '../payments-start/handler.ts';
 import { createHandler as panelApi } from '../panel-api/handler.ts';
@@ -411,4 +412,26 @@ Deno.test('panel-api: rates sync acts as the admin and stores nothing when every
   eq(res.status, 200);
   assert(results.length >= 4 && results.every((r) => !r.ok), JSON.stringify(results));
   eq((await service<unknown[]>('/rest/v1/exchange_rates?select=id')).length, before.length, 'no rate stored');
+});
+
+// ---------- assets-mirror (one-time move of the demo images from GitHub to Storage) ----------
+Deno.test('assets-mirror: only server jobs, only files of this repository, only into the demo folders', async () => {
+  const png = Uint8Array.from(atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='), (c) => c.charCodeAt(0));
+  const seen: string[] = [];
+  const fake: typeof fetch = (input) => { seen.push(String(input)); return Promise.resolve(new Response(png, { headers: { 'content-type': 'image/png' } })); };
+  const h = assetsMirror({ env: envWith({}), fetch: fake });
+  const name = `demo/prueba-mirror-${uid()}.png`;
+  const items = [
+    { bucket: 'catalog', path: name, source: `${SOURCE_PREFIX}abc123/supabase/seed-assets/catalog/demo/x.png` },
+    { bucket: 'catalog', path: 'demo/otro.png', source: 'https://example.com/x.png' },
+    { bucket: 'payment-proofs', path: 'demo/x.png', source: `${SOURCE_PREFIX}abc/x.png` },
+    { bucket: 'catalog', path: '../escape.png', source: `${SOURCE_PREFIX}abc/x.png` },
+  ];
+  eq((await call(h, { items }, { authorization: `Bearer ${ANON}` })).status, 401);
+  const res = await call(h, { items }, { authorization: `Bearer ${SERVICE}` });
+  const body = await res.json() as { copied: number; failed: number; results: { path: string; ok: boolean; error?: string }[] };
+  eq([res.status, body.copied, body.failed], [200, 1, 3]);
+  eq(seen, [items[0]!.source], 'only the repository file was fetched');
+  const stored = await fetch(`${URL_}/storage/v1/object/public/catalog/${name}`);
+  eq([stored.status, (await stored.arrayBuffer()).byteLength], [200, png.byteLength]);
 });

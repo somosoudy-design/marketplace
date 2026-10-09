@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, ImagePlus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { ProductCosts } from '@/components/ProductCosts';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Textarea, cx } from '@/components/ui';
 import { dateTime, moderationTone } from '@/lib/format';
@@ -193,6 +194,7 @@ function Editor({ product: p }: { product: Product | null }) {
               <Field label="Máximo por pedido" error={tried ? errors.max : null}><Input inputMode="numeric" className="tabular" value={f.max_per_order} onChange={(e) => setF({ ...f, max_per_order: e.target.value })} /></Field>
             </div>
           </Card>
+          {p ? <ProductCosts productId={p.id} /> : <Card title="Costos y precio"><p className="text-[13px] text-ink-3">Crea el producto y luego registra aquí su costo: el precio puede seguir al costo y a la brecha del día.</p></Card>}
         </div>
 
         <div className="flex flex-col gap-5">

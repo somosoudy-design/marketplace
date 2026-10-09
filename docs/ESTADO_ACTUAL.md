@@ -4,8 +4,8 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-09 23:20Z, por Claude (sesión de Claude Code en la nube; relevo pedido por Oliver
-con las prioridades: Android, panel publicado, push, imágenes a Storage, motor de precios).
+**Última actualización:** 2026-10-10 00:05Z, por Claude (sesión en la nube). Oliver pidió detenerse para cuidar los
+créditos: este es el checkpoint de cierre del relevo.
 
 ## Dónde está el trabajo
 
@@ -43,32 +43,42 @@ con las prioridades: Android, panel publicado, push, imágenes a Storage, motor 
   sin código cuando el proyecto lo permite, etiquetas legibles sobre fotos en oscuro, selector de pago nuevo.
 - En local, con el stack sin Docker: todas las suites en verde en esta sesión (ver «Pruebas»).
 
-## Trabajo en curso
+## Trabajo en curso (checkpoint de cierre, 2026-10-10 00:05Z)
 
-- Archivos sin commit: ninguno. Commits `WIP:` abiertos: ninguno (el `WIP: Panel as a static export` quedó
-  completado por los commits siguientes).
-- **Panel publicado** en https://kora-panel.expo.app (workflow `panel-deploy.yml`, EAS Hosting sin costo). Las
-  acciones de servidor (importar por URL, publicar importación, «Consultar ahora» de tasas) corren en la función
-  `panel-api`, ya desplegada en el proyecto de pruebas (versión 1, `verify_jwt`, comprueba `is_admin`). Fichas
-  con id en la dirección (`/admin/pedidos/ver?id=…`, `/vendedor/productos/editar?id=…`).
-- **Android:** las capturas del emulador ya se pueden ver (rama `ci/capturas`). El recorrido de visitante pasa
-  con la identidad Electric Violet en el APK 4 + actualización. El recorrido con cuenta (`02-cuenta.yaml`) ya
-  corre porque el proyecto de pruebas tiene el registro sin confirmación (lo detecta el workflow); revisión 10 en
-  curso (la 9 falló porque `clearState` borraba la actualización descargada).
-- Ajuste de diseño sin publicar todavía: la barra superior de la ficha y de la tienda se vuelve opaca antes de
-  que la foto pase por debajo de los botones (`components/ui/Bars.tsx`). Va en la próxima EAS Update.
+Archivos sin commit: ninguno. Nada a medio escribir. Qué quedó, por bloque:
 
-## Próxima acción
+- **Panel publicado:** https://kora-panel.expo.app (EAS Hosting, sin costo). Se vuelve a publicar solo con cada push
+  que toque `apps/admin`, `packages/*` o `tools/panel` (workflow `panel-deploy.yml`). Acciones de servidor en la
+  función `panel-api` (desplegada). Fichas con id en la consulta (`/admin/pedidos/ver?id=…`).
+- **Android (APK 4 en emulador):** el recorrido de visitante pasa; el de cuenta llega hasta la cotización de Pago
+  Móvil y la cancelación (revisión 11). Corregido después en el repo (sin volver a correr el emulador): la aserción
+  final del recorrido y el texto «Reembolsado» de un pedido cancelado sin pagar (ahora «Cancelado»).
+- **Imágenes a Storage: HECHO en el proyecto de pruebas.** 110 archivos copiados (100 fotos, 5 logos, 5 portadas) con
+  la función `assets-mirror`; filas de `product_images`, `stores` y `order_items` apuntan a `demo/…` en Storage;
+  comprobado que Storage los sirve (HTTP 200). Ninguna referencia a GitHub queda en datos visibles (solo en
+  `audit_log`, historial). El generador del catálogo remoto ya produce rutas de Storage.
+- **Motor de precios: avanzado, NO publicado a los teléfonos.** Base de datos aplicada en el proyecto de pruebas
+  (migración `20261009233831_pricing_engine`, mismas definiciones que el repo), tarea horaria activa y primera
+  brecha tomada sola (23:40Z: BCV 875,65, P2P 1.016,00, 16,03 %). Desde entonces, **en el proyecto de pruebas Zelle y
+  USDT ya cotizan con el descuento de la brecha**. Panel (Costos y precio, Brecha del día en Tasas, regla y brecha
+  en Configuración, importador) en el repo y probado en local; se publica solo con este push. App (precio en
+  divisas, montos por método, explicación de la cotización): en el repo y probada en web, **sin EAS Update**.
+  Diseño en `docs/PRECIOS.md`.
+- Cambio de regla a revisar con Oliver: el margen ahora se aplica sobre el costo puesto en Venezuela (costo + flete +
+  gastos), no solo sobre el costo, y el precio principal incluye la brecha.
 
-1. Ver el resultado de la revisión 10 del emulador (`git fetch origin ci/capturas`, carpeta `ultima/`) y
-   corregir `02-cuenta.yaml` o la app según lo que muestre.
-2. **Motor comercial de precios** (pedido por Oliver, diseño en `docs/PRECIOS.md` cuando exista): costo Amazon por
-   variante, flete editable, gastos logísticos, margen, brecha BCV/USDT con instantánea diaria, precio principal
-   en USD BCV, Pago Móvil en Bs al BCV, Zelle/USDT con la brecha aplicada una sola vez como factor de conversión
-   verificable.
-3. Imágenes del catálogo remoto: de `raw.githubusercontent.com` a Supabase Storage (función temporal invocada con
-   `pg_net`), antes de proponer a Oliver hacer privado el repositorio.
-4. Push en Android: preparar `google-services.json` desde un secreto de GitHub y el APK 5 (identidad violeta).
+## Próxima acción (para el siguiente agente, en este orden)
+
+1. `git fetch origin && git checkout claude/marketplace-v1 && git pull --ff-only`; crear `apps/mobile/.env.local` y
+   `apps/admin/.env.local` (ver `docs/ENTORNO.md` §4) y `pnpm stack:start && pnpm db:reset`.
+2. Comprobar que el último `panel-deploy` quedó en verde (`gh run list --branch claude/marketplace-v1 --limit 3`) y
+   que https://kora-panel.expo.app/admin/tasas muestra «Brecha del día».
+3. Publicar la app al APK 4: comprobar el runtime (`docs/ENTORNO.md` §10), cambiar la primera línea sin `#` de
+   `.github/eas-update-request`, push. Luego una corrida del emulador (`.github/apk-emulator-request`, revisión 12) y
+   ver `ci/capturas/ultima/`: debe pasar `02-cuenta.yaml` y la ficha debe mostrar el precio con Zelle/USDT.
+4. Revisar con Oliver la regla de precios (margen sobre costo puesto) y cargar costos reales en «Costos y precio».
+5. Push en Android (Firebase de Oliver), APK 5 con identidad violeta.
+6. Proponer a Oliver pasar el repo a privado (checklist en `docs/ENTORNO.md` §12 bis); **pedir confirmación antes**.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -120,7 +130,7 @@ Resumen; procedimientos en `docs/ENTORNO.md`.
 
 | Servicio | Estado |
 |---|---|
-| Supabase de pruebas `mimnotafmfasvwrclxan` («Marketplace») | 23/23 migraciones, 3 funciones desplegadas (`rates-sync`, `push-dispatch`, `panel-api`), cron activo, catálogo demo cargado, registro sin confirmación por correo |
+| Supabase de pruebas `mimnotafmfasvwrclxan` («Marketplace») | 24/24 migraciones (última `20261009233831_pricing_engine`), 4 funciones (`rates-sync`, `push-dispatch`, `panel-api`, `assets-mirror` de uso único), 7 trabajos de cron (nuevo `kora-pricing-snapshot`, hora :40), brecha del día vigente, imágenes demo en Storage, registro sin confirmación por correo |
 | EAS Hosting | Panel en https://kora-panel.expo.app (mismo proyecto Expo `marketplacebrand/marketplace`, plan sin costo) |
 | Supabase `bfuggvbgttvcygbexqyn` | **Prohibido tocarlo**: es de otros productos de Oliver (BingoCriollo) |
 | Expo `marketplacebrand/marketplace` | APK 4 (build `5ee104fe`, versionCode 2, runtime `a4682c83c1bb738fc74c73153838ded0656f1912`); actualizaciones por canal `preview` |

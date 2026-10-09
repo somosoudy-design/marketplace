@@ -1,5 +1,5 @@
 'use client';
-import { computeImportPrice, type ImportPricingRule } from '@kora/core';
+import { priceFromCost, type CostRule } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState, type ReactNode } from 'react';
@@ -8,6 +8,7 @@ import { useToast } from '@/components/toast';
 import { Badge, Button, Card, ErrorBox, Field, Input, Loading, Notice, Toggle } from '@/components/ui';
 import { ago, money } from '@/lib/format';
 import { db, run } from '@/lib/kora';
+import { gapRates, pct, useGap } from '@/lib/pricing';
 
 // Purpose-built forms for the settings the database computes with. Each rule mirrors the database guard
 // (migration 001800, guard_setting_value), so Save only enables for a value the server will accept; the server
@@ -86,19 +87,43 @@ const GROUPS: Group[] = [
 
 const PRICING: Group = {
   id: 'pricing',
-  title: 'Precio sugerido para importaciones',
-  description: 'El importador por URL propone un precio de venta con esta regla: costo + margen + flete por peso + manejo, con la terminación elegida. Siempre se puede cambiar antes de crear el producto.',
+  title: 'Regla de precios',
+  description: (
+    <>
+      Del costo al precio (docs/PRECIOS.md): costo + flete + gastos logísticos, más el margen, es lo que el producto debe dejar en
+      divisas; con la brecha del día se convierte en el precio en dólares a tasa BCV. Cada producto puede cambiar flete, gastos o
+      margen en su ficha (Costos y precio). El importador por URL sugiere precios con esta regla.
+    </>
+  ),
   specs: [
-    { id: 'markup', key: 'pricing.import', path: 'markup_pct', label: 'Margen sobre el costo', kind: 'decimal', min: 0, max: 500, suffix: '%' },
-    { id: 'per-kg', key: 'pricing.import', path: 'per_kg_usd', label: 'Flete internacional', kind: 'decimal', min: 0, max: 200, suffix: 'USD por kg' },
-    { id: 'fixed', key: 'pricing.import', path: 'fixed_usd', label: 'Manejo por producto', kind: 'decimal', min: 0, max: 1000, suffix: 'USD' },
+    { id: 'markup', key: 'pricing.import', path: 'markup_pct', label: 'Margen sobre el costo puesto en Venezuela', kind: 'decimal', min: 0, max: 500, suffix: '%' },
+    { id: 'per-kg', key: 'pricing.import', path: 'per_kg_usd', label: 'Flete', kind: 'decimal', min: 0, max: 200, suffix: 'USD por kg' },
+    { id: 'fixed', key: 'pricing.import', path: 'fixed_usd', label: 'Gastos logísticos', kind: 'decimal', min: 0, max: 1000, suffix: 'USD por unidad' },
     { id: 'round', key: 'pricing.import', path: 'round_to', label: 'Terminación del precio', kind: 'optional-decimal', min: 0, max: 0.99, hint: 'Por ejemplo 0,99 para $41,99. Vacío: sin redondear.' },
     { id: 'configured', key: 'pricing.import', path: 'configured', label: 'Regla revisada y lista para usar', kind: 'bool', hint: 'Mientras esté apagada, el importador no sugiere precios.' },
   ],
 };
 
+const GAP: Group = {
+  id: 'gap',
+  title: 'Brecha del día',
+  description: (
+    <>
+      La brecha entre el dólar BCV y el USDT (Binance P2P) se toma sola con las tasas vigentes y fija el precio en divisas de Zelle
+      y USDT. Si no hay una vigente, esos métodos cobran el precio principal, sin descuento. Se puede tomar a mano en{' '}
+      <Link className="font-semibold text-brand" href="/admin/tasas">Tasas</Link>.
+    </>
+  ),
+  specs: [
+    { id: 'divisas', key: 'pricing.gap', path: 'divisas_prices', label: 'Precio especial en divisas (Zelle, USDT)', kind: 'bool', hint: 'Apagado: todos los métodos cobran el precio principal. Los precios que siguen al costo igual usan la brecha.' },
+    { id: 'refresh', key: 'pricing.gap', path: 'refresh_hours', label: 'Tomar una brecha nueva cada', kind: 'int', min: 1, max: 72, suffix: 'horas', explain: (v) => `Una vez cada ${hoursText(v)}, con las tasas del momento.` },
+    { id: 'valid', key: 'pricing.gap', path: 'valid_hours', label: 'Cada brecha vale', kind: 'int', min: 2, max: 96, suffix: 'horas', explain: (v) => `Pasadas ${hoursText(v)} sin una nueva, Zelle y USDT cobran el precio principal. Debe ser más que el intervalo.` },
+    { id: 'max-gap', key: 'pricing.gap', path: 'max_gap_pct', label: 'Brecha máxima aceptada', kind: 'decimal', min: 1, max: 1000, suffix: '%', explain: (v) => `Una lectura por encima de ${show(v)} % no se usa: se revisa a mano.` },
+  ],
+};
+
 /** Keys these forms own; anything else stays editable in "Otros parámetros". Ranking has its own page. */
-export const FORM_KEYS = new Set([...GROUPS, PRICING].flatMap((g) => g.specs.map((s) => s.key)).concat('ranking'));
+export const FORM_KEYS = new Set([...GROUPS, PRICING, GAP].flatMap((g) => g.specs.map((s) => s.key)).concat('ranking'));
 
 function rawOf(spec: Spec, rows: Map<string, SettingRow>): unknown {
   const v = rows.get(spec.key)?.value;
@@ -141,6 +166,7 @@ export function SettingsForms() {
         {GROUPS.map((g) => <SettingsGroup key={g.id} group={g} rows={rows} />)}
       </div>
       <SettingsGroup group={PRICING} rows={rows} preview={(p) => <PricingPreview values={p} />} />
+      <SettingsGroup group={GAP} rows={rows} />
       <p className="text-[13px] text-ink-3">
         Los pesos de las recomendaciones se ajustan en <Link className="font-semibold text-brand" href="/admin/recomendaciones">Recomendaciones</Link>. Cada cambio queda en la auditoría.
       </p>
@@ -219,7 +245,7 @@ function SettingsGroup({ group, rows, preview }: { group: Group; rows: Map<strin
         }}
       >
         <p className="max-w-2xl text-[14px] text-ink-2">{group.description}</p>
-        <div className={group.id === 'pricing' ? 'grid gap-x-5 gap-y-4 sm:grid-cols-2 xl:grid-cols-4' : 'flex flex-col gap-4'}>
+        <div className={group.id === 'pricing' || group.id === 'gap' ? 'grid gap-x-5 gap-y-4 sm:grid-cols-2 xl:grid-cols-4' : 'flex flex-col gap-4'}>
           {group.specs.map((s) => {
             const c = checks[s.id]!;
             if (s.kind === 'bool') {
@@ -264,14 +290,23 @@ function SettingsGroup({ group, rows, preview }: { group: Group; rows: Map<strin
 }
 
 function PricingPreview({ values }: { values: Parsed }) {
-  const rule: ImportPricingRule = { markup_pct: values.markup as number, per_kg_usd: values['per-kg'] as number, fixed_usd: values.fixed as number, round_to: values.round as number | null };
-  const p = computeImportPrice(20, 0.5, rule);
+  const gap = useGap();
+  const rule: CostRule = { markup_pct: values.markup as number, per_kg_usd: values['per-kg'] as number, fixed_usd: values.fixed as number, round_to: values.round as number | null };
+  // without a gap in force the BCV price cannot be known: the example shows what the product must bring in divisas
+  const p = priceFromCost({ cost_usd: 20, weight_kg: 0.5 }, rule, gap.current ? gapRates(gap.current) : { bcv: 1, usdt_ves: 1 });
   return (
     <div className="flex flex-col gap-3">
       <p className="rounded-[14px] bg-sunken px-4 py-3 text-[14px] text-ink-2" data-testid="pricing-preview">
-        Ejemplo: un producto que nos cuesta {money(20, 'USD')} y pesa 0,5 kg se sugiere a{' '}
-        <span className="tabular font-bold text-ink">{money(p.price_usd, 'USD')}</span>
-        <span className="text-ink-3"> (margen {money(p.markup_usd, 'USD')}, flete {money(p.freight_usd, 'USD')}, manejo {money(p.fixed_usd, 'USD')}).</span>
+        Ejemplo: un producto que nos cuesta {money(20, 'USD')} y pesa 0,5 kg queda puesto en {money(p.landed_usd, 'USD')} (flete{' '}
+        {money(p.freight_usd, 'USD')}, gastos {money(p.logistics_usd, 'USD')}) y con el margen debe dejar {money(p.target_divisas_usd, 'USD')} en divisas.{' '}
+        {gap.current ? (
+          <>
+            Con la brecha del día ({pct(p.gap_pct)}) su precio es <span className="tabular font-bold text-ink">{money(p.price_usd, 'USD')}</span> a tasa BCV;
+            con Zelle o USDT paga {money(p.price_divisas_usd, 'USD')}.
+          </>
+        ) : (
+          <span className="text-ink-3">No hay brecha vigente: el precio a tasa BCV se calcula cuando se tome una en Tasas.</span>
+        )}
       </p>
       {values.configured !== true ? (
         <Notice tone="warning">La regla todavía trae valores de ejemplo. Revísala y activa «Regla revisada» para que el importador sugiera precios.</Notice>
@@ -283,6 +318,6 @@ function PricingPreview({ values }: { values: Parsed }) {
 /** The import pricing rule, only when an operator marked it as reviewed. */
 export function useImportPricing() {
   const q = useSettings();
-  const v = q.data?.find((r) => r.key === 'pricing.import')?.value as (ImportPricingRule & { configured?: boolean }) | undefined;
+  const v = q.data?.find((r) => r.key === 'pricing.import')?.value as (CostRule & { configured?: boolean }) | undefined;
   return { isPending: q.isPending, rule: v && v.configured === true ? v : null };
 }
