@@ -1,0 +1,8 @@
+# Cambiar este archivo en la rama de trabajo instala estos APK en un emulador Android 15 (workflow apk-emulator).
+# 1: «App no instalada» en Samsung S24 Ultra y S25 Ultra; ver el resultado exacto de la instalación.
+# APK 1 (build 037b11c5):
+https://expo.dev/artifacts/eas/ZgUg0r1-psGuJZ3ezQcGYq7yqx6ylwg8tmiv59M7V28.apk
+# APK 2 (build 1a0f1922):
+https://expo.dev/artifacts/eas/4GP0-UOnPl0YVxQXDLpRWsWBa6ouAs6Lld7rcLMsVKk.apk
+# APK 3 (build bd3fa808, solo ARM):
+https://expo.dev/artifacts/eas/LCeLGKosrTWEsnQdn_cI05UIs-f-RNw_oNM2pNqqsCs.apk

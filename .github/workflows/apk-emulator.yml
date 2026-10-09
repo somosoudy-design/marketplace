@@ -1,0 +1,52 @@
+# Installs each APK listed in .github/apk-emulator-request on an Android 15 emulator and opens it: prints the
+# exact install result (Android hides it behind "App not installed" on the phone), whether the app starts
+# without crashing, and keeps a screenshot of the first screen as an artifact.
+name: APK en emulador
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/apk-emulator-request']
+
+permissions:
+  contents: read
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: KVM para el emulador
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Descargar los APK
+        run: |
+          mkdir -p apks shots
+          i=0
+          for url in $(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-emulator-request); do
+            i=$((i+1)); curl -sSfL --retry 3 -o "apks/apk$i.apk" "$url"
+          done
+          ls -la apks
+
+      - name: Instalar y abrir en Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/eas/emulator-install.sh
+
+      - name: Capturas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-emulador
+          path: shots/
+          if-no-files-found: ignore
