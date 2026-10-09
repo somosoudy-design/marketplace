@@ -4,7 +4,7 @@
 02-cuenta: FALLÓ
 
 Waiting for flows to complete...
-[Failed] Comprador con cuenta hasta la cotización y cancelación (39s) (Assertion is false: id: cart-continue is visible)
+[Failed] Comprador con cuenta hasta la cotización y cancelación (2m 4s) (Assertion is false: ".*Maestro Prueba.*", id: checkout-address is visible)
 
 1/1 Flow Failed
 
