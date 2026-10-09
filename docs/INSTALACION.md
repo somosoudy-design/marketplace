@@ -75,13 +75,31 @@ pnpm typecheck && pnpm lint
 
 ## 7. Compilar Android e iOS (EAS)
 
+El proyecto de Expo es https://expo.dev/accounts/marketplacebrand/projects/marketplace. `config/expo.json`
+fija `owner`, `slug` y `projectId`; no uses `eas init`, que podría crear otro proyecto.
+
+El perfil `preview` (APK interno) ya trae en `eas.json` la URL del proyecto Supabase de pruebas y su clave
+pública `anon` (la misma que lleva cualquier APK; la seguridad la dan las reglas RLS, nunca una clave de
+servicio). Para otro backend, cambia esos dos valores.
+
+**APK desde GitHub (recomendado aquí):** guarda un token de Expo (expo.dev › Access tokens) como secreto
+`EXPO_TOKEN` del repositorio y sube una etiqueta:
+
 ```bash
-npm i -g eas-cli
-eas login && eas init                       # crea el proyecto; exporta EAS_PROJECT_ID y EXPO_OWNER
-eas env:create --environment preview --name EXPO_PUBLIC_SUPABASE_URL --value https://<ref>.supabase.co
-eas env:create --environment preview --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <anon key>
-eas build --profile development --platform android   # cliente de desarrollo instalable
+git tag apk-preview-1 && git push origin apk-preview-1
+```
+
+El workflow `.github/workflows/eas-android-preview.yml` verifica que el token vea ese proyecto exacto y que
+el `projectId` coincida, compila en EAS esperando el resultado y deja en el resumen del job la página de
+instalación, el enlace del APK y, si falla, el final del registro de EAS. No publica en Google Play.
+
+**Desde tu computadora:**
+
+```bash
+npm i -g eas-cli && eas login
+cd apps/mobile
 eas build --profile preview --platform android       # APK interno para probar
+eas build --profile development --platform android   # cliente de desarrollo instalable
 eas build --profile production --platform all        # AAB / IPA para tiendas (requiere cuentas de tienda)
 ```
 
@@ -93,6 +111,11 @@ primera build pública. Compilar en local (`npx expo run:android`) requiere Andr
 
 Requiere un proyecto **nuevo** y autorización (puede tener costo). Nunca el proyecto existente de otros
 productos.
+
+Proyecto actual: «Marketplace» (`mimnotafmfasvwrclxan`). Las migraciones 1 a 6 se aplicaron con el conector de
+Supabase; las 15 restantes van en `tools/supabase-remote/aplicar-migraciones-07-a-21.sql`, que se pega en el
+SQL Editor del proyecto y corre en una sola transacción (no carga datos demo). Desde ahí, `supabase db push`
+queda coherente porque el historial usa las mismas versiones que los archivos.
 
 ```bash
 npx supabase link --project-ref <ref>

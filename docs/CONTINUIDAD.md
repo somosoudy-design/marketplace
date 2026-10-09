@@ -12,10 +12,12 @@ La v1 está construida, documentada y verificada en local: base de datos, motor 
 de administración y de vendedor, funciones de servidor, y una ronda de profundidad (opiniones verificadas,
 posventa como conversación, inicio editorial, tasa explicada, recomendaciones medidas con su panel,
 parámetros validados), y una segunda ronda (pago en verificación, direcciones, app sin conexión, recibos de
-entrega de push con su salud en el panel, importador protegido contra DNS rebinding). 167 pruebas en verde tras
-reconstruir la base desde cero, revisión visual en claro y oscuro de lo nuevo. La rama está en GitHub (PR #1 en
-borrador). Lo que queda depende de Oliver o de servicios externos: proyecto Supabase dedicado, cuentas de
-Expo/tiendas y credenciales de proveedores (ver sección 5).
+entrega de push con su salud en el panel, importador protegido contra DNS rebinding, parámetros del panel con
+formularios propios, precio sugerido en el importador, contacto de soporte configurable). 171 pruebas en verde
+tras reconstruir la base desde cero, revisión visual en claro y oscuro de lo nuevo. La rama está en GitHub
+(PR #1 en borrador). En curso: esquema en el proyecto Supabase «Marketplace» (6 de 21 migraciones; el resto
+lo ejecuta Oliver con un archivo) y APK de prueba en EAS para marketplacebrand/marketplace (falta su token
+de Expo en GitHub). Ver sección 5.
 
 ## 1. Directrices originales que no se pueden perder
 
@@ -245,20 +247,36 @@ Verificadas = cubiertas por pruebas que se ejecutaron en verde (sección 6).
 - **Sin conexión:** pedidos, detalle con pasos de entrega, direcciones, favoritos, avisos e inicio se abren
   sin red; una pantalla nunca cargada lo explica; si una actualización falla sobre datos guardados se avisa.
 - **Push confiable y visible:** recibos de entrega, limpieza de dispositivos y tarjeta de salud en el panel.
-- **Importador:** protegido contra DNS rebinding.
+- **Importador:** protegido contra DNS rebinding; sugiere el precio de venta con la regla comercial
+  (costo, peso, margen, redondeo) y deja usarlo con un toque.
+- **Parámetros del panel** (`/admin/configuracion?tab=settings`): formularios propios por grupo (pedidos,
+  vendedores, privacidad, soporte, precios de importación) con validación igual a la de la base y vista previa
+  del precio; las claves sin formulario siguen en "Otros parámetros".
+- **Contacto de soporte:** correo y horario editables en el panel (validados en la base, `002100`) y
+  mostrados en Cuenta › Ayuda de la app.
 
 ## 5. Pendiente
 
 Bloqueado por Oliver o por servicios externos:
 
 1. **GitHub:** resuelto. La rama está subida y el PR #1 (borrador) espera revisión de Oliver; no se fusiona
-   sin él. El repo no tiene CI: las pruebas se corren en local (sección 7).
-2. **Proyecto Supabase dedicado:** Oliver creó la organización «Marketplace» (plan gratuito) con el proyecto
-   «Marketplace» (`mimnotafmfasvwrclxan`, us-east-1, Postgres 17), y el conector ya apunta a esa cuenta. Estaba
-   vacío; solo se activó `pg_net`. Aplicar las 20 migraciones espera su visto bueno explícito (la revisión de
-   permisos lo bloqueó sin él). Nunca cargar el seed demo en un proyecto remoto (tiene cuentas con clave
-   conocida). Después: funciones, avisos de seguridad y los pasos del panel en `docs/INSTALACION.md`.
-3. **Expo/EAS, Apple y Google** para builds instalables y publicación (costo). Ver `docs/PUBLICACION.md`.
+   sin él. No hay CI de pruebas (corren en local, sección 7); el único workflow compila el APK de prueba.
+2. **Proyecto Supabase «Marketplace»** (`mimnotafmfasvwrclxan`, us-east-1, Postgres 17, plan gratuito).
+   Oliver aprobó aplicar el esquema sin datos demo (tarjeta de decisión, 2026-10-09 11:51Z). Las migraciones
+   1 a 6 se aplicaron con el conector. Desde la 7, el conector pide una confirmación por los `DELETE`/`DROP`
+   que Oliver no ve en el proyecto (se queda colgado): no reintentar ni disfrazar sentencias. Las 15
+   restantes están en `tools/supabase-remote/aplicar-migraciones-07-a-21.sql` (generado por `build.py`, una
+   transacción, se niega a correr dos veces, renombra el historial a las versiones de los archivos); se le
+   pidió ejecutarlo en el SQL Editor. Después: verificar con consultas de solo lectura, avisos de seguridad,
+   desplegar funciones y los pasos del panel en `docs/INSTALACION.md` (hook de auth, URLs, correo de
+   confirmación o SMTP, secretos de Vault, primer superadmin). Nunca cargar el seed demo en un proyecto remoto
+   (tiene cuentas con clave conocida). Este contenedor no llega a `*.supabase.co` (proxy 403); solo el conector.
+3. **APK de prueba (EAS):** proyecto https://expo.dev/accounts/marketplacebrand/projects/marketplace (creado
+   por Oliver; no crear otro). `config/expo.json` fija owner y slug; `projectId` se completa con el valor que
+   imprime la verificación del workflow. El contenedor no llega a expo.dev, así que se compila desde GitHub
+   Actions (`.github/workflows/eas-android-preview.yml`, al subir una etiqueta `apk-preview-*`), con el
+   secreto `EXPO_TOKEN` que Oliver debe crear. Perfil `preview`: APK interno contra el proyecto Supabase.
+   No publicar en Google Play. Apple/Google y builds de tienda: `docs/PUBLICACION.md` (costo).
 4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
 5. **Datos reales:** datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales.
 
@@ -268,8 +286,8 @@ Mejoras ejecutables sin bloqueo (siguiente trabajo sugerido):
   conexión (anula el inset superior para el native-stack; verificado solo en web).
 - Verificación automática de pagos USDT en cadena.
 - CI en GitHub Actions con el stack local (hoy las suites corren solo en esta máquina).
-- Ajustes del panel: "Parámetros" sigue siendo un editor JSON genérico; los críticos ya se validan en la base,
-  pero merecen formularios propios como el de pesos del ranking.
+- Panel publicado en internet para pruebas con el APK (hoy solo corre en local; publicar requiere a Oliver).
+- Push en Android necesita Firebase Cloud Messaging en la build; sin eso la app lo explica en Ajustes.
 
 ## 6. Integraciones: estado
 
@@ -277,18 +295,18 @@ Tabla completa y actualizada en `docs/INTEGRACIONES.md`.
 
 ## 7. Pruebas y resultados (ejecutadas de verdad)
 
-Tras `pnpm db:reset` el 2026-10-09, cierre de la segunda ronda: 167 pruebas en verde (detalle y casos
+Tras `pnpm db:reset` el 2026-10-09, cierre de la ronda de parámetros: 171 pruebas en verde (detalle y casos
 críticos en `docs/PRUEBAS.md`):
 
 | Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos | `pnpm test:db` | 72/72 |
+| Base de datos | `pnpm test:db` | 73/73 |
 | E2E por API pública | `pnpm test:e2e` | 8/8 |
 | Funciones del servidor (Deno) | `pnpm test:functions` | 10/10 |
 | Núcleo | `pnpm --filter @kora/core test` | 34/34 |
 | Panel unitario (SSRF y DNS rebinding) | `pnpm test:admin` | 28/28 |
-| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 9/9 |
-| Panel entre roles (Playwright) | `pnpm test:panel` | 6/6 |
+| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 10/10 |
+| Panel entre roles (Playwright) | `pnpm test:panel` | 8/8 |
 | Tipos / lint / build del panel | `pnpm typecheck`, `pnpm lint`, `pnpm --filter @kora/admin build` | sin errores |
 
 No ejecutado: builds nativas y dispositivos reales (sin Android SDK ni Google Maven ni macOS), proveedores
@@ -357,6 +375,14 @@ Convenciones:
 - Fixtures de push para el panel: `pushTrouble()` en `tests/app-e2e/tests/support/db.ts` (devuelve su limpieza).
 - Ajuste nuevo que una función de la base convierta a número: agrégalo a `guard_setting_value` (migración
   `001800`) y su prueba en `config-guards.test.ts`.
+- Formulario de un ajuste nuevo en el panel: agrega su `Spec` al grupo en `apps/admin/src/components/Settings.tsx`
+  (la validación `check()` debe coincidir con la guarda de la base) y su caso en `panel/settings.spec.ts`.
+- Migración nueva para el proyecto remoto: mientras el conector pida confirmaciones que Oliver no ve, genera un
+  archivo para el SQL Editor siguiendo `tools/supabase-remote/build.py` y ensáyalo antes en una base de
+  prueba local (copia de `auth`/`extensions`/`storage` con `pg_dump -s`, migraciones previas y el archivo).
+- APK de prueba: con `EXPO_TOKEN` en GitHub, `git tag apk-preview-N && git push origin apk-preview-N`; lee el
+  resultado con los registros del job (página de la compilación, enlace del APK y, si falla, el final del log
+  de EAS). `workflow_dispatch` no sirve mientras el workflow no esté en `main`.
 
 ## 9. Bitácora
 
@@ -377,3 +403,8 @@ Convenciones:
   sola capa), hojas de confirmación multiplataforma, recibos de push y salud del canal en el panel (`002000`),
   importador protegido contra DNS rebinding (undici + `guardedLookup`). GitHub ya acepta el push: rama subida
   y PR #1 en borrador. 167 pruebas en verde.
+- 2026-10-09 — Parámetros del panel con formularios propios y vista previa de precio, precio sugerido en el
+  importador, contacto de soporte configurable (`002100`). 171 pruebas en verde. Oliver aprobó aplicar el
+  esquema al proyecto «Marketplace»: 6 migraciones aplicadas; las 15 restantes, en un archivo ensayado para el
+  SQL Editor. App vinculada a Expo marketplacebrand/marketplace, perfil `preview` contra ese backend y
+  workflow de EAS por etiqueta; esperando el SQL ejecutado y `EXPO_TOKEN`.

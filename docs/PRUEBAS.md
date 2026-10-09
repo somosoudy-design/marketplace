@@ -1,25 +1,25 @@
 # Resultados de pruebas
 
 Ejecutadas el 2026-10-09 en el entorno de desarrollo (Linux, Node 22, Postgres 16, stack local sin Docker),
-inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las 20 migraciones y el seed).
+inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las 21 migraciones y el seed).
 
 ## Resumen
 
 | Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos: RLS, finanzas, checkout, pagos, logística, privilegios, herramientas, opiniones, recomendaciones, avisos, parámetros | `pnpm test:db` | **72/72** en verde (10 archivos) |
+| Base de datos: RLS, finanzas, checkout, pagos, logística, privilegios, herramientas, opiniones, recomendaciones, avisos, parámetros | `pnpm test:db` | **73/73** en verde (10 archivos) |
 | Compra completa por la API pública (como la app) | `pnpm test:e2e` | **8/8** en verde |
 | Funciones del servidor (Deno, contra el stack local) | `pnpm test:functions` | **10/10** en verde |
 | Núcleo: dinero, planes, tasas, proveedores, errores | `pnpm --filter @kora/core test` | **34/34** en verde |
 | Panel: protección SSRF y DNS rebinding del importador | `pnpm test:admin` | **28/28** en verde (2 archivos, uno sin dobles de red) |
-| Interfaz de la app (Playwright, Pixel 7, build web) | `pnpm test:ui` | **9/9** en verde |
-| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | **6/6** en verde |
+| Interfaz de la app (Playwright, Pixel 7, build web) | `pnpm test:ui` | **10/10** en verde |
+| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | **8/8** en verde |
 | Tipos (8 paquetes) | `pnpm typecheck` | sin errores |
 | Lint (app y panel) | `pnpm lint` | sin errores ni avisos |
 | Build de producción del panel | `pnpm --filter @kora/admin build` | correcta |
 | Configuración nativa | `expo config`, `expo prebuild --platform android` | correcta (proyecto Android generado; no compilado) |
 
-Total: **167 pruebas automatizadas** en verde.
+Total: **171 pruebas automatizadas** en verde.
 
 ## Casos críticos del brief
 
@@ -55,6 +55,10 @@ Total: **167 pruebas automatizadas** en verde.
 | Push aceptado pero no entregado | `functions.test.ts` (recibo pedido solo cuando vence, dispositivo inexistente borrado, aviso marcado "Sin entregar" solo si nadie lo recibió, recibo no listo reintentado a los 10 min) |
 | Avisos atascados o credenciales de push rechazadas | `panel/dashboard.spec.ts` (el resumen lo advierte y dice qué revisar) |
 | DNS rebinding en el importador | `safe-fetch.test.ts` (un host que pasa la primera revisión y cambia a una IP privada al conectar es rechazado); `safe-fetch-connect.test.ts` (sin dobles: undici resuelve a través del guardián y no abre un socket hacia localhost) |
+| Parámetros del panel con formularios | `panel/settings.spec.ts` (valor inválido rechazado con su motivo antes de guardar, guardado por grupo, vista previa del precio con la regla comercial); `config-guards.test.ts` (correo y horario de soporte validados en la base) |
+| Precio sugerido al importar | `panel/settings.spec.ts` (sin regla revisada no se sugiere nada; revisada, el importador calcula costo + margen + flete por peso + manejo con el redondeo configurado y lo aplica con un toque) |
+| Contacto de soporte en la app | `account.spec.ts` (Cuenta › Ayuda muestra el correo y horario configurados en el panel) |
+| Esquema remoto en un solo archivo | Ensayo manual: base local nueva con las migraciones 1 a 6, el archivo de `tools/supabase-remote` aplicado en una transacción, mismo esquema que la base completa (funciones, columnas, políticas, índices) y negativa a correr dos veces |
 | Métricas de recomendaciones | `reviews-engagement.test.ts` (CTR, carrito y compra tras clic; solo admin); `panel/reviews.spec.ts` (nombres de espacios, aviso de tráfico demo, pesos validados) |
 
 ## Lo que no se ejecutó (y por qué)

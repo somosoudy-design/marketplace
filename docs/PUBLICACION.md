@@ -21,7 +21,8 @@ autorización de Oliver y tiene costo.
 
 ## Cuentas y credenciales
 
-- [ ] Expo / EAS (`eas init`), `EAS_PROJECT_ID`, `EXPO_OWNER`.
+- [x] Proyecto Expo marketplacebrand/marketplace vinculado en `config/expo.json` (falta su `projectId`, que imprime
+      el workflow del APK al tener `EXPO_TOKEN`).
 - [ ] Apple Developer Program (pago anual) y App Store Connect.
 - [ ] Google Play Console (pago único) y firma de apps de Play.
 - [ ] FCM v1 (Android) y APNs (iOS) cargados con `eas credentials` para push.
