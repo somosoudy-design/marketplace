@@ -3,13 +3,14 @@
 > Propósito: que cualquier sesión o persona continúe exactamente donde quedó el trabajo, sin rehacer nada
 > ni perder las directrices originales. Actualízalo al cerrar cada hito (sección 8 = bitácora).
 >
-> Última actualización: 2026-10-09. Rama de trabajo: `claude/marketplace-v1`.
+> Última actualización: 2026-10-09 (cierre de v1). Rama de trabajo: `claude/marketplace-v1`.
 
 ## 0. Estado en una línea
 
-Base de datos, motor financiero, app móvil, panel de administración y panel de vendedor están construidos y
-probados en local. Falta: funciones de servidor (Edge Functions), reinstalación limpia con todas las
-pruebas, documentación final y subir a GitHub (bloqueado: la app de Claude aún no tiene acceso al repo).
+La v1 está construida, documentada y verificada en local: base de datos, motor financiero, app móvil, panel
+de administración y de vendedor, funciones de servidor y 138 pruebas en verde tras reconstruir la base desde
+cero. Lo que queda depende de Oliver o de servicios externos: acceso de GitHub para subir la rama, proyecto
+Supabase dedicado, cuentas de Expo/tiendas y credenciales de proveedores (ver sección 5).
 
 ## 1. Directrices originales que no se pueden perder
 
@@ -51,7 +52,8 @@ Del brief "MARKETPLACE NATIVO PREMIUM v1.0" (Oliver). Son requisitos, no sugeren
 | Cliente tipado | supabase-js + tipos generados | `packages/api` |
 | Diseño | tokens únicos para app, panel y assets | `packages/design-tokens` |
 | Datos demo | generador de catálogo, imágenes y `seed.sql` | `tools/demo-assets` |
-| Stack local sin Docker | Postgres + GoTrue + PostgREST + gateway Node | `tools/local-stack` |
+| Funciones del servidor | Deno (Supabase Edge Functions), sin dependencias npm | `supabase/functions` |
+| Stack local sin Docker | Postgres + GoTrue + PostgREST + gateway Node + funciones Deno | `tools/local-stack` |
 
 Decisiones clave:
 
@@ -74,7 +76,19 @@ Decisiones clave:
 - **Pagos manuales** (Pago Móvil, transferencia VES, Zelle, USDT TRC-20, efectivo): instrucciones
   configurables, referencia y comprobante, verificación por admin. **Automáticos** (Binance Pay, PayPal):
   `integration_status = pending_credentials`; el admin no puede cambiar ese estado ni habilitarlos sin
-  integración (trigger `guard_payment_method`).
+  integración (trigger `guard_payment_method`). Flujo en línea: la app llama a la función `payments-start`
+  (crea la orden con secretos del servidor y devuelve el enlace); solo el webhook firmado acredita
+  (`record_provider_event`). Un evento sin firma se guarda con id sintético para no bloquear al legítimo;
+  un éxito que llega tras cancelar o vencer el intento va a revisión manual; los intentos sin confirmar
+  vencen a los `payments.provider_expiry_minutes` (180).
+- **Funciones del servidor** (`supabase/functions/<nombre>/handler.ts` exporta `createHandler(deps)` para
+  poder probarlas con dobles; `index.ts` solo hace `Deno.serve`). `_shared/core/*.ts` es una copia generada
+  de `packages/core` (`pnpm edge:sync`; las pruebas fallan si está desactualizada). Hablan con PostgREST por
+  HTTP (`_shared/rest.ts`). `rates-sync` y `push-dispatch` exigen la service role key; los webhooks verifican
+  la firma del proveedor. El cron (migración `001600`) se programa solo si existen `pg_cron` y `pg_net`, y
+  llama a las funciones con secretos de Vault (`kora_project_url`, `kora_service_role_key`).
+- **Push:** `claim_push_batch` marca lotes como `sending` (dos ejecuciones nunca envían dos veces),
+  `complete_push` registra el resultado, reintenta hasta 3 veces y borra tokens `DeviceNotRegistered`.
 - **Pedidos multi-vendedor:** el carrito se divide en entregas (`fulfillments`) por tienda/modalidad, cada una
   con su envío y su flujo (importación en 10 pasos, envío del vendedor, retiro). Los pasos que requieren pago
   se bloquean hasta que el nivel de pago lo permite (`_order_payment_level`).
@@ -142,62 +156,45 @@ Verificadas = cubiertas por pruebas que se ejecutaron en verde (sección 6).
 
 ## 5. Pendiente
 
-1. **Edge Functions** en `supabase/functions` (no existen todavía):
-   - `_shared/`: copia generada de `packages/core/src/rates` y `payments` (script `tools/sync-edge-shared.mjs`
-     con modo `--check`) y cliente service role (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`).
-   - `rates-sync`: exige la service role key (comparación en tiempo constante), consulta fuentes habilitadas,
-     llama `ingest_rate`, reporta resultados. El panel ya tiene el equivalente manual en
-     `apps/admin/src/app/api/rates/sync/route.ts`.
-   - `binance-pay-webhook` y `paypal-webhook` (`verify_jwt = false`): verificar firma (Binance RSA con
-     `BINANCE_PAY_PUBLIC_KEY`; PayPal vía verify-webhook-signature con `PAYPAL_CLIENT_ID`,
-     `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`, `PAYPAL_ENV`) y llamar `record_provider_event`. 503 si no
-     están configurados.
-   - `payments-start`: `start_provider_payment` como el usuario, crear la orden en el proveedor con secretos
-     del servidor y `attach_provider_payment`. 503 si no está configurado.
-   - `push-dispatch`: Expo push para `notifications.push_status = 'pending'`, sin `is_test`.
-   - `supabase/config.toml` y migración de cron protegida (solo si existen `pg_cron`/`pg_net`/vault; en local
-     no existen) para `expire_unpaid_orders`, `refresh_popularity` y `rates-sync`.
-   - Pruebas Deno (p. ej. firma Binance con una clave RSA generada). Deno 2.9.6 está en el scratchpad de la
-     sesión anterior; en otra máquina instala Deno.
-   - Helpers ya listos en `packages/core/src/payments/index.ts`: `signBinancePayRequest`,
-     `verifyBinancePayWebhook`, `normalizeBinancePayEvent`, `binancePayCreateOrderBody`, `PAYPAL_BASE`,
-     `paypalVerifyBody`, `normalizePaypalEvent`, `paypalCreateOrderBody`.
-2. Regenerar tipos: `pnpm db:types`.
-3. **Reinstalación limpia:** `pnpm db:reset` y repetir todas las suites (la migración `20261009000500` se
-   editó en su sitio y `001300`–`001500` se aplicaron a mano en la base de desarrollo; el reset lo valida).
-   La base de desarrollo tiene cuentas y pedidos de prueba (`ui-*`, `e2e-*`, `panel-*`) que el reset limpia.
-4. Documentación final en español: README, instalación, `.env.example` raíz, guía de servicios externos,
-   sistema de diseño, tabla de estado de integraciones, resultados de pruebas, informe final, checklist de
-   publicación en tiendas.
-5. **GitHub:** subir `claude/marketplace-v1` a `somosoudy-design/marketplace` y abrir PR cuando Oliver dé
-   acceso a la app de Claude. El repo es público.
-6. Proyecto Supabase real: requiere autorización de Oliver (costo/cuenta externa).
+Bloqueado por Oliver o por servicios externos:
+
+1. **GitHub:** la app de Claude no tiene acceso a `somosoudy-design/marketplace` (público). Cuando lo tenga:
+   `git push -u origin claude/marketplace-v1` y abrir PR hacia `main` (el remoto solo tiene un README inicial;
+   la rama ya está rebasada sobre él).
+2. **Proyecto Supabase dedicado** (autorización y posible costo). Pasos en `docs/INSTALACION.md`.
+3. **Expo/EAS, Apple y Google** para builds instalables y publicación (costo). Ver `docs/PUBLICACION.md`.
+4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
+5. **Datos reales:** datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales.
+
+Mejoras ejecutables sin bloqueo (siguiente trabajo sugerido):
+
+- Pruebas en Android/iOS reales cuando exista una build (Maestro o Detox).
+- Recibos de entrega de Expo Push (segunda fase) además de los tickets.
+- Verificación automática de pagos USDT en cadena.
+- Métricas del sistema de recomendaciones en el panel.
+- Protección contra DNS rebinding en el importador (resolver una vez y conectar a esa IP).
 
 ## 6. Integraciones: estado
 
-| Integración | Estado | Nota |
-|---|---|---|
-| Pago Móvil, transferencia VES, Zelle, USDT TRC-20, efectivo | Operativa y probada (verificación manual) | Datos de cobro de demostración, ficticios. Zelle no tiene API pública universal: es manual. |
-| Tasa BCV (HTML), DolarApi, Binance P2P (referencial), Kraken USD/USDT | Implementada, pendiente de red | Parsers probados con muestras; la red del sandbox no tiene DNS de salida, nunca se consultaron en vivo. |
-| Tasa manual / forzada por admin | Operativa y probada | |
-| Binance Pay | Implementada pendiente de credenciales | Requiere cuenta merchant aprobada por Binance; no hay garantía de aprobación. |
-| PayPal | Implementada pendiente de credenciales | Requiere cuenta Business y aprobación; no hay garantía. |
-| Push (Expo) | Pendiente (función `push-dispatch` por escribir) | Registro de tokens en la app ya existe (`apps/mobile/src/lib/push.ts`). |
-| Correo transaccional | Simulado para desarrollo | GoTrue local con autoconfirmación. |
-| Importador por URL | Operativo (solo admin), probado con importación manual | Sin red externa en el sandbox. |
-| Supabase en la nube | Pendiente por restricciones | Falta autorización para crear proyecto. |
+Tabla completa y actualizada en `docs/INTEGRACIONES.md`.
 
 ## 7. Pruebas y resultados (ejecutadas de verdad)
 
-| Suite | Comando | Último resultado |
+Tras `pnpm db:reset` el 2026-10-09 (detalle y casos críticos en `docs/PRUEBAS.md`):
+
+| Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos (RLS, finanzas, checkout, privilegios…) | `pnpm test:db` | 51/51 en verde (2026-10-09) |
-| E2E por API pública | `pnpm test:e2e` | 8/8 en verde (2026-10-09, antes del reset pendiente) |
-| UI app (Playwright, Pixel 7, build web) | `pnpm test:ui` | 5/5 en verde (2026-10-09) |
-| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | 3/3 en verde (2026-10-09) |
-| Núcleo (dinero, planes, tasas, proveedores, errores) | `pnpm --filter @kora/core test` | 32/32 en verde (2026-10-09) |
-| Panel unitario (protección SSRF) | `pnpm test:admin` | 23/23 en verde (2026-10-09) |
-| Compilación de producción del panel | `pnpm --filter @kora/admin build` | OK, 31 rutas (2026-10-09) |
+| Base de datos | `pnpm test:db` | 58/58 |
+| E2E por API pública | `pnpm test:e2e` | 8/8 |
+| Funciones del servidor (Deno) | `pnpm test:functions` | 9/9 |
+| Núcleo | `pnpm --filter @kora/core test` | 32/32 |
+| Panel unitario (SSRF) | `pnpm test:admin` | 23/23 |
+| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 5/5 |
+| Panel entre roles (Playwright) | `pnpm test:panel` | 3/3 |
+| Tipos / lint / build del panel | `pnpm typecheck`, `pnpm lint`, `pnpm --filter @kora/admin build` | sin errores |
+
+No ejecutado: builds nativas y dispositivos reales (sin Android SDK ni Google Maven ni macOS), proveedores
+externos en vivo (sin salida de red ni credenciales), transacciones reales (prohibido).
 
 `pnpm test:db` clona la base de desarrollo en `kora_test` y prueba sobre la copia.
 
@@ -222,8 +219,11 @@ pnpm --filter @kora/mobile start  # Expo
 # Cuentas demo (solo local): admin@example.com, vendedor@example.com, comprador@example.com — clave Demo-1234
 
 # 4) Pruebas
-pnpm test:db && pnpm test:e2e && pnpm test:ui && pnpm test:panel && pnpm test:admin && pnpm --filter @kora/core test
-pnpm typecheck
+pnpm test:db && pnpm test:e2e && pnpm test:functions && pnpm test:ui && pnpm test:panel && pnpm test:admin && pnpm --filter @kora/core test
+pnpm typecheck && pnpm lint
+
+# 5) Guardar progreso (commit + respaldo en los archivos del proyecto)
+git add -A && git commit && bash tools/backup-to-project.sh
 ```
 
 Convenciones:
@@ -233,6 +233,11 @@ Convenciones:
   `notify pgrst, 'reload schema'`.
 - Nueva RPC expuesta: agrégala a `EXPOSED` en `privileges.test.ts` y su error a `packages/core/src/errors.ts`.
 - `supabase/seed.sql` es generado: edita `tools/demo-assets/*` y corre `pnpm seed:build`.
+- Cambiaste `packages/core/src/rates` o `payments`: corre `pnpm edge:sync`.
+- Tras una migración: `pnpm db:types` regenera `packages/api/src/database.types.ts`.
+- Las funciones locales corren en :54331 (las arranca `stack:start`; log en `.local/logs/functions.log`).
+- La app usa ESLint con `eslint-config-expo` y el panel con `eslint-config-next`; efectos que solo fijan
+  estado se reemplazan por estado derivado (regla `react-hooks/set-state-in-effect`).
 - Gateway local: no uses `pkill -f` con un patrón que aparezca en tu propia línea de comandos; usa el pid
   de `.local/gateway.pid`.
 - El servidor de desarrollo de Next a veces entra en bucle de recarga; reinícialo.
@@ -243,3 +248,6 @@ Convenciones:
 - 2026-10-09 — Base de datos, motor financiero, app móvil, panel admin y vendedor; todas las suites en verde.
   Primer commit; respaldo en `/mnt/project-files/marketplace/kora-repo.bundle` y `/mnt/project-files/marketplace/repo`.
   Push a GitHub rechazado (app de Claude sin acceso al repo); pedido a Oliver.
+- 2026-10-09 — Funciones del servidor (pagos en línea, webhooks, tasas, push) con migración `001600`; pago en
+  línea en la app (iniciar, retomar, cancelar); marca del panel desde `config/brand.json`; ESLint en app y
+  panel; base reconstruida desde cero y 138 pruebas en verde; documentación final en `docs/`.
