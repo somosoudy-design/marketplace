@@ -21,6 +21,11 @@ status=0
 } >>"$report"
 for flow in tests/apk-flows/*.yaml; do
   name=$(basename "$flow" .yaml)
+  # flows that create a tester account need the test project with "Confirm email" off (see the workflow)
+  if grep -q '^# requiere: registro-sin-correo' "$flow" && [ "${KORA_SIGNUP_AUTOCONFIRM:-false}" != true ]; then
+    echo "$name: omitido (el proyecto de pruebas pide confirmar el correo)" >>"$report"
+    continue
+  fi
   if (cd shots/flujos && maestro test --format junit --output "$name.xml" "../../$flow") >"shots/flujos/$name.log" 2>&1; then
     echo "$name: pasó" >>"$report"
   else

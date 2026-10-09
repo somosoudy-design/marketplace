@@ -1,0 +1,181 @@
+# requiere: registro-sin-correo
+# Recorrido con cuenta en el APK real (Maestro) contra el proyecto de pruebas: un visitante agrega el cable, crea
+# una cuenta de tester maestro-<hora>@example.com (sin correo: solo corre si el proyecto tiene «Confirm email»
+# desactivado; lo decide el workflow apk-emulator), conserva el carrito, agrega una dirección ficticia, confirma
+# el pedido, ve la cotización de Pago Móvil en bolívares con su tasa y cancela el pedido sin reportar ningún pago.
+# Nada se paga ni se marca como pagado: queda un pedido cancelado de una cuenta @example.com.
+appId: com.example.kora.preview
+name: Comprador con cuenta hasta la cotización y cancelación
+---
+- evalScript: ${output.email = 'maestro-' + new Date().getTime() + '@example.com'}
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+
+# 1. visitante agrega el cable (1 m, el precio base)
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-cta
+    timeout: 30000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: added-to-cart
+    timeout: 20000
+- tapOn:
+    id: added-to-cart
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 20000
+- tapOn:
+    id: cart-continue
+
+# 2. crea la cuenta desde «Iniciar sesión»
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 20000
+- tapOn: Crear una cuenta
+- tapOn:
+    id: sign-up-name
+- inputText: Maestro Prueba
+- tapOn:
+    id: sign-up-email
+- inputText: ${output.email}
+- tapOn:
+    id: sign-up-password
+- inputText: Kora-prueba-2026
+- hideKeyboard
+- takeScreenshot: flujo-cuenta-01-registro
+- tapOn:
+    id: sign-up-submit
+
+# 3. vuelve al carrito con la sesión abierta y el mismo producto
+- extendedWaitUntil:
+    visible:
+      text: Continuar
+      id: cart-continue
+    timeout: 30000
+- assertVisible:
+    id: cart-line-.*
+- takeScreenshot: flujo-cuenta-02-carrito-con-cuenta
+- tapOn:
+    id: cart-continue
+
+# 4. checkout: dirección ficticia
+- extendedWaitUntil:
+    visible:
+      id: checkout-add-address
+    timeout: 30000
+- tapOn:
+    id: checkout-add-address
+- extendedWaitUntil:
+    visible:
+      id: addr-recipient
+    timeout: 20000
+- tapOn:
+    id: addr-recipient
+- inputText: Maestro Prueba
+- tapOn:
+    id: addr-phone
+- inputText: '04125550101'
+- hideKeyboard
+- tapOn:
+    id: addr-region
+- scrollUntilVisible:
+    element:
+      text: Distrito Capital
+    direction: DOWN
+    timeout: 20000
+- tapOn: Distrito Capital
+- tapOn:
+    id: addr-city
+- inputText: Caracas
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: addr-line1
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: addr-line1
+- inputText: Av. de Ejemplo, Edif. Demo, piso 2
+- hideKeyboard
+- takeScreenshot: flujo-cuenta-03-direccion
+- scrollUntilVisible:
+    element:
+      id: addr-save
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: addr-save
+
+# 5. resumen y confirmación del pedido
+- extendedWaitUntil:
+    visible:
+      id: checkout-address
+    timeout: 30000
+- assertVisible:
+    id: checkout-address
+    text: .*Maestro Prueba.*
+- takeScreenshot: flujo-cuenta-04-checkout
+- scrollUntilVisible:
+    element:
+      id: checkout-place
+    direction: DOWN
+    timeout: 20000
+- tapOn:
+    id: checkout-place
+
+# 6. cotización de Pago Móvil en bolívares (sin reportar nada)
+- extendedWaitUntil:
+    visible:
+      id: method-pago_movil
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-05-metodos
+- tapOn:
+    id: method-pago_movil
+- tapOn:
+    id: pay-quote
+- extendedWaitUntil:
+    visible:
+      id: quote-amount
+    timeout: 30000
+- assertVisible:
+    id: quote-amount
+    text: .*Bs.*
+- assertVisible:
+    id: quote-rate
+- takeScreenshot: flujo-cuenta-06-cotizacion
+
+# 7. el pedido se cancela desde su ficha
+- openLink: kora://orders
+- extendedWaitUntil:
+    visible:
+      id: order-P-.*
+    timeout: 30000
+- tapOn:
+    id: order-P-.*
+- extendedWaitUntil:
+    visible:
+      id: order-number
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      id: order-cancel
+    direction: DOWN
+    timeout: 20000
+- tapOn:
+    id: order-cancel
+- tapOn:
+    id: order-cancel-sheet-confirm
+- extendedWaitUntil:
+    visible: Cancelado
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-07-cancelado

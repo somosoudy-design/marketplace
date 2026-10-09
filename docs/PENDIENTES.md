@@ -12,7 +12,7 @@
 
 | # | Tarea | Estado | Depende de / notas |
 |---|---|---|---|
-| 1.2 | Recorrido con cuenta en el APK real: registro `@example.com`, compra, pago simulado en verificación y cancelación (plan en `ESTADO_ACTUAL.md`). El de visitante ya pasa (`tests/apk-flows/visitante.yaml`) | Bloqueada | Oliver desactiva «Confirm email» (P2.1) |
+| 1.2 | Recorrido con cuenta en el APK real: registro `@example.com`, compra, pago simulado en verificación y cancelación (plan en `ESTADO_ACTUAL.md`). El de visitante ya pasa (`tests/apk-flows/01-visitante.yaml`) | Bloqueada | Oliver desactiva «Confirm email» (P2.1) |
 | 1.3 | Cierre del hito D: ficha, carrito, checkout, cuotas y seguimiento ya se revisaron en la versión web (claro y oscuro) y el selector de pago es nuevo; falta verlos en Android (capturas del artefacto `capturas-emulador`) y corregir lo que aparezca | Lista | `tools/design/screens.mjs` para la web; capturas de Maestro para el APK |
 | 1.4 | Validación integral (hito E): repasar la lista de recorridos de `DIRECCION_PRODUCTO.md` («Criterios de calidad») en el APK real, anotando qué se probó y dónde | Lista (parcial) | La parte con cuenta, tras P2.1 |
 | 1.5 | APK 5 con la identidad nativa violeta (`NATIVE_IDENTITY = 'violet'`: icono, splash, color de notificación) | Lista cuando convenga | Obliga a reinstalar; juntarlo con otro cambio nativo (por ejemplo Firebase, P3.3). Tras instalarlo, actualizar la línea `runtime:` de `.github/eas-update-request` |
