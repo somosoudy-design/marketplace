@@ -38,6 +38,24 @@ describe('function privileges', () => {
     expect(rows.map((r: any) => r.proname)).toEqual(allowed);
   });
 
+  it('guests can only execute the public catalog functions', async () => {
+    const rows = await admin(`
+      select distinct p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+       where n.nspname = 'public' and p.prokind = 'f' and has_function_privilege('anon', p.oid, 'execute')
+       order by 1`);
+    expect(rows.map((r: any) => r.proname)).toEqual([...EXPOSED.public].sort());
+  });
+
+  it('every function pins its search_path', async () => {
+    const rows = await admin(`
+      select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+       left join pg_depend d on d.objid = p.oid and d.deptype = 'e'
+       where n.nspname = 'public' and d.objid is null
+         and not exists (select 1 from unnest(coalesce(p.proconfig, '{}')) c where c like 'search_path=%')
+       order by 1`);
+    expect(rows.map((r: any) => r.proname)).toEqual([]);
+  });
+
   it('internal helpers cannot be called directly', async () => {
     const u = await createUser('priv');
     for (const call of [
