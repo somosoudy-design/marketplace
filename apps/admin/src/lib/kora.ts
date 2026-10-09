@@ -35,9 +35,10 @@ export const storeImage = (path: string | null | undefined) => publicImageUrl(en
 /** Calls one of the panel's own route handlers as the signed-in user. Errors carry the handler's Spanish message. */
 export async function apiPost<T>(path: string, body?: unknown): Promise<T> {
   const { data } = await kora().client.auth.getSession();
-  const res = await fetch(path, {
+  const url = env.panelApi ? env.panelApi + path.replace(/^\/api/, '') : path;
+  const res = await fetch(url, {
     method: 'POST',
-    headers: { authorization: `Bearer ${data.session?.access_token ?? ''}`, 'content-type': 'application/json' },
+    headers: { authorization: `Bearer ${data.session?.access_token ?? ''}`, 'content-type': 'application/json', ...(env.panelApi ? { apikey: env.supabaseAnonKey } : {}) },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const json = (await res.json().catch(() => null)) as (T & { error?: string }) | null;

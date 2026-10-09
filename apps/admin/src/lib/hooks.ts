@@ -1,5 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
+import { useParams, usePathname } from 'next/navigation';
 import { db, run } from './kora';
 
 /** Names for a set of user ids (admins can read profiles). */
@@ -33,4 +34,18 @@ export function useCategoriesIndex() {
   });
   const map = new Map((q.data ?? []).map((c) => [c.id, c]));
   return { list: q.data ?? [], name: (id: string | null | undefined) => (id ? map.get(id)?.name ?? '—' : '—') };
+}
+
+/** Placeholder id of the pages exported for static hosting (generateStaticParams of the [id] routes). */
+export const STATIC_ROUTE_ID = '_';
+
+/**
+ * The [id] of the current panel route. The hosted panel is a static export where one page answers every id, so
+ * when the route says "_" the real id is the last segment of the address.
+ */
+export function useRouteId(): string {
+  const { id } = useParams<{ id: string }>();
+  const pathname = usePathname();
+  if (id !== STATIC_ROUTE_ID) return id;
+  return decodeURIComponent(pathname.split('/').filter(Boolean).pop() ?? '');
 }
