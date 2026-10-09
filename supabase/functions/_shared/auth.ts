@@ -1,5 +1,6 @@
 import type { Env } from './env.ts';
 import { bearer } from './http.ts';
+import { rest } from './rest.ts';
 
 async function digest(s: string): Promise<Uint8Array> {
   return new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)));
@@ -13,10 +14,17 @@ export async function safeEqual(a: string, b: string): Promise<boolean> {
   return diff === 0;
 }
 
-/** Jobs (pg_cron through invoke_edge_function) and operators call internal functions with the service key. */
+/** Operators call internal functions with the service key; scheduled jobs (pg_cron through
+ * invoke_edge_function) present the Vault job token instead, which only the database can check. */
 export async function isServiceCaller(req: Request, env: Env): Promise<boolean> {
   const key = env('SUPABASE_SERVICE_ROLE_KEY');
   const presented = bearer(req) ?? req.headers.get('apikey');
-  if (!key || !presented) return false;
-  return safeEqual(presented, key);
+  if (key && presented && (await safeEqual(presented, key))) return true;
+  const token = req.headers.get('x-kora-job-token');
+  if (!key || !token || token.length < 32 || token.length > 256) return false;
+  try {
+    return (await rest(env).rpc<boolean>('job_token_valid', { p_token: token })) === true;
+  } catch {
+    return false;
+  }
 }

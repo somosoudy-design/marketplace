@@ -130,4 +130,15 @@ describe('edge function plumbing', () => {
   it('edge functions are only invoked by the service role', async () => {
     await forbidden(asUser(buyer.id, (sql) => sql(`select public.invoke_edge_function('rates-sync', '{}')`)));
   });
+
+  it('the job token stays in Vault: only the service role can check it, and only the exact token passes', async () => {
+    await forbidden(asUser(buyer.id, (sql) => sql(`select public.job_token_valid('x')`)));
+    const [{ t }] = await admin(`select decrypted_secret as t from vault.decrypted_secrets where name = 'kora_job_token'`);
+    expect(t).toMatch(/^[0-9a-f]{64}$/);
+    const check = async (token: string | null) => (await admin(`select public.job_token_valid($1) as ok`, [token]))[0].ok;
+    expect(await check(t)).toBe(true);
+    expect(await check(t.slice(0, 63) + (t.endsWith('0') ? '1' : '0'))).toBe(false);
+    expect(await check(t.slice(0, 31))).toBe(false);
+    expect(await check(null)).toBe(false);
+  });
 });

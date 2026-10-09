@@ -91,9 +91,9 @@ Decisiones clave:
 - **Funciones del servidor** (`supabase/functions/<nombre>/handler.ts` exporta `createHandler(deps)` para
   poder probarlas con dobles; `index.ts` solo hace `Deno.serve`). `_shared/core/*.ts` es una copia generada
   de `packages/core` (`pnpm edge:sync`; las pruebas fallan si está desactualizada). Hablan con PostgREST por
-  HTTP (`_shared/rest.ts`). `rates-sync` y `push-dispatch` exigen la service role key; los webhooks verifican
+  HTTP (`_shared/rest.ts`). `rates-sync` y `push-dispatch` aceptan la service role key o la clave de tareas de Vault; los webhooks verifican
   la firma del proveedor. El cron (migración `001600`) se programa solo si existen `pg_cron` y `pg_net`, y
-  llama a las funciones con secretos de Vault (`kora_project_url`, `kora_service_role_key`).
+  llama a las funciones con secretos de Vault: `kora_project_url` (la pone el operador) y `kora_job_token` (la crea la migración `20261009154233`; las funciones la validan con `job_token_valid`).
 - **Push:** `claim_push_batch` marca lotes como `sending` (dos ejecuciones nunca envían dos veces),
   `complete_push` registra el resultado, reintenta hasta 3 veces y borra tokens `DeviceNotRegistered`.
 - **Pedidos multi-vendedor:** el carrito se divide en entregas (`fulfillments`) por tienda/modalidad, cada una

@@ -234,6 +234,15 @@ Deno.test('rates-sync: only the service role; failed sources are reported and no
   eq((await service<unknown[]>('/rest/v1/exchange_rates?select=id')).length, before.length, 'no rate stored');
 });
 
+Deno.test('scheduled jobs start rates-sync with the Vault job token; a wrong token is refused', async () => {
+  const token = Deno.env.get('KORA_TEST_JOB_TOKEN');
+  assert(token, 'kora_job_token missing in the local Vault: run the migrations');
+  const h = ratesSync({ env: envWith({}), fetch: noNetwork });
+  eq((await call(h, {}, { 'x-kora-job-token': 'f'.repeat(64) })).status, 401);
+  eq((await call(h, {}, { 'x-kora-job-token': token.slice(0, 31) })).status, 401);
+  eq((await call(h, {}, { 'x-kora-job-token': token, authorization: `Bearer ${ANON}` })).status, 200);
+});
+
 Deno.test('rates-sync: a parsed value is stored through ingest_rate', async () => {
   const kraken = JSON.stringify({ error: [], result: { USDTZUSD: { c: ['0.99950000', '10'] } } });
   const onlyKraken: typeof fetch = (input) => String(input).includes('api.kraken.com') ? Promise.resolve(new Response(kraken)) : Promise.reject(new Error('offline'));

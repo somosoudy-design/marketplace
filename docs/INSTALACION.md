@@ -83,10 +83,12 @@ pública `anon` (la misma que lleva cualquier APK; la seguridad la dan las regla
 servicio). Para otro backend, cambia esos dos valores.
 
 **APK desde GitHub (recomendado aquí):** guarda un token de Expo (expo.dev › Access tokens) como secreto
-`EXPO_TOKEN` del repositorio y sube una etiqueta:
+`EXPO_TOKEN` del repositorio y cambia el comentario de `.github/apk-preview-request` en la rama de trabajo
+(o sube una etiqueta `apk-preview-N` si tu acceso a GitHub lo permite):
 
 ```bash
-git tag apk-preview-1 && git push origin apk-preview-1
+echo "# 3: motivo de la compilación" > .github/apk-preview-request
+git commit -am "Pedir APK de prueba" && git push
 ```
 
 El workflow `.github/workflows/eas-android-preview.yml` verifica que el token vea ese proyecto exacto y que
@@ -113,9 +115,11 @@ Requiere un proyecto **nuevo** y autorización (puede tener costo). Nunca el pro
 productos.
 
 Proyecto actual: «Marketplace» (`mimnotafmfasvwrclxan`). Las migraciones 1 a 6 se aplicaron con el conector de
-Supabase; las 15 restantes van en `tools/supabase-remote/aplicar-migraciones-07-a-21.sql`, que se pega en el
-SQL Editor del proyecto y corre en una sola transacción (no carga datos demo). Desde ahí, `supabase db push`
-queda coherente porque el historial usa las mismas versiones que los archivos.
+Supabase; de la 7 a la 21 con `tools/supabase-remote/aplicar-migraciones-07-a-21.sql` en el SQL Editor (una sola
+transacción, sin datos demo); `20261009153318` (permisos) y `20261009154233` (clave de tareas) otra vez con el
+conector. El historial usa las mismas versiones que los archivos, así que `supabase db push` queda coherente.
+Funciones desplegadas: `rates-sync` y `push-dispatch`. `payments-start` y los dos webhooks se despliegan cuando
+se habilite Binance Pay o PayPal con sus credenciales.
 
 ```bash
 npx supabase link --project-ref <ref>
@@ -131,11 +135,12 @@ Luego, en el panel de Supabase:
 3. Auth > SMTP: correo propio.
 4. Database > Extensions: `pg_cron` y `pg_net` (la migración `20261009001600` programa los trabajos si
    existen; si se activan después, vuelve a ejecutar su bloque final).
-5. SQL Editor, para que el cron pueda llamar a las funciones:
+5. SQL Editor, para que el cron pueda llamar a las funciones (la clave `kora_job_token` la crea la migración
+   `20261009154233` dentro de Vault; nunca hace falta copiar la clave de servicio):
    ```sql
    select vault.create_secret('https://<ref>.supabase.co', 'kora_project_url');
-   select vault.create_secret('<service role key>', 'kora_service_role_key');
    ```
+   En «Marketplace» ya está hecho.
 6. Crear el primer administrador: registrarse en la app y ejecutar
    `insert into user_roles (user_id, role) values ('<uuid>', 'superadmin');`.
 7. Cargar datos reales: tasas (fuentes habilitadas o tasa manual), métodos de pago con datos de cobro
