@@ -68,6 +68,68 @@ begin
   where s.id = p_store;
 end $$;
 
+-- Ratings are derived data. Whoever updates a product or store (a seller editing a listing, a buyer's review
+-- refreshing the aggregate), the stored rating is recomputed from published reviews, so it can never be forged.
+create or replace function public.guard_rating_fields() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_n int; v_avg numeric;
+begin
+  if tg_op = 'INSERT' then
+    new.rating_count := 0;
+    new.rating_avg := null;
+    return new;
+  end if;
+  if (new.rating_avg, new.rating_count) is not distinct from (old.rating_avg, old.rating_count) then
+    return new;
+  end if;
+  if tg_table_name = 'products' then
+    select count(*), round(avg(rating), 2) into v_n, v_avg from public.reviews where product_id = new.id and status = 'published';
+  else
+    select count(*), round(avg(rating), 2) into v_n, v_avg from public.reviews where store_id = new.id and status = 'published';
+  end if;
+  new.rating_count := v_n;
+  new.rating_avg := v_avg;
+  return new;
+end $$;
+create trigger products_rating_guard before insert or update on public.products for each row execute function public.guard_rating_fields();
+create trigger stores_rating_guard before insert or update on public.stores for each row execute function public.guard_rating_fields();
+
+-- the store guard no longer freezes ratings (the trigger above owns them); everything else is unchanged
+create or replace function public.guard_store_fields() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if not (public.is_admin() or public.is_service_role()) then
+    new.status := old.status; new.kind := old.kind; new.slug := old.slug; new.is_demo := old.is_demo;
+  end if;
+  return new;
+end $$;
+
+-- rating refreshes are routine, not changes worth an audit entry
+create or replace function public.audit_trigger() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare
+  v_id text;
+  v_data jsonb;
+begin
+  if tg_op = 'DELETE' then
+    v_id := (to_jsonb(old) ->> 'id');
+    v_data := jsonb_build_object('old', to_jsonb(old));
+  elsif tg_op = 'UPDATE' then
+    v_id := (to_jsonb(new) ->> coalesce(tg_argv[0], 'id'));
+    select jsonb_object_agg(n.key, jsonb_build_object('from', o.value, 'to', n.value))
+      into v_data
+      from jsonb_each(to_jsonb(new)) n
+      join jsonb_each(to_jsonb(old)) o using (key)
+     where n.value is distinct from o.value and n.key not in ('updated_at', 'search', 'rating_avg', 'rating_count');
+    if v_data is null then return new; end if;
+  else
+    v_id := (to_jsonb(new) ->> coalesce(tg_argv[0], 'id'));
+    v_data := jsonb_build_object('new', to_jsonb(new));
+  end if;
+  perform public.audit(lower(tg_op), tg_table_name, v_id, v_data);
+  return coalesce(new, old);
+end $$;
+
 /** "Ana Pérez" -> "Ana P." so reviews show a person without exposing a full name. */
 create or replace function public._public_name(p_full text) returns text
 language sql immutable set search_path = public as $$
@@ -182,7 +244,7 @@ begin
     'items', coalesce((select jsonb_agg(x order by x.created_at desc) from (
                 select r.id, r.rating, r.body, r.created_at, r.reply_body, r.reply_at, r.is_demo,
                        public._public_name(pr.full_name) as author, i.variant_title,
-                       (r.user_id = auth.uid()) as mine
+                       coalesce(r.user_id = auth.uid(), false) as mine
                   from public.reviews r
                   join public.order_items i on i.id = r.order_item_id
                   left join public.profiles pr on pr.id = r.user_id
@@ -410,7 +472,7 @@ end $$;
 do $$
 declare
   r record;
-  internal text[] := array['_fmt_usd', '_refresh_ratings', '_public_name', 'remind_installments', 'prune_activity', 'flag_demo_order'];
+  internal text[] := array['_fmt_usd', '_refresh_ratings', '_public_name', 'remind_installments', 'prune_activity', 'flag_demo_order', 'guard_rating_fields'];
 begin
   for r in
     select p.oid::regprocedure as sig from pg_proc p join pg_namespace n on n.oid = p.pronamespace

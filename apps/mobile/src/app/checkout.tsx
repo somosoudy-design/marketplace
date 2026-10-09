@@ -4,7 +4,6 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tansta
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -28,7 +27,6 @@ const MAX_W = 720;
 
 export default function CheckoutScreen() {
   const t = useTheme();
-  const insets = useSafeAreaInsets();
   const qc = useQueryClient();
   const { user, cartSyncing } = useAuth();
   const addresses = useAddresses();

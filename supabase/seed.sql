@@ -442,13 +442,12 @@ insert into public.collections (slug, title, subtitle, tone, layout, sort) value
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'casa-calida'), (select id from public.products where slug = 'lampara-mesa-lino'), 0);
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'casa-calida'), (select id from public.products where slug = 'set-tazas-ceramica-x4'), 1);
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'casa-calida'), (select id from public.products where slug = 'vela-aromatica-vaso'), 2);
-insert into public.collections (slug, title, subtitle, tone, layout, sort) values ('regalos', 'Ideas para regalar', 'Menos de 50 USD', 'clay', 'rail', 5);
+insert into public.collections (slug, title, subtitle, tone, layout, sort) values ('regalos', 'Ideas para regalar', 'Menos de 50 USD', 'clay', 'grid', 5);
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'ugreen-nexode-65w'), 0);
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'ugreen-cable-usb-c-100w'), 1);
-insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'audifonos-anc-over-ear'), 2);
-insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'sheglam-labial-liquido-mate'), 3);
-insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'sheglam-set-brochas'), 4);
-insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'set-tazas-ceramica-x4'), 5);
+insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'sheglam-labial-liquido-mate'), 2);
+insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'sheglam-set-brochas'), 3);
+insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'regalos'), (select id from public.products where slug = 'set-tazas-ceramica-x4'), 4);
 insert into public.collections (slug, title, subtitle, tone, layout, sort) values ('mascotas-felices', 'Para tus mascotas', null, 'clay', 'rail', 6);
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'mascotas-felices'), (select id from public.products where slug = 'cama-ovalada-mascotas'), 0);
 insert into public.collection_products (collection_id, product_id, sort) values ((select id from public.collections where slug = 'mascotas-felices'), (select id from public.products where slug = 'comedero-doble-acero'), 1);
@@ -758,6 +757,25 @@ set local role authenticated;
 select public.post_claim_message(c.id, 'Lamentamos el inconveniente. Enviaremos una caja de reposición con el próximo despacho (respuesta de demostración).')
   from public.claims c where c.order_id = current_setting('seed.order')::uuid;
 reset role;
+-- buyer 2 reviews what was delivered (through the same RPC as the app; demo orders make demo reviews)
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-a000-000000000005","role":"authenticated"}', true);
+set local role authenticated;
+select public.submit_review(i.id, r.rating, r.body)
+  from public.order_items i join public.orders o on o.id = i.order_id join public.products p on p.id = i.product_id
+  join (values
+    ('guantes-nitrilo-x100', 4, 'Buena talla y no se rompen al ponerlos. Faltaron unidades en la caja, pero la tienda respondió rápido (opinión de demostración).'),
+    ('espejos-bucales-x12', 5, 'Vinieron bien protegidos y la imagen es nítida (opinión de demostración).'),
+    ('cama-ovalada-mascotas', 5, 'Mi perra no se baja de ella. La tela se siente resistente (opinión de demostración).'),
+    ('comedero-doble-acero', 3, 'Uno llegó abollado; me reembolsaron esa unidad (opinión de demostración).')
+  ) r(slug, rating, body) on r.slug = p.slug
+ where o.buyer_id = auth.uid();
+reset role;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-a000-000000000002","role":"authenticated"}', true);
+set local role authenticated;
+select public.reply_review(r.id, 'Gracias por contarnos. La reposición ya va en camino (respuesta de demostración).')
+  from public.reviews r join public.products p on p.id = r.product_id where p.slug = 'guantes-nitrilo-x100';
+reset role;
+
 -- admin: partial refund on the pet order (one bowl arrived damaged) + payout draft for OdontoPro
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-a000-000000000001","role":"authenticated"}', true);
 set local role authenticated;

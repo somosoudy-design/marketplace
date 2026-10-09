@@ -130,7 +130,7 @@ export const products = [
     description: 'Audífonos over-ear genéricos de demostración. Por encargo internacional.',
     highlights: ['Por encargo', 'Plegables'], availability: 'on_order', origin: 'import', weight: 0.35,
     options: ['Color'], variants: [{ title: 'Salvia', options: { Color: 'Salvia' }, price: 89, stock: null, color: C.sage }, { title: 'Arena', options: { Color: 'Arena' }, price: 89, stock: null, color: C.cream }],
-    collections: ['nuevos-encargos', 'regalos'], popularity: 76 },
+    collections: ['nuevos-encargos'], popularity: 76 },
   { slug: 'audifonos-in-ear-estuche', store: 'kora', category: 'audio', brand: null, archetype: 'earbuds', color: C.white,
     title: 'Audífonos in-ear con estuche de carga', subtitle: 'Bluetooth, uso diario',
     description: 'Audífonos inalámbricos genéricos de demostración.',
@@ -315,7 +315,7 @@ export const collections = [
   { slug: 'belleza-esencial', title: 'Belleza de todos los días', subtitle: 'Labios y rostro', tone: 'blush', layout: 'rail', sort: 2 },
   { slug: 'nuevos-encargos', title: 'Traídos para ti', subtitle: 'Por encargo, con anticipo del 50 %', tone: 'lilac', layout: 'rail', sort: 3 },
   { slug: 'casa-calida', title: 'Casa cálida', subtitle: 'De tiendas independientes', tone: 'sand', layout: 'feature', sort: 4 },
-  { slug: 'regalos', title: 'Ideas para regalar', subtitle: 'Menos de 50 USD', tone: 'clay', layout: 'rail', sort: 5 },
+  { slug: 'regalos', title: 'Ideas para regalar', subtitle: 'Menos de 50 USD', tone: 'clay', layout: 'grid', sort: 5 },
   { slug: 'mascotas-felices', title: 'Para tus mascotas', subtitle: null, tone: 'clay', layout: 'rail', sort: 6 },
   { slug: 'consultorio', title: 'Para el consultorio', subtitle: 'Insumos de OdontoPro', tone: 'sage', layout: 'rail', sort: 7 },
 ];

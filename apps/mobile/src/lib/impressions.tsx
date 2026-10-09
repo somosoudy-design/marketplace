@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { View, type LayoutChangeEvent, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
 import { api } from './supabase';
 
@@ -47,12 +47,18 @@ const Ctx = createContext<{ vp: Viewport; enabled: boolean } | null>(null);
 
 /** Owns the visible window of one vertical scroller; attach onScroll/onLayout to it and wrap it in ImpressionScope. */
 export function useViewportTracking() {
-  const vp = useRef(new Viewport()).current;
-  return {
-    vp,
-    onScroll: (e: NativeSyntheticEvent<NativeScrollEvent>) => vp.update(e.nativeEvent.contentOffset.y, e.nativeEvent.layoutMeasurement.height),
-    onLayout: (e: LayoutChangeEvent) => vp.update(vp.y, e.nativeEvent.layout.height),
-  };
+  const [vp] = useState(() => new Viewport());
+  // stable handlers: they are captured by native scroll handlers that should not be rebuilt every render
+  return useMemo(
+    () => ({
+      vp,
+      onScroll: (e: NativeSyntheticEvent<NativeScrollEvent>) => vp.update(e.nativeEvent.contentOffset.y, e.nativeEvent.layoutMeasurement.height),
+      /** Same as onScroll for scrollers driven by a Reanimated handler (see useScrollY). */
+      onWindow: (y: number, h: number) => vp.update(y, h),
+      onLayout: (e: LayoutChangeEvent) => vp.update(vp.y, e.nativeEvent.layout.height),
+    }),
+    [vp],
+  );
 }
 
 export function ImpressionScope({ tracking, enabled, children }: { tracking: { vp: Viewport }; enabled: boolean; children: ReactNode }) {
@@ -71,31 +77,32 @@ export function TrackedSection({ slot, ids, visible = 3, children, testID }: { s
   const box = useRef<{ y: number; h: number } | null>(null);
   const done = useRef(false);
   const key = ids.join(',');
-  const check = useRef(() => {});
-  check.current = () => {
+  const first = ids.slice(0, visible).join(',');
+  const check = useCallback(() => {
     if (!ctx?.enabled || done.current || !box.current || !ctx.vp.h) return;
     const { y, h } = box.current;
     if (y < ctx.vp.y + ctx.vp.h && y + h > ctx.vp.y) {
       done.current = true;
-      recordImpressions(slot, ids.slice(0, visible));
+      recordImpressions(slot, first.split(','));
     }
-  };
+  }, [ctx, slot, first]);
   useEffect(() => {
     done.current = false;
+  }, [key]);
+  useEffect(() => {
     if (!ctx) return;
-    const l = () => check.current();
-    ctx.vp.listeners.add(l);
-    l();
+    ctx.vp.listeners.add(check);
+    check();
     return () => {
-      ctx.vp.listeners.delete(l);
+      ctx.vp.listeners.delete(check);
     };
-  }, [ctx, key]);
+  }, [ctx, check]);
   return (
     <View
       testID={testID}
       onLayout={(e) => {
         box.current = { y: e.nativeEvent.layout.y, h: e.nativeEvent.layout.height };
-        check.current();
+        check();
       }}
     >
       {children}

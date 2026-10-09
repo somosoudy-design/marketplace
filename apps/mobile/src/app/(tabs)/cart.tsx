@@ -173,7 +173,6 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
 }
 
 function CartFooter({ items, note, cta, onPress, disabled }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean }) {
-  const t = useTheme();
   return (
     <BottomBar maxWidth={MAX_CONTENT} safeArea={false}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>

@@ -3,6 +3,7 @@ import { storeAccents } from '@kora/design-tokens';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { View } from 'react-native';
+import { RatingInline } from '@/components/reviews/Reviews';
 import { Badge } from '@/components/ui/Badge';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Text } from '@/components/ui/Text';
@@ -35,7 +36,11 @@ export function StoreCard({ store, width }: { store: StoreSummary; width: number
           <Text variant="subtitle" numberOfLines={1} style={{ flexShrink: 1 }}>{store.name}</Text>
           {store.kind === 'platform' ? <Badge label="Oficial" tone="brand" /> : null}
         </View>
-        {store.tagline ? <Text variant="caption" color="textMuted" numberOfLines={2}>{store.tagline}</Text> : null}
+        <Text variant="caption" color="textMuted" numberOfLines={1}>{store.tagline ?? ' '}</Text>
+        {/* fixed-height line so cards in a rail align whether or not the store has reviews yet */}
+        <View style={{ height: 20, justifyContent: 'center' }}>
+          {store.rating_count ? <RatingInline avg={store.rating_avg ?? null} count={store.rating_count} /> : <Text variant="caption" color="textMuted">Aún sin opiniones</Text>}
+        </View>
       </View>
     </ScalePressable>
   );

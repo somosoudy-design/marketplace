@@ -6,7 +6,7 @@ import { admin, asUser, createUser, pool } from '../../src/db';
 const EXPOSED = {
   public: [
     'current_rate', 'home_feed', 'lead_time', 'product_detail', 'rate_status', 'recommended_products',
-    'search_products', 'shipping_options', 'track_event',
+    'search_products', 'shipping_options', 'track_event', 'store_profile', 'product_reviews', 'track_recommendation',
     // used by RLS policies, so they must stay callable
     'has_role', 'is_admin', 'is_store_member', 'is_superadmin',
   ],
@@ -14,12 +14,14 @@ const EXPOSED = {
     'cart_add', 'cart_merge', 'cart_set_quantity', 'cart_summary', 'checkout_preview', 'place_order', 'cancel_order',
     'create_payment_quote', 'submit_payment', 'start_provider_payment', 'cancel_provider_payment', 'open_claim', 'post_claim_message', 'escalate_claim',
     'mark_notifications_read', 'register_push_token', 'request_account_deletion', 'recently_viewed', 'clear_my_activity',
+    'submit_review',
   ],
-  seller: ['seller_dashboard', 'seller_balance', 'advance_fulfillment', 'seller_fulfillments', 'seller_sales'],
+  seller: ['seller_dashboard', 'seller_balance', 'advance_fulfillment', 'seller_fulfillments', 'seller_sales', 'reply_review'],
   admin: [
     'admin_dashboard', 'assign_to_batch', 'update_cargo_batch', 'moderate_product', 'review_payment', 'refund_item',
     'record_refund_payout', 'create_payout', 'cancel_payout', 'mark_payout_paid', 'post_adjustment', 'resolve_claim',
     'set_manual_rate', 'ingest_rate', 'admin_users', 'set_user_role', 'add_store_member', 'process_account_deletion', 'publish_import',
+    'moderate_review', 'recommendation_metrics',
   ],
 };
 

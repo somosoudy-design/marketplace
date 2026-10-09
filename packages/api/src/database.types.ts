@@ -1563,6 +1563,7 @@ export type Database = {
           kind: Database['public']['Enums']['obligation_kind'];
           order_id: string;
           paid_usd: number;
+          reminded_stage: number;
           seq: number;
           status: Database['public']['Enums']['obligation_status'];
           updated_at: string;
@@ -1577,6 +1578,7 @@ export type Database = {
           kind: Database['public']['Enums']['obligation_kind'];
           order_id: string;
           paid_usd?: number;
+          reminded_stage?: number;
           seq: number;
           status?: Database['public']['Enums']['obligation_status'];
           updated_at?: string;
@@ -1589,6 +1591,7 @@ export type Database = {
           kind?: Database['public']['Enums']['obligation_kind'];
           order_id?: string;
           paid_usd?: number;
+          reminded_stage?: number;
           seq?: number;
           status?: Database['public']['Enums']['obligation_status'];
           updated_at?: string;
@@ -2030,6 +2033,8 @@ export type Database = {
           origin: Database['public']['Enums']['product_origin'];
           popularity: number;
           published_at: string | null;
+          rating_avg: number | null;
+          rating_count: number;
           search: unknown;
           slug: string;
           source_provider: string | null;
@@ -2059,6 +2064,8 @@ export type Database = {
           origin?: Database['public']['Enums']['product_origin'];
           popularity?: number;
           published_at?: string | null;
+          rating_avg?: number | null;
+          rating_count?: number;
           search?: unknown;
           slug: string;
           source_provider?: string | null;
@@ -2087,6 +2094,8 @@ export type Database = {
           origin?: Database['public']['Enums']['product_origin'];
           popularity?: number;
           published_at?: string | null;
+          rating_avg?: number | null;
+          rating_count?: number;
           search?: unknown;
           slug?: string;
           source_provider?: string | null;
@@ -2262,6 +2271,49 @@ export type Database = {
           },
         ];
       };
+      rec_events: {
+        Row: {
+          created_at: string;
+          id: number;
+          kind: string;
+          product_id: string;
+          slot: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          id?: never;
+          kind: string;
+          product_id: string;
+          slot: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: never;
+          kind?: string;
+          product_id?: string;
+          slot?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'rec_events_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'product_cards';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'rec_events_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       refunds: {
         Row: {
           amount_usd: number;
@@ -2335,6 +2387,87 @@ export type Database = {
           sort?: number;
         };
         Relationships: [];
+      };
+      reviews: {
+        Row: {
+          body: string | null;
+          created_at: string;
+          hidden_reason: string | null;
+          id: string;
+          is_demo: boolean;
+          order_item_id: string;
+          product_id: string;
+          rating: number;
+          reply_at: string | null;
+          reply_body: string | null;
+          status: string;
+          store_id: string;
+          updated_at: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          body?: string | null;
+          created_at?: string;
+          hidden_reason?: string | null;
+          id?: string;
+          is_demo?: boolean;
+          order_item_id: string;
+          product_id: string;
+          rating: number;
+          reply_at?: string | null;
+          reply_body?: string | null;
+          status?: string;
+          store_id: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          body?: string | null;
+          created_at?: string;
+          hidden_reason?: string | null;
+          id?: string;
+          is_demo?: boolean;
+          order_item_id?: string;
+          product_id?: string;
+          rating?: number;
+          reply_at?: string | null;
+          reply_body?: string | null;
+          status?: string;
+          store_id?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'reviews_order_item_id_fkey';
+            columns: ['order_item_id'];
+            isOneToOne: true;
+            referencedRelation: 'order_items';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'reviews_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'product_cards';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'reviews_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'reviews_store_id_fkey';
+            columns: ['store_id'];
+            isOneToOne: false;
+            referencedRelation: 'stores';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       shipping_methods: {
         Row: {
@@ -2762,6 +2895,8 @@ export type Database = {
           popularity: number | null;
           price_usd: number | null;
           published_at: string | null;
+          rating_avg: number | null;
+          rating_count: number | null;
           slug: string | null;
           stock_total: number | null;
           store_id: string | null;
@@ -2832,6 +2967,7 @@ export type Database = {
           weight_kg: number;
         }[];
       };
+      _fmt_usd: { Args: { p: number }; Returns: string };
       _group_label: {
         Args: { p_flow: Database['public']['Enums']['fulfillment_flow']; p_key: string; p_store_name: string };
         Returns: string;
@@ -2856,8 +2992,10 @@ export type Database = {
         };
         Returns: Json;
       };
+      _public_name: { Args: { p_full: string }; Returns: string };
       _recompute_order: { Args: { p_order_id: string }; Returns: undefined };
       _reduce_buyer_debt: { Args: { p_amount: number; p_event: string; p_order_id: string }; Returns: number };
+      _refresh_ratings: { Args: { p_product: string; p_store: string }; Returns: undefined };
       _set_fulfillment_step: {
         Args: {
           p_carrier: string;
@@ -2970,6 +3108,7 @@ export type Database = {
         Args: { p_note?: string; p_product_id: string; p_status: Database['public']['Enums']['moderation_status'] };
         Returns: undefined;
       };
+      moderate_review: { Args: { p_hide: boolean; p_reason?: string; p_review_id: string }; Returns: Json };
       notify: {
         Args: { p_body: string; p_data?: Json; p_kind: string; p_title: string; p_user: string };
         Returns: string;
@@ -2990,6 +3129,8 @@ export type Database = {
         Returns: undefined;
       };
       product_detail: { Args: { p_id: string }; Returns: Json };
+      product_reviews: { Args: { p_limit?: number; p_offset?: number; p_product_id: string }; Returns: Json };
+      prune_activity: { Args: Record<PropertyKey, never>; Returns: number };
       publish_import: {
         Args: { p_images?: Json; p_import_id: string; p_product: Json; p_variants?: Json };
         Returns: string;
@@ -3014,6 +3155,8 @@ export type Database = {
           popularity: number | null;
           price_usd: number | null;
           published_at: string | null;
+          rating_avg: number | null;
+          rating_count: number | null;
           slug: string | null;
           stock_total: number | null;
           store_id: string | null;
@@ -3032,6 +3175,7 @@ export type Database = {
           isSetofReturn: true;
         };
       };
+      recommendation_metrics: { Args: { p_days?: number }; Returns: Json };
       recommended_products: {
         Args: { p_exclude?: string[]; p_limit?: number };
         Returns: {
@@ -3051,6 +3195,8 @@ export type Database = {
           popularity: number | null;
           price_usd: number | null;
           published_at: string | null;
+          rating_avg: number | null;
+          rating_count: number | null;
           slug: string | null;
           stock_total: number | null;
           store_id: string | null;
@@ -3093,6 +3239,8 @@ export type Database = {
         Returns: Json;
       };
       register_push_token: { Args: { p_platform: string; p_token: string }; Returns: undefined };
+      remind_installments: { Args: Record<PropertyKey, never>; Returns: number };
+      reply_review: { Args: { p_body: string; p_review_id: string }; Returns: Json };
       request_account_deletion: { Args: { p_reason?: string }; Returns: string };
       require_admin: { Args: Record<PropertyKey, never>; Returns: undefined };
       require_store_member: { Args: { p_store_id: string }; Returns: undefined };
@@ -3135,6 +3283,8 @@ export type Database = {
           popularity: number | null;
           price_usd: number | null;
           published_at: string | null;
+          rating_avg: number | null;
+          rating_count: number | null;
           slug: string | null;
           stock_total: number | null;
           store_id: string | null;
@@ -3189,6 +3339,7 @@ export type Database = {
       };
       slugify: { Args: { p: string }; Returns: string };
       start_provider_payment: { Args: { p_idempotency_key: string; p_quote_id: string }; Returns: Json };
+      store_profile: { Args: { p_slug: string }; Returns: Json };
       submit_payment: {
         Args: {
           p_idempotency_key: string;
@@ -3199,6 +3350,7 @@ export type Database = {
         };
         Returns: Json;
       };
+      submit_review: { Args: { p_body?: string; p_order_item_id: string; p_rating: number }; Returns: Json };
       track_event: {
         Args: {
           p_category_id?: string;
@@ -3209,6 +3361,7 @@ export type Database = {
         };
         Returns: undefined;
       };
+      track_recommendation: { Args: { p_kind: string; p_product_ids: string[]; p_slot: string }; Returns: undefined };
       update_cargo_batch: { Args: { p_batch_id: string; p_note?: string; p_step: string }; Returns: Json };
     };
     Enums: {

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { Extrapolation, FadeIn, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, type SharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { scheduleOnRN } from 'react-native-worklets';
 import { useTheme } from '@/theme';
 import { Text } from './Text';
 
@@ -47,11 +48,19 @@ export function ChangingText({ value, children }: { value: string; children: Rea
   );
 }
 
-/** Scroll position for screens whose header changes as the hero scrolls away. */
-export function useScrollY() {
+/**
+ * Scroll position for screens whose header changes as the hero scrolls away. `onJS` receives the visible window
+ * on the JS thread, at most every `step` points of travel, for work that does not need every frame.
+ */
+export function useScrollY(onJS?: (y: number, height: number) => void, step = 48) {
   const y = useSharedValue(0);
+  const sent = useSharedValue(-1000);
   const onScroll = useAnimatedScrollHandler((e) => {
     y.value = e.contentOffset.y;
+    if (onJS && Math.abs(e.contentOffset.y - sent.value) >= step) {
+      sent.value = e.contentOffset.y;
+      scheduleOnRN(onJS, e.contentOffset.y, e.layoutMeasurement.height);
+    }
   });
   return { y, onScroll };
 }
