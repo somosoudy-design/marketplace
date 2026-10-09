@@ -1,0 +1,45 @@
+# Installable Android test build (APK) on EAS for https://expo.dev/accounts/marketplacebrand/projects/marketplace.
+# Runs only when a tag apk-preview-* is pushed. Needs the repository secret EXPO_TOKEN (an Expo access token).
+# Internal distribution only: nothing is submitted to Google Play.
+name: APK de prueba (EAS)
+
+on:
+  push:
+    tags: ['apk-preview-*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eas-android-preview
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Compilación en EAS (espera a que termine)
+        working-directory: apps/mobile
+        run: npx --yes eas-cli@24.12.1 build --platform android --profile preview --non-interactive --wait --json > "$GITHUB_WORKSPACE/eas-build.json"
+
+      - name: Resultado
+        if: always()
+        run: node tools/eas/report.mjs eas-build.json

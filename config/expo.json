@@ -1,0 +1,6 @@
+{
+  "$comment": "Expo/EAS project the app builds into (https://expo.dev/accounts/marketplacebrand/projects/marketplace). projectId is not a secret; it ties builds to that exact project so EAS never creates a new one.",
+  "owner": "marketplacebrand",
+  "slug": "marketplace",
+  "projectId": ""
+}

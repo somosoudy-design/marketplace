@@ -1,5 +1,8 @@
 {
-  "cli": { "version": ">= 16.0.0", "appVersionSource": "remote" },
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote"
+  },
   "build": {
     "base": {
       "node": "22.22.0",
@@ -10,20 +13,30 @@
       "developmentClient": true,
       "distribution": "internal",
       "environment": "development",
-      "env": { "APP_VARIANT": "development" }
+      "env": {
+        "APP_VARIANT": "development"
+      }
     },
     "preview": {
       "extends": "base",
       "distribution": "internal",
       "environment": "preview",
-      "env": { "APP_VARIANT": "preview" },
-      "android": { "buildType": "apk" }
+      "env": {
+        "APP_VARIANT": "preview",
+        "EXPO_PUBLIC_SUPABASE_URL": "https://mimnotafmfasvwrclxan.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pbW5vdGFmbWZhc3Z3cmNseGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1MzkzNzIsImV4cCI6MjEwNzExNTM3Mn0.NC9YnaOFEgPdwSBp4bzaRT8t47aHPWtzPO1CfRszoEA"
+      },
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {
       "extends": "base",
       "environment": "production",
       "autoIncrement": true,
-      "env": { "APP_VARIANT": "production" }
+      "env": {
+        "APP_VARIANT": "production"
+      }
     }
   },
   "submit": {

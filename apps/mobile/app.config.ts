@@ -1,5 +1,6 @@
 import type { ExpoConfig, ConfigContext } from 'expo/config';
 import brand from '../../config/brand.json';
+import expo from '../../config/expo.json';
 
 // APP_VARIANT is set per EAS build profile (eas.json) so development, preview and production builds
 // can be installed side by side with different identifiers.
@@ -10,7 +11,7 @@ const nameSuffix = variant === 'production' ? '' : variant === 'preview' ? ' (Pr
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: `${brand.name}${nameSuffix}`,
-  slug: brand.scheme,
+  slug: expo.slug,
   version: '0.1.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
@@ -82,7 +83,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     variant,
     supportEmail: brand.supportEmail,
-    eas: process.env.EAS_PROJECT_ID ? { projectId: process.env.EAS_PROJECT_ID } : undefined,
+    eas: expo.projectId ? { projectId: expo.projectId } : undefined,
   },
-  owner: process.env.EXPO_OWNER,
+  owner: expo.owner,
 });
