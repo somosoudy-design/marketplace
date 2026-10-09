@@ -128,9 +128,8 @@ name: Comprador con cuenta hasta la cotización y cancelación
     visible:
       id: checkout-address
     timeout: 30000
-- assertVisible:
-    id: checkout-address
-    text: .*Maestro Prueba.*
+# the address card is a View: Maestro matches the text of its children, not of the container
+- assertVisible: .*Maestro Prueba.*
 - takeScreenshot: flujo-cuenta-04-checkout
 - scrollUntilVisible:
     element:
