@@ -55,7 +55,7 @@ export default function PaymentsPage() {
             {q.data.map((p) => (
               <tr key={p.id} className="hover:bg-sunken/50">
                 <Td className="whitespace-nowrap font-semibold">{p.number}</Td>
-                <Td className="whitespace-nowrap"><Link className="font-semibold text-brand" href={`/admin/pedidos/${p.order_id}`}>{p.orders?.number}</Link></Td>
+                <Td className="whitespace-nowrap"><Link className="font-semibold text-brand" href={`/admin/pedidos/ver?id=${p.order_id}`}>{p.orders?.number}</Link></Td>
                 <Td>{p.payer_name ?? name(p.buyer_id)}</Td>
                 <Td className="whitespace-nowrap">{p.payment_methods?.name ?? p.method_code}</Td>
                 <Td className="tabular whitespace-nowrap">
@@ -150,7 +150,7 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
       <div className="grid gap-6 md:grid-cols-[1fr_300px]">
         <div className="flex flex-col gap-4">
           <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-            <Item label="Pedido" value={<Link className="font-semibold text-brand" href={`/admin/pedidos/${p.order_id}`}>{p.orders?.number}</Link>} />
+            <Item label="Pedido" value={<Link className="font-semibold text-brand" href={`/admin/pedidos/ver?id=${p.order_id}`}>{p.orders?.number}</Link>} />
             <Item label="Cliente" value={buyerName} />
             <Item label="Método" value={p.payment_methods?.name ?? p.method_code} />
             <Item label="Monto a recibir" value={<span className="tabular text-base font-bold">{money(p.amount, p.currency)}</span>} />

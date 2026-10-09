@@ -8,7 +8,7 @@ import { FulfillmentCard, type FulfillmentRow } from '@/components/Fulfillment';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Dialog, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Table, Td, Textarea, Thumb, Toggle } from '@/components/ui';
 import { date, dateTime, money, orderPayTone, paymentTone } from '@/lib/format';
-import { useProfiles, useRouteId, useStoresIndex } from '@/lib/hooks';
+import { useProfiles, useQueryId, useStoresIndex } from '@/lib/hooks';
 import { catalogImage, db, kora, rpc, run } from '@/lib/kora';
 
 type Item = { id: string; fulfillment_id: string; store_id: string; title: string; variant_title: string | null; image_path: string | null; unit_price_usd: string; quantity: number; line_total_usd: string; commission_usd: string; refunded_qty: number; refunded_usd: string };
@@ -22,7 +22,7 @@ type Order = {
 };
 
 export default function OrderDetail() {
-  const id = useRouteId();
+  const id = useQueryId();
   const stores = useStoresIndex();
   const [refundItem, setRefundItem] = useState<Item | null>(null);
   const [payout, setPayout] = useState(false);

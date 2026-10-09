@@ -56,7 +56,7 @@ export default function ShippingPage() {
             <Table head={['Pedido', 'Entrega', 'Tienda', 'Flujo', 'Estado', 'Llega a más tardar']}>
               {fulfillments.data.map((f) => (
                 <tr key={f.id}>
-                  <Td><Link className="font-semibold text-brand" href={`/admin/pedidos/${f.orders?.id}`}>{f.orders?.number}</Link></Td>
+                  <Td><Link className="font-semibold text-brand" href={`/admin/pedidos/ver?id=${f.orders?.id}`}>{f.orders?.number}</Link></Td>
                   <Td>{f.seq}</Td><Td>{stores.name(f.store_id)}</Td><Td>{FLOW_LABEL[f.flow]}</Td>
                   <Td><Badge tone="brand">{label(f.flow, f.status)}</Badge></Td>
                   <Td className={f.eta_max_date && new Date(f.eta_max_date) < new Date() ? 'font-semibold text-danger' : 'text-ink-2'}>{date(f.eta_max_date)}</Td>
@@ -171,7 +171,7 @@ function BatchDialog({ batch, onClose, storeName }: { batch: Batch | null; onClo
         <Table head={['Pedido', 'Tienda', 'Estado', 'Pago']}>
           {(items.data ?? []).map((f) => (
             <tr key={f.id}>
-              <Td><Link className="font-semibold text-brand" href={`/admin/pedidos/${f.orders?.id}`}>{f.orders?.number}</Link> · {f.seq}</Td>
+              <Td><Link className="font-semibold text-brand" href={`/admin/pedidos/ver?id=${f.orders?.id}`}>{f.orders?.number}</Link> · {f.seq}</Td>
               <Td>{storeName(f.store_id)}</Td><Td>{label(f.flow, f.status)}</Td>
               <Td>{f.orders?.payment_status === 'unpaid' ? <Badge tone="warning">Sin anticipo</Badge> : <Badge tone="success">Con pago</Badge>}</Td>
             </tr>

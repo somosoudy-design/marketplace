@@ -35,7 +35,7 @@ export default function InstallmentsPage() {
           <Table head={['Pedido', 'Cliente', 'Cuota', 'Vence', 'Monto', 'Pagado', 'Estado']}>
             {q.data.map((o) => (
               <tr key={o.id}>
-                <Td><Link className="font-semibold text-brand" href={`/admin/pedidos/${o.order_id}`}>{o.orders?.number}</Link></Td>
+                <Td><Link className="font-semibold text-brand" href={`/admin/pedidos/ver?id=${o.order_id}`}>{o.orders?.number}</Link></Td>
                 <Td>{name(o.orders?.buyer_id)}</Td>
                 <Td>{OBLIGATION_KIND_LABEL[o.kind]} {o.seq}</Td>
                 <Td className={`whitespace-nowrap ${tab === 'overdue' ? 'font-semibold text-danger' : ''}`}>{date(o.due_date)}</Td>

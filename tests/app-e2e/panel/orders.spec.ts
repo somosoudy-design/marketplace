@@ -45,7 +45,7 @@ test('a seller creates a product that is published right away in a general categ
   await page.getByLabel('Inventario de la variante 1').fill('4');
   await page.getByRole('button', { name: 'Crear producto' }).click();
   await expect(page.getByText('Guardado y publicado.')).toBeVisible();
-  await expect(page).toHaveURL(/\/vendedor\/productos\/[0-9a-f-]{36}$/);
+  await expect(page).toHaveURL(/\/vendedor\/productos\/editar\?id=[0-9a-f-]{36}$/);
   await expect(page.getByText('Publicado').first()).toBeVisible();
 
   // The admin suspends it (with a reason the store sees) so the demo catalog stays as seeded.

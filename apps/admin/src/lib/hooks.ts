@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { db, run } from './kora';
 
 /** Names for a set of user ids (admins can read profiles). */
@@ -37,11 +37,10 @@ export function useCategoriesIndex() {
 }
 
 /**
- * The [id] of the current panel route, read from the address. The hosted panel is a static export where one page
- * ("_", see generateStaticParams of the [id] routes) answers every id, so the route params would say "_"; the
- * address always has the real one, also after history.replaceState (a product saved for the first time).
+ * The record a detail page shows (/admin/pedidos/ver?id=…, /vendedor/productos/editar?id=…). The id travels in the
+ * query so the static panel needs one page per screen, not one per record; '' when there is none (a new product).
+ * Pages that use it render inside <Suspense> (required by useSearchParams in a static export).
  */
-export function useRouteId(): string {
-  const pathname = usePathname();
-  return decodeURIComponent(pathname.split('/').filter(Boolean).pop() ?? '');
+export function useQueryId(): string {
+  return useSearchParams().get('id') ?? '';
 }

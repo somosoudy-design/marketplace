@@ -8,7 +8,7 @@ if (!/^https:\/\//.test(base)) {
   console.log('No hubo URL de publicación.');
   process.exit(1);
 }
-const pages = ['/', '/login', '/admin', '/admin/pedidos', '/admin/pedidos/00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/00000000-0000-4000-8000-000000000000', '/admin/tasas'];
+const pages = ['/', '/login', '/admin', '/admin/pedidos', '/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000', '/admin/tasas'];
 const rows = [];
 let ok = true;
 const get = async (path) => {
@@ -26,7 +26,7 @@ for (let i = 0; i < 24; i++) {
   await new Promise((r) => setTimeout(r, 5000));
 }
 // direct files tell "the hosting serves our files" apart from "the route manifest does not match"
-for (const path of ['/index.html', '/login.html', '/_expo/.routes.json']) {
+for (const path of ['/index.html', '/login.html']) {
   const res = await get(path);
   rows.push(`| ${path} (archivo) | ${res?.status ?? 'sin respuesta'} | ${res?.headers.get('content-type') ?? ''} | — |`);
 }
@@ -45,7 +45,7 @@ const js = script ? await get(script) : null;
 rows.push(`| ${script ?? 'script'} | ${js?.status ?? 'no encontrado'} | ${js?.headers.get('content-type') ?? ''} | ${js?.status === 200 ? 'sí' : 'NO'} |`);
 ok &&= js?.status === 200;
 const head = await get('/login');
-const headers = ['x-frame-options', 'x-content-type-options', 'referrer-policy', 'x-robots-tag'].map((h) => `${h}: ${head?.headers.get(h) ?? '—'}`);
+const headers = ['x-frame-options', 'content-security-policy', 'x-content-type-options', 'referrer-policy', 'x-robots-tag'].map((h) => `${h}: ${head?.headers.get(h) ?? '—'}`);
 
 console.log(`### Panel publicado: ${base}\n`);
 console.log('| Ruta | Estado | Tipo | Bien |\n|---|---|---|---|');

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Textarea, cx } from '@/components/ui';
 import { dateTime, moderationTone } from '@/lib/format';
-import { useCategoriesIndex, useRouteId } from '@/lib/hooks';
+import { useCategoriesIndex, useQueryId } from '@/lib/hooks';
 import { catalogImage, db, kora, run } from '@/lib/kora';
 import { useStore } from '@/lib/store';
 
@@ -26,9 +26,9 @@ const SELLER_AVAILABILITY: Availability[] = ['available', 'on_order', 'reservabl
 const n = (s: string) => s.trim().replace(',', '.');
 
 export default function ProductEditor() {
-  const id = useRouteId();
+  const id = useQueryId();
   const { store } = useStore();
-  const isNew = id === 'nuevo';
+  const isNew = !id;
   const q = useQuery({
     queryKey: ['seller-product', id],
     queryFn: () => run<Product>(db('products').select('*, product_images(id, path, sort), product_variants(id, title, sku, price_usd, stock, active, sort), moderation_events(id, to_status, note, automatic, created_at)').eq('id', id).single()),
@@ -37,7 +37,7 @@ export default function ProductEditor() {
   if (!isNew && q.isPending) return <Loading rows={6} />;
   if (!isNew && q.isError) return <ErrorBox error={q.error} onRetry={() => q.refetch()} />;
   if (!isNew && q.data!.store_id !== store!.id) return <Notice tone="warning">Este producto pertenece a otra de tus tiendas. Cámbiala en el selector para editarlo.</Notice>;
-  return <Editor key={id} product={isNew ? null : q.data!} />;
+  return <Editor key={id || 'nuevo'} product={isNew ? null : q.data!} />;
 }
 
 function Editor({ product: p }: { product: Product | null }) {
@@ -120,9 +120,9 @@ function Editor({ product: p }: { product: Product | null }) {
       qc.invalidateQueries({ queryKey: ['seller-product', r.id] });
       qc.invalidateQueries({ queryKey: ['stock'] });
       toast.ok(r.moderation_status === 'published' ? 'Guardado y publicado.' : r.moderation_status === 'suspended' ? 'Guardado. El producto sigue suspendido.' : 'Guardado. Quedó en revisión antes de publicarse.');
-      // the address changes without a page load (the hosted panel has no page per product to navigate to);
-      // Next follows history.replaceState, so useRouteId() gives the new id and the editor loads it
-      if (!p) window.history.replaceState(null, '', `/vendedor/productos/${r.id}`);
+      // a new product gets its address without a page load: Next follows history.replaceState, so useQueryId()
+      // gives the new id and the editor opens the saved product
+      if (!p) window.history.replaceState(null, '', `/vendedor/productos/editar?id=${r.id}`);
     },
     onError: toast.error,
   });

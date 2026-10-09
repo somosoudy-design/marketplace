@@ -54,11 +54,11 @@ export default function SellerProducts() {
                   const img = [...p.product_images].sort((a, b) => a.sort - b.sort)[0];
                   const tracked = p.product_variants.filter((v) => v.active && v.stock !== null);
                   return (
-                    <tr key={p.id} className="cursor-pointer hover:bg-sunken/50" onClick={() => router.push(`/vendedor/productos/${p.id}`)}>
+                    <tr key={p.id} className="cursor-pointer hover:bg-sunken/50" onClick={() => router.push(`/vendedor/productos/editar?id=${p.id}`)}>
                       <Td>
                         <div className="flex items-center gap-3">
                           <Thumb src={catalogImage(img?.path)} alt={p.title} size={36} />
-                          <Link href={`/vendedor/productos/${p.id}`} className="max-w-[360px] truncate font-semibold hover:text-brand" onClick={(e) => e.stopPropagation()}>{p.title}</Link>
+                          <Link href={`/vendedor/productos/editar?id=${p.id}`} className="max-w-[360px] truncate font-semibold hover:text-brand" onClick={(e) => e.stopPropagation()}>{p.title}</Link>
                         </div>
                       </Td>
                       <Td className="tabular">{money(p.base_price_usd, 'USD')}</Td>

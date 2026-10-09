@@ -50,7 +50,7 @@ export default function OrdersPage() {
               const due = Number(o.total_usd) - Number(o.refunded_usd ?? 0) - Number(o.paid_usd);
               return (
                 <tr key={o.id} className="hover:bg-sunken/50">
-                  <Td className="whitespace-nowrap"><Link className="font-semibold text-brand" href={`/admin/pedidos/${o.id}`}>{o.number}</Link>{o.is_demo ? <Badge tone="editorial" className="ml-2">Demo</Badge> : null}</Td>
+                  <Td className="whitespace-nowrap"><Link className="font-semibold text-brand" href={`/admin/pedidos/ver?id=${o.id}`}>{o.number}</Link>{o.is_demo ? <Badge tone="editorial" className="ml-2">Demo</Badge> : null}</Td>
                   <Td>{name(o.buyer_id)}</Td>
                   <Td className="whitespace-nowrap text-ink-2">{o.ship_to?.city ?? '—'}</Td>
                   <Td className="whitespace-nowrap text-ink-2">{dateTime(o.placed_at)}</Td>
