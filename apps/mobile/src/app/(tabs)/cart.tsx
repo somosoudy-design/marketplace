@@ -4,19 +4,20 @@ import { router } from 'expo-router';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
-import { MAX_CONTENT } from '@/components/catalog/ProductGrid';
+import { MAX_CONTENT, ProductRail } from '@/components/catalog/ProductGrid';
 import { Badge } from '@/components/ui/Badge';
 import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
-import { Card, Divider, Stepper } from '@/components/ui/Layout';
+import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import type { GuestLine } from '@/lib/guest-cart';
-import { useCart, useGuestCart, useSetCartQuantity } from '@/lib/hooks';
+import { useCart, useGuestCart, useHome, useSetCartQuantity } from '@/lib/hooks';
+import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { useTheme } from '@/theme';
 
 const ISSUE_TEXT: Record<string, string> = {
@@ -55,10 +56,7 @@ function AccountCart({ header }: { header: React.ReactNode }) {
   if (cart.isError) return <View>{header}<ErrorState onRetry={() => cart.refetch()} /></View>;
   if (!s || s.line_count === 0) {
     return (
-      <View>
-        {header}
-        <EmptyState icon="shopping-bag" title="Tu carrito está vacío" body="Explora el catálogo y agrega lo que necesites." action="Explorar" onAction={() => router.navigate('/explore')} />
-      </View>
+      <EmptyCart header={header} body="Explora el catálogo y agrega lo que necesites." />
     );
   }
   const groups = s.groups;
@@ -134,15 +132,34 @@ function LineRow({ line: l, onQty }: { line: CartLine; onQty: (variantId: string
   );
 }
 
+/** An empty cart still offers a way forward: a short shelf of picks, measured like any other recommendation. */
+function EmptyCart({ header, body }: { header: React.ReactNode; body: string }) {
+  const { user } = useAuth();
+  const home = useHome();
+  const tracking = useViewportTracking();
+  const picks = (home.data?.recommended ?? []).slice(0, 10);
+  return (
+    <ImpressionScope tracking={tracking} enabled={!!user}>
+      <ScrollView testID="cart-empty" onScroll={tracking.onScroll} onLayout={tracking.onLayout} scrollEventThrottle={100} contentContainerStyle={{ paddingBottom: 32, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}>
+        {header}
+        <EmptyState icon="shopping-bag" title="Tu carrito está vacío" body={body} action="Explorar" onAction={() => router.navigate('/explore')} />
+        {picks.length ? (
+          <TrackedSection slot="cart_empty" ids={picks.map((p) => p.id)} visible={2} testID="cart-empty-picks">
+            <SectionHeader overline={home.data?.personalized ? 'Para ti' : 'Para empezar'} title="Te puede gustar" />
+            <ProductRail products={picks} slot="cart_empty" />
+          </TrackedSection>
+        ) : null}
+      </ScrollView>
+    </ImpressionScope>
+  );
+}
+
 function GuestCartView({ header }: { header: React.ReactNode }) {
   const lines = useGuestCart();
   const setQty = useSetCartQuantity();
   if (!lines.length) {
     return (
-      <View>
-        {header}
-        <EmptyState icon="shopping-bag" title="Tu carrito está vacío" body="Agrega productos y continúa cuando quieras. Al iniciar sesión los guardamos en tu cuenta." action="Explorar" onAction={() => router.navigate('/explore')} />
-      </View>
+      <EmptyCart header={header} body="Agrega productos y continúa cuando quieras. Al iniciar sesión los guardamos en tu cuenta." />
     );
   }
   const subtotal = lines.reduce((s, l) => s.plus(D(l.price_usd).times(l.quantity)), D(0));

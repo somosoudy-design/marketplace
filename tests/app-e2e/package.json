@@ -9,6 +9,8 @@
     "test:panel": "playwright test --project=panel"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.0"
+    "@playwright/test": "1.64.0",
+    "@types/pg": "8.23.1",
+    "pg": "8.23.1"
   }
 }

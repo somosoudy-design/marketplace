@@ -6,6 +6,7 @@ import type { KoraClient } from './client';
 import type {
   Address,
   Category,
+  City,
   CheckoutSummary,
   Claim,
   ClaimWithContext,
@@ -229,6 +230,9 @@ export function createApi(client: KoraClient) {
         : run<Address>(from('addresses').insert(a).select().single()),
     deleteAddress: (id: string) => run<void>(from('addresses').delete().eq('id', id)),
     regions: (country = 'VE') => run<Region[]>(from('regions').select('*').eq('country_code', country).order('sort')),
+    /** Known cities of a state, capital first, to suggest while typing (any city can still be written). */
+    cities: (regionCode: string, country = 'VE') =>
+      run<City[]>(from('cities').select('*').eq('country_code', country).eq('region_code', regionCode).order('is_capital', { ascending: false }).order('name')),
     favorites: () =>
       run<{ product_id: string; created_at: string }[]>(from('favorites').select('product_id, created_at').order('created_at', { ascending: false })),
     favoriteProducts: async () => {
