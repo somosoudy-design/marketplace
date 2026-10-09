@@ -25,6 +25,7 @@ import type {
   Region,
   SearchParams,
   ShippingSelection,
+  StartOnlineResult,
   Store,
   SubmitPaymentInput,
   SubmitPaymentResult,
@@ -143,8 +144,28 @@ export function createApi(client: KoraClient) {
           p_idempotency_key: i.idempotencyKey,
         }),
       ),
-    startProvider: (quoteId: string, idempotencyKey: string) =>
-      run<Record<string, unknown>>(rpc('start_provider_payment', { p_quote_id: quoteId, p_idempotency_key: idempotencyKey })),
+    /**
+     * Online methods (Binance Pay, PayPal): the `payments-start` edge function creates the provider order with
+     * server-held credentials and returns where to pay. The payment is confirmed only by the provider's signed
+     * webhook, never by the app.
+     */
+    startOnline: async (quoteId: string, idempotencyKey: string): Promise<StartOnlineResult> => {
+      const { data, error } = await client.functions.invoke<StartOnlineResult>('payments-start', { body: { quoteId, idempotencyKey } });
+      if (!error && data) return data;
+      let body: { error?: string; message?: string } | null = null;
+      try {
+        body = await (error as { context?: Response } | null)?.context?.json();
+      } catch {
+        body = null;
+      }
+      throw new ApiError({
+        code: body?.error ?? 'network',
+        message: body?.message ?? 'No pudimos iniciar el pago en línea. Revisa tu conexión e intenta de nuevo.',
+        cause: error,
+      });
+    },
+    /** Gives up on an online attempt that was never completed, so the buyer can pay another way. */
+    cancelOnline: (paymentId: string) => run<null>(rpc('cancel_provider_payment', { p_payment_id: paymentId })),
     /** Uploads a payment proof to the private bucket under the user's own folder and returns its path. */
     uploadProof: async (userId: string, file: Blob | ArrayBuffer | Uint8Array, contentType: string, ext = 'jpg') => {
       const path = `${userId}/${newIdempotencyKey('proof')}.${ext}`;

@@ -86,6 +86,12 @@ SUPABASE_SERVICE_ROLE_KEY=$SERVICE_KEY
 DATABASE_URL=$DB_URL
 JWT_SECRET=$JWT_SECRET
 KEYS
+# Edge functions (Deno from node_modules; skipped if it is not installed)
+if [ -x "$ROOT_DIR/node_modules/.bin/deno" ]; then
+  [ -f "$LOCAL_DIR/functions.pid" ] && kill "$(cat "$LOCAL_DIR/functions.pid")" 2>/dev/null || true
+  nohup bash "$(dirname "$0")/functions.sh" serve >"$LOG_DIR/functions.log" 2>&1 &
+  echo $! > "$LOCAL_DIR/functions.pid"
+fi
 for i in $(seq 1 40); do
   if curl -fsS "http://127.0.0.1:$GATEWAY_PORT/auth/v1/health" >/dev/null 2>&1 && curl -fsS "http://127.0.0.1:$GATEWAY_PORT/rest/v1/" -H "apikey: $ANON_KEY" >/dev/null 2>&1; then
     echo "✓ local stack ready at http://127.0.0.1:$GATEWAY_PORT (keys in .local/keys.env)"; exit 0

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button, Field, Input, Notice } from '@/components/ui';
 import { authErrorMessage, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/env';
+import { brand } from '@/lib/brand';
 
 export default function LoginPage() {
   const { signIn, session, ready } = useAuth();
@@ -34,7 +35,7 @@ export default function LoginPage() {
     <div className="grid min-h-dvh place-items-center px-4">
       <form onSubmit={submit} className="w-full max-w-[400px] rounded-[28px] border border-line bg-surface p-8 shadow-sm">
         <span className="mb-6 grid size-11 place-items-center rounded-[14px] bg-brand font-display text-xl font-semibold text-on-brand">K</span>
-        <h1 className="font-display text-[28px] font-semibold">Panel de Kora</h1>
+        <h1 className="font-display text-[28px] font-semibold">Panel de {brand.name}</h1>
         <p className="mt-1 mb-6 text-[15px] text-ink-2">Administración y vendedores. Usa tu cuenta del marketplace.</p>
         {!isConfigured ? (
           <Notice tone="warning" title="Falta configuración">Define NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY en apps/admin/.env.local.</Notice>

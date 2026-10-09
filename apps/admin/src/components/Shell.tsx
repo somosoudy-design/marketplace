@@ -9,6 +9,7 @@ import { useState, type ReactNode } from 'react';
 import { useAuth } from '@/lib/auth';
 import { cx } from './ui';
 import { StorePicker } from './StorePicker';
+import { brand } from '@/lib/brand';
 
 type Item = { href: string; label: string; icon: LucideIcon };
 const ADMIN: { title: string; items: Item[] }[] = [
@@ -88,9 +89,9 @@ export function Shell({ area, children }: { area: 'admin' | 'seller'; children: 
     <div className="min-h-dvh lg:grid lg:grid-cols-[264px_1fr]">
       <aside className={cx('fixed inset-y-0 left-0 z-40 flex w-[264px] flex-col border-r border-line bg-surface px-3 py-5 transition-transform lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0', open ? 'translate-x-0' : '-translate-x-full')}>
         <Link href="/" className="mb-6 flex items-center gap-2.5 px-3">
-          <span className="grid size-9 place-items-center rounded-[12px] bg-brand font-display text-lg font-semibold text-on-brand">K</span>
+          <span className="grid size-9 place-items-center rounded-[12px] bg-brand font-display text-lg font-semibold text-on-brand">{brand.name.charAt(0)}</span>
           <span>
-            <span className="block font-display text-lg leading-none font-semibold">Kora</span>
+            <span className="block font-display text-lg leading-none font-semibold">{brand.name}</span>
             <span className="text-[12px] font-semibold text-ink-3">{area === 'admin' ? 'Administración' : 'Panel de vendedor'}</span>
           </span>
         </Link>
@@ -112,7 +113,7 @@ export function Shell({ area, children }: { area: 'admin' | 'seller'; children: 
       <div className="min-w-0">
         <div className="sticky top-0 z-20 flex items-center gap-3 border-b border-line bg-surface/90 px-4 py-3 backdrop-blur lg:hidden">
           <button onClick={() => setOpen(true)} className="rounded-[10px] border border-line-strong px-3 py-1.5 text-sm font-semibold">Menú</button>
-          <span className="font-display text-lg font-semibold">Kora</span>
+          <span className="font-display text-lg font-semibold">{brand.name}</span>
         </div>
         <main className="mx-auto w-full max-w-[1240px] px-4 py-7 sm:px-8">{children}</main>
       </div>

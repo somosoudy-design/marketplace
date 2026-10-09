@@ -271,6 +271,14 @@ export interface SubmitPaymentInput {
   idempotencyKey: string;
 }
 
+/** Answer of the payments-start edge function. `checkout_url` is the provider page where the buyer pays. */
+export interface StartOnlineResult {
+  payment_id: string;
+  number: string;
+  status: 'processing' | 'confirmed' | 'failed' | 'pending_verification' | 'rejected' | 'refunded';
+  checkout_url: string | null;
+}
+
 export type SubmitPaymentResult =
   | (Payment & { replayed: boolean; error?: undefined })
   | { error: 'quote_expired' | 'obligation_already_paid' };

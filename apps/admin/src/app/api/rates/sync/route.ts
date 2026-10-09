@@ -1,4 +1,5 @@
-import { RATE_ADAPTERS, type RateAdapterKey } from '@kora/core/rates';
+import { isRateAdapter, rateReadError, readRateSource, type RateAdapterKey } from '@kora/core/rates';
+import { brand } from '@/lib/brand';
 import { requireAdmin } from '@/lib/server/supabase';
 
 export const dynamic = 'force-dynamic';
@@ -19,26 +20,15 @@ export async function POST(req: Request) {
 
   const results: Result[] = await Promise.all(
     (sources ?? [])
-      .filter((s) => s.adapter in RATE_ADAPTERS)
+      .filter((s) => isRateAdapter(s.adapter))
       .map(async (s): Promise<Result> => {
-        const a = RATE_ADAPTERS[s.adapter as RateAdapterKey];
         try {
-          const res = await fetch(a.url, {
-            method: a.method,
-            headers: { accept: a.kind === 'json' ? 'application/json' : 'text/html', 'content-type': 'application/json', 'user-agent': 'KoraRates/1.0 (+https://kora.example.com)' },
-            body: 'body' in a ? JSON.stringify(a.body) : undefined,
-            signal: AbortSignal.timeout(12_000),
-            cache: 'no-store',
-          });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const obs = a.parse(await res.text());
-          if (obs.source !== s.code) throw new Error(`adapter returned ${obs.source}`);
+          const obs = await readRateSource(s.adapter as RateAdapterKey, s.code, { userAgent: `KoraRates/1.0 (+https://${brand.webDomain})` });
           const { error: e } = await sb.rpc('ingest_rate', { p_source: s.code, p_pair: obs.pair, p_rate: obs.rate, p_observed_at: obs.observedAt, p_raw: (obs.raw ?? null) as never });
-          if (e) throw new Error(e.hint === 'rate_anomaly' ? 'Variación mayor al 25% respecto al último valor: revísala y cárgala manualmente.' : e.message);
+          if (e) throw Object.assign(new Error(e.message), { hint: e.hint });
           return { source: s.code, ok: true, pair: obs.pair, rate: obs.rate, observedAt: obs.observedAt };
         } catch (e) {
-          const msg = e instanceof Error ? (e.name === 'TimeoutError' ? 'Tiempo de espera agotado' : e.cause instanceof Error ? `${e.message}: ${e.cause.message}` : e.message) : String(e);
-          return { source: s.code, ok: false, error: msg };
+          return { source: s.code, ok: false, error: rateReadError(e) };
         }
       }),
   );

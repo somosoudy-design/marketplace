@@ -7,6 +7,7 @@ import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Loading, Notice, T
 import { ago, claimTone, dateTime } from '@/lib/format';
 import { useProfiles } from '@/lib/hooks';
 import { db, kora, run } from '@/lib/kora';
+import { brand } from '@/lib/brand';
 
 type Claim = { id: string; number: string; order_id: string; fulfillment_id: string; store_id: string; buyer_id: string; reason: string; description: string; status: string; resolution: string | null; created_at: string; updated_at: string; orders: { number: string } | null };
 type Msg = { id: number; author_id: string | null; author_role: string; body: string; created_at: string };
@@ -84,7 +85,7 @@ function ClaimDialog({ claim: c, role, onClose }: { claim: Claim | null; role: '
         <ol className="flex flex-col gap-2">
           {(msgs.data ?? []).map((m) => (
             <li key={m.id} className={`max-w-[80%] rounded-[14px] px-4 py-2.5 text-sm ${m.author_role === 'buyer' ? 'self-start bg-sunken' : 'self-end bg-brand-soft'}`}>
-              <p className="text-[12px] font-bold text-ink-3">{m.author_role === 'buyer' ? 'Cliente' : m.author_role === 'seller' ? 'Tienda' : 'Kora'} · {ago(m.created_at)}</p>
+              <p className="text-[12px] font-bold text-ink-3">{m.author_role === 'buyer' ? 'Cliente' : m.author_role === 'seller' ? 'Tienda' : brand.name} · {ago(m.created_at)}</p>
               <p className="whitespace-pre-line">{m.body}</p>
             </li>
           ))}

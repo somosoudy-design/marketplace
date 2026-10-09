@@ -17,7 +17,10 @@
     "seed:build": "pnpm --filter @kora/demo-assets seed",
     "assets:generate": "pnpm --filter @kora/demo-assets generate",
     "test:panel": "pnpm --filter @kora/app-e2e test:panel",
-    "test:admin": "pnpm --filter @kora/admin test"
+    "test:admin": "pnpm --filter @kora/admin test",
+    "edge:sync": "node tools/sync-edge-shared.mjs",
+    "functions:serve": "bash tools/local-stack/functions.sh serve",
+    "test:functions": "bash tools/local-stack/functions.sh test"
   },
   "engines": {
     "node": ">=20"
@@ -28,7 +31,8 @@
       "supabase",
       "esbuild",
       "@swc/core",
-      "unrs-resolver"
+      "unrs-resolver",
+      "deno"
     ],
     "overrides": {
       "react": "19.2.3",
@@ -40,6 +44,7 @@
     "prettier": "^3.9.9",
     "supabase": "^2.120.0",
     "typescript": "~5.9.3",
-    "vitest": "^3.2.7"
+    "vitest": "^3.2.7",
+    "deno": "2.9.6"
   }
 }

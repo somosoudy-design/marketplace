@@ -1,3 +1,4 @@
+// GENERATED from packages/core/src/rates/index.ts by tools/sync-edge-shared.mjs. Do not edit; run `pnpm edge:sync`.
 /**
  * Exchange-rate provider adapters. Pure parsing + validation so they run identically in
  * Deno (edge function `rates-sync`), Node (tests) and the admin panel.

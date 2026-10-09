@@ -1185,6 +1185,9 @@ export type Database = {
           id: string;
           is_test: boolean;
           kind: string;
+          push_attempts: number;
+          push_claimed_at: string | null;
+          push_error: string | null;
           push_status: string;
           read_at: string | null;
           title: string;
@@ -1198,6 +1201,9 @@ export type Database = {
           id?: string;
           is_test?: boolean;
           kind: string;
+          push_attempts?: number;
+          push_claimed_at?: string | null;
+          push_error?: string | null;
           push_status?: string;
           read_at?: string | null;
           title: string;
@@ -1210,6 +1216,9 @@ export type Database = {
           id?: string;
           is_test?: boolean;
           kind?: string;
+          push_attempts?: number;
+          push_claimed_at?: string | null;
+          push_error?: string | null;
           push_status?: string;
           read_at?: string | null;
           title?: string;
@@ -1694,6 +1703,7 @@ export type Database = {
           payer_phone: string | null;
           proof_path: string | null;
           provider: string | null;
+          provider_checkout_url: string | null;
           provider_payment_id: string | null;
           quote_id: string;
           rate_applied: number;
@@ -1726,6 +1736,7 @@ export type Database = {
           payer_phone?: string | null;
           proof_path?: string | null;
           provider?: string | null;
+          provider_checkout_url?: string | null;
           provider_payment_id?: string | null;
           quote_id: string;
           rate_applied: number;
@@ -1757,6 +1768,7 @@ export type Database = {
           payer_phone?: string | null;
           proof_path?: string | null;
           provider?: string | null;
+          provider_checkout_url?: string | null;
           provider_payment_id?: string | null;
           quote_id?: string;
           rate_applied?: number;
@@ -2869,18 +2881,24 @@ export type Database = {
         Returns: undefined;
       };
       assign_to_batch: { Args: { p_batch_id: string; p_fulfillment_ids: string[] }; Returns: number };
-      attach_provider_payment: { Args: { p_payment_id: string; p_provider_payment_id: string }; Returns: undefined };
+      attach_provider_payment: {
+        Args: { p_checkout_url?: string; p_payment_id: string; p_provider_payment_id: string };
+        Returns: undefined;
+      };
       audit: { Args: { p_action: string; p_data?: Json; p_entity: string; p_entity_id: string }; Returns: undefined };
       cancel_order: { Args: { p_order_id: string; p_reason: string }; Returns: undefined };
       cancel_payout: { Args: { p_payout_id: string }; Returns: undefined };
+      cancel_provider_payment: { Args: { p_payment_id: string }; Returns: undefined };
       cart_add: { Args: { p_quantity?: number; p_variant_id: string }; Returns: Json };
       cart_merge: { Args: { p_lines: Json }; Returns: number };
       cart_set_quantity: { Args: { p_quantity: number; p_variant_id: string }; Returns: Json };
       cart_summary: { Args: { p_address_id?: string }; Returns: Json };
       check_rate_limit: { Args: { p_action: string; p_max: number; p_window_seconds: number }; Returns: undefined };
       checkout_preview: { Args: { p_address_id: string; p_plan_code?: string; p_shipping?: Json }; Returns: Json };
+      claim_push_batch: { Args: { p_ids?: string[]; p_limit?: number }; Returns: Json };
       clear_my_activity: { Args: Record<PropertyKey, never>; Returns: undefined };
       commission_pct: { Args: { p_category_id: string; p_store_id: string }; Returns: number };
+      complete_push: { Args: { p_dead_tokens?: string[]; p_results: Json }; Returns: undefined };
       create_payment_quote: {
         Args: { p_method_code: string; p_obligation_ids?: string[]; p_order_id: string };
         Returns: Json;
@@ -2901,6 +2919,7 @@ export type Database = {
       dev_refresh_demo_rates: { Args: Record<PropertyKey, never>; Returns: undefined };
       escalate_claim: { Args: { p_claim_id: string }; Returns: undefined };
       expire_unpaid_orders: { Args: Record<PropertyKey, never>; Returns: number };
+      fail_provider_start: { Args: { p_payment_id: string; p_reason: string }; Returns: undefined };
       flow_for: {
         Args: {
           p_origin: Database['public']['Enums']['product_origin'];
@@ -2911,9 +2930,17 @@ export type Database = {
       has_role: { Args: { p_role: Database['public']['Enums']['app_role'] }; Returns: boolean };
       home_feed: { Args: Record<PropertyKey, never>; Returns: Json };
       ingest_rate: {
-        Args: { p_observed_at: string; p_pair: string; p_rate: number; p_raw?: Json; p_source: string };
+        Args: {
+          p_force?: boolean;
+          p_observed_at: string;
+          p_pair: string;
+          p_rate: number;
+          p_raw?: Json;
+          p_source: string;
+        };
         Returns: number;
       };
+      invoke_edge_function: { Args: { p_body?: Json; p_name: string }; Returns: number };
       is_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
       is_service_role: { Args: Record<PropertyKey, never>; Returns: boolean };
       is_store_member: { Args: { p_store_id: string }; Returns: boolean };
@@ -2963,6 +2990,10 @@ export type Database = {
         Returns: undefined;
       };
       product_detail: { Args: { p_id: string }; Returns: Json };
+      publish_import: {
+        Args: { p_images?: Json; p_import_id: string; p_product: Json; p_variants?: Json };
+        Returns: string;
+      };
       rate_status: { Args: { p_pair?: string }; Returns: Json };
       recently_viewed: {
         Args: { p_limit?: number };
@@ -3124,6 +3155,8 @@ export type Database = {
       };
       seller_balance: { Args: { p_store_id: string }; Returns: Json };
       seller_dashboard: { Args: { p_store_id: string }; Returns: Json };
+      seller_fulfillments: { Args: { p_scope?: string; p_store_id: string }; Returns: Json };
+      seller_sales: { Args: { p_days?: number; p_store_id: string }; Returns: Json };
       set_manual_rate: {
         Args: { p_note: string; p_pair: string; p_rate: number; p_valid_minutes: number };
         Returns: undefined;
@@ -3154,6 +3187,7 @@ export type Database = {
           min_days: number;
         }[];
       };
+      slugify: { Args: { p: string }; Returns: string };
       start_provider_payment: { Args: { p_idempotency_key: string; p_quote_id: string }; Returns: Json };
       submit_payment: {
         Args: {

@@ -12,7 +12,7 @@ const EXPOSED = {
   ],
   buyer: [
     'cart_add', 'cart_merge', 'cart_set_quantity', 'cart_summary', 'checkout_preview', 'place_order', 'cancel_order',
-    'create_payment_quote', 'submit_payment', 'start_provider_payment', 'open_claim', 'post_claim_message', 'escalate_claim',
+    'create_payment_quote', 'submit_payment', 'start_provider_payment', 'cancel_provider_payment', 'open_claim', 'post_claim_message', 'escalate_claim',
     'mark_notifications_read', 'register_push_token', 'request_account_deletion', 'recently_viewed', 'clear_my_activity',
   ],
   seller: ['seller_dashboard', 'seller_balance', 'advance_fulfillment', 'seller_fulfillments', 'seller_sales'],

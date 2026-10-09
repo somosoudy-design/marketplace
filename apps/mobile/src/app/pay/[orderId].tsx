@@ -5,6 +5,7 @@ import * as Clipboard from 'expo-clipboard';
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,6 +19,7 @@ import { Banner, ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { useAuth } from '@/lib/auth';
+import { brand } from '@/lib/brand';
 import { SOURCE_LABEL, shortDate, shortDateTime } from '@/lib/format';
 import { haptics } from '@/lib/haptics';
 import { useOrder, usePaymentMethods } from '@/lib/hooks';
@@ -41,12 +43,18 @@ export default function PayScreen() {
   const methods = usePaymentMethods();
   const [method, setMethod] = useState<PaymentMethod | null>(null);
   const [quote, setQuote] = useState<PaymentQuote | null>(null);
-  const [submitted, setSubmitted] = useState<{ number: string } | null>(null);
+  const [submitted, setSubmitted] = useState<{ number: string; online?: string } | null>(null);
   const qc = useQueryClient();
 
   const createQuote = useMutation({
     mutationFn: (code: string) => api.payments.quote(orderId, code),
     onSuccess: (q) => setQuote(q),
+    onError: () => haptics.warning(),
+  });
+
+  const cancelOnline = useMutation({
+    mutationFn: (paymentId: string) => api.payments.cancelOnline(paymentId),
+    onSuccess: () => qc.invalidateQueries({ queryKey: qk.order(orderId) }),
     onError: () => haptics.warning(),
   });
 
@@ -65,8 +73,12 @@ export default function PayScreen() {
         <View style={{ width: 84, height: 84, borderRadius: 42, backgroundColor: t.colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}>
           <Icon name="hourglass" size={38} color={t.colors.brand} />
         </View>
-        <Text variant="displayM" align="center" testID="payment-submitted">Recibimos tu pago {submitted.number}</Text>
-        <Text color="textSecondary" align="center">Lo estamos verificando con el banco. Tu pedido avanza cuando lo confirmemos y te avisaremos por notificación.</Text>
+        <Text variant="displayM" align="center" testID="payment-submitted">{submitted.online ? `Pago ${submitted.number} iniciado` : `Recibimos tu pago ${submitted.number}`}</Text>
+        <Text color="textSecondary" align="center">
+          {submitted.online
+            ? `Lo confirmamos en cuanto ${submitted.online} nos avise que el pago fue exitoso, y te avisaremos por notificación. Si lo cancelaste, vuelve al pedido y elige otro método.`
+            : 'Lo estamos verificando con el banco. Tu pedido avanza cuando lo confirmemos y te avisaremos por notificación.'}
+        </Text>
         <Button title="Ver mi pedido" full onPress={() => router.replace({ pathname: '/orders/[id]', params: { id: orderId } })} style={{ maxWidth: 420, width: '100%' }} />
         <Button title="Seguir comprando" variant="ghost" onPress={() => router.dismissTo('/')} />
       </View>
@@ -95,6 +107,19 @@ export default function PayScreen() {
         {pending.length ? (
           <Banner tone="info" icon="hourglass" title="Tienes un pago en verificación" body={`${pending.map((p) => `${p.number} (${PAYMENT_RECORD_LABEL[p.status]})`).join(', ')}. Espera la confirmación antes de pagar de nuevo.`} />
         ) : null}
+        {pending.filter((p) => p.status === 'processing' && p.provider).map((p) => (
+          <Card key={p.id} style={{ gap: 10 }}>
+            <Text variant="subtitle">Pago en línea {p.number} sin completar</Text>
+            <Text variant="bodySmall" color="textSecondary">Si no terminaste de pagar, retómalo o cancélalo para elegir otro método. Si ya pagaste, espera la confirmación: no lo canceles.</Text>
+            {cancelOnline.error ? <Banner tone="danger" icon="circle-alert" body={(cancelOnline.error as Error).message} /> : null}
+            <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+              {p.provider_checkout_url ? (
+                <Button title="Retomar pago" icon="wallet" onPress={() => (Platform.OS === 'web' ? window.open(p.provider_checkout_url!, '_blank', 'noopener') : WebBrowser.openAuthSessionAsync(p.provider_checkout_url!, `${brand.scheme}://pay/result`))} />
+              ) : null}
+              <Button testID={`cancel-online-${p.number}`} title="Cancelar intento" variant="secondary" loading={cancelOnline.isPending} onPress={() => cancelOnline.mutate(p.id)} />
+            </View>
+          </Card>
+        ))}
 
         {!nextObligation ? (
           <Banner tone="success" icon="circle-check" title="Este pedido no tiene saldo pendiente" />
@@ -125,12 +150,12 @@ export default function PayScreen() {
             onRequote={() => createQuote.mutate(quote.method_code)}
             requoting={createQuote.isPending}
             onChangeMethod={() => setQuote(null)}
-            onSubmitted={(number) => {
+            onSubmitted={(number, online) => {
               haptics.success();
               qc.invalidateQueries({ queryKey: qk.order(orderId) });
               qc.invalidateQueries({ queryKey: qk.orders });
               qc.invalidateQueries({ queryKey: qk.notifications });
-              setSubmitted({ number });
+              setSubmitted({ number, online });
             }}
           />
         )}
@@ -149,7 +174,7 @@ function useCountdown(expiresAt: string) {
   return { expired: ms <= 0, label: ms <= 0 ? '0:00' : `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, '0')}`, ms };
 }
 
-function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitted }: { quote: PaymentQuote; onRequote: () => void; requoting: boolean; onChangeMethod: () => void; onSubmitted: (number: string) => void }) {
+function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitted }: { quote: PaymentQuote; onRequote: () => void; requoting: boolean; onChangeMethod: () => void; onSubmitted: (number: string, online?: string) => void }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
@@ -232,7 +257,11 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
         {countdown.expired ? <Button testID="quote-refresh" title="Actualizar monto" icon="refresh-cw" loading={requoting} onPress={onRequote} /> : null}
       </Card>
 
-      {instructions.length ? (
+      {q.method.kind === 'automated' ? (
+        <OnlinePay quote={q} expired={countdown.expired} onStarted={(number) => onSubmitted(number, q.method.name)} />
+      ) : null}
+
+      {q.method.kind !== 'automated' && instructions.length ? (
         <Card style={{ gap: 12 }}>
           <Text variant="title">Datos para pagar</Text>
           {note ? <Banner tone="warning" icon="info" body={note} /> : null}
@@ -248,48 +277,86 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
         </Card>
       ) : null}
 
-      <Card style={{ gap: 14 }}>
-        <Text variant="title">Confirma tu pago</Text>
-        {q.method.requires_reference ? (
-          <TextField
-            testID="pay-reference"
-            label={q.method.code === 'usdt_trc20' ? 'Hash de la transacción' : 'Número de referencia'}
-            value={reference}
-            onChangeText={setReference}
-            autoCapitalize="characters"
-            autoCorrect={false}
-            keyboardType={q.method.code === 'usdt_trc20' ? 'default' : 'number-pad'}
-            helper={q.method.code === 'usdt_trc20' ? 'Lo encuentras en el detalle del retiro.' : 'Los últimos dígitos que aparecen en tu comprobante.'}
+      {q.method.kind !== 'automated' ? (
+        <Card style={{ gap: 14 }}>
+          <Text variant="title">Confirma tu pago</Text>
+          {q.method.requires_reference ? (
+            <TextField
+              testID="pay-reference"
+              label={q.method.code === 'usdt_trc20' ? 'Hash de la transacción' : 'Número de referencia'}
+              value={reference}
+              onChangeText={setReference}
+              autoCapitalize="characters"
+              autoCorrect={false}
+              keyboardType={q.method.code === 'usdt_trc20' ? 'default' : 'number-pad'}
+              helper={q.method.code === 'usdt_trc20' ? 'Lo encuentras en el detalle del retiro.' : 'Los últimos dígitos que aparecen en tu comprobante.'}
+            />
+          ) : null}
+          {isVes ? <TextField label="Banco desde el que pagaste (opcional)" value={payerBank} onChangeText={setPayerBank} /> : null}
+          <View style={{ gap: 8 }}>
+            <Text variant="label" color="textSecondary">Comprobante {q.method.requires_proof ? '' : '(opcional)'}</Text>
+            {proof ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Image source={{ uri: proof.uri }} style={{ width: 56, height: 72, borderRadius: 8 }} contentFit="cover" />
+                <Text variant="bodySmall" color={proof.path ? 'success' : 'textMuted'} style={{ flex: 1 }}>{proof.uploading ? 'Subiendo…' : 'Comprobante adjunto'}</Text>
+                <Pressable onPress={pickProof} hitSlop={8}><Text variant="label" color="brand">Cambiar</Text></Pressable>
+              </View>
+            ) : (
+              <Button testID="pay-proof" title="Adjuntar captura" variant="secondary" icon="image" onPress={pickProof} />
+            )}
+          </View>
+          {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
+          <Button
+            testID="pay-submit"
+            title="Ya pagué, enviar para verificar"
+            size="lg"
+            full
+            loading={submit.isPending}
+            disabled={countdown.expired || !!proof?.uploading}
+            onPress={() => { setError(null); submit.mutate(); }}
           />
-        ) : null}
-        {isVes ? <TextField label="Banco desde el que pagaste (opcional)" value={payerBank} onChangeText={setPayerBank} /> : null}
-        <View style={{ gap: 8 }}>
-          <Text variant="label" color="textSecondary">Comprobante {q.method.requires_proof ? '' : '(opcional)'}</Text>
-          {proof ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-              <Image source={{ uri: proof.uri }} style={{ width: 56, height: 72, borderRadius: 8 }} contentFit="cover" />
-              <Text variant="bodySmall" color={proof.path ? 'success' : 'textMuted'} style={{ flex: 1 }}>{proof.uploading ? 'Subiendo…' : 'Comprobante adjunto'}</Text>
-              <Pressable onPress={pickProof} hitSlop={8}><Text variant="label" color="brand">Cambiar</Text></Pressable>
-            </View>
-          ) : (
-            <Button testID="pay-proof" title="Adjuntar captura" variant="secondary" icon="image" onPress={pickProof} />
-          )}
-        </View>
-        {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
-        <Button
-          testID="pay-submit"
-          title="Ya pagué, enviar para verificar"
-          size="lg"
-          full
-          loading={submit.isPending}
-          disabled={countdown.expired || !!proof?.uploading}
-          onPress={() => { setError(null); submit.mutate(); }}
-        />
-        <Text variant="caption" color="textMuted" align="center" style={{ marginBottom: insets.bottom }}>
-          Tu pago queda en verificación. Lo confirmamos al verlo reflejado; enviar este formulario no lo marca como pagado.
-        </Text>
-      </Card>
+          <Text variant="caption" color="textMuted" align="center" style={{ marginBottom: insets.bottom }}>
+            Tu pago queda en verificación. Lo confirmamos al verlo reflejado; enviar este formulario no lo marca como pagado.
+          </Text>
+        </Card>
+      ) : null}
       <Badge label={`Cotización ${q.id.slice(0, 8)}`} tone="muted" />
     </View>
+  );
+}
+
+/** Binance Pay / PayPal: the provider page opens in an in-app browser; the order is credited by the provider's
+ * signed notification to our server, so coming back to the app never marks anything as paid. */
+function OnlinePay({ quote: q, expired, onStarted }: { quote: PaymentQuote; expired: boolean; onStarted: (number: string) => void }) {
+  const key = useRef(intentKey('online'));
+  useEffect(() => {
+    key.current = intentKey('online');
+  }, [q.id]);
+  const start = useMutation({
+    mutationFn: async () => {
+      const r = await api.payments.startOnline(q.id, key.current);
+      if (r.status === 'processing' && r.checkout_url) {
+        if (Platform.OS === 'web') window.open(r.checkout_url, '_blank', 'noopener');
+        else await WebBrowser.openAuthSessionAsync(r.checkout_url, `${brand.scheme}://pay/result`);
+      }
+      return r;
+    },
+    onSuccess: (r) => {
+      if (r.status === 'failed') return;
+      onStarted(r.number);
+    },
+    onError: () => haptics.warning(),
+  });
+  const failed = start.data?.status === 'failed';
+  return (
+    <Card style={{ gap: 14 }}>
+      <Text variant="title">Pagar con {q.method.name}</Text>
+      <Text color="textSecondary">
+        Te llevamos a {q.method.name} para completar el pago del monto exacto. Tu pedido se confirma cuando {q.method.name} nos avisa que el pago fue exitoso.
+      </Text>
+      {start.error ? <Banner tone="danger" icon="circle-alert" body={(start.error as Error).message} /> : null}
+      {failed ? <Banner tone="danger" icon="circle-alert" body="El proveedor no aceptó este intento. Actualiza el monto o elige otro método." /> : null}
+      <Button testID="pay-online" title={`Continuar a ${q.method.name}`} size="lg" full loading={start.isPending} disabled={expired} onPress={() => start.mutate()} />
+    </Card>
   );
 }
