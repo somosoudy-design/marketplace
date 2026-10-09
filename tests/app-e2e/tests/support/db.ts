@@ -20,41 +20,64 @@ function databaseUrl() {
 const SELLER2 = '00000000-0000-4000-a000-000000000003'; // demo seller of Patitas & Co. (seed)
 const ADMIN = '00000000-0000-4000-a000-000000000001';
 
+type As = <T>(user: string, sql: string, params?: unknown[]) => Promise<T>;
+
+/** Runs one statement as a signed-in user (RLS and auth.uid() apply) on an open connection. */
+const asOn = (client: pg.Client): As => async <T>(user: string, sql: string, params: unknown[] = []) => {
+  await client.query('begin');
+  try {
+    await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify({ sub: user, role: 'authenticated' })]);
+    await client.query('set local role authenticated');
+    const r = await client.query(sql, params);
+    await client.query('commit');
+    return r.rows[0] as T;
+  } catch (e) {
+    await client.query('rollback');
+    throw e;
+  }
+};
+
+/** A confirmed demo buyer (example.com) with one main address, as GoTrue and the app expect it. */
+async function insertBuyer(client: pg.Client, as: As, label: string) {
+  const email = `${label}-${Date.now()}@example.com`;
+  const password = 'Kora-prueba-2026';
+  const { rows: [u] } = await client.query(
+    // GoTrue expects empty strings, not nulls, in its token columns
+    `insert into auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+                             confirmation_token, recovery_token, email_change_token_new, email_change, email_change_token_current, reauthentication_token, phone_change, phone_change_token)
+     values ('00000000-0000-0000-0000-000000000000', gen_random_uuid(), 'authenticated', 'authenticated', $1, extensions.crypt($2, extensions.gen_salt('bf')), now(),
+             '{"provider":"email","providers":["email"]}', '{"full_name":"Ana Prueba"}', now(), now(), '', '', '', '', '', '', '', '') returning id`,
+    [email, password],
+  );
+  await client.query(
+    `insert into auth.identities (id, provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+     values (gen_random_uuid(), $1::text, $1::uuid, $2::jsonb, 'email', now(), now(), now())`,
+    [u.id, JSON.stringify({ sub: u.id, email, email_verified: true })],
+  );
+  await client.query(`update public.profiles set is_demo = true where id = $1`, [u.id]);
+  await as(u.id, `insert into public.addresses (user_id, label, recipient, phone, region_code, city, municipality, line1, is_default)
+                  values (auth.uid(), 'Casa', 'Ana Prueba', '+58 412 555 0101', 'A', 'Caracas', 'Libertador', 'Av. Ejemplo, Edif. Demo, piso 2', true)`);
+  return { id: u.id as string, email, password };
+}
+
+/** A signed-up buyer with one saved address and no orders. */
+export async function newBuyer(label: string) {
+  const client = new pg.Client({ connectionString: databaseUrl() });
+  await client.connect();
+  try {
+    return await insertBuyer(client, asOn(client), label);
+  } finally {
+    await client.end();
+  }
+}
+
 export async function deliveredOrderFor(label: string) {
   const client = new pg.Client({ connectionString: databaseUrl() });
   await client.connect();
-  const as = async <T>(user: string, sql: string, params: unknown[] = []) => {
-    await client.query('begin');
-    try {
-      await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify({ sub: user, role: 'authenticated' })]);
-      await client.query('set local role authenticated');
-      const r = await client.query(sql, params);
-      await client.query('commit');
-      return r.rows[0] as T;
-    } catch (e) {
-      await client.query('rollback');
-      throw e;
-    }
-  };
+  const as = asOn(client);
   try {
-    const email = `${label}-${Date.now()}@example.com`;
-    const password = 'Kora-prueba-2026';
-    const { rows: [u] } = await client.query(
-      // GoTrue expects empty strings, not nulls, in its token columns
-      `insert into auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
-                               confirmation_token, recovery_token, email_change_token_new, email_change, email_change_token_current, reauthentication_token, phone_change, phone_change_token)
-       values ('00000000-0000-0000-0000-000000000000', gen_random_uuid(), 'authenticated', 'authenticated', $1, extensions.crypt($2, extensions.gen_salt('bf')), now(),
-               '{"provider":"email","providers":["email"]}', '{"full_name":"Ana Prueba"}', now(), now(), '', '', '', '', '', '', '', '') returning id`,
-      [email, password],
-    );
-    await client.query(
-      `insert into auth.identities (id, provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
-       values (gen_random_uuid(), $1::text, $1::uuid, $2::jsonb, 'email', now(), now(), now())`,
-      [u.id, JSON.stringify({ sub: u.id, email, email_verified: true })],
-    );
-    await client.query(`update public.profiles set is_demo = true where id = $1`, [u.id]);
-    await as(u.id, `insert into public.addresses (user_id, label, recipient, phone, region_code, city, municipality, line1, is_default)
-                    values (auth.uid(), 'Casa', 'Ana Prueba', '+58 412 555 0101', 'A', 'Caracas', 'Libertador', 'Av. Ejemplo, Edif. Demo, piso 2', true)`);
+    const { id: uid, email, password } = await insertBuyer(client, as, label);
+    const u = { id: uid };
     const variant = (await client.query(`select v.id from public.product_variants v join public.products p on p.id = v.product_id where p.slug = 'juguete-cuerda-perros' limit 1`)).rows[0].id;
     await as(u.id, `select public.cart_set_quantity($1, 1)`, [variant]);
     const order = await as<{ r: { order_id: string; number: string } }>(
@@ -79,20 +102,12 @@ export async function deliveredOrderFor(label: string) {
   }
 }
 
-/** One statement as a signed-in user (RLS and auth.uid() apply), in its own transaction. */
+/** One statement as a signed-in user, on its own connection. */
 async function runAs<T = Record<string, unknown>>(userId: string, sql: string, params: unknown[] = []) {
   const client = new pg.Client({ connectionString: databaseUrl() });
   await client.connect();
   try {
-    await client.query('begin');
-    await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify({ sub: userId, role: 'authenticated' })]);
-    await client.query('set local role authenticated');
-    const r = await client.query(sql, params);
-    await client.query('commit');
-    return r.rows[0] as T;
-  } catch (e) {
-    await client.query('rollback').catch(() => undefined);
-    throw e;
+    return await asOn(client)<T>(userId, sql, params);
   } finally {
     await client.end();
   }

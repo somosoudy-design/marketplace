@@ -132,3 +132,22 @@ describe('checkout & inventory', () => {
     await asUser(buyer.id, (sql) => sql(`delete from public.cart_items`));
   });
 });
+
+describe('saved addresses', () => {
+  it('deleting the main address promotes the most recently added one', async () => {
+    const u = await createUser('addr-main');
+    const first = await createAddress(u.id);
+    const second = await createAddress(u.id);
+    const third = await createAddress(u.id); // each new one is created as main, so make the first one main again
+    await asUser(u.id, (sql) => sql(`update public.addresses set is_default = true where id = $1`, [first]));
+    const main = async () => (await admin(`select id from public.addresses where user_id = $1 and is_default`, [u.id])).map((r: any) => r.id);
+    expect(await main()).toEqual([first]);
+
+    await asUser(u.id, (sql) => sql(`delete from public.addresses where id = $1`, [first]));
+    expect(await main()).toEqual([third]);
+    await asUser(u.id, (sql) => sql(`delete from public.addresses where id = $1`, [second])); // not the main one: nothing moves
+    expect(await main()).toEqual([third]);
+    await asUser(u.id, (sql) => sql(`delete from public.addresses where id = $1`, [third]));
+    expect(await main()).toEqual([]);
+  });
+});

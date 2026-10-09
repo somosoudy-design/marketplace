@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
+import { Sheet } from '@/components/ui/Sheet';
 import { Banner } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
@@ -36,6 +37,7 @@ export default function EditAddressScreen() {
   const [regionSheet, setRegionSheet] = useState(false);
   const [more, setMore] = useState(false);
   const [customLabel, setCustomLabel] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
   const cities = useQuery({ queryKey: ['cities', f.region_code], queryFn: () => api.account.cities(f.region_code), enabled: !!f.region_code, staleTime: Infinity });
 
@@ -76,6 +78,18 @@ export default function EditAddressScreen() {
     },
     onSuccess: () => {
       haptics.success();
+      qc.invalidateQueries({ queryKey: qk.addresses });
+      qc.invalidateQueries({ queryKey: ['checkout'] });
+      router.back();
+    },
+    onError: () => haptics.warning(),
+  });
+
+  const remove = useMutation({
+    mutationFn: () => api.account.deleteAddress(id!),
+    onSuccess: () => {
+      haptics.success();
+      setConfirmDelete(false);
       qc.invalidateQueries({ queryKey: qk.addresses });
       qc.invalidateQueries({ queryKey: ['checkout'] });
       router.back();
@@ -155,6 +169,10 @@ export default function EditAddressScreen() {
             </View>
           ) : null}
         </Section>
+
+        {id && saved ? (
+          <Button testID="addr-delete" title="Eliminar esta dirección" icon="trash" variant="danger" onPress={() => setConfirmDelete(true)} />
+        ) : null}
       </ScrollView>
 
       <View style={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: insets.bottom + 12, backgroundColor: t.colors.chrome, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: t.colors.borderStrong }}>
@@ -162,6 +180,26 @@ export default function EditAddressScreen() {
           <Button testID="addr-save" title={id ? 'Guardar cambios' : 'Guardar dirección'} size="lg" full loading={save.isPending} onPress={() => save.mutate()} />
         </View>
       </View>
+
+      <Sheet
+        visible={confirmDelete}
+        title={`¿Eliminar «${saved?.label ?? 'esta dirección'}»?`}
+        onClose={() => setConfirmDelete(false)}
+        footer={
+          <>
+            <Button testID="addr-delete-confirm" title="Eliminar" variant="danger" full loading={remove.isPending} onPress={() => remove.mutate()} />
+            <Button title="Conservarla" variant="ghost" full onPress={() => setConfirmDelete(false)} />
+          </>
+        }
+      >
+        <View style={{ gap: 12 }}>
+          <Text color="textSecondary">
+            Tus pedidos ya hechos no cambian: guardan la dirección con la que se compraron.
+            {saved?.is_default && (addresses.data?.length ?? 0) > 1 ? ' La dirección que agregaste más recientemente pasa a ser la principal.' : ''}
+          </Text>
+          {remove.error ? <Banner tone="danger" icon="circle-alert" body={(remove.error as Error).message} /> : null}
+        </View>
+      </Sheet>
 
       <OptionsSheet
         visible={regionSheet}
