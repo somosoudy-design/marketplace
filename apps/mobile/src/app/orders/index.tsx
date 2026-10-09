@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { EmptyState, ErrorState } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { paymentTone, shortDate } from '@/lib/format';
 import { useOrders } from '@/lib/hooks';
@@ -15,12 +15,14 @@ import { useTheme } from '@/theme';
 export default function OrdersScreen() {
   const t = useTheme();
   const orders = useOrders();
-  if (orders.isError) return <ErrorState onRetry={() => orders.refetch()} />;
+  if (orders.isError && !orders.data) return <ErrorState onRetry={() => orders.refetch()} />;
+  if (waitingForNetwork(orders)) return <OfflineState />;
   return (
     <FlatList
       testID="orders-list"
       data={orders.data ?? []}
       keyExtractor={(o) => o.id}
+      ListHeaderComponent={<StaleNotice q={orders} />}
       style={{ backgroundColor: t.colors.background }}
       contentContainerStyle={{ padding: 16, gap: 12, width: '100%', maxWidth: 720, alignSelf: 'center' }}
       refreshControl={<RefreshControl refreshing={orders.isRefetching} onRefresh={() => orders.refetch()} tintColor={t.colors.brand} />}

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
-import { Sheet } from '@/components/ui/Sheet';
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet';
 import { Banner } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
@@ -181,25 +181,18 @@ export default function EditAddressScreen() {
         </View>
       </View>
 
-      <Sheet
+      <ConfirmSheet
         visible={confirmDelete}
+        testID="addr-delete"
         title={`¿Eliminar «${saved?.label ?? 'esta dirección'}»?`}
+        body={`Tus pedidos ya hechos no cambian: guardan la dirección con la que se compraron.${saved?.is_default && (addresses.data?.length ?? 0) > 1 ? ' La dirección que agregaste más recientemente pasa a ser la principal.' : ''}`}
+        confirm="Eliminar"
+        cancel="Conservarla"
+        loading={remove.isPending}
+        error={remove.error ? (remove.error as Error).message : null}
+        onConfirm={() => remove.mutate()}
         onClose={() => setConfirmDelete(false)}
-        footer={
-          <>
-            <Button testID="addr-delete-confirm" title="Eliminar" variant="danger" full loading={remove.isPending} onPress={() => remove.mutate()} />
-            <Button title="Conservarla" variant="ghost" full onPress={() => setConfirmDelete(false)} />
-          </>
-        }
-      >
-        <View style={{ gap: 12 }}>
-          <Text color="textSecondary">
-            Tus pedidos ya hechos no cambian: guardan la dirección con la que se compraron.
-            {saved?.is_default && (addresses.data?.length ?? 0) > 1 ? ' La dirección que agregaste más recientemente pasa a ser la principal.' : ''}
-          </Text>
-          {remove.error ? <Banner tone="danger" icon="circle-alert" body={(remove.error as Error).message} /> : null}
-        </View>
-      </Sheet>
+      />
 
       <OptionsSheet
         visible={regionSheet}

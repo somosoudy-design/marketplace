@@ -11,6 +11,8 @@ export const supabase = createKoraClient({
   anonKey: env.supabaseAnonKey || 'missing-anon-key',
   storage: Platform.OS === 'web' && typeof window === 'undefined' ? undefined : AsyncStorage,
   detectSessionInUrl: Platform.OS === 'web',
+  // the query client (lib/query) owns retries and knows which errors are worth repeating
+  retryReads: false,
 });
 
 export const api = createApi(supabase);

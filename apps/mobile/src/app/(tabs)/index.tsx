@@ -17,7 +17,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { SectionHeader } from '@/components/ui/Layout';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { ProductCardSkeleton, Skeleton } from '@/components/ui/Skeleton';
-import { ErrorState } from '@/components/ui/States';
+import { ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
@@ -162,7 +162,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
         <RatePill />
       </View>
 
-      {home.isError ? <ErrorState onRetry={() => home.refetch()} /> : null}
+      {home.isError && !data ? <ErrorState onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 
       <View style={{ marginTop: 24 }}>
         {data ? (

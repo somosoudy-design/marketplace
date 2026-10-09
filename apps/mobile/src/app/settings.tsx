@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Alert, Platform, ScrollView, Switch, View } from 'react-native';
+import { ScrollView, Switch, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet';
 import { Chip } from '@/components/ui/Chip';
 import { Card, Divider } from '@/components/ui/Layout';
 import { Banner } from '@/components/ui/States';
@@ -22,6 +23,7 @@ export default function SettingsScreen() {
   const p = profile.data;
   const [reason, setReason] = useState('');
   const [deletionRequested, setDeletionRequested] = useState(false);
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [pushStatus, setPushStatus] = useState<string | null>(null);
 
   const update = useMutation({
@@ -33,14 +35,6 @@ export default function SettingsScreen() {
   });
   const clear = useMutation({ mutationFn: () => api.account.clearActivity(), onSuccess: () => qc.invalidateQueries({ queryKey: qk.home }) });
   const del = useMutation({ mutationFn: () => api.account.requestDeletion(reason || undefined), onSuccess: () => setDeletionRequested(true) });
-
-  const confirmDeletion = () =>
-    Platform.OS === 'web'
-      ? del.mutate()
-      : Alert.alert('¿Solicitar eliminación de la cuenta?', 'Revisaremos que no tengas pedidos o pagos pendientes y eliminaremos tus datos personales. Conservamos solo lo que la ley exige.', [
-          { text: 'Cancelar', style: 'cancel' },
-          { text: 'Solicitar', style: 'destructive', onPress: () => del.mutate() },
-        ]);
 
   const schemes: { v: SchemePreference; l: string }[] = [{ v: 'system', l: 'Automático' }, { v: 'light', l: 'Claro' }, { v: 'dark', l: 'Oscuro' }];
   const notif = ((p?.preferences as Record<string, any> | undefined)?.notifications ?? {}) as Record<string, boolean>;
@@ -84,15 +78,27 @@ export default function SettingsScreen() {
       <Card style={{ gap: 12 }}>
         <Text variant="title">Eliminar cuenta</Text>
         {deletionRequested || del.isSuccess ? (
-          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Te escribiremos al correo de la cuenta para confirmar la eliminación." />
+          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Revisaremos que no tengas pedidos ni pagos pendientes y luego eliminaremos tus datos personales. Hasta entonces tu cuenta sigue funcionando." />
         ) : (
           <>
             <Text variant="bodySmall" color="textSecondary">Puedes pedir que eliminemos tu cuenta y tus datos personales. Los registros de pedidos y pagos se conservan de forma anonimizada cuando la ley lo exige.</Text>
             <TextField label="Motivo (opcional)" value={reason} onChangeText={setReason} />
-            <Button testID="request-deletion" title="Solicitar eliminación" variant="danger" loading={del.isPending} onPress={confirmDeletion} />
+            <Button testID="request-deletion" title="Solicitar eliminación" variant="danger" onPress={() => setConfirmDeletion(true)} />
           </>
         )}
       </Card>
+      <ConfirmSheet
+        visible={confirmDeletion && !del.isSuccess}
+        testID="request-deletion-sheet"
+        title="¿Solicitar la eliminación de tu cuenta?"
+        body="Revisaremos que no tengas pedidos o pagos pendientes y eliminaremos tus datos personales. Conservamos solo lo que la ley exige, sin datos que te identifiquen."
+        confirm="Solicitar eliminación"
+        cancel="Conservar mi cuenta"
+        loading={del.isPending}
+        error={del.error ? (del.error as Error).message : null}
+        onConfirm={() => del.mutate()}
+        onClose={() => setConfirmDeletion(false)}
+      />
     </ScrollView>
   );
 }

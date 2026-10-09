@@ -2,6 +2,7 @@ import type { Session, User } from '@supabase/supabase-js';
 import { useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { guestCart } from './guest-cart';
+import { clearAccountCache } from './query';
 import { api, supabase } from './supabase';
 
 interface AuthState {
@@ -53,7 +54,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setCartSyncing(false);
       }
     };
+    // the device keeps one account's data for offline use (lib/query); another account must never see it
+    let owner: string | null | undefined;
+    const ownedBy = (id: string | null) => {
+      if (owner !== undefined && owner !== id) clearAccountCache().catch(() => qc.clear());
+      if (owner === undefined && id === null) clearAccountCache().catch(() => undefined);
+      owner = id;
+    };
     supabase.auth.getSession().then(({ data }) => {
+      ownedBy(data.session?.user.id ?? null);
       setSession(data.session);
       setReady(true);
       if (data.session) {
@@ -62,6 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     });
     const { data } = supabase.auth.onAuthStateChange((event, s) => {
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') ownedBy(s?.user.id ?? null);
       setSession(s);
       if (event === 'SIGNED_IN') {
         // hold account cart queries in the same render that exposes the session, so they cannot read the
@@ -69,7 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setCartSyncing(true);
         setTimeout(syncGuestCart, 0);
       }
-      if (event === 'SIGNED_OUT') qc.clear();
     });
     return () => data.subscription.unsubscribe();
   }, [qc]);

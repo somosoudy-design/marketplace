@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
+import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { timeAgo } from '@/lib/format';
 import { useNotifications } from '@/lib/hooks';
@@ -92,7 +92,8 @@ export default function NotificationsScreen() {
   // when every notice comes from demo data one banner says so, instead of a label on each row
   const allTest = !!q.data?.length && q.data.every((n) => n.is_test);
 
-  if (q.isError) return <ErrorState onRetry={() => q.refetch()} />;
+  if (q.isError && !q.data) return <ErrorState onRetry={() => q.refetch()} />;
+  if (waitingForNetwork(q)) return <OfflineState />;
   return (
     <SectionList
       testID="notifications-list"

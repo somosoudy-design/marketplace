@@ -12,7 +12,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { Card, Divider } from '@/components/ui/Layout';
 import { Sheet } from '@/components/ui/Sheet';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, ErrorState } from '@/components/ui/States';
+import { Banner, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { brand } from '@/lib/brand';
@@ -36,8 +36,10 @@ export default function ClaimScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Stack.Screen options={{ title: showForm || !current ? 'Reportar un problema' : `Reclamo ${current.number}` }} />
-      {q.isError ? (
+      {q.isError && !q.data ? (
         <ErrorState onRetry={() => q.refetch()} />
+      ) : waitingForNetwork(q) ? (
+        <OfflineState />
       ) : q.isLoading ? (
         <View style={{ padding: 20, gap: 12 }}>
           <Skeleton height={120} radius={t.radii.lg} />

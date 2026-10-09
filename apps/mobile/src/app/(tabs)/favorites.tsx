@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MAX_CONTENT, ProductCard, useGridColumns } from '@/components/catalog/ProductGrid';
 import { ProductCardSkeleton } from '@/components/ui/Skeleton';
-import { EmptyState, ErrorState } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { useFavorites } from '@/lib/hooks';
@@ -44,6 +44,8 @@ export default function FavoritesScreen() {
       ListEmptyComponent={
         products.isLoading ? (
           <View style={{ flexDirection: 'row', gap: grid.gap, paddingHorizontal: 16 }}>{[0, 1].map((i) => <ProductCardSkeleton key={i} width={grid.cardWidth} />)}</View>
+        ) : waitingForNetwork(products) ? (
+          <OfflineState />
         ) : products.isError ? (
           <ErrorState onRetry={() => products.refetch()} />
         ) : (

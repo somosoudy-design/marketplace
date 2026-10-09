@@ -12,7 +12,7 @@ import { Icon } from '@/components/ui/Icon';
 import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
+import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import type { GuestLine } from '@/lib/guest-cart';
@@ -45,6 +45,7 @@ function AccountCart({ header }: { header: React.ReactNode }) {
   const setQty = useSetCartQuantity();
   const s = cart.data;
 
+  if (waitingForNetwork(cart)) return <View>{header}<OfflineState /></View>;
   if (cart.isPending) {
     return (
       <View>
@@ -53,7 +54,7 @@ function AccountCart({ header }: { header: React.ReactNode }) {
       </View>
     );
   }
-  if (cart.isError) return <View>{header}<ErrorState onRetry={() => cart.refetch()} /></View>;
+  if (cart.isError && !s) return <View>{header}<ErrorState onRetry={() => cart.refetch()} /></View>;
   if (!s || s.line_count === 0) {
     return (
       <EmptyCart header={header} body="Explora el catálogo y agrega lo que necesites." />

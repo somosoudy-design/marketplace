@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider } from '@/components/ui/Layout';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, ErrorState } from '@/components/ui/States';
+import { Banner, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { useAuth } from '@/lib/auth';
@@ -63,7 +63,8 @@ export default function PayScreen() {
   const outstanding = o ? D(o.total_usd).minus(o.refunded_usd ?? 0).minus(o.paid_usd) : D(0);
   const nextObligation = (o?.payment_obligations ?? []).find((x) => x.status === 'pending' || x.status === 'partially_paid');
 
-  if (order.isError) return <ErrorState onRetry={() => order.refetch()} />;
+  if (order.isError && !order.data) return <ErrorState onRetry={() => order.refetch()} />;
+  if (waitingForNetwork(order)) return <OfflineState />;
   if (!o) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[120, 260].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;
 
   if (submitted) {
@@ -89,6 +90,7 @@ export default function PayScreen() {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Stack.Screen options={{ title: `Pagar ${o.number}`, headerBackVisible: !fresh }} />
       <ScrollView testID="pay-scroll" contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: 60, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
+        <StaleNotice q={order} />
         {fresh ? <Banner tone="success" icon="circle-check" title={`Pedido ${o.number} creado`} body="Apartamos tus productos. Completa el pago para que lo preparemos." /> : null}
 
         <Card style={{ gap: 10 }}>

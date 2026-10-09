@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
 import { ProductCardSkeleton } from '@/components/ui/Skeleton';
-import { EmptyState, ErrorState } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useCategories, useSearch } from '@/lib/hooks';
 import { useTheme } from '@/theme';
@@ -182,6 +182,8 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: grid.gap, paddingHorizontal: 16 }}>
               {[0, 1, 2, 3].map((i) => <ProductCardSkeleton key={i} width={grid.cardWidth} />)}
             </View>
+          ) : waitingForNetwork(search) ? (
+            <OfflineState />
           ) : search.isError ? (
             <ErrorState onRetry={() => search.refetch()} />
           ) : (

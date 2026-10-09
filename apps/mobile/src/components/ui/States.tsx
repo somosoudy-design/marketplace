@@ -30,6 +30,20 @@ export function ErrorState({ message, onRetry }: { message?: string; onRetry?: (
   );
 }
 
+/** Shown instead of a skeleton when there is nothing saved for this screen and the device is offline. */
+export function OfflineState() {
+  return <EmptyState icon="wifi-off" title="Sin conexión" body="Esto todavía no está guardado en tu teléfono. Se carga solo cuando vuelva la conexión." />;
+}
+
+/** A query that has never loaded and is waiting for the network (React Query pauses it while offline). */
+export const waitingForNetwork = (q: { isPending: boolean; fetchStatus: string }) => q.isPending && q.fetchStatus === 'paused';
+
+/** Over saved data when the latest refresh failed, so an old amount or status is never taken as current. */
+export function StaleNotice({ q }: { q: { isError: boolean; data: unknown } }) {
+  if (!q.isError || q.data === undefined) return null;
+  return <Banner tone="warning" icon="wifi-off" body="No pudimos actualizar. Ves lo último que cargaste; puede haber cambiado." />;
+}
+
 export function Banner({ tone = 'info', icon = 'info', title, body, children }: { tone?: 'info' | 'warning' | 'danger' | 'success' | 'brand'; icon?: IconName; title?: string; body?: string; children?: React.ReactNode }) {
   const { colors, radii } = useTheme();
   const map = {

@@ -3,7 +3,7 @@ import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconButton } from '@/components/ui/IconButton';
-import { EmptyState, ErrorState } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { api } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 
@@ -22,6 +22,8 @@ export default function ProductLink() {
       </View>
       {q.isError ? (
         <ErrorState onRetry={() => q.refetch()} />
+      ) : waitingForNetwork(q) ? (
+        <OfflineState />
       ) : (
         <EmptyState icon="package" title="Este producto no está disponible" body="El enlace puede ser antiguo o el producto fue retirado por la tienda." action="Ver catálogo" onAction={() => router.replace('/explore')} />
       )}

@@ -11,6 +11,11 @@ export interface ClientOptions {
   /** React Native needs detectSessionInUrl=false; the web admin keeps the default. */
   detectSessionInUrl?: boolean;
   fetch?: typeof fetch;
+  /**
+   * Let supabase-js retry failed reads on its own (1 s, 2 s, 4 s). Off when the caller already retries, like
+   * the app's query client: stacked retries made a dead connection take about a minute to surface.
+   */
+  retryReads?: boolean;
 }
 
 export function createKoraClient(opts: ClientOptions): KoraClient {
@@ -24,6 +29,7 @@ export function createKoraClient(opts: ClientOptions): KoraClient {
       persistSession: true,
       detectSessionInUrl: opts.detectSessionInUrl ?? false,
     },
+    db: { retry: opts.retryReads ?? true },
     global: opts.fetch ? { fetch: opts.fetch } : undefined,
   });
 }

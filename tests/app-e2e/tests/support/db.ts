@@ -71,32 +71,51 @@ export async function newBuyer(label: string) {
   }
 }
 
+/** Places an order (one dog toy from Patitas & Co.) for the buyer through the same function as checkout. */
+async function placeOrder(client: pg.Client, as: As, userId: string) {
+  const variant = (await client.query(`select v.id from public.product_variants v join public.products p on p.id = v.product_id where p.slug = 'juguete-cuerda-perros' limit 1`)).rows[0].id;
+  await as(userId, `select public.cart_set_quantity($1, 1)`, [variant]);
+  const { r } = await as<{ r: { order_id: string; number: string } }>(
+    userId,
+    `select public.place_order((select id from public.addresses where user_id = auth.uid()), '{}'::jsonb, 'full', $1) as r`,
+    [`ui-${Date.now()}`],
+  );
+  return { orderId: r.order_id, number: r.number };
+}
+
+/** A buyer with a placed order that has no payment yet (it can still be cancelled). */
+export async function unpaidOrderFor(label: string) {
+  const client = new pg.Client({ connectionString: databaseUrl() });
+  await client.connect();
+  const as = asOn(client);
+  try {
+    const buyer = await insertBuyer(client, as, label);
+    return { userId: buyer.id, email: buyer.email, password: buyer.password, ...(await placeOrder(client, as, buyer.id)) };
+  } finally {
+    await client.end();
+  }
+}
+
+/** A buyer whose order was paid (Zelle, approved by the admin) and delivered by the store. */
 export async function deliveredOrderFor(label: string) {
   const client = new pg.Client({ connectionString: databaseUrl() });
   await client.connect();
   const as = asOn(client);
   try {
     const { id: uid, email, password } = await insertBuyer(client, as, label);
-    const u = { id: uid };
-    const variant = (await client.query(`select v.id from public.product_variants v join public.products p on p.id = v.product_id where p.slug = 'juguete-cuerda-perros' limit 1`)).rows[0].id;
-    await as(u.id, `select public.cart_set_quantity($1, 1)`, [variant]);
-    const order = await as<{ r: { order_id: string; number: string } }>(
-      u.id,
-      `select public.place_order((select id from public.addresses where user_id = auth.uid()), '{}'::jsonb, 'full', $1) as r`,
-      [`ui-${Date.now()}`],
-    );
-    const quote = await as<{ q: { id: string } }>(u.id, `select public.create_payment_quote($1, 'zelle') as q`, [order.r.order_id]);
+    const order = await placeOrder(client, as, uid);
+    const quote = await as<{ q: { id: string } }>(uid, `select public.create_payment_quote($1, 'zelle') as q`, [order.orderId]);
     const pay = await as<{ p: { id: string } }>(
-      u.id,
+      uid,
       `select public.submit_payment($1, $2, $3, '{"name":"Ana Prueba"}', $4) as p`,
-      [quote.q.id, `ZL-UI-${Date.now()}`, `${u.id}/ui-comprobante.webp`, `ui-pay-${Date.now()}`],
+      [quote.q.id, `ZL-UI-${Date.now()}`, `${uid}/ui-comprobante.webp`, `ui-pay-${Date.now()}`],
     );
     await as(ADMIN, `select public.review_payment($1, true)`, [pay.p.id]);
-    const fid = (await client.query(`select id from public.fulfillments where order_id = $1`, [order.r.order_id])).rows[0].id;
+    const fid = (await client.query(`select id from public.fulfillments where order_id = $1`, [order.orderId])).rows[0].id;
     for (const step of ['confirmed', 'preparing', 'dispatched', 'delivered']) {
       await as(SELLER2, `select public.advance_fulfillment($1, $2, null, $3)`, [fid, step, step === 'dispatched' ? 'ZOOM-UI-1' : null]);
     }
-    return { userId: u.id as string, email, password, orderId: order.r.order_id, number: order.r.number, fulfillmentId: fid as string };
+    return { userId: uid, email, password, orderId: order.orderId, number: order.number, fulfillmentId: fid as string };
   } finally {
     await client.end();
   }

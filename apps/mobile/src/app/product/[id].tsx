@@ -17,7 +17,7 @@ import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { Price } from '@/components/ui/Price';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
+import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { BottomBar, CollapsingHeader, useScrollY } from '@/components/ui/Bars';
 import { RatingInline, RatingSummary, ReviewItem } from '@/components/reviews/Reviews';
 import { Text } from '@/components/ui/Text';
@@ -47,6 +47,7 @@ export default function ProductScreen() {
   }, [id]);
 
   if (q.isLoading) return <ProductSkeleton />;
+  if (waitingForNetwork(q)) return <View style={{ flex: 1, paddingTop: insets.top + 60, backgroundColor: t.colors.background }}><BackButton /><OfflineState /></View>;
   if (q.isError) return <View style={{ flex: 1, paddingTop: insets.top + 60, backgroundColor: t.colors.background }}><BackButton /><ErrorState onRetry={() => q.refetch()} /></View>;
   if (!q.data) {
     return (

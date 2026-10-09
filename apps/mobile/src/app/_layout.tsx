@@ -1,6 +1,6 @@
 import { Fraunces_500Medium_Italic, Fraunces_600SemiBold } from '@expo-google-fonts/fraunces';
 import { Manrope_400Regular, Manrope_500Medium, Manrope_600SemiBold, Manrope_700Bold, Manrope_800ExtraBold } from '@expo-google-fonts/manrope';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider as NavigationThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,7 +11,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ConfigMissing } from '@/components/ConfigMissing';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/env';
-import { queryClient } from '@/lib/query';
+import { persistOptions, queryClient } from '@/lib/query';
+import { OfflineFrame } from '@/components/OfflineNotice';
 import { ThemeProvider, useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
 
@@ -57,26 +58,28 @@ function RootStack() {
   return (
     <NavigationThemeProvider value={navTheme}>
       <StatusBar style={t.scheme === 'dark' ? 'light' : 'dark'} />
-      <Stack screenOptions={header}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Inicio' }} />
-        <Stack.Screen name="product/[id]" options={{ headerShown: false, title: 'Producto' }} />
-        <Stack.Screen name="store/[slug]" options={{ headerShown: false, title: 'Tienda' }} />
-        <Stack.Screen name="catalog" options={{ title: 'Catálogo' }} />
-        <Stack.Screen name="checkout" options={{ title: 'Finalizar compra' }} />
-        <Stack.Screen name="pay/[orderId]" options={{ title: 'Pagar', gestureEnabled: false }} />
-        <Stack.Screen name="orders/index" options={{ title: 'Mis pedidos' }} />
-        <Stack.Screen name="orders/[id]" options={{ title: 'Pedido' }} />
-        <Stack.Screen name="addresses/index" options={{ title: 'Direcciones' }} />
-        <Stack.Screen name="addresses/edit" options={{ title: 'Dirección', presentation: 'modal' }} />
-        <Stack.Screen name="notifications" options={{ title: 'Notificaciones' }} />
-        <Stack.Screen name="settings" options={{ title: 'Preferencias y privacidad' }} />
-        <Stack.Screen name="claim/[fulfillmentId]" options={{ title: 'Reclamo' }} />
-        <Stack.Screen name="p/[slug]" options={{ headerShown: false }} />
-        <Stack.Screen name="tienda/[slug]" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-in" options={{ title: 'Iniciar sesión', presentation: 'modal' }} />
-        <Stack.Screen name="sign-up" options={{ title: 'Crear cuenta', presentation: 'modal' }} />
-        <Stack.Screen name="forgot-password" options={{ title: 'Recuperar acceso', presentation: 'modal' }} />
-      </Stack>
+      <OfflineFrame>
+        <Stack screenOptions={header}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false, title: 'Inicio' }} />
+          <Stack.Screen name="product/[id]" options={{ headerShown: false, title: 'Producto' }} />
+          <Stack.Screen name="store/[slug]" options={{ headerShown: false, title: 'Tienda' }} />
+          <Stack.Screen name="catalog" options={{ title: 'Catálogo' }} />
+          <Stack.Screen name="checkout" options={{ title: 'Finalizar compra' }} />
+          <Stack.Screen name="pay/[orderId]" options={{ title: 'Pagar', gestureEnabled: false }} />
+          <Stack.Screen name="orders/index" options={{ title: 'Mis pedidos' }} />
+          <Stack.Screen name="orders/[id]" options={{ title: 'Pedido' }} />
+          <Stack.Screen name="addresses/index" options={{ title: 'Direcciones' }} />
+          <Stack.Screen name="addresses/edit" options={{ title: 'Dirección', presentation: 'modal' }} />
+          <Stack.Screen name="notifications" options={{ title: 'Notificaciones' }} />
+          <Stack.Screen name="settings" options={{ title: 'Preferencias y privacidad' }} />
+          <Stack.Screen name="claim/[fulfillmentId]" options={{ title: 'Reclamo' }} />
+          <Stack.Screen name="p/[slug]" options={{ headerShown: false }} />
+          <Stack.Screen name="tienda/[slug]" options={{ headerShown: false }} />
+          <Stack.Screen name="sign-in" options={{ title: 'Iniciar sesión', presentation: 'modal' }} />
+          <Stack.Screen name="sign-up" options={{ title: 'Crear cuenta', presentation: 'modal' }} />
+          <Stack.Screen name="forgot-password" options={{ title: 'Recuperar acceso', presentation: 'modal' }} />
+        </Stack>
+      </OfflineFrame>
     </NavigationThemeProvider>
   );
 }
@@ -86,13 +89,13 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <QueryClientProvider client={queryClient}>
+        <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
           <ThemeProvider>
             <AuthProvider>
               <RootStack />
             </AuthProvider>
           </ThemeProvider>
-        </QueryClientProvider>
+        </PersistQueryClientProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

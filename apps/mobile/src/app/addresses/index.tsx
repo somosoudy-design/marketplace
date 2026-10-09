@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { EmptyState, ErrorState } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAddresses } from '@/lib/hooks';
 import { useTheme } from '@/theme';
@@ -14,7 +14,8 @@ export default function AddressesScreen() {
   const t = useTheme();
   const addresses = useAddresses();
 
-  if (addresses.isError) return <ErrorState onRetry={() => addresses.refetch()} />;
+  if (addresses.isError && !addresses.data) return <ErrorState onRetry={() => addresses.refetch()} />;
+  if (waitingForNetwork(addresses)) return <OfflineState />;
   return (
     <ScrollView style={{ backgroundColor: t.colors.background }} contentContainerStyle={{ padding: 16, gap: 12, width: '100%', maxWidth: 720, alignSelf: 'center' }}>
       {addresses.isLoading ? [0, 1].map((i) => <Skeleton key={i} height={90} radius={t.radii.lg} />) : null}

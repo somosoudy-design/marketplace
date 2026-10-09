@@ -3,7 +3,7 @@ import { D, describeEtaDates, formatMoney, formatRate, formatUSD, OBLIGATION_KIN
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import { Alert, Platform, RefreshControl, ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 import { SummaryRow } from '@/components/checkout/Rows';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { ReviewSheet } from '@/components/reviews/ReviewSheet';
@@ -11,10 +11,11 @@ import { Stars } from '@/components/reviews/Reviews';
 import { Badge } from '@/components/ui/Badge';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Button } from '@/components/ui/Button';
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider, ListRow } from '@/components/ui/Layout';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
+import { Banner, EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { paymentRecordTone, paymentTone, shortDate, shortDateTime } from '@/lib/format';
 import { useFulfillmentSteps, useOrder } from '@/lib/hooks';
@@ -36,16 +37,19 @@ export default function OrderScreen() {
   const delivered = order.data?.fulfillments.some((f) => f.status === 'delivered') ?? false;
   const myReviews = useQuery({ queryKey: qk.myReviews(id), queryFn: () => api.reviews.mine(itemIds), enabled: delivered && itemIds.length > 0 });
   const [reviewing, setReviewing] = useState<OrderItem | null>(null);
+  const [confirmCancel, setConfirmCancel] = useState(false);
   const claims = useQuery({ queryKey: ['claims', 'list'], queryFn: api.claims.list, enabled: !!order.data });
   const cancel = useMutation({
     mutationFn: () => api.orders.cancel(id, 'Cancelado por el comprador desde la app'),
     onSuccess: () => {
+      setConfirmCancel(false);
       qc.invalidateQueries({ queryKey: qk.order(id) });
       qc.invalidateQueries({ queryKey: qk.orders });
     },
   });
 
-  if (order.isError) return <ErrorState onRetry={() => order.refetch()} />;
+  if (order.isError && !order.data) return <ErrorState onRetry={() => order.refetch()} />;
+  if (waitingForNetwork(order)) return <OfflineState />;
   const o = order.data;
   if (order.isLoading) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[100, 180, 240].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;
   if (!o) return <EmptyState icon="receipt" title="No encontramos este pedido" />;
@@ -56,13 +60,6 @@ export default function OrderScreen() {
   const canCancel = o.status === 'placed' && D(o.paid_usd).isZero() && !pendingPayment;
   const ship = o.ship_to as Record<string, string> | null;
 
-  const confirmCancel = () => {
-    if (Platform.OS === 'web') return cancel.mutate();
-    Alert.alert('¿Cancelar el pedido?', 'Liberamos los productos apartados. Esta acción no se puede deshacer.', [
-      { text: 'Volver', style: 'cancel' },
-      { text: 'Cancelar pedido', style: 'destructive', onPress: () => cancel.mutate() },
-    ]);
-  };
 
   return (
     <ScrollView
@@ -72,6 +69,7 @@ export default function OrderScreen() {
       refreshControl={<RefreshControl refreshing={order.isRefetching} onRefresh={() => order.refetch()} tintColor={t.colors.brand} />}
     >
       <Stack.Screen options={{ title: o.number }} />
+      <StaleNotice q={order} />
       <View style={{ gap: 8 }}>
         <Text variant="displayM" testID="order-number">Pedido {o.number}</Text>
         <Text variant="bodySmall" color="textMuted">Realizado el {shortDateTime(o.placed_at)}</Text>
@@ -147,8 +145,19 @@ export default function OrderScreen() {
         </Card>
       ) : null}
 
-      {canCancel ? <Button testID="order-cancel" title="Cancelar pedido" variant="danger" loading={cancel.isPending} onPress={confirmCancel} /> : null}
-      {cancel.error ? <Banner tone="danger" icon="circle-alert" body={(cancel.error as Error).message} /> : null}
+      {canCancel ? <Button testID="order-cancel" title="Cancelar pedido" variant="danger" onPress={() => setConfirmCancel(true)} /> : null}
+      <ConfirmSheet
+        visible={confirmCancel}
+        testID="order-cancel-sheet"
+        title={`¿Cancelar el pedido ${o.number}?`}
+        body="Liberamos los productos que apartamos para ti. No se puede deshacer: si cambias de idea tendrás que comprar de nuevo."
+        confirm="Cancelar pedido"
+        cancel="Conservar el pedido"
+        loading={cancel.isPending}
+        error={cancel.error ? (cancel.error as Error).message : null}
+        onConfirm={() => cancel.mutate()}
+        onClose={() => setConfirmCancel(false)}
+      />
       <ReviewSheet
         key={reviewing?.id ?? 'none'}
         item={reviewing}
@@ -171,7 +180,12 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, cla
     <Card padded={false} style={{ overflow: 'hidden' }}>
       <View style={{ padding: 16, gap: 6, backgroundColor: t.colors.surfaceSunken }}>
         <Text variant="overline" color="textMuted">{total > 1 ? `ENTREGA ${index + 1} DE ${total}` : 'ENTREGA'}</Text>
-        <Text variant="title" testID={`fulfillment-status-${index}`}>{current?.buyer_label ?? current?.label ?? f.status}</Text>
+        {current ? (
+          <Text variant="title" testID={`fulfillment-status-${index}`}>{current.buyer_label ?? current.label}</Text>
+        ) : (
+          // labels come from the logistics configuration; never show the internal code while they load
+          <Skeleton height={24} width={170} radius={8} />
+        )}
         {current?.buyer_description ? <Text variant="bodySmall" color="textSecondary">{current.buyer_description}</Text> : null}
         {f.eta_min_date && f.eta_max_date && f.status !== 'delivered' && f.status !== 'cancelled' ? (
           <Text variant="bodySmall" color="brand">{describeEtaDates(f.eta_min_date, f.eta_max_date)}</Text>
