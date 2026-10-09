@@ -2,4 +2,4 @@
 # Llega a los APK que tienen expo-updates (APK 4 en adelante) con el mismo runtime. La primera línea sin # es el mensaje.
 # runtime: el de los APK instalados; el workflow se detiene si el de esta versión es otro (algo nativo cambió).
 runtime: a4682c83c1bb738fc74c73153838ded0656f1912
-Sesión guardada en Android (lectura corregida), mensajes de error claros, Electric Violet e Inicio de tienda
+Registro para testers sin código por correo cuando el proyecto lo permite; sesión guardada en Android corregida
