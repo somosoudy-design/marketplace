@@ -12,6 +12,20 @@ test('home shows the editorial catalog to visitors', async ({ page }) => {
   await expect(page.getByRole('tab', { name: 'Inicio' })).toHaveAttribute('aria-selected', 'true');
 });
 
+test('a marketplace with nothing published yet says so instead of an empty featured section', async ({ page }) => {
+  // the same answers a brand-new backend gives: an empty home feed and no search results
+  await page.route('**/rest/v1/rpc/home_feed*', (r) =>
+    r.fulfill({ json: { stores: [], categories: [], collections: [], recommended: [], personalized: false, recently_viewed: [] } }));
+  await page.route('**/rest/v1/rpc/search_products*', (r) => r.fulfill({ json: [] }));
+  await page.goto('/');
+  const empty = page.getByTestId('home-catalog-empty');
+  await expect(empty).toContainText('Las tiendas están preparando su catálogo');
+  await expect(page.getByText('Una selección para empezar')).toHaveCount(0);
+  await expect(page.getByTestId('home-feed-end')).toHaveCount(0);
+  await empty.getByRole('button', { name: 'Crear cuenta' }).click();
+  await expect(page).toHaveURL(/sign-up/);
+});
+
 test('search and filters survive opening a product and coming back', async ({ page }) => {
   await page.goto('/explore');
   const search = page.getByTestId('catalog-search');

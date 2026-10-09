@@ -17,7 +17,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { SectionHeader } from '@/components/ui/Layout';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { ProductCardSkeleton, Skeleton } from '@/components/ui/Skeleton';
-import { ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
@@ -29,7 +29,8 @@ import { useTheme } from '@/theme';
 type Row =
   | { kind: 'title'; key: string; overline: string; title: string }
   | { kind: 'products'; key: string; slot: string; items: Card[] }
-  | { kind: 'loading'; key: string };
+  | { kind: 'loading'; key: string }
+  | { kind: 'empty'; key: string };
 
 const SEARCH_BOTTOM = 128; // scroll offset at which the inline search has left the screen
 
@@ -52,19 +53,21 @@ export default function HomeScreen() {
       for (let i = 0; i < items.length; i += grid.columns) out.push({ kind: 'products', key: `${slot}-${i}`, slot, items: items.slice(i, i + grid.columns) });
     };
     const first = data.recommended;
+    const rest = (more.data?.pages.flat() ?? []).filter((p) => !first.some((f) => f.id === p.id) && p.availability !== 'unavailable');
+    // a marketplace that has published nothing yet says so instead of showing an empty "featured" heading
+    if (!first.length && !rest.length && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
     out.push(personalized
       ? { kind: 'title', key: 't1', overline: 'Para ti', title: 'Elegidos según lo que te gusta' }
       : { kind: 'title', key: 't1', overline: 'Destacados', title: 'Una selección para empezar' });
     push(personalized ? 'home_for_you' : 'home_featured', first);
-    const seen = new Set(first.map((p) => p.id));
-    const rest = (more.data?.pages.flat() ?? []).filter((p) => !seen.has(p.id) && p.availability !== 'unavailable');
     if (rest.length) {
       out.push({ kind: 'title', key: 't2', overline: 'Más para descubrir', title: 'Lo más elegido últimamente' });
       push('home_popular', rest);
     }
     if (more.isFetchingNextPage || (more.isLoading && !rest.length)) out.push({ kind: 'loading', key: 'more' });
     return out;
-  }, [data, personalized, more.data, more.isFetchingNextPage, more.isLoading, grid.columns]);
+  }, [data, personalized, more.data, more.isFetchingNextPage, more.isLoading, more.isError, grid.columns]);
+  const empty = rows.length === 1 && rows[0]!.kind === 'empty';
 
   // impressions: rails count when their section enters the viewport, the feed per visible row
   const tracking = useViewportTracking();
@@ -103,8 +106,9 @@ export default function HomeScreen() {
           onEndReachedThreshold={0.6}
           onEndReached={() => more.hasNextPage && !more.isFetchingNextPage && void more.fetchNextPage()}
           ListHeaderComponent={<Header home={home} />}
-          ListFooterComponent={data && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
+          ListFooterComponent={data && !empty && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
           renderItem={({ item }) => {
+            if (item.kind === 'empty') return <CatalogOpening signedIn={!!user} />;
             if (item.kind === 'title') return <View style={{ marginTop: 36 }}><SectionHeader overline={item.overline} title={item.title} /></View>;
             if (item.kind === 'loading') {
               return (
@@ -341,6 +345,23 @@ function TrustStrip() {
           <Text variant="caption" color="textSecondary">{i.text}</Text>
         </View>
       ))}
+    </View>
+  );
+}
+
+/** Nothing is published yet (a new marketplace, or every product paused): honest, calm, and one useful next step. */
+function CatalogOpening({ signedIn }: { signedIn: boolean }) {
+  return (
+    <View testID="home-catalog-empty" style={{ marginTop: 12 }}>
+      <EmptyState
+        icon="store"
+        title="Las tiendas están preparando su catálogo"
+        body={signedIn
+          ? 'Todavía no hay productos publicados. Aquí aparecerán apenas una tienda publique el primero.'
+          : 'Todavía no hay productos publicados. Crea tu cuenta y tendrás tus datos de envío listos cuando abran.'}
+        action={signedIn ? undefined : 'Crear cuenta'}
+        onAction={signedIn ? undefined : () => router.push('/sign-up')}
+      />
     </View>
   );
 }
