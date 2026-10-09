@@ -1,7 +1,7 @@
 'use client';
 import {
   BadgeDollarSign, Boxes, ChartLine, ClipboardList, FileClock, FolderTree, Globe, HandCoins, LayoutDashboard, LifeBuoy, LogOut, Megaphone,
-  Package, PackageCheck, Plane, Receipt, Settings, ShieldCheck, Store, Truck, Users, Wallet, type LucideIcon,
+  Package, PackageCheck, Plane, Receipt, Settings, ShieldCheck, Sparkles, Star, Store, Truck, Users, Wallet, type LucideIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -27,6 +27,8 @@ const ADMIN: { title: string; items: Item[] }[] = [
     { href: '/admin/categorias', label: 'Categorías', icon: FolderTree },
     { href: '/admin/importar', label: 'Importar por URL', icon: Globe },
     { href: '/admin/contenido', label: 'Contenido editorial', icon: Megaphone },
+    { href: '/admin/opiniones', label: 'Opiniones', icon: Star },
+    { href: '/admin/recomendaciones', label: 'Recomendaciones', icon: Sparkles },
   ] },
   { title: 'Finanzas', items: [
     { href: '/admin/tasas', label: 'Tasas de cambio', icon: ChartLine },
@@ -48,6 +50,7 @@ const SELLER: { title: string; items: Item[] }[] = [
     { href: '/vendedor/ventas', label: 'Ventas y comisiones', icon: ClipboardList },
     { href: '/vendedor/balance', label: 'Balance', icon: Wallet },
     { href: '/vendedor/reclamos', label: 'Reclamos', icon: LifeBuoy },
+    { href: '/vendedor/opiniones', label: 'Opiniones', icon: Star },
     { href: '/vendedor/tienda', label: 'Perfil de la tienda', icon: Store },
     { href: '/vendedor/envios', label: 'Tarifas de envío', icon: Truck },
   ] },

@@ -367,6 +367,8 @@ export interface StoreProfile {
 export interface RecommendationMetrics {
   from: string;
   ranking: Record<string, unknown>;
+  events: number;
+  demo_events: number;
   slots: { slot: string; impressions: number; clicks: number; ctr_pct: number | null; users: number; added_to_cart: number; purchased: number }[];
   top_clicked: { id: string; title: string; clicks: number }[];
 }

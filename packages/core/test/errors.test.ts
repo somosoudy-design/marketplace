@@ -21,4 +21,10 @@ describe('error messages', () => {
     expect(toAppError(new TypeError('Network request failed')).code).toBe('network');
     expect(toAppError({ code: 'XX000', message: 'boom' }).message).toBe(ERROR_MESSAGES.unknown);
   });
+
+  it('shows the database detail for settings validation, and the generic copy when there is none', () => {
+    const detail = 'El plazo de respuesta del vendedor (horas) debe ser un número entero.';
+    expect(toAppError({ code: '22023', hint: 'invalid_setting', message: 'invalid setting', details: detail }).message).toBe(detail);
+    expect(toAppError({ code: '22023', hint: 'invalid_setting', message: 'invalid setting' }).message).toBe(ERROR_MESSAGES.invalid_setting);
+  });
 });

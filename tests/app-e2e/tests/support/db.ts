@@ -73,8 +73,44 @@ export async function deliveredOrderFor(label: string) {
     for (const step of ['confirmed', 'preparing', 'dispatched', 'delivered']) {
       await as(SELLER2, `select public.advance_fulfillment($1, $2, null, $3)`, [fid, step, step === 'dispatched' ? 'ZOOM-UI-1' : null]);
     }
-    return { email, password, orderId: order.r.order_id, number: order.r.number, fulfillmentId: fid as string };
+    return { userId: u.id as string, email, password, orderId: order.r.order_id, number: order.r.number, fulfillmentId: fid as string };
   } finally {
     await client.end();
   }
+}
+
+/** One statement as a signed-in user (RLS and auth.uid() apply), in its own transaction. */
+async function runAs<T = Record<string, unknown>>(userId: string, sql: string, params: unknown[] = []) {
+  const client = new pg.Client({ connectionString: databaseUrl() });
+  await client.connect();
+  try {
+    await client.query('begin');
+    await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify({ sub: userId, role: 'authenticated' })]);
+    await client.query('set local role authenticated');
+    const r = await client.query(sql, params);
+    await client.query('commit');
+    return r.rows[0] as T;
+  } catch (e) {
+    await client.query('rollback').catch(() => undefined);
+    throw e;
+  } finally {
+    await client.end();
+  }
+}
+
+/** The buyer of a delivered order rates its item, through the same function the app calls. Returns the review id. */
+export async function reviewAs(userId: string, orderId: string, rating: number, body: string) {
+  const r = await runAs<{ id: string }>(
+    userId,
+    `select (public.submit_review((select id from public.order_items where order_id = $1 limit 1), $2, $3)) ->> 'id' as id`,
+    [orderId, rating, body],
+  );
+  return r.id;
+}
+
+/** Recommendation events as the app records them: impressions of the first products of a slot and a click on one. */
+export async function browseRecommendations(userId: string, slot: string, productSlugs: string[], clicked: string) {
+  const ids = (await runAs<{ ids: string[] }>(userId, `select array_agg(id) as ids from public.products where slug = any ($1)`, [productSlugs])).ids;
+  await runAs(userId, `select public.track_recommendation($1, 'impression', $2)`, [slot, ids]);
+  await runAs(userId, `select public.track_recommendation($1, 'click', array[(select id from public.products where slug = $2)])`, [slot, clicked]);
 }

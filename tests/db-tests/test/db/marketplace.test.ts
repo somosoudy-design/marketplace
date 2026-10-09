@@ -197,8 +197,10 @@ describe('logistics', () => {
     await asUser(stranger.id, async (sql) => expect(await sql(`select id from public.claims where id = $1`, [claimId])).toHaveLength(0));
     await asUser(adminU.id, (sql) => sql(`select public.resolve_claim($1, 'resolved', 'Reembolso parcial aprobado')`, [claimId]));
     await expectHint(asUser(buyer.id, (sql) => sql(`select public.post_claim_message($1, 'gracias')`, [claimId])), 'claim_closed');
-    const msgs = await admin(`select author_role from public.claim_messages where claim_id = $1 order by id`, [claimId]);
-    expect(msgs.map((m: any) => m.author_role)).toEqual(['buyer', 'seller']);
+    // the escalation is part of the conversation the store and the buyer read
+    const msgs = await admin(`select author_role, body from public.claim_messages where claim_id = $1 order by id`, [claimId]);
+    expect(msgs.map((m: any) => m.author_role)).toEqual(['buyer', 'seller', 'buyer']);
+    expect(msgs[2].body).toBe('Pedí que el equipo de la plataforma revise este reclamo.');
   });
 });
 

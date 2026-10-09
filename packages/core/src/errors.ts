@@ -64,9 +64,12 @@ export const ERROR_MESSAGES: Record<string, string> = {
   integration_not_ready: 'Esta integración aún no tiene credenciales configuradas. No se puede activar.',
   instructions_required: 'Agrega los datos de pago (cuenta, teléfono o dirección) antes de activar este método.',
   rate_anomaly: 'La tasa recibida varía demasiado respecto a la anterior. Revísala manualmente.',
+  invalid_setting: 'Ese valor no es válido para este parámetro.',
   network: 'Sin conexión. Revisa tu internet e intenta de nuevo.',
   unknown: 'Algo salió mal. Intenta de nuevo.',
 };
+
+const DETAILED = new Set(['invalid_setting']);
 
 export interface AppError { code: string; message: string; detail?: string; cause?: unknown }
 
@@ -77,6 +80,8 @@ export function toAppError(err: unknown): AppError {
   if (e.name === 'TypeError' && /fetch|network/i.test(e.message ?? '')) return { code: 'network', message: ERROR_MESSAGES.network!, cause: err };
   if (/Failed to fetch|Network request failed|NetworkError/i.test(e.message ?? '')) return { code: 'network', message: ERROR_MESSAGES.network!, cause: err };
   const hint = e.hint ?? (e.code === '42501' ? 'forbidden' : e.code === '28000' ? 'auth_required' : undefined);
+  // these hints come with a Spanish detail written by the database that says exactly what to fix
+  if (hint && DETAILED.has(hint) && e.details) return { code: hint, message: e.details, cause: err };
   if (hint && ERROR_MESSAGES[hint]) return { code: hint, message: ERROR_MESSAGES[hint]!, detail: e.details, cause: err };
   return { code: e.code ?? 'unknown', message: ERROR_MESSAGES.unknown!, detail: e.message, cause: err };
 }

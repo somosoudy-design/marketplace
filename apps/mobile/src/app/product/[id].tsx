@@ -22,6 +22,7 @@ import { BottomBar, CollapsingHeader, useScrollY } from '@/components/ui/Bars';
 import { RatingInline, RatingSummary, ReviewItem } from '@/components/reviews/Reviews';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
+import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct, useVesRate } from '@/lib/hooks';
@@ -97,7 +98,9 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const images = p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }];
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
-  const scroll = useScrollY();
+  // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
+  const tracking = useViewportTracking();
+  const scroll = useScrollY(tracking.onWindow);
   const heroHeight = imageWidth / t.imagery.productAspect;
   const scrollRef = useRef<Animated.ScrollView>(null);
   const reviewsY = useRef(0);
@@ -140,121 +143,125 @@ function ProductView({ product: p }: { product: ProductDetail }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      <Animated.ScrollView ref={scrollRef} testID="product-scroll" onScroll={scroll.onScroll} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 140 + insets.bottom }} showsVerticalScrollIndicator={false}>
-        {/* gallery */}
-        <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
-          <FlatList
-            horizontal
-            pagingEnabled
-            data={images}
-            keyExtractor={(img, i) => `${img.path}-${i}`}
-            showsHorizontalScrollIndicator={false}
-            onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
-            renderItem={({ item, index }) => (
-              <ProductImage path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
-            )}
-          />
-          {images.length > 1 ? (
-            <View accessibilityLabel={`Foto ${page + 1} de ${images.length}`} style={{ position: 'absolute', bottom: 14, alignSelf: 'center', flexDirection: 'row', gap: 6 }}>
-              {images.map((_, i) => <View key={i} style={{ width: i === page ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: i === page ? t.colors.text : t.colors.borderStrong }} />)}
-            </View>
-          ) : null}
-        </View>
-
-        <View style={{ padding: 20, gap: 18, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
-          {/* store + title */}
-          <ScalePressable accessibilityRole="link" accessibilityLabel={`Tienda ${p.store.name}`} onPress={() => router.push({ pathname: '/store/[slug]', params: { slug: p.store.slug } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-            <View style={{ width: 30, height: 30, borderRadius: 10, overflow: 'hidden', backgroundColor: t.colors.surfaceSunken }}>
-              {p.store.logo_path ? <Image source={{ uri: storeImage(p.store.logo_path) ?? undefined }} style={{ flex: 1 }} /> : null}
-            </View>
-            <Text variant="label" color="textSecondary" style={{ flex: 1 }}>{p.brand_name ? `${p.brand_name} · ` : ''}{p.store.name}</Text>
-            <Icon name="chevron-right" size={16} color={t.colors.textMuted} />
-          </ScalePressable>
-          <View style={{ gap: 6 }}>
-            <Text variant="displayM" testID="product-title">{p.title}</Text>
-            {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
-            <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: true })} />
-          </View>
-          <View style={{ gap: 10 }}>
-            {/* re-keyed so a variant with another price fades in instead of snapping */}
-            <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
-              <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} />
-            </Animated.View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-              <AvailabilityBadge value={variantSoldOut ? 'sold_out' : p.availability} />
-              {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
-            </View>
-            {lead ? (
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                <Icon name={p.availability === 'on_order' ? 'plane' : p.availability === 'in_transit' ? 'ship' : 'clock'} size={17} color={t.colors.textSecondary} />
-                <Text variant="bodySmall" color="textSecondary" style={{ flex: 1 }}>{lead}{eta ? ` · ${eta}` : ''}</Text>
+      <ImpressionScope tracking={tracking} enabled={!!user}>
+        <Animated.ScrollView ref={scrollRef} testID="product-scroll" onScroll={scroll.onScroll} onLayout={tracking.onLayout} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 140 + insets.bottom }} showsVerticalScrollIndicator={false}>
+          {/* gallery */}
+          <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+            <FlatList
+              horizontal
+              pagingEnabled
+              data={images}
+              keyExtractor={(img, i) => `${img.path}-${i}`}
+              showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
+              renderItem={({ item, index }) => (
+                <ProductImage path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
+              )}
+            />
+            {images.length > 1 ? (
+              <View accessibilityLabel={`Foto ${page + 1} de ${images.length}`} style={{ position: 'absolute', bottom: 14, alignSelf: 'center', flexDirection: 'row', gap: 6 }}>
+                {images.map((_, i) => <View key={i} style={{ width: i === page ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: i === page ? t.colors.text : t.colors.borderStrong }} />)}
               </View>
             ) : null}
           </View>
 
-          {p.is_demo ? <Banner tone="warning" icon="info" title="Producto de demostración" body="Foto ilustrativa y precio de ejemplo para probar la tienda. No es una oferta real." /> : null}
-
-          {/* variants */}
-          {p.variants.length > 1 ? (
-            <View style={{ gap: 10 }}>
-              <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-                {p.variants.map((v) => {
-                  const out = v.stock != null && v.stock <= 0;
-                  return <Chip key={v.id} testID={`variant-${v.title}`} label={out ? `${v.title} · agotado` : v.title} selected={variant?.id === v.id} onPress={() => setVariant(v)} />;
-                })}
+          <View style={{ padding: 20, gap: 18, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+            {/* store + title */}
+            <ScalePressable accessibilityRole="link" accessibilityLabel={`Tienda ${p.store.name}`} onPress={() => router.push({ pathname: '/store/[slug]', params: { slug: p.store.slug } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <View style={{ width: 30, height: 30, borderRadius: 10, overflow: 'hidden', backgroundColor: t.colors.surfaceSunken }}>
+                {p.store.logo_path ? <Image source={{ uri: storeImage(p.store.logo_path) ?? undefined }} style={{ flex: 1 }} /> : null}
               </View>
+              <Text variant="label" color="textSecondary" style={{ flex: 1 }}>{p.brand_name ? `${p.brand_name} · ` : ''}{p.store.name}</Text>
+              <Icon name="chevron-right" size={16} color={t.colors.textMuted} />
+            </ScalePressable>
+            <View style={{ gap: 6 }}>
+              <Text variant="displayM" testID="product-title">{p.title}</Text>
+              {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
+              <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: true })} />
             </View>
-          ) : null}
-
-          {availability.purchasable && !variantSoldOut ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Text variant="label" color="textSecondary">Cantidad</Text>
-              <Stepper value={qty} max={maxQty} onChange={setQty} />
-            </View>
-          ) : null}
-
-          {p.highlights?.length ? (
             <View style={{ gap: 10 }}>
-              {p.highlights.map((h) => (
-                <View key={h} style={{ flexDirection: 'row', gap: 10 }}>
-                  <Icon name="check" size={18} color={t.colors.brand} strokeWidth={2.2} />
-                  <Text style={{ flex: 1 }}>{h}</Text>
+              {/* re-keyed so a variant with another price fades in instead of snapping */}
+              <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
+                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} />
+              </Animated.View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <AvailabilityBadge value={variantSoldOut ? 'sold_out' : p.availability} />
+                {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
+              </View>
+              {lead ? (
+                <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                  <Icon name={p.availability === 'on_order' ? 'plane' : p.availability === 'in_transit' ? 'ship' : 'clock'} size={17} color={t.colors.textSecondary} />
+                  <Text variant="bodySmall" color="textSecondary" style={{ flex: 1 }}>{lead}{eta ? ` · ${eta}` : ''}</Text>
                 </View>
-              ))}
+              ) : null}
             </View>
-          ) : null}
 
-          {p.description ? (
-            <View style={{ gap: 8 }}>
-              <Text variant="title">Descripción</Text>
-              <Text color="textSecondary" style={{ lineHeight: 24 }}>{p.description}</Text>
-            </View>
-          ) : null}
+            {p.is_demo ? <Banner tone="warning" icon="info" title="Producto de demostración" body="Foto ilustrativa y precio de ejemplo para probar la tienda. No es una oferta real." /> : null}
 
-          <Card style={{ gap: 14 }}>
-            <InfoRow icon="truck" title="Entrega" body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
-            {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Puedes pagar el 100 % o un anticipo del 50 % y el resto cuando llegue a Venezuela." /> : null}
-            <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
-            {methods.data?.length ? (
-              <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. En bolívares calculamos el monto al momento de pagar.`} />
+            {/* variants */}
+            {p.variants.length > 1 ? (
+              <View style={{ gap: 10 }}>
+                <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+                  {p.variants.map((v) => {
+                    const out = v.stock != null && v.stock <= 0;
+                    return <Chip key={v.id} testID={`variant-${v.title}`} label={out ? `${v.title} · agotado` : v.title} selected={variant?.id === v.id} onPress={() => setVariant(v)} />;
+                  })}
+                </View>
+              </View>
             ) : null}
-          </Card>
-        </View>
 
-        {p.rating_count > 0 ? (
-          <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
-            <ProductReviewsSection productId={p.id} />
-          </View>
-        ) : null}
+            {availability.purchasable && !variantSoldOut ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text variant="label" color="textSecondary">Cantidad</Text>
+                <Stepper value={qty} max={maxQty} onChange={setQty} />
+              </View>
+            ) : null}
 
-        {p.related.length ? (
-          <View style={{ marginTop: 10 }}>
-            <SectionHeader overline="También te puede gustar" title="Relacionados" />
-            <ProductRail products={p.related} />
+            {p.highlights?.length ? (
+              <View style={{ gap: 10 }}>
+                {p.highlights.map((h) => (
+                  <View key={h} style={{ flexDirection: 'row', gap: 10 }}>
+                    <Icon name="check" size={18} color={t.colors.brand} strokeWidth={2.2} />
+                    <Text style={{ flex: 1 }}>{h}</Text>
+                  </View>
+                ))}
+              </View>
+            ) : null}
+
+            {p.description ? (
+              <View style={{ gap: 8 }}>
+                <Text variant="title">Descripción</Text>
+                <Text color="textSecondary" style={{ lineHeight: 24 }}>{p.description}</Text>
+              </View>
+            ) : null}
+
+            <Card style={{ gap: 14 }}>
+              <InfoRow icon="truck" title="Entrega" body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
+              {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Puedes pagar el 100 % o un anticipo del 50 % y el resto cuando llegue a Venezuela." /> : null}
+              <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
+              {methods.data?.length ? (
+                <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. En bolívares calculamos el monto al momento de pagar.`} />
+              ) : null}
+            </Card>
           </View>
-        ) : null}
-      </Animated.ScrollView>
+
+          {p.rating_count > 0 ? (
+            <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+              <ProductReviewsSection productId={p.id} />
+            </View>
+          ) : null}
+
+          {p.related.length ? (
+            <TrackedSection slot="related" ids={p.related.map((r) => r.id)} visible={2} testID="product-related">
+              <View style={{ paddingTop: 10 }}>
+                <SectionHeader overline="También te puede gustar" title="Relacionados" />
+                <ProductRail products={p.related} slot="related" />
+              </View>
+            </TrackedSection>
+          ) : null}
+        </Animated.ScrollView>
+      </ImpressionScope>
 
       <CollapsingHeader
         y={scroll.y}

@@ -404,6 +404,10 @@ begin
   return jsonb_build_object(
     'from', v_from,
     'ranking', public.setting('ranking', '{}'::jsonb),
+    -- events from demo accounts are measured too, so the panel can say how much of the sample is not real traffic
+    'events', (select count(*) from public.rec_events e where e.created_at >= v_from),
+    'demo_events', (select count(*) from public.rec_events e join public.profiles pr on pr.id = e.user_id
+                     where e.created_at >= v_from and pr.is_demo),
     'slots', coalesce((select jsonb_agg(x order by x.impressions desc) from (
       select e.slot,
              count(*) filter (where e.kind = 'impression') as impressions,

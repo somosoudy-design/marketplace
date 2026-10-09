@@ -127,9 +127,9 @@ export function Toggle({ checked, onChange, label, disabled }: { checked: boolea
   );
 }
 
-export function Tabs<T extends string>({ value, onChange, items }: { value: T; onChange: (v: T) => void; items: { value: T; label: string; count?: number }[] }) {
+export function Tabs<T extends string>({ value, onChange, items, flush }: { value: T; onChange: (v: T) => void; items: { value: T; label: string; count?: number }[]; flush?: boolean }) {
   return (
-    <div role="tablist" className="mb-5 flex flex-wrap gap-1.5">
+    <div role="tablist" className={cx('flex flex-wrap gap-1.5', !flush && 'mb-5')}>
       {items.map((i) => (
         <button
           key={i.value}

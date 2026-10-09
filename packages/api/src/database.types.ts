@@ -3007,6 +3007,10 @@ export type Database = {
         };
         Returns: undefined;
       };
+      _setting_number: {
+        Args: { p_integer: boolean; p_key: string; p_label: string; p_max: number; p_min: number; p_value: Json };
+        Returns: undefined;
+      };
       _settle_fulfillment: { Args: { p_fulfillment_id: string }; Returns: undefined };
       add_store_member: {
         Args: { p_email: string; p_role?: Database['public']['Enums']['store_member_role']; p_store_id: string };
