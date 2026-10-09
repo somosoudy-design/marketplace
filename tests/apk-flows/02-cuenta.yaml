@@ -10,6 +10,12 @@ name: Comprador con cuenta hasta la cotización y cancelación
 - evalScript: ${output.email = 'maestro-' + new Date().getTime() + '@example.com'}
 - launchApp:
     clearState: true
+- runFlow:
+    # a slow emulator can show a system "isn't responding" dialog over the app
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
 - extendedWaitUntil:
     visible:
       id: home-search

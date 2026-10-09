@@ -8,6 +8,11 @@ report=shots/flujos/resumen.md
 apk=$(ls apks/*.apk | sort -V | tail -1)
 mkdir -p shots/flujos
 : >"$report"
+# a slow emulator makes the Pixel Launcher stop answering and its "isn't responding" dialog covers the app: the flows
+# start the app themselves, so the launcher is turned off and error dialogs are hidden
+adb shell settings put global hide_error_dialogs 1 >/dev/null 2>&1
+adb shell pm disable-user --user 0 com.google.android.apps.nexuslauncher >/dev/null 2>&1
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1
 adb uninstall "$PKG" >/dev/null 2>&1
 adb install "$apk" >/dev/null
 adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1

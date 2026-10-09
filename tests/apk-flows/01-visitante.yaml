@@ -6,6 +6,12 @@ appId: com.example.kora.preview
 name: Visitante compra sin cuenta
 ---
 - launchApp
+- runFlow:
+    # a slow emulator can show a system "isn't responding" dialog over the app
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
 - extendedWaitUntil:
     visible:
       id: home-search
@@ -59,6 +65,12 @@ name: Visitante compra sin cuenta
 # Cerrar y reabrir: el carrito sigue ahí
 - stopApp
 - launchApp
+- runFlow:
+    # a slow emulator can show a system "isn't responding" dialog over the app
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
 - extendedWaitUntil:
     visible:
       id: home-search
