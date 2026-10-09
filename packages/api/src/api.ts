@@ -1,0 +1,280 @@
+// Typed, error-normalized access to the marketplace backend. Shared by the Expo app and the web panel.
+// All business rules (prices, stock, rates, balances, permissions) are enforced in the database; this layer only
+// shapes requests and turns database hints into friendly errors (AppError from @kora/core).
+import { toAppError, type AppError } from '@kora/core';
+import type { KoraClient } from './client';
+import type {
+  Address,
+  Category,
+  CheckoutSummary,
+  Claim,
+  ClaimMessage,
+  FulfillmentStep,
+  HomeFeed,
+  Notification,
+  OrderDetail,
+  Order,
+  Payment,
+  PaymentMethod,
+  PaymentQuote,
+  PlaceOrderResult,
+  ProductCard,
+  ProductDetail,
+  Profile,
+  RateStatus,
+  Region,
+  SearchParams,
+  ShippingSelection,
+  Store,
+  SubmitPaymentInput,
+  SubmitPaymentResult,
+} from './types';
+
+export class ApiError extends Error implements AppError {
+  code: string;
+  detail?: string;
+  override cause?: unknown;
+  constructor(e: AppError) {
+    super(e.message);
+    this.name = 'ApiError';
+    this.code = e.code;
+    this.detail = e.detail;
+    this.cause = e.cause;
+  }
+}
+
+/** Awaits a supabase-js query and throws ApiError (with Spanish copy) on failure. */
+export async function run<T>(p: PromiseLike<{ data: unknown; error: unknown }>): Promise<T> {
+  let res: { data: unknown; error: unknown };
+  try {
+    res = await p;
+  } catch (e) {
+    throw new ApiError(toAppError(e));
+  }
+  if (res.error) throw new ApiError(toAppError(res.error));
+  return res.data as T;
+}
+
+/** Random idempotency key. Generate once per user intent (e.g. when the checkout screen mounts), not per tap. */
+export function newIdempotencyKey(prefix = 'k'): string {
+  const c = globalThis.crypto;
+  const id = c?.randomUUID ? c.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
+  return `${prefix}-${id}`;
+}
+
+// The generated Database type describes jsonb results as Json; these RPC helpers keep call sites typed.
+type Rpc = (fn: string, args?: Record<string, unknown>) => PromiseLike<{ data: unknown; error: unknown }>;
+
+export function createApi(client: KoraClient) {
+  const rpc: Rpc = (fn, args) => (client.rpc as unknown as Rpc)(fn, args);
+  const from = (table: string) => (client.from as unknown as (t: string) => any)(table);
+
+  const catalog = {
+    home: () => run<HomeFeed>(rpc('home_feed')),
+    search: (p: SearchParams = {}) =>
+      run<ProductCard[]>(
+        rpc('search_products', {
+          p_query: p.query ?? null,
+          p_category: p.category ?? null,
+          p_store: p.store ?? null,
+          p_availability: p.availability?.length ? p.availability : null,
+          p_min_price: p.minPrice ?? null,
+          p_max_price: p.maxPrice ?? null,
+          p_sort: p.sort ?? 'relevance',
+          p_limit: p.limit ?? 24,
+          p_offset: p.offset ?? 0,
+          p_collection: p.collection ?? null,
+        }),
+      ),
+    product: (id: string) => run<ProductDetail | null>(rpc('product_detail', { p_id: id })),
+    productIdBySlug: async (slug: string) => {
+      const rows = await run<{ id: string }[]>(from('products').select('id').eq('slug', slug).limit(1));
+      return rows[0]?.id ?? null;
+    },
+    categories: () => run<Category[]>(from('categories').select('*').eq('active', true).order('sort')),
+    store: (slug: string) => run<Store | null>(from('stores').select('*').eq('slug', slug).maybeSingle()),
+    recommended: (limit = 12, exclude: string[] = []) =>
+      run<ProductCard[]>(rpc('recommended_products', { p_limit: limit, p_exclude: exclude })),
+    recentlyViewed: (limit = 12) => run<ProductCard[]>(rpc('recently_viewed', { p_limit: limit })),
+    track: (kind: 'view' | 'search' | 'add_to_cart' | 'favorite' | 'category_view' | 'store_view', ids: { productId?: string; categoryId?: string; storeId?: string; query?: string } = {}) =>
+      run<void>(
+        rpc('track_event', {
+          p_kind: kind,
+          p_product_id: ids.productId ?? null,
+          p_category_id: ids.categoryId ?? null,
+          p_store_id: ids.storeId ?? null,
+          p_query: ids.query ?? null,
+        }),
+      ).catch(() => undefined), // signals are best-effort and never block the UI
+    rate: (pair = 'USD/VES') => run<RateStatus>(rpc('rate_status', { p_pair: pair })),
+  };
+
+  const cart = {
+    add: (variantId: string, quantity = 1) => run<unknown>(rpc('cart_add', { p_variant_id: variantId, p_quantity: quantity })),
+    setQuantity: (variantId: string, quantity: number) =>
+      run<unknown>(rpc('cart_set_quantity', { p_variant_id: variantId, p_quantity: quantity })),
+    /** Merges a guest cart (kept on device) into the account after sign in. */
+    merge: (lines: { variant_id: string; quantity: number }[]) => run<unknown>(rpc('cart_merge', { p_lines: lines })),
+    summary: (addressId?: string | null) => run<CheckoutSummary>(rpc('cart_summary', { p_address_id: addressId ?? null })),
+  };
+
+  const checkout = {
+    preview: (addressId: string | null, shipping: ShippingSelection, planCode: string | null) =>
+      run<CheckoutSummary>(rpc('checkout_preview', { p_address_id: addressId, p_shipping: shipping, p_plan_code: planCode })),
+    placeOrder: (addressId: string, shipping: ShippingSelection, planCode: string, idempotencyKey: string) =>
+      run<PlaceOrderResult>(
+        rpc('place_order', { p_address_id: addressId, p_shipping: shipping, p_plan_code: planCode, p_idempotency_key: idempotencyKey }),
+      ),
+  };
+
+  const payments = {
+    methods: () => run<PaymentMethod[]>(from('payment_methods').select('*').eq('enabled', true).order('sort')),
+    quote: (orderId: string, methodCode: string, obligationIds?: string[]) =>
+      run<PaymentQuote>(
+        rpc('create_payment_quote', { p_order_id: orderId, p_method_code: methodCode, p_obligation_ids: obligationIds ?? null }),
+      ),
+    submit: (i: SubmitPaymentInput) =>
+      run<SubmitPaymentResult>(
+        rpc('submit_payment', {
+          p_quote_id: i.quoteId,
+          p_reference: i.reference ?? null,
+          p_proof_path: i.proofPath ?? null,
+          p_payer: i.payer ?? {},
+          p_idempotency_key: i.idempotencyKey,
+        }),
+      ),
+    startProvider: (quoteId: string, idempotencyKey: string) =>
+      run<Record<string, unknown>>(rpc('start_provider_payment', { p_quote_id: quoteId, p_idempotency_key: idempotencyKey })),
+    /** Uploads a payment proof to the private bucket under the user's own folder and returns its path. */
+    uploadProof: async (userId: string, file: Blob | ArrayBuffer | Uint8Array, contentType: string, ext = 'jpg') => {
+      const path = `${userId}/${newIdempotencyKey('proof')}.${ext}`;
+      const { error } = await client.storage.from('payment-proofs').upload(path, file as Blob, { contentType, upsert: false });
+      if (error) throw new ApiError(toAppError(error));
+      return path;
+    },
+  };
+
+  const orders = {
+    list: () =>
+      run<(Order & { order_items: { title: string; image_path: string | null; quantity: number }[] })[]>(
+        from('orders').select('*, order_items(title, image_path, quantity)').order('placed_at', { ascending: false }),
+      ),
+    detail: (id: string) =>
+      run<OrderDetail | null>(
+        from('orders')
+          .select('*, order_items(*), fulfillments(*, fulfillment_events(*)), payment_obligations(*), payments(*)')
+          .eq('id', id)
+          .order('seq', { referencedTable: 'payment_obligations' })
+          .order('seq', { referencedTable: 'fulfillments' })
+          .order('created_at', { referencedTable: 'payments', ascending: false })
+          .maybeSingle(),
+      ),
+    steps: () => run<FulfillmentStep[]>(from('fulfillment_steps').select('*').order('flow').order('seq')),
+    cancel: (id: string, reason: string) => run<void>(rpc('cancel_order', { p_order_id: id, p_reason: reason })),
+  };
+
+  const account = {
+    profile: (userId: string) => run<Profile | null>(from('profiles').select('*').eq('id', userId).maybeSingle()),
+    updateProfile: (userId: string, patch: Partial<Pick<Profile, 'full_name' | 'phone' | 'preferences' | 'personalization_enabled' | 'marketing_opt_in'>>) =>
+      run<Profile>(from('profiles').update(patch).eq('id', userId).select().single()),
+    addresses: () => run<Address[]>(from('addresses').select('*').order('is_default', { ascending: false }).order('created_at')),
+    saveAddress: (a: Partial<Address> & { user_id: string }) =>
+      a.id
+        ? run<Address>(from('addresses').update(a).eq('id', a.id).select().single())
+        : run<Address>(from('addresses').insert(a).select().single()),
+    deleteAddress: (id: string) => run<void>(from('addresses').delete().eq('id', id)),
+    regions: (country = 'VE') => run<Region[]>(from('regions').select('*').eq('country_code', country).order('sort')),
+    favorites: () =>
+      run<{ product_id: string; created_at: string }[]>(from('favorites').select('product_id, created_at').order('created_at', { ascending: false })),
+    favoriteProducts: async () => {
+      const favs = await account.favorites();
+      if (!favs.length) return [] as ProductCard[];
+      const cards = await run<ProductCard[]>(from('product_cards').select('*').in('id', favs.map((f) => f.product_id)));
+      const order = new Map(favs.map((f, i) => [f.product_id, i]));
+      return cards.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
+    },
+    setFavorite: async (userId: string, productId: string, on: boolean) => {
+      if (on) await run(from('favorites').upsert({ user_id: userId, product_id: productId }, { ignoreDuplicates: true }));
+      else await run(from('favorites').delete().eq('user_id', userId).eq('product_id', productId));
+      if (on) void catalog.track('favorite', { productId });
+    },
+    setStockAlert: async (userId: string, productId: string, on: boolean) => {
+      if (on) await run(from('stock_alerts').upsert({ user_id: userId, product_id: productId }, { ignoreDuplicates: true }));
+      else await run(from('stock_alerts').delete().eq('user_id', userId).eq('product_id', productId));
+    },
+    notifications: (limit = 50) =>
+      run<Notification[]>(from('notifications').select('*').order('created_at', { ascending: false }).limit(limit)),
+    markNotificationsRead: (ids?: string[]) => run<number>(rpc('mark_notifications_read', { p_ids: ids ?? null })),
+    registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
+      run<void>(rpc('register_push_token', { p_token: token, p_platform: platform })),
+    clearActivity: () => run<void>(rpc('clear_my_activity')),
+    requestDeletion: (reason?: string) => run<string>(rpc('request_account_deletion', { p_reason: reason ?? null })),
+    roles: (userId: string) => run<{ role: string }[]>(from('user_roles').select('role').eq('user_id', userId)),
+    stores: (userId: string) =>
+      run<{ role: string; stores: Store }[]>(from('store_members').select('role, stores(*)').eq('user_id', userId)),
+  };
+
+  const claims = {
+    list: () => run<Claim[]>(from('claims').select('*').order('created_at', { ascending: false })),
+    messages: (claimId: string) =>
+      run<ClaimMessage[]>(from('claim_messages').select('*').eq('claim_id', claimId).order('created_at')),
+    open: (fulfillmentId: string, reason: Claim['reason'], description: string) =>
+      run<string>(rpc('open_claim', { p_fulfillment_id: fulfillmentId, p_reason: reason, p_description: description })),
+    post: (claimId: string, body: string) => run<void>(rpc('post_claim_message', { p_claim_id: claimId, p_body: body })),
+    escalate: (claimId: string) => run<void>(rpc('escalate_claim', { p_claim_id: claimId })),
+  };
+
+  const seller = {
+    dashboard: (storeId: string) => run<Record<string, any>>(rpc('seller_dashboard', { p_store_id: storeId })),
+    balance: (storeId: string) => run<Record<string, number>>(rpc('seller_balance', { p_store_id: storeId })),
+    advance: (fulfillmentId: string, step: string, opts: { note?: string; tracking?: string; carrier?: string } = {}) =>
+      run<unknown>(
+        rpc('advance_fulfillment', {
+          p_fulfillment_id: fulfillmentId,
+          p_step: step,
+          p_note: opts.note ?? null,
+          p_tracking: opts.tracking ?? null,
+          p_carrier: opts.carrier ?? null,
+        }),
+      ),
+  };
+
+  const admin = {
+    dashboard: () => run<Record<string, any>>(rpc('admin_dashboard')),
+    reviewPayment: (paymentId: string, approve: boolean, opts: { amountReceived?: number; reason?: string } = {}) =>
+      run<{ status: 'confirmed' | 'rejected'; usd_recognized?: number }>(
+        rpc('review_payment', {
+          p_payment_id: paymentId,
+          p_approve: approve,
+          p_amount_received: opts.amountReceived ?? null,
+          p_reason: opts.reason ?? null,
+        }),
+      ),
+    pendingPayments: () =>
+      run<(Payment & { orders: Pick<Order, 'number' | 'total_usd' | 'paid_usd'> })[]>(
+        from('payments').select('*, orders(number, total_usd, paid_usd)').eq('status', 'pending_verification').order('created_at'),
+      ),
+    moderate: (productId: string, status: 'published' | 'in_review' | 'rejected' | 'suspended' | 'pending', note?: string) =>
+      run<void>(rpc('moderate_product', { p_product_id: productId, p_status: status, p_note: note ?? null })),
+    setManualRate: (pair: string, rate: number, validMinutes: number, note: string) =>
+      run<unknown>(rpc('set_manual_rate', { p_pair: pair, p_rate: rate, p_valid_minutes: validMinutes, p_note: note })),
+    refundItem: (orderItemId: string, quantity: number, reason: string, restock = false) =>
+      run<{ refunded_usd: number; refund_due_usd: number }>(
+        rpc('refund_item', { p_order_item_id: orderItemId, p_quantity: quantity, p_reason: reason, p_restock: restock }),
+      ),
+    resolveClaim: (claimId: string, status: 'resolved' | 'rejected', resolution: string) =>
+      run<void>(rpc('resolve_claim', { p_claim_id: claimId, p_status: status, p_resolution: resolution })),
+    createPayout: (storeId: string, amount: number, notes?: string) =>
+      run<string>(rpc('create_payout', { p_store_id: storeId, p_amount: amount, p_notes: notes ?? null })),
+    markPayoutPaid: (payoutId: string, method: string, reference: string) =>
+      run<void>(rpc('mark_payout_paid', { p_payout_id: payoutId, p_method: method, p_reference: reference })),
+    updateBatch: (batchId: string, step: string, note?: string) =>
+      run<{ updated: number; skipped: { fulfillment_id: string; reason: string }[] }>(
+        rpc('update_cargo_batch', { p_batch_id: batchId, p_step: step, p_note: note ?? null }),
+      ),
+  };
+
+  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin };
+}
+
+export type Api = ReturnType<typeof createApi>;

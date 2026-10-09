@@ -1,0 +1,76 @@
+/* generated from @kora/design-tokens — do not edit */
+:root {
+  --background: #F6F0E7;
+  --surface: #FFFDF9;
+  --surface-sunken: #EEE5D8;
+  --surface-raised: #FFFFFF;
+  --border: rgba(58, 50, 42, 0.12);
+  --border-strong: rgba(58, 50, 42, 0.24);
+  --text: #211D19;
+  --text-secondary: #5A4D3F;
+  --text-muted: #7D6C58;
+  --text-inverse: #FFFDF9;
+  --brand: #0E5E54;
+  --brand-pressed: #0B4A43;
+  --brand-soft: #E8F4F1;
+  --on-brand: #FFFFFF;
+  --accent: #F2A541;
+  --accent-soft: #FEF6E9;
+  --on-accent: #211D19;
+  --danger: #C2422D;
+  --danger-soft: #FDEDEA;
+  --success: #137A67;
+  --success-soft: #E8F4F1;
+  --warning: #B56D16;
+  --warning-soft: #FEF6E9;
+  --info: #3C7DBF;
+  --info-soft: #EAF2FA;
+  --editorial: #6E4A86;
+  --editorial-soft: #F3EEF6;
+  --overlay: rgba(33, 29, 25, 0.48);
+  --skeleton: #EEE5D8;
+  --skeleton-highlight: #F6F0E7;
+  --tab-bar: rgba(255, 253, 249, 0.94);
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+  --amber: #F2A541;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+  --background: #121416;
+  --surface: #1A1D20;
+  --surface-sunken: #0D0F10;
+  --surface-raised: #23272B;
+  --border: rgba(246, 240, 231, 0.10);
+  --border-strong: rgba(246, 240, 231, 0.22);
+  --text: #F6F0E7;
+  --text-secondary: #E2D5C3;
+  --text-muted: #CDBBA4;
+  --text-inverse: #211D19;
+  --brand: #5FB3A1;
+  --brand-pressed: #97CFC2;
+  --brand-soft: rgba(95, 179, 161, 0.14);
+  --on-brand: #062824;
+  --accent: #F6B85A;
+  --accent-soft: rgba(246, 184, 90, 0.14);
+  --on-accent: #211D19;
+  --danger: #EF8D7C;
+  --danger-soft: rgba(239, 141, 124, 0.14);
+  --success: #5FB3A1;
+  --success-soft: rgba(95, 179, 161, 0.14);
+  --warning: #F6B85A;
+  --warning-soft: rgba(246, 184, 90, 0.14);
+  --info: #8DB5DE;
+  --info-soft: rgba(141, 181, 222, 0.14);
+  --editorial: #A98BBE;
+  --editorial-soft: rgba(169, 139, 190, 0.16);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --skeleton: #23272B;
+  --skeleton-highlight: #2E3338;
+  --tab-bar: rgba(26, 29, 32, 0.94);
+  }
+}
