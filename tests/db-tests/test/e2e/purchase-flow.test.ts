@@ -16,12 +16,28 @@ function newApi(): Api {
   return createApi(createKoraClient({ url: URL, anonKey: ANON }));
 }
 
+/** The code in the newest email the local stack sent to this address (tools/local-stack/mail.mjs). */
+async function emailedCode(email: string): Promise<string> {
+  for (let i = 0; i < 60; i++) {
+    const [m] = (await (await fetch(`http://127.0.0.1:2501/messages?to=${encodeURIComponent(email)}`)).json()) as { code: string | null }[];
+    if (m?.code) return m.code;
+    await new Promise((r) => setTimeout(r, 250));
+  }
+  throw new Error(`no code emailed to ${email}`);
+}
+
+/** Signs up like the app: no session until the six-digit code from the email is confirmed. */
 async function signUp(api: Api, label: string) {
   const email = `e2e-${label}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}@example.com`;
   const { data, error } = await api.client.auth.signUp({ email, password: 'E2e-test-1234', options: { data: { full_name: `E2E ${label}` } } });
   if (error) throw error;
-  expect(data.session).toBeTruthy(); // local stack auto-confirms email
-  return data.user!;
+  expect(data.session).toBeNull();
+  const wrong = await api.client.auth.verifyOtp({ email, token: '000000', type: 'signup' });
+  expect(wrong.error?.code).toBe('otp_expired');
+  const verified = await api.client.auth.verifyOtp({ email, token: await emailedCode(email), type: 'signup' });
+  if (verified.error) throw verified.error;
+  expect(verified.data.session).toBeTruthy();
+  return verified.data.user!;
 }
 
 describe('purchase flow through the public API', () => {

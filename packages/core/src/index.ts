@@ -6,3 +6,4 @@ export * from './errors';
 export * from './pricing';
 export * from './validation';
 export * from './labels';
+export * from './auth';

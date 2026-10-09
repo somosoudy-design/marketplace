@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { emailCode } from '../tests/support/mail';
 
 // Talks to the local stack the way the app does (GoTrue + PostgREST through the gateway) to set up data
 // that would otherwise take a long trip through the phone UI. Only the public anon key is used.
@@ -20,7 +21,10 @@ const rpc = <T>(fn: string, args: Record<string, unknown>, token: string) => cal
 /** A new buyer places an order for one in-stock product of the given store and reports a cash payment. */
 export async function buyerPaysInCash(storeName: string) {
   const email = `panel-${Date.now().toString(36)}@example.com`;
-  const auth = await call<{ access_token: string; user: { id: string } }>('/auth/v1/signup', { method: 'POST', body: JSON.stringify({ email, password: 'Kora-prueba-2026', data: { full_name: 'Comprador de prueba' } }) });
+  const since = Date.now() - 1000;
+  await call('/auth/v1/signup', { method: 'POST', body: JSON.stringify({ email, password: 'Kora-prueba-2026', data: { full_name: 'Comprador de prueba' } }) });
+  // the account is active once the emailed code is confirmed, as in the app
+  const auth = await call<{ access_token: string; user: { id: string } }>('/auth/v1/verify', { method: 'POST', body: JSON.stringify({ type: 'signup', email, token: await emailCode(email, since) }) });
   const token = auth.access_token;
   const cards = await call<{ id: string }[]>(`/rest/v1/product_cards?select=id&store_name=eq.${encodeURIComponent(storeName)}&availability=eq.available&limit=10`);
   const [variant] = await call<{ id: string }[]>(`/rest/v1/product_variants?select=id&active=eq.true&stock=gt.1&product_id=in.(${cards.map((c) => c.id).join(',')})&limit=1`);

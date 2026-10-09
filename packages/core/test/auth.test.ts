@@ -1,0 +1,47 @@
+import { describe, expect, it } from 'vitest';
+import { authErrorKind, authErrorMessage, otpDigits, utf8Decode, utf8Encode } from '../src';
+
+describe('email code', () => {
+  it('keeps the digits of whatever is pasted', () => {
+    expect(otpDigits('482913')).toBe('482913');
+    expect(otpDigits('Tu código: 482 913')).toBe('482913');
+    expect(otpDigits(' 48-29-13 \n')).toBe('482913');
+    expect(otpDigits('4829131234')).toBe('482913');
+    expect(otpDigits('48a')).toBe('48');
+    expect(otpDigits('')).toBe('');
+  });
+});
+
+describe('auth errors', () => {
+  // shapes returned by the local GoTrue (see tools/local-stack) and supabase-js
+  it('reads the error code first', () => {
+    expect(authErrorKind({ code: 'otp_expired', message: 'Token has expired or is invalid', status: 403 }).kind).toBe('invalid_code');
+    expect(authErrorKind({ code: 'email_not_confirmed', message: 'Email not confirmed' }).kind).toBe('email_not_confirmed');
+    expect(authErrorKind({ code: 'invalid_credentials', message: 'Invalid login credentials' }).kind).toBe('invalid_credentials');
+    expect(authErrorKind({ code: 'same_password', message: 'New password should be different from the old password.' }).kind).toBe('same_password');
+  });
+  it('tells a resend that came too soon from the hourly email limit', () => {
+    expect(authErrorKind({ code: 'over_email_send_rate_limit', message: 'For security purposes, you can only request this after 42 seconds.' })).toEqual({ kind: 'resend_too_soon', seconds: 42 });
+    expect(authErrorKind({ code: 'over_email_send_rate_limit', message: 'For security purposes, you can only request this after 0 seconds.' })).toEqual({ kind: 'resend_too_soon', seconds: 1 });
+    expect(authErrorKind({ code: 'over_email_send_rate_limit', message: 'email rate limit exceeded' }).kind).toBe('email_limit');
+  });
+  it('falls back to the message and to a generic line', () => {
+    expect(authErrorKind({ message: 'User already registered' }).kind).toBe('already_registered');
+    expect(authErrorKind(new TypeError('Failed to fetch')).kind).toBe('network');
+    expect(authErrorKind(null).kind).toBe('unknown');
+    expect(authErrorMessage({ message: 'something else' })).toBe('No pudimos completar la operación. Intenta de nuevo.');
+  });
+  it('speaks Spanish for every case', () => {
+    expect(authErrorMessage({ code: 'otp_expired' })).toMatch(/código no es válido o ya venció/);
+    expect(authErrorMessage({ message: 'For security purposes, you can only request this after 9 seconds.' })).toBe('Ya te enviamos un código hace poco. Podrás pedir otro en 9 s.');
+  });
+});
+
+describe('utf8', () => {
+  it('round-trips sessions with accents and emoji', () => {
+    const s = JSON.stringify({ full_name: 'Ana Pérez Ñúñez', note: 'Señal 📦 ✓', ascii: 'abc' });
+    expect(utf8Decode(utf8Encode(s))).toBe(s);
+    expect(Array.from(utf8Encode('é✓📦'))).toEqual(Array.from(new TextEncoder().encode('é✓📦')));
+    expect(utf8Decode(new TextEncoder().encode('Mérida 🛵'))).toBe('Mérida 🛵');
+  });
+});

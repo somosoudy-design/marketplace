@@ -16,12 +16,18 @@ interface AuthState {
   /** True while a visitor cart is being merged into the account; account cart queries wait for it. */
   cartSyncing: boolean;
   signIn: (email: string, password: string) => Promise<void>;
+  /** Creates the account. Unless the project skips confirmation, Supabase emails a six-digit code and there is no session yet. */
   signUp: (email: string, password: string, fullName: string) => Promise<{ needsConfirmation: boolean }>;
+  /** Emails a new code: to confirm the account, or to choose a new password. */
+  sendEmailCode: (email: string, purpose: EmailCodePurpose) => Promise<void>;
+  /** Checks the emailed code with Supabase; a right code signs the user in. */
+  verifyEmailCode: (email: string, code: string, purpose: EmailCodePurpose) => Promise<void>;
   signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-  /** Saves a new password for the signed-in user (after opening the reset link). */
+  /** Saves a new password for the signed-in user (after the recovery code or reset link). */
   updatePassword: (password: string) => Promise<void>;
 }
+
+export type EmailCodePurpose = 'signup' | 'recovery';
 
 const AuthContext = createContext<AuthState | null>(null);
 
@@ -103,17 +109,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
           password,
+          // the email carries a code; the redirect only matters for older link templates
           options: { data: { full_name: fullName.trim() }, emailRedirectTo: authRedirect('/auth-callback') },
         });
         if (error) throw error;
+        // a confirmed address comes back as a user without identities and no email is sent
+        if (data.user && !data.session && data.user.identities?.length === 0) throw Object.assign(new Error('User already registered'), { code: 'user_already_exists' });
         return { needsConfirmation: !data.session };
+      },
+      sendEmailCode: async (email, purpose) => {
+        const { error } = purpose === 'signup'
+          ? await supabase.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: authRedirect('/auth-callback') } })
+          : await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: authRedirect('/reset-password') });
+        if (error) throw error;
+      },
+      verifyEmailCode: async (email, code, purpose) => {
+        const { data, error } = await supabase.auth.verifyOtp({ email: email.trim(), token: code, type: purpose });
+        if (error) throw error;
+        if (!data.session) throw Object.assign(new Error('Auth session missing'), { code: 'session_not_found' });
       },
       signOut: async () => {
         await supabase.auth.signOut();
-      },
-      resetPassword: async (email) => {
-        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: authRedirect('/reset-password') });
-        if (error) throw error;
       },
       updatePassword: async (password) => {
         const { error } = await supabase.auth.updateUser({ password });
@@ -131,16 +147,5 @@ export function useAuth(): AuthState {
   return a;
 }
 
-/** Spanish copy for Supabase Auth errors. */
-export function authErrorMessage(e: unknown): string {
-  const m = String((e as { message?: string })?.message ?? '');
-  if (/invalid login credentials/i.test(m)) return 'Correo o contraseña incorrectos.';
-  if (/already registered|already exists/i.test(m)) return 'Ya existe una cuenta con ese correo. Inicia sesión.';
-  if (/password should be at least|weak password/i.test(m)) return 'La contraseña debe tener al menos 8 caracteres, con letras y números.';
-  if (/email not confirmed/i.test(m)) return 'Confirma tu correo para continuar. Revisa tu bandeja de entrada.';
-  if (/should be different from the old/i.test(m)) return 'Usa una contraseña distinta a la anterior.';
-  if (/session missing|auth session/i.test(m)) return 'El enlace ya no es válido. Pide uno nuevo.';
-  if (/rate limit|too many/i.test(m)) return 'Demasiados intentos. Espera un momento.';
-  if (/fetch|network/i.test(m)) return 'Sin conexión. Revisa tu internet e intenta de nuevo.';
-  return 'No pudimos completar la operación. Intenta de nuevo.';
-}
+/** Spanish copy for Supabase Auth errors (shared with the tests in @kora/core). */
+export { authErrorMessage } from '@kora/core';

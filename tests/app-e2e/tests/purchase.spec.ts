@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
+import { emailCode } from './support/mail';
 
-// Full buyer journey: visitor cart -> sign up -> cart merge -> checkout with a new address ->
+// Full buyer journey: visitor cart -> sign up -> code from the email -> cart merge -> checkout with a new address ->
 // double tap on "Confirmar" -> Pago Móvil quote in Bs -> reference -> payment stays in verification.
 // Uses fictitious example.com accounts against the local stack only.
 
@@ -21,7 +22,13 @@ test('a new buyer completes checkout and submits a Pago Móvil payment for verif
   await page.getByTestId('sign-up-name').fill('Ana Prueba');
   await page.getByTestId('sign-up-email').fill(email);
   await page.getByTestId('sign-up-password').fill('Kora-prueba-2026');
+  const since = Date.now() - 1000;
   await page.getByTestId('sign-up-submit').click();
+
+  // 2b. the account becomes active with the six-digit code from the email
+  await expect(page).toHaveURL(/verify-email/);
+  await page.getByTestId('code-input').fill(await emailCode(email, since));
+  await expect(page.getByTestId('verify-done')).toBeVisible();
 
   // 3. back in the cart, the visitor line now lives in the account cart
   await expect(page.getByTestId('cart-continue')).toHaveText('Continuar');

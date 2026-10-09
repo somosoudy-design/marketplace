@@ -1,3 +1,4 @@
+import { authErrorKind } from '@kora/core';
 import { Link, router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, TextInput, View } from 'react-native';
@@ -28,6 +29,8 @@ export default function SignInScreen() {
       if (router.canGoBack()) router.back();
       else router.replace('/');
     } catch (e) {
+      // the account exists but was never confirmed: finish it with a code instead of a dead end
+      if (authErrorKind(e).kind === 'email_not_confirmed') return router.replace({ pathname: '/verify-email', params: { email: email.trim(), resend: '1' } });
       haptics.warning();
       setError(authErrorMessage(e));
     } finally {

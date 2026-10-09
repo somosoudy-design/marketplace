@@ -13,6 +13,7 @@ import { AuthProvider, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/env';
 import { persistOptions, queryClient } from '@/lib/query';
 import { OfflineFrame } from '@/components/OfflineNotice';
+import { UpdateNotice } from '@/components/UpdateNotice';
 import { ThemeProvider, useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
 
@@ -77,10 +78,12 @@ function RootStack() {
           <Stack.Screen name="tienda/[slug]" options={{ headerShown: false }} />
           <Stack.Screen name="sign-in" options={{ title: 'Iniciar sesión', presentation: 'modal' }} />
           <Stack.Screen name="sign-up" options={{ title: 'Crear cuenta', presentation: 'modal' }} />
+          <Stack.Screen name="verify-email" options={{ title: 'Confirmar correo', presentation: 'modal' }} />
           <Stack.Screen name="forgot-password" options={{ title: 'Recuperar acceso', presentation: 'modal' }} />
           <Stack.Screen name="reset-password" options={{ title: 'Contraseña nueva', gestureEnabled: false }} />
           <Stack.Screen name="auth-callback" options={{ title: 'Confirmar correo', headerBackVisible: false }} />
         </Stack>
+        <UpdateNotice />
       </OfflineFrame>
     </NavigationThemeProvider>
   );

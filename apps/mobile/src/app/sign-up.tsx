@@ -16,7 +16,6 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const pwError = password ? validatePassword(password) : null;
 
@@ -28,7 +27,7 @@ export default function SignUpScreen() {
     setError(null);
     try {
       const r = await signUp(email, password, name);
-      if (r.needsConfirmation) setSent(true);
+      if (r.needsConfirmation) router.replace({ pathname: '/verify-email', params: { email: email.trim() } });
       else if (router.canGoBack()) router.back();
       else router.replace('/');
     } catch (e) {
@@ -38,21 +37,12 @@ export default function SignUpScreen() {
     }
   };
 
-  if (sent) {
-    return (
-      <View style={{ flex: 1, padding: 24, gap: 14, backgroundColor: t.colors.background }}>
-        <Text variant="displayL">Revisa tu correo</Text>
-        <Text color="textSecondary">Te enviamos un enlace a {email.trim()} para confirmar tu cuenta.</Text>
-        <Button title="Entendido" onPress={() => router.back()} />
-      </View>
-    );
-  }
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: t.colors.background }}>
       <ScrollView contentContainerStyle={{ padding: 24, gap: 18, width: '100%', maxWidth: 480, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
         <View style={{ gap: 6 }}>
           <Text variant="displayL">Crea tu cuenta</Text>
-          <Text color="textSecondary">Solo te pedimos lo necesario. La dirección la agregas al comprar.</Text>
+          <Text color="textSecondary">Te enviaremos un código a tu correo para activarla. La dirección la agregas al comprar.</Text>
         </View>
         {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
         <TextField testID="sign-up-name" label="Nombre y apellido" value={name} onChangeText={setName} autoComplete="name" textContentType="name" />

@@ -10,7 +10,7 @@ sliders-horizontal arrow-up-down truck package store map-pin clock shield-check 
 image receipt credit-card wallet log-out settings trash star sparkles tag box plane ship hourglass refresh-cw message-circle
 lock eye eye-off funnel arrow-right circle-check banknote landmark smartphone coins badge-check cpu headphones sofa paw-print
 toothbrush face-slightly-smiling stethoscope gem lamp shirt watch layout-grid flame gift calendar file-text circle-question-mark globe moon sun
-monitor-smartphone zap plug-zap battery-charging scissors brush cable wifi-off`.split(/\s+/);
+monitor-smartphone zap plug-zap battery-charging scissors brush cable wifi-off mail mail-check key-round arrow-up`.split(/\s+/);
 
 const lines = [
   '// Icon geometry derived from Lucide (https://lucide.dev), ISC License, Copyright (c) Lucide Icons and Contributors.',
