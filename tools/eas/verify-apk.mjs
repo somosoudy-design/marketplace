@@ -39,9 +39,14 @@ const jwtRoles = [...new Set([...bundle.matchAll(/eyJ[A-Za-z0-9_-]{10,}\.(eyJ[A-
   try { return JSON.parse(Buffer.from(m[1], 'base64url').toString('utf8')).role ?? '?'; } catch { return '?'; }
 }))];
 
+// A key body is ~31 random characters: it starts with a letter or digit and mixes digits with both cases.
+// Packed neighbours ("sb_secret_" + "_isInitialized…") do not.
 const secretHits = [...bundle.matchAll(/sb_secret_([A-Za-z0-9_-]{20,})/g)]
   .map((m) => m[1])
-  .filter((body) => !/^(sb_|publishable|secret|temp)/.test(body))
+  .filter((body) => {
+    const head = body.slice(0, 31);
+    return /^[A-Za-z0-9]/.test(head) && /\d/.test(head) && /[A-Z]/.test(head) && /[a-z]/.test(head);
+  })
   .map((body) => `sb_secret_${body.slice(0, 4)}… (${body.length} caracteres)`);
 
 const checks = [
@@ -51,8 +56,7 @@ const checks = [
   ['sin el backend local (127.0.0.1, localhost o 10.0.2.2 en los puertos del stack)', !/(127\.0\.0\.1|localhost|10\.0\.2\.2):(54321|54322|3100|8089)\b/.test(bundle)],
   [`claves embebidas solo anon (${jwtRoles.join(', ') || 'ninguna'})`, jwtRoles.length > 0 && jwtRoles.every((r) => r === 'anon')],
   // supabase-js itself contains the bare prefix (it checks key formats), and Hermes stores strings back to back,
-  // so the prefix can run into the next string ("sb_secret_sb_temp_…"). A real key is the prefix plus 31+
-  // characters that are not another known prefix.
+  // so the prefix can run into the next string; see secretHits for what counts as a key.
   [`sin claves secretas (sb_secret_…)${secretHits.length ? `: ${secretHits.join(', ')}` : ''}`, secretHits.length === 0],
   [`projectId ${expo.projectId}`, config.includes(expo.projectId)],
 ];
