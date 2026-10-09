@@ -27,6 +27,13 @@ for apk in apks/*.apk; do
       adb logcat -d -b crash 2>/dev/null | grep -E "FATAL|Exception|Error" | head -8
       adb logcat -d 2>/dev/null | grep -E "ReactNativeJS|E AndroidRuntime" | grep -iE "error|exception|fatal" | head -8
       adb exec-out screencap -p >"shots/$name.png" 2>/dev/null
+      # builds with the diagnostics screen (APK 4 on) report update channel, runtime and the session seal test
+      adb logcat -c
+      adb shell am start -a android.intent.action.VIEW -d "kora://diagnostico" "$PKG" >/dev/null 2>&1
+      sleep 12
+      diag=$(adb logcat -d 2>/dev/null | grep -o 'KoraDiag .*' | tail -1)
+      echo "diagnóstico: ${diag:-sin pantalla de diagnóstico en esta versión}"
+      adb exec-out screencap -p >"shots/$name-diagnostico.png" 2>/dev/null
     fi
     echo '```'
   } >>"$out"

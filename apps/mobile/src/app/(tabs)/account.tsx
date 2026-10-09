@@ -81,7 +81,7 @@ export default function AccountScreen() {
         />
       </Card>
       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}
-      <Text variant="caption" color="textMuted" align="center">
+      <Text variant="caption" color="textMuted" align="center" onPress={() => router.push('/diagnostico')} testID="app-version">
         {brand.legalName} · versión {Constants.expoConfig?.version ?? '0.1.0'}
         {/* which EAS Update is running, so a tester can tell whether the latest one arrived */}
         {Updates.isEnabled && !Updates.isEmbeddedLaunch && Updates.updateId

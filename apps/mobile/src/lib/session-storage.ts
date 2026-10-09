@@ -69,6 +69,23 @@ function encryptedStorage(): Storage | null {
 
 const sealedStorage = Platform.OS === 'web' ? null : encryptedStorage();
 
+/** Seals and reads back a throwaway value with the session key (for the diagnostics screen). */
+export async function sessionSealSelfTest(): Promise<'ok' | 'not-encrypted' | string> {
+  if (!sealedStorage) return 'not-encrypted';
+  const name = 'kora.seal-selftest';
+  const value = `prueba ñ ✓ ${Date.now()}`;
+  try {
+    await sealedStorage.setItem(name, value);
+    const raw = await AsyncStorage.getItem(name);
+    const back = await sealedStorage.getItem(name);
+    await sealedStorage.removeItem(name);
+    if (!raw?.startsWith(SEALED) || raw.includes('prueba')) return 'stored in the clear';
+    return back === value ? 'ok' : 'read back a different value';
+  } catch (e) {
+    return String((e as Error)?.message ?? e);
+  }
+}
+
 /** True when sessions on this device are sealed with a key from the device keystore. */
 export const sessionEncrypted = sealedStorage !== null;
 
