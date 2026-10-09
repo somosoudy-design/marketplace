@@ -6,22 +6,29 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-09 22:25Z.
+**Última revisión:** 2026-10-09 23:20Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
 | # | Tarea | Estado | Depende de / notas |
 |---|---|---|---|
-| 1.2 | Recorrido con cuenta en el APK real: registro `@example.com`, compra, pago simulado en verificación y cancelación (plan en `ESTADO_ACTUAL.md`). El de visitante ya pasa (`tests/apk-flows/01-visitante.yaml`) | Bloqueada | Oliver desactiva «Confirm email» (P2.1) |
+| 1.2 | Recorrido con cuenta en el APK real (`tests/apk-flows/02-cuenta.yaml`): registro `maestro-…@example.com`, carrito, dirección, pedido, cotización de Pago Móvil en Bs y cancelación sin reportar pago. El de visitante ya pasa | En curso | «Confirm email» ya está desactivado; ajustar el recorrido hasta que pase |
 | 1.3 | Cierre del hito D: ficha, carrito, checkout, cuotas y seguimiento ya se revisaron en la versión web (claro y oscuro) y el selector de pago es nuevo; falta verlos en Android (capturas del artefacto `capturas-emulador`) y corregir lo que aparezca | Lista | `tools/design/screens.mjs` para la web; capturas de Maestro para el APK |
 | 1.4 | Validación integral (hito E): repasar la lista de recorridos de `DIRECCION_PRODUCTO.md` («Criterios de calidad») en el APK real, anotando qué se probó y dónde | Lista (parcial) | La parte con cuenta, tras P2.1 |
 | 1.5 | APK 5 con la identidad nativa violeta (`NATIVE_IDENTITY = 'violet'`: icono, splash, color de notificación) | Lista cuando convenga | Obliga a reinstalar; juntarlo con otro cambio nativo (por ejemplo Firebase, P3.3). Tras instalarlo, actualizar la línea `runtime:` de `.github/eas-update-request` |
+
+## Prioridad 1 bis: relevo del 2026-10-09 23Z (pedido de Oliver, en este orden)
+
+| # | Tarea | Estado | Notas |
+|---|---|---|---|
+| R.1 | Motor comercial de precios: costo Amazon, flete editable, gastos logísticos, margen, brecha BCV/USDT, precio principal en USD BCV, Pago Móvil en Bs al BCV, Zelle/USDT sin doble brecha, descuentos verificables | Lista | Diseño y pruebas en la base, núcleo, panel y app |
+| R.2 | Imágenes del catálogo remoto desde Supabase Storage en vez de `raw.githubusercontent.com`; preparar el repositorio para hacerse privado | Lista | Pedir confirmación a Oliver antes de cambiar la visibilidad. Ojo: en privado, Actions tiene minutos limitados |
+| R.3 | Push real en Android | Bloqueada en parte | Código y workflow se preparan; falta el proyecto Firebase de Oliver (P3.3) |
 
 ## Prioridad 2: lo que solo Oliver puede hacer
 
 | # | Tarea | Estado | Dónde |
 |---|---|---|---|
-| 2.1 | Desactivar «Confirm email» en el proyecto de pruebas (registro de testers sin correo) | Bloqueada (Oliver) | Supabase › Marketplace › Authentication › Sign In / Providers › Email › Confirm email › Save |
 | 2.2 | Agregar `kora://**` a Redirect URLs | Bloqueada (Oliver) | Supabase › Authentication › URL Configuration |
 | 2.3 | Acceso al repositorio para Kevin y Heisber, si van a trabajar con sus agentes | Bloqueada (Oliver) | GitHub › somosoudy-design/marketplace › Settings › Collaborators (permiso *Write*, no *Admin*) |
 | 2.4 | Revisar y, cuando quiera, fusionar el PR #1 a `main` | Bloqueada (Oliver) | https://github.com/somosoudy-design/marketplace/pull/1 |
@@ -35,7 +42,6 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 | 3.1 | Dominio y SMTP propio: vuelve el código de 6 dígitos por correo y «Olvidé mi contraseña» para cualquiera | Bloqueada | Dominio y proveedor SMTP (gasto, decisión de Oliver). Luego pegar `supabase/templates/` y activar «Confirm email» |
 | 3.2 | Binance Pay y PayPal en línea | Bloqueada | Cuentas de comercio aprobadas y credenciales (`docs/ENTORNO.md` §8); desplegar `payments-start` y webhooks |
 | 3.3 | Push en Android | Bloqueada | Proyecto Firebase y `google-services.json` en una build (APK nuevo) |
-| 3.4 | Panel web publicado para pruebas con el APK | Bloqueada | Hosting (por ejemplo Vercel) con las variables públicas; decisión de Oliver |
 | 3.5 | Datos reales: datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales | Bloqueada | Oliver y los vendedores |
 | 3.6 | Publicación en Google Play / App Store | Bloqueada | Oliver lo pidió explícitamente: todavía no. Lista de pasos en `docs/PUBLICACION.md` |
 

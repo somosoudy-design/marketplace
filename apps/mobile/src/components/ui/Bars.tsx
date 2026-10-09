@@ -73,7 +73,10 @@ export function useScrollY(onJS?: (y: number, height: number) => void, step = 48
 export function CollapsingHeader({ y, threshold, title, left, right }: { y: SharedValue<number>; threshold: number; title?: string; left?: ReactNode; right?: ReactNode }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  const bar = useAnimatedStyle(() => ({ opacity: interpolate(y.value, [threshold - 90, threshold - 30], [0, 1], Extrapolation.CLAMP) }));
+  // the bar is fully opaque by the time the photo's lower edge reaches the bar's own lower edge, so nothing of the
+  // photo (or its "imagen demo" badge) is left showing through behind the buttons
+  const barHeight = insets.top + 60;
+  const bar = useAnimatedStyle(() => ({ opacity: interpolate(y.value, [threshold - barHeight - 60, threshold - barHeight], [0, 1], Extrapolation.CLAMP) }));
   const label = useAnimatedStyle(() => ({
     opacity: interpolate(y.value, [threshold - 40, threshold], [0, 1], Extrapolation.CLAMP),
     transform: [{ translateY: interpolate(y.value, [threshold - 40, threshold], [6, 0], Extrapolation.CLAMP) }],

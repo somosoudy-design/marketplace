@@ -89,4 +89,4 @@ jobs:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment }}
         run: |
           set -o pipefail
-          node tools/panel/check-deploy.mjs "$PANEL_URL" "$DEPLOYMENT_URL" | tee -a "$GITHUB_STEP_SUMMARY"
+          node tools/panel/check-deploy.mjs "$DEPLOYMENT_URL" "$PANEL_URL" | tee -a "$GITHUB_STEP_SUMMARY"

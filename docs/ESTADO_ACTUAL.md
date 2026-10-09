@@ -4,8 +4,8 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-09 22:25Z, por Claude (sesión de Claude Code en la nube, hilo «Marketplace
-nativo premium» del proyecto TIENDA ONLINE).
+**Última actualización:** 2026-10-09 23:20Z, por Claude (sesión de Claude Code en la nube; relevo pedido por Oliver
+con las prioridades: Android, panel publicado, push, imágenes a Storage, motor de precios).
 
 ## Dónde está el trabajo
 
@@ -16,7 +16,8 @@ nativo premium» del proyecto TIENDA ONLINE).
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `dc93a53` («Publish an update for APK 4: clearer payment picker») |
 | Plan vigente | Directriz maestra 02 de Oliver: hitos A a E (abajo) |
-| Objetivo actual | Hito E (validación integral) y cierre del hito D en Android |
+| Objetivo actual | Relevo del 2026-10-09 23Z: Android (D/E), panel publicado (hecho), push, imágenes a Storage, motor de precios |
+| Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
 ## Hitos de la Directriz maestra 02
@@ -44,28 +45,35 @@ nativo premium» del proyecto TIENDA ONLINE).
 
 ## Trabajo en curso
 
-- Nada a medio escribir; sin commits `WIP:` abiertos. Archivos modificados sin commit: ninguno.
-- Recién terminado: **primer recorrido automático en el APK real** (`tests/apk-flows/visitante.yaml`, corre con
-  Maestro en el workflow «APK en emulador»). Pasó el 2026-10-09 22:21Z (ejecución `37998307758`) en un Android 15
-  con pantalla de Pixel 6, sobre el APK 4 con la actualización `01a122a3` (la del selector de pago) y el backend
-  de pruebas: Inicio con catálogo remoto y recomendados, ficha por enlace `kora://p/…`, variante de 2 m,
-  agregar, carrito con 12 USD, carrito conservado al cerrar y reabrir, y paso a iniciar sesión. Las capturas
-  quedan en el artefacto `capturas-emulador` de cada ejecución (carpeta `flujos/`).
+- Archivos sin commit: ninguno. Commits `WIP:` abiertos: ninguno (el `WIP: Panel as a static export` quedó
+  completado por los commits siguientes).
+- **Panel publicado** en https://kora-panel.expo.app (workflow `panel-deploy.yml`, EAS Hosting sin costo). Las
+  acciones de servidor (importar por URL, publicar importación, «Consultar ahora» de tasas) corren en la función
+  `panel-api`, ya desplegada en el proyecto de pruebas (versión 1, `verify_jwt`, comprueba `is_admin`). Fichas
+  con id en la dirección (`/admin/pedidos/ver?id=…`, `/vendedor/productos/editar?id=…`).
+- **Android:** las capturas del emulador ya se pueden ver (rama `ci/capturas`). El recorrido de visitante pasa
+  con la identidad Electric Violet en el APK 4 + actualización. El recorrido con cuenta (`02-cuenta.yaml`) ya
+  corre porque el proyecto de pruebas tiene el registro sin confirmación (lo detecta el workflow); revisión 10 en
+  curso (la 9 falló porque `clearState` borraba la actualización descargada).
+- Ajuste de diseño sin publicar todavía: la barra superior de la ficha y de la tienda se vuelve opaca antes de
+  que la foto pase por debajo de los botones (`components/ui/Bars.tsx`). Va en la próxima EAS Update.
 
 ## Próxima acción
 
-1. **Recorrido con cuenta** (`PENDIENTES.md` 1.2), bloqueado hasta que Oliver desactive «Confirm email»:
-   registrar `maestro+<fecha>@example.com`, iniciar sesión, comprar el cable con retiro o envío, elegir
-   Pago Móvil (datos ficticios «No transferir»), reportar una referencia de prueba, ver «Estamos verificando tu
-   pago» y cancelar el pedido. Nada se marca como pagado. Archivo previsto: `tests/apk-flows/cuenta.yaml`
-   (el script corre todos los `.yaml` de la carpeta, así que no lo agregues hasta que el registro funcione).
-2. Mientras tanto, cierre del hito D en Android (`PENDIENTES.md` 1.3): revisar las capturas del recorrido y
-   corregir lo que no esté al nivel.
+1. Ver el resultado de la revisión 10 del emulador (`git fetch origin ci/capturas`, carpeta `ultima/`) y
+   corregir `02-cuenta.yaml` o la app según lo que muestre.
+2. **Motor comercial de precios** (pedido por Oliver, diseño en `docs/PRECIOS.md` cuando exista): costo Amazon por
+   variante, flete editable, gastos logísticos, margen, brecha BCV/USDT con instantánea diaria, precio principal
+   en USD BCV, Pago Móvil en Bs al BCV, Zelle/USDT con la brecha aplicada una sola vez como factor de conversión
+   verificable.
+3. Imágenes del catálogo remoto: de `raw.githubusercontent.com` a Supabase Storage (función temporal invocada con
+   `pg_net`), antes de proponer a Oliver hacer privado el repositorio.
+4. Push en Android: preparar `google-services.json` desde un secreto de GitHub y el APK 5 (identidad violeta).
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
-1. Supabase › proyecto «Marketplace» › Authentication › Sign In / Providers › Email › desactivar **Confirm
-   email** › Save. Habilita el registro de testers sin correo (solo en este proyecto de pruebas).
+1. ~~Desactivar «Confirm email»~~: el workflow del emulador lo encontró desactivado el 2026-10-09 22:40Z
+   (`/auth/v1/settings` → `mailer_autoconfirm: true`). Hecho.
 2. Supabase › Authentication › URL Configuration › Redirect URLs: agregar `kora://**`.
 3. Dar acceso al repositorio de GitHub a Kevin y Heisber si van a trabajar con sus propios agentes.
 4. Más adelante: dominio y SMTP propio (vuelve el código por correo), credenciales de Binance Pay, PayPal y
@@ -76,7 +84,9 @@ nativo premium» del proyecto TIENDA ONLINE).
 - Sin SMTP propio, «Olvidé mi contraseña» y el código de registro solo llegan a correos del equipo de
   Supabase de Oliver (límite de unas 2 por hora).
 - Push en Android no funciona hasta tener Firebase (`google-services.json`) en una build.
-- El panel web solo corre en local; no está publicado.
+- El panel publicado abre las fichas desde las listas con una carga completa la primera vez que se visitan (sitio
+  estático); funciona igual.
+- Los artefactos de GitHub Actions no se pueden bajar desde el contenedor de Claude: usar la rama `ci/capturas`.
 - `pnpm stack:start` sobre un stack ya encendido deja PostgREST y funciones sin arrancar («Address in use»):
   usar `pnpm stack:stop` antes.
 - `gh run view --log` a veces da 403 al bajar registros; leerlos con la herramienta `get_job_logs` del
@@ -110,10 +120,11 @@ Resumen; procedimientos en `docs/ENTORNO.md`.
 
 | Servicio | Estado |
 |---|---|
-| Supabase de pruebas `mimnotafmfasvwrclxan` («Marketplace») | 23/23 migraciones, 2 funciones desplegadas, cron activo, catálogo demo cargado, «Confirm email» todavía activado |
+| Supabase de pruebas `mimnotafmfasvwrclxan` («Marketplace») | 23/23 migraciones, 3 funciones desplegadas (`rates-sync`, `push-dispatch`, `panel-api`), cron activo, catálogo demo cargado, registro sin confirmación por correo |
+| EAS Hosting | Panel en https://kora-panel.expo.app (mismo proyecto Expo `marketplacebrand/marketplace`, plan sin costo) |
 | Supabase `bfuggvbgttvcygbexqyn` | **Prohibido tocarlo**: es de otros productos de Oliver (BingoCriollo) |
 | Expo `marketplacebrand/marketplace` | APK 4 (build `5ee104fe`, versionCode 2, runtime `a4682c83c1bb738fc74c73153838ded0656f1912`); actualizaciones por canal `preview` |
-| GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `apk-verify.yml`, `apk-emulator.yml`; secreto `EXPO_TOKEN` configurado |
+| GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `apk-verify.yml`, `apk-emulator.yml` (capturas también en la rama `ci/capturas`), `panel-deploy.yml` (panel); secreto `EXPO_TOKEN` configurado |
 | Google Play / App Store | Nada publicado. Oliver dijo que todavía no |
 | Binance Pay, PayPal | Preparados en código, deshabilitados (`pending_credentials`) |
 

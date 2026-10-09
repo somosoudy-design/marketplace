@@ -9,11 +9,11 @@ inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las
 |---|---|---|
 | Base de datos: RLS, finanzas, checkout, pagos, logística, privilegios, herramientas, opiniones, recomendaciones, avisos, parámetros | `pnpm test:db` | **76/76** en verde (10 archivos) |
 | Compra completa por la API pública (como la app) | `pnpm test:e2e` | **8/8** en verde |
-| Funciones del servidor (Deno, contra el stack local) | `pnpm test:functions` | **11/11** en verde |
+| Funciones del servidor (Deno, contra el stack local) | `pnpm test:functions` | **15/15** en verde (2026-10-09 23Z; incluye `panel-api`) |
 | Núcleo: dinero, planes, tasas, proveedores, errores | `pnpm --filter @kora/core test` | **34/34** en verde |
 | Panel: protección SSRF y DNS rebinding del importador | `pnpm test:admin` | **28/28** en verde (2 archivos, uno sin dobles de red) |
 | Interfaz de la app (Playwright, Pixel 7, build web) | `pnpm test:ui` | **14/14** en verde |
-| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | **8/8** en verde |
+| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | **8/8** en verde con el servidor de Next y **8/8** sobre la exportación estática publicada (servida con `tools/panel/serve-static.mjs`) |
 | Tipos (8 paquetes) | `pnpm typecheck` | sin errores |
 | Lint (app y panel) | `pnpm lint` | sin errores ni avisos |
 | Build de producción del panel | `pnpm --filter @kora/admin build` | correcta |

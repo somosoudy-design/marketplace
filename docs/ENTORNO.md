@@ -12,10 +12,10 @@ estado y se comprueba por separado:
 |---|---|---|---|
 | Código y documentación | Rama `claude/marketplace-v1` en GitHub (fuente de verdad) | Tu copia local hasta que haces push | `git fetch origin && git status -sb` (sin «ahead» ni «behind») |
 | Migraciones de la base | `supabase/migrations/*.sql` | Proyecto Supabase de pruebas, solo las que alguien aplicó | Conector de Supabase `list_migrations`, o `npx supabase migration list` con el proyecto enlazado |
-| Funciones del servidor | `supabase/functions/*` | Desplegadas: hoy solo `rates-sync` y `push-dispatch` | Conector `list_edge_functions` / `get_edge_function` (versión y código), o el panel de Supabase |
+| Funciones del servidor | `supabase/functions/*` | Desplegadas: `rates-sync`, `push-dispatch` y `panel-api` | Conector `list_edge_functions` / `get_edge_function` (versión y código), o el panel de Supabase |
 | Datos | `supabase/seed.sql` (solo local); `supabase/remote-demo/*.sql` (catálogo demo remoto) | Lo cargado en cada base | Consultas de solo lectura (abajo) |
 | App en teléfonos | `apps/mobile` | Parte nativa: el APK instalado (cambia solo con un APK nuevo). JavaScript: la última actualización publicada en el canal `preview` | Pantalla `kora://diagnostico` en el teléfono; página del proyecto en expo.dev; resumen del workflow `eas-update-preview` |
-| Panel web | `apps/admin` | Solo local (no está publicado) | — |
+| Panel web | `apps/admin` | https://kora-panel.expo.app (EAS Hosting, exportación estática; lo publica el workflow `panel-deploy.yml` en cada cambio del panel) | Resumen del workflow «Panel web (EAS Hosting)» |
 | Pruebas | `tests/`, `packages/*/src/**/*.test.ts`, `supabase/functions/tests` | Corren en local contra el stack local; no hay CI de pruebas en GitHub | Ejecutarlas (sección 7) |
 
 Consultas de solo lectura útiles en el proyecto de pruebas (conector `execute_sql` o SQL Editor):
@@ -84,8 +84,23 @@ pnpm --filter @kora/admin dev                        # http://127.0.0.1:3100
 pnpm --filter @kora/admin build && pnpm --filter @kora/admin start   # producción
 ```
 
-Se despliega en cualquier hosting de Next.js (por ejemplo Vercel) con las variables de la sección 8. No
-necesita ningún secreto. Publicarlo requiere a Oliver (cuenta y posible costo).
+**Publicado:** https://kora-panel.expo.app (EAS Hosting, plan sin costo, mismo proyecto de Expo que la app). El
+workflow `panel-deploy.yml` lo exporta como sitio estático (`KORA_PANEL_EXPORT=1 pnpm --filter @kora/admin build`,
+carpeta `apps/admin/out`) con el backend y la clave `anon` del perfil `preview`, y lo publica con `eas deploy`
+cada vez que cambia el panel o lo que usa (o `.github/panel-deploy-request`). No necesita ningún secreto aparte de
+`EXPO_TOKEN`. Detalles:
+
+- Las tres acciones de servidor del panel (`/api/import`, `/api/import/publish`, `/api/rates/sync`) corren, en
+  la versión publicada, en la función `panel-api` de Supabase (como el administrador que llama). En local las
+  sigue respondiendo el servidor de Next.
+- Las fichas usan el id en la dirección: `/admin/pedidos/ver?id=…` y `/vendedor/productos/editar?id=…`
+  (sin id, producto nuevo). EAS Hosting sirve cada archivo en su dirección limpia y no tiene rutas dinámicas.
+- Probar la versión publicada en local: exportar con `NEXT_PUBLIC_PANEL_API=http://127.0.0.1:54321/functions/v1/panel-api`,
+  `node tools/panel/eas-routes.mjs apps/admin/out`, `node tools/panel/serve-static.mjs apps/admin/out 3100` y
+  `cd tests/app-e2e && npx playwright test --project=panel` (usa el servidor que ya está en :3100).
+- La dirección de producción tarda un momento en pasar a la versión nueva; `tools/panel/check-deploy.mjs`
+  comprueba primero la dirección propia de la publicación (`kora-panel--<id>.expo.app`).
+- Si el repositorio pasa a privado, el panel sigue publicado (no depende de GitHub Pages).
 
 ## 6. Funciones del servidor
 
@@ -221,6 +236,14 @@ Se disparan al cambiar un archivo de solicitud en `.github/` de la rama comparti
 | `.github/apk-verify-request` | `apk-verify.yml` | Revisa un APK ya compilado (último enlace del archivo) |
 | `.github/apk-emulator-request` | `apk-emulator.yml` | Instala y abre los APK listados en un Android 15 limpio (pantalla de Pixel 6), con capturas y registros, y corre los recorridos de Maestro de `tests/apk-flows` |
 | `.github/eas-update-request` | `eas-update-preview.yml` | Publica una actualización de JavaScript en el canal `preview` |
+| `.github/panel-deploy-request` (o cualquier cambio en `apps/admin`, `packages/*`, `tools/panel`) | `panel-deploy.yml` | Exporta y publica el panel en https://kora-panel.expo.app y comprueba sus páginas |
+
+**Capturas del emulador sin bajar artefactos:** el contenedor de Claude no llega al almacenamiento de artefactos de
+Actions, así que `apk-emulator.yml` también copia las capturas (reducidas a JPEG) a la rama `ci/capturas`, carpeta
+`ultima/` (con `resumen.md` y `LEEME.md`). Para verlas: `git fetch origin ci/capturas && git worktree add <carpeta>
+origin/ci/capturas`. Esa rama solo guarda capturas: no se fusiona ni se compila nada desde ella.
+El recorrido `02-cuenta.yaml` crea una cuenta `maestro-<hora>@example.com` en el proyecto de pruebas y solo corre si
+`/auth/v1/settings` dice que el registro no pide confirmar el correo.
 
 Resultados: `gh run list --branch claude/marketplace-v1 --limit 5` y `gh run view <id>`. Si `gh run view --log`
 responde 403, lee el registro del job por la API (`gh api repos/somosoudy-design/marketplace/actions/jobs/<job>/logs`)

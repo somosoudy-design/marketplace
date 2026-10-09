@@ -14,6 +14,7 @@
 | Datos demo | generador de catálogo, imágenes, logos y `seed.sql` | `tools/demo-assets` |
 | Stack local sin Docker | Postgres + GoTrue + PostgREST + gateway Node + funciones Deno + buzón de correo | `tools/local-stack` |
 | Compilación y revisión de APK | scripts usados por los workflows de GitHub | `tools/eas`, `.github/workflows` |
+| Panel publicado | exportación estática, manifiesto de EAS Hosting y comprobaciones | `tools/panel`, `.github/workflows/panel-deploy.yml` |
 | Pruebas | vitest (base, API, núcleo, panel), Deno (funciones), Playwright (app web y panel) | `tests/db-tests`, `tests/app-e2e`, `supabase/functions/tests` |
 
 ```
@@ -22,7 +23,7 @@ apps/mobile/src/components   ui/ (Text, Button, Badge, Card, States, Bars…), c
 apps/mobile/src/lib          auth, supabase, query (caché y modo sin conexión), session-storage, hooks
 apps/admin/src/app           rutas del panel; components/ con ui.tsx, Shell, Crud, Settings…
 supabase/migrations          23 migraciones (`20261009000100` … `20261009154233`)
-supabase/functions           rates-sync, push-dispatch, payments-start, binance-pay-webhook, paypal-webhook
+supabase/functions           rates-sync, push-dispatch, panel-api, payments-start, binance-pay-webhook, paypal-webhook
 supabase/remote-demo         catálogo demo para el proyecto remoto y el script para quitarlo
 tools/supabase-remote        archivos SQL para el SQL Editor cuando el conector no sirve
 ```
@@ -136,6 +137,11 @@ sesión» mientras la app muestra una cuenta, la app vuelve al modo visitante (`
 - **Pedidos multi-vendedor:** el carrito se divide en entregas (`fulfillments`) por tienda/modalidad, cada una
   con su envío y su flujo (importación en 10 pasos, envío del vendedor, retiro). Los pasos que requieren pago
   se bloquean hasta que el nivel de pago lo permite (`_order_payment_level`).
+- **Panel publicado como sitio estático** (`KORA_PANEL_EXPORT=1`, `output: 'export'`, `pageExtensions: ['tsx']` para
+  dejar fuera los `route.ts`): EAS Hosting en https://kora-panel.expo.app. Sus acciones de servidor van a la
+  función `panel-api` (`NEXT_PUBLIC_PANEL_API`; `apiPost` en `lib/kora.ts` elige destino), que actúa con el token
+  del administrador y repite las reglas del importador (SSRF en Deno: `_shared/safe-fetch.ts`). Las fichas llevan
+  el id en la consulta (`useQueryId()` en `lib/hooks.ts`, páginas dentro de `<Suspense>`).
 - **Panel web:** todas las páginas son cliente (`'use client'`) con la anon key y la sesión del usuario. Los
   route handlers (`app/api/*`) actúan como el usuario que llama (Bearer + `requireAdmin`), nunca con service
   role. El importador por URL (`/api/import`) usa `safe-fetch.ts` con protección SSRF (IPv4/IPv6 privadas,
