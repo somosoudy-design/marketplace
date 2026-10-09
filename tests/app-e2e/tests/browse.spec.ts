@@ -7,9 +7,14 @@ test('home shows the editorial catalog to visitors', async ({ page }) => {
   await expect(page.getByTestId('home-search')).toBeVisible();
   await expect(page.getByTestId('category-odontologia')).toBeVisible();
   await expect(page.locator('[data-testid^="product-card-"]').first()).toBeVisible();
-  // the VES reference rate is shown with its source, or an honest notice when unavailable
-  await expect(page.getByTestId('home-rate')).toContainText(/Bs|tasa/i);
+  await expect(page.getByTestId('home-hero')).toBeVisible();
+  await expect(page.getByTestId('home-recommended')).toBeVisible();
   await expect(page.getByRole('tab', { name: 'Inicio' })).toHaveAttribute('aria-selected', 'true');
+  // the store front carries no rate or payment blocks; the VES reference rate is in Cuenta, with its source
+  await expect(page.getByTestId('home-rate')).toHaveCount(0);
+  await expect(page.getByTestId('home-trust')).toHaveCount(0);
+  await page.goto('/account');
+  await expect(page.getByTestId('account-rate')).toContainText(/Bs|tasa/i);
 });
 
 test('a marketplace with nothing published yet says so instead of an empty featured section', async ({ page }) => {
@@ -20,7 +25,7 @@ test('a marketplace with nothing published yet says so instead of an empty featu
   await page.goto('/');
   const empty = page.getByTestId('home-catalog-empty');
   await expect(empty).toContainText('Las tiendas están preparando su catálogo');
-  await expect(page.getByText('Una selección para empezar')).toHaveCount(0);
+  await expect(page.getByText('Recomendados')).toHaveCount(0);
   await expect(page.getByTestId('home-feed-end')).toHaveCount(0);
   await empty.getByRole('button', { name: 'Crear cuenta' }).click();
   await expect(page).toHaveURL(/sign-up/);

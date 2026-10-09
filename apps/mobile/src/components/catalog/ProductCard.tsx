@@ -31,6 +31,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, showSt
   const lead = describeLeadTimeShort(p.lead_min_days, p.lead_max_days, p.availability);
   const hint = stockHint(p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id);
+  const discount = p.compare_at_usd && Number(p.compare_at_usd) > Number(p.price_usd) ? Math.round((1 - Number(p.price_usd) / Number(p.compare_at_usd)) * 100) : 0;
   return (
     <ScalePressable
       testID={`product-card-${p.slug}`}
@@ -45,6 +46,11 @@ export const ProductCard = memo(function ProductCard({ product: p, width, showSt
     >
       <View>
         <ProductImage path={p.image_path} tone={p.tone} alt={p.title} priority={priority} radius={radii.lg} />
+        {discount && p.availability === 'available' ? (
+          <View style={{ position: 'absolute', left: 8, top: 8, paddingHorizontal: 7, paddingVertical: 3, borderRadius: radii.xs, backgroundColor: colors.accent }}>
+            <Text variant="caption" style={{ color: colors.onAccent, fontFamily: 'PlusJakartaSans_800ExtraBold' }}>-{discount}%</Text>
+          </View>
+        ) : null}
         {p.availability !== 'available' ? (
           <View style={{ position: 'absolute', left: 8, top: 8 }}>
             <Badge label={availability.label} tone={availability.tone} solid={p.availability === 'sold_out' || p.availability === 'unavailable'} />
@@ -53,7 +59,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, showSt
         <IconButton
           icon="heart"
           label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-          size={34}
+          size={32}
           tone="glass"
           color={isFav ? colors.danger : colors.text}
           filled={isFav}
@@ -61,13 +67,13 @@ export const ProductCard = memo(function ProductCard({ product: p, width, showSt
           onPress={() => (user ? fav.toggle({ productId: p.id, on: !isFav }) : router.push('/sign-in'))}
         />
       </View>
-      <View style={{ paddingTop: 10, gap: 3 }}>
+      <View style={{ paddingTop: 9, paddingHorizontal: 2, gap: 3 }}>
         {showStore ? (
           <Text variant="caption" color="textMuted" numberOfLines={1}>
             {p.brand_name && !p.title.toLowerCase().startsWith(p.brand_name.toLowerCase()) ? `${p.brand_name} · ` : ''}{p.store_name}
           </Text>
         ) : null}
-        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'Manrope_600SemiBold', minHeight: 36 }}>
+        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold', minHeight: 36, letterSpacing: -0.1 }}>
           {p.title}
         </Text>
         <Price usd={p.price_usd} compareAt={p.compare_at_usd} size="sm" muted={!availability.purchasable} />

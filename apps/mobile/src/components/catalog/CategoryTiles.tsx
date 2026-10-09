@@ -8,13 +8,13 @@ import { Text } from '@/components/ui/Text';
 import { catalogImage } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 
-const SIZE = 68;
+const SIZE = 58;
 
-/** Categories as product photographs on their tone: the shelf, not an icon grid. */
+/** Compact category shelf: each category shows its most popular product on its tone, not an icon. */
 export function CategoryTiles({ categories }: { categories: CategorySummary[] }) {
   const t = useTheme();
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 10, gap: 0 }}>
       {categories.map((c) => {
         const tone = t.tone(c.tone);
         const uri = catalogImage(c.image_path);
@@ -25,7 +25,7 @@ export function CategoryTiles({ categories }: { categories: CategorySummary[] })
             accessibilityRole="link"
             accessibilityLabel={c.name}
             onPress={() => router.push({ pathname: '/catalog', params: { category: c.slug, title: c.name } })}
-            style={{ width: SIZE + 10, alignItems: 'center', gap: 8 }}
+            style={{ width: SIZE + 22, alignItems: 'center', gap: 6 }}
           >
             <View style={{ width: SIZE, height: SIZE, borderRadius: SIZE / 2, backgroundColor: tone.bg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
               {uri ? (
@@ -34,7 +34,7 @@ export function CategoryTiles({ categories }: { categories: CategorySummary[] })
                 <Icon name={c.icon ?? 'tag'} size={26} color={t.scheme === 'dark' ? t.colors.text : tone.dark} />
               )}
             </View>
-            <Text variant="caption" numberOfLines={1} align="center" style={{ fontFamily: 'Manrope_600SemiBold' }}>{c.name}</Text>
+            <Text variant="caption" numberOfLines={1} align="center" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{c.name}</Text>
           </ScalePressable>
         );
       })}

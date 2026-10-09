@@ -161,7 +161,7 @@ function Row({ n, isNew, first, last, labelTest }: { n: Notification; isNew: boo
       </View>
       <View style={{ flex: 1, gap: 3 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <Text variant="label" numberOfLines={2} style={{ flex: 1, fontFamily: isNew ? 'Manrope_700Bold' : undefined }}>{n.title}</Text>
+          <Text variant="label" numberOfLines={2} style={{ flex: 1, fontFamily: isNew ? 'PlusJakartaSans_700Bold' : undefined }}>{n.title}</Text>
           <Text variant="caption" color="textMuted">{timeAgo(n.created_at)}</Text>
           {isNew ? <View accessibilityElementsHidden style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: t.colors.brand }} /> : null}
         </View>

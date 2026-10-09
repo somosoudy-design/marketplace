@@ -15,8 +15,7 @@
     "doctor": "expo-doctor"
   },
   "dependencies": {
-    "@expo-google-fonts/fraunces": "^0.4.1",
-    "@expo-google-fonts/manrope": "^0.4.2",
+    "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
     "@kora/api": "workspace:*",
     "@kora/core": "workspace:*",
     "@kora/design-tokens": "workspace:*",

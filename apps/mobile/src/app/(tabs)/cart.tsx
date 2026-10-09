@@ -120,7 +120,7 @@ function LineRow({ line: l, onQty }: { line: CartLine; onQty: (variantId: string
         <ProductImage path={l.image_path} style={{ width: 76 }} radius={t.radii.md} />
       </ScalePressable>
       <View style={{ flex: 1, gap: 4 }}>
-        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'Manrope_600SemiBold' }}>{l.title}</Text>
+        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
         {l.variant_title ? <Text variant="caption" color="textMuted">{l.variant_title}</Text> : null}
         {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
         {l.issue ? <Text variant="caption" color="danger">{ISSUE_TEXT[l.issue] ?? 'Revisa este producto.'}</Text> : null}

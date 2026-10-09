@@ -19,7 +19,7 @@ export function Badge({ label, tone = 'muted', style, solid, testID }: { label: 
   const [bg, fg] = map[tone];
   return (
     <View testID={testID} style={[{ alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, borderRadius: radii.pill, backgroundColor: solid ? fg : bg }, style]}>
-      <Text variant="caption" style={{ color: solid ? colors.surface : fg, fontFamily: 'Manrope_700Bold' }} numberOfLines={1}>
+      <Text variant="caption" style={{ color: solid ? colors.surface : fg, fontFamily: 'PlusJakartaSans_700Bold' }} numberOfLines={1}>
         {label}
       </Text>
     </View>

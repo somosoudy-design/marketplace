@@ -26,7 +26,7 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
     >
       <ProductImage path={p.image_path} tone={p.tone} alt={p.title} style={{ width: 52 }} aspect={1} radius={t.radii.md} />
       <View style={{ flex: 1, gap: 2 }}>
-        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'Manrope_600SemiBold' }}>{p.title}</Text>
+        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.title}</Text>
         <Text variant="caption" color="textSecondary" tabular>{formatUSD(p.price_usd)}</Text>
       </View>
     </ScalePressable>

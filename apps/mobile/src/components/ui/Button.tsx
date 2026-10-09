@@ -31,7 +31,7 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
     danger: { bg: colors.dangerSoft, fg: colors.danger },
   };
   const p = palette[variant];
-  const height = size === 'lg' ? 56 : size === 'sm' ? 38 : 48;
+  const height = size === 'lg' ? 52 : size === 'sm' ? 36 : 44;
   const inactive = disabled || loading;
   return (
     <ScalePressable
@@ -51,10 +51,10 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
         {
           height,
           backgroundColor: p.bg,
-          borderRadius: radii.pill,
+          borderRadius: size === 'sm' ? radii.sm : radii.md,
           borderWidth: p.border ? StyleSheet.hairlineWidth * 2 : 0,
           borderColor: p.border,
-          paddingHorizontal: size === 'sm' ? 14 : 22,
+          paddingHorizontal: size === 'sm' ? 14 : 20,
           opacity: disabled && !loading ? 0.45 : 1,
           alignSelf: full ? 'stretch' : 'auto',
         },
@@ -65,7 +65,7 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
         <ActivityIndicator color={p.fg} />
       ) : (
         <View style={styles.row}>
-          {icon ? <Icon name={icon} size={size === 'sm' ? 16 : 19} color={p.fg} strokeWidth={2} /> : null}
+          {icon ? <Icon name={icon} size={size === 'sm' ? 16 : 18} color={p.fg} strokeWidth={2} /> : null}
           <Text variant={size === 'sm' ? 'label' : 'button'} style={{ color: p.fg }} numberOfLines={1}>
             {title}
           </Text>

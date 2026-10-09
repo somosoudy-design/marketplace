@@ -5,6 +5,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { Linking, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MAX_CONTENT } from '@/components/catalog/ProductGrid';
+import { RatePill } from '@/components/RateSheet';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider, ListRow } from '@/components/ui/Layout';
@@ -80,6 +81,8 @@ export default function AccountScreen() {
           onPress={() => Linking.openURL(`mailto:${support.data?.email ?? brand.supportEmail}`)}
         />
       </Card>
+      {/* the bolívar reference rate lives here and next to prices, not on the store front */}
+      <RatePill testID="account-rate" />
       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}
       <Text variant="caption" color="textMuted" align="center" onPress={() => router.push('/diagnostico')} testID="app-version">
         {brand.legalName} · versión {Constants.expoConfig?.version ?? '0.1.0'}

@@ -1,5 +1,10 @@
-import { Fraunces_500Medium_Italic, Fraunces_600SemiBold } from '@expo-google-fonts/fraunces';
-import { Manrope_400Regular, Manrope_500Medium, Manrope_600SemiBold, Manrope_700Bold, Manrope_800ExtraBold } from '@expo-google-fonts/manrope';
+import {
+  PlusJakartaSans_400Regular,
+  PlusJakartaSans_500Medium,
+  PlusJakartaSans_600SemiBold,
+  PlusJakartaSans_700Bold,
+  PlusJakartaSans_800ExtraBold,
+} from '@expo-google-fonts/plus-jakarta-sans';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider as NavigationThemeProvider } from 'expo-router';
@@ -28,13 +33,11 @@ function RootStack() {
   const t = useTheme();
   const { ready } = useAuth();
   const [fontsLoaded, fontError] = useFonts({
-    Fraunces_600SemiBold,
-    Fraunces_500Medium_Italic,
-    Manrope_400Regular,
-    Manrope_500Medium,
-    Manrope_600SemiBold,
-    Manrope_700Bold,
-    Manrope_800ExtraBold,
+    PlusJakartaSans_400Regular,
+    PlusJakartaSans_500Medium,
+    PlusJakartaSans_600SemiBold,
+    PlusJakartaSans_700Bold,
+    PlusJakartaSans_800ExtraBold,
   });
   const loaded = (fontsLoaded || !!fontError) && ready;
   useEffect(() => {
@@ -49,7 +52,7 @@ function RootStack() {
   };
   const header = {
     headerStyle: { backgroundColor: t.colors.background },
-    headerTitleStyle: { fontFamily: 'Manrope_700Bold', fontSize: 17, color: t.colors.text },
+    headerTitleStyle: { fontFamily: 'PlusJakartaSans_700Bold', fontSize: 17, color: t.colors.text },
     headerTintColor: t.colors.text,
     headerShadowVisible: false,
     headerBackButtonDisplayMode: 'minimal' as const,

@@ -31,11 +31,11 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { icon: IconName; lab
         <Icon name={icon} size={23} color={color} strokeWidth={isFocused ? 2.1 : 1.75} />
         {badge ? (
           <View style={{ position: 'absolute', right: -10, top: -4, minWidth: 18, height: 18, borderRadius: 9, paddingHorizontal: 4, backgroundColor: colors.danger, alignItems: 'center', justifyContent: 'center' }}>
-            <Text variant="caption" style={{ color: '#fff', fontSize: 11, fontFamily: 'Manrope_700Bold' }}>{badge > 9 ? '9+' : badge}</Text>
+            <Text variant="caption" style={{ color: '#fff', fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold' }}>{badge > 9 ? '9+' : badge}</Text>
           </View>
         ) : null}
       </View>
-      <Text variant="caption" style={{ color, fontFamily: isFocused ? 'Manrope_700Bold' : 'Manrope_500Medium', fontSize: 11 }}>{label}</Text>
+      <Text variant="caption" style={{ color, fontFamily: isFocused ? 'PlusJakartaSans_700Bold' : 'PlusJakartaSans_500Medium', fontSize: 11 }}>{label}</Text>
     </Pressable>
   );
 });

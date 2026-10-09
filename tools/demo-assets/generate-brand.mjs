@@ -7,9 +7,11 @@ import sharp from 'sharp';
 const out = join(import.meta.dirname, '../../apps/mobile/assets/images');
 mkdirSync(out, { recursive: true });
 
-const JADE = '#0E5E54';
-const SAND = '#FBF7F1';
-const AMBER = '#F2A541';
+// Electric Violet: violet field, white stem and leaf, the coral leaf echoes the spark next to the wordmark
+const VIOLET = '#6D42E8';
+const WHITE = '#FFFFFF';
+const CORAL = '#FF746B';
+const INK = '#1C1928';
 
 /** A "K" drawn as a stem and two leaves (growth, harvest, exchange). Coordinates on a 1024 canvas. */
 function mark({ stem, upper, lower, scale = 1, dx = 0, dy = 0 }) {
@@ -23,15 +25,15 @@ const svg = (body, bg) =>
   Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">${bg ? `<rect width="1024" height="1024" fill="${bg}"/>` : ''}${body}</svg>`);
 
 const jobs = [
-  ['icon.png', svg(mark({ stem: SAND, upper: AMBER, lower: SAND, scale: 0.92 }), JADE), 1024],
-  ['android-icon-background.png', svg('', JADE), 1024],
+  ['icon.png', svg(mark({ stem: WHITE, upper: CORAL, lower: WHITE, scale: 0.92 }), VIOLET), 1024],
+  ['android-icon-background.png', svg('', VIOLET), 1024],
   // adaptive foreground: keep the mark inside the 66% safe zone
-  ['android-icon-foreground.png', svg(mark({ stem: SAND, upper: AMBER, lower: SAND, scale: 0.62 })), 1024],
+  ['android-icon-foreground.png', svg(mark({ stem: WHITE, upper: CORAL, lower: WHITE, scale: 0.62 })), 1024],
   ['android-icon-monochrome.png', svg(mark({ stem: '#FFFFFF', upper: '#FFFFFF', lower: '#FFFFFF', scale: 0.62 })), 1024],
-  ['splash-icon.png', svg(mark({ stem: JADE, upper: AMBER, lower: JADE })), 512],
-  ['splash-icon-dark.png', svg(mark({ stem: SAND, upper: AMBER, lower: SAND })), 512],
+  ['splash-icon.png', svg(mark({ stem: VIOLET, upper: CORAL, lower: INK })), 512],
+  ['splash-icon-dark.png', svg(mark({ stem: '#A98CFF', upper: CORAL, lower: WHITE })), 512],
   ['notification-icon.png', svg(mark({ stem: '#FFFFFF', upper: '#FFFFFF', lower: '#FFFFFF', scale: 0.8 })), 96],
-  ['favicon.png', svg(mark({ stem: SAND, upper: AMBER, lower: SAND, scale: 0.9 }), JADE), 48],
+  ['favicon.png', svg(mark({ stem: WHITE, upper: CORAL, lower: WHITE, scale: 0.9 }), VIOLET), 48],
 ];
 
 for (const [name, data, size] of jobs) {

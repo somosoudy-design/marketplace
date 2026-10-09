@@ -1,31 +1,33 @@
 /**
- * Kora design tokens (provisional brand). Single source of truth for the native app,
- * the admin/seller web panel and generated demo assets.
+ * Kora design tokens. Single source of truth for the native app, the admin/seller web panel and generated demo
+ * assets.
  *
- * Direction: "Arena y Jade" — warm sand surfaces, a deep jade brand color, amber for
- * moments of delight, coral for urgency. Editorial serif for display, humanist sans for UI.
- * Not black/white minimalism, not clinical pale.
+ * Direction: "Electric Violet". Violet is the color of action (buttons, selection, links), never a background
+ * wash; coral is energy (offers, news, the cart count); deep ink carries prices and text; soft lavender marks
+ * what is selected or highlighted. Surfaces stay quiet and slightly cool so product photos lead. One sans family
+ * (Plus Jakarta Sans) in a tight hierarchy; no decorative shadows: borders and surfaces build depth, shadows only
+ * lift what floats (sheets, sticky bars, floating buttons).
  */
 
 export const palette = {
-  jade: { 50: '#E8F4F1', 100: '#CBE7E0', 200: '#97CFC2', 300: '#5FB3A1', 400: '#2F9580', 500: '#137A67', 600: '#0E5E54', 700: '#0B4A43', 800: '#093A35', 900: '#062824' },
-  amber: { 50: '#FEF6E9', 100: '#FDE8C6', 200: '#FAD08F', 300: '#F6B85A', 400: '#F2A541', 500: '#DB8A22', 600: '#B56D16', 700: '#8A5212' },
-  coral: { 50: '#FDEDEA', 100: '#F9D3CC', 300: '#EF8D7C', 500: '#E0563F', 600: '#C2422D', 700: '#9A3323' },
-  plum: { 50: '#F3EEF6', 100: '#E4DAEC', 300: '#A98BBE', 500: '#6E4A86', 700: '#4B2F5E' },
-  sky: { 50: '#EAF2FA', 300: '#8DB5DE', 500: '#3C7DBF', 700: '#24578C' },
-  sand: { 0: '#FFFDF9', 50: '#FBF7F1', 100: '#F6F0E7', 200: '#EEE5D8', 300: '#E2D5C3', 400: '#CDBBA4', 500: '#A8957D', 600: '#7D6C58', 700: '#5A4D3F', 800: '#3A322A', 900: '#211D19' },
-  night: { 600: '#2E3338', 700: '#23272B', 800: '#1A1D20', 900: '#121416' },
+  violet: { 50: '#F6F2FF', 100: '#EDE6FF', 200: '#DACDFF', 300: '#B9A2FA', 400: '#9374F2', 500: '#6D42E8', 600: '#5B31D2', 700: '#4826AB', 800: '#361C84', 900: '#22125A' },
+  ink: { 0: '#FFFFFF', 50: '#F8F7FC', 100: '#F0EEF6', 200: '#E4E1EC', 300: '#CFCBDA', 400: '#A9A4B6', 500: '#8C889A', 600: '#777383', 650: '#6B6779', 700: '#55516A', 800: '#2E2A3D', 900: '#1C1928' },
+  coral: { 50: '#FFF1EF', 100: '#FFDCD8', 300: '#FF9B93', 400: '#FF746B', 500: '#F2564C', 600: '#C93A31', 700: '#A12C25' },
+  green: { 50: '#E7F6EF', 300: '#5CC79A', 500: '#1F9D6B', 600: '#137A55' },
+  amber: { 50: '#FFF5E0', 300: '#F8C25C', 400: '#F5A524', 600: '#9A5B00' },
+  sky: { 50: '#EAF1FE', 300: '#8DB4F5', 500: '#2563CC' },
+  night: { 600: '#2C2839', 700: '#252131', 800: '#1B1825', 900: '#110F18', 950: '#0B0A10' },
 } as const;
 
-/** Photo backdrops: every product image sits on the tone of its category. */
+/** Photo backdrops: what shows behind (and before) a product photo, by category. Quiet, slightly tinted. */
 export const photoTones = {
-  sand: { bg: '#EFE5D6', bgDeep: '#E2D3BE', shadow: '#B9A285', dark: '#3A332B' },
-  sage: { bg: '#DDE6DA', bgDeep: '#C9D7C4', shadow: '#8FA58A', dark: '#2B342B' },
-  blush: { bg: '#F2DFD9', bgDeep: '#E8CBC2', shadow: '#BE968B', dark: '#3A2C29' },
-  mist: { bg: '#DFE6EE', bgDeep: '#CAD5E2', shadow: '#8E9FB3', dark: '#283039' },
-  clay: { bg: '#EBD7C6', bgDeep: '#DEC2AB', shadow: '#B08C70', dark: '#3A2E25' },
-  lilac: { bg: '#E6E0EF', bgDeep: '#D6CCE6', shadow: '#9A8CB2', dark: '#2F2A38' },
-  night: { bg: '#2B3036', bgDeep: '#22262B', shadow: '#0E1012', dark: '#2B3036' },
+  sand: { bg: '#F3EFEA', bgDeep: '#E9E2D9', shadow: '#B9A68E', dark: '#2A2622' },
+  sage: { bg: '#EAF0EA', bgDeep: '#DCE6DB', shadow: '#8FA58A', dark: '#222A23' },
+  blush: { bg: '#F8ECEB', bgDeep: '#F0DCD9', shadow: '#C1968E', dark: '#2D2324' },
+  mist: { bg: '#ECF0F6', bgDeep: '#DEE4EE', shadow: '#8E9FB3', dark: '#22262E' },
+  clay: { bg: '#F5ECE4', bgDeep: '#ECDDD0', shadow: '#B08C70', dark: '#2B241F' },
+  lilac: { bg: '#F1ECFB', bgDeep: '#E5DCF8', shadow: '#9A8CB2', dark: '#262131' },
+  night: { bg: '#2A2635', bgDeep: '#211E2A', shadow: '#0B0A10', dark: '#2A2635' },
 } as const;
 export type PhotoTone = keyof typeof photoTones;
 
@@ -33,112 +35,111 @@ export type ColorScheme = 'light' | 'dark';
 
 export const colors = {
   light: {
-    background: palette.sand[100],
-    surface: palette.sand[0],
-    surfaceSunken: palette.sand[200],
+    background: palette.ink[50],
+    surface: palette.ink[0],
+    surfaceSunken: palette.ink[100],
     surfaceRaised: '#FFFFFF',
-    border: 'rgba(58, 50, 42, 0.12)',
-    borderStrong: 'rgba(58, 50, 42, 0.24)',
-    text: palette.sand[900],
-    textSecondary: palette.sand[700],
-    textMuted: palette.sand[600],
-    textInverse: palette.sand[0],
-    brand: palette.jade[600],
-    brandPressed: palette.jade[700],
-    brandSoft: palette.jade[50],
+    border: 'rgba(28, 25, 40, 0.08)',
+    borderStrong: 'rgba(28, 25, 40, 0.16)',
+    text: palette.ink[900],
+    textSecondary: palette.ink[700],
+    textMuted: palette.ink[650],
+    textInverse: '#FFFFFF',
+    brand: palette.violet[500],
+    brandPressed: palette.violet[600],
+    brandSoft: palette.violet[100],
     onBrand: '#FFFFFF',
-    accent: palette.amber[400],
-    accentSoft: palette.amber[50],
-    onAccent: palette.sand[900],
+    accent: palette.coral[400],
+    accentSoft: palette.coral[50],
+    onAccent: palette.ink[900],
     danger: palette.coral[600],
     dangerSoft: palette.coral[50],
-    success: palette.jade[500],
-    successSoft: palette.jade[50],
+    success: palette.green[600],
+    successSoft: palette.green[50],
     warning: palette.amber[600],
     warningSoft: palette.amber[50],
     info: palette.sky[500],
     infoSoft: palette.sky[50],
-    editorial: palette.plum[500],
-    editorialSoft: palette.plum[50],
-    overlay: 'rgba(33, 29, 25, 0.48)',
-    skeleton: palette.sand[200],
-    skeletonHighlight: palette.sand[100],
-    tabBar: 'rgba(255, 253, 249, 0.94)',
+    editorial: palette.violet[700],
+    editorialSoft: palette.violet[50],
+    overlay: 'rgba(28, 25, 40, 0.48)',
+    skeleton: '#ECE9F3',
+    skeletonHighlight: '#F6F4FA',
+    tabBar: 'rgba(255, 255, 255, 0.96)',
     /** Opaque bars pinned over scrolling content (purchase bar, collapsed headers). */
-    chrome: palette.sand[0],
+    chrome: '#FFFFFF',
   },
   dark: {
     background: palette.night[900],
     surface: palette.night[800],
-    surfaceSunken: '#0D0F10',
+    surfaceSunken: palette.night[950],
     surfaceRaised: palette.night[700],
-    border: 'rgba(246, 240, 231, 0.10)',
-    borderStrong: 'rgba(246, 240, 231, 0.22)',
-    text: palette.sand[100],
-    textSecondary: palette.sand[300],
-    textMuted: palette.sand[400],
-    textInverse: palette.sand[900],
-    brand: palette.jade[300],
-    brandPressed: palette.jade[200],
-    brandSoft: 'rgba(95, 179, 161, 0.14)',
-    onBrand: palette.jade[900],
-    accent: palette.amber[300],
-    accentSoft: 'rgba(246, 184, 90, 0.14)',
-    onAccent: palette.sand[900],
-    danger: palette.coral[300],
-    dangerSoft: 'rgba(239, 141, 124, 0.14)',
-    success: palette.jade[300],
-    successSoft: 'rgba(95, 179, 161, 0.14)',
+    border: 'rgba(243, 241, 250, 0.09)',
+    borderStrong: 'rgba(243, 241, 250, 0.18)',
+    text: '#F3F1FA',
+    textSecondary: '#C4C0D3',
+    textMuted: '#9893AA',
+    textInverse: palette.ink[900],
+    brand: '#A98CFF',
+    brandPressed: '#C2AEFF',
+    brandSoft: 'rgba(169, 140, 255, 0.16)',
+    onBrand: '#14101F',
+    accent: '#FF8A82',
+    accentSoft: 'rgba(255, 116, 107, 0.16)',
+    onAccent: '#14101F',
+    danger: '#FF8A82',
+    dangerSoft: 'rgba(255, 116, 107, 0.14)',
+    success: palette.green[300],
+    successSoft: 'rgba(92, 199, 154, 0.14)',
     warning: palette.amber[300],
-    warningSoft: 'rgba(246, 184, 90, 0.14)',
+    warningSoft: 'rgba(248, 194, 92, 0.14)',
     info: palette.sky[300],
-    infoSoft: 'rgba(141, 181, 222, 0.14)',
-    editorial: palette.plum[300],
-    editorialSoft: 'rgba(169, 139, 190, 0.16)',
+    infoSoft: 'rgba(141, 180, 245, 0.14)',
+    editorial: '#C2AEFF',
+    editorialSoft: 'rgba(169, 140, 255, 0.14)',
     overlay: 'rgba(0, 0, 0, 0.6)',
     skeleton: palette.night[700],
     skeletonHighlight: palette.night[600],
-    tabBar: 'rgba(26, 29, 32, 0.94)',
+    tabBar: 'rgba(27, 24, 37, 0.96)',
     chrome: palette.night[800],
   },
 } as const;
 export type ColorTokens = { [K in keyof typeof colors.light]: string };
 
 export const fontFamilies = {
-  display: 'Fraunces_600SemiBold',
-  displayItalic: 'Fraunces_500Medium_Italic',
-  body: 'Manrope_500Medium',
-  bodyRegular: 'Manrope_400Regular',
-  bodySemibold: 'Manrope_600SemiBold',
-  bodyBold: 'Manrope_700Bold',
-  bodyExtraBold: 'Manrope_800ExtraBold',
+  regular: 'PlusJakartaSans_400Regular',
+  medium: 'PlusJakartaSans_500Medium',
+  semibold: 'PlusJakartaSans_600SemiBold',
+  bold: 'PlusJakartaSans_700Bold',
+  extrabold: 'PlusJakartaSans_800ExtraBold',
 } as const;
 
-/** Type scale (size / line height / letter spacing). Display uses the serif; everything else Manrope. */
+/** Type scale (size / line height / letter spacing). One family; weight and size carry the hierarchy. */
 export const typography = {
-  displayXL: { fontFamily: fontFamilies.display, fontSize: 34, lineHeight: 38, letterSpacing: -0.6 },
-  displayL: { fontFamily: fontFamilies.display, fontSize: 28, lineHeight: 32, letterSpacing: -0.4 },
-  displayM: { fontFamily: fontFamilies.display, fontSize: 22, lineHeight: 26, letterSpacing: -0.2 },
-  title: { fontFamily: fontFamilies.bodyBold, fontSize: 18, lineHeight: 24, letterSpacing: -0.2 },
-  subtitle: { fontFamily: fontFamilies.bodySemibold, fontSize: 16, lineHeight: 22, letterSpacing: -0.1 },
-  body: { fontFamily: fontFamilies.body, fontSize: 15, lineHeight: 22, letterSpacing: 0 },
-  bodySmall: { fontFamily: fontFamilies.body, fontSize: 13, lineHeight: 18, letterSpacing: 0 },
-  label: { fontFamily: fontFamilies.bodySemibold, fontSize: 13, lineHeight: 16, letterSpacing: 0.1 },
-  caption: { fontFamily: fontFamilies.body, fontSize: 12, lineHeight: 16, letterSpacing: 0.1 },
-  overline: { fontFamily: fontFamilies.bodyBold, fontSize: 11, lineHeight: 14, letterSpacing: 1.1 },
-  price: { fontFamily: fontFamilies.bodyExtraBold, fontSize: 16, lineHeight: 20, letterSpacing: -0.3 },
-  priceLarge: { fontFamily: fontFamilies.bodyExtraBold, fontSize: 26, lineHeight: 30, letterSpacing: -0.6 },
-  button: { fontFamily: fontFamilies.bodyBold, fontSize: 16, lineHeight: 20, letterSpacing: -0.1 },
+  displayXL: { fontFamily: fontFamilies.extrabold, fontSize: 30, lineHeight: 36, letterSpacing: -0.8 },
+  displayL: { fontFamily: fontFamilies.extrabold, fontSize: 25, lineHeight: 30, letterSpacing: -0.6 },
+  displayM: { fontFamily: fontFamilies.bold, fontSize: 19, lineHeight: 24, letterSpacing: -0.4 },
+  title: { fontFamily: fontFamilies.bold, fontSize: 17, lineHeight: 22, letterSpacing: -0.3 },
+  subtitle: { fontFamily: fontFamilies.semibold, fontSize: 15, lineHeight: 20, letterSpacing: -0.1 },
+  body: { fontFamily: fontFamilies.medium, fontSize: 15, lineHeight: 22, letterSpacing: -0.1 },
+  bodySmall: { fontFamily: fontFamilies.medium, fontSize: 13, lineHeight: 18, letterSpacing: 0 },
+  label: { fontFamily: fontFamilies.semibold, fontSize: 13, lineHeight: 16, letterSpacing: 0 },
+  caption: { fontFamily: fontFamilies.medium, fontSize: 12, lineHeight: 16, letterSpacing: 0 },
+  overline: { fontFamily: fontFamilies.bold, fontSize: 11, lineHeight: 14, letterSpacing: 0.8 },
+  price: { fontFamily: fontFamilies.extrabold, fontSize: 16, lineHeight: 20, letterSpacing: -0.3 },
+  priceLarge: { fontFamily: fontFamilies.extrabold, fontSize: 26, lineHeight: 30, letterSpacing: -0.8 },
+  button: { fontFamily: fontFamilies.bold, fontSize: 15, lineHeight: 20, letterSpacing: -0.1 },
 } as const;
 export type TypographyVariant = keyof typeof typography;
 
 export const space = { 0: 0, 0.5: 2, 1: 4, 1.5: 6, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 8: 32, 10: 40, 12: 48, 14: 56, 16: 64 } as const;
-export const radii = { xs: 6, sm: 10, md: 14, lg: 20, xl: 28, pill: 999 } as const;
+export const radii = { xs: 6, sm: 10, md: 14, lg: 18, xl: 24, pill: 999 } as const;
 
+/** Shadows only for what floats above content (sheets, sticky bars, floating buttons), tinted with ink. */
 export const elevation = {
   none: { shadowOpacity: 0, elevation: 0 },
-  low: { shadowColor: '#3B2A1A', shadowOpacity: 0.07, shadowRadius: 10, shadowOffset: { width: 0, height: 3 }, elevation: 2 },
-  high: { shadowColor: '#3B2A1A', shadowOpacity: 0.14, shadowRadius: 24, shadowOffset: { width: 0, height: 10 }, elevation: 8 },
+  low: { shadowColor: '#1C1928', shadowOpacity: 0.06, shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 2 },
+  high: { shadowColor: '#1C1928', shadowOpacity: 0.14, shadowRadius: 28, shadowOffset: { width: 0, height: 12 }, elevation: 10 },
 } as const;
 
 /** Motion: short, physical, purposeful. All durations collapse to 0 with reduced motion. */
@@ -167,7 +168,8 @@ export const availabilityStyles = {
   unavailable: { tone: 'muted', label: 'No disponible' },
 } as const;
 
+/** Store color choices; the keys are stored per store, so they keep their names when the palette changes. */
 export const storeAccents = {
-  jade: palette.jade[600], amber: palette.amber[500], coral: palette.coral[500],
-  plum: palette.plum[500], ink: palette.sand[800], sky: palette.sky[500],
+  jade: '#12806A', amber: '#D98A12', coral: palette.coral[500],
+  plum: palette.violet[600], ink: palette.ink[800], sky: palette.sky[500],
 } as const;

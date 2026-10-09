@@ -206,7 +206,7 @@ function Section({ step, title, children }: { step: number; title: string; child
     <View style={{ gap: 12 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         <View style={{ width: 26, height: 26, borderRadius: 13, backgroundColor: t.colors.text, alignItems: 'center', justifyContent: 'center' }}>
-          <Text variant="caption" style={{ color: t.colors.surface, fontFamily: 'Manrope_700Bold' }}>{step}</Text>
+          <Text variant="caption" style={{ color: t.colors.surface, fontFamily: 'PlusJakartaSans_700Bold' }}>{step}</Text>
         </View>
         <Text variant="title">{title}</Text>
       </View>

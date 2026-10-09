@@ -200,7 +200,7 @@ function ClaimThread({ claim: c, onStartNew }: { claim: ClaimWithContext; onStar
               placeholderTextColor={t.colors.textMuted}
               multiline
               accessibilityLabel="Mensaje"
-              style={{ flex: 1, minHeight: 44, maxHeight: 140, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 12, borderRadius: 22, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, color: t.colors.text, fontFamily: 'Manrope_500Medium', fontSize: 15 }}
+              style={{ flex: 1, minHeight: 44, maxHeight: 140, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 12, borderRadius: 22, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, color: t.colors.text, fontFamily: 'PlusJakartaSans_500Medium', fontSize: 15 }}
             />
             <IconButton
               testID="claim-send"

@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: `${brand.androidPackage}${suffix}`,
     adaptiveIcon: {
-      backgroundColor: '#0E5E54',
+      backgroundColor: '#6D42E8',
       foregroundImage: './assets/images/android-icon-foreground.png',
       backgroundImage: './assets/images/android-icon-background.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
@@ -59,10 +59,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#F6F0E7',
+        backgroundColor: '#F8F7FC',
         image: './assets/images/splash-icon.png',
         imageWidth: 96,
-        dark: { backgroundColor: '#121416', image: './assets/images/splash-icon-dark.png' },
+        dark: { backgroundColor: '#110F18', image: './assets/images/splash-icon-dark.png' },
       },
     ],
     [
@@ -73,7 +73,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         microphonePermission: false,
       },
     ],
-    ['expo-notifications', { icon: './assets/images/notification-icon.png', color: '#0E5E54' }],
+    ['expo-notifications', { icon: './assets/images/notification-icon.png', color: '#6D42E8' }],
     'expo-web-browser',
   ],
   // EAS Update: test builds pick up JavaScript and image changes without a new APK. The fingerprint changes

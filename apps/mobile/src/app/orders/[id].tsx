@@ -107,7 +107,7 @@ export default function OrderScreen() {
         {o.payments.map((p) => (
           <View key={p.id} style={{ gap: 2 }} testID={`payment-${p.number}`}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
-              <Text variant="bodySmall" style={{ fontFamily: 'Manrope_600SemiBold' }}>{p.number} · {formatMoney(p.amount, p.currency as Currency)}</Text>
+              <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.number} · {formatMoney(p.amount, p.currency as Currency)}</Text>
               <Badge label={PAYMENT_RECORD_LABEL[p.status] ?? p.status} tone={paymentRecordTone(p.status)} />
             </View>
             <Text variant="caption" color="textMuted">
@@ -191,7 +191,7 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, cla
           <Text variant="bodySmall" color="brand">{describeEtaDates(f.eta_min_date, f.eta_max_date)}</Text>
         ) : null}
         {f.tracking_number ? (
-          <Text variant="bodySmall" selectable>Guía {f.carrier_name ? `${f.carrier_name} ` : ''}<Text variant="bodySmall" style={{ fontFamily: 'Manrope_700Bold' }}>{f.tracking_number}</Text></Text>
+          <Text variant="bodySmall" selectable>Guía {f.carrier_name ? `${f.carrier_name} ` : ''}<Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_700Bold' }}>{f.tracking_number}</Text></Text>
         ) : null}
         <Text variant="caption" color="textMuted">{f.shipping_method_name}</Text>
       </View>

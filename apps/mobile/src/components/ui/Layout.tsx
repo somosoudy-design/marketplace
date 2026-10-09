@@ -9,11 +9,11 @@ export function SectionHeader({ overline, title, action, onAction }: { overline?
   return (
     <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingHorizontal: 16, marginBottom: 12, gap: 12 }}>
       <View style={{ flex: 1, gap: 2 }}>
-        {overline ? <Text variant="overline" color="brand">{overline.toUpperCase()}</Text> : null}
-        <Text variant="displayM">{title}</Text>
+        {overline ? <Text variant="caption" color="textMuted">{overline}</Text> : null}
+        <Text variant="displayM" accessibilityRole="header">{title}</Text>
       </View>
       {action ? (
-        <ScalePressable accessibilityRole="link" onPress={onAction} hitSlop={8} style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+        <ScalePressable accessibilityRole="link" onPress={onAction} hitSlop={10} style={{ flexDirection: 'row', alignItems: 'center', gap: 2, paddingBottom: 2 }}>
           <Text variant="label" color="brand">{action}</Text>
           <Icon name="chevron-right" size={16} color={colors.brand} />
         </ScalePressable>

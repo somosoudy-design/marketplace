@@ -51,7 +51,7 @@ export function RatePill({ testID = 'home-rate' }: { testID?: string }) {
         }}
       >
         <Icon name={ok ? 'landmark' : 'circle-alert'} size={14} color={ok ? t.colors.textSecondary : t.colors.warning} />
-        <Text variant="caption" color={ok ? 'textSecondary' : 'warning'} tabular numberOfLines={1} style={{ fontFamily: 'Manrope_600SemiBold' }}>{label}</Text>
+        <Text variant="caption" color={ok ? 'textSecondary' : 'warning'} tabular numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{label}</Text>
         <Icon name="chevron-right" size={14} color={t.colors.textMuted} />
       </ScalePressable>
       <RateSheet rate={r} visible={open} onClose={() => setOpen(false)} />

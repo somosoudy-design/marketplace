@@ -20,19 +20,19 @@ export function Chip({ label, selected, onPress, icon, count, testID }: { label:
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
-        height: 36,
-        paddingHorizontal: 14,
+        height: 34,
+        paddingHorizontal: 13,
         borderRadius: radii.pill,
-        backgroundColor: selected ? colors.text : colors.surface,
+        backgroundColor: selected ? colors.brand : colors.surface,
         borderWidth: 1,
-        borderColor: selected ? colors.text : colors.border,
+        borderColor: selected ? colors.brand : colors.border,
       }}
     >
-      {icon ? <Icon name={icon} size={16} color={selected ? colors.surface : colors.textSecondary} /> : null}
-      <Text variant="label" style={{ color: selected ? colors.surface : colors.text }}>{label}</Text>
+      {icon ? <Icon name={icon} size={16} color={selected ? colors.onBrand : colors.textSecondary} /> : null}
+      <Text variant="label" style={{ color: selected ? colors.onBrand : colors.text }}>{label}</Text>
       {count ? (
-        <View style={{ minWidth: 18, height: 18, borderRadius: 9, backgroundColor: colors.brand, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 }}>
-          <Text variant="caption" style={{ color: colors.onBrand, fontFamily: 'Manrope_700Bold', fontSize: 11 }}>{count}</Text>
+        <View style={{ minWidth: 18, height: 18, borderRadius: 9, backgroundColor: selected ? colors.onBrand : colors.brand, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 }}>
+          <Text variant="caption" style={{ color: selected ? colors.brand : colors.onBrand, fontFamily: 'PlusJakartaSans_700Bold', fontSize: 11 }}>{count}</Text>
         </View>
       ) : null}
     </ScalePressable>

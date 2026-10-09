@@ -33,7 +33,8 @@ export function IconButton({ icon, label, onPress, size = 40, tone = 'plain', co
       scaleTo={0.9}
       style={[
         { width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center', backgroundColor: bg },
-        tone === 'glass' || tone === 'surface' ? elevation.low : null,
+        // floating over photos only; on plain surfaces a hairline is enough
+        tone === 'glass' ? elevation.low : tone === 'surface' ? { borderWidth: 1, borderColor: colors.border } : null,
         style,
       ]}
     >
