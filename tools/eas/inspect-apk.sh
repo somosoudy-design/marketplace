@@ -15,10 +15,10 @@ for url in "$@"; do
     echo "tipo: $(file -b "$f" | cut -c1-60)"
     unzip -tq "$f" >/dev/null 2>&1 && echo "zip: íntegro" || echo "zip: DAÑADO"
     unzip -l "$f" | grep -q 'AndroidManifest.xml' && echo "AndroidManifest.xml: sí (es APK)" || echo "AndroidManifest.xml: NO (¿AAB?)"
-    "$BT/aapt2" dump badging "$f" 2>&1 | grep -E "^(package|sdkVersion|targetSdkVersion|native-code|alt-native-code|application-debuggable|testOnly|uses-permission:)" | sed "s/compileSdkVersion.*//"
+    "$BT/aapt2" dump badging "$f" 2>&1 | grep -E "^(package|sdkVersion|minSdkVersion|targetSdkVersion|native-code|alt-native-code|application-debuggable|testOnly)" | sed "s/compileSdkVersion.*//"
     "$BT/aapt2" dump xmltree --file AndroidManifest.xml "$f" 2>/dev/null | grep -E "testOnly|debuggable|extractNativeLibs|installLocation" | sed 's/^ *//'
     echo "librerías nativas: $(unzip -l "$f" | grep -oE 'lib/[^/]+/' | sort -u | tr '\n' ' ')"
-    "$BT/apksigner" verify --verbose --print-certs "$f" 2>&1 | grep -E "^(Verifies|Verified using|Signer #1 certificate (DN|SHA-256)|Number of signers|WARNING|ERROR|DOES NOT VERIFY)" | grep -v "WARNING: META-INF" | head -12
+    "$BT/apksigner" verify --verbose --print-certs "$f" 2>&1 | grep -vE "META-INF|scheme \(.*\): false" | head -20
     echo '```'
   } >>"$out"
   rm -f "$f"
