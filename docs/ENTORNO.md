@@ -107,6 +107,11 @@ pnpm test:remote-catalog   # catálogo demo del proyecto remoto, en una base apa
 pnpm typecheck && pnpm lint
 ```
 
+Recorridos en el APK real: `tests/apk-flows/*.yaml` (Maestro). Los corre `tools/eas/emulator-flows.sh` dentro
+del workflow «APK en emulador» sobre el último APK de `.github/apk-emulator-request`, después de dejar que baje
+la última actualización. En React Native el `id` de Maestro es el `testID`. El informe sale en el registro del
+job; las capturas, en el artefacto `capturas-emulador`.
+
 Un solo spec de la app: `pnpm --filter @kora/app-e2e build:web` y luego
 `cd tests/app-e2e && npx playwright test --project=app tests/<spec>.ts`. Detalle y casos críticos en
 `docs/PRUEBAS.md`.
@@ -214,7 +219,7 @@ Se disparan al cambiar un archivo de solicitud en `.github/` de la rama comparti
 |---|---|---|
 | `.github/apk-preview-request` | `eas-android-preview.yml` | Compila un APK `preview` en EAS y lo revisa |
 | `.github/apk-verify-request` | `apk-verify.yml` | Revisa un APK ya compilado (último enlace del archivo) |
-| `.github/apk-emulator-request` | `apk-emulator.yml` | Instala y abre los APK listados en un Android 15 limpio, con capturas y registros |
+| `.github/apk-emulator-request` | `apk-emulator.yml` | Instala y abre los APK listados en un Android 15 limpio (pantalla de Pixel 6), con capturas y registros, y corre los recorridos de Maestro de `tests/apk-flows` |
 | `.github/eas-update-request` | `eas-update-preview.yml` | Publica una actualización de JavaScript en el canal `preview` |
 
 Resultados: `gh run list --branch claude/marketplace-v1 --limit 5` y `gh run view <id>`. Si `gh run view --log`

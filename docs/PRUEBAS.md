@@ -20,6 +20,7 @@ inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las
 | Catálogo demo remoto contra una base solo con migraciones (cargar, doble carga, quitar, compra y pago de un comprador nuevo, quitar con pedidos) | `pnpm test:remote-catalog` | **11/11** comprobaciones |
 | Configuración nativa | `expo config`, `expo prebuild --platform android` | correcta |
 | APK de prueba (EAS) | `tools/eas/verify-apk.mjs` en el workflow | backend de eas.json, sin direcciones locales, solo clave anon, projectId correcto |
+| Recorrido de visitante en el APK real (Maestro, Android 15, pantalla de Pixel 6, backend de pruebas) | `tests/apk-flows/visitante.yaml` en el workflow «APK en emulador» (cambiar `.github/apk-emulator-request`) | en verde el 2026-10-09 (APK 4 + actualización `01a122a3`): catálogo remoto, ficha por enlace, variante, carrito, carrito conservado al reabrir, paso a iniciar sesión |
 
 Total: **179 pruebas automatizadas** en verde, más las 11 comprobaciones del catálogo remoto.
 

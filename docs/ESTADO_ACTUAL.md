@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-09 22:05Z, por Claude (sesión de Claude Code en la nube, hilo «Marketplace
+**Última actualización:** 2026-10-09 22:25Z, por Claude (sesión de Claude Code en la nube, hilo «Marketplace
 nativo premium» del proyecto TIENDA ONLINE).
 
 ## Dónde está el trabajo
@@ -27,7 +27,7 @@ nativo premium» del proyecto TIENDA ONLINE).
 | B | Catálogo remoto visible y acceso (registro con código) | Hecho: catálogo demo cargado; registro con código de 6 dígitos hecho y probado; registro sin confirmación para testers decidido (falta el clic de Oliver, ver «Pendiente de Oliver») |
 | C | Inicio nuevo e identidad Electric Violet | Hecho y publicado por EAS Update: Inicio de tienda, 20 pantallas revisadas en claro y oscuro, logos de tiendas, panel con la misma tipografía y marca. Lo nativo violeta (icono, splash) espera al APK 5 |
 | D | Rediseño del recorrido comercial completo | En curso: selector de pago rediseñado y publicado. Ficha, carrito, checkout, cuotas y seguimiento revisados en la versión web; falta verlos en Android (`PENDIENTES.md` 1.3) |
-| E | Validación integral | Empezando: recorrido automático en el emulador con el APK real (ver «Próxima acción») |
+| E | Validación integral | En curso: recorrido de visitante automático en el APK real, en verde. Falta el recorrido con cuenta (espera «Confirm email») |
 
 ## Qué funciona hoy (verificado)
 
@@ -44,30 +44,23 @@ nativo premium» del proyecto TIENDA ONLINE).
 
 ## Trabajo en curso
 
-- Recorrido de visitante con Maestro escrito (`tests/apk-flows/visitante.yaml`, `tools/eas/emulator-flows.sh`,
-  pasos nuevos en `.github/workflows/apk-emulator.yml`) y primera corrida pedida en GitHub (revisión 5 de
-  `.github/apk-emulator-request`). **Sin resultado todavía**: si este archivo sigue diciendo esto, mira la última
-  ejecución de «APK en emulador» (`gh run list --workflow apk-emulator.yml --limit 1`) y su artefacto
-  `capturas-emulador` (carpeta `flujos/`).
-- Archivos modificados sin commit: ninguno.
+- Nada a medio escribir; sin commits `WIP:` abiertos. Archivos modificados sin commit: ninguno.
+- Recién terminado: **primer recorrido automático en el APK real** (`tests/apk-flows/visitante.yaml`, corre con
+  Maestro en el workflow «APK en emulador»). Pasó el 2026-10-09 22:21Z (ejecución `37998307758`) en un Android 15
+  con pantalla de Pixel 6, sobre el APK 4 con la actualización `01a122a3` (la del selector de pago) y el backend
+  de pruebas: Inicio con catálogo remoto y recomendados, ficha por enlace `kora://p/…`, variante de 2 m,
+  agregar, carrito con 12 USD, carrito conservado al cerrar y reabrir, y paso a iniciar sesión. Las capturas
+  quedan en el artefacto `capturas-emulador` de cada ejecución (carpeta `flujos/`).
 
 ## Próxima acción
 
-**Recorrido automático con Maestro en el emulador del workflow `apk-emulator.yml`** (`PENDIENTES.md` 1.1),
-contra el APK 4 con su última actualización y el backend de pruebas. Escrito; falta verlo pasar:
-
-1. Abrir la app, esperar el Inicio con el catálogo remoto (`home-search`, `home-recommended`).
-2. `kora://p/ugreen-cable-usb-c-100w`: ficha (`product-title`), elegir variante (`variant-2 m`), agregar
-   (`product-cta`, luego `added-to-cart`).
-3. Carrito (`cart-subtotal`; `cart-continue` dice «Iniciar sesión» para visitantes).
-4. Cerrar y reabrir la app: el carrito de visitante sigue ahí.
-5. `cart-continue` lleva a iniciar sesión (`sign-in-email`).
-
-Archivos previstos: `tests/apk-flows/visitante.yaml`, `tools/eas/emulator-flows.sh` (abre la app 25 s para
-que baje la actualización, la cierra y corre Maestro; copia capturas a `shots/`) y un paso nuevo en
-`.github/workflows/apk-emulator.yml` que instala Maestro antes del emulador. Se dispara cambiando
-`.github/apk-emulator-request`. Solo lectura sobre el backend: no crea cuentas ni pedidos. Cuando Oliver
-apague «Confirm email», ampliar con registro de una cuenta `@example.com`, compra y cancelación del pedido.
+1. **Recorrido con cuenta** (`PENDIENTES.md` 1.2), bloqueado hasta que Oliver desactive «Confirm email»:
+   registrar `maestro+<fecha>@example.com`, iniciar sesión, comprar el cable con retiro o envío, elegir
+   Pago Móvil (datos ficticios «No transferir»), reportar una referencia de prueba, ver «Estamos verificando tu
+   pago» y cancelar el pedido. Nada se marca como pagado. Archivo previsto: `tests/apk-flows/cuenta.yaml`
+   (el script corre todos los `.yaml` de la carpeta, así que no lo agregues hasta que el registro funcione).
+2. Mientras tanto, cierre del hito D en Android (`PENDIENTES.md` 1.3): revisar las capturas del recorrido y
+   corregir lo que no esté al nivel.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -104,6 +97,9 @@ Ejecutadas en esta sesión (2026-10-09, stack local):
 
 No ejecutadas en esta sesión: `pnpm test:db` (76), `pnpm test:e2e` (8) y `pnpm test:functions` (11); pasaron la
 última vez que se tocó la base (ver `docs/PRUEBAS.md`) y desde entonces no cambió ninguna migración ni función.
+
+En el APK real (GitHub Actions, Android 15, pantalla de Pixel 6): `tests/apk-flows/visitante.yaml` con Maestro,
+en verde (2026-10-09 22:21Z).
 
 Faltan: recorrido en el APK real con cuenta (registro, compra, pago simulado) y pruebas en un teléfono físico
 más allá de lo que Oliver prueba a mano.

@@ -26,8 +26,10 @@ arriba de la bitácora, con este formato:
 - Pruebas: las de la bitácora del día; los documentos no cambian código.
 - Servicios: ninguno en este relevo. Estado remoto comprobado con el conector a las 22:00Z (ver
   `ESTADO_ACTUAL.md`).
-- Siguiente: recorrido con Maestro en el emulador (`PENDIENTES.md` 1.1).
-- Último commit: el del checkpoint «Continuity protocol» en `claude/marketplace-v1`.
+- Después del protocolo, en el mismo turno: primer recorrido automático en el APK real (Maestro en el workflow
+  «APK en emulador», `tests/apk-flows/visitante.yaml`), en verde a las 22:21Z.
+- Siguiente: recorrido con cuenta cuando Oliver desactive «Confirm email»; cierre del hito D en Android.
+- Último commit: el checkpoint «Maestro visitor flow passes on the real APK» en `claude/marketplace-v1`.
 
 ## Bitácora anterior (de `docs/CONTINUIDAD.md`)
 
