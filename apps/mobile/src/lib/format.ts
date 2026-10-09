@@ -34,3 +34,15 @@ export const SOURCE_LABEL: Record<string, string> = {
 export type StatusTone = 'success' | 'warning' | 'danger' | 'info' | 'muted' | 'brand';
 export const paymentTone = (s: string): StatusTone => (s === 'paid' ? 'success' : s === 'partially_paid' ? 'warning' : s === 'unpaid' ? 'danger' : 'info');
 export const paymentRecordTone = (s: string): StatusTone => (s === 'confirmed' ? 'success' : s === 'rejected' || s === 'failed' ? 'danger' : s === 'refunded' ? 'muted' : 'info');
+
+/** 4.5 -> "4,5" (one decimal, Spanish separator). */
+export function formatRating(v: number | string | null | undefined): string {
+  return Number(v ?? 0).toFixed(1).replace('.', ',');
+}
+
+/** "Desde oct 2026" for how long a store has been selling. */
+export function monthYear(iso: string | null | undefined): string {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return `${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}

@@ -1,6 +1,7 @@
 import type { Availability, SearchSort } from '@kora/api';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { ActivityIndicator, Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
+import Animated, { type useAnimatedScrollHandler } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
@@ -64,13 +65,19 @@ interface Props {
   header?: React.ReactElement | null;
   topInset?: number;
   testID?: string;
+  /** Hide the seller line on cards when every product comes from the same store. */
+  showStore?: boolean;
+  /** Restricts the category chips (a store only shows the categories it sells in). */
+  categorySlugs?: string[];
+  onScroll?: ReturnType<typeof useAnimatedScrollHandler>;
+  searchPlaceholder?: string;
 }
 
 /**
  * Catalog with search, filters and infinite scroll. The screen stays mounted under pushed product pages,
  * so scroll position, query and filters are intact when the buyer comes back.
  */
-export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey, header, topInset = 0, testID }: Props) {
+export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey, header, topInset = 0, testID, showStore = true, categorySlugs, onScroll, searchPlaceholder = 'Buscar productos, marcas o tiendas' }: Props) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const grid = useGridColumns();
@@ -90,7 +97,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
   );
   const search = useSearch(params);
   const items = useMemo(() => search.data?.pages.flat() ?? [], [search.data]);
-  const topCategories = (categories.data ?? []).filter((c) => !c.parent_id);
+  const topCategories = (categories.data ?? []).filter((c) => !c.parent_id && (!categorySlugs || categorySlugs.includes(c.slug)));
   const priceLabel = PRICES.find((p) => p.min === f.minPrice && p.max === f.maxPrice)?.label ?? 'Precio';
   const activeCount = f.availability.length + (f.minPrice != null || f.maxPrice != null ? 1 : 0) + (f.sort !== 'relevance' ? 1 : 0);
 
@@ -108,7 +115,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
             testID="catalog-search"
             value={f.query}
             onChangeText={(q) => setF((x) => ({ ...x, query: q }))}
-            placeholder="Buscar productos, marcas o tiendas"
+            placeholder={searchPlaceholder}
             placeholderTextColor={t.colors.textMuted}
             returnKeyType="search"
             autoCorrect={false}
@@ -122,7 +129,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
           ) : null}
         </View>
       ) : null}
-      {!locked.includes('category') && !f.collection ? (
+      {!locked.includes('category') && !f.collection && topCategories.length > 1 ? (
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 8 }}>
           <Chip label="Todo" selected={!f.category} onPress={() => setF((x) => ({ ...x, category: null }))} />
           {topCategories.map((c) => (
@@ -152,8 +159,10 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
 
   return (
     <>
-      <FlatList
+      <Animated.FlatList
         testID={testID ?? 'catalog-list'}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
         key={grid.columns}
         data={items}
         numColumns={grid.columns}
@@ -165,7 +174,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
         columnWrapperStyle={grid.columns > 1 ? { gap: grid.gap, paddingHorizontal: 16 } : undefined}
         ItemSeparatorComponent={() => <View style={{ height: 22 }} />}
         ListHeaderComponent={listHeader}
-        renderItem={({ item, index }) => <ProductCard product={item} width={grid.cardWidth} priority={index < 4 ? 'high' : 'normal'} />}
+        renderItem={({ item, index }) => <ProductCard product={item} width={grid.cardWidth} showStore={showStore} priority={index < 4 ? 'high' : 'normal'} />}
         onEndReachedThreshold={0.6}
         onEndReached={() => search.hasNextPage && !search.isFetchingNextPage && search.fetchNextPage()}
         ListEmptyComponent={

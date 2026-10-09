@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
+import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider } from '@/components/ui/Layout';
@@ -168,12 +169,13 @@ export default function CheckoutScreen() {
         {place.error ? <Banner tone="danger" icon="circle-alert" body={(place.error as Error).message} /> : null}
       </ScrollView>
 
-      <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 16, paddingBottom: insets.bottom + 16, backgroundColor: t.colors.tabBar, borderTopWidth: 1, borderTopColor: t.colors.border }}>
-        <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center', gap: 8 }}>
+      <BottomBar maxWidth={MAX_W}>
           {blocking ? <Text variant="caption" color="danger">{blocking}</Text> : null}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <Text variant="subtitle">{s.schedule.length > 1 ? 'Pagas hoy' : 'Total'}</Text>
-            <Text variant="priceLarge" style={{ fontSize: 22 }} tabular>{formatUSD(firstPayment ?? s.total_usd)}</Text>
+            <ChangingText value={formatUSD(firstPayment ?? s.total_usd)}>
+              <Text variant="priceLarge" style={{ fontSize: 22 }} tabular>{formatUSD(firstPayment ?? s.total_usd)}</Text>
+            </ChangingText>
           </View>
           <Button
             testID="checkout-place"
@@ -185,8 +187,7 @@ export default function CheckoutScreen() {
             onPress={() => place.mutate()}
           />
           <Text variant="caption" color="textMuted" align="center">En el siguiente paso eliges el método de pago y ves el monto exacto.</Text>
-        </View>
-      </View>
+      </BottomBar>
     </View>
   );
 }

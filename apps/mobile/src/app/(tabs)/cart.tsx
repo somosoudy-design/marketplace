@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { MAX_CONTENT } from '@/components/catalog/ProductGrid';
 import { Badge } from '@/components/ui/Badge';
+import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider, Stepper } from '@/components/ui/Layout';
@@ -174,15 +175,15 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
 function CartFooter({ items, note, cta, onPress, disabled }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean }) {
   const t = useTheme();
   return (
-    <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 16, backgroundColor: t.colors.tabBar, borderTopWidth: 1, borderTopColor: t.colors.border }}>
-      <View style={{ width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center', gap: 10 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <Text variant="subtitle">Productos</Text>
+    <BottomBar maxWidth={MAX_CONTENT} safeArea={false}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <Text variant="subtitle">Productos</Text>
+        <ChangingText value={formatUSD(items)}>
           <Text variant="priceLarge" style={{ fontSize: 22 }} tabular testID="cart-subtotal">{formatUSD(items)}</Text>
-        </View>
-        <Text variant="caption" color="textMuted">{note}</Text>
-        <Button testID="cart-continue" title={cta} size="lg" full disabled={disabled} onPress={onPress} />
+        </ChangingText>
       </View>
-    </View>
+      <Text variant="caption" color="textMuted">{note}</Text>
+      <Button testID="cart-continue" title={cta} size="lg" full disabled={disabled} onPress={onPress} />
+    </BottomBar>
   );
 }

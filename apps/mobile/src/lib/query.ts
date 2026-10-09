@@ -26,6 +26,8 @@ export const qk = {
   search: (p: object) => ['search', p] as const,
   product: (id: string) => ['product', id] as const,
   store: (slug: string) => ['store', slug] as const,
+  reviews: (productId: string) => ['reviews', productId] as const,
+  myReviews: (orderId: string) => ['my-reviews', orderId] as const,
   categories: ['categories'] as const,
   cart: (addressId?: string | null) => ['cart', addressId ?? null] as const,
   orders: ['orders'] as const,

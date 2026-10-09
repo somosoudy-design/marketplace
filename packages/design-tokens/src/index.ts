@@ -64,6 +64,8 @@ export const colors = {
     skeleton: palette.sand[200],
     skeletonHighlight: palette.sand[100],
     tabBar: 'rgba(255, 253, 249, 0.94)',
+    /** Opaque bars pinned over scrolling content (purchase bar, collapsed headers). */
+    chrome: palette.sand[0],
   },
   dark: {
     background: palette.night[900],
@@ -97,6 +99,7 @@ export const colors = {
     skeleton: palette.night[700],
     skeletonHighlight: palette.night[600],
     tabBar: 'rgba(26, 29, 32, 0.94)',
+    chrome: palette.night[800],
   },
 } as const;
 export type ColorTokens = { [K in keyof typeof colors.light]: string };

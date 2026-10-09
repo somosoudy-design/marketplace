@@ -2,8 +2,9 @@ import type { ProductDetail, ProductVariant } from '@kora/api';
 import { describeLeadTime, etaFromToday, presentAvailability, stockHint } from '@kora/core';
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
-import { FlatList, Platform, ScrollView, Share, useWindowDimensions, View } from 'react-native';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { FlatList, Platform, Share, useWindowDimensions, View } from 'react-native';
+import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
 import { ProductImage } from '@/components/catalog/ProductImage';
@@ -12,18 +13,20 @@ import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
-import { Card, SectionHeader, Stepper } from '@/components/ui/Layout';
+import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { Price } from '@/components/ui/Price';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
+import { BottomBar, CollapsingHeader, useScrollY } from '@/components/ui/Bars';
+import { RatingInline, RatingSummary, ReviewItem } from '@/components/reviews/Reviews';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct, useVesRate } from '@/lib/hooks';
 import { api, storeImage } from '@/lib/supabase';
-import { useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
 import { useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
@@ -55,7 +58,7 @@ export default function ProductScreen() {
   return <ProductView product={q.data} />;
 }
 
-function BackButton() {
+function BackButton({ inline }: { inline?: boolean }) {
   const insets = useSafeAreaInsets();
   return (
     <IconButton
@@ -64,7 +67,7 @@ function BackButton() {
       label="Volver"
       tone="glass"
       onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
-      style={{ position: 'absolute', left: 16, top: insets.top + 8, zIndex: 10 }}
+      style={inline ? undefined : { position: 'absolute', left: 16, top: insets.top + 8, zIndex: 10 }}
     />
   );
 }
@@ -94,6 +97,10 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const images = p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }];
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
+  const scroll = useScrollY();
+  const heroHeight = imageWidth / t.imagery.productAspect;
+  const scrollRef = useRef<Animated.ScrollView>(null);
+  const reviewsY = useRef(0);
 
   // a different variant starts again from one unit
   const [qtyVariant, setQtyVariant] = useState(variant?.id);
@@ -133,7 +140,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      <ScrollView testID="product-scroll" contentContainerStyle={{ paddingBottom: 140 + insets.bottom }} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView ref={scrollRef} testID="product-scroll" onScroll={scroll.onScroll} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 140 + insets.bottom }} showsVerticalScrollIndicator={false}>
         {/* gallery */}
         <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
           <FlatList
@@ -166,9 +173,13 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           <View style={{ gap: 6 }}>
             <Text variant="displayM" testID="product-title">{p.title}</Text>
             {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
+            <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: true })} />
           </View>
           <View style={{ gap: 10 }}>
-            <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} />
+            {/* re-keyed so a variant with another price fades in instead of snapping */}
+            <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
+              <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} />
+            </Animated.View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
               <AvailabilityBadge value={variantSoldOut ? 'sold_out' : p.availability} />
               {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
@@ -231,38 +242,57 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           </Card>
         </View>
 
+        {p.rating_count > 0 ? (
+          <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+            <ProductReviewsSection productId={p.id} />
+          </View>
+        ) : null}
+
         {p.related.length ? (
           <View style={{ marginTop: 10 }}>
             <SectionHeader overline="También te puede gustar" title="Relacionados" />
             <ProductRail products={p.related} />
           </View>
         ) : null}
-      </ScrollView>
+      </Animated.ScrollView>
 
-      {/* floating controls */}
-      <BackButton />
-      <View style={{ position: 'absolute', right: 16, top: insets.top + 8, flexDirection: 'row', gap: 10 }}>
-        <IconButton icon="share-2" label="Compartir" tone="glass" onPress={share} />
-        <IconButton
-          testID="product-favorite"
-          icon="heart"
-          label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-          tone="glass"
-          filled={isFav}
-          color={isFav ? t.colors.danger : t.colors.text}
-          onPress={() => (user ? fav.toggle({ productId: p.id, on: !isFav }) : router.push('/sign-in'))}
-        />
-      </View>
+      <CollapsingHeader
+        y={scroll.y}
+        threshold={heroHeight}
+        title={p.title}
+        left={<BackButton inline />}
+        right={
+          <View style={{ flexDirection: 'row', gap: 10 }}>
+            <IconButton icon="share-2" label="Compartir" tone="glass" onPress={share} />
+            <IconButton
+              testID="product-favorite"
+              icon="heart"
+              label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+              tone="glass"
+              filled={isFav}
+              color={isFav ? t.colors.danger : t.colors.text}
+              onPress={() => (user ? fav.toggle({ productId: p.id, on: !isFav }) : router.push('/sign-in'))}
+            />
+          </View>
+        }
+      />
 
       {/* sticky purchase bar */}
-      <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 16, paddingTop: 12, paddingBottom: insets.bottom + 12, backgroundColor: t.colors.tabBar, borderTopWidth: 1, borderTopColor: t.colors.border }}>
-        <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center', gap: 10 }}>
+      <BottomBar maxWidth={MAX_W}>
           {added ? (
-            <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }} accessibilityLiveRegion="polite">
-              <Icon name="circle-check" size={18} color={t.colors.success} />
-              <Text variant="label" color="success" style={{ flex: 1 }}>Agregado al carrito</Text>
-              <Text variant="label" color="brand">Ver carrito</Text>
-            </ScalePressable>
+            <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>
+              <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
+                <View style={{ width: 36, height: 45, borderRadius: 8, overflow: 'hidden' }}>
+                  <ProductImage path={p.image_path} tone={p.tone} radius={8} />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text variant="label" color="success">Agregado al carrito</Text>
+                  <Text variant="caption" color="textMuted" numberOfLines={1}>{qty > 1 ? `${qty} × ` : ''}{p.title}{variant && p.variants.length > 1 ? ` · ${variant.title}` : ''}</Text>
+                </View>
+                <Text variant="label" color="brand">Ver carrito</Text>
+                <Icon name="chevron-right" size={16} color={t.colors.brand} />
+              </ScalePressable>
+            </Animated.View>
           ) : null}
           {addToCart.error ? <Text variant="caption" color="danger">{(addToCart.error as Error).message}</Text> : null}
           <Button
@@ -281,8 +311,38 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             }
             onPress={onPrimary}
           />
+      </BottomBar>
+    </View>
+  );
+}
+
+const REVIEWS_PAGE = 5;
+
+function ProductReviewsSection({ productId }: { productId: string }) {
+  const q = useInfiniteQuery({
+    queryKey: ['reviews', productId],
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) => api.catalog.reviews(productId, REVIEWS_PAGE, pageParam),
+    getNextPageParam: (last, all) => (last.items.length < REVIEWS_PAGE ? undefined : all.length * REVIEWS_PAGE),
+  });
+  const summary = q.data?.pages[0]?.summary;
+  const items = q.data?.pages.flatMap((pg) => pg.items) ?? [];
+  if (q.isLoading) return <Skeleton height={120} />;
+  if (!summary || !summary.count) return null;
+  return (
+    <View style={{ gap: 16 }} testID="product-reviews">
+      <Text variant="title">Opiniones de compradores</Text>
+      <RatingSummary summary={summary} />
+      <Text variant="caption" color="textMuted">Solo pueden opinar quienes recibieron este producto.</Text>
+      {items.map((r) => (
+        <View key={r.id} style={{ gap: 16 }}>
+          <Divider />
+          <ReviewItem review={r} />
         </View>
-      </View>
+      ))}
+      {q.hasNextPage ? (
+        <Button title="Ver más opiniones" variant="secondary" loading={q.isFetchingNextPage} onPress={() => q.fetchNextPage()} />
+      ) : null}
     </View>
   );
 }

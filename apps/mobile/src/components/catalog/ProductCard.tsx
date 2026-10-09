@@ -1,5 +1,5 @@
 import type { ProductCard as Card } from '@kora/api';
-import { describeLeadTime, presentAvailability, stockHint } from '@kora/core';
+import { describeLeadTimeShort, presentAvailability, stockHint } from '@kora/core';
 import { router } from 'expo-router';
 import { memo } from 'react';
 import { View } from 'react-native';
@@ -10,6 +10,7 @@ import { ScalePressable } from '@/components/ui/Pressable';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { useFavorites } from '@/lib/hooks';
+import { recordClick } from '@/lib/impressions';
 import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
 
@@ -18,14 +19,16 @@ interface Props {
   width: number;
   showStore?: boolean;
   priority?: 'low' | 'normal' | 'high';
+  /** Recommendation slot this card was shown in; opening it counts as a click for that slot. */
+  slot?: string;
 }
 
-export const ProductCard = memo(function ProductCard({ product: p, width, showStore = true, priority }: Props) {
+export const ProductCard = memo(function ProductCard({ product: p, width, showStore = true, priority, slot }: Props) {
   const { colors, radii } = useTheme();
   const { user } = useAuth();
   const fav = useFavorites();
   const availability = presentAvailability(p.availability);
-  const lead = p.availability !== 'available' ? describeLeadTime(p.lead_min_days, p.lead_max_days, p.availability) : null;
+  const lead = describeLeadTimeShort(p.lead_min_days, p.lead_max_days, p.availability);
   const hint = stockHint(p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id);
   return (
@@ -34,7 +37,10 @@ export const ProductCard = memo(function ProductCard({ product: p, width, showSt
       scaleTo={0.98}
       accessibilityRole="link"
       accessibilityLabel={`${p.title}, ${availability.label}`}
-      onPress={() => router.push({ pathname: '/product/[id]', params: { id: p.id } })}
+      onPress={() => {
+        if (slot) recordClick(slot, p.id);
+        router.push({ pathname: '/product/[id]', params: { id: p.id } });
+      }}
       style={{ width }}
     >
       <View>

@@ -10,7 +10,6 @@ export const useHome = () => useQuery({ queryKey: qk.home, queryFn: api.catalog.
 export const useCategories = () => useQuery({ queryKey: qk.categories, queryFn: api.catalog.categories, staleTime: 10 * 60_000 });
 export const useProduct = (id: string | undefined) =>
   useQuery({ queryKey: qk.product(id ?? ''), queryFn: () => api.catalog.product(id!), enabled: !!id });
-export const useStore = (slug: string) => useQuery({ queryKey: qk.store(slug), queryFn: () => api.catalog.store(slug) });
 
 /** Reference USD/VES rate for showing bolívar equivalents. Returns null when no fresh rate exists. */
 /** Current USD/VES reference rate, or null when none is valid. `demo` marks the development rate. */

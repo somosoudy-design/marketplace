@@ -32,6 +32,16 @@ export function describeLeadTime(minDays: number | null | undefined, maxDays: nu
   return null;
 }
 
+/** Compact form for product cards, where one short line has to fit the column. */
+export function describeLeadTimeShort(minDays: number | null | undefined, maxDays: number | null | undefined, availability: string): string | null {
+  if (minDays === null || minDays === undefined || maxDays === null || maxDays === undefined) return null;
+  const range = minDays === maxDays ? `${minDays} días` : `${minDays}–${maxDays} días`;
+  if (availability === 'on_order') return `Llega en ${range}`;
+  if (availability === 'in_transit') return `Disponible en ${range}`;
+  if (availability === 'reservable') return `Próximo lote en ${range}`;
+  return null;
+}
+
 export function etaFromToday(minDays: number, maxDays: number, today = new Date()): string {
   return describeEtaDates(addDays(today, minDays), addDays(today, maxDays));
 }

@@ -1,11 +1,15 @@
-import type { Fulfillment, FulfillmentEvent, FulfillmentStep, OrderItem } from '@kora/api';
-import { D, describeEtaDates, formatMoney, formatUSD, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency } from '@kora/core';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { Fulfillment, FulfillmentEvent, FulfillmentStep, MyReview, OrderItem } from '@kora/api';
+import { D, describeEtaDates, formatMoney, formatRate, formatUSD, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency } from '@kora/core';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { Alert, Platform, RefreshControl, ScrollView, View } from 'react-native';
 import { SummaryRow } from '@/components/checkout/Rows';
 import { ProductImage } from '@/components/catalog/ProductImage';
+import { ReviewSheet } from '@/components/reviews/ReviewSheet';
+import { Stars } from '@/components/reviews/Reviews';
 import { Badge } from '@/components/ui/Badge';
+import { ScalePressable } from '@/components/ui/Pressable';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider } from '@/components/ui/Layout';
@@ -27,6 +31,10 @@ export default function OrderScreen() {
   const qc = useQueryClient();
   const order = useOrder(id);
   const steps = useFulfillmentSteps();
+  const itemIds = order.data?.order_items.map((i) => i.id) ?? [];
+  const delivered = order.data?.fulfillments.some((f) => f.status === 'delivered') ?? false;
+  const myReviews = useQuery({ queryKey: qk.myReviews(id), queryFn: () => api.reviews.mine(itemIds), enabled: delivered && itemIds.length > 0 });
+  const [reviewing, setReviewing] = useState<OrderItem | null>(null);
   const cancel = useMutation({
     mutationFn: () => api.orders.cancel(id, 'Cancelado por el comprador desde la app'),
     onSuccess: () => {
@@ -103,7 +111,7 @@ export default function OrderScreen() {
               <Badge label={PAYMENT_RECORD_LABEL[p.status] ?? p.status} tone={paymentRecordTone(p.status)} />
             </View>
             <Text variant="caption" color="textMuted">
-              {shortDateTime(p.created_at)}{p.currency === 'VES' && p.rate_applied ? ` · tasa ${D(p.rate_applied).toFixed(2)}` : ''}{p.usd_recognized ? ` · acreditado ${formatUSD(p.usd_recognized)}` : ''}
+              {shortDateTime(p.created_at)}{p.currency === 'VES' && p.rate_applied ? ` · ${formatRate(p.rate_applied)}` : ''}{p.usd_recognized ? ` · acreditado ${formatUSD(p.usd_recognized)}` : ''}
             </Text>
             {p.rejection_reason ? <Text variant="caption" color="danger">{p.rejection_reason}</Text> : null}
           </View>
@@ -122,6 +130,8 @@ export default function OrderScreen() {
           total={o.fulfillments.length}
           items={o.order_items.filter((it) => it.fulfillment_id === f.id)}
           steps={(steps.data ?? []).filter((s) => s.flow === f.flow)}
+          reviews={myReviews.data ?? []}
+          onReview={setReviewing}
         />
       ))}
 
@@ -136,11 +146,18 @@ export default function OrderScreen() {
 
       {canCancel ? <Button testID="order-cancel" title="Cancelar pedido" variant="danger" loading={cancel.isPending} onPress={confirmCancel} /> : null}
       {cancel.error ? <Banner tone="danger" icon="circle-alert" body={(cancel.error as Error).message} /> : null}
+      <ReviewSheet
+        key={reviewing?.id ?? 'none'}
+        item={reviewing}
+        existing={myReviews.data?.find((r) => r.order_item_id === reviewing?.id)}
+        orderId={id}
+        onClose={() => setReviewing(null)}
+      />
     </ScrollView>
   );
 }
 
-function FulfillmentCard({ f, index, total, items, steps }: { f: Fulfillment & { fulfillment_events: FulfillmentEvent[] }; index: number; total: number; items: OrderItem[]; steps: FulfillmentStep[] }) {
+function FulfillmentCard({ f, index, total, items, steps, reviews, onReview }: { f: Fulfillment & { fulfillment_events: FulfillmentEvent[] }; index: number; total: number; items: OrderItem[]; steps: FulfillmentStep[]; reviews: MyReview[]; onReview: (item: OrderItem) => void }) {
   const t = useTheme();
   const reached = new Map<string, string>();
   f.fulfillment_events.filter((e) => e.visible_to_buyer).forEach((e) => reached.set(e.step_code, e.created_at));
@@ -181,16 +198,30 @@ function FulfillmentCard({ f, index, total, items, steps }: { f: Fulfillment & {
         })}
       </View>
       <Divider />
-      {items.map((it) => (
-        <View key={it.id} style={{ flexDirection: 'row', gap: 12, padding: 14 }}>
-          <ProductImage path={it.image_path} style={{ width: 48 }} radius={t.radii.sm} />
-          <View style={{ flex: 1 }}>
-            <Text variant="bodySmall" numberOfLines={2}>{it.title}</Text>
-            <Text variant="caption" color="textMuted">{it.variant_title ? `${it.variant_title} · ` : ''}{it.quantity} × {formatUSD(it.unit_price_usd)}</Text>
-            {it.refunded_qty > 0 ? <Text variant="caption" color="info">Reembolsado: {it.refunded_qty} ({formatUSD(it.refunded_usd)})</Text> : null}
+      {items.map((it) => {
+        const review = reviews.find((r) => r.order_item_id === it.id);
+        return (
+          <View key={it.id} style={{ flexDirection: 'row', gap: 12, padding: 14, alignItems: 'center' }}>
+            <ScalePressable accessibilityRole="link" accessibilityLabel={`Ver ${it.title}`} onPress={() => router.push({ pathname: '/product/[id]', params: { id: it.product_id } })} style={{ flexDirection: 'row', gap: 12, flex: 1 }}>
+              <ProductImage path={it.image_path} style={{ width: 48 }} radius={t.radii.sm} />
+              <View style={{ flex: 1, gap: 2 }}>
+                <Text variant="bodySmall" numberOfLines={2}>{it.title}</Text>
+                <Text variant="caption" color="textMuted">{it.variant_title ? `${it.variant_title} · ` : ''}{it.quantity} × {formatUSD(it.unit_price_usd)}</Text>
+                {it.refunded_qty > 0 ? <Text variant="caption" color="info">Reembolsado: {it.refunded_qty} ({formatUSD(it.refunded_usd)})</Text> : null}
+                {review ? (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <Stars value={review.rating} size={12} />
+                    <Text variant="caption" color="textMuted">{review.status === 'hidden' ? 'Oculta por moderación' : 'Tu opinión'}</Text>
+                  </View>
+                ) : null}
+              </View>
+            </ScalePressable>
+            {f.status === 'delivered' ? (
+              <Button testID={`review-${it.id}`} title={review ? 'Editar' : 'Calificar'} size="sm" variant={review ? 'ghost' : 'secondary'} icon={review ? undefined : 'star'} onPress={() => onReview(it)} />
+            ) : null}
           </View>
-        </View>
-      ))}
+        );
+      })}
       {canClaim ? (
         <View style={{ padding: 14, paddingTop: 0 }}>
           <Button title="Reportar un problema" variant="secondary" size="sm" icon="message-circle" onPress={() => router.push({ pathname: '/claim/[fulfillmentId]', params: { fulfillmentId: f.id } })} />

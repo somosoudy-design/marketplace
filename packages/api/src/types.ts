@@ -58,6 +58,8 @@ export interface ProductCard {
   published_at: string | null;
   is_demo: boolean;
   moderation_status: ModerationStatus;
+  rating_avg: number | null;
+  rating_count: number;
 }
 
 export interface ProductVariant {
@@ -102,6 +104,8 @@ export interface StoreSummary {
   tagline: string | null;
   logo_path: string | null;
   cover_path: string | null;
+  rating_avg?: number | null;
+  rating_count?: number;
 }
 
 export interface CategorySummary {
@@ -110,6 +114,8 @@ export interface CategorySummary {
   name: string;
   slug: string;
   tone: string;
+  /** Photo of the category's most popular product, so the tile shows a product rather than an icon. */
+  image_path?: string | null;
 }
 
 export interface CollectionBlock {
@@ -297,4 +303,68 @@ export interface OrderDetail extends Order {
 export interface SellerDashboard {
   store: Store;
   [k: string]: unknown;
+}
+
+// ---------- reviews ----------
+export interface ReviewSummary {
+  count: number;
+  avg: number | null;
+  distribution: Record<'1' | '2' | '3' | '4' | '5', number>;
+}
+
+export interface PublicReview {
+  id: string;
+  rating: number;
+  body: string | null;
+  created_at: string;
+  author: string;
+  variant_title?: string | null;
+  product_title?: string;
+  reply_body?: string | null;
+  reply_at?: string | null;
+  is_demo?: boolean;
+  mine?: boolean;
+}
+
+export interface ProductReviews {
+  summary: ReviewSummary;
+  items: PublicReview[];
+}
+
+export interface MyReview {
+  id: string;
+  order_item_id: string;
+  rating: number;
+  body: string | null;
+  status: 'published' | 'hidden';
+  created_at: string;
+}
+
+export interface StoreProfile {
+  id: string;
+  slug: string;
+  name: string;
+  tagline: string | null;
+  description: string | null;
+  logo_path: string | null;
+  cover_path: string | null;
+  accent: string;
+  kind: StoreKind;
+  status: string;
+  shipping_info: string | null;
+  policies: Record<string, string>;
+  rating_avg: number | null;
+  rating_count: number;
+  is_demo: boolean;
+  since: string;
+  product_count: number;
+  categories: { slug: string; name: string; count: number }[];
+  reviews: PublicReview[];
+}
+
+export interface RecommendationMetrics {
+  from: string;
+  ranking: Record<string, unknown>;
+  slots: { slot: string; impressions: number; clicks: number; ctr_pct: number | null; users: number; added_to_cart: number; purchased: number }[];
+  top_clicked: { id: string; title: string; clicks: number }[];
 }

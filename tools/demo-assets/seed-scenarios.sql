@@ -208,6 +208,25 @@ set local role authenticated;
 select public.post_claim_message(c.id, 'Lamentamos el inconveniente. Enviaremos una caja de reposición con el próximo despacho (respuesta de demostración).')
   from public.claims c where c.order_id = current_setting('seed.order')::uuid;
 reset role;
+-- buyer 2 reviews what was delivered (through the same RPC as the app; demo orders make demo reviews)
+select set_config('request.jwt.claims', '{"sub":"{{buyer2}}","role":"authenticated"}', true);
+set local role authenticated;
+select public.submit_review(i.id, r.rating, r.body)
+  from public.order_items i join public.orders o on o.id = i.order_id join public.products p on p.id = i.product_id
+  join (values
+    ('guantes-nitrilo-x100', 4, 'Buena talla y no se rompen al ponerlos. Faltaron unidades en la caja, pero la tienda respondió rápido (opinión de demostración).'),
+    ('espejos-bucales-x12', 5, 'Vinieron bien protegidos y la imagen es nítida (opinión de demostración).'),
+    ('cama-ovalada-mascotas', 5, 'Mi perra no se baja de ella. La tela se siente resistente (opinión de demostración).'),
+    ('comedero-doble-acero', 3, 'Uno llegó abollado; me reembolsaron esa unidad (opinión de demostración).')
+  ) r(slug, rating, body) on r.slug = p.slug
+ where o.buyer_id = auth.uid();
+reset role;
+select set_config('request.jwt.claims', '{"sub":"{{seller}}","role":"authenticated"}', true);
+set local role authenticated;
+select public.reply_review(r.id, 'Gracias por contarnos. La reposición ya va en camino (respuesta de demostración).')
+  from public.reviews r join public.products p on p.id = r.product_id where p.slug = 'guantes-nitrilo-x100';
+reset role;
+
 -- admin: partial refund on the pet order (one bowl arrived damaged) + payout draft for OdontoPro
 select set_config('request.jwt.claims', '{"sub":"{{admin}}","role":"authenticated"}', true);
 set local role authenticated;

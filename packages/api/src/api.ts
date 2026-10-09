@@ -21,7 +21,11 @@ import type {
   ProductCard,
   ProductDetail,
   Profile,
+  MyReview,
+  ProductReviews,
   RateStatus,
+  RecommendationMetrics,
+  StoreProfile,
   Region,
   SearchParams,
   ShippingSelection,
@@ -108,6 +112,25 @@ export function createApi(client: KoraClient) {
         }),
       ).catch(() => undefined), // signals are best-effort and never block the UI
     rate: (pair = 'USD/VES') => run<RateStatus>(rpc('rate_status', { p_pair: pair })),
+    storeProfile: (slug: string) => run<StoreProfile | null>(rpc('store_profile', { p_slug: slug })),
+    reviews: (productId: string, limit = 10, offset = 0) =>
+      run<ProductReviews>(rpc('product_reviews', { p_product_id: productId, p_limit: limit, p_offset: offset })),
+    /** Recommendation impressions (batched) and clicks per slot, used to measure ranking changes. Best effort. */
+    trackRecommendation: (slot: string, kind: 'impression' | 'click', productIds: string[]) =>
+      run<void>(rpc('track_recommendation', { p_slot: slot, p_kind: kind, p_product_ids: productIds })).catch(() => undefined),
+  };
+
+  const reviews = {
+    /** Reviews the signed-in buyer wrote for the given order items (own rows are readable under RLS). */
+    mine: (orderItemIds: string[]) =>
+      orderItemIds.length
+        ? run<MyReview[]>(from('reviews').select('id, order_item_id, rating, body, status, created_at').in('order_item_id', orderItemIds))
+        : Promise.resolve([] as MyReview[]),
+    submit: (orderItemId: string, rating: number, body?: string | null) =>
+      run<MyReview>(rpc('submit_review', { p_order_item_id: orderItemId, p_rating: rating, p_body: body ?? null })),
+    reply: (reviewId: string, body: string) => run<unknown>(rpc('reply_review', { p_review_id: reviewId, p_body: body })),
+    moderate: (reviewId: string, hide: boolean, reason?: string) =>
+      run<unknown>(rpc('moderate_review', { p_review_id: reviewId, p_hide: hide, p_reason: reason ?? null })),
   };
 
   const cart = {
@@ -289,13 +312,14 @@ export function createApi(client: KoraClient) {
       run<string>(rpc('create_payout', { p_store_id: storeId, p_amount: amount, p_notes: notes ?? null })),
     markPayoutPaid: (payoutId: string, method: string, reference: string) =>
       run<void>(rpc('mark_payout_paid', { p_payout_id: payoutId, p_method: method, p_reference: reference })),
+    recommendationMetrics: (days = 14) => run<RecommendationMetrics>(rpc('recommendation_metrics', { p_days: days })),
     updateBatch: (batchId: string, step: string, note?: string) =>
       run<{ updated: number; skipped: { fulfillment_id: string; reason: string }[] }>(
         rpc('update_cargo_batch', { p_batch_id: batchId, p_step: step, p_note: note ?? null }),
       ),
   };
 
-  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin };
+  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin, reviews };
 }
 
 export type Api = ReturnType<typeof createApi>;

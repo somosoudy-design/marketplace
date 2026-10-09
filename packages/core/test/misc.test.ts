@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AVAILABILITY, computeImportPrice, describeEtaDates, describeLeadTime, stockHint, toAppError, addressSchema, validateUpload } from '../src';
+import { AVAILABILITY, computeImportPrice, describeEtaDates, describeLeadTime, describeLeadTimeShort, stockHint, toAppError, addressSchema, validateUpload } from '../src';
 
 describe('availability', () => {
   it('maps every state to a CTA', () => {
@@ -24,6 +24,12 @@ describe('eta', () => {
     expect(describeEtaDates('2026-10-30', '2026-11-02')).toBe('Llega entre el 30 oct y el 2 nov (estimado)');
     expect(describeEtaDates('2026-10-12', '2026-10-12')).toBe('Llega el 12 oct (estimado)');
     expect(describeLeadTime(18, 30, 'on_order')).toBe('Llega a Venezuela en 18 a 30 días aprox.');
+  });
+  it('has a compact form that fits a product card line', () => {
+    expect(describeLeadTimeShort(18, 30, 'on_order')).toBe('Llega en 18–30 días');
+    expect(describeLeadTimeShort(7, 7, 'in_transit')).toBe('Disponible en 7 días');
+    expect(describeLeadTimeShort(1, 2, 'available')).toBeNull();
+    expect(describeLeadTimeShort(null, 30, 'on_order')).toBeNull();
   });
 });
 
