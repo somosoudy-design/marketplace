@@ -17,9 +17,11 @@ inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las
 | Tipos (8 paquetes) | `pnpm typecheck` | sin errores |
 | Lint (app y panel) | `pnpm lint` | sin errores ni avisos |
 | Build de producción del panel | `pnpm --filter @kora/admin build` | correcta |
-| Configuración nativa | `expo config`, `expo prebuild --platform android` | correcta (proyecto Android generado; no compilado) |
+| Catálogo demo remoto contra una base solo con migraciones (cargar, doble carga, quitar, compra y pago de un comprador nuevo, quitar con pedidos) | `pnpm test:remote-catalog` | **11/11** comprobaciones |
+| Configuración nativa | `expo config`, `expo prebuild --platform android` | correcta |
+| APK de prueba (EAS) | `tools/eas/verify-apk.mjs` en el workflow | backend de eas.json, sin direcciones locales, solo clave anon, projectId correcto |
 
-Total: **179 pruebas automatizadas** en verde.
+Total: **179 pruebas automatizadas** en verde, más las 11 comprobaciones del catálogo remoto.
 
 ## Casos críticos del brief
 

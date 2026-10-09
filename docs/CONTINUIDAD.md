@@ -3,7 +3,7 @@
 > Propósito: que cualquier sesión o persona continúe exactamente donde quedó el trabajo, sin rehacer nada
 > ni perder las directrices originales. Actualízalo al cerrar cada hito (sección 8 = bitácora).
 >
-> Última actualización: 2026-10-09 (sin conexión, recibos de push, importador). Rama de trabajo: `claude/marketplace-v1`,
+> Última actualización: 2026-10-09 (backend remoto operativo, APK de prueba entregado, catálogo demo remoto preparado). Rama de trabajo: `claude/marketplace-v1`,
 > subida a GitHub con PR en borrador: https://github.com/somosoudy-design/marketplace/pull/1
 
 ## 0. Estado en una línea
@@ -13,11 +13,13 @@ de administración y de vendedor, funciones de servidor, y una ronda de profundi
 posventa como conversación, inicio editorial, tasa explicada, recomendaciones medidas con su panel,
 parámetros validados), y una segunda ronda (pago en verificación, direcciones, app sin conexión, recibos de
 entrega de push con su salud en el panel, importador protegido contra DNS rebinding, parámetros del panel con
-formularios propios, precio sugerido en el importador, contacto de soporte configurable). 171 pruebas en verde
-tras reconstruir la base desde cero, revisión visual en claro y oscuro de lo nuevo. La rama está en GitHub
-(PR #1 en borrador). En curso: esquema en el proyecto Supabase «Marketplace» (6 de 21 migraciones; el resto
-lo ejecuta Oliver con un archivo) y APK de prueba en EAS para marketplacebrand/marketplace (falta su token
-de Expo en GitHub). Ver sección 5.
+formularios propios, precio sugerido en el importador, contacto de soporte configurable). La rama está en
+GitHub (PR #1 en borrador). Backend de pruebas en el proyecto Supabase «Marketplace»: 23 migraciones
+aplicadas, tasas en vivo cada 30 min y cola de push cada minuto, sin clave maestra en la base (token de
+trabajos en Vault). APK de prueba compilado en EAS (marketplacebrand/marketplace) y revisado
+automáticamente; entregado a Oliver con lo que se puede probar en el teléfono. 179 pruebas en verde tras
+reconstruir la base desde cero. Pendiente de Oliver: cargar o no el catálogo de demostración en el proyecto
+remoto (preparado y ensayado), `kora://**` en Redirect URLs y el correo de confirmación. Ver sección 5.
 
 ## 1. Directrices originales que no se pueden perder
 
@@ -262,21 +264,31 @@ Bloqueado por Oliver o por servicios externos:
 1. **GitHub:** resuelto. La rama está subida y el PR #1 (borrador) espera revisión de Oliver; no se fusiona
    sin él. No hay CI de pruebas (corren en local, sección 7); el único workflow compila el APK de prueba.
 2. **Proyecto Supabase «Marketplace»** (`mimnotafmfasvwrclxan`, us-east-1, Postgres 17, plan gratuito).
-   Oliver aprobó aplicar el esquema sin datos demo (tarjeta de decisión, 2026-10-09 11:51Z). Las migraciones
-   1 a 6 se aplicaron con el conector. Desde la 7, el conector pide una confirmación por los `DELETE`/`DROP`
-   que Oliver no ve en el proyecto (se queda colgado): no reintentar ni disfrazar sentencias. Las 15
-   restantes están en `tools/supabase-remote/aplicar-migraciones-07-a-21.sql` (generado por `build.py`, una
-   transacción, se niega a correr dos veces, renombra el historial a las versiones de los archivos); se le
-   pidió ejecutarlo en el SQL Editor. Después: verificar con consultas de solo lectura, avisos de seguridad,
-   desplegar funciones y los pasos del panel en `docs/INSTALACION.md` (hook de auth, URLs, correo de
-   confirmación o SMTP, secretos de Vault, primer superadmin). Nunca cargar el seed demo en un proyecto remoto
-   (tiene cuentas con clave conocida). Este contenedor no llega a `*.supabase.co` (proxy 403); solo el conector.
+   Las 21 migraciones están aplicadas (Oliver ejecutó las 7 a 21 en el SQL Editor), más `20261009153318`
+   (permisos y `search_path` de la revisión de seguridad) y `20261009154233` (token de trabajos), aplicadas
+   con el conector. Vault: `kora_project_url` y `kora_job_token`; pg_cron llama a `rates-sync` y
+   `push-dispatch` con la cabecera `x-kora-job-token`, que las funciones validan con `job_token_valid`
+   (sha256, solo service_role). Funciones desplegadas: `rates-sync` y `push-dispatch`; `payments-start` y los
+   webhooks esperan credenciales de los proveedores. La tasa USD/VES llega por DolarApi (el sitio del BCV
+   falla por su certificado y se informa como fuente caída). El conector pide una confirmación por
+   `DELETE`/`DROP` que Oliver no ve: no reintentar ni disfrazar sentencias; ese tipo de SQL va en un archivo
+   para el SQL Editor. Nunca cargar `supabase/seed.sql` en un proyecto remoto (cuentas con clave conocida).
+   Este contenedor no llega a `*.supabase.co` (proxy 403); solo el conector.
+   **Catálogo de demostración remoto:** `supabase/remote-demo/catalogo-demo.sql` (sin usuarios, pedidos ni
+   tasas; imágenes del repo fijadas a un commit; se niega a cargar dos veces) y `quitar-catalogo-demo.sql`
+   (borra, o suspende si ya hay pedidos). Se regeneran con `pnpm catalog:remote` y se prueban con
+   `pnpm test:remote-catalog`. Se carga solo si Oliver lo aprueba en la tarjeta de decisión del hilo; el
+   archivo de carga solo hace `INSERT`/`UPDATE`, así que puede ir por el conector; el de quitar va al SQL Editor.
+   Pasos de Oliver todavía abiertos: `kora://**` en Redirect URLs y desactivar «Confirm email» o configurar
+   SMTP (`docs/INSTALACION.md`).
 3. **APK de prueba (EAS):** proyecto https://expo.dev/accounts/marketplacebrand/projects/marketplace (creado
-   por Oliver; no crear otro). `config/expo.json` fija owner y slug; `projectId` se completa con el valor que
-   imprime la verificación del workflow. El contenedor no llega a expo.dev, así que se compila desde GitHub
-   Actions (`.github/workflows/eas-android-preview.yml`, al subir una etiqueta `apk-preview-*`), con el
-   secreto `EXPO_TOKEN` que Oliver debe crear. Perfil `preview`: APK interno contra el proyecto Supabase.
-   No publicar en Google Play. Apple/Google y builds de tienda: `docs/PUBLICACION.md` (costo).
+   por Oliver; no crear otro), `projectId` 9f629f10-d679-4a99-9965-8a9e588afc85 en `config/expo.json`. El
+   contenedor no llega a expo.dev: se compila en GitHub Actions (`eas-android-preview.yml`) al cambiar
+   `.github/apk-preview-request` en la rama (las etiquetas dan 403 en el proxy de git), con el secreto
+   `EXPO_TOKEN`. Cada APK pasa por `tools/eas/verify-apk.mjs` (backend de eas.json, sin direcciones locales,
+   solo clave anon, sin clave secreta, projectId); `apk-verify.yml` revisa uno ya compilado al cambiar
+   `.github/apk-verify-request`. APK 1: build `037b11c5`, verificado. Probado solo en la versión web, no en un
+   teléfono físico. No publicar en Google Play. Tiendas: `docs/PUBLICACION.md` (costo).
 4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
 5. **Datos reales:** datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales.
 
@@ -336,6 +348,7 @@ pnpm --filter @kora/mobile start  # Expo
 
 # 4) Pruebas
 pnpm test:db && pnpm test:e2e && pnpm test:functions && pnpm test:ui && pnpm test:panel && pnpm test:admin && pnpm --filter @kora/core test
+pnpm test:remote-catalog   # catálogo demo del proyecto remoto, en una base aparte
 pnpm typecheck && pnpm lint
 
 # 5) Guardar progreso (commit + respaldo en los archivos del proyecto)
@@ -408,3 +421,9 @@ Convenciones:
   esquema al proyecto «Marketplace»: 6 migraciones aplicadas; las 15 restantes, en un archivo ensayado para el
   SQL Editor. App vinculada a Expo marketplacebrand/marketplace, perfil `preview` contra ese backend y
   workflow de EAS por etiqueta; esperando el SQL ejecutado y `EXPO_TOKEN`.
+- 2026-10-09 — Backend remoto operativo: 21 migraciones verificadas, revisión de seguridad corregida
+  (`153318`), tasas y push programados con un token en Vault en vez de la clave maestra (`154233`). Enlaces de
+  correo dentro de la app (contraseña nueva, confirmar cuenta), inicio para catálogo vacío, mensajes para
+  invitados. EAS por archivo de solicitud; APK 1 compilado, revisado por `verify-apk.mjs` y entregado con
+  `que-probar.md`. Catálogo de demostración remoto preparado y ensayado contra una base solo con migraciones
+  (compra y reporte de pago de un comprador nuevo); se carga solo con el visto bueno de Oliver. 179 pruebas.
