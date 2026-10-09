@@ -15,12 +15,14 @@
     "test:ui": "pnpm --filter @kora/app-e2e build:web && pnpm --filter @kora/app-e2e test:ui",
     "db:types": "bash -c 'source .local/keys.env && supabase gen types typescript --db-url \"$DATABASE_URL\" --schema public > packages/api/src/database.types.ts && prettier --write packages/api/src/database.types.ts >/dev/null'",
     "seed:build": "pnpm --filter @kora/demo-assets seed",
+    "catalog:remote": "node tools/demo-assets/build-remote-catalog.mjs",
     "assets:generate": "pnpm --filter @kora/demo-assets generate",
     "test:panel": "pnpm --filter @kora/app-e2e test:panel",
     "test:admin": "pnpm --filter @kora/admin test",
     "edge:sync": "node tools/sync-edge-shared.mjs",
     "functions:serve": "bash tools/local-stack/functions.sh serve",
-    "test:functions": "bash tools/local-stack/functions.sh test"
+    "test:functions": "bash tools/local-stack/functions.sh test",
+    "test:remote-catalog": "bash tools/local-stack/remote-catalog-check.sh"
   },
   "engines": {
     "node": ">=20"
