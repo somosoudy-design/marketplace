@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { sealedPlaintext, utf8Encode } from '@kora/core';
+import { base64Decode, sealedPlaintext, utf8Encode } from '@kora/core';
 import { requireOptionalNativeModule } from 'expo';
 import { Platform } from 'react-native';
 
@@ -18,7 +18,12 @@ interface Storage {
 const KEY_ALIAS = 'kora.session-key.v1';
 const SEALED = 'kora-aes1:';
 
-function encryptedStorage(): Storage | null {
+interface SealedStorage extends Storage {
+  /** Seals and opens a value without storing it, naming the step that fails (diagnostics). */
+  probe: (value: string) => Promise<string>;
+}
+
+function encryptedStorage(): SealedStorage | null {
   // builds without the native modules (Expo Go, an older test APK) fall back to plain storage
   if (!requireOptionalNativeModule('ExpoSecureStore') || !requireOptionalNativeModule('ExpoCryptoAES')) return null;
   /* eslint-disable @typescript-eslint/no-require-imports */
@@ -40,10 +45,18 @@ function encryptedStorage(): Storage | null {
     return key;
   };
 
-  const storage: Storage = {
+  // Only base64 strings and Uint8Arrays cross to the native module. On Android `fromCombined` accepts bytes only
+  // (a base64 string is refused there, unlike iOS), and the decrypt comes back as base64 with the tag's length
+  // of extra zero bytes, which sealedPlaintext drops.
+  const seal = async (value: string) => (await Crypto.aesEncryptAsync(utf8Encode(value), await sessionKey())).combined('base64');
+  const open = async (combined: string) => {
+    const sealed = Crypto.AESSealedData.fromCombined(base64Decode(combined));
+    return sealedPlaintext(await Crypto.aesDecryptAsync(sealed, await sessionKey(), { output: 'base64' }), sealed);
+  };
+
+  const storage: SealedStorage = {
     async setItem(name, value) {
-      const sealed = await Crypto.aesEncryptAsync(utf8Encode(value), await sessionKey());
-      await AsyncStorage.setItem(name, SEALED + (await sealed.combined('base64')));
+      await AsyncStorage.setItem(name, SEALED + (await seal(value)));
     },
     async getItem(name) {
       const stored = await AsyncStorage.getItem(name);
@@ -54,9 +67,7 @@ function encryptedStorage(): Storage | null {
         return stored;
       }
       try {
-        const sealed = Crypto.AESSealedData.fromCombined(stored.slice(SEALED.length));
-        // Android returns 16 extra zero bytes; sealedPlaintext keeps exactly the ciphertext's length
-        return sealedPlaintext(await Crypto.aesDecryptAsync(sealed, await sessionKey(), { output: 'bytes' }), sealed);
+        return await open(stored.slice(SEALED.length));
       } catch {
         // the key is gone (restored from a backup, app data partly cleared): the session cannot be trusted
         await AsyncStorage.removeItem(name);
@@ -64,6 +75,20 @@ function encryptedStorage(): Storage | null {
       }
     },
     removeItem: (name) => AsyncStorage.removeItem(name),
+    async probe(value) {
+      let step = 'key';
+      try {
+        await sessionKey();
+        step = 'seal';
+        const combined = await seal(value);
+        if (combined.includes(value)) return 'stored in the clear';
+        step = 'open';
+        const back = await open(combined);
+        return back === value ? 'ok' : `read back a different value (${back.length} of ${value.length} chars)`;
+      } catch (e) {
+        return `${step} failed: ${String((e as Error)?.message ?? e).slice(0, 160)}`;
+      }
+    },
   };
   return storage;
 }
@@ -73,15 +98,18 @@ const sealedStorage = Platform.OS === 'web' ? null : encryptedStorage();
 /** Seals and reads back a throwaway value with the session key (for the diagnostics screen). */
 export async function sessionSealSelfTest(): Promise<'ok' | 'not-encrypted' | string> {
   if (!sealedStorage) return 'not-encrypted';
-  const name = 'kora.seal-selftest';
   const value = `prueba ñ ✓ ${Date.now()}`;
+  const direct = await sealedStorage.probe(value);
+  if (direct !== 'ok') return direct;
+  // and through storage, as supabase-js uses it
+  const name = 'kora.seal-selftest';
   try {
     await sealedStorage.setItem(name, value);
     const raw = await AsyncStorage.getItem(name);
     const back = await sealedStorage.getItem(name);
     await sealedStorage.removeItem(name);
     if (!raw?.startsWith(SEALED) || raw.includes('prueba')) return 'stored in the clear';
-    return back === value ? 'ok' : 'read back a different value';
+    return back === value ? 'ok' : 'stored copy read back differently';
   } catch (e) {
     return String((e as Error)?.message ?? e);
   }

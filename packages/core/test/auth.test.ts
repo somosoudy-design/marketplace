@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { authErrorKind, authErrorMessage, otpDigits, sealedPlaintext, utf8Decode, utf8Encode } from '../src';
+import { authErrorKind, authErrorMessage, base64Decode, base64Encode, otpDigits, sealedPlaintext, utf8Decode, utf8Encode } from '../src';
 
 describe('email code', () => {
   it('keeps the digits of whatever is pasted', () => {
@@ -51,16 +51,31 @@ describe('sealed session', () => {
   const bytes = utf8Encode(session);
   // 12-byte IV + ciphertext (same length as the text) + 16-byte tag
   const sizes = { combinedSize: 12 + bytes.length + 16, ivSize: 12, tagSize: 16 };
+  const android = new Uint8Array(bytes.length + 16);
+  android.set(bytes);
+
+  it('base64 matches the platform encoder both ways', () => {
+    for (const sample of [new Uint8Array([]), new Uint8Array([0]), new Uint8Array([255, 254]), bytes, android]) {
+      const b64 = base64Encode(sample);
+      expect(b64).toBe(Buffer.from(sample).toString('base64'));
+      expect(Array.from(base64Decode(b64))).toEqual(Array.from(sample));
+      expect(base64Decode(b64).byteLength).toBe(base64Decode(b64).buffer.byteLength);
+    }
+    expect(() => base64Decode('no es base64!')).toThrow();
+  });
 
   it('reads back exactly the stored session when Android adds the tag length in zero bytes', () => {
-    const android = new Uint8Array(bytes.length + 16);
-    android.set(bytes);
     expect(utf8Decode(android)).not.toBe(session);
     expect(sealedPlaintext(android, sizes)).toBe(session);
+    expect(sealedPlaintext(base64Encode(android), sizes)).toBe(session);
+    // without usable sizes the zero bytes are still dropped
+    expect(sealedPlaintext(base64Encode(android))).toBe(session);
+    expect(sealedPlaintext(android, { combinedSize: undefined, ivSize: undefined, tagSize: undefined })).toBe(session);
     expect(JSON.parse(sealedPlaintext(android, sizes)).user.name).toBe('Ñandú ✓');
   });
 
   it('leaves an exact plaintext as it is (iOS, web)', () => {
     expect(sealedPlaintext(bytes, sizes)).toBe(session);
+    expect(sealedPlaintext(base64Encode(bytes), sizes)).toBe(session);
   });
 });

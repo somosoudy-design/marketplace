@@ -93,11 +93,49 @@ export function utf8Decode(bytes: Uint8Array): string {
   return s;
 }
 
+const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+/** Standard base64 (with padding) of the bytes. */
+export function base64Encode(bytes: Uint8Array): string {
+  let out = '';
+  for (let i = 0; i < bytes.length; i += 3) {
+    const n = (bytes[i]! << 16) | ((bytes[i + 1] ?? 0) << 8) | (bytes[i + 2] ?? 0);
+    out += B64[(n >> 18) & 63]! + B64[(n >> 12) & 63]! + (i + 1 < bytes.length ? B64[(n >> 6) & 63]! : '=') + (i + 2 < bytes.length ? B64[n & 63]! : '=');
+  }
+  return out;
+}
+
+/** The bytes of a standard base64 string (padding and whitespace optional). Throws on any other character. */
+export function base64Decode(text: string): Uint8Array {
+  const clean = text.replace(/[\s=]/g, '');
+  const out = new Uint8Array(Math.floor((clean.length * 3) / 4));
+  let bits = 0;
+  let acc = 0;
+  let j = 0;
+  for (const ch of clean) {
+    const v = B64.indexOf(ch);
+    if (v < 0) throw new Error('invalid base64');
+    acc = (acc << 6) | v;
+    bits += 6;
+    if (bits >= 8) {
+      bits -= 8;
+      out[j++] = (acc >> bits) & 0xff;
+    }
+  }
+  // a fresh array, not a view: native modules may read the whole underlying buffer
+  return j === out.length ? out : out.slice(0, j);
+}
+
 /**
- * The text inside an AES-GCM sealed session. expo-crypto's Android decrypt hands back its whole output buffer,
- * a tag's length longer than the plaintext (zero bytes), so the plaintext is cut to the ciphertext's length:
- * combined data = IV + ciphertext + tag.
+ * The text inside an AES-GCM sealed session, from what the decrypt returned (base64 or bytes). expo-crypto's
+ * Android decrypt hands back its whole output buffer, a tag's length longer than the plaintext (zero bytes), so
+ * the text is cut to the ciphertext's length (combined = IV + ciphertext + tag) and trailing zero bytes are
+ * dropped (stored sessions are JSON, which never ends in one).
  */
-export function sealedPlaintext(bytes: Uint8Array, sealed: { combinedSize: number; ivSize: number; tagSize: number }): string {
-  return utf8Decode(bytes.subarray(0, sealed.combinedSize - sealed.ivSize - sealed.tagSize));
+export function sealedPlaintext(plain: Uint8Array | string, sealed?: { combinedSize?: unknown; ivSize?: unknown; tagSize?: unknown }): string {
+  const bytes = typeof plain === 'string' ? base64Decode(plain) : plain;
+  const size = Number(sealed?.combinedSize) - Number(sealed?.ivSize) - Number(sealed?.tagSize);
+  let end = Number.isInteger(size) && size >= 0 && size < bytes.length ? size : bytes.length;
+  while (end > 0 && bytes[end - 1] === 0) end -= 1;
+  return utf8Decode(bytes.subarray(0, end));
 }
