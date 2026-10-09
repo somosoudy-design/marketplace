@@ -410,11 +410,18 @@ for (const p of products) {
 }
 
 // stores: logo + cover composed from their products
-const accents = { jade: '#0E5E54', amber: '#DB8A22', coral: '#E0563F', plum: '#6E4A86', ink: '#3A322A', sky: '#3C7DBF' };
+// storeAccents from @kora/design-tokens (Electric Violet)
+const accents = { jade: '#12806A', amber: '#D98A12', coral: '#F2564C', plum: '#5B31D2', ink: '#2E2A3D', sky: '#2563CC' };
+// the platform store wears the app's own mark (generate-brand.mjs): violet field, white stem, coral and white leaves
+const koraMark = `<rect x="330" y="270" width="104" height="484" rx="52" fill="#FFFFFF"/>
+    <path d="M474 512 Q680 498 724 282 Q524 300 474 512 Z" fill="#FF746B"/><path d="M474 512 Q524 724 724 742 Q680 526 474 512 Z" fill="#FFFFFF"/>`;
 for (const s of stores) {
   const a = accents[s.accent];
-  const logo = `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" rx="64" fill="${a}"/>
-    <text x="128" y="${s.monogram.length > 1 ? 154 : 166}" text-anchor="middle" font-family="DejaVu Serif" font-weight="bold" font-size="${s.monogram.length > 1 ? 92 : 120}" fill="#FFFDF9">${s.monogram}</text></svg>`;
+  const logo = s.kind === 'platform'
+    ? `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="256" fill="#6D42E8"/>
+    <g transform="translate(512 512) scale(0.8) translate(-512 -512)">${koraMark}</g></svg>`
+    : `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" rx="64" fill="${a}"/>
+    <text x="128" y="${s.monogram.length > 1 ? 160 : 170}" text-anchor="middle" font-family="DejaVu Sans" font-weight="bold" letter-spacing="-4" font-size="${s.monogram.length > 1 ? 88 : 116}" fill="#FFFFFF">${s.monogram}</text></svg>`;
   await render(logo, join(ROOT, 'stores/demo', `${s.slug}-logo.webp`), 256);
   const t = photoTones[s.tone];
   const own = products.filter((p) => p.store === s.slug).slice(0, 3);

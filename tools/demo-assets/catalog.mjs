@@ -31,7 +31,7 @@ export const brands = [
 ];
 
 export const stores = [
-  { slug: 'kora', name: 'Kora', kind: 'platform', status: 'active', accent: 'jade', monogram: 'K', tone: 'mist',
+  { slug: 'kora', name: 'Kora', kind: 'platform', status: 'active', accent: 'plum', monogram: 'K', tone: 'mist',
     tagline: 'Selección propia con envío desde Venezuela', shipping: 'Despachos desde Caracas. Encargos internacionales con anticipo.',
     description: 'La tienda de la plataforma: tecnología, belleza y accesorios seleccionados, en stock local o por encargo.' },
   { slug: 'odontopro', name: 'OdontoPro Suministros', kind: 'seller', status: 'active', accent: 'sky', monogram: 'OP', tone: 'sage', owner: 'seller',

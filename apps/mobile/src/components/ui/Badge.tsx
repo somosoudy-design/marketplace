@@ -1,11 +1,24 @@
+import { colors as colorTokens } from '@kora/design-tokens';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { useTheme } from '@/theme';
 import { Text } from './Text';
 
 export type Tone = 'success' | 'editorial' | 'info' | 'warning' | 'muted' | 'danger' | 'brand' | 'accent';
 
-export function Badge({ label, tone = 'muted', style, solid, testID }: { label: string; tone?: Tone; style?: StyleProp<ViewStyle>; solid?: boolean; testID?: string }) {
-  const { colors, radii } = useTheme();
+interface Props {
+  label: string;
+  tone?: Tone;
+  style?: StyleProp<ViewStyle>;
+  solid?: boolean;
+  /** Sits on a product photo: photos are light in both schemes, so the badge keeps its light colors. */
+  onPhoto?: boolean;
+  testID?: string;
+}
+
+export function Badge({ label, tone = 'muted', style, solid, onPhoto, testID }: Props) {
+  const theme = useTheme();
+  const { radii } = theme;
+  const colors = onPhoto ? colorTokens.light : theme.colors;
   const map: Record<Tone, [string, string]> = {
     success: [colors.successSoft, colors.success],
     editorial: [colors.editorialSoft, colors.editorial],

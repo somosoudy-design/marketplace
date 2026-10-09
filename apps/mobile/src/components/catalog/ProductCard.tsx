@@ -53,7 +53,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, showSt
         ) : null}
         {p.availability !== 'available' ? (
           <View style={{ position: 'absolute', left: 8, top: 8 }}>
-            <Badge label={availability.label} tone={availability.tone} solid={p.availability === 'sold_out' || p.availability === 'unavailable'} />
+            <Badge onPhoto label={availability.label} tone={availability.tone} solid={p.availability === 'sold_out' || p.availability === 'unavailable'} />
           </View>
         ) : null}
         <IconButton

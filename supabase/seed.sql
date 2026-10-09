@@ -66,7 +66,7 @@ insert into public.brands (slug, name, official_url) values ('sheglam', 'SHEGLAM
 
 -- ---------- stores ----------
 insert into public.stores (slug, name, tagline, description, logo_path, cover_path, accent, kind, status, shipping_info, policies, contact_email, is_demo)
-values ('kora', 'Kora', 'Selección propia con envío desde Venezuela', 'La tienda de la plataforma: tecnología, belleza y accesorios seleccionados, en stock local o por encargo.', 'demo/kora-logo.webp', 'demo/kora-cover.webp', 'jade', 'platform', 'active', 'Despachos desde Caracas. Encargos internacionales con anticipo.',
+values ('kora', 'Kora', 'Selección propia con envío desde Venezuela', 'La tienda de la plataforma: tecnología, belleza y accesorios seleccionados, en stock local o por encargo.', 'demo/kora-logo.webp', 'demo/kora-cover.webp', 'plum', 'platform', 'active', 'Despachos desde Caracas. Encargos internacionales con anticipo.',
   '{"returns":"Cambios dentro de 7 días si el producto está sin uso y en su empaque (texto de demostración).","warranty":"Según fabricante (texto de demostración)."}'::jsonb, 'kora@example.com', true);
 insert into public.stores (slug, name, tagline, description, logo_path, cover_path, accent, kind, status, shipping_info, policies, contact_email, is_demo)
 values ('odontopro', 'OdontoPro Suministros', 'Insumos para consultorios', 'Tienda de demostración de suministros odontológicos. Los productos regulados pasan revisión antes de publicarse.', 'demo/odontopro-logo.webp', 'demo/odontopro-cover.webp', 'sky', 'seller', 'active', 'Envíos nacionales con MRW y Zoom (tarifas de demostración).',
