@@ -372,3 +372,17 @@ export interface RecommendationMetrics {
   slots: { slot: string; impressions: number; clicks: number; ctr_pct: number | null; users: number; added_to_cart: number; purchased: number }[];
   top_clicked: { id: string; title: string; clicks: number }[];
 }
+
+/** Health of the phone notification channel over the last 24 hours (admin dashboard). */
+export interface PushHealth {
+  devices: number;
+  sent_24h: number;
+  failed_24h: number;
+  /** Receipts: delivered by Apple/Google, or refused by them. */
+  confirmed_24h: number;
+  rejected_24h: number;
+  /** Notifications waiting longer than the dispatcher's schedule allows. */
+  stuck: number;
+  /** Last time Expo, Apple or Google refused our credentials, if in the last 24 hours. */
+  credentials_error: string | null;
+}

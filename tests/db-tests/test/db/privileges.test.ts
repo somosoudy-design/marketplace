@@ -21,7 +21,7 @@ const EXPOSED = {
     'admin_dashboard', 'assign_to_batch', 'update_cargo_batch', 'moderate_product', 'review_payment', 'refund_item',
     'record_refund_payout', 'create_payout', 'cancel_payout', 'mark_payout_paid', 'post_adjustment', 'resolve_claim',
     'set_manual_rate', 'ingest_rate', 'admin_users', 'set_user_role', 'add_store_member', 'process_account_deletion', 'publish_import',
-    'moderate_review', 'recommendation_metrics',
+    'moderate_review', 'recommendation_metrics', 'push_health',
   ],
 };
 

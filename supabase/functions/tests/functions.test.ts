@@ -4,7 +4,7 @@
 import { createHandler as binanceWebhook } from '../binance-pay-webhook/handler.ts';
 import { createHandler as paymentsStart } from '../payments-start/handler.ts';
 import { createHandler as paypalWebhook } from '../paypal-webhook/handler.ts';
-import { createHandler as pushDispatch, EXPO_PUSH_URL } from '../push-dispatch/handler.ts';
+import { createHandler as pushDispatch, EXPO_PUSH_URL, EXPO_RECEIPTS_URL } from '../push-dispatch/handler.ts';
 import { createHandler as ratesSync } from '../rates-sync/handler.ts';
 import { signBinancePayRequest } from '../_shared/core/payments.ts';
 import type { Env } from '../_shared/env.ts';
@@ -273,4 +273,76 @@ Deno.test('push-dispatch: sends once, drops dead devices, never runs for others'
   const r3 = await (await call(h({ env: envWith({}), fetch: expo }), { ids: [id2] }, { authorization: `Bearer ${SERVICE}` })).json();
   eq([r3.claimed, r3.failed], [1, 1]);
   eq(await service(`/rest/v1/push_tokens?token=eq.${encodeURIComponent(dead)}&select=token`), [], 'dead token removed');
+});
+
+Deno.test('push receipts: checked once due, dead devices removed, undelivered notices marked failed', async () => {
+  const h = pushDispatch;
+  const auth = { authorization: `Bearer ${SERVICE}` };
+  const user = await signUp();
+  const a = `ExponentPushToken[${uid()}${uid()}]`;
+  const b = `ExponentPushToken[${uid()}${uid()}]`;
+  await rpc('register_push_token', { p_token: a, p_platform: 'android' }, user.token);
+  await rpc('register_push_token', { p_token: b, p_platform: 'ios' }, user.token);
+  const tag = uid();
+  const ticketFor = (to: string, n: number) => `tk-${tag}-${n}-${to === a ? 'a' : 'b'}`;
+  let sends = 0;
+  let receipts: Record<string, unknown> = {};
+  const asked: string[][] = [];
+  const expo: typeof fetch = async (input, init) => {
+    const body = JSON.parse(String(init!.body));
+    if (String(input) === EXPO_PUSH_URL) {
+      sends++;
+      return new Response(JSON.stringify({ data: (body as { to: string }[]).map((m) => ({ status: 'ok', id: ticketFor(m.to, sends) })) }));
+    }
+    eq(String(input), EXPO_RECEIPTS_URL);
+    asked.push(body.ids);
+    return new Response(JSON.stringify({ data: receipts }));
+  };
+  const run = async (ids: string[]) => (await call(h({ env: envWith({}), fetch: expo }), { ids }, auth)).json();
+  const age = (id: string) => service(`/rest/v1/push_tickets?notification_id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ created_at: new Date(Date.now() - 20 * 60_000).toISOString() }) });
+
+  // sent to both devices: two tickets stored, no receipt asked before it is due
+  const n1 = await rpc<string>('notify', { p_user: user.id, p_kind: 'system', p_title: 'Prueba', p_body: 'Recibos', p_data: {} });
+  const r1 = await run([n1]);
+  eq([r1.sent, r1.receipts.checked], [1, 0]);
+  const t1 = await service<{ ticket_id: string; status: string; token: string }[]>(`/rest/v1/push_tickets?notification_id=eq.${n1}&select=ticket_id,status,token&order=ticket_id`);
+  eq(t1.map((t) => [t.status, t.token]), [['pending', a], ['pending', b]]);
+
+  // 15 minutes later: one delivered, the other device no longer exists
+  await age(n1);
+  receipts = { [ticketFor(a, 1)]: { status: 'ok' }, [ticketFor(b, 1)]: { status: 'error', message: 'gone', details: { error: 'DeviceNotRegistered' } } };
+  const r2 = await run([n1]);
+  eq([r2.receipts.checked, r2.receipts.ok, r2.receipts.error, r2.receipts.devices_removed, r2.receipts.notifications_failed], [2, 1, 1, 1, 0]);
+  eq(await service(`/rest/v1/push_tokens?token=eq.${encodeURIComponent(b)}&select=token`), [], 'dead device removed');
+  const [s1] = await service<{ push_status: string }[]>(`/rest/v1/notifications?id=eq.${n1}&select=push_status`);
+  eq(s1!.push_status, 'sent', 'delivered to one device is still sent');
+  eq((await run([n1])).receipts.checked, 0, 'a settled ticket is never asked again');
+
+  // the only device rejects the message: the notice is marked failed with the reason
+  const n2 = await rpc<string>('notify', { p_user: user.id, p_kind: 'system', p_title: 'Prueba', p_body: 'Rechazo', p_data: {} });
+  await run([n2]);
+  await age(n2);
+  receipts = { [ticketFor(a, 2)]: { status: 'error', message: 'too big', details: { error: 'MessageTooBig' } } };
+  eq((await run([n2])).receipts.notifications_failed, 1);
+  const [s2] = await service<{ push_status: string; push_error: string }[]>(`/rest/v1/notifications?id=eq.${n2}&select=push_status,push_error`);
+  eq([s2!.push_status, s2!.push_error], ['failed', 'Sin entregar: MessageTooBig']);
+
+  // a receipt Expo has not produced yet stays pending and is asked again only after 10 minutes
+  const n3 = await rpc<string>('notify', { p_user: user.id, p_kind: 'system', p_title: 'Prueba', p_body: 'Pendiente', p_data: {} });
+  await run([n3]);
+  await age(n3);
+  receipts = {};
+  const r3 = await run([n3]);
+  eq([r3.receipts.checked, r3.receipts.not_ready], [1, 1]);
+  eq((await run([n3])).receipts.checked, 0, 'not asked again right away');
+  const [t3] = await service<{ status: string }[]>(`/rest/v1/push_tickets?notification_id=eq.${n3}&select=status`);
+  eq(t3!.status, 'pending');
+  eq(asked.flat().length, 4, 'exactly the due tickets were asked about');
+
+  // health for the admin dashboard; buyers cannot read it
+  const health = await rpc<{ devices: number; rejected_24h: number }>('push_health', {});
+  assert(health.devices >= 1 && health.rejected_24h >= 2, `health ${JSON.stringify(health)}`);
+  const denied = await fetch(`${URL_}/rest/v1/rpc/push_health`, { method: 'POST', headers: { apikey: ANON, authorization: `Bearer ${user.token}`, 'content-type': 'application/json' }, body: '{}' });
+  eq(denied.status, 403);
+  await denied.body?.cancel();
 });

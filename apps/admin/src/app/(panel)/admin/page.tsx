@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Card, ErrorBox, Loading, Notice, PageHeader, Stat } from '@/components/ui';
 import { ago, money, RATE_SOURCE_LABEL } from '@/lib/format';
 import { kora } from '@/lib/kora';
+import type { PushHealth } from '@kora/api';
 
 export default function AdminHome() {
   const q = useQuery({ queryKey: ['admin-dashboard'], queryFn: () => kora().api.admin.dashboard(), refetchInterval: 60_000 });
@@ -37,7 +38,7 @@ export default function AdminHome() {
         <Stat label="Ingreso de plataforma" value={money(d.platform_revenue_usd, 'USD')} hint="Comisiones y cargos" />
         <Stat label="Por pagar a vendedores" value={money(d.seller_payable_usd, 'USD')} href="/admin/liquidaciones" />
       </div>
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         <Card title="Tasa USD/VES en uso" actions={<Link href="/admin/tasas" className="text-sm font-bold text-brand">Gestionar</Link>}>
           {rate.available ? (
             <div>
@@ -55,7 +56,54 @@ export default function AdminHome() {
           <p className="tabular font-display text-4xl font-semibold">{money(d.refunds_due_usd, 'USD')}</p>
           <p className="mt-1 text-sm text-ink-2">Montos aprobados que aún no se han devuelto al comprador. Regístralos desde el detalle de cada pedido.</p>
         </Card>
+        <PushCard />
       </div>
     </>
+  );
+}
+
+/** Phone notifications: whether the dispatcher runs, and what Apple and Google say about delivery. */
+function PushCard() {
+  const q = useQuery({ queryKey: ['push-health'], queryFn: () => kora().api.admin.pushHealth(), refetchInterval: 60_000 });
+  const h: PushHealth | undefined = q.data;
+  return (
+    <Card title="Avisos al teléfono">
+      {q.isPending ? (
+        <Loading rows={2} />
+      ) : q.isError || !h ? (
+        <p className="text-sm text-danger">No pudimos leer el estado de los avisos.</p>
+      ) : (
+        <div data-testid="push-health" className="space-y-3">
+          <div>
+            <p className="tabular font-display text-4xl font-semibold">{h.devices}</p>
+            <p className="mt-1 text-sm text-ink-2">{h.devices === 1 ? 'teléfono recibe avisos' : 'teléfonos reciben avisos'}</p>
+          </div>
+          <dl className="divide-y divide-line border-t border-line text-sm">
+            <PushFigure label="Enviados en 24 horas" value={h.sent_24h} />
+            <PushFigure label="Entregas confirmadas por Apple o Google" value={h.confirmed_24h} />
+            <PushFigure label="Sin entregar" value={h.failed_24h} danger={h.failed_24h > 0} />
+          </dl>
+          {h.credentials_error ? (
+            <Notice tone="danger" title="Credenciales de avisos rechazadas">
+              Expo, Apple o Google rechazaron las credenciales (último rechazo: {ago(h.credentials_error)}). Ningún teléfono recibe avisos hasta corregirlas en Expo (EXPO_ACCESS_TOKEN y credenciales FCM/APNs).
+            </Notice>
+          ) : null}
+          {h.stuck ? (
+            <Notice tone="warning" title={h.stuck === 1 ? '1 aviso sin enviar' : `${h.stuck} avisos sin enviar`}>
+              {h.stuck === 1 ? 'Espera' : 'Esperan'} hace más de 10 minutos. Revisa que la tarea programada push-dispatch y los secretos del Vault estén configurados.
+            </Notice>
+          ) : null}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function PushFigure({ label, value, danger }: { label: string; value: number; danger?: boolean }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 py-2">
+      <dt className="text-ink-2">{label}</dt>
+      <dd className={`tabular font-bold ${danger ? 'text-danger' : 'text-ink'}`}>{value}</dd>
+    </div>
   );
 }

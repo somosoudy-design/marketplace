@@ -26,6 +26,7 @@ import type {
   MyReview,
   ProductReviews,
   RateStatus,
+  PushHealth,
   RecommendationMetrics,
   StoreProfile,
   Region,
@@ -299,6 +300,7 @@ export function createApi(client: KoraClient) {
 
   const admin = {
     dashboard: () => run<Record<string, any>>(rpc('admin_dashboard')),
+    pushHealth: () => run<PushHealth>(rpc('push_health')),
     reviewPayment: (paymentId: string, approve: boolean, opts: { amountReceived?: number; reason?: string } = {}) =>
       run<{ status: 'confirmed' | 'rejected'; usd_recognized?: number }>(
         rpc('review_payment', {

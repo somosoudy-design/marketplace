@@ -148,3 +148,40 @@ export async function browseRecommendations(userId: string, slot: string, produc
   await runAs(userId, `select public.track_recommendation($1, 'impression', $2)`, [slot, ids]);
   await runAs(userId, `select public.track_recommendation($1, 'click', array[(select id from public.products where slug = $2)])`, [slot, clicked]);
 }
+
+/**
+ * A push channel in trouble, as the dispatcher would leave it: one notice waiting for 15 minutes (the scheduled job is
+ * not running) and one receipt where Expo refused our credentials. Returns a cleanup that removes all of it.
+ */
+export async function pushTrouble(label: string) {
+  const client = new pg.Client({ connectionString: databaseUrl() });
+  await client.connect();
+  try {
+    const user = await insertBuyer(client, asOn(client), label);
+    const token = `ExponentPushToken[${label}-${Date.now()}]`;
+    await client.query(`insert into public.push_tokens (token, user_id, platform) values ($1, $2, 'android')`, [token, user.id]);
+    const n = await client.query(
+      `insert into public.notifications (user_id, kind, title, body, push_status, created_at)
+       values ($1, 'system', 'Prueba de canal', 'Aviso de prueba', 'pending', now() - interval '15 minutes'),
+              ($1, 'system', 'Prueba de canal', 'Aviso de prueba', 'sent', now() - interval '20 minutes') returning id`,
+      [user.id],
+    );
+    await client.query(
+      `insert into public.push_tickets (ticket_id, notification_id, token, status, error, created_at, checked_at)
+       values ($1, $2, $3, 'error', 'InvalidCredentials', now() - interval '20 minutes', now())`,
+      [`tk-${label}-${Date.now()}`, n.rows[1].id, token],
+    );
+    return async () => {
+      const c = new pg.Client({ connectionString: databaseUrl() });
+      await c.connect();
+      try {
+        await c.query(`delete from public.notifications where user_id = $1`, [user.id]);
+        await c.query(`delete from public.push_tokens where user_id = $1`, [user.id]);
+      } finally {
+        await c.end();
+      }
+    };
+  } finally {
+    await client.end();
+  }
+}

@@ -2170,6 +2170,52 @@ export type Database = {
         };
         Relationships: [];
       };
+      push_tickets: {
+        Row: {
+          checked_at: string | null;
+          created_at: string;
+          error: string | null;
+          notification_id: string;
+          status: string;
+          ticket_id: string;
+          token: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          checked_at?: string | null;
+          created_at?: string;
+          error?: string | null;
+          notification_id: string;
+          status?: string;
+          ticket_id: string;
+          token?: string | null;
+        };
+        Update: {
+          checked_at?: string | null;
+          created_at?: string;
+          error?: string | null;
+          notification_id?: string;
+          status?: string;
+          ticket_id?: string;
+          token?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'push_tickets_notification_id_fkey';
+            columns: ['notification_id'];
+            isOneToOne: false;
+            referencedRelation: 'notifications';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'push_tickets_token_fkey';
+            columns: ['token'];
+            isOneToOne: false;
+            referencedRelation: 'push_tokens';
+            referencedColumns: ['token'];
+          },
+        ];
+      };
       push_tokens: {
         Row: {
           created_at: string;
@@ -3038,9 +3084,11 @@ export type Database = {
       check_rate_limit: { Args: { p_action: string; p_max: number; p_window_seconds: number }; Returns: undefined };
       checkout_preview: { Args: { p_address_id: string; p_plan_code?: string; p_shipping?: Json }; Returns: Json };
       claim_push_batch: { Args: { p_ids?: string[]; p_limit?: number }; Returns: Json };
+      claim_push_receipts: { Args: { p_ids?: string[]; p_limit?: number }; Returns: Json };
       clear_my_activity: { Args: Record<PropertyKey, never>; Returns: undefined };
       commission_pct: { Args: { p_category_id: string; p_store_id: string }; Returns: number };
-      complete_push: { Args: { p_dead_tokens?: string[]; p_results: Json }; Returns: undefined };
+      complete_push: { Args: { p_dead_tokens?: string[]; p_results: Json; p_tickets?: Json }; Returns: undefined };
+      complete_push_receipts: { Args: { p_receipts: Json }; Returns: Json };
       create_payment_quote: {
         Args: { p_method_code: string; p_obligation_ids?: string[]; p_order_id: string };
         Returns: Json;
@@ -3139,6 +3187,7 @@ export type Database = {
         Args: { p_images?: Json; p_import_id: string; p_product: Json; p_variants?: Json };
         Returns: string;
       };
+      push_health: { Args: Record<PropertyKey, never>; Returns: Json };
       rate_status: { Args: { p_pair?: string }; Returns: Json };
       recently_viewed: {
         Args: { p_limit?: number };
