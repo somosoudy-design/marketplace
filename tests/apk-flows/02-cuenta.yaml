@@ -8,8 +8,9 @@ appId: com.example.kora.preview
 name: Comprador con cuenta hasta la cotización y cancelación
 ---
 - evalScript: ${output.email = 'maestro-' + new Date().getTime() + '@example.com'}
-- launchApp:
-    clearState: true
+# no clearState: it would also erase the EAS Update the app downloaded and run the APK's original JavaScript.
+# 01-visitante runs first and leaves the 2 m cable in the visitor cart; this flow adds the 1 m one.
+- launchApp
 - runFlow:
     # a slow emulator can show a system "isn't responding" dialog over the app
     when:
