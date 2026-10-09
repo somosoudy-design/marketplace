@@ -15,7 +15,7 @@ import { useTheme } from '@/theme';
 export default function OrdersScreen() {
   const t = useTheme();
   const orders = useOrders();
-  if (orders.isError && !orders.data) return <ErrorState onRetry={() => orders.refetch()} />;
+  if (orders.isError && !orders.data) return <ErrorState error={orders.error} onRetry={() => orders.refetch()} />;
   if (waitingForNetwork(orders)) return <OfflineState />;
   return (
     <FlatList

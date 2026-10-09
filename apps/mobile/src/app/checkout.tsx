@@ -65,7 +65,7 @@ export default function CheckoutScreen() {
   });
 
   if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace('/sign-in')} />;
-  if (preview.isError && !s) return <ErrorState onRetry={() => preview.refetch()} />;
+  if (preview.isError && !s) return <ErrorState error={preview.error} onRetry={() => preview.refetch()} />;
   if (!s) {
     return (
       <View style={{ padding: 16, gap: 14, backgroundColor: t.colors.background, flex: 1 }}>

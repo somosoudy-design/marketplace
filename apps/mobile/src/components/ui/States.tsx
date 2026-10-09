@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { View } from 'react-native';
 import { useTheme } from '@/theme';
 import { Button } from './Button';
@@ -18,12 +19,22 @@ export function EmptyState({ icon = 'sparkles', title, body, action, onAction }:
   );
 }
 
-export function ErrorState({ message, onRetry }: { message?: string; onRetry?: () => void }) {
+/**
+ * A screen that could not load. Says why: only a network failure asks to check the connection, an ended
+ * session asks to sign in again, and anything else shows the server's own message.
+ */
+export function ErrorState({ error, message, onRetry }: { error?: unknown; message?: string; onRetry?: () => void }) {
+  const code = (error as { code?: string } | null | undefined)?.code;
+  if (code === 'auth_required') {
+    return <EmptyState icon="user" title="Tu sesión terminó" body="Inicia sesión otra vez para continuar." action="Iniciar sesión" onAction={() => router.push('/sign-in')} />;
+  }
+  const network = code === undefined || code === 'network';
+  const detail = error instanceof Error && error.message ? error.message : undefined;
   return (
     <EmptyState
-      icon="wifi-off"
+      icon={network ? 'wifi-off' : 'circle-alert'}
       title="No pudimos cargar esto"
-      body={message ?? 'Revisa tu conexión e intenta de nuevo.'}
+      body={message ?? (network ? 'Revisa tu conexión e intenta de nuevo.' : detail ?? 'Algo salió mal. Intenta de nuevo.')}
       action={onRetry ? 'Reintentar' : undefined}
       onAction={onRetry}
     />

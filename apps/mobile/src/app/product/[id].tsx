@@ -48,7 +48,7 @@ export default function ProductScreen() {
 
   if (q.isLoading) return <ProductSkeleton />;
   if (waitingForNetwork(q)) return <View style={{ flex: 1, paddingTop: insets.top + 60, backgroundColor: t.colors.background }}><BackButton /><OfflineState /></View>;
-  if (q.isError) return <View style={{ flex: 1, paddingTop: insets.top + 60, backgroundColor: t.colors.background }}><BackButton /><ErrorState onRetry={() => q.refetch()} /></View>;
+  if (q.isError) return <View style={{ flex: 1, paddingTop: insets.top + 60, backgroundColor: t.colors.background }}><BackButton /><ErrorState error={q.error} onRetry={() => q.refetch()} /></View>;
   if (!q.data) {
     return (
       <View style={{ flex: 1, paddingTop: insets.top + 60, backgroundColor: t.colors.background }}>

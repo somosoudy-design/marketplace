@@ -47,7 +47,7 @@ export default function FavoritesScreen() {
         ) : waitingForNetwork(products) ? (
           <OfflineState />
         ) : products.isError ? (
-          <ErrorState onRetry={() => products.refetch()} />
+          <ErrorState error={products.error} onRetry={() => products.refetch()} />
         ) : (
           <EmptyState icon="heart" title="Aún no tienes favoritos" body="Toca el corazón en cualquier producto para guardarlo aquí." action="Explorar" onAction={() => router.navigate('/explore')} />
         )

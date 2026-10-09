@@ -63,7 +63,7 @@ export default function PayScreen() {
   const outstanding = o ? D(o.total_usd).minus(o.refunded_usd ?? 0).minus(o.paid_usd) : D(0);
   const nextObligation = (o?.payment_obligations ?? []).find((x) => x.status === 'pending' || x.status === 'partially_paid');
 
-  if (order.isError && !order.data) return <ErrorState onRetry={() => order.refetch()} />;
+  if (order.isError && !order.data) return <ErrorState error={order.error} onRetry={() => order.refetch()} />;
   if (waitingForNetwork(order)) return <OfflineState />;
   if (!o) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[120, 260].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;
 

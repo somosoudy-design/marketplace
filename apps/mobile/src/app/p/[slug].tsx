@@ -21,7 +21,7 @@ export default function ProductLink() {
         <IconButton icon="chevron-left" label="Volver" tone="surface" onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} />
       </View>
       {q.isError ? (
-        <ErrorState onRetry={() => q.refetch()} />
+        <ErrorState error={q.error} onRetry={() => q.refetch()} />
       ) : waitingForNetwork(q) ? (
         <OfflineState />
       ) : (

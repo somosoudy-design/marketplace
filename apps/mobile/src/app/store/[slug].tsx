@@ -52,7 +52,7 @@ export default function StoreScreen() {
       <View style={{ flex: 1, paddingTop: insets.top + 64, backgroundColor: t.colors.background }}>
         <View style={{ position: 'absolute', left: 16, top: insets.top + 8 }}>{back}</View>
         {q.isError ? (
-          <ErrorState onRetry={() => q.refetch()} />
+          <ErrorState error={q.error} onRetry={() => q.refetch()} />
         ) : (
           <EmptyState icon="store" title="Esta tienda no está disponible" body="Puede estar en revisión o suspendida temporalmente." action="Explorar otras tiendas" onAction={() => router.navigate('/explore')} />
         )}

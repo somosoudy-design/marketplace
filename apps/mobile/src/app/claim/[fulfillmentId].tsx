@@ -37,7 +37,7 @@ export default function ClaimScreen() {
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Stack.Screen options={{ title: showForm || !current ? 'Reportar un problema' : `Reclamo ${current.number}` }} />
       {q.isError && !q.data ? (
-        <ErrorState onRetry={() => q.refetch()} />
+        <ErrorState error={q.error} onRetry={() => q.refetch()} />
       ) : waitingForNetwork(q) ? (
         <OfflineState />
       ) : q.isLoading ? (

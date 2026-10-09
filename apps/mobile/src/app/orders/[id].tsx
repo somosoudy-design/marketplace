@@ -48,7 +48,7 @@ export default function OrderScreen() {
     },
   });
 
-  if (order.isError && !order.data) return <ErrorState onRetry={() => order.refetch()} />;
+  if (order.isError && !order.data) return <ErrorState error={order.error} onRetry={() => order.refetch()} />;
   if (waitingForNetwork(order)) return <OfflineState />;
   const o = order.data;
   if (order.isLoading) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[100, 180, 240].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;

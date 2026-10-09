@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { authErrorKind, authErrorMessage, otpDigits, utf8Decode, utf8Encode } from '../src';
+import { authErrorKind, authErrorMessage, otpDigits, sealedPlaintext, utf8Decode, utf8Encode } from '../src';
 
 describe('email code', () => {
   it('keeps the digits of whatever is pasted', () => {
@@ -43,5 +43,24 @@ describe('utf8', () => {
     expect(utf8Decode(utf8Encode(s))).toBe(s);
     expect(Array.from(utf8Encode('é✓📦'))).toEqual(Array.from(new TextEncoder().encode('é✓📦')));
     expect(utf8Decode(new TextEncoder().encode('Mérida 🛵'))).toBe('Mérida 🛵');
+  });
+});
+
+describe('sealed session', () => {
+  const session = JSON.stringify({ access_token: 'a.b.c', user: { email: 'compradora@example.com', name: 'Ñandú ✓' } });
+  const bytes = utf8Encode(session);
+  // 12-byte IV + ciphertext (same length as the text) + 16-byte tag
+  const sizes = { combinedSize: 12 + bytes.length + 16, ivSize: 12, tagSize: 16 };
+
+  it('reads back exactly the stored session when Android adds the tag length in zero bytes', () => {
+    const android = new Uint8Array(bytes.length + 16);
+    android.set(bytes);
+    expect(utf8Decode(android)).not.toBe(session);
+    expect(sealedPlaintext(android, sizes)).toBe(session);
+    expect(JSON.parse(sealedPlaintext(android, sizes)).user.name).toBe('Ñandú ✓');
+  });
+
+  it('leaves an exact plaintext as it is (iOS, web)', () => {
+    expect(sealedPlaintext(bytes, sizes)).toBe(session);
   });
 });

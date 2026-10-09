@@ -92,7 +92,7 @@ export default function NotificationsScreen() {
   // when every notice comes from demo data one banner says so, instead of a label on each row
   const allTest = !!q.data?.length && q.data.every((n) => n.is_test);
 
-  if (q.isError && !q.data) return <ErrorState onRetry={() => q.refetch()} />;
+  if (q.isError && !q.data) return <ErrorState error={q.error} onRetry={() => q.refetch()} />;
   if (waitingForNetwork(q)) return <OfflineState />;
   return (
     <SectionList

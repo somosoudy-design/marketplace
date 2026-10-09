@@ -165,7 +165,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       <SearchEntry />
 
-      {home.isError && !data ? <ErrorState onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
+      {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 
       <View style={{ marginTop: 18 }}>
         {data ? (

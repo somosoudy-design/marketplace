@@ -89,7 +89,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setTimeout(syncGuestCart, 0);
       }
     });
-    return () => data.subscription.unsubscribe();
+    // The server answering "sign in" while the app shows an account means the stored session is gone (expired
+    // and not refreshable, or unreadable): show the visitor's app instead of account screens that cannot load.
+    const sessionGone = (error: unknown) => {
+      if ((error as { code?: string } | null)?.code !== 'auth_required') return;
+      supabase.auth.getSession().then(({ data: current }) => {
+        if (current.session) return;
+        ownedBy(null);
+        setSession(null);
+      });
+    };
+    const stopQueries = qc.getQueryCache().subscribe((e) => {
+      if (e.type === 'updated' && e.action.type === 'error') sessionGone(e.action.error);
+    });
+    const stopMutations = qc.getMutationCache().subscribe((e) => {
+      if (e.type === 'updated' && e.action.type === 'error') sessionGone(e.action.error);
+    });
+    return () => {
+      data.subscription.unsubscribe();
+      stopQueries();
+      stopMutations();
+    };
   }, [qc]);
 
   const value = useMemo<AuthState>(() => {

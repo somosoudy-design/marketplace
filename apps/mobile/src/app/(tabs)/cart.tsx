@@ -54,7 +54,7 @@ function AccountCart({ header }: { header: React.ReactNode }) {
       </View>
     );
   }
-  if (cart.isError && !s) return <View>{header}<ErrorState onRetry={() => cart.refetch()} /></View>;
+  if (cart.isError && !s) return <View>{header}<ErrorState error={cart.error} onRetry={() => cart.refetch()} /></View>;
   if (!s || s.line_count === 0) {
     return (
       <EmptyCart header={header} body="Explora el catálogo y agrega lo que necesites." />

@@ -92,3 +92,12 @@ export function utf8Decode(bytes: Uint8Array): string {
   }
   return s;
 }
+
+/**
+ * The text inside an AES-GCM sealed session. expo-crypto's Android decrypt hands back its whole output buffer,
+ * a tag's length longer than the plaintext (zero bytes), so the plaintext is cut to the ciphertext's length:
+ * combined data = IV + ciphertext + tag.
+ */
+export function sealedPlaintext(bytes: Uint8Array, sealed: { combinedSize: number; ivSize: number; tagSize: number }): string {
+  return utf8Decode(bytes.subarray(0, sealed.combinedSize - sealed.ivSize - sealed.tagSize));
+}

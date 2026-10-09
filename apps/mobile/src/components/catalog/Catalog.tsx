@@ -185,7 +185,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
           ) : waitingForNetwork(search) ? (
             <OfflineState />
           ) : search.isError ? (
-            <ErrorState onRetry={() => search.refetch()} />
+            <ErrorState error={search.error} onRetry={() => search.refetch()} />
           ) : (
             <EmptyState icon="search" title="No encontramos productos" body="Prueba con otra palabra o quita algún filtro." />
           )
