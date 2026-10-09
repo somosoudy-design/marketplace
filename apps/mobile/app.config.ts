@@ -75,6 +75,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     ['expo-notifications', { icon: './assets/images/notification-icon.png', color: '#0E5E54' }],
     'expo-web-browser',
+    // development builds keep every architecture so emulators work
+    ...(variant === 'development' ? [] : ['./plugins/with-phone-abis.js']),
   ],
   experiments: {
     typedRoutes: true,
