@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { Extrapolation, FadeIn, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, type SharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scheduleOnRN } from 'react-native-worklets';
+import { palette } from '@kora/design-tokens';
 import { useTheme } from '@/theme';
 import { Text } from './Text';
 
@@ -27,7 +28,7 @@ export function BottomBar({ children, maxWidth = 760, testID, safeArea = true }:
         backgroundColor: t.colors.chrome,
         borderTopWidth: StyleSheet.hairlineWidth,
         borderTopColor: t.colors.borderStrong,
-        shadowColor: '#3B2A1A',
+        shadowColor: palette.ink[900],
         shadowOpacity: t.scheme === 'dark' ? 0 : 0.06,
         shadowRadius: 12,
         shadowOffset: { width: 0, height: -4 },

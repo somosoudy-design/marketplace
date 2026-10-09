@@ -9,10 +9,10 @@ import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { RadioRow, SummaryRow } from '@/components/checkout/Rows';
-import { Badge } from '@/components/ui/Badge';
+import { SummaryRow } from '@/components/checkout/Rows';
+import { BottomBar } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
-import { Icon } from '@/components/ui/Icon';
+import { Icon, type IconName } from '@/components/ui/Icon';
 import { Card, Divider } from '@/components/ui/Layout';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Banner, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
@@ -63,6 +63,8 @@ export default function PayScreen() {
   const outstanding = o ? D(o.total_usd).minus(o.refunded_usd ?? 0).minus(o.paid_usd) : D(0);
   const nextObligation = (o?.payment_obligations ?? []).find((x) => x.status === 'pending' || x.status === 'partially_paid');
 
+  const picking = !!nextObligation && !pending.length && !quote;
+
   if (order.isError && !order.data) return <ErrorState error={order.error} onRetry={() => order.refetch()} />;
   if (waitingForNetwork(order)) return <OfflineState />;
   if (!o) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[120, 260].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;
@@ -89,7 +91,7 @@ export default function PayScreen() {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Stack.Screen options={{ title: `Pagar ${o.number}`, headerBackVisible: !fresh }} />
-      <ScrollView testID="pay-scroll" contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: 60, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
+      <ScrollView testID="pay-scroll" contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: picking ? 150 : 60, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
         <StaleNotice q={order} />
         {fresh ? <Banner tone="success" icon="circle-check" title={`Pedido ${o.number} creado`} body="Apartamos tus productos. Completa el pago para que lo preparemos." /> : null}
 
@@ -127,26 +129,13 @@ export default function PayScreen() {
         {!nextObligation ? (
           <Banner tone="success" icon="circle-check" title="Este pedido no tiene saldo pendiente" />
         ) : pending.length ? null : !quote ? (
-          <View style={{ gap: 12 }}>
-            <Text variant="title">Elige cómo pagar</Text>
-            <Card padded={false}>
-              {(methods.data ?? []).map((m, i) => (
-                <View key={m.code}>
-                  {i > 0 ? <Divider inset={16} /> : null}
-                  <RadioRow
-                    testID={`method-${m.code}`}
-                    selected={method?.code === m.code}
-                    title={m.name}
-                    subtitle={m.description ?? undefined}
-                    trailing={m.currency === 'VES' ? 'Bs.' : m.currency}
-                    onPress={() => setMethod(m)}
-                  />
-                </View>
-              ))}
-            </Card>
-            {createQuote.error ? <Banner tone="danger" icon="circle-alert" body={(createQuote.error as Error).message} /> : null}
-            <Button testID="pay-quote" title={method ? `Ver monto en ${method.currency === 'VES' ? 'bolívares' : method.currency}` : 'Elige un método'} size="lg" full disabled={!method} loading={createQuote.isPending} onPress={() => method && createQuote.mutate(method.code)} />
-          </View>
+          <MethodPicker
+            methods={methods.data ?? []}
+            selected={method?.code ?? null}
+            amountUsd={D(nextObligation.amount_usd).minus(nextObligation.paid_usd).minus(nextObligation.waived_usd)}
+            onSelect={setMethod}
+            error={createQuote.error ? (createQuote.error as Error).message : null}
+          />
         ) : (
           <QuotePanel
             quote={quote}
@@ -163,7 +152,90 @@ export default function PayScreen() {
           />
         )}
       </ScrollView>
+      {picking ? (
+        <BottomBar maxWidth={MAX_W}>
+          <Button
+            testID="pay-quote"
+            title={method ? `Continuar con ${method.name}` : 'Elige un método'}
+            size="lg"
+            full
+            disabled={!method}
+            loading={createQuote.isPending}
+            onPress={() => method && createQuote.mutate(method.code)}
+          />
+          <Text variant="caption" color="textMuted" align="center">Te mostramos el monto exacto y los datos para pagar.</Text>
+        </BottomBar>
+      ) : null}
     </KeyboardAvoidingView>
+  );
+}
+
+const METHOD_GROUPS: { title: string; match: (m: PaymentMethod) => boolean }[] = [
+  { title: 'En bolívares', match: (m) => m.currency === 'VES' },
+  { title: 'En dólares', match: (m) => m.currency === 'USD' && m.kind !== 'automated' },
+  { title: 'Con cripto', match: (m) => m.currency !== 'VES' && m.currency !== 'USD' && m.kind !== 'automated' },
+  { title: 'En línea', match: (m) => m.kind === 'automated' },
+];
+const RAIL_ICON: Record<string, IconName> = {
+  pago_movil: 'smartphone', bank_transfer_ve: 'landmark', zelle: 'zap', usdt_trc20: 'coins', binance_pay: 'coins', paypal: 'globe', cash: 'banknote',
+};
+
+/** Methods grouped by the currency the buyer pays in, each with what it costs and its limits; the exact amount
+ * comes from the server's quote in the next step. */
+function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { methods: PaymentMethod[]; selected: string | null; amountUsd: ReturnType<typeof D>; onSelect: (m: PaymentMethod) => void; error: string | null }) {
+  const t = useTheme();
+  return (
+    <View style={{ gap: 18 }}>
+      <View style={{ gap: 4 }}>
+        <Text variant="title">Elige cómo pagar</Text>
+        <Text variant="bodySmall" color="textSecondary">Ahora pagas {formatUSD(amountUsd)}. En bolívares o cripto lo convertimos con la tasa del momento.</Text>
+      </View>
+      {METHOD_GROUPS.map((g) => {
+        const list = methods.filter(g.match);
+        if (!list.length) return null;
+        return (
+          <View key={g.title} style={{ gap: 8 }}>
+            <Text variant="overline" color="textMuted">{g.title.toUpperCase()}</Text>
+            <Card padded={false}>
+              {list.map((m, i) => {
+                const min = Number(m.min_usd);
+                const max = m.max_usd == null ? null : Number(m.max_usd);
+                const limit = min > 0 && amountUsd.lt(min) ? `Desde ${formatUSD(min)}` : max != null && amountUsd.gt(max) ? `Hasta ${formatUSD(max)}` : null;
+                const fee = Number(m.fee_pct) > 0 ? `+${String(Number(m.fee_pct)).replace('.', ',')} %` : Number(m.fee_fixed_usd) > 0 ? `+${formatUSD(m.fee_fixed_usd)}` : null;
+                const on = selected === m.code;
+                return (
+                  <View key={m.code}>
+                    {i > 0 ? <Divider inset={68} /> : null}
+                    <Pressable
+                      testID={`method-${m.code}`}
+                      accessibilityRole="radio"
+                      aria-checked={on}
+                      aria-disabled={!!limit}
+                      disabled={!!limit}
+                      onPress={() => { haptics.select(); onSelect(m); }}
+                      style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, opacity: limit ? 0.5 : 1, backgroundColor: on ? t.colors.brandSoft : pressed ? t.colors.surfaceSunken : 'transparent' })}
+                    >
+                      <View style={{ width: 42, height: 42, borderRadius: t.radii.md, alignItems: 'center', justifyContent: 'center', backgroundColor: on ? t.colors.brand : t.colors.surfaceSunken }}>
+                        <Icon name={RAIL_ICON[m.rail] ?? 'wallet'} size={20} color={on ? t.colors.onBrand : t.colors.text} />
+                      </View>
+                      <View style={{ flex: 1, gap: 2 }}>
+                        <Text variant="subtitle" style={{ fontSize: 15 }}>{m.name}</Text>
+                        {m.description ? <Text variant="caption" color="textMuted" numberOfLines={2}>{m.description}</Text> : null}
+                      </View>
+                      <View style={{ alignItems: 'flex-end', gap: 2 }}>
+                        <Text variant="label" tabular>{m.currency === 'VES' ? 'Bs.' : m.currency}</Text>
+                        <Text variant="caption" color={limit ? 'warning' : 'textMuted'}>{limit ?? fee ?? 'Sin comisión'}</Text>
+                      </View>
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </Card>
+          </View>
+        );
+      })}
+      {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
+    </View>
   );
 }
 
@@ -351,7 +423,7 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
           </Text>
         </Card>
       ) : null}
-      <Badge label={`Cotización ${q.id.slice(0, 8)}`} tone="muted" />
+      <Text variant="caption" color="textMuted" align="center" selectable>Código de este monto: {q.id.slice(0, 8)} (por si escribes a soporte)</Text>
     </View>
   );
 }
