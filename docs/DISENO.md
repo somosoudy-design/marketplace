@@ -49,7 +49,9 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
 - **ui/**: `Text` (variantes tipográficas), `Button` (primario, secundario, fantasma, peligro; tamaños; estado
   de carga), `IconButton`, `Pressable` (escala al presionar, respeta movimiento reducido), `Chip`, `Badge`,
   `Availability`, `Price` (USD con decimales exactos), `TextField` (etiqueta, ayuda, error), `Skeleton`,
-  `States` (`EmptyState`, `ErrorState`, `Banner`), `Layout` (`Card`, `Divider`, `ListRow`, `SectionHeader`,
+  `States` (`EmptyState`, `ErrorState`, `Banner`, `OfflineState`, `StaleNotice`), `ConfirmSheet` (confirmación
+  en hoja inferior, igual en web, iOS y Android; el botón destructivo dice exactamente qué hace y el de volver
+  conserva: "Conservar el pedido"), `Layout` (`Card`, `Divider`, `ListRow`, `SectionHeader`,
   `Stepper`), `Icon` (set propio de trazos).
 - **catalog/**: `ProductCard`, `ProductGrid` (virtualizada), `ProductImage`, `CategoryTiles`, `StoreCard`,
   `Catalog` (búsqueda, filtros y orden con `OptionsSheet`).
@@ -61,6 +63,11 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
 - **Opiniones:** `reviews/Reviews` (resumen con barras, opinión con respuesta de la tienda, nota en línea) y
   `ReviewSheet` (estrellas y comentario, editable).
 - **Catálogo:** `MiniProductCard` para listas compactas; `ProductRail` y `TrackedSection` miden lo que se ve.
+- **Sin conexión:** `OfflineFrame` envuelve la navegación; con la red caída muestra una franja de tinta bajo la
+  barra de estado ("Sin conexión · ves lo último que cargaste") que empuja las pantallas en vez de taparlas, y
+  espera 1,2 s antes de aparecer para no parpadear en cortes breves.
+- **Pago en verificación:** tarjeta con método, monto, equivalente y referencia, una explicación de qué pasa
+  ahora y un solo camino ("Ver mi pedido"); mientras tanto no se ofrece pagar otra vez.
 - `ErrorBoundary` por pantalla y `ConfigMissing` cuando faltan variables públicas.
 
 ## Estados comerciales del producto
@@ -96,7 +103,11 @@ rango ("Estimado entre … y …"), no como promesa.
 ## Estados obligatorios en cada pantalla
 
 Carga (skeleton con la forma del contenido), vacío (qué pasa y qué hacer), error (mensaje en español y
-reintentar), sin conexión (mensaje de red amable) y éxito (confirmación clara con siguiente paso).
+reintentar), sin conexión y éxito (confirmación clara con siguiente paso). Sin conexión tiene tres casos:
+datos guardados (se muestran, con la franja arriba), datos guardados que no se pudieron actualizar (aviso
+"No pudimos actualizar. Ves lo último que cargaste; puede haber cambiado.") y pantalla nunca cargada
+(`OfflineState`: "Esto todavía no está guardado en tu teléfono. Se carga solo cuando vuelva la conexión.").
+Nunca se muestra un código interno en lugar de un texto: si falta el nombre, se muestra un esqueleto.
 
 ## Panel web
 
@@ -105,7 +116,8 @@ error accesibles, tablas, insignias, diálogos, pestañas, avisos), `Crud.tsx` (
 configuración), `Fulfillment.tsx`, `ProductReview.tsx`, `Claims.tsx`, `Payouts.tsx`, `StockTable.tsx`,
 `Shell.tsx`, `Reviews.tsx` (moderación y respuesta de opiniones). El panel prioriza densidad y eficiencia sin
 perder la identidad: filtros en la misma línea que las pestañas, cifras tabulares, barras finas para comparar
-proporciones (CTR) y avisos honestos cuando los datos son de demostración o la muestra es pequeña.
+proporciones (CTR) y avisos honestos cuando los datos son de demostración o la muestra es pequeña. Las
+tarjetas de salud (tasa, avisos al teléfono) dicen qué está mal y qué revisar, no solo un número.
 
 ## Accesibilidad
 

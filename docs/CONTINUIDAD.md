@@ -3,16 +3,19 @@
 > Propósito: que cualquier sesión o persona continúe exactamente donde quedó el trabajo, sin rehacer nada
 > ni perder las directrices originales. Actualízalo al cerrar cada hito (sección 8 = bitácora).
 >
-> Última actualización: 2026-10-09 (cierre de la ronda de profundidad). Rama de trabajo: `claude/marketplace-v1`.
+> Última actualización: 2026-10-09 (sin conexión, recibos de push, importador). Rama de trabajo: `claude/marketplace-v1`,
+> subida a GitHub con PR en borrador: https://github.com/somosoudy-design/marketplace/pull/1
 
 ## 0. Estado en una línea
 
 La v1 está construida, documentada y verificada en local: base de datos, motor financiero, app móvil, panel
 de administración y de vendedor, funciones de servidor, y una ronda de profundidad (opiniones verificadas,
 posventa como conversación, inicio editorial, tasa explicada, recomendaciones medidas con su panel,
-parámetros validados). 156 pruebas en verde tras reconstruir la base desde cero, revisión visual en claro y
-oscuro de lo nuevo. Lo que queda depende de Oliver o de servicios externos: acceso de GitHub para subir la rama, proyecto
-Supabase dedicado, cuentas de Expo/tiendas y credenciales de proveedores (ver sección 5).
+parámetros validados), y una segunda ronda (pago en verificación, direcciones, app sin conexión, recibos de
+entrega de push con su salud en el panel, importador protegido contra DNS rebinding). 167 pruebas en verde tras
+reconstruir la base desde cero, revisión visual en claro y oscuro de lo nuevo. La rama está en GitHub (PR #1 en
+borrador). Lo que queda depende de Oliver o de servicios externos: proyecto Supabase dedicado, cuentas de
+Expo/tiendas y credenciales de proveedores (ver sección 5).
 
 ## 1. Directrices originales que no se pueden perder
 
@@ -97,8 +100,9 @@ Decisiones clave:
 - **Panel web:** todas las páginas son cliente (`'use client'`) con la anon key y la sesión del usuario. Los
   route handlers (`app/api/*`) actúan como el usuario que llama (Bearer + `requireAdmin`), nunca con service
   role. El importador por URL (`/api/import`) usa `safe-fetch.ts` con protección SSRF (IPv4/IPv6 privadas,
-  redirecciones re-validadas, tamaño máximo). Limitación conocida: no protege contra DNS rebinding entre la
-  validación y la conexión; es una herramienta solo para administradores.
+  redirecciones re-validadas, tamaño máximo). Contra DNS rebinding, cada petición va por `importerAgent`
+  (undici) cuyo `guardedLookup` vuelve a resolver y rechaza respuestas privadas en el momento de conectar
+  (`EPRIVATEADDR` → "Dirección no permitida."); una IP literal se valida antes y no pasa por DNS.
 - **Opiniones verificadas** (migración `001700`): solo opina quien compró y recibió (`submit_review` por
   línea de pedido, editable). La tienda responde en público (`reply_review`); la plataforma oculta con un
   motivo que ve el autor (`moderate_review`). `rating_avg`/`rating_count` de productos y tiendas son datos
@@ -124,6 +128,31 @@ Decisiones clave:
   es demo, y esas nunca se envían por push (`push_status = skipped`). Los avisos de reclamo llevan
   `order_id` y `fulfillment_id` para abrir la conversación; `notify_store` marca `audience: 'store'` (la app
   no los abre: se gestionan en el panel). Montos con `_fmt_usd` ("$1.234,56").
+- **Push en dos fases** (migración `002000`): `push-dispatch` envía (fase 1, tickets) y en la misma corrida
+  pide los recibos vencidos (fase 2). `push_tickets` guarda cada ticket aceptado (el token se borra solo
+  cuando se borra el dispositivo: `on delete set null`). `claim_push_receipts` entrega los que tienen ≥15 min,
+  con 10 min de espera si Expo aún no tiene el recibo, cierra como `expired` los de más de 24 h y borra los
+  terminados tras 7 días. `complete_push_receipts` borra dispositivos `DeviceNotRegistered` y marca el aviso
+  `failed` ("Sin entregar: …") solo si ningún dispositivo lo recibió. `push_health()` (admin) alimenta la
+  tarjeta "Avisos al teléfono" del resumen: dispositivos, enviados, entregas confirmadas, sin entregar, y
+  alertas de avisos atascados (falta el cron o los secretos del Vault) o credenciales rechazadas.
+- **Direcciones** (migración `001900`): al borrar la principal, la agregada más recientemente pasa a ser la
+  principal (trigger `addresses_promote`, por `created_at`: `updated_at` cambia con cada edición). Los pedidos
+  guardan copia de la dirección, así que borrarla no altera pedidos.
+- **App sin conexión** (`apps/mobile/src/lib/query.ts`): React Query persiste en AsyncStorage
+  (`kora-offline-v1`, 1 día, `buster` a subir si cambia la forma de una respuesta) solo estas claves:
+  `home`, `categories`, `orders`, `order`, `fulfillment-steps`, `addresses`, `favorites`, `notifications`,
+  `profile`, `claims`. Nunca la tasa, métodos de pago, cotizaciones, carrito ni checkout (solo valen como
+  los da el servidor en ese momento). `clearAccountCache()` borra todo al cerrar sesión o cambiar de cuenta
+  (`lib/auth.tsx`). El estado en línea viene de NetInfo sin sondeo a terceros, más los eventos
+  `online`/`offline` del navegador en web (NetInfo web solo mira `navigator.connection`). Las mutaciones usan
+  `networkMode: 'always'` para fallar con "sin conexión" en vez de quedar en espera. Los reintentos son de
+  una sola capa: el cliente se crea con `retryReads: false` (supabase-js reintentaba lecturas 1-2-4 s debajo
+  de React Query y una conexión caída tardaba ~1 min en mostrarse). Piezas de UI: `OfflineFrame` (franja bajo
+  la barra de estado que empuja las pantallas, con 1,2 s de margen para cortes breves; anula el inset
+  superior para que los encabezados no lo dupliquen), `OfflineState`, `waitingForNetwork(q)` y `StaleNotice`.
+- **Confirmaciones:** `ConfirmSheet` (hoja inferior, funciona igual en web, iOS y Android) para cancelar un
+  pedido, eliminar una dirección y pedir la eliminación de la cuenta; `Alert.alert` no funciona en web.
 - **Reclamos:** conversación comprador–tienda; el comprador puede escalar cuando la tienda respondió o pasó
   `claims.seller_response_hours` (48) sin respuesta; escalar deja un mensaje en la conversación y avisa a la
   tienda. Un solo reclamo abierto por entrega.
@@ -209,14 +238,21 @@ Verificadas = cubiertas por pruebas que se ejecutaron en verde (sección 6).
 - **Recomendaciones en el panel** (`/admin/recomendaciones`): rendimiento por espacio y período, productos
   más tocados, aviso de tráfico demo o muestra pequeña, editor de pesos validado igual que en la base.
 - **Parámetros validados:** un valor inválido en Configuración se rechaza con el motivo exacto.
+- **Pago en verificación:** tras reportar un pago, la pantalla de pago muestra una tarjeta "Estamos verificando
+  tu pago" (método, monto, equivalente, referencia) y oculta el selector hasta que el admin decida.
+- **Direcciones:** lista de filas con insignia "Principal", edición, eliminación con confirmación y promoción
+  automática de otra principal.
+- **Sin conexión:** pedidos, detalle con pasos de entrega, direcciones, favoritos, avisos e inicio se abren
+  sin red; una pantalla nunca cargada lo explica; si una actualización falla sobre datos guardados se avisa.
+- **Push confiable y visible:** recibos de entrega, limpieza de dispositivos y tarjeta de salud en el panel.
+- **Importador:** protegido contra DNS rebinding.
 
 ## 5. Pendiente
 
 Bloqueado por Oliver o por servicios externos:
 
-1. **GitHub:** la app de Claude no tiene acceso a `somosoudy-design/marketplace` (público). Cuando lo tenga:
-   `git push -u origin claude/marketplace-v1` y abrir PR hacia `main` (el remoto solo tiene un README inicial;
-   la rama ya está rebasada sobre él).
+1. **GitHub:** resuelto. La rama está subida y el PR #1 (borrador) espera revisión de Oliver; no se fusiona
+   sin él. El repo no tiene CI: las pruebas se corren en local (sección 7).
 2. **Proyecto Supabase dedicado:** Oliver quiere usar otra cuenta de Supabase (la actual tiene muchos
    proyectos). Se le pidió crearla y reconectar el conector. Cuando aparezca una organización que no sea la
    de BingoCriollo: crear el proyecto en plan gratuito, aplicar migraciones y seed demo, desplegar funciones.
@@ -227,13 +263,10 @@ Bloqueado por Oliver o por servicios externos:
 
 Mejoras ejecutables sin bloqueo (siguiente trabajo sugerido):
 
-- Pruebas en Android/iOS reales cuando exista una build (Maestro o Detox).
-- Recibos de entrega de Expo Push (segunda fase) además de los tickets.
+- Pruebas en Android/iOS reales cuando exista una build (Maestro o Detox). En particular la franja sin
+  conexión (anula el inset superior para el native-stack; verificado solo en web).
 - Verificación automática de pagos USDT en cadena.
-- Protección contra DNS rebinding en el importador (resolver una vez y conectar a esa IP).
-- Persistencia de consultas sin conexión en la app (React Query persister) para abrir pedidos sin red.
-- Revisión visual completa en modo oscuro de todas las pantallas de la app (revisadas: inicio, hoja de tasa,
-  reclamo, notificaciones; faltan checkout, pagos y cuenta).
+- CI en GitHub Actions con el stack local (hoy las suites corren solo en esta máquina).
 - Ajustes del panel: "Parámetros" sigue siendo un editor JSON genérico; los críticos ya se validan en la base,
   pero merecen formularios propios como el de pesos del ranking.
 
@@ -243,18 +276,18 @@ Tabla completa y actualizada en `docs/INTEGRACIONES.md`.
 
 ## 7. Pruebas y resultados (ejecutadas de verdad)
 
-Tras `pnpm db:reset` el 2026-10-09, cierre de la ronda de profundidad: 156 pruebas en verde (detalle y casos
+Tras `pnpm db:reset` el 2026-10-09, cierre de la segunda ronda: 167 pruebas en verde (detalle y casos
 críticos en `docs/PRUEBAS.md`):
 
 | Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos | `pnpm test:db` | 71/71 |
+| Base de datos | `pnpm test:db` | 72/72 |
 | E2E por API pública | `pnpm test:e2e` | 8/8 |
-| Funciones del servidor (Deno) | `pnpm test:functions` | 9/9 |
+| Funciones del servidor (Deno) | `pnpm test:functions` | 10/10 |
 | Núcleo | `pnpm --filter @kora/core test` | 34/34 |
-| Panel unitario (SSRF) | `pnpm test:admin` | 23/23 |
-| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 6/6 |
-| Panel entre roles (Playwright) | `pnpm test:panel` | 5/5 |
+| Panel unitario (SSRF y DNS rebinding) | `pnpm test:admin` | 28/28 |
+| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 9/9 |
+| Panel entre roles (Playwright) | `pnpm test:panel` | 6/6 |
 | Tipos / lint / build del panel | `pnpm typecheck`, `pnpm lint`, `pnpm --filter @kora/admin build` | sin errores |
 
 No ejecutado: builds nativas y dispositivos reales (sin Android SDK ni Google Maven ni macOS), proveedores
@@ -313,6 +346,14 @@ Convenciones:
   decide cuál se ve. Los pedidos de `deliveredOrderFor` son de Patitas & Co.
 - Lint de la app (compilador de React): no leer ni escribir refs durante el render, nada impuro en el render
   (`Date.now()` va en `useState(() => Date.now())`); refs se actualizan en efectos.
+- `pnpm test:ui` reconstruye la build web; para correr un solo spec de la app, reconstruye antes
+  (`pnpm --filter @kora/app-e2e build:web`) y luego
+  `cd tests/app-e2e && npx playwright test --project=app tests/<spec>.ts`. `offline.spec.ts` tarda ~40 s a
+  propósito: espera el refresco de 30 s del pedido para comprobar el aviso de datos desactualizados.
+- Consulta nueva que deba abrirse sin red: agrega su primera clave a `PERSISTED` en `lib/query.ts`; si cambias
+  la forma de una respuesta persistida, sube `buster`. Nunca persistas tasas, cotizaciones, carrito ni checkout.
+- Hojas de confirmación: `ConfirmSheet` con `testID`; el botón de confirmar es `<testID>-confirm`.
+- Fixtures de push para el panel: `pushTrouble()` en `tests/app-e2e/tests/support/db.ts` (devuelve su limpieza).
 - Ajuste nuevo que una función de la base convierta a número: agrégalo a `guard_setting_value` (migración
   `001800`) y su prueba en `config-guards.test.ts`.
 
@@ -330,3 +371,8 @@ Convenciones:
   seguros, formulario de dirección por secciones, carrito vacío con sugerencias, medición de recomendaciones,
   panel de opiniones y de recomendaciones, validación de parámetros en la base (migración `001800`).
   Cada pieza con prueba y revisión de pantalla (claro y oscuro). Push a GitHub sigue rechazado (403).
+- 2026-10-09 — Segunda ronda: tarjeta de pago en verificación, gestión de direcciones con promoción de la
+  principal (`001900`), app sin conexión (persistencia selectiva, franja, estados honestos, reintentos en una
+  sola capa), hojas de confirmación multiplataforma, recibos de push y salud del canal en el panel (`002000`),
+  importador protegido contra DNS rebinding (undici + `guardedLookup`). GitHub ya acepta el push: rama subida
+  y PR #1 en borrador. 167 pruebas en verde.

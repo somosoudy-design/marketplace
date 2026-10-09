@@ -1,25 +1,25 @@
 # Resultados de pruebas
 
 Ejecutadas el 2026-10-09 en el entorno de desarrollo (Linux, Node 22, Postgres 16, stack local sin Docker),
-inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las 18 migraciones y el seed).
+inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las 20 migraciones y el seed).
 
 ## Resumen
 
 | Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos: RLS, finanzas, checkout, pagos, logística, privilegios, herramientas, opiniones, recomendaciones, avisos, parámetros | `pnpm test:db` | **71/71** en verde (10 archivos) |
+| Base de datos: RLS, finanzas, checkout, pagos, logística, privilegios, herramientas, opiniones, recomendaciones, avisos, parámetros | `pnpm test:db` | **72/72** en verde (10 archivos) |
 | Compra completa por la API pública (como la app) | `pnpm test:e2e` | **8/8** en verde |
-| Funciones del servidor (Deno, contra el stack local) | `pnpm test:functions` | **9/9** en verde |
+| Funciones del servidor (Deno, contra el stack local) | `pnpm test:functions` | **10/10** en verde |
 | Núcleo: dinero, planes, tasas, proveedores, errores | `pnpm --filter @kora/core test` | **34/34** en verde |
-| Panel: protección SSRF del importador | `pnpm test:admin` | **23/23** en verde |
-| Interfaz de la app (Playwright, Pixel 7, build web) | `pnpm test:ui` | **6/6** en verde |
-| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | **5/5** en verde |
+| Panel: protección SSRF y DNS rebinding del importador | `pnpm test:admin` | **28/28** en verde (2 archivos, uno sin dobles de red) |
+| Interfaz de la app (Playwright, Pixel 7, build web) | `pnpm test:ui` | **9/9** en verde |
+| Panel entre roles (Playwright, escritorio) | `pnpm test:panel` | **6/6** en verde |
 | Tipos (8 paquetes) | `pnpm typecheck` | sin errores |
 | Lint (app y panel) | `pnpm lint` | sin errores ni avisos |
 | Build de producción del panel | `pnpm --filter @kora/admin build` | correcta |
 | Configuración nativa | `expo config`, `expo prebuild --platform android` | correcta (proyecto Android generado; no compilado) |
 
-Total: **138 pruebas automatizadas** en verde.
+Total: **167 pruebas automatizadas** en verde.
 
 ## Casos críticos del brief
 
@@ -48,6 +48,13 @@ Total: **138 pruebas automatizadas** en verde.
 | Reclamo: escalar antes de tiempo, dos reclamos abiertos | `reviews-engagement.test.ts` (`too_early`, índice único), `marketplace.test.ts` (el escalado queda en la conversación) |
 | Posventa completa en la app | `after-sale.spec.ts` (calificar, abrir reclamo, escribir, ver el reclamo en el pedido, aviso que abre el pedido) |
 | Parámetro inválido rompe el checkout o el feed | `config-guards.test.ts` (texto en un número, fuera de rango, clave desconocida en `ranking`, borrar un ajuste requerido) |
+| Pago reportado: no volver a pagar por error | `purchase.spec.ts` (tras enviar, la pantalla de pago muestra "Estamos verificando tu pago" y no ofrece otro método) |
+| Borrar la dirección principal | `checkout.test.ts` (la más reciente pasa a ser principal; sin direcciones no queda ninguna); `account.spec.ts` (confirmación y nueva principal en pantalla) |
+| Abrir pedidos sin conexión | `offline.spec.ts` (con la API bloqueada y recarga completa: número, pasos con su nombre, aviso de que no se pudo actualizar; franja sin conexión que no tapa el título; pantalla nunca cargada explicada; recuperación al volver la red) |
+| Cancelar un pedido en web | `offline.spec.ts` (la hoja de confirmación funciona igual en todas las plataformas) |
+| Push aceptado pero no entregado | `functions.test.ts` (recibo pedido solo cuando vence, dispositivo inexistente borrado, aviso marcado "Sin entregar" solo si nadie lo recibió, recibo no listo reintentado a los 10 min) |
+| Avisos atascados o credenciales de push rechazadas | `panel/dashboard.spec.ts` (el resumen lo advierte y dice qué revisar) |
+| DNS rebinding en el importador | `safe-fetch.test.ts` (un host que pasa la primera revisión y cambia a una IP privada al conectar es rechazado); `safe-fetch-connect.test.ts` (sin dobles: undici resuelve a través del guardián y no abre un socket hacia localhost) |
 | Métricas de recomendaciones | `reviews-engagement.test.ts` (CTR, carrito y compra tras clic; solo admin); `panel/reviews.spec.ts` (nombres de espacios, aviso de tráfico demo, pesos validados) |
 
 ## Lo que no se ejecutó (y por qué)
@@ -87,3 +94,19 @@ Total: **138 pruebas automatizadas** en verde.
 - Tres códigos de error de opiniones no tenían texto en español (lo detectó la prueba de cobertura de
   `errors.ts`); el de "ya no se puede editar" tenía el mismo código que "aún no entregado" y ahora es propio.
 
+
+## Problemas encontrados y corregidos en la segunda ronda (pago, direcciones, sin conexión, push, importador)
+
+- Tras reportar un pago, la pantalla seguía ofreciendo pagar de nuevo; ahora muestra el pago en verificación.
+- Promover la dirección principal por `updated_at` elegía mal (cada edición lo cambia); ahora por `created_at`.
+- La app mostraba el código interno "delivered" como título de una entrega cuando los nombres de los pasos no
+  estaban cargados; ahora muestra un esqueleto y los nombres se guardan para abrir sin red.
+- Una conexión caída tardaba cerca de un minuto en mostrarse: supabase-js reintentaba cada lectura debajo de
+  React Query. Ahora hay una sola capa de reintentos (`retryReads: false`).
+- En web, la app no se enteraba de que había vuelto la conexión (NetInfo web escucha solo
+  `navigator.connection`); ahora también escucha los eventos `online`/`offline` del navegador.
+- El aviso flotante "Sin conexión" tapaba el título de la pantalla; ahora es una franja que empuja el
+  contenido.
+- `Alert.alert` no funciona en web: cancelar un pedido no pedía confirmación allí. Ahora se usa una hoja
+  propia en todas las plataformas.
+- El texto de solicitud de eliminación prometía un correo que el sistema no envía; ya no lo promete.
