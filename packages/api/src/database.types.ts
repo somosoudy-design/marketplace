@@ -1493,6 +1493,7 @@ export type Database = {
       };
       payment_methods: {
         Row: {
+          basis_adjust_pct: number;
           code: string;
           currency: string;
           description: string | null;
@@ -1505,6 +1506,7 @@ export type Database = {
           max_usd: number | null;
           min_usd: number;
           name: string;
+          price_basis: string;
           quote_ttl_minutes: number;
           rail: string;
           reference_pattern: string | null;
@@ -1514,6 +1516,7 @@ export type Database = {
         };
         ComputedFields: never;
         Insert: {
+          basis_adjust_pct?: number;
           code: string;
           currency: string;
           description?: string | null;
@@ -1526,6 +1529,7 @@ export type Database = {
           max_usd?: number | null;
           min_usd?: number;
           name: string;
+          price_basis?: string;
           quote_ttl_minutes?: number;
           rail: string;
           reference_pattern?: string | null;
@@ -1534,6 +1538,7 @@ export type Database = {
           sort?: number;
         };
         Update: {
+          basis_adjust_pct?: number;
           code?: string;
           currency?: string;
           description?: string | null;
@@ -1546,6 +1551,7 @@ export type Database = {
           max_usd?: number | null;
           min_usd?: number;
           name?: string;
+          price_basis?: string;
           quote_ttl_minutes?: number;
           rail?: string;
           reference_pattern?: string | null;
@@ -1615,11 +1621,14 @@ export type Database = {
           currency: string;
           expires_at: string;
           fee_usd: number;
+          gap_pct: number | null;
           id: string;
           issued_at: string;
           method_code: string;
           obligation_ids: string[];
           order_id: string;
+          price_basis: string;
+          pricing_snapshot_id: number | null;
           rate_applied: number;
           rate_base: number;
           rate_observed_at: string;
@@ -1636,11 +1645,14 @@ export type Database = {
           currency: string;
           expires_at: string;
           fee_usd?: number;
+          gap_pct?: number | null;
           id?: string;
           issued_at?: string;
           method_code: string;
           obligation_ids: string[];
           order_id: string;
+          price_basis?: string;
+          pricing_snapshot_id?: number | null;
           rate_applied: number;
           rate_base: number;
           rate_observed_at: string;
@@ -1656,11 +1668,14 @@ export type Database = {
           currency?: string;
           expires_at?: string;
           fee_usd?: number;
+          gap_pct?: number | null;
           id?: string;
           issued_at?: string;
           method_code?: string;
           obligation_ids?: string[];
           order_id?: string;
+          price_basis?: string;
+          pricing_snapshot_id?: number | null;
           rate_applied?: number;
           rate_base?: number;
           rate_observed_at?: string;
@@ -1682,6 +1697,13 @@ export type Database = {
             columns: ['order_id'];
             isOneToOne: false;
             referencedRelation: 'orders';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payment_quotes_pricing_snapshot_id_fkey';
+            columns: ['pricing_snapshot_id'];
+            isOneToOne: false;
+            referencedRelation: 'pricing_snapshots';
             referencedColumns: ['id'];
           },
         ];
@@ -1900,6 +1922,113 @@ export type Database = {
             columns: ['carrier_id'];
             isOneToOne: false;
             referencedRelation: 'carriers';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      pricing_snapshots: {
+        Row: {
+          bcv_observed_at: string;
+          bcv_rate: number;
+          bcv_source: string;
+          gap_pct: number;
+          id: number;
+          note: string | null;
+          taken_at: string;
+          taken_by: string | null;
+          usd_usdt_rate: number;
+          usd_usdt_source: string;
+          usdt_observed_at: string;
+          usdt_source: string;
+          usdt_ves_rate: number;
+          valid_until: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          bcv_observed_at: string;
+          bcv_rate: number;
+          bcv_source: string;
+          gap_pct: number;
+          id?: never;
+          note?: string | null;
+          taken_at?: string;
+          taken_by?: string | null;
+          usd_usdt_rate: number;
+          usd_usdt_source: string;
+          usdt_observed_at: string;
+          usdt_source: string;
+          usdt_ves_rate: number;
+          valid_until: string;
+        };
+        Update: {
+          bcv_observed_at?: string;
+          bcv_rate?: number;
+          bcv_source?: string;
+          gap_pct?: number;
+          id?: never;
+          note?: string | null;
+          taken_at?: string;
+          taken_by?: string | null;
+          usd_usdt_rate?: number;
+          usd_usdt_source?: string;
+          usdt_observed_at?: string;
+          usdt_source?: string;
+          usdt_ves_rate?: number;
+          valid_until?: string;
+        };
+        Relationships: [];
+      };
+      product_costs: {
+        Row: {
+          auto_price: boolean;
+          freight_usd: number | null;
+          logistics_usd: number | null;
+          margin_pct: number | null;
+          notes: string | null;
+          product_id: string;
+          source: string;
+          source_url: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          auto_price?: boolean;
+          freight_usd?: number | null;
+          logistics_usd?: number | null;
+          margin_pct?: number | null;
+          notes?: string | null;
+          product_id: string;
+          source?: string;
+          source_url?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          auto_price?: boolean;
+          freight_usd?: number | null;
+          logistics_usd?: number | null;
+          margin_pct?: number | null;
+          notes?: string | null;
+          product_id?: string;
+          source?: string;
+          source_url?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'product_costs_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: true;
+            referencedRelation: 'product_cards';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'product_costs_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: true;
+            referencedRelation: 'products';
             referencedColumns: ['id'];
           },
         ];
@@ -2921,6 +3050,36 @@ export type Database = {
         };
         Relationships: [];
       };
+      variant_costs: {
+        Row: {
+          cost_usd: number;
+          updated_at: string;
+          updated_by: string | null;
+          variant_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          cost_usd: number;
+          updated_at?: string;
+          updated_by?: string | null;
+          variant_id: string;
+        };
+        Update: {
+          cost_usd?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+          variant_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'variant_costs_variant_id_fkey';
+            columns: ['variant_id'];
+            isOneToOne: true;
+            referencedRelation: 'product_variants';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
       product_cards: {
@@ -2974,6 +3133,7 @@ export type Database = {
       };
     };
     Functions: {
+      _apply_ending: { Args: { p_price: number; p_round_to: number }; Returns: number };
       _apply_payment: {
         Args: { p_actor_note: string; p_fee: number; p_payment_id: string; p_usd: number };
         Returns: undefined;
@@ -3013,6 +3173,17 @@ export type Database = {
           weight_kg: number;
         }[];
       };
+      _divisas_factor: {
+        Args: {
+          p_adjust_pct?: number;
+          p_currency: string;
+          p_snap: Omit<
+            Database['public']['Tables']['pricing_snapshots']['Row'],
+            Database['public']['Tables']['pricing_snapshots']['ComputedFields']
+          >;
+        };
+        Returns: number;
+      };
       _fmt_usd: { Args: { p: number }; Returns: string };
       _group_label: {
         Args: { p_flow: Database['public']['Enums']['fulfillment_flow']; p_key: string; p_store_name: string };
@@ -3038,10 +3209,26 @@ export type Database = {
         };
         Returns: Json;
       };
+      _price_from_cost: {
+        Args: {
+          p_cost: number;
+          p_freight: number;
+          p_logistics: number;
+          p_margin_pct: number;
+          p_rule: Json;
+          p_snap: Omit<
+            Database['public']['Tables']['pricing_snapshots']['Row'],
+            Database['public']['Tables']['pricing_snapshots']['ComputedFields']
+          >;
+          p_weight: number;
+        };
+        Returns: Json;
+      };
       _public_name: { Args: { p_full: string }; Returns: string };
       _recompute_order: { Args: { p_order_id: string }; Returns: undefined };
       _reduce_buyer_debt: { Args: { p_amount: number; p_event: string; p_order_id: string }; Returns: number };
       _refresh_ratings: { Args: { p_product: string; p_store: string }; Returns: undefined };
+      _reprice_from_costs: { Args: { p_product_id?: string }; Returns: number };
       _set_fulfillment_step: {
         Args: {
           p_carrier: string;
@@ -3107,6 +3294,7 @@ export type Database = {
       };
       custom_access_token_hook: { Args: { event: Json }; Returns: Json };
       dev_refresh_demo_rates: { Args: Record<PropertyKey, never>; Returns: undefined };
+      ensure_pricing_snapshot: { Args: Record<PropertyKey, never>; Returns: string };
       escalate_claim: { Args: { p_claim_id: string }; Returns: undefined };
       expire_unpaid_orders: { Args: Record<PropertyKey, never>; Returns: number };
       fail_provider_start: { Args: { p_payment_id: string; p_reason: string }; Returns: undefined };
@@ -3135,6 +3323,7 @@ export type Database = {
       is_service_role: { Args: Record<PropertyKey, never>; Returns: boolean };
       is_store_member: { Args: { p_store_id: string }; Returns: boolean };
       is_superadmin: { Args: Record<PropertyKey, never>; Returns: boolean };
+      job_token_valid: { Args: { p_token: string }; Returns: boolean };
       lead_time: {
         Args: { p_product_id: string };
         Returns: {
@@ -3176,11 +3365,38 @@ export type Database = {
       };
       post_adjustment: { Args: { p_amount: number; p_memo: string; p_store_id: string }; Returns: string };
       post_claim_message: { Args: { p_body: string; p_claim_id: string }; Returns: undefined };
+      pricing_snapshot_current: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          bcv_observed_at: string;
+          bcv_rate: number;
+          bcv_source: string;
+          gap_pct: number;
+          id: number;
+          note: string | null;
+          taken_at: string;
+          taken_by: string | null;
+          usd_usdt_rate: number;
+          usd_usdt_source: string;
+          usdt_observed_at: string;
+          usdt_source: string;
+          usdt_ves_rate: number;
+          valid_until: string;
+        };
+        SetofOptions: {
+          from: '*';
+          to: 'pricing_snapshots';
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      pricing_today: { Args: Record<PropertyKey, never>; Returns: Json };
       process_account_deletion: {
         Args: { p_approve: boolean; p_notes?: string; p_request_id: string };
         Returns: undefined;
       };
       product_detail: { Args: { p_id: string }; Returns: Json };
+      product_pricing: { Args: { p_product_id: string }; Returns: Json };
       product_reviews: { Args: { p_limit?: number; p_offset?: number; p_product_id: string }; Returns: Json };
       prune_activity: { Args: Record<PropertyKey, never>; Returns: number };
       publish_import: {
@@ -3364,6 +3580,7 @@ export type Database = {
         Args: { p_note: string; p_pair: string; p_rate: number; p_valid_minutes: number };
         Returns: undefined;
       };
+      set_product_costs: { Args: { p_costs: Json; p_product_id: string; p_variant_costs?: Json }; Returns: Json };
       set_user_role: {
         Args: { p_grant: boolean; p_role: Database['public']['Enums']['app_role']; p_user_id: string };
         Returns: undefined;
@@ -3404,6 +3621,7 @@ export type Database = {
         Returns: Json;
       };
       submit_review: { Args: { p_body?: string; p_order_item_id: string; p_rating: number }; Returns: Json };
+      take_pricing_snapshot: { Args: { p_note?: string }; Returns: Json };
       track_event: {
         Args: {
           p_category_id?: string;
