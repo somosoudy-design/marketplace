@@ -1,4 +1,4 @@
-import type { Fulfillment, FulfillmentEvent, FulfillmentStep, MyReview, OrderItem } from '@kora/api';
+import type { Claim, Fulfillment, FulfillmentEvent, FulfillmentStep, MyReview, OrderItem } from '@kora/api';
 import { D, describeEtaDates, formatMoney, formatRate, formatUSD, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -12,12 +12,13 @@ import { Badge } from '@/components/ui/Badge';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
-import { Card, Divider } from '@/components/ui/Layout';
+import { Card, Divider, ListRow } from '@/components/ui/Layout';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { paymentRecordTone, paymentTone, shortDate, shortDateTime } from '@/lib/format';
 import { useFulfillmentSteps, useOrder } from '@/lib/hooks';
+import { CLAIM_STATUS } from '@/lib/claims';
 import { qk } from '@/lib/query';
 import { api } from '@/lib/supabase';
 import { useTheme } from '@/theme';
@@ -35,6 +36,7 @@ export default function OrderScreen() {
   const delivered = order.data?.fulfillments.some((f) => f.status === 'delivered') ?? false;
   const myReviews = useQuery({ queryKey: qk.myReviews(id), queryFn: () => api.reviews.mine(itemIds), enabled: delivered && itemIds.length > 0 });
   const [reviewing, setReviewing] = useState<OrderItem | null>(null);
+  const claims = useQuery({ queryKey: ['claims', 'list'], queryFn: api.claims.list, enabled: !!order.data });
   const cancel = useMutation({
     mutationFn: () => api.orders.cancel(id, 'Cancelado por el comprador desde la app'),
     onSuccess: () => {
@@ -132,6 +134,7 @@ export default function OrderScreen() {
           steps={(steps.data ?? []).filter((s) => s.flow === f.flow)}
           reviews={myReviews.data ?? []}
           onReview={setReviewing}
+          claim={(claims.data ?? []).find((c) => c.fulfillment_id === f.id)}
         />
       ))}
 
@@ -157,7 +160,7 @@ export default function OrderScreen() {
   );
 }
 
-function FulfillmentCard({ f, index, total, items, steps, reviews, onReview }: { f: Fulfillment & { fulfillment_events: FulfillmentEvent[] }; index: number; total: number; items: OrderItem[]; steps: FulfillmentStep[]; reviews: MyReview[]; onReview: (item: OrderItem) => void }) {
+function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, claim }: { f: Fulfillment & { fulfillment_events: FulfillmentEvent[] }; index: number; total: number; items: OrderItem[]; steps: FulfillmentStep[]; reviews: MyReview[]; onReview: (item: OrderItem) => void; claim?: Claim }) {
   const t = useTheme();
   const reached = new Map<string, string>();
   f.fulfillment_events.filter((e) => e.visible_to_buyer).forEach((e) => reached.set(e.step_code, e.created_at));
@@ -222,9 +225,20 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview }: {
           </View>
         );
       })}
-      {canClaim ? (
+      {claim ? (
+        <>
+          <Divider />
+          <ListRow
+            testID={`claim-row-${f.id}`}
+            icon="message-circle"
+            title={`Reclamo ${claim.number}`}
+            subtitle={CLAIM_STATUS[claim.status]?.label ?? claim.status}
+            onPress={() => router.push({ pathname: '/claim/[fulfillmentId]', params: { fulfillmentId: f.id } })}
+          />
+        </>
+      ) : canClaim ? (
         <View style={{ padding: 14, paddingTop: 0 }}>
-          <Button title="Reportar un problema" variant="secondary" size="sm" icon="message-circle" onPress={() => router.push({ pathname: '/claim/[fulfillmentId]', params: { fulfillmentId: f.id } })} />
+          <Button testID={`claim-open-${f.id}`} title="Reportar un problema" variant="secondary" size="sm" icon="message-circle" onPress={() => router.push({ pathname: '/claim/[fulfillmentId]', params: { fulfillmentId: f.id } })} />
         </View>
       ) : null}
     </Card>

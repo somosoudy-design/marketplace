@@ -4,7 +4,7 @@ import { Text } from './Text';
 
 export type Tone = 'success' | 'editorial' | 'info' | 'warning' | 'muted' | 'danger' | 'brand' | 'accent';
 
-export function Badge({ label, tone = 'muted', style, solid }: { label: string; tone?: Tone; style?: StyleProp<ViewStyle>; solid?: boolean }) {
+export function Badge({ label, tone = 'muted', style, solid, testID }: { label: string; tone?: Tone; style?: StyleProp<ViewStyle>; solid?: boolean; testID?: string }) {
   const { colors, radii } = useTheme();
   const map: Record<Tone, [string, string]> = {
     success: [colors.successSoft, colors.success],
@@ -18,7 +18,7 @@ export function Badge({ label, tone = 'muted', style, solid }: { label: string; 
   };
   const [bg, fg] = map[tone];
   return (
-    <View style={[{ alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, borderRadius: radii.pill, backgroundColor: solid ? fg : bg }, style]}>
+    <View testID={testID} style={[{ alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, borderRadius: radii.pill, backgroundColor: solid ? fg : bg }, style]}>
       <Text variant="caption" style={{ color: solid ? colors.surface : fg, fontFamily: 'Manrope_700Bold' }} numberOfLines={1}>
         {label}
       </Text>

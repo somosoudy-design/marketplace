@@ -8,6 +8,7 @@ import type {
   Category,
   CheckoutSummary,
   Claim,
+  ClaimWithContext,
   ClaimMessage,
   FulfillmentStep,
   HomeFeed,
@@ -260,6 +261,15 @@ export function createApi(client: KoraClient) {
 
   const claims = {
     list: () => run<Claim[]>(from('claims').select('*').order('created_at', { ascending: false })),
+    forFulfillment: (fulfillmentId: string) =>
+      run<ClaimWithContext[]>(
+        from('claims').select('*, stores(name), orders(number)').eq('fulfillment_id', fulfillmentId).order('created_at', { ascending: false }),
+      ),
+    /** Hours a store has to answer before the buyer may escalate (public setting). */
+    responseHours: async () => {
+      const row = await run<{ value: unknown } | null>(from('app_settings').select('value').eq('key', 'claims.seller_response_hours').maybeSingle());
+      return Number(row?.value ?? 48);
+    },
     messages: (claimId: string) =>
       run<ClaimMessage[]>(from('claim_messages').select('*').eq('claim_id', claimId).order('created_at')),
     open: (fulfillmentId: string, reason: Claim['reason'], description: string) =>

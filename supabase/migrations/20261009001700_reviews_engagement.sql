@@ -9,12 +9,6 @@
 --     measured (CTR, add to cart and purchases after a click).
 -- =====================================================================
 
--- ---------- money formatting for notification copy ----------
-create or replace function public._fmt_usd(p numeric) returns text
-language sql immutable set search_path = public as $$
-  select '$' || translate(to_char(round(p, 2), 'FM999,999,990.00'), ',.', '.,')
-$$;
-
 -- ---------- demo data stays recognizable ----------
 -- Orders placed by demo accounts are demo orders, whatever path created them.
 create or replace function public.flag_demo_order() returns trigger
@@ -466,6 +460,68 @@ declare v_user uuid := public.require_user();
 begin
   delete from public.user_events where user_id = v_user;
   delete from public.rec_events where user_id = v_user;
+end $$;
+
+-- ---------- notifications: demo safety and deep links ----------
+-- several notices can come from one transaction (payment confirmed, then delivery prepared); clock time keeps their order
+alter table public.notifications alter column created_at set default clock_timestamp();
+
+-- Anything about demo data is a test notification: it is labeled in the app and never pushed to a device.
+-- Claim notices also carry the order and delivery so the app can open the right screen, and notices sent to a
+-- store's team say so, because their actions live in the seller panel rather than in the buyer app.
+create or replace function public.notify(p_user uuid, p_kind text, p_title text, p_body text, p_data jsonb default '{}'::jsonb)
+returns uuid language plpgsql security definer set search_path = public as $$
+declare
+  v_id uuid;
+  v_prefs jsonb;
+  v_push boolean;
+  v_test boolean;
+  v_data jsonb := coalesce(p_data, '{}'::jsonb);
+  v_extra jsonb;
+begin
+  select preferences, is_demo into v_prefs, v_test from public.profiles where id = p_user;
+  if v_data ? 'claim_id' and not v_data ? 'order_id' then
+    select jsonb_build_object('order_id', c.order_id, 'fulfillment_id', c.fulfillment_id) into v_extra
+      from public.claims c where c.id = (v_data ->> 'claim_id')::uuid;
+    v_data := v_data || coalesce(v_extra, '{}'::jsonb);
+  end if;
+  v_test := coalesce(v_test, false)
+    or exists (select 1 from public.orders o where o.id = (v_data ->> 'order_id')::uuid and o.is_demo)
+    or exists (select 1 from public.products p where p.id = (v_data ->> 'product_id')::uuid and p.is_demo);
+  v_push := coalesce((v_prefs -> 'notifications' ->> p_kind)::boolean, (v_prefs -> 'notifications' ->> 'push')::boolean, true);
+  insert into public.notifications (user_id, kind, title, body, data, is_test, push_status)
+  values (p_user, p_kind, p_title, p_body, v_data, v_test,
+          case when not v_test and v_push and exists (select 1 from public.push_tokens where user_id = p_user) then 'pending' else 'skipped' end)
+  returning id into v_id;
+  return v_id;
+end $$;
+
+create or replace function public.notify_store(p_store uuid, p_kind text, p_title text, p_body text, p_data jsonb default '{}'::jsonb)
+returns void language plpgsql security definer set search_path = public as $$
+declare r record;
+begin
+  for r in select user_id from public.store_members where store_id = p_store loop
+    perform public.notify(r.user_id, p_kind, p_title, p_body, coalesce(p_data, '{}'::jsonb) || jsonb_build_object('audience', 'store', 'store_id', p_store));
+  end loop;
+end $$;
+
+-- escalation tells the store, so it is never surprised by the platform stepping in
+create or replace function public.escalate_claim(p_claim_id uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_user uuid := public.require_user(); v_c public.claims;
+begin
+  select * into v_c from public.claims where id = p_claim_id for update;
+  if not found or v_c.buyer_id <> v_user then raise exception 'not found' using errcode = 'P0002'; end if;
+  if v_c.status not in ('open', 'seller_responded') then raise exception 'cannot escalate' using errcode = 'P0001', hint = 'invalid_state'; end if;
+  -- buyers may escalate after the seller answered, or after the configured response window
+  if v_c.status = 'open' and v_c.created_at > now() - make_interval(hours => (public.setting('claims.seller_response_hours', '48'))::int) then
+    raise exception 'seller response window still open' using errcode = 'P0001', hint = 'too_early';
+  end if;
+  update public.claims set status = 'escalated' where id = p_claim_id;
+  insert into public.claim_messages (claim_id, author_id, author_role, body)
+  values (p_claim_id, v_user, 'buyer', 'Pedí que el equipo de la plataforma revise este reclamo.');
+  perform public.notify_store(v_c.store_id, 'claim_update', 'Reclamo ' || v_c.number || ' escalado',
+    'El comprador pidió la intervención de la plataforma. Comparte tu versión en el reclamo.', jsonb_build_object('claim_id', p_claim_id));
 end $$;
 
 -- ---------- privileges ----------

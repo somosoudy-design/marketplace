@@ -201,3 +201,57 @@ describe('recommendation measurement', () => {
     expect(r).toEqual({ a: 0, b: 0 });
   });
 });
+
+describe('notifications', () => {
+  it('anything about demo data is a test notice and is never queued for push', async () => {
+    const demo = await createUser('nt-demo');
+    await admin(`update public.profiles set is_demo = true where id = $1`, [demo.id]);
+    await admin(`insert into public.push_tokens (user_id, token, platform) values ($1, $2, 'ios')`, [demo.id, `ExponentPushToken[${demo.id.slice(0, 12)}]`]);
+    const f = await createStoreWithProduct({ price: 10, stock: 5 });
+    await buy(demo.id, f.variantId, 1);
+    const rows = await admin(`select is_test, push_status from public.notifications where user_id = $1`, [demo.id]);
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.every((r: any) => r.is_test && r.push_status === 'skipped')).toBe(true);
+  });
+
+  it('claim notices link to the delivery, and store-team copies say who they are for', async () => {
+    const seller = await createUser('nt-seller');
+    const buyer = await createUser('nt-buyer');
+    const f = await createStoreWithProduct({ owner: seller.id, price: 10, stock: 5 });
+    const o = await buy(buyer.id, f.variantId, 1);
+    await deliver(seller.id, o.order_id);
+    const [fu] = await admin(`select id from public.fulfillments where order_id = $1`, [o.order_id]);
+    const claimId = await asUser(buyer.id, async (sql) => (await sql(`select public.open_claim($1, 'damaged', 'La caja llegó rota y el producto también') as id`, [fu.id]))[0].id);
+
+    const [toStore] = await admin(`select data from public.notifications where user_id = $1 and kind = 'claim_update' order by created_at desc limit 1`, [seller.id]);
+    expect(toStore.data).toMatchObject({ claim_id: claimId, order_id: o.order_id, fulfillment_id: fu.id, audience: 'store', store_id: f.storeId });
+
+    await asUser(seller.id, (sql) => sql(`select public.post_claim_message($1, 'Te enviamos un reemplazo mañana')`, [claimId]));
+    const [toBuyer] = await admin(`select data from public.notifications where user_id = $1 and kind = 'claim_update' order by created_at desc limit 1`, [buyer.id]);
+    expect(toBuyer.data).toMatchObject({ claim_id: claimId, order_id: o.order_id, fulfillment_id: fu.id });
+    expect(toBuyer.data.audience).toBeUndefined();
+
+    // the store answered, so the buyer may escalate at once; the store hears about it
+    await asUser(buyer.id, (sql) => sql(`select public.escalate_claim($1)`, [claimId]));
+    const [c] = await admin(`select status from public.claims where id = $1`, [claimId]);
+    expect(c.status).toBe('escalated');
+    const [last] = await admin(`select title from public.notifications where user_id = $1 order by created_at desc limit 1`, [seller.id]);
+    expect(last.title).toMatch(/escalado$/);
+    const msgs = await asUser(buyer.id, (sql) => sql(`select author_role, body from public.claim_messages where claim_id = $1 order by created_at`, [claimId]));
+    expect(msgs.map((m: any) => m.author_role)).toEqual(['buyer', 'seller', 'buyer']);
+  });
+
+  it('a buyer cannot escalate before the store had its chance to answer', async () => {
+    const seller = await createUser('nt-seller2');
+    const buyer = await createUser('nt-buyer2');
+    const f = await createStoreWithProduct({ owner: seller.id, price: 10, stock: 5 });
+    const o = await buy(buyer.id, f.variantId, 1);
+    await deliver(seller.id, o.order_id);
+    const [fu] = await admin(`select id from public.fulfillments where order_id = $1`, [o.order_id]);
+    const claimId = await asUser(buyer.id, async (sql) => (await sql(`select public.open_claim($1, 'not_as_described', 'El color no coincide con la foto') as id`, [fu.id]))[0].id);
+    await expectHint(asUser(buyer.id, (sql) => sql(`select public.escalate_claim($1)`, [claimId])), 'too_early');
+    await expect(
+      asUser(buyer.id, (sql) => sql(`select public.open_claim($1, 'other', 'Segundo reclamo para la misma entrega')`, [fu.id])),
+    ).rejects.toMatchObject({ code: '23505' }); // one open claim per delivery
+  });
+});

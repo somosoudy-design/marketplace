@@ -261,7 +261,7 @@ begin
   select * into v_order from public.orders where id = v_p.order_id;
   perform public.notify(v_p.buyer_id, 'payment_confirmed', 'Pago confirmado',
     case when v_order.payment_status = 'paid' then 'Tu pedido ' || v_order.number || ' está pagado por completo.'
-         else 'Saldo pendiente: ' || to_char(v_order.total_usd - v_order.paid_usd, 'FM999G999G990D00') || ' USD.' end,
+         else 'Saldo pendiente: ' || public._fmt_usd(v_order.total_usd - v_order.paid_usd) || '.' end,
     jsonb_build_object('order_id', v_p.order_id, 'payment_id', p_payment_id));
   if v_order.payment_status = 'paid' then
     for v_f in select distinct store_id from public.fulfillments where order_id = v_p.order_id and flow = 'seller_shipping' loop
@@ -627,8 +627,8 @@ begin
   values (v_item.order_id, v_item.id, p_quantity, v_amount, p_reason, p_restock, auth.uid());
   perform public._recompute_order(v_item.order_id);
   perform public.notify(v_order.buyer_id, 'system', 'Reembolso registrado',
-    'Pedido ' || v_order.number || ': ' || to_char(v_amount, 'FM999G990D00') || ' USD.' ||
-    case when v_due > 0 then ' Te devolveremos ' || to_char(v_due, 'FM999G990D00') || ' USD.' else ' Se descontó de tu saldo pendiente.' end,
+    'Pedido ' || v_order.number || ': ' || public._fmt_usd(v_amount) || '.' ||
+    case when v_due > 0 then ' Te devolveremos ' || public._fmt_usd(v_due) || '.' else ' Se descontó de tu saldo pendiente.' end,
     jsonb_build_object('order_id', v_item.order_id));
   return jsonb_build_object('refunded_usd', v_amount, 'refund_due_usd', v_due);
 end $$;

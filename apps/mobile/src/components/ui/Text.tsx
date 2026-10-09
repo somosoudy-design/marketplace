@@ -23,6 +23,7 @@ export function Text({ variant = 'body', color = 'text', align, tabular, style, 
         { color: t.colors[color] },
         align ? { textAlign: align } : null,
         tabular ? { fontVariant: ['tabular-nums'] } : null,
+        variant === 'overline' ? { textTransform: 'uppercase' } : null,
         style,
       ]}
       {...rest}

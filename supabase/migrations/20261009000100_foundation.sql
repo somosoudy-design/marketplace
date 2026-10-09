@@ -294,3 +294,10 @@ begin
   perform public.audit('request', 'account_deletion', v_id::text, null);
   return v_id;
 end $$;
+
+-- money in user-facing text (notifications): "$1.234,56", independent of the server locale
+create or replace function public._fmt_usd(p numeric) returns text
+language sql immutable set search_path = public as $$
+  select '$' || translate(to_char(round(p, 2), 'FM999,999,990.00'), ',.', '.,')
+$$;
+revoke execute on function public._fmt_usd(numeric) from public, anon, authenticated;

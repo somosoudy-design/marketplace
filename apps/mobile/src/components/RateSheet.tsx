@@ -90,7 +90,7 @@ export function RateSheet({ rate: r, visible, onClose }: { rate: RateStatus; vis
           </>
         ) : (
           <>
-            <Banner tone="warning" icon="circle-alert" title="Sin una tasa reciente y verificada" body="No usamos tasas vencidas sin control. El pago en bolívares se habilita en cuanto la tasa se actualice; mientras tanto puedes pagar en USD o USDT." />
+            <Banner tone="warning" icon="circle-alert" title="Sin una tasa reciente y verificada" body="No usamos tasas vencidas sin control. El pago en bolívares se habilita en cuanto la tasa se actualice; mientras tanto puedes pagar con métodos en dólares." />
             {r.last ? (
               <Text variant="caption" color="textMuted">
                 Última registrada: {formatRate(r.last.rate)} ({SOURCE_LABEL[r.last.source] ?? r.last.source}, {shortDateTime(r.last.observed_at)}). Solo como referencia.
@@ -100,8 +100,8 @@ export function RateSheet({ rate: r, visible, onClose }: { rate: RateStatus; vis
         )}
         <View style={{ gap: 12 }}>
           <Point icon="tag" text="Los precios se publican en dólares (USD)." />
-          <Point icon="banknote" text="Si pagas en bolívares, el monto se calcula al generar el pago y queda fijo durante el tiempo que te indicamos en ese paso." />
-          <Point icon="coins" text="En USD o USDT pagas el precio publicado, sin conversión." />
+          <Point icon="banknote" text="Si pagas en bolívares, el monto se calcula con la tasa vigente al generar el pago y queda fijo durante el tiempo que te indicamos en ese paso." />
+          <Point icon="coins" text="En USDT se aplica la tasa USD/USDT de ese momento. Si un método cobra comisión, la ves antes de pagar." />
         </View>
       </View>
     </Sheet>

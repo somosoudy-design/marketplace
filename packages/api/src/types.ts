@@ -30,6 +30,7 @@ export type Profile = Tables['profiles']['Row'];
 export type Region = Tables['regions']['Row'];
 export type Claim = Tables['claims']['Row'];
 export type ClaimMessage = Tables['claim_messages']['Row'];
+export type ClaimWithContext = Claim & { stores: { name: string } | null; orders: { number: string } | null };
 
 export interface ProductCard {
   id: string;
