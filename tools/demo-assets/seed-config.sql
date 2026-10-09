@@ -21,7 +21,7 @@ update public.payment_methods set enabled = true, instructions = '{"banco":"Banc
 update public.payment_methods set enabled = true, instructions = '{"banco":"Banco de Demostración (0000)","cuenta":"0000-0000-00-0000000000","documento":"J-00000000-0","titular":"DEMO MARKETPLACE C.A.","nota":"Datos ficticios de desarrollo. No transferir."}' where code = 'transferencia_ves';
 update public.payment_methods set enabled = true, instructions = '{"correo":"pagos-demo@example.com","titular":"Demo Marketplace LLC","nota":"Datos ficticios de desarrollo. No enviar dinero."}' where code = 'zelle';
 update public.payment_methods set enabled = true, instructions = '{"red":"TRON (TRC-20)","direccion":"TDEMO000000000000000000000000000000","nota":"Dirección ficticia de desarrollo. No enviar fondos."}' where code = 'usdt_trc20';
-update public.payment_methods set enabled = true where code = 'efectivo_usd';
+update public.payment_methods set enabled = true, instructions = '{"donde":"Al retirar en la oficina de demostración o al recibir con el motorizado","nota":"Datos ficticios de desarrollo. Lleva el monto exacto."}' where code = 'efectivo_usd';
 -- binance_pay / paypal stay disabled: pending merchant credentials
 
 -- ---------- logistics (DEMO tariffs: not commercial rates) ----------
