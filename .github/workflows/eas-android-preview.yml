@@ -24,14 +24,14 @@ jobs:
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Proyecto Expo y token
         run: node tools/eas/check-project.mjs
 
       - uses: pnpm/action-setup@v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22.22.0
           cache: pnpm
@@ -40,9 +40,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Compilación en EAS (espera a que termine)
+        id: build
         working-directory: apps/mobile
         run: npx --yes eas-cli@24.12.1 build --platform android --profile preview --non-interactive --wait --json > "$GITHUB_WORKSPACE/eas-build.json"
 
       - name: Resultado
-        if: always()
+        if: always() && steps.build.outcome != 'skipped'
         run: node tools/eas/report.mjs eas-build.json
