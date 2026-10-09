@@ -1,10 +1,13 @@
 # Installable Android test build (APK) on EAS for https://expo.dev/accounts/marketplacebrand/projects/marketplace.
-# Runs only when a tag apk-preview-* is pushed. Needs the repository secret EXPO_TOKEN (an Expo access token).
+# Runs when .github/apk-preview-request changes on the work branch (or a tag apk-preview-* is pushed).
+# Needs the repository secret EXPO_TOKEN (an Expo access token).
 # Internal distribution only: nothing is submitted to Google Play.
 name: APK de prueba (EAS)
 
 on:
   push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/apk-preview-request']
     tags: ['apk-preview-*']
 
 permissions:
