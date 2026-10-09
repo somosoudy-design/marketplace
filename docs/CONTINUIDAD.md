@@ -3,7 +3,7 @@
 > Propósito: que cualquier sesión o persona continúe exactamente donde quedó el trabajo, sin rehacer nada
 > ni perder las directrices originales. Actualízalo al cerrar cada hito (sección 8 = bitácora).
 >
-> Última actualización: 2026-10-09 21:30Z (Directriz maestra 02: APK 4 instalado en el Samsung de Oliver, catálogo demo cargado en el proyecto remoto, registro con código de 6 dígitos, identidad Electric Violet e Inicio de tienda). Rama de trabajo: `claude/marketplace-v1`,
+> Última actualización: 2026-10-09 21:45Z (Directriz maestra 02: APK 4 instalado en el Samsung de Oliver, catálogo demo cargado en el proyecto remoto, registro con código de 6 dígitos, sesión cifrada corregida en Android por EAS Update, registro sin confirmación en el entorno de pruebas, identidad Electric Violet e Inicio de tienda). Rama de trabajo: `claude/marketplace-v1`,
 > subida a GitHub con PR en borrador: https://github.com/somosoudy-design/marketplace/pull/1
 
 ## 0. Estado en una línea
@@ -22,7 +22,8 @@ pantalla de diagnóstico) está instalado en el Samsung de Oliver, y el catálog
 el proyecto remoto. Plan vigente: Directriz maestra 02 (hitos A instalar, B catálogo y acceso, C Inicio e
 identidad, D compra completa, E validación). A y B hechos; C en curso (Electric Violet, Inicio de tienda);
 las actualizaciones de JavaScript llegan al APK 4 por EAS Update mientras no cambie nada nativo. Pendiente de
-Oliver: pegar las plantillas de correo con código en Supabase (`/mnt/project-files/marketplace/supabase/correos-con-codigo.md`).
+Oliver: desactivar «Confirm email» en el proyecto de pruebas (Authentication › Sign In / Providers › Email)
+para que los testers se registren sin correo; las plantillas con código quedan para cuando haya SMTP.
 Ver sección 5.
 
 ## 1. Directrices originales que no se pueden perder
@@ -286,8 +287,16 @@ Bloqueado por Oliver o por servicios externos:
    revisión a propósito), 62 variantes, 100 imágenes, 7 colecciones, 5 métodos de pago con datos ficticios
    «No transferir». El md5 del contenido coincide con una carga local del mismo archivo. Como visitante:
    `home_feed` trae 7 colecciones y 16 recomendados; buscar «ugreen» da 11. El de quitar va al SQL Editor.
-   Pasos de Oliver todavía abiertos: `kora://**` en Redirect URLs y desactivar «Confirm email» o configurar
-   SMTP (`docs/INSTALACION.md`).
+   **Registro sin confirmación en pruebas (decisión de Oliver, 2026-10-09 21:12Z):** mientras no haya dominio
+   ni SMTP, este proyecto (`mimnotafmfasvwrclxan`, el entorno de pruebas) va con «Confirm email» desactivado
+   para que Kevin, Heisber y los demás testers se registren sin correo. Es un ajuste del panel de Supabase
+   (Authentication › Sign In / Providers › Email › Confirm email), no del código: la app pregunta al servidor
+   y, si el registro devuelve sesión, entra directo sin pantalla de código y conserva el carrito de visitante
+   (`signup-without-email.spec.ts`). El flujo de código de 6 dígitos sigue completo y probado (`auth.spec.ts`);
+   vuelve solo al activar «Confirm email» con SMTP propio. Producción: «Confirm email» activado y SMTP
+   siempre. Sin SMTP, «Olvidé mi contraseña» solo llega a correos del equipo de Supabase. Pagos del entorno
+   de pruebas: datos ficticios «No transferir», Binance Pay y PayPal deshabilitados. Pendiente de Oliver:
+   `kora://**` en Redirect URLs (`docs/INSTALACION.md`).
 3. **APK de prueba (EAS):** proyecto https://expo.dev/accounts/marketplacebrand/projects/marketplace (creado
    por Oliver; no crear otro), `projectId` 9f629f10-d679-4a99-9965-8a9e588afc85 en `config/expo.json`. El
    contenedor no llega a expo.dev: se compila en GitHub Actions (`eas-android-preview.yml`) al cambiar
@@ -451,6 +460,12 @@ Convenciones:
   de diagnóstico (`kora://diagnostico`). APK 4 instalado en el Samsung de Oliver. Catálogo de demostración
   cargado en el proyecto remoto. El emulador mostró que en Android la sesión cifrada se leía con 16 bytes de
   más (expo-crypto devuelve el búfer completo al descifrar): corregido recortando al largo del texto cifrado.
+  Segunda causa, vista con el diagnóstico paso a paso: en Android `AESSealedData.fromCombined` solo acepta
+  bytes (en iOS también base64), así que la sesión guardada no se podía abrir y la app la borraba: Oliver
+  quedaba fuera de la cuenta, y el carrito decía «Revisa tu conexión» porque `ErrorState` mostraba ese texto
+  ante cualquier error. Corregido por EAS Update al APK 4 (bytes a `fromCombined`, descifrado en base64,
+  mensajes según el error y vuelta al modo visitante si el servidor pide iniciar sesión; `session.spec.ts`).
+  Registro sin confirmación por correo en el entorno de pruebas, por decisión de Oliver (sección 5).
   Identidad Electric Violet (Plus Jakarta Sans, violeta #6D42E8, tinta #1C1928, coral #FF746B) e Inicio de
   tienda (buscador, categorías, colecciones, recomendados, tiendas destacadas, populares; sin bloques de tasa
   ni de confianza). Lo nativo violeta queda para el próximo APK.

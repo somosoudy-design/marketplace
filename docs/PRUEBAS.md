@@ -64,6 +64,8 @@ Total: **179 pruebas automatizadas** en verde, más las 11 comprobaciones del ca
 | Tareas programadas sin la clave maestra | `server-functions.test.ts` (la clave de tareas vive en Vault, solo el rol de servicio la comprueba y solo la exacta pasa); `functions.test.ts` (rates-sync acepta la clave de Vault y rechaza una falsa o recortada) |
 | Catálogo todavía vacío | `browse.spec.ts` (el inicio explica que las tiendas preparan su catálogo y ofrece crear cuenta, sin secciones vacías) |
 | Enlaces de los correos de acceso | `auth-links.spec.ts` (el enlace de recuperación abre la pantalla de contraseña nueva, valida, guarda y deja de servir al reutilizarlo; el de confirmación inicia sesión y lo dice; abrir la pantalla sin enlace explica dónde abrirlo) |
+| Sesión que desaparece | `session.spec.ts` (si la sesión guardada falta con la app abierta, agregar al carrito pide iniciar sesión, la app vuelve al modo visitante y nada dice «Revisa tu conexión»); `auth.test.ts` (base64 y la lectura de la sesión cifrada con los bytes de relleno de Android) |
+| Registro sin confirmación (entorno de pruebas) | `signup-without-email.spec.ts` (con «Confirm email» desactivado: sin pantalla de código, el carrito del visitante pasa a la cuenta, no se envía ningún correo; corre solo con `AUTH_AUTOCONFIRM=true pnpm stack:start`) |
 | Esquema remoto en un solo archivo | Ensayo manual: base local nueva con las migraciones 1 a 6, el archivo de `tools/supabase-remote` aplicado en una transacción, mismo esquema que la base completa (funciones, columnas, políticas, índices) y negativa a correr dos veces |
 | Métricas de recomendaciones | `reviews-engagement.test.ts` (CTR, carrito y compra tras clic; solo admin); `panel/reviews.spec.ts` (nombres de espacios, aviso de tráfico demo, pesos validados) |
 
@@ -76,7 +78,9 @@ Total: **179 pruebas automatizadas** en verde, más las 11 comprobaciones del ca
   entorno no tiene salida a esos dominios y no hay credenciales. Se probaron los lectores con respuestas de
   ejemplo y las integraciones con dobles de prueba que validan firma y forma de cada petición.
 - **Transacciones reales:** ninguna, por instrucción.
-- **Correo:** autoconfirmado en local; sin SMTP.
+- **Correo:** en local, Auth pide el código de 6 dígitos y los correos llegan a un buzón de prueba
+  (`pnpm stack:start`); el registro sin confirmación del entorno de pruebas se prueba con
+  `AUTH_AUTOCONFIRM=true pnpm stack:start`. No hay SMTP real.
 - **Cron en Supabase:** `pg_cron`/`pg_net` no existen en el Postgres local; la migración lo detecta y no
   programa. Los trabajos se probaron llamándolos directamente.
 

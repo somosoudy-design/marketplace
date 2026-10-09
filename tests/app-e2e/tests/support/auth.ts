@@ -39,3 +39,10 @@ export async function canSignIn(email: string, password: string): Promise<boolea
   });
   return res.ok;
 }
+
+/** True when the auth server confirms new accounts without an email (local: AUTH_AUTOCONFIRM=true pnpm stack:start). */
+export async function signUpWithoutEmail(): Promise<boolean> {
+  const k = localKeys();
+  const res = await fetch(`${k.SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: k.SUPABASE_ANON_KEY } });
+  return ((await res.json()) as { mailer_autoconfirm?: boolean }).mailer_autoconfirm === true;
+}

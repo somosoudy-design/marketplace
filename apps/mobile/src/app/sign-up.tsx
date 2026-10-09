@@ -42,7 +42,8 @@ export default function SignUpScreen() {
       <ScrollView contentContainerStyle={{ padding: 24, gap: 18, width: '100%', maxWidth: 480, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
         <View style={{ gap: 6 }}>
           <Text variant="displayL">Crea tu cuenta</Text>
-          <Text color="textSecondary">Te enviaremos un código a tu correo para activarla. La dirección la agregas al comprar.</Text>
+          {/* whether a code is emailed depends on the project ("Confirm email"); verify-email explains it when it is */}
+          <Text color="textSecondary">Guarda tus pedidos, direcciones y favoritos. La dirección la agregas al comprar.</Text>
         </View>
         {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
         <TextField testID="sign-up-name" label="Nombre y apellido" value={name} onChangeText={setName} autoComplete="name" textContentType="name" />

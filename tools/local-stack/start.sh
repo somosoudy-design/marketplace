@@ -41,7 +41,8 @@ export GOTRUE_URI_ALLOW_LIST="kora://**,exp://**,http://127.0.0.1:*/**,http://lo
 export GOTRUE_JWT_SECRET="$JWT_SECRET" GOTRUE_JWT_EXP=3600 GOTRUE_JWT_AUD=authenticated
 export GOTRUE_JWT_DEFAULT_GROUP_NAME=authenticated GOTRUE_JWT_ADMIN_ROLES=service_role
 export GOTRUE_DISABLE_SIGNUP=false GOTRUE_EXTERNAL_EMAIL_ENABLED=true
-# Like the hosted project: a new account is confirmed with the 6-digit code from its email (AUTH_AUTOCONFIRM=true skips it)
+# Like production: a new account is confirmed with the 6-digit code from its email. AUTH_AUTOCONFIRM=true is the
+# test project while it has no SMTP ("Confirm email" off): sign-up returns a session and no email is sent
 export GOTRUE_MAILER_AUTOCONFIRM="${AUTH_AUTOCONFIRM:-false}" GOTRUE_MAILER_OTP_LENGTH=6 GOTRUE_MAILER_OTP_EXP=3600
 export GOTRUE_SMTP_MAX_FREQUENCY="${AUTH_SMTP_MAX_FREQUENCY:-1s}"
 for tpl in confirmation recovery magic_link email_change; do

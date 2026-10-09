@@ -141,6 +141,11 @@ Luego, en el panel de Supabase:
 3. Auth > SMTP: correo propio. El correo integrado de Supabase solo entrega a miembros del equipo del proyecto
    y unas 2 veces por hora en total, lo que no alcanza para registrar a otras personas ni para reenviar
    códigos; con SMTP propio el límite se ajusta en Auth > Rate Limits.
+   **Entorno de pruebas sin dominio:** mientras no haya SMTP, el proyecto de pruebas puede ir con *Confirm
+   email* desactivado (Authentication › Sign In / Providers › Email) para que cualquier tester se registre.
+   La app lo detecta sola (sin APK nuevo): el registro devuelve sesión y entra directo, sin pantalla de
+   código. Para volver al código de 6 dígitos basta con activar *Confirm email* otra vez, ya con SMTP. En
+   producción *Confirm email* va siempre activado.
 4. Database > Extensions: `pg_cron` y `pg_net` (la migración `20261009001600` programa los trabajos si
    existen; si se activan después, vuelve a ejecutar su bloque final).
 5. SQL Editor, para que el cron pueda llamar a las funciones (la clave `kora_job_token` la crea la migración
