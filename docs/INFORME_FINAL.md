@@ -7,7 +7,7 @@ Fecha: 2026-10-09. Marca provisional "Kora" (se cambia en `config/brand.json`).
 Se construyó una primera versión funcional e integrada de un e-commerce + marketplace multivendedor para
 Venezuela: app nativa (Expo/React Native), backend Supabase con la lógica financiera en la base de datos,
 funciones de servidor para pagos en línea, tasas y push, panel web de administración y de vendedores, sistema
-de diseño propio, catálogo de demostración reproducible y 171 pruebas automatizadas en verde ejecutadas
+de diseño propio, catálogo de demostración reproducible y 179 pruebas automatizadas en verde ejecutadas
 sobre una base reconstruida desde cero. Después de la primera entrega se hicieron dos rondas de profundidad
 (opiniones verificadas, posventa como conversación, inicio editorial, tasa explicada, recomendaciones
 medidas con su panel, parámetros validados; luego pago en verificación, direcciones, app sin conexión,
@@ -19,7 +19,7 @@ con pruebas y revisión de pantalla. El código está en GitHub con un PR en bor
 | | Entregable | Dónde |
 |---|---|---|
 | A | App móvil (Expo + expo-router, iOS/Android, también web para pruebas) | `apps/mobile` |
-| B | Backend: 21 migraciones, RLS, 140 definiciones de funciones SQL, 5 Edge Functions, `config.toml` | `supabase/` |
+| B | Backend: 23 migraciones, RLS, 140 definiciones de funciones SQL, 5 Edge Functions, `config.toml` | `supabase/` |
 | C | Panel de administración (20 secciones) y panel de vendedor (9 secciones) | `apps/admin` |
 | D | Sistema de diseño: tokens, componentes, reglas | `packages/design-tokens`, [DISENO.md](DISENO.md) |
 | E | Datos iniciales: 5 tiendas (1 propia, 4 externas, incluida una odontológica), 16 categorías, 43 productos, 66 variantes, pedidos en varios estados, cuotas, pagos, envíos y notificaciones de prueba, todo marcado como demo | `tools/demo-assets`, `supabase/seed.sql` |

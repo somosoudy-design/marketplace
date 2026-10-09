@@ -295,17 +295,17 @@ Tabla completa y actualizada en `docs/INTEGRACIONES.md`.
 
 ## 7. Pruebas y resultados (ejecutadas de verdad)
 
-Tras `pnpm db:reset` el 2026-10-09, cierre de la ronda de parámetros: 171 pruebas en verde (detalle y casos
+Tras `pnpm db:reset` el 2026-10-09, cierre de la ronda del backend remoto: 179 pruebas en verde (detalle y casos
 críticos en `docs/PRUEBAS.md`):
 
 | Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos | `pnpm test:db` | 73/73 |
+| Base de datos | `pnpm test:db` | 76/76 |
 | E2E por API pública | `pnpm test:e2e` | 8/8 |
-| Funciones del servidor (Deno) | `pnpm test:functions` | 10/10 |
+| Funciones del servidor (Deno) | `pnpm test:functions` | 11/11 |
 | Núcleo | `pnpm --filter @kora/core test` | 34/34 |
 | Panel unitario (SSRF y DNS rebinding) | `pnpm test:admin` | 28/28 |
-| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 10/10 |
+| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 14/14 |
 | Panel entre roles (Playwright) | `pnpm test:panel` | 8/8 |
 | Tipos / lint / build del panel | `pnpm typecheck`, `pnpm lint`, `pnpm --filter @kora/admin build` | sin errores |
 
