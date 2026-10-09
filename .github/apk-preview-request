@@ -1,2 +1,2 @@
 # Cambiar este archivo en la rama de trabajo pide un APK de prueba nuevo (workflow eas-android-preview).
-# 3: pantalla de catálogo vacío, enlaces de correo dentro de la app, guía de inicio de sesión para invitados.
+# 4: APK más liviano (solo ARM, sin librerías de emulador) tras «App no instalada» en el teléfono de Oliver.

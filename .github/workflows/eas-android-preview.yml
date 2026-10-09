@@ -51,3 +51,7 @@ jobs:
       - name: Revisar el APK (backend, claves, proyecto)
         if: steps.build.outcome == 'success'
         run: node tools/eas/verify-apk.mjs --from-json eas-build.json
+
+      - name: Datos de instalación (firma, versión, Android mínimo, procesadores)
+        if: steps.build.outcome == 'success'
+        run: bash tools/eas/inspect-apk.sh "$(node -e "const r=require('fs').readFileSync('eas-build.json','utf8'); console.log(JSON.parse(r.slice(r.indexOf('[')))[0].artifacts.buildUrl)")"
