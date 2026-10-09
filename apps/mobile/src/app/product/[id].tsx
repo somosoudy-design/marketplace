@@ -95,7 +95,12 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
 
-  useEffect(() => setQty(1), [variant?.id]);
+  // a different variant starts again from one unit
+  const [qtyVariant, setQtyVariant] = useState(variant?.id);
+  if (qtyVariant !== variant?.id) {
+    setQtyVariant(variant?.id);
+    setQty(1);
+  }
 
   const onPrimary = async () => {
     if (!availability.purchasable || variantSoldOut) {

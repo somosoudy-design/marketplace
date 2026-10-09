@@ -426,7 +426,6 @@ function DraftEditor({
 function ImageTile({ src, remote, include, rights, onInclude, onRights }: { src: string; remote?: boolean; include: boolean; rights: boolean; onInclude: (v: boolean) => void; onRights: (v: boolean) => void }) {
   return (
     <div className={`overflow-hidden rounded-[14px] border ${include ? 'border-line-strong' : 'border-line opacity-50'}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt="" referrerPolicy="no-referrer" className="aspect-square w-full bg-sunken object-contain" />
       <div className="flex flex-col gap-1.5 p-2.5 text-[12.5px]">
         {include ? (

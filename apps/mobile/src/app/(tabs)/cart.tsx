@@ -134,7 +134,6 @@ function LineRow({ line: l, onQty }: { line: CartLine; onQty: (variantId: string
 }
 
 function GuestCartView({ header }: { header: React.ReactNode }) {
-  const t = useTheme();
   const lines = useGuestCart();
   const setQty = useSetCartQuantity();
   if (!lines.length) {

@@ -3,9 +3,9 @@ import { photoTones, type PhotoTone } from '@kora/design-tokens';
 import { MODERATION_LABEL } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowDown, ArrowUp, Plus, Search, Trash2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useToast } from '@/components/toast';
-import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Thumb, Toggle, cx } from '@/components/ui';
+import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Thumb, Toggle, cx } from '@/components/ui';
 import { date, money } from '@/lib/format';
 import { catalogImage, db, run } from '@/lib/kora';
 
@@ -49,16 +49,15 @@ function live(c: Collection) {
 export default function ContentPage() {
   const qc = useQueryClient();
   const toast = useToast();
-  const [selected, setSelected] = useState<string | null>(null);
+  const [chosen, setSelected] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
 
   const list = useQuery({
     queryKey: ['collections'],
     queryFn: () => run<Collection[]>(db('collections').select('id, slug, title, subtitle, tone, sort, active, starts_at, ends_at, collection_products(product_id, sort)').order('sort').order('created_at')),
   });
-  useEffect(() => {
-    if (!selected && list.data?.length) setSelected(list.data[0]!.id);
-  }, [list.data, selected]);
+  // the first collection is open until the editor picks another
+  const selected = chosen ?? list.data?.[0]?.id ?? null;
 
   const reorder = useMutation({
     mutationFn: async ({ from, to }: { from: number; to: number }) => {

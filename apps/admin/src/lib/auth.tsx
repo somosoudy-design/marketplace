@@ -36,10 +36,10 @@ function claims(session: Session | null): { roles: string[]; stores: string[] } 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const qc = useQueryClient();
   const [session, setSession] = useState<Session | null>(null);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(!isConfigured);
 
   useEffect(() => {
-    if (!isConfigured) return setReady(true);
+    if (!isConfigured) return;
     const { client } = kora();
     client.auth.getSession().then(({ data }) => {
       setSession(data.session);

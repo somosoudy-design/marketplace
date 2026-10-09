@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start -p 3100",
     "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint .",
     "tokens": "node --experimental-strip-types ../../packages/design-tokens/scripts/css.ts src/app/tokens.css",
     "test": "vitest run"
   },
@@ -28,6 +29,8 @@
     "@types/node": "^22.20.5",
     "@types/react": "~19.2.2",
     "@types/react-dom": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.0",
     "tailwindcss": "4.3.3",
     "typescript": "~5.9.3"
   }

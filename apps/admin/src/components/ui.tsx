@@ -254,7 +254,6 @@ export function Dialog({ open, onClose, title, children, footer, wide }: { open:
 
 export function Thumb({ src, alt, size = 44 }: { src: string | null | undefined; alt: string; size?: number }) {
   return src ? (
-    // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} width={size} height={size * 1.25} className="shrink-0 rounded-[10px] bg-sunken object-cover" style={{ width: size, height: size * 1.25 }} />
   ) : (
     <div className="shrink-0 rounded-[10px] bg-sunken" style={{ width: size, height: size * 1.25 }} />

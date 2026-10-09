@@ -165,7 +165,7 @@ export default function PayScreen() {
 }
 
 function useCountdown(expiresAt: string) {
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);

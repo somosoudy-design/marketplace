@@ -18,6 +18,7 @@ export function kora(): { client: KoraClient; api: Api } {
 
 /** Table access with typed rows; errors become ApiError with Spanish copy. */
 export function db(table: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- table names are dynamic here; RLS and the generated types guard the shapes
   return (kora().client.from as unknown as (t: string) => any)(table);
 }
 

@@ -1,7 +1,7 @@
 import { addressSchema, type AddressInput } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Switch, View } from 'react-native';
 import { OptionsSheet } from '@/components/catalog/Catalog';
 import { Button } from '@/components/ui/Button';
@@ -30,10 +30,13 @@ export default function EditAddressScreen() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [regionSheet, setRegionSheet] = useState(false);
 
-  useEffect(() => {
-    const a = addresses.data?.find((x) => x.id === id);
-    if (a) setF({ label: a.label, recipient: a.recipient, phone: a.phone, region_code: a.region_code, city: a.city, municipality: a.municipality ?? '', line1: a.line1, reference: a.reference ?? '', id_document: a.id_document ?? '', is_default: a.is_default } as Form);
-  }, [addresses.data, id]);
+  // load the saved address once; a background refetch must not overwrite what the buyer is typing
+  const [loadedId, setLoadedId] = useState<string | null>(null);
+  const saved = addresses.data?.find((x) => x.id === id);
+  if (saved && loadedId !== saved.id) {
+    setLoadedId(saved.id);
+    setF({ label: saved.label, recipient: saved.recipient, phone: saved.phone, region_code: saved.region_code, city: saved.city, municipality: saved.municipality ?? '', line1: saved.line1, reference: saved.reference ?? '', id_document: saved.id_document ?? '', is_default: saved.is_default } as Form);
+  }
 
   const save = useMutation({
     mutationFn: async () => {

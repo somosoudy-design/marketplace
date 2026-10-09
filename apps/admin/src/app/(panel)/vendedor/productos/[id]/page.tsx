@@ -215,7 +215,6 @@ function Editor({ product: p }: { product: Product | null }) {
               <div className="grid grid-cols-2 gap-2">
                 {images.map((img, i) => (
                   <div key={img.id ?? img.preview} className="group relative overflow-hidden rounded-[12px] border border-line bg-sunken">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={img.preview} alt={`Foto ${i + 1}`} className="aspect-[4/5] w-full object-cover" />
                     {i === 0 ? <span className="absolute top-1.5 left-1.5 rounded-full bg-surface/90 px-2 py-0.5 text-[11px] font-bold">Portada</span> : null}
                     <div className="absolute inset-x-0 bottom-0 flex justify-between bg-surface/90 px-1 py-0.5">

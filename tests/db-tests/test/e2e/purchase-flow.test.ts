@@ -76,7 +76,7 @@ describe('purchase flow through the public API', () => {
     expect((await buyerApi.catalog.product(productId))?.is_favorite).toBe(true);
     const summary = await buyerApi.cart.summary(addressId);
     expect(summary.line_count).toBe(1);
-    expect(summary.groups[0]!.shipping_options.length).toBeGreaterThan(0);
+    expect(summary.groups[0]!.shipping_options?.length ?? 0).toBeGreaterThan(0);
   });
 
   it('checkout totals come from the server and a double tap creates one order', async () => {

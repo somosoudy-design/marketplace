@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import { useAuth } from './auth';
 import { db, run } from './kora';
 
@@ -16,15 +16,14 @@ const Ctx = createContext<{ store: StoreRow | null; stores: StoreRow[]; setStore
 /** The store a seller is working on. Membership comes from the token; the database re-checks it on every call. */
 export function StoreProvider({ children }: { children: ReactNode }) {
   const { storeIds } = useAuth();
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(() => {
+    try { return typeof window === 'undefined' ? null : localStorage.getItem(KEY); } catch { return null; /* storage unavailable */ }
+  });
   const q = useQuery({
     queryKey: ['my-stores', storeIds],
     queryFn: () => run<StoreRow[]>(db('stores').select('*').in('id', storeIds).order('name')),
     enabled: storeIds.length > 0,
   });
-  useEffect(() => {
-    try { setSelected(localStorage.getItem(KEY)); } catch { /* storage unavailable */ }
-  }, []);
   const stores = q.data ?? [];
   const store = stores.find((s) => s.id === selected) ?? stores[0] ?? null;
   const setStoreId = (id: string) => {

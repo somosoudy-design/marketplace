@@ -88,6 +88,7 @@ export function CrudTable<T extends Row>({
   scope?: string;
   select: string;
   order?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- receives db(table), whose table name is dynamic
   filter?: (q: any) => any;
   columns: ColDef<T>[];
   fields: FieldDef[];

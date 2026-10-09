@@ -2,11 +2,10 @@ import { ApiError, type Address, type CheckoutSummary, type DeliveryGroup, type 
 import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL } from '@kora/core';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card, Divider } from '@/components/ui/Layout';
@@ -32,16 +31,14 @@ export default function CheckoutScreen() {
   const qc = useQueryClient();
   const { user, cartSyncing } = useAuth();
   const addresses = useAddresses();
-  const [addressId, setAddressId] = useState<string | null>(null);
+  const [chosenAddressId, setAddressId] = useState<string | null>(null);
+  // until the buyer picks one, the default (or first) saved address is used
+  const addressId = chosenAddressId ?? (addresses.data?.find((a) => a.is_default) ?? addresses.data?.[0])?.id ?? null;
   const [pickAddress, setPickAddress] = useState(false);
   const [shipping, setShipping] = useState<ShippingSelection>({});
   const [plan, setPlan] = useState('full');
   // one key per checkout visit: double taps and retries resolve to the same order
   const orderKey = useRef(intentKey('order')).current;
-
-  useEffect(() => {
-    if (!addressId && addresses.data?.length) setAddressId((addresses.data.find((a) => a.is_default) ?? addresses.data[0])!.id);
-  }, [addresses.data, addressId]);
 
   const preview = useQuery({
     queryKey: ['checkout', addressId, shipping, plan],
@@ -52,9 +49,7 @@ export default function CheckoutScreen() {
   const s = preview.data;
 
   // if the selected plan is not offered for this cart (e.g. seller items), fall back to the first offered plan
-  useEffect(() => {
-    if (s && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
-  }, [s, plan]);
+  if (s && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
 
   const place = useMutation({
     mutationFn: () => api.checkout.placeOrder(addressId!, currentSelection(s, shipping), plan, orderKey),

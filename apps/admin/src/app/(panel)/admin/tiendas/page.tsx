@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/components/toast';
-import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Table, Td, Textarea, Thumb } from '@/components/ui';
+import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Table, Td, Thumb } from '@/components/ui';
 import { date, storeTone } from '@/lib/format';
 import { useProfiles } from '@/lib/hooks';
 import { db, rpc, run, storeImage } from '@/lib/kora';

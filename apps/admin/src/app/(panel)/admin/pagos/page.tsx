@@ -73,7 +73,7 @@ export default function PaymentsPage() {
           </Table>
         )}
       </Card>
-      <ReviewDialog payment={open} buyerName={open ? open.payer_name ?? name(open.buyer_id) : ''} onClose={() => setOpen(null)} />
+      <ReviewDialog key={open?.id ?? 'closed'} payment={open} buyerName={open ? open.payer_name ?? name(open.buyer_id) : ''} onClose={() => setOpen(null)} />
     </>
   );
 }
@@ -88,15 +88,17 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
   const [proofError, setProofError] = useState(false);
 
   useEffect(() => {
-    setMode('view'); setReason(''); setReceived(''); setProofUrl(null); setProofError(false);
+    // the dialog is keyed by payment, so its form state starts fresh for each one
     if (!p?.proof_path) return;
     let url: string | null = null;
+    let cancelled = false;
     kora().client.storage.from('payment-proofs').download(p.proof_path).then(({ data, error }) => {
+      if (cancelled) return;
       if (error || !data) return setProofError(true);
       url = URL.createObjectURL(data);
       setProofUrl(url);
     });
-    return () => { if (url) URL.revokeObjectURL(url); };
+    return () => { cancelled = true; if (url) URL.revokeObjectURL(url); };
   }, [p?.id, p?.proof_path]);
 
   const review = useMutation({
@@ -190,7 +192,6 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
             <Notice tone="danger">No pudimos abrir el comprobante.</Notice>
           ) : proofUrl ? (
             <a href={proofUrl} target="_blank" rel="noreferrer">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={proofUrl} alt={`Comprobante del pago ${p.number}`} className="max-h-[420px] w-full rounded-[16px] border border-line object-contain" />
             </a>
           ) : (
