@@ -45,7 +45,8 @@ const checks = [
   // stays in release bundles and is never used there, so it is not counted
   ['sin el backend local (127.0.0.1, localhost o 10.0.2.2 en los puertos del stack)', !/(127\.0\.0\.1|localhost|10\.0\.2\.2):(54321|54322|3100|8089)\b/.test(bundle)],
   [`claves embebidas solo anon (${jwtRoles.join(', ') || 'ninguna'})`, jwtRoles.length > 0 && jwtRoles.every((r) => r === 'anon')],
-  ['sin claves sb_secret_', !bundle.includes('sb_secret_')],
+  // supabase-js itself contains the bare prefix (it checks key formats); a real secret key has a body after it
+  ['sin claves secretas (sb_secret_…)', !/sb_secret_[A-Za-z0-9_-]{16,}/.test(bundle)],
   [`projectId ${expo.projectId}`, config.includes(expo.projectId)],
 ];
 const lines = ['### Revisión del APK', '', `- APK: ${url}`, ...checks.map(([name, ok]) => `- ${ok ? '✅' : '❌'} ${name}`)];
