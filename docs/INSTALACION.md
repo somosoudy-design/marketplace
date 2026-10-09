@@ -131,12 +131,16 @@ npx supabase secrets set PAYMENTS_RETURN_URL=kora://pay/result   # y los de cada
 Luego, en el panel de Supabase:
 
 1. Auth > Hooks: activar *Custom Access Token* con `public.custom_access_token_hook`.
-2. Auth > URL configuration: `site_url` del panel y, en *Redirect URLs*, `kora://**`. Sin esa línea los
-   correos de confirmación y de contraseña nueva terminan en `site_url` en lugar de abrir la app
-   (`kora://auth-callback`, `kora://reset-password`).
+2. Auth > Emails > Templates: los correos llevan solo un código de 6 dígitos que la persona escribe en la app
+   (sin enlaces, así nada termina en `localhost`). Pegar el asunto y el HTML de `supabase/templates/`:
+   *Confirm sign up* ← `confirmation.html` («Tu código de Kora»), *Reset password* ← `recovery.html`
+   («Código para cambiar tu contraseña»), *Magic link* ← `magic_link.html`, *Change email address* ←
+   `email_change.html`. En Auth > Sign In / Providers > Email: *Confirm email* activado y *Email OTP length* 6.
+   Auth > URL configuration: `site_url` = `kora://auth-callback` y, en *Redirect URLs*, `kora://**` (solo
+   para correos antiguos con enlace).
 3. Auth > SMTP: correo propio. El correo integrado de Supabase solo entrega a miembros del equipo del proyecto
-   y pocas veces por hora; para pruebas con varias personas, configura SMTP o desactiva temporalmente
-   *Confirm email* (Authentication › Sign In / Providers › Email) y vuelve a activarlo antes de publicar.
+   y unas 2 veces por hora en total, lo que no alcanza para registrar a otras personas ni para reenviar
+   códigos; con SMTP propio el límite se ajusta en Auth > Rate Limits.
 4. Database > Extensions: `pg_cron` y `pg_net` (la migración `20261009001600` programa los trabajos si
    existen; si se activan después, vuelve a ejecutar su bloque final).
 5. SQL Editor, para que el cron pueda llamar a las funciones (la clave `kora_job_token` la crea la migración
