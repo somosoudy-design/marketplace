@@ -1,9 +1,13 @@
 import 'server-only';
+import { lookup as resolveNow, type LookupAddress } from 'node:dns';
 import { lookup } from 'node:dns/promises';
-import { isIP } from 'node:net';
+import { isIP, type LookupFunction } from 'node:net';
+import { Agent, fetch } from 'undici';
 
 // Fetches public pages and images for the URL importer. Guards against SSRF: only http(s) on default ports,
 // every DNS answer must be a public address, redirects are re-checked hop by hop, and the body is capped.
+// The address is checked again at the moment of connecting (guardedLookup), because a hostile DNS server can
+// answer with a public address for the first check and a private one for the connection (DNS rebinding).
 const MAX_BYTES = 2_000_000;
 const MAX_REDIRECTS = 3;
 
@@ -55,14 +59,32 @@ export async function assertPublicUrl(raw: string): Promise<URL> {
   return u;
 }
 
+const PRIVATE_ADDRESS = 'EPRIVATEADDR';
+
+/** Resolves a hostname for a socket like the OS does, but refuses the connection if any answer is private. */
+export const guardedLookup: LookupFunction = (hostname, options, callback) => {
+  resolveNow(hostname, { ...options, all: true }, (err, answers) => {
+    const list = (answers ?? []) as LookupAddress[];
+    if (err) return callback(err, '', 0);
+    if (!list.length || list.some((a) => isPrivate(a.address))) {
+      return callback(Object.assign(new Error('Dirección no permitida.'), { code: PRIVATE_ADDRESS }), '', 0);
+    }
+    if (options.all) return callback(null, list);
+    return callback(null, list[0]!.address, list[0]!.family);
+  });
+};
+
+// every importer request connects through this agent, so no socket can open towards a private address
+export const importerAgent = new Agent({ connect: { lookup: guardedLookup }, connections: 8, keepAliveTimeout: 4_000 });
+
 async function fetchPublic(raw: string, opts: { accept: string; types: RegExp; maxBytes: number; truncate: boolean; kind: string }) {
   let url = (await assertPublicUrl(raw)).toString();
   for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
     const res = await fetch(url, {
+      dispatcher: importerAgent,
       redirect: 'manual',
       signal: AbortSignal.timeout(10_000),
       headers: { accept: opts.accept, 'user-agent': 'KoraImporter/1.0 (+https://kora.example.com; metadatos para vista previa)' },
-      cache: 'no-store',
     });
     if (res.status >= 300 && res.status < 400 && res.headers.get('location')) {
       url = (await assertPublicUrl(new URL(res.headers.get('location')!, url).toString())).toString();
@@ -108,6 +130,7 @@ export async function fetchPublicImage(raw: string): Promise<{ type: 'image/jpeg
 export function fetchErrorMessage(e: unknown, fallback: string): string {
   if (!(e instanceof Error)) return fallback;
   const code = (e as { code?: string; cause?: { code?: string } }).code ?? (e as { cause?: { code?: string } }).cause?.code ?? '';
+  if (code === PRIVATE_ADDRESS) return 'Dirección no permitida.';
   if (e.name === 'TimeoutError' || code === 'UND_ERR_CONNECT_TIMEOUT') return 'El sitio tardó demasiado en responder.';
   if (code === 'ENOTFOUND' || code === 'EAI_AGAIN' || /ENOTFOUND|EAI_AGAIN/.test(e.message)) return 'No encontramos ese sitio. Revisa el enlace.';
   if (/ECONNREFUSED|ECONNRESET|fetch failed/.test(code + e.message)) return 'El sitio rechazó la conexión.';
