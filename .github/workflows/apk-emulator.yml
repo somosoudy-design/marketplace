@@ -1,6 +1,7 @@
 # Installs each APK listed in .github/apk-emulator-request on an Android 15 emulator and opens it: prints the
 # exact install result (Android hides it behind "App not installed" on the phone), whether the app starts
-# without crashing, and keeps a screenshot of the first screen as an artifact.
+# without crashing, and keeps a screenshot of the first screen as an artifact. Then runs the Maestro flows of
+# tests/apk-flows on the last APK of the list (tools/eas/emulator-flows.sh).
 name: APK en emulador
 
 on:
@@ -33,15 +34,32 @@ jobs:
           done
           ls -la apks
 
-      - name: Instalar y abrir en Android 15
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Maestro
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+        run: |
+          curl -fsSL --retry 3 https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Instalar, abrir y recorrer en Android 15
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+          MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
         with:
           api-level: 35
           target: google_apis
           arch: x86_64
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/eas/emulator-install.sh
+          script: |
+            bash tools/eas/emulator-install.sh
+            bash tools/eas/emulator-flows.sh
 
       - name: Capturas
         if: always()

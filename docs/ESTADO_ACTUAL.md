@@ -44,13 +44,17 @@ nativo premium» del proyecto TIENDA ONLINE).
 
 ## Trabajo en curso
 
-- Archivos modificados sin commit: ninguno. Nada a medio escribir; no hay commits `WIP:` pendientes.
-- Último paso completado: adopción del protocolo de continuidad (estos documentos).
+- Recorrido de visitante con Maestro escrito (`tests/apk-flows/visitante.yaml`, `tools/eas/emulator-flows.sh`,
+  pasos nuevos en `.github/workflows/apk-emulator.yml`) y primera corrida pedida en GitHub (revisión 5 de
+  `.github/apk-emulator-request`). **Sin resultado todavía**: si este archivo sigue diciendo esto, mira la última
+  ejecución de «APK en emulador» (`gh run list --workflow apk-emulator.yml --limit 1`) y su artefacto
+  `capturas-emulador` (carpeta `flujos/`).
+- Archivos modificados sin commit: ninguno.
 
 ## Próxima acción
 
 **Recorrido automático con Maestro en el emulador del workflow `apk-emulator.yml`** (`PENDIENTES.md` 1.1),
-contra el APK 4 con su última actualización y el backend de pruebas. No empezado en archivos:
+contra el APK 4 con su última actualización y el backend de pruebas. Escrito; falta verlo pasar:
 
 1. Abrir la app, esperar el Inicio con el catálogo remoto (`home-search`, `home-recommended`).
 2. `kora://p/ugreen-cable-usb-c-100w`: ficha (`product-title`), elegir variante (`variant-2 m`), agregar

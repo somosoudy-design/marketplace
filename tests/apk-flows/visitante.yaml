@@ -1,0 +1,77 @@
+# Recorrido de un visitante en el APK real (Maestro), contra el backend de pruebas y sin crear nada en él:
+# Inicio con el catálogo remoto, ficha por enlace, variante, carrito, carrito conservado al reabrir la app y paso
+# a iniciar sesión. Lo corre tools/eas/emulator-flows.sh dentro del workflow apk-emulator.
+# En React Native, el `id` de Maestro es el `testID` del componente.
+appId: com.example.kora.preview
+name: Visitante compra sin cuenta
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- scrollUntilVisible:
+    element:
+      id: home-recommended
+    direction: DOWN
+    timeout: 30000
+- takeScreenshot: flujo-visitante-01-inicio
+
+# Ficha por enlace (el mismo que abriría un link compartido)
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 30000
+- assertVisible:
+    id: product-title
+    text: UGREEN cable USB-C a USB-C
+- tapOn:
+    id: variant-2 m
+- takeScreenshot: flujo-visitante-02-ficha
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: added-to-cart
+    timeout: 20000
+- takeScreenshot: flujo-visitante-03-agregado
+
+# Carrito de visitante (variante de 2 m: 12 USD)
+- tapOn:
+    id: added-to-cart
+- extendedWaitUntil:
+    visible:
+      id: cart-subtotal
+    timeout: 20000
+- assertVisible:
+    id: cart-subtotal
+    text: .*12.*
+- assertVisible: .*2 m.*
+- takeScreenshot: flujo-visitante-04-carrito
+
+# Cerrar y reabrir: el carrito sigue ahí
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- openLink: kora://cart
+- extendedWaitUntil:
+    visible:
+      id: cart-subtotal
+    timeout: 20000
+- assertVisible:
+    id: cart-subtotal
+    text: .*12.*
+- takeScreenshot: flujo-visitante-05-carrito-reabierto
+
+# Sin cuenta, continuar lleva a iniciar sesión
+- tapOn:
+    id: cart-continue
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 20000
+- takeScreenshot: flujo-visitante-06-iniciar-sesion
