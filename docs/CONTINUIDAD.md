@@ -287,10 +287,13 @@ Bloqueado por Oliver o por servicios externos:
    `.github/apk-preview-request` en la rama (las etiquetas dan 403 en el proxy de git), con el secreto
    `EXPO_TOKEN`. Cada APK pasa por `tools/eas/verify-apk.mjs` (backend de eas.json, sin direcciones locales,
    solo clave anon, sin clave secreta, projectId); `apk-verify.yml` revisa uno ya compilado al cambiar
-   `.github/apk-verify-request`. APK 1: build `037b11c5`; APK 2 (commit `b5eff0c`): build `1a0f1922`; APK 3 (commit `2ed1595`, solo ARM por
-   `apps/mobile/plugins/with-phone-abis.js`, 62 MB en vez de 109): build `bd3fa808`; todos verificados y con la
-   misma firma (`tools/eas/inspect-apk.sh` muestra firma, versión, minSdk 24 y procesadores). El teléfono de
-   Oliver dio «App no instalada» con los APK 1 y 2; se le enviaron los pasos habituales y el APK 3. Probado solo en la versión web, no en un
+   `.github/apk-verify-request`. APK 1: build `037b11c5`; APK 2 (commit `b5eff0c`): build `1a0f1922`; APK 3 (solo ARM, 62 MB): build `bd3fa808`. Todos con la misma firma
+   (`tools/eas/inspect-apk.sh`: firma, versión, minSdk 24, procesadores). `apk-emulator.yml` (al cambiar
+   `.github/apk-emulator-request`) los instala en un Android 15 limpio: los tres se instalan; APK 1 y 2 abren y
+   siguen funcionando; el 3 se cae al abrir (SoLoader no encuentra `libreactnative.so` bajo la traducción ARM
+   del emulador), así que se volvió a todas las arquitecturas. En los Samsung S24 Ultra y S25 Ultra de Oliver
+   los tres dan «App no instalada»: bloqueo del teléfono, en revisión (Bloqueador automático, país).
+   Probado solo en la versión web, no en un
    teléfono físico. No publicar en Google Play. Tiendas: `docs/PUBLICACION.md` (costo).
 4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
 5. **Datos reales:** datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales.
