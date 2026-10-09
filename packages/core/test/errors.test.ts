@@ -18,6 +18,9 @@ describe('error messages', () => {
   it('maps PostgREST errors, permission errors and network failures', () => {
     expect(toAppError({ code: 'P0001', hint: 'sold_out', message: 'x' }).message).toBe(ERROR_MESSAGES.sold_out);
     expect(toAppError({ code: '42501', message: 'permission denied' }).code).toBe('forbidden');
+    // a guest calling a function that needs an account is asked to sign in
+    expect(toAppError({ code: '42501', message: 'permission denied for function cart_add' }).code).toBe('auth_required');
+    expect(toAppError({ code: '42501', hint: 'admin_required', message: 'permission denied for function x' }).code).toBe('admin_required');
     expect(toAppError(new TypeError('Network request failed')).code).toBe('network');
     expect(toAppError({ code: 'XX000', message: 'boom' }).message).toBe(ERROR_MESSAGES.unknown);
   });

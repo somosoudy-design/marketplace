@@ -83,7 +83,10 @@ export function toAppError(err: unknown): AppError {
   if (!e) return { code: 'unknown', message: ERROR_MESSAGES.unknown! };
   if (e.name === 'TypeError' && /fetch|network/i.test(e.message ?? '')) return { code: 'network', message: ERROR_MESSAGES.network!, cause: err };
   if (/Failed to fetch|Network request failed|NetworkError/i.test(e.message ?? '')) return { code: 'network', message: ERROR_MESSAGES.network!, cause: err };
-  const hint = e.hint ?? (e.code === '42501' ? 'forbidden' : e.code === '28000' ? 'auth_required' : undefined);
+  // Functions that need an account are not executable by guests at all, so Postgres answers before the
+  // function's own auth check: for the app that means "sign in", not "you are not allowed".
+  const guestBlocked = e.code === '42501' && /permission denied for function/i.test(e.message ?? '');
+  const hint = e.hint ?? (guestBlocked ? 'auth_required' : e.code === '42501' ? 'forbidden' : e.code === '28000' ? 'auth_required' : undefined);
   // these hints come with a Spanish detail written by the database that says exactly what to fix
   if (hint && DETAILED.has(hint) && e.details) return { code: hint, message: e.details, cause: err };
   if (hint && ERROR_MESSAGES[hint]) return { code: hint, message: ERROR_MESSAGES[hint]!, detail: e.details, cause: err };

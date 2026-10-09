@@ -14,6 +14,8 @@ import { useOrders, useProfile, useSupport, useUnreadCount } from '@/lib/hooks';
 import { useTheme } from '@/theme';
 
 const PANEL_URL = process.env.EXPO_PUBLIC_PANEL_URL ?? '';
+// Builds made before the web panel is published say so instead of a row that does nothing.
+const PANEL_PENDING = 'El panel web todavía no está publicado para esta versión';
 
 export default function AccountScreen() {
   const t = useTheme();
@@ -61,10 +63,10 @@ export default function AccountScreen() {
           {storeIds.length || roles.length ? (
             <Card padded={false}>
               {storeIds.length ? (
-                <ListRow icon="store" title="Panel de vendedor" subtitle="Pedidos, productos, inventario y liquidaciones" onPress={() => openPanel('/vendedor')} />
+                <ListRow icon="store" title="Panel de vendedor" subtitle={PANEL_URL ? 'Pedidos, productos, inventario y liquidaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/vendedor') : undefined} />
               ) : null}
               {storeIds.length && roles.length ? <Divider inset={52} /> : null}
-              {roles.length ? <ListRow icon="shield-check" title="Administración" subtitle="Panel web de operaciones" onPress={() => openPanel('/admin')} /> : null}
+              {roles.length ? <ListRow icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
             </Card>
           ) : null}
         </>
@@ -86,7 +88,7 @@ export default function AccountScreen() {
 }
 
 function openPanel(path: string) {
-  if (PANEL_URL) WebBrowser.openBrowserAsync(`${PANEL_URL}${path}`).catch(() => undefined);
+  WebBrowser.openBrowserAsync(`${PANEL_URL}${path}`).catch(() => undefined);
 }
 
 function initials(s: string) {

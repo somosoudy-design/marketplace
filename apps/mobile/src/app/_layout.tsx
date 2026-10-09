@@ -78,6 +78,8 @@ function RootStack() {
           <Stack.Screen name="sign-in" options={{ title: 'Iniciar sesión', presentation: 'modal' }} />
           <Stack.Screen name="sign-up" options={{ title: 'Crear cuenta', presentation: 'modal' }} />
           <Stack.Screen name="forgot-password" options={{ title: 'Recuperar acceso', presentation: 'modal' }} />
+          <Stack.Screen name="reset-password" options={{ title: 'Contraseña nueva', gestureEnabled: false }} />
+          <Stack.Screen name="auth-callback" options={{ title: 'Confirmar correo', headerBackVisible: false }} />
         </Stack>
       </OfflineFrame>
     </NavigationThemeProvider>

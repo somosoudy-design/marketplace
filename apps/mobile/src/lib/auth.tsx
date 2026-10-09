@@ -1,6 +1,7 @@
 import type { Session, User } from '@supabase/supabase-js';
 import { useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { authRedirect } from './auth-link';
 import { guestCart } from './guest-cart';
 import { clearAccountCache } from './query';
 import { api, supabase } from './supabase';
@@ -18,6 +19,8 @@ interface AuthState {
   signUp: (email: string, password: string, fullName: string) => Promise<{ needsConfirmation: boolean }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  /** Saves a new password for the signed-in user (after opening the reset link). */
+  updatePassword: (password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthState | null>(null);
@@ -97,7 +100,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (error) throw error;
       },
       signUp: async (email, password, fullName) => {
-        const { data, error } = await supabase.auth.signUp({ email: email.trim(), password, options: { data: { full_name: fullName.trim() } } });
+        const { data, error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: { data: { full_name: fullName.trim() }, emailRedirectTo: authRedirect('/auth-callback') },
+        });
         if (error) throw error;
         return { needsConfirmation: !data.session };
       },
@@ -105,7 +112,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await supabase.auth.signOut();
       },
       resetPassword: async (email) => {
-        const { error } = await supabase.auth.resetPasswordForEmail(email.trim());
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: authRedirect('/reset-password') });
+        if (error) throw error;
+      },
+      updatePassword: async (password) => {
+        const { error } = await supabase.auth.updateUser({ password });
         if (error) throw error;
       },
     };
@@ -127,6 +138,8 @@ export function authErrorMessage(e: unknown): string {
   if (/already registered|already exists/i.test(m)) return 'Ya existe una cuenta con ese correo. Inicia sesión.';
   if (/password should be at least|weak password/i.test(m)) return 'La contraseña debe tener al menos 8 caracteres, con letras y números.';
   if (/email not confirmed/i.test(m)) return 'Confirma tu correo para continuar. Revisa tu bandeja de entrada.';
+  if (/should be different from the old/i.test(m)) return 'Usa una contraseña distinta a la anterior.';
+  if (/session missing|auth session/i.test(m)) return 'El enlace ya no es válido. Pide uno nuevo.';
   if (/rate limit|too many/i.test(m)) return 'Demasiados intentos. Espera un momento.';
   if (/fetch|network/i.test(m)) return 'Sin conexión. Revisa tu internet e intenta de nuevo.';
   return 'No pudimos completar la operación. Intenta de nuevo.';
