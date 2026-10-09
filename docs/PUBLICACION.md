@@ -10,7 +10,7 @@ autorización de Oliver y tiene costo.
 - [ ] Iconos, icono adaptativo de Android, icono de notificación y splash definitivos
       (`apps/mobile/assets/images`; los actuales son provisionales generados por `tools/demo-assets`).
 - [ ] Proyecto Supabase de producción dedicado, con migraciones aplicadas y **sin seed**.
-- [ ] Hook de token, SMTP, `pg_cron`/`pg_net` y secretos de Vault configurados ([INSTALACION.md](INSTALACION.md)).
+- [ ] Hook de token, SMTP, `pg_cron`/`pg_net` y secretos de Vault configurados ([ENTORNO.md](ENTORNO.md)).
 - [ ] Datos de cobro reales en los métodos manuales; métodos automáticos solo si sus credenciales existen.
 - [ ] Tasas: fuentes probadas en vivo desde el proyecto real o tasa manual vigente.
 - [ ] Catálogo real: fotos con derechos, precios actuales, especificaciones verificadas. Eliminar o

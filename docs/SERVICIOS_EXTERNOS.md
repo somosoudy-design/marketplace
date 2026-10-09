@@ -10,7 +10,7 @@ servicio de esta lista tiene credenciales reales configuradas. Los secretos van 
 - **Necesario:** un proyecto Supabase nuevo y dedicado. **No usar** el proyecto existente
   `bfuggvbgttvcygbexqyn`, que contiene datos de otros productos. Crear el proyecto puede tener costo y
   requiere autorización.
-- **Activación:** ver [INSTALACION.md](INSTALACION.md#desplegar-en-un-proyecto-supabase).
+- **Activación:** ver [ENTORNO.md](ENTORNO.md#12-proyecto-supabase-de-pruebas).
 - **Precauciones:** nunca ejecutar `supabase/seed.sql` en producción (datos de demostración, tasa "demo").
   Activar el hook de token (`custom_access_token_hook`) en Auth > Hooks, o los roles no llegarán al token.
 

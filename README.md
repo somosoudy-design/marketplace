@@ -4,6 +4,9 @@ E-commerce y marketplace multivendedor: app nativa (iOS/Android) para compradore
 administración y vendedores, y un backend Supabase donde viven las reglas de precios, pagos, cuotas,
 tasas y permisos. El nombre "Kora" es provisional y se cambia en [`config/brand.json`](config/brand.json).
 
+**¿Vas a trabajar en el proyecto (persona o agente de IA)?** Empieza por [`AGENTS.md`](AGENTS.md) y luego
+[`docs/ESTADO_ACTUAL.md`](docs/ESTADO_ACTUAL.md). Rama compartida: `claude/marketplace-v1`.
+
 ## Estructura
 
 ```
@@ -11,7 +14,7 @@ apps/mobile        App Expo / React Native (expo-router)
 apps/admin         Panel Next.js: /admin y /vendedor
 packages/core      Reglas compartidas: dinero exacto, planes, tasas, pagos, errores en español
 packages/api       Cliente tipado de Supabase para app y panel
-packages/design-tokens  Sistema de diseño "Arena y Jade"
+packages/design-tokens  Sistema de diseño "Electric Violet"
 supabase/          Migraciones, seed de demostración, Edge Functions, config.toml
 tools/local-stack  Supabase local sin Docker (Postgres + Auth + PostgREST + gateway + funciones)
 tools/demo-assets  Generador del catálogo, imágenes demo y seed
@@ -29,7 +32,7 @@ pnpm --filter @kora/mobile start           # app (Expo)
 ```
 
 Cuentas demo locales (clave `Demo-1234`): `admin@example.com`, `vendedor@example.com`,
-`comprador@example.com`. Detalles en [docs/INSTALACION.md](docs/INSTALACION.md).
+`comprador@example.com`. Detalles en [docs/ENTORNO.md](docs/ENTORNO.md).
 
 ## Pruebas
 
@@ -42,9 +45,13 @@ pnpm typecheck && pnpm lint
 
 ## Documentación
 
-- [Continuidad: estado, decisiones y cómo seguir](docs/CONTINUIDAD.md)
-- [Informe final](docs/INFORME_FINAL.md)
-- [Instalación, compilación y despliegue](docs/INSTALACION.md)
+- [Manual para agentes y personas que continúan el trabajo](AGENTS.md)
+- [Estado actual y próxima acción](docs/ESTADO_ACTUAL.md) y [pendientes](docs/PENDIENTES.md)
+- [Arquitectura, funcionalidades y convenciones](docs/ARQUITECTURA.md)
+- [Dirección de producto](docs/DIRECCION_PRODUCTO.md)
+- [Entorno: instalación, pruebas, compilación, despliegue y variables](docs/ENTORNO.md)
+- [Historial de agentes](docs/HISTORIAL_AGENTES.md)
+- [Informe final de la v1 inicial](docs/INFORME_FINAL.md)
 - [Servicios externos](docs/SERVICIOS_EXTERNOS.md) y [estado de integraciones](docs/INTEGRACIONES.md)
 - [Sistema de diseño](docs/DISENO.md)
 - [Publicación en tiendas](docs/PUBLICACION.md)

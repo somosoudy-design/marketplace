@@ -24,10 +24,10 @@ con pruebas y revisión de pantalla. El código está en GitHub con un PR en bor
 | D | Sistema de diseño: tokens, componentes, reglas | `packages/design-tokens`, [DISENO.md](DISENO.md) |
 | E | Datos iniciales: 5 tiendas (1 propia, 4 externas, incluida una odontológica), 16 categorías, 43 productos, 66 variantes, pedidos en varios estados, cuotas, pagos, envíos y notificaciones de prueba, todo marcado como demo | `tools/demo-assets`, `supabase/seed.sql` |
 | F | Resultados de pruebas | [PRUEBAS.md](PRUEBAS.md) |
-| G | Instalación y compilación | [INSTALACION.md](INSTALACION.md) |
+| G | Instalación y compilación | [ENTORNO.md](ENTORNO.md) (antes `INSTALACION.md`) |
 | H | Variables de entorno y servicios externos | `.env.example`, [SERVICIOS_EXTERNOS.md](SERVICIOS_EXTERNOS.md) |
 | I | Estado de integraciones | [INTEGRACIONES.md](INTEGRACIONES.md) |
-| J | Este informe; continuidad para otra sesión | [CONTINUIDAD.md](CONTINUIDAD.md) |
+| J | Este informe; continuidad para otra sesión | [AGENTS.md](../AGENTS.md) y [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md) (antes `CONTINUIDAD.md`) |
 
 ## Lo que funciona hoy
 
@@ -106,7 +106,7 @@ con pruebas y revisión de pantalla. El código está en GitHub con un PR en bor
 ## Siguientes pasos recomendados
 
 1. Revisar el PR #1 y autorizar un proyecto Supabase dedicado; desplegar siguiendo
-   [INSTALACION.md](INSTALACION.md).
+   [ENTORNO.md](ENTORNO.md).
 2. Crear la cuenta de Expo/EAS y generar un APK de preview para probar en teléfonos reales.
 3. Validar las fuentes de tasas en vivo desde el proyecto real y fijar la política definitiva.
 4. Cargar datos reales: métodos de cobro, tarifas de envío, comisiones, catálogo con fotos autorizadas.

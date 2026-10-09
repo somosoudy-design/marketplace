@@ -7,7 +7,7 @@ import { supabase } from './supabase';
  * Links from Supabase Auth emails (confirm sign-up, reset password) come back to the app as
  * `kora://<route>#access_token=…&refresh_token=…&type=…`, as `?code=…` (PKCE), or with `error_code` when the
  * link expired or was already used. The redirect only reaches the app when `kora://**` is in the project's
- * allowed redirect URLs (docs/INSTALACION.md).
+ * allowed redirect URLs (docs/ENTORNO.md).
  */
 export interface AuthLinkParams {
   code?: string;
