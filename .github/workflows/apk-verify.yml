@@ -25,3 +25,7 @@ jobs:
 
       - name: Revisar el APK
         run: node tools/eas/verify-apk.mjs "$(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-verify-request | tail -1)"
+
+      - name: Datos de instalación (firma, versión, Android mínimo, procesadores)
+        if: always()
+        run: bash tools/eas/inspect-apk.sh $(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-verify-request)
