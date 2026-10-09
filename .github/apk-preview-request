@@ -1,2 +1,3 @@
 # Cambiar este archivo en la rama de trabajo pide un APK de prueba nuevo (workflow eas-android-preview).
-# 4: APK más liviano (solo ARM, sin librerías de emulador) tras «App no instalada» en el teléfono de Oliver.
+# 5: APK 4, base para actualizaciones sin reinstalar (expo-updates, canal preview), sesión cifrada y registro con código.
+#    No es un intento de arreglar «App no instalada»: eso se diagnostica con ADB en el teléfono.
