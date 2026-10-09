@@ -30,7 +30,27 @@ enable_signup = true
 
 [auth.email]
 enable_signup = true
-enable_confirmations = false
+# Accounts are confirmed with a 6-digit code typed in the app (no links, so nothing depends on a web address).
+enable_confirmations = true
+otp_length = 6
+otp_expiry = 3600
+max_frequency = "1m"
+
+[auth.email.template.confirmation]
+subject = "Tu código de Kora"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Código para cambiar tu contraseña"
+content_path = "./supabase/templates/recovery.html"
+
+[auth.email.template.magic_link]
+subject = "Tu código para entrar a Kora"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.email_change]
+subject = "Confirma tu nuevo correo"
+content_path = "./supabase/templates/email_change.html"
 
 # Adds app_metadata.roles / app_metadata.stores to every access token (see migrations).
 [auth.hook.custom_access_token]

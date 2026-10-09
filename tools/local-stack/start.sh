@@ -40,7 +40,15 @@ export GOTRUE_SITE_URL="${SITE_URL:-http://127.0.0.1:3100}"
 export GOTRUE_URI_ALLOW_LIST="kora://**,exp://**,http://127.0.0.1:*/**,http://localhost:*/**"
 export GOTRUE_JWT_SECRET="$JWT_SECRET" GOTRUE_JWT_EXP=3600 GOTRUE_JWT_AUD=authenticated
 export GOTRUE_JWT_DEFAULT_GROUP_NAME=authenticated GOTRUE_JWT_ADMIN_ROLES=service_role
-export GOTRUE_DISABLE_SIGNUP=false GOTRUE_EXTERNAL_EMAIL_ENABLED=true GOTRUE_MAILER_AUTOCONFIRM=true
+export GOTRUE_DISABLE_SIGNUP=false GOTRUE_EXTERNAL_EMAIL_ENABLED=true
+# Like the hosted project: a new account is confirmed with the 6-digit code from its email (AUTH_AUTOCONFIRM=true skips it)
+export GOTRUE_MAILER_AUTOCONFIRM="${AUTH_AUTOCONFIRM:-false}" GOTRUE_MAILER_OTP_LENGTH=6 GOTRUE_MAILER_OTP_EXP=3600
+export GOTRUE_SMTP_MAX_FREQUENCY="${AUTH_SMTP_MAX_FREQUENCY:-1s}"
+for tpl in confirmation recovery magic_link email_change; do
+  export "GOTRUE_MAILER_TEMPLATES_${tpl^^}=http://127.0.0.1:2501/templates/$tpl.html"
+done
+export GOTRUE_MAILER_SUBJECTS_CONFIRMATION="Tu código de Kora" GOTRUE_MAILER_SUBJECTS_RECOVERY="Código para cambiar tu contraseña"
+export GOTRUE_MAILER_SUBJECTS_MAGIC_LINK="Tu código para entrar a Kora" GOTRUE_MAILER_SUBJECTS_EMAIL_CHANGE="Confirma tu nuevo correo"
 export GOTRUE_SMTP_HOST=127.0.0.1 GOTRUE_SMTP_PORT=2500 GOTRUE_SMTP_ADMIN_EMAIL=no-reply@example.com GOTRUE_SMTP_SENDER_NAME=Kora
 export GOTRUE_RATE_LIMIT_EMAIL_SENT=1000 GOTRUE_LOG_LEVEL=warn
 export GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED="${GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED:-false}"
@@ -55,6 +63,10 @@ if [ "$FRESH" = "1" ] || [ "${SEED:-0}" = "1" ]; then bash "$(dirname "$0")/seed
 if psql "$DB_URL" -tAc "select 1 from pg_proc where proname='custom_access_token_hook'" | grep -q 1; then
   export GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED=true
 fi
+# email sink + templates for Auth (tools/local-stack/mail.mjs)
+[ -f "$LOCAL_DIR/mail.pid" ] && kill "$(cat "$LOCAL_DIR/mail.pid")" 2>/dev/null || true
+nohup node "$(dirname "$0")/mail.mjs" >"$LOG_DIR/mail.log" 2>&1 &
+echo $! > "$LOCAL_DIR/mail.pid"
 pkill -f "$BIN_DIR/auth/auth serve" 2>/dev/null || true
 nohup "$BIN_DIR/auth/auth" serve >"$LOG_DIR/auth.log" 2>&1 &
 echo $! > "$LOCAL_DIR/auth.pid"
