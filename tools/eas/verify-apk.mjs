@@ -39,14 +39,21 @@ const jwtRoles = [...new Set([...bundle.matchAll(/eyJ[A-Za-z0-9_-]{10,}\.(eyJ[A-
   try { return JSON.parse(Buffer.from(m[1], 'base64url').toString('utf8')).role ?? '?'; } catch { return '?'; }
 }))];
 
+const secretHits = [...bundle.matchAll(/sb_secret_([A-Za-z0-9_-]{20,})/g)]
+  .map((m) => m[1])
+  .filter((body) => !/^(sb_|publishable|secret|temp)/.test(body))
+  .map((body) => `sb_secret_${body.slice(0, 4)}… (${body.length} caracteres)`);
+
 const checks = [
   [`apunta a ${supabaseUrl}`, bundle.includes(supabaseUrl)],
   // the local stack's gateway, database, panel and web build; React Native's own dev-server default (localhost:8081)
   // stays in release bundles and is never used there, so it is not counted
   ['sin el backend local (127.0.0.1, localhost o 10.0.2.2 en los puertos del stack)', !/(127\.0\.0\.1|localhost|10\.0\.2\.2):(54321|54322|3100|8089)\b/.test(bundle)],
   [`claves embebidas solo anon (${jwtRoles.join(', ') || 'ninguna'})`, jwtRoles.length > 0 && jwtRoles.every((r) => r === 'anon')],
-  // supabase-js itself contains the bare prefix (it checks key formats); a real secret key has a body after it
-  ['sin claves secretas (sb_secret_…)', !/sb_secret_[A-Za-z0-9_-]{16,}/.test(bundle)],
+  // supabase-js itself contains the bare prefix (it checks key formats), and Hermes stores strings back to back,
+  // so the prefix can run into the next string ("sb_secret_sb_temp_…"). A real key is the prefix plus 31+
+  // characters that are not another known prefix.
+  [`sin claves secretas (sb_secret_…)${secretHits.length ? `: ${secretHits.join(', ')}` : ''}`, secretHits.length === 0],
   [`projectId ${expo.projectId}`, config.includes(expo.projectId)],
 ];
 const lines = ['### Revisión del APK', '', `- APK: ${url}`, ...checks.map(([name, ok]) => `- ${ok ? '✅' : '❌'} ${name}`)];
