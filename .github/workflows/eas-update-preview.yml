@@ -1,0 +1,54 @@
+# Publishes the current JavaScript and images of the app to EAS Update, channel "preview", so test APKs built with
+# expo-updates (APK 4 onward) receive them without reinstalling. Runs when .github/eas-update-request changes on
+# the work branch; the first line that is not a comment becomes the update message. Needs the EXPO_TOKEN secret.
+# The runtime version (fingerprint of the native code) decides which APKs can take the update.
+name: Actualización de prueba (EAS Update)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/eas-update-request']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eas-update-preview
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Variables del perfil preview (las mismas del APK)
+        working-directory: apps/mobile
+        run: node -e "for (const [k, v] of Object.entries(require('./eas.json').build.preview.env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
+
+      - name: Publicar en el canal preview
+        id: update
+        working-directory: apps/mobile
+        run: |
+          msg="$(grep -v '^#' "$GITHUB_WORKSPACE/.github/eas-update-request" | grep -v '^\s*$' | head -1)"
+          npx --yes eas-cli@24.12.1 update --channel preview --platform android --message "${msg:-Versión de prueba}" --non-interactive --json > "$GITHUB_WORKSPACE/eas-update.json"
+
+      - name: Resultado
+        if: always() && steps.update.outcome != 'skipped'
+        run: node tools/eas/update-report.mjs eas-update.json

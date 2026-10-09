@@ -15,7 +15,8 @@
       "environment": "development",
       "env": {
         "APP_VARIANT": "development"
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "extends": "base",
@@ -28,7 +29,9 @@
       },
       "android": {
         "buildType": "apk"
-      }
+      },
+      "channel": "preview",
+      "autoIncrement": true
     },
     "production": {
       "extends": "base",
@@ -36,7 +39,8 @@
       "autoIncrement": true,
       "env": {
         "APP_VARIANT": "production"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {

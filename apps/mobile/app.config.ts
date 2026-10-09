@@ -76,6 +76,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ['expo-notifications', { icon: './assets/images/notification-icon.png', color: '#0E5E54' }],
     'expo-web-browser',
   ],
+  // EAS Update: test builds pick up JavaScript and image changes without a new APK. The fingerprint changes
+  // whenever native code does, so an update only reaches builds it can run on.
+  runtimeVersion: { policy: 'fingerprint' },
+  updates: expo.projectId ? { url: `https://u.expo.dev/${expo.projectId}`, checkAutomatically: 'ON_LOAD', fallbackToCacheTimeout: 0 } : undefined,
   experiments: {
     typedRoutes: true,
     reactCompiler: true,

@@ -1,0 +1,2 @@
+# Cambiar este archivo en la rama de trabajo publica una actualización en el canal preview (workflow eas-update-preview).
+# Llega a los APK que tienen expo-updates (APK 4 en adelante) con el mismo runtime. La primera línea sin # es el mensaje.

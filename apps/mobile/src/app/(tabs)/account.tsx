@@ -1,4 +1,5 @@
 import Constants from 'expo-constants';
+import * as Updates from 'expo-updates';
 import { router } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { Linking, ScrollView, View } from 'react-native';
@@ -82,6 +83,10 @@ export default function AccountScreen() {
       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}
       <Text variant="caption" color="textMuted" align="center">
         {brand.legalName} · versión {Constants.expoConfig?.version ?? '0.1.0'}
+        {/* which EAS Update is running, so a tester can tell whether the latest one arrived */}
+        {Updates.isEnabled && !Updates.isEmbeddedLaunch && Updates.updateId
+          ? ` · actualización ${Updates.updateId.slice(0, 8)}${Updates.createdAt ? ` del ${Updates.createdAt.toLocaleDateString('es-VE', { day: 'numeric', month: 'short' })}` : ''}`
+          : ''}
       </Text>
     </ScrollView>
   );
