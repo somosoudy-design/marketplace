@@ -53,10 +53,11 @@ export function useOnline() {
 
 /**
  * What the app keeps on the device to open without a connection: the buyer's own orders, addresses, favorites
- * and notices, the home feed and the delivery step names. Never the exchange rate, payment methods, quotes, cart or checkout: those are
- * only valid as the server returns them now. The saved copy expires after a day and is erased on sign-out.
+ * and notices, the home feed, the delivery step names and the support contact. Never the exchange rate,
+ * payment methods, quotes, cart or checkout: those are only valid as the server returns them now. The saved
+ * copy expires after a day and is erased on sign-out.
  */
-const PERSISTED = new Set(['home', 'categories', 'orders', 'order', 'fulfillment-steps', 'addresses', 'favorites', 'notifications', 'profile', 'claims']);
+const PERSISTED = new Set(['home', 'categories', 'orders', 'order', 'fulfillment-steps', 'addresses', 'favorites', 'notifications', 'profile', 'claims', 'support']);
 
 export const persister = createAsyncStoragePersister({ storage: AsyncStorage, key: 'kora-offline-v1', throttleTime: 2000 });
 
@@ -95,4 +96,5 @@ export const qk = {
   methods: ['payment-methods'] as const,
   steps: ['fulfillment-steps'] as const,
   claims: ['claims'] as const,
+  support: ['support'] as const,
 };

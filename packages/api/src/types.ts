@@ -386,3 +386,9 @@ export interface PushHealth {
   /** Last time Expo, Apple or Google refused our credentials, if in the last 24 hours. */
   credentials_error: string | null;
 }
+
+/** Public support contact (app_settings 'support'), validated by the database. */
+export interface SupportContact {
+  email: string;
+  hours: string;
+}

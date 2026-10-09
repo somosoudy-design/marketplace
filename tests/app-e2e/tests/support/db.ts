@@ -185,3 +185,31 @@ export async function pushTrouble(label: string) {
     await client.end();
   }
 }
+
+/** Saves the current value of some settings and returns a function that puts them back (tests that edit them). */
+export async function settingsSnapshot(keys: string[]) {
+  const client = new pg.Client({ connectionString: databaseUrl() });
+  await client.connect();
+  const { rows } = await client.query(`select key, value from public.app_settings where key = any ($1)`, [keys]);
+  await client.end();
+  return async () => {
+    const c = new pg.Client({ connectionString: databaseUrl() });
+    await c.connect();
+    try {
+      for (const r of rows) await c.query(`update public.app_settings set value = $2 where key = $1`, [r.key, JSON.stringify(r.value)]);
+    } finally {
+      await c.end();
+    }
+  };
+}
+
+/** Removes URL import drafts a test created (they are only drafts: no product was published). */
+export async function forgetImports(urlPrefix: string) {
+  const c = new pg.Client({ connectionString: databaseUrl() });
+  await c.connect();
+  try {
+    await c.query(`delete from public.url_imports where url like $1 and product_id is null`, [`${urlPrefix}%`]);
+  } finally {
+    await c.end();
+  }
+}

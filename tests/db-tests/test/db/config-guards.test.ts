@@ -90,4 +90,23 @@ describe('commercial configuration guards', () => {
       await admin(`update public.app_settings set value = '"P"' where key = 'orders.number_prefix'`);
     }
   });
+
+  it('the support contact the app shows is validated, and buyers can read it', async () => {
+    const adm = await createUser('cfg-support', { role: 'admin' });
+    const buyer = await createUser('cfg-support-buyer');
+    const set = (value: string) => asUser(adm.id, (sql) => sql(`update public.app_settings set value = $1::jsonb where key = 'support'`, [value]));
+    const [before] = await admin(`select value from public.app_settings where key = 'support'`);
+    try {
+      expect((await expectHint(set('{"email":"no es correo","hours":"Lun a Vie"}'), 'invalid_setting')).detail).toBe('El correo de soporte no es válido.');
+      expect((await expectHint(set('{"email":"ayuda@example.com","hours":""}'), 'invalid_setting')).detail).toMatch(/horario/);
+      expect((await expectHint(set('{"email":"ayuda@example.com","hours":"Siempre","phone":"0412"}'), 'invalid_setting')).detail).toMatch(/«phone»/);
+      await set('{"email":"ayuda@example.com","hours":"Lun a Sáb, 8:00 a 20:00"}');
+      const [row] = await asUser(buyer.id, (sql) => sql(`select value from public.app_settings where key = 'support'`));
+      expect(row.value).toEqual({ email: 'ayuda@example.com', hours: 'Lun a Sáb, 8:00 a 20:00' });
+      // the unused presentation flag is gone, so nothing in the panel pretends to change the checkout
+      expect(await admin(`select key from public.app_settings where key = 'checkout'`)).toEqual([]);
+    } finally {
+      await admin(`update public.app_settings set value = $1 where key = 'support'`, [JSON.stringify(before.value)]);
+    }
+  });
 });

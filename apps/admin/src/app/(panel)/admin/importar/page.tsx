@@ -1,13 +1,14 @@
 'use client';
-import { AVAILABILITY, type Availability } from '@kora/core';
+import { AVAILABILITY, computeImportPrice, type Availability } from '@kora/core';
 import { providerName, type ExtractedProduct } from '@kora/core/import';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink, Globe, ImagePlus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useImportPricing } from '@/components/Settings';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Table, Td, Textarea, type Tone } from '@/components/ui';
-import { ago } from '@/lib/format';
+import { ago, money } from '@/lib/format';
 import { useCategoriesIndex, useStoresIndex } from '@/lib/hooks';
 import { apiPost, db, kora, run } from '@/lib/kora';
 
@@ -44,6 +45,8 @@ interface Draft {
   storeId: string;
   categoryId: string;
   price: string;
+  /** what we pay per unit; only feeds the suggested price, never stored */
+  cost: string;
   compareAt: string;
   availability: Availability;
   weight: string;
@@ -66,6 +69,7 @@ function draftFrom(row: ImportRow, storeId: string): Draft {
     storeId,
     categoryId: '',
     price: '',
+    cost: x?.currency === 'USD' && x.price ? String(x.price) : '',
     compareAt: '',
     availability: 'on_order',
     weight: '0.5',
@@ -232,12 +236,15 @@ function DraftEditor({
     price: !PRICE.test(d.price.trim()) || Number(d.price.replace(',', '.')) <= 0 ? 'Indica nuestro precio de venta en USD (hasta 2 decimales).' : null,
     compareAt: d.compareAt.trim() && (!PRICE.test(d.compareAt.trim()) || Number(d.compareAt.replace(',', '.')) <= Number(d.price.replace(',', '.'))) ? 'Debe ser mayor que el precio de venta.' : null,
     weight: !/^\d{1,3}([.,]\d{1,3})?$/.test(d.weight.trim()) ? 'Peso inválido.' : null,
+    cost: d.cost.trim() && (!PRICE.test(d.cost.trim()) || Number(d.cost.replace(',', '.')) <= 0) ? 'Costo inválido (USD, hasta 2 decimales).' : null,
     variants: d.variants.some((v) => !v.title.trim() || (v.price.trim() && !PRICE.test(v.price.trim()))) ? 'Cada variante necesita un nombre y, si cambia el precio, un monto válido.' : null,
     rights: included.some((i) => !i.rights) || d.files.some((f) => !f.rights) ? 'Confirma los derechos de uso de cada imagen incluida, o quítala.' : null,
   };
   const valid = Object.values(errors).every((e) => !e);
   const sensitive = catOptions.find((c) => c.id === d.categoryId)?.sensitive;
   const num = (s: string) => s.trim().replace(',', '.');
+  const pricing = useImportPricing();
+  const suggestion = pricing.rule && d.cost.trim() && !errors.cost && !errors.weight ? computeImportPrice(num(d.cost), num(d.weight), pricing.rule) : null;
 
   const create = useMutation({
     mutationFn: async () => {
@@ -324,14 +331,20 @@ function DraftEditor({
             {SALE_AVAILABILITY.map((a) => <option key={a} value={a}>{AVAILABILITY[a].label}</option>)}
           </Select>
         </Field>
+        <Field label="Costo del proveedor (USD)" hint="Lo que pagamos por unidad. Solo calcula el precio sugerido; no se guarda ni se publica." error={errors.cost}>
+          <Input inputMode="decimal" className="tabular" placeholder="0.00" value={d.cost} onChange={(e) => set('cost', e.target.value)} data-testid="import-cost" />
+        </Field>
+        <Field label="Peso estimado (kg)" hint="Se usa para cotizar el envío internacional." error={tried ? errors.weight : null}>
+          <Input inputMode="decimal" className="tabular" value={d.weight} onChange={(e) => set('weight', e.target.value)} />
+        </Field>
+        <div className="md:col-span-2">
+          <SuggestedPrice loading={pricing.isPending} configured={!!pricing.rule} hasCost={!!d.cost.trim() && !errors.cost} suggestion={suggestion} weight={num(d.weight)} current={num(d.price)} onUse={(v) => set('price', v)} />
+        </div>
         <Field label="Nuestro precio de venta (USD)" error={tried ? errors.price : null}>
           <Input inputMode="decimal" className="tabular" placeholder="0.00" value={d.price} onChange={(e) => set('price', e.target.value)} />
         </Field>
         <Field label="Precio anterior (USD)" hint="Opcional. Solo si de verdad lo vendimos a ese precio." error={tried ? errors.compareAt : null}>
           <Input inputMode="decimal" className="tabular" value={d.compareAt} onChange={(e) => set('compareAt', e.target.value)} />
-        </Field>
-        <Field label="Peso estimado (kg)" hint="Se usa para cotizar el envío internacional." error={tried ? errors.weight : null}>
-          <Input inputMode="decimal" className="tabular" value={d.weight} onChange={(e) => set('weight', e.target.value)} />
         </Field>
       </div>
 
@@ -438,6 +451,38 @@ function ImageTile({ src, remote, include, rights, onInclude, onRights }: { src:
           {remote ? (include ? 'No usar esta imagen' : 'Usar esta imagen') : 'Quitar'}
         </button>
       </div>
+    </div>
+  );
+}
+
+function SuggestedPrice({ loading, configured, hasCost, suggestion, weight, current, onUse }: {
+  loading: boolean;
+  configured: boolean;
+  hasCost: boolean;
+  suggestion: ReturnType<typeof computeImportPrice> | null;
+  weight: string;
+  current: string;
+  onUse: (price: string) => void;
+}) {
+  if (loading) return null;
+  if (!configured) {
+    return (
+      <p className="pb-2 text-[13px] text-ink-3" data-testid="import-suggestion">
+        Sin precio sugerido: la regla de precio aún no está revisada. <Link className="font-semibold text-brand" href="/admin/configuracion?tab=settings">Revisarla</Link>
+      </p>
+    );
+  }
+  if (!hasCost || !suggestion) return <p className="pb-2 text-[13px] text-ink-3" data-testid="import-suggestion">Escribe el costo para ver el precio sugerido.</p>;
+  const using = Number(current) === Number(suggestion.price_usd);
+  return (
+    <div className="flex w-full items-center justify-between gap-3 rounded-[14px] bg-sunken px-4 py-2.5" data-testid="import-suggestion">
+      <div className="text-[13px] text-ink-2">
+        <p>Precio sugerido <span className="tabular text-[15px] font-bold text-ink">{money(suggestion.price_usd, 'USD')}</span></p>
+        <p className="text-ink-3">
+          costo {money(suggestion.cost_usd, 'USD')} + margen {money(suggestion.markup_usd, 'USD')} + flete {money(suggestion.freight_usd, 'USD')} ({weight.replace('.', ',')} kg) + manejo {money(suggestion.fixed_usd, 'USD')}
+        </p>
+      </div>
+      {using ? <Badge tone="success">En uso</Badge> : <Button size="sm" variant="secondary" onClick={() => onUse(suggestion.price_usd)} data-testid="import-use-suggestion">Usar</Button>}
     </div>
   );
 }

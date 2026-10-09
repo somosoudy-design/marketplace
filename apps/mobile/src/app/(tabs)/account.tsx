@@ -10,7 +10,7 @@ import { Card, Divider, ListRow } from '@/components/ui/Layout';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { useOrders, useProfile, useUnreadCount } from '@/lib/hooks';
+import { useOrders, useProfile, useSupport, useUnreadCount } from '@/lib/hooks';
 import { useTheme } from '@/theme';
 
 const PANEL_URL = process.env.EXPO_PUBLIC_PANEL_URL ?? '';
@@ -22,6 +22,7 @@ export default function AccountScreen() {
   const profile = useProfile();
   const orders = useOrders();
   const unread = useUnreadCount();
+  const support = useSupport();
   const open = (orders.data ?? []).filter((o) => o.status === 'placed' || o.status === 'in_progress').length;
 
   return (
@@ -69,7 +70,12 @@ export default function AccountScreen() {
         </>
       )}
       <Card padded={false}>
-        <ListRow icon="circle-question-mark" title="Ayuda" subtitle={brand.supportEmail} onPress={() => Linking.openURL(`mailto:${brand.supportEmail}`)} />
+        <ListRow
+          icon="circle-question-mark"
+          title="Ayuda"
+          subtitle={support.data ? `${support.data.email} · ${support.data.hours}` : brand.supportEmail}
+          onPress={() => Linking.openURL(`mailto:${support.data?.email ?? brand.supportEmail}`)}
+        />
       </Card>
       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}
       <Text variant="caption" color="textMuted" align="center">

@@ -150,3 +150,6 @@ export const useProfile = () => {
   const { user } = useAuth();
   return useQuery({ queryKey: qk.profile, queryFn: () => api.account.profile(user!.id), enabled: !!user });
 };
+
+/** Support contact set by the operator; the brand file's email is the fallback while it loads or offline. */
+export const useSupport = () => useQuery({ queryKey: qk.support, queryFn: api.catalog.support, staleTime: 60 * 60_000 });

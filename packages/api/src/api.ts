@@ -27,6 +27,7 @@ import type {
   ProductReviews,
   RateStatus,
   PushHealth,
+  SupportContact,
   RecommendationMetrics,
   StoreProfile,
   Region,
@@ -115,6 +116,11 @@ export function createApi(client: KoraClient) {
         }),
       ).catch(() => undefined), // signals are best-effort and never block the UI
     rate: (pair = 'USD/VES') => run<RateStatus>(rpc('rate_status', { p_pair: pair })),
+    /** Support contact the operator sets in the panel (public setting); null when it is not configured. */
+    support: async () => {
+      const row = await run<{ value: SupportContact } | null>(from('app_settings').select('value').eq('key', 'support').maybeSingle());
+      return row?.value ?? null;
+    },
     storeProfile: (slug: string) => run<StoreProfile | null>(rpc('store_profile', { p_slug: slug })),
     reviews: (productId: string, limit = 10, offset = 0) =>
       run<ProductReviews>(rpc('product_reviews', { p_product_id: productId, p_limit: limit, p_offset: offset })),

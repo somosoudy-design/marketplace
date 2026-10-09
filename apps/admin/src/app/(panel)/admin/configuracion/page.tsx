@@ -2,11 +2,13 @@
 import { FLOW_LABEL, INTEGRATION_LABEL } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useState } from 'react';
 import { CrudTable } from '@/components/Crud';
+import { SettingsForms } from '@/components/Settings';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Dialog, ErrorBox, Field, Input, Loading, Notice, PageHeader, Tabs, Textarea, Toggle, cx } from '@/components/ui';
-import { ago, integrationTone, money } from '@/lib/format';
+import { integrationTone, money } from '@/lib/format';
 import { useCategoriesIndex, useStoresIndex } from '@/lib/hooks';
 import { db, run } from '@/lib/kora';
 
@@ -37,7 +39,18 @@ const USD = /^\d{1,8}([.,]\d{1,2})?$/;
 const n = (s: string) => s.trim().replace(',', '.');
 
 export default function CommercialConfigPage() {
-  const [tab, setTab] = useState<Tab>('payments');
+  // the tab can be linked (?tab=settings); reading the URL needs a Suspense boundary in the App Router
+  return (
+    <Suspense fallback={<Loading rows={6} />}>
+      <CommercialConfig />
+    </Suspense>
+  );
+}
+
+function CommercialConfig() {
+  const params = useSearchParams();
+  const asked = params.get('tab');
+  const [tab, setTab] = useState<Tab>(asked === 'plans' || asked === 'commissions' || asked === 'settings' ? asked : 'payments');
   const stores = useStoresIndex();
   const cats = useCategoriesIndex();
   const defaultCommission = useQuery({ queryKey: ['setting', 'commission.default_pct'], queryFn: async () => (await run<{ value: number }>(db('app_settings').select('value').eq('key', 'commission.default_pct').single())).value });
@@ -109,23 +122,7 @@ export default function CommercialConfigPage() {
           footer={`Comisión general: ${defaultCommission.data ?? '…'} %. Gana la regla más específica (tienda y categoría, luego tienda, luego categoría). La comisión se fija en cada venta al confirmarse el pedido.`}
         />
       ) : (
-        <CrudTable
-          table="app_settings"
-          idKey="key"
-          select="key, value, description, is_public, updated_at"
-          order="key"
-          canCreate={false}
-          editTitle={(r) => (r.description as string) ?? (r.key as string)}
-          defaults={{}}
-          fields={[{ key: 'value', label: 'Valor (JSON)', type: 'json', required: true, hint: 'Números sin comillas; textos entre comillas; objetos con llaves.' }]}
-          columns={[
-            { label: 'Parámetro', render: (r) => <><span className="font-semibold">{(r.description as string) ?? (r.key as string)}</span><span className="block text-[12px] text-ink-3">{r.key as string}</span></> },
-            { label: 'Valor', render: (r) => <code className="block max-w-[420px] truncate rounded bg-sunken px-2 py-1 text-[12.5px]">{JSON.stringify(r.value)}</code> },
-            { label: 'Visible en la app', render: (r) => (r.is_public ? <Badge tone="info">Pública</Badge> : <Badge>Interna</Badge>) },
-            { label: 'Actualizado', render: (r) => ago(r.updated_at as string), className: 'whitespace-nowrap text-ink-3' },
-          ]}
-          footer="«pricing.import» trae valores de ejemplo y «configured: false»: define el margen real antes de usar precios sugeridos para importaciones."
-        />
+        <SettingsForms />
       )}
     </>
   );

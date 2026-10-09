@@ -38,3 +38,9 @@ test('a buyer adds an address and deletes the main one; the other becomes main',
   await expect(page.locator('[data-testid^="addr-row-"]')).toHaveCount(1);
   await expect(office).toContainText('Principal');
 });
+
+// Help shows the support contact the operator sets in the panel (Configuración › Parámetros), not a fixed address.
+test('help shows the support contact set in the panel', async ({ page }) => {
+  await page.goto('/account');
+  await expect(page.getByText('soporte@example.com · Lun a Vie, 9:00 a 18:00')).toBeVisible();
+});
