@@ -10,6 +10,7 @@ import { useAuth } from '@/lib/auth';
 import { cx } from './ui';
 import { StorePicker } from './StorePicker';
 import { brand } from '@/lib/brand';
+import { BrandMark } from './BrandMark';
 
 type Item = { href: string; label: string; icon: LucideIcon };
 const ADMIN: { title: string; items: Item[] }[] = [
@@ -92,7 +93,7 @@ export function Shell({ area, children }: { area: 'admin' | 'seller'; children: 
     <div className="min-h-dvh lg:grid lg:grid-cols-[264px_1fr]">
       <aside className={cx('fixed inset-y-0 left-0 z-40 flex w-[264px] flex-col border-r border-line bg-surface px-3 py-5 transition-transform lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0', open ? 'translate-x-0' : '-translate-x-full')}>
         <Link href="/" className="mb-6 flex items-center gap-2.5 px-3">
-          <span className="grid size-9 place-items-center rounded-[12px] bg-brand font-display text-lg font-semibold text-on-brand">{brand.name.charAt(0)}</span>
+          <BrandMark size={36} radius={12} />
           <span>
             <span className="block font-display text-lg leading-none font-semibold">{brand.name}</span>
             <span className="text-[12px] font-semibold text-ink-3">{area === 'admin' ? 'Administración' : 'Panel de vendedor'}</span>

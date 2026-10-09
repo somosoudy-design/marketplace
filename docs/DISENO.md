@@ -54,6 +54,10 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
   mezclar estilos.
 - Carga progresiva con `expo-image` (caché en disco y memoria, transición suave, placeholder del tono).
 - Las imágenes demo son ilustraciones originales rotuladas "IMAGEN DEMO"; se reemplazan desde el panel.
+- Logos demo de tiendas: Kora, la tienda de la plataforma, lleva la marca de la app; las demás, su monograma en
+  sans sobre su color de `storeAccents` (`tools/demo-assets/generate-images.mjs`).
+- Las etiquetas sobre una foto (por encargo, en camino, agotado) usan los colores del modo claro también en
+  oscuro, porque las fotos son claras en los dos modos (`Badge onPhoto`).
 
 ## Componentes de la app (`apps/mobile/src/components`)
 
@@ -122,7 +126,9 @@ Nunca se muestra un código interno en lugar de un texto: si falta el nombre, se
 
 ## Panel web
 
-Mismos tokens vía CSS. Componentes en `apps/admin/src/components`: `ui.tsx` (botones, campos con ayuda y
+Mismos tokens vía CSS y la misma familia (Plus Jakarta Sans, en `apps/admin/src/fonts` con su licencia OFL);
+los títulos grandes van en negrita con tracking negativo como en la app, y la barra lateral y el acceso llevan
+la marca de la app (`BrandMark.tsx`). Componentes en `apps/admin/src/components`: `ui.tsx` (botones, campos con ayuda y
 error accesibles, tablas, insignias, diálogos, pestañas, avisos), `Crud.tsx` (tablas editables de
 configuración), `Fulfillment.tsx`, `ProductReview.tsx`, `Claims.tsx`, `Payouts.tsx`, `StockTable.tsx`,
 `Shell.tsx`, `Reviews.tsx` (moderación y respuesta de opiniones). El panel prioriza densidad y eficiencia sin

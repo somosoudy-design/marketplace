@@ -466,6 +466,10 @@ Convenciones:
   ante cualquier error. Corregido por EAS Update al APK 4 (bytes a `fromCombined`, descifrado en base64,
   mensajes según el error y vuelta al modo visitante si el servidor pide iniciar sesión; `session.spec.ts`).
   Registro sin confirmación por correo en el entorno de pruebas, por decisión de Oliver (sección 5).
+  Hito C, repaso de 20 pantallas en claro y oscuro (`tools/design/screens.mjs`, ahora también con sesión):
+  etiquetas sobre fotos legibles en oscuro, logos demo de tiendas con la identidad nueva (Kora con la marca
+  de la app; aplicado también en el proyecto de pruebas con un UPDATE de `logo_path`, `cover_path` y el
+  acento de Kora), y el panel web en Plus Jakarta Sans con la marca de la app.
   Identidad Electric Violet (Plus Jakarta Sans, violeta #6D42E8, tinta #1C1928, coral #FF746B) e Inicio de
   tienda (buscador, categorías, colecciones, recomendados, tiendas destacadas, populares; sin bloques de tasa
   ni de confianza). Lo nativo violeta queda para el próximo APK.

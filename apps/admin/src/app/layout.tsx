@@ -4,29 +4,29 @@ import { Providers } from '@/lib/providers';
 import './globals.css';
 import { brand } from '@/lib/brand';
 
-const manrope = localFont({
-  variable: '--font-manrope',
+// one family, as in the app: Plus Jakarta Sans for titles, interface and prices
+const jakarta = localFont({
+  variable: '--font-jakarta',
   display: 'swap',
   src: [
-    { path: '../fonts/Manrope_400Regular.ttf', weight: '400' },
-    { path: '../fonts/Manrope_500Medium.ttf', weight: '500' },
-    { path: '../fonts/Manrope_600SemiBold.ttf', weight: '600' },
-    { path: '../fonts/Manrope_700Bold.ttf', weight: '700' },
-    { path: '../fonts/Manrope_800ExtraBold.ttf', weight: '800' },
+    { path: '../fonts/PlusJakartaSans_400Regular.ttf', weight: '400' },
+    { path: '../fonts/PlusJakartaSans_500Medium.ttf', weight: '500' },
+    { path: '../fonts/PlusJakartaSans_600SemiBold.ttf', weight: '600' },
+    { path: '../fonts/PlusJakartaSans_700Bold.ttf', weight: '700' },
+    { path: '../fonts/PlusJakartaSans_800ExtraBold.ttf', weight: '800' },
   ],
 });
-const fraunces = localFont({ variable: '--font-fraunces', display: 'swap', src: [{ path: '../fonts/Fraunces_600SemiBold.ttf', weight: '600' }] });
 
 export const metadata: Metadata = {
   title: { default: `${brand.name} · Panel`, template: `%s · ${brand.name}` },
   description: `Administración y panel de vendedores del marketplace ${brand.name}.`,
   robots: { index: false, follow: false },
 };
-export const viewport: Viewport = { themeColor: [{ media: '(prefers-color-scheme: light)', color: '#F6F0E7' }, { media: '(prefers-color-scheme: dark)', color: '#121416' }] };
+export const viewport: Viewport = { themeColor: [{ media: '(prefers-color-scheme: light)', color: '#F8F7FC' }, { media: '(prefers-color-scheme: dark)', color: '#110F18' }] };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-VE" className={`${manrope.variable} ${fraunces.variable}`}>
+    <html lang="es-VE" className={jakarta.variable}>
       <body>
         <Providers>{children}</Providers>
       </body>

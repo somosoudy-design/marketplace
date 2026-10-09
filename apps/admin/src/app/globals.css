@@ -27,8 +27,8 @@
   --color-info-soft: var(--info-soft);
   --color-editorial: var(--editorial);
   --color-editorial-soft: var(--editorial-soft);
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 
 html { color-scheme: light dark; }
@@ -39,5 +39,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 .tabular { font-variant-numeric: tabular-nums; }
+/* large titles in the app's display style: bold with tight tracking */
+.font-display { font-weight: 700; letter-spacing: -0.02em; }
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 ::selection { background: var(--brand-soft); }
