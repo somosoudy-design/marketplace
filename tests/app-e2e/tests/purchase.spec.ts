@@ -66,6 +66,15 @@ test('a new buyer completes checkout and submits a Pago Móvil payment for verif
   await expect(page.getByTestId('order-number')).toContainText('P-');
   await expect(page.getByText('En verificación').first()).toBeVisible();
 
+  // coming back to pay shows the payment being checked, not a method picker that would be rejected
+  const orderId = page.url().split('/orders/')[1]!.split(/[?#]/)[0];
+  await page.goto(`/pay/${orderId}`);
+  const pendingCard = page.locator('[data-testid^="pending-PG-"]');
+  await expect(pendingCard).toContainText('Estamos verificando tu pago');
+  await expect(pendingCard).toContainText('Pago Móvil');
+  await expect(pendingCard).toContainText('Bs');
+  await expect(page.getByTestId('pay-quote')).toHaveCount(0);
+
   // 8. exactly one order exists for this account
   await page.goto('/orders');
   await expect(page.locator('[data-testid^="order-P-"]')).toHaveCount(1);

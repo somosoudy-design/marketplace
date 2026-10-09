@@ -22,9 +22,9 @@ export function SectionHeader({ overline, title, action, onAction }: { overline?
   );
 }
 
-export function Card({ children, style, padded = true }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; padded?: boolean }) {
+export function Card({ children, style, padded = true, testID }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; padded?: boolean; testID?: string }) {
   const { colors, radii } = useTheme();
-  return <View style={[{ backgroundColor: colors.surface, borderRadius: radii.lg, padding: padded ? 16 : 0, borderWidth: 1, borderColor: colors.border }, style]}>{children}</View>;
+  return <View testID={testID} style={[{ backgroundColor: colors.surface, borderRadius: radii.lg, padding: padded ? 16 : 0, borderWidth: 1, borderColor: colors.border }, style]}>{children}</View>;
 }
 
 export function Divider({ inset = 0 }: { inset?: number }) {

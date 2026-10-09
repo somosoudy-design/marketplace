@@ -1,5 +1,5 @@
-import { ApiError, type PaymentMethod, type PaymentQuote } from '@kora/api';
-import { D, formatMoney, formatRate, formatUSD, normalizeReference, OBLIGATION_KIND_LABEL, PAYMENT_RECORD_LABEL, type Currency } from '@kora/core';
+import { ApiError, type Payment, type PaymentMethod, type PaymentQuote } from '@kora/api';
+import { D, formatMoney, formatRate, formatUSD, normalizeReference, OBLIGATION_KIND_LABEL, type Currency } from '@kora/core';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as Clipboard from 'expo-clipboard';
 import * as ImagePicker from 'expo-image-picker';
@@ -96,7 +96,7 @@ export default function PayScreen() {
           <SummaryRow label="Pagado y confirmado" value={formatUSD(o.paid_usd)} />
           <Divider />
           <SummaryRow label="Saldo pendiente" value={formatUSD(outstanding)} strong testID="pay-outstanding" />
-          {nextObligation ? (
+          {nextObligation && !pending.length ? (
             <Text variant="caption" color="textMuted">
               Ahora pagas: {OBLIGATION_KIND_LABEL[nextObligation.kind] ?? 'pago'}{nextObligation.kind === 'installment' ? ` ${nextObligation.seq}` : ''} por {formatUSD(D(nextObligation.amount_usd).minus(nextObligation.paid_usd).minus(nextObligation.waived_usd))}
               {nextObligation.due_date ? ` · vence ${shortDate(nextObligation.due_date)}` : ''}
@@ -104,9 +104,10 @@ export default function PayScreen() {
           ) : null}
         </Card>
 
-        {pending.length ? (
-          <Banner tone="info" icon="hourglass" title="Tienes un pago en verificación" body={`${pending.map((p) => `${p.number} (${PAYMENT_RECORD_LABEL[p.status]})`).join(', ')}. Espera la confirmación antes de pagar de nuevo.`} />
-        ) : null}
+        {/* while a payment is being checked the order can't be paid again, so the screen shows that payment instead of a picker */}
+        {pending.filter((p) => p.status === 'pending_verification').map((p) => (
+          <PendingCard key={p.id} payment={p} methodName={methods.data?.find((m) => m.code === p.method_code)?.name ?? p.method_code} onOrder={() => router.replace({ pathname: '/orders/[id]', params: { id: orderId } })} />
+        ))}
         {pending.filter((p) => p.status === 'processing' && p.provider).map((p) => (
           <Card key={p.id} style={{ gap: 10 }}>
             <Text variant="subtitle">Pago en línea {p.number} sin completar</Text>
@@ -123,7 +124,7 @@ export default function PayScreen() {
 
         {!nextObligation ? (
           <Banner tone="success" icon="circle-check" title="Este pedido no tiene saldo pendiente" />
-        ) : !quote ? (
+        ) : pending.length ? null : !quote ? (
           <View style={{ gap: 12 }}>
             <Text variant="title">Elige cómo pagar</Text>
             <Card padded={false}>
@@ -142,7 +143,7 @@ export default function PayScreen() {
               ))}
             </Card>
             {createQuote.error ? <Banner tone="danger" icon="circle-alert" body={(createQuote.error as Error).message} /> : null}
-            <Button testID="pay-quote" title={method ? `Ver monto en ${method.currency === 'VES' ? 'bolívares' : method.currency}` : 'Elige un método'} size="lg" full disabled={!method || pending.length > 0} loading={createQuote.isPending} onPress={() => method && createQuote.mutate(method.code)} />
+            <Button testID="pay-quote" title={method ? `Ver monto en ${method.currency === 'VES' ? 'bolívares' : method.currency}` : 'Elige un método'} size="lg" full disabled={!method} loading={createQuote.isPending} onPress={() => method && createQuote.mutate(method.code)} />
           </View>
         ) : (
           <QuotePanel
@@ -161,6 +162,34 @@ export default function PayScreen() {
         )}
       </ScrollView>
     </KeyboardAvoidingView>
+  );
+}
+
+function PendingCard({ payment: p, methodName, onOrder }: { payment: Payment; methodName: string; onOrder: () => void }) {
+  const t = useTheme();
+  const currency = p.currency as Currency;
+  return (
+    <Card testID={`pending-${p.number}`} style={{ gap: 14 }}>
+      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: t.colors.infoSoft, alignItems: 'center', justifyContent: 'center' }}>
+          <Icon name="hourglass" size={20} color={t.colors.info} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text variant="subtitle">Estamos verificando tu pago</Text>
+          <Text variant="caption" color="textMuted">{p.number} · enviado {shortDateTime(p.created_at)}</Text>
+        </View>
+      </View>
+      <View style={{ gap: 8 }}>
+        <SummaryRow label="Método" value={methodName} />
+        <SummaryRow label="Monto" value={formatMoney(p.amount, currency)} />
+        {currency !== 'USD' ? <SummaryRow label="Equivale a" value={formatUSD(p.base_usd)} /> : null}
+        {p.reference ? <SummaryRow label="Referencia" value={p.reference} /> : null}
+      </View>
+      <Text variant="bodySmall" color="textSecondary">
+        Revisamos que el dinero haya llegado a la cuenta indicada. Cuando lo confirmemos, tu saldo se actualiza y te avisamos. No hace falta pagar de nuevo.
+      </Text>
+      <Button title="Ver mi pedido" variant="secondary" onPress={onOrder} />
+    </Card>
   );
 }
 
