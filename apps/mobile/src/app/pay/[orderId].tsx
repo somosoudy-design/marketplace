@@ -22,7 +22,7 @@ import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
 import { SOURCE_LABEL, shortDate, shortDateTime } from '@/lib/format';
 import { haptics } from '@/lib/haptics';
-import { useOrder, usePaymentMethods } from '@/lib/hooks';
+import { useDivisas, useOrder, usePaymentMethods, useVesRate } from '@/lib/hooks';
 import { intentKey } from '@/lib/ids';
 import { qk } from '@/lib/query';
 import { api } from '@/lib/supabase';
@@ -184,11 +184,23 @@ const RAIL_ICON: Record<string, IconName> = {
  * comes from the server's quote in the next step. */
 function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { methods: PaymentMethod[]; selected: string | null; amountUsd: ReturnType<typeof D>; onSelect: (m: PaymentMethod) => void; error: string | null }) {
   const t = useTheme();
+  const vesRate = useVesRate();
+  const divisas = useDivisas();
+  /** What the method will ask for, as a reference (the quote of the next step is exact): bolívares at today's BCV
+   * rate, or the divisas price through today's gap (docs/PRECIOS.md). Null when there is nothing current to show. */
+  const estimate = (m: PaymentMethod): { amount: string; saving: number | null } | null => {
+    if (m.currency === 'VES') return vesRate ? { amount: formatMoney(amountUsd.times(vesRate.rate), 'VES'), saving: null } : null;
+    const f = divisas?.factor(m.code);
+    if (!f) return { amount: formatMoney(amountUsd, m.currency as Currency), saving: null };
+    return { amount: formatMoney(amountUsd.times(f), m.currency as Currency), saving: D(1).minus(f).times(100).toDecimalPlaces(1).toNumber() };
+  };
   return (
     <View style={{ gap: 18 }}>
       <View style={{ gap: 4 }}>
         <Text variant="title">Elige cómo pagar</Text>
-        <Text variant="bodySmall" color="textSecondary">Ahora pagas {formatUSD(amountUsd)}. En bolívares o cripto lo convertimos con la tasa del momento.</Text>
+        <Text variant="bodySmall" color="textSecondary">
+          Ahora pagas {formatUSD(amountUsd)} a tasa BCV. En bolívares lo convertimos con la tasa del momento{divisas ? `; con ${divisas.label} pagas menos, por la brecha del día` : ''}.
+        </Text>
       </View>
       {METHOD_GROUPS.map((g) => {
         const list = methods.filter(g.match);
@@ -223,8 +235,19 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
                         {m.description ? <Text variant="caption" color="textMuted" numberOfLines={2}>{m.description}</Text> : null}
                       </View>
                       <View style={{ alignItems: 'flex-end', gap: 2 }}>
-                        <Text variant="label" tabular>{m.currency === 'VES' ? 'Bs.' : m.currency}</Text>
-                        <Text variant="caption" color={limit ? 'warning' : 'textMuted'}>{limit ?? fee ?? 'Sin comisión'}</Text>
+                        {(() => {
+                          const e = estimate(m);
+                          return (
+                            <>
+                              <Text variant="label" tabular testID={`method-amount-${m.code}`}>{e ? `≈ ${e.amount}` : m.currency === 'VES' ? 'Bs.' : m.currency}</Text>
+                              {limit || fee || !e?.saving ? (
+                                <Text variant="caption" color={limit ? 'warning' : 'textMuted'}>{limit ?? fee ?? 'Sin comisión'}</Text>
+                              ) : (
+                                <Text variant="caption" color="success">{String(e.saving).replace('.', ',')} % menos</Text>
+                              )}
+                            </>
+                          );
+                        })()}
                       </View>
                     </Pressable>
                   </View>
@@ -348,6 +371,16 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
           <Text variant="bodySmall" color="textSecondary" testID="quote-rate">
             {formatUSD(D(q.base_usd).plus(q.fee_usd))} × {formatRate(q.rate_applied)} · {SOURCE_LABEL[q.rate_source] ?? q.rate_source}, {shortDateTime(q.rate_observed_at)}
           </Text>
+        ) : q.divisas ? (
+          // verifiable: the price at the BCV rate and the two rates of the day's gap that turn it into this amount
+          <View style={{ gap: 2 }} testID="quote-divisas">
+            <Text variant="bodySmall" color="success">
+              Precio en divisas: {formatUSD(q.divisas.main_usd)} a tasa BCV, {String(D(1).minus(D(q.amount_due).div(q.divisas.main_usd)).times(100).toDecimalPlaces(1)).replace('.', ',')} % menos
+            </Text>
+            <Text variant="caption" color="textMuted">
+              Brecha del día {String(D(q.divisas.gap_pct).toDecimalPlaces(2)).replace('.', ',')} %: dólar BCV a {formatMoney(q.divisas.bcv_rate, 'VES')} y USDT a {formatMoney(q.divisas.usdt_ves_rate, 'VES')} ({shortDateTime(q.divisas.taken_at)}){Number(q.fee_usd) > 0 ? ` · incluye comisión de ${formatUSD(q.fee_usd)}` : ''}
+            </Text>
+          </View>
         ) : Number(q.fee_usd) > 0 ? (
           <Text variant="bodySmall" color="textSecondary">Incluye comisión del método de {formatUSD(q.fee_usd)}</Text>
         ) : null}

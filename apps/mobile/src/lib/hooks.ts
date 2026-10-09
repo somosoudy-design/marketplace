@@ -18,6 +18,25 @@ export function useVesRate(): { rate: number; demo: boolean } | null {
   return q.data && q.data.available ? { rate: Number(q.data.rate), demo: q.data.source === 'demo' } : null;
 }
 
+/**
+ * The day's gap for showing what Zelle/USDT pay (docs/PRECIOS.md): `factor(code)` turns BCV dollars into the method's
+ * currency; `best` is the most conservative factor among the enabled divisas methods, for a single "en divisas"
+ * price. Null when no gap is in force: then nothing special is shown, exactly when the server stops quoting it.
+ * Display only; the quote is what charges. Never persisted offline (qk.pricing is not in PERSISTED).
+ */
+export function useDivisas(): { best: number; label: string; gapPct: number; factor: (code: string) => number | null } | null {
+  const q = useQuery({ queryKey: qk.pricing, queryFn: api.catalog.pricingToday, staleTime: 5 * 60_000 });
+  return useMemo(() => {
+    const d = q.data;
+    if (!d?.available || !d.methods.length) return null;
+    const byCode = new Map(d.methods.map((m) => [m.code, Number(m.factor)]));
+    const names = [...new Set(d.methods.map((m) => DIVISAS_SHORT[m.code] ?? m.name))];
+    const label = names.length > 1 ? `${names.slice(0, -1).join(', ')} o ${names.at(-1)}` : names[0]!;
+    return { best: Math.max(...byCode.values()), label, gapPct: Number(d.snapshot.gap_pct), factor: (code: string) => byCode.get(code) ?? null };
+  }, [q.data]);
+}
+const DIVISAS_SHORT: Record<string, string> = { zelle: 'Zelle', usdt_trc20: 'USDT', binance_pay: 'Binance Pay', paypal: 'PayPal', efectivo_usd: 'efectivo' };
+
 const PAGE = 20;
 export function useSearch(params: Omit<SearchParams, 'limit' | 'offset'>) {
   return useInfiniteQuery({

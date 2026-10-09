@@ -25,7 +25,7 @@ import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
-import { useAddToCart, useFavorites, usePaymentMethods, useProduct, useVesRate } from '@/lib/hooks';
+import { useAddToCart, useDivisas, useFavorites, usePaymentMethods, useProduct, useVesRate } from '@/lib/hooks';
 import { api, storeImage } from '@/lib/supabase';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
@@ -82,6 +82,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const qc = useQueryClient();
   const fav = useFavorites();
   const vesRate = useVesRate();
+  const divisas = useDivisas();
   const methods = usePaymentMethods();
   const addToCart = useAddToCart();
   const purchasableVariants = p.variants.filter((v) => v.active && (v.stock == null || v.stock > 0));
@@ -183,7 +184,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <View style={{ gap: 10 }}>
               {/* re-keyed so a variant with another price fades in instead of snapping */}
               <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
-                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} />
+                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} divisas={divisas} />
               </Animated.View>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <AvailabilityBadge value={variantSoldOut ? 'sold_out' : p.availability} />

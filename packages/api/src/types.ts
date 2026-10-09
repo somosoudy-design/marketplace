@@ -259,6 +259,12 @@ export interface PaymentQuote {
   status: 'open' | 'used' | 'expired' | 'cancelled';
   issued_at: string;
   expires_at: string;
+  /** 'divisas': converted with the day's gap (Zelle, USDT); 'bcv': at the method's rate */
+  price_basis?: 'bcv' | 'divisas';
+  pricing_snapshot_id?: number | null;
+  gap_pct?: number | null;
+  /** present on divisas quotes: the rates behind the factor and the price in BCV dollars it replaces */
+  divisas?: { gap_pct: number; bcv_rate: number; usdt_ves_rate: number; usd_usdt_rate: number; taken_at: string; main_usd: number } | null;
   method: {
     code: string;
     name: string;
@@ -294,6 +300,42 @@ export type SubmitPaymentResult =
 export type RateStatus =
   | { pair: string; available: true; rate: number; base: number; source: string; observed_at: string; is_fallback: boolean; is_manual: boolean }
   | { pair: string; available: false; reason: 'stale_or_missing'; last: { rate: number; source: string; observed_at: string } | null };
+
+/** The day's gap and the factor of each divisas method (pricing_today; docs/PRECIOS.md). Display only: quotes decide. */
+export type PricingToday =
+  | {
+      available: true;
+      snapshot: { id: number; taken_at: string; valid_until: string; bcv_rate: number; bcv_source: string; usdt_ves_rate: number; usdt_source: string; usd_usdt_rate: number; gap_pct: number };
+      methods: { code: string; name: string; currency: 'USD' | 'USDT'; factor: number }[];
+    }
+  | { available: false; reason: 'disabled' | 'no_snapshot' };
+
+/** One price built from its cost (product_pricing / priceFromCost). Null prices when there is no gap in force. */
+export interface PriceBreakdownRow {
+  cost_usd: number; freight_usd: number; logistics_usd: number; landed_usd: number; margin_pct: number; margin_usd: number;
+  target_divisas_usd: number; gap_pct: number | null; price_usd: number | null; price_ves: number | null;
+  price_divisas_usd: number | null; divisas_discount_pct: number | null; profit_usd: number | null; profit_pct: number | null;
+}
+
+export interface ProductCosts {
+  product_id: string; source: 'amazon' | 'proveedor' | 'propio' | 'otro'; source_url: string | null; freight_usd: string | null;
+  logistics_usd: string | null; margin_pct: string | null; auto_price: boolean; notes: string | null; updated_at: string;
+}
+
+export interface PricingSnapshot {
+  id: number; taken_at: string; valid_until: string; bcv_rate: string; bcv_source: string; bcv_observed_at: string;
+  usdt_ves_rate: string; usdt_source: string; usdt_observed_at: string; usd_usdt_rate: string; usd_usdt_source: string;
+  gap_pct: string; taken_by: string | null; note: string | null;
+}
+
+export interface ProductPricing {
+  product_id: string;
+  weight_kg: number;
+  costs: ProductCosts | null;
+  rule: { markup_pct: number; per_kg_usd: number; fixed_usd: number; round_to: number | null; configured?: boolean };
+  snapshot: PricingSnapshot | null;
+  variants: { variant_id: string; title: string; price_usd: number; cost_usd: number | null; breakdown: PriceBreakdownRow | null }[];
+}
 
 export interface OrderDetail extends Order {
   order_items: OrderItem[];

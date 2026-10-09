@@ -2,7 +2,7 @@ import { D, divisasFactor, priceFromCost } from '@kora/core';
 import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { admin, asUser, buy, createStoreWithProduct, createUser, expectHint, key, ledgerBalanced, pool, setRate } from '../../src/db';
 
-// Commercial price engine (migration 20261009233000, docs/PRECIOS.md). Rates of 2026-10-09 in the test project:
+// Commercial price engine (migration 20261009233831, docs/PRECIOS.md). Rates of 2026-10-09 in the test project:
 // BCV 875,65 Bs/$, Binance P2P 1.014,93 Bs/USDT, Kraken 1,0009 USDT/$.
 const BCV = 875.65;
 const P2P = 1014.93;

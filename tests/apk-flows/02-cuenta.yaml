@@ -181,7 +181,14 @@ name: Comprador con cuenta hasta la cotización y cancelación
     id: order-cancel
 - tapOn:
     id: order-cancel-sheet-confirm
+# the order screen stays scrolled at the bottom, where the delivery shows it was cancelled
 - extendedWaitUntil:
-    visible: Cancelado
+    visible: Entrega cancelada
     timeout: 30000
 - takeScreenshot: flujo-cuenta-07-cancelado
+- scrollUntilVisible:
+    element:
+      id: order-number
+    direction: UP
+    timeout: 20000
+- takeScreenshot: flujo-cuenta-08-pedido-cancelado

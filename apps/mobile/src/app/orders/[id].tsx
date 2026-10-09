@@ -58,6 +58,8 @@ export default function OrderScreen() {
   const pendingPayment = o.payments.some((p) => p.status === 'pending_verification' || p.status === 'processing');
   const canPay = o.status !== 'cancelled' && o.payment_obligations.some((x) => x.status === 'pending' || x.status === 'partially_paid');
   const canCancel = o.status === 'placed' && D(o.paid_usd).isZero() && !pendingPayment;
+  // cancelling closes the lines as "refunded" so nothing stays owed; with nothing paid, no money went back
+  const voided = o.status === 'cancelled' && D(o.paid_usd).isZero();
   const ship = o.ship_to as Record<string, string> | null;
 
 
@@ -86,7 +88,7 @@ export default function OrderScreen() {
       <Card style={{ gap: 10 }}>
         <Text variant="title">Pagos</Text>
         <SummaryRow label="Total" value={formatUSD(o.total_usd)} />
-        {Number(o.refunded_usd) > 0 ? <SummaryRow label="Reembolsado" value={`− ${formatUSD(o.refunded_usd)}`} /> : null}
+        {Number(o.refunded_usd) > 0 ? <SummaryRow label={voided ? 'Anulado al cancelar' : 'Reembolsado'} value={`− ${formatUSD(o.refunded_usd)}`} /> : null}
         <SummaryRow label="Pagado y confirmado" value={formatUSD(o.paid_usd)} />
         <Divider />
         <SummaryRow label="Saldo pendiente" value={formatUSD(outstanding.isNegative() ? 0 : outstanding)} strong testID="order-outstanding" />
@@ -123,7 +125,7 @@ export default function OrderScreen() {
 
       {/* deliveries */}
       {o.fulfillments.map((f, i) => (
-        <FulfillmentCard
+        <FulfillmentCard voided={voided}
           key={f.id}
           f={f}
           index={i}
@@ -169,7 +171,7 @@ export default function OrderScreen() {
   );
 }
 
-function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, claim }: { f: Fulfillment & { fulfillment_events: FulfillmentEvent[] }; index: number; total: number; items: OrderItem[]; steps: FulfillmentStep[]; reviews: MyReview[]; onReview: (item: OrderItem) => void; claim?: Claim }) {
+function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, claim, voided }: { f: Fulfillment & { fulfillment_events: FulfillmentEvent[] }; index: number; total: number; items: OrderItem[]; steps: FulfillmentStep[]; reviews: MyReview[]; onReview: (item: OrderItem) => void; claim?: Claim; voided: boolean }) {
   const t = useTheme();
   const reached = new Map<string, string>();
   f.fulfillment_events.filter((e) => e.visible_to_buyer).forEach((e) => reached.set(e.step_code, e.created_at));
@@ -224,7 +226,9 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, cla
               <View style={{ flex: 1, gap: 2 }}>
                 <Text variant="bodySmall" numberOfLines={2}>{it.title}</Text>
                 <Text variant="caption" color="textMuted">{it.variant_title ? `${it.variant_title} · ` : ''}{it.quantity} × {formatUSD(it.unit_price_usd)}</Text>
-                {it.refunded_qty > 0 ? <Text variant="caption" color="info">Reembolsado: {it.refunded_qty} ({formatUSD(it.refunded_usd)})</Text> : null}
+                {it.refunded_qty > 0 ? (
+                  <Text variant="caption" color={voided ? 'textMuted' : 'info'}>{voided ? 'Cancelado' : `Reembolsado: ${it.refunded_qty} (${formatUSD(it.refunded_usd)})`}</Text>
+                ) : null}
                 {review ? (
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                     <Stars value={review.rating} size={12} />

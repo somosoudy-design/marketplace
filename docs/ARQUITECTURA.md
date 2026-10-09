@@ -22,7 +22,7 @@ apps/mobile/src/app          pantallas (expo-router): (tabs), product, cart, che
 apps/mobile/src/components   ui/ (Text, Button, Badge, Card, States, Bars…), catalog/, checkout/
 apps/mobile/src/lib          auth, supabase, query (caché y modo sin conexión), session-storage, hooks
 apps/admin/src/app           rutas del panel; components/ con ui.tsx, Shell, Crud, Settings…
-supabase/migrations          23 migraciones (`20261009000100` … `20261009154233`)
+supabase/migrations          24 migraciones (`20261009000100` … `20261009233831`)
 supabase/functions           rates-sync, push-dispatch, panel-api, payments-start, binance-pay-webhook, paypal-webhook
 supabase/remote-demo         catálogo demo para el proyecto remoto y el script para quitarlo
 tools/supabase-remote        archivos SQL para el SQL Editor cuando el conector no sirve

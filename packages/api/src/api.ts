@@ -25,6 +25,10 @@ import type {
   Profile,
   MyReview,
   ProductReviews,
+  PricingSnapshot,
+  PricingToday,
+  ProductCosts,
+  ProductPricing,
   RateStatus,
   PushHealth,
   SupportContact,
@@ -116,6 +120,8 @@ export function createApi(client: KoraClient) {
         }),
       ).catch(() => undefined), // signals are best-effort and never block the UI
     rate: (pair = 'USD/VES') => run<RateStatus>(rpc('rate_status', { p_pair: pair })),
+    /** The day's gap and the divisas factor per method, to show Zelle/USDT prices (the quote is what charges). */
+    pricingToday: () => run<PricingToday>(rpc('pricing_today')),
     /** Support contact the operator sets in the panel (public setting); null when it is not configured. */
     support: async () => {
       const row = await run<{ value: SupportContact } | null>(from('app_settings').select('value').eq('key', 'support').maybeSingle());
@@ -290,6 +296,10 @@ export function createApi(client: KoraClient) {
   };
 
   const seller = {
+    /** Cost structure and price breakdown of a product of the store (docs/PRECIOS.md). */
+    productPricing: (productId: string) => run<ProductPricing>(rpc('product_pricing', { p_product_id: productId })),
+    setProductCosts: (productId: string, costs: Partial<Omit<ProductCosts, 'product_id' | 'updated_at'>>, variantCosts: { variant_id: string; cost_usd: number | null }[]) =>
+      run<ProductPricing>(rpc('set_product_costs', { p_product_id: productId, p_costs: costs as never, p_variant_costs: variantCosts as never })),
     dashboard: (storeId: string) => run<Record<string, any>>(rpc('seller_dashboard', { p_store_id: storeId })),
     balance: (storeId: string) => run<Record<string, number>>(rpc('seller_balance', { p_store_id: storeId })),
     advance: (fulfillmentId: string, step: string, opts: { note?: string; tracking?: string; carrier?: string } = {}) =>
@@ -334,6 +344,9 @@ export function createApi(client: KoraClient) {
       run<string>(rpc('create_payout', { p_store_id: storeId, p_amount: amount, p_notes: notes ?? null })),
     markPayoutPaid: (payoutId: string, method: string, reference: string) =>
       run<void>(rpc('mark_payout_paid', { p_payout_id: payoutId, p_method: method, p_reference: reference })),
+    /** Takes the day's gap now from the rates in force and reprices the products that follow their cost. */
+    takePricingSnapshot: (note?: string) => run<PricingSnapshot & { repriced: number }>(rpc('take_pricing_snapshot', { p_note: note ?? null })),
+    pricingSnapshots: (limit = 10) => run<PricingSnapshot[]>(from('pricing_snapshots').select('*').order('taken_at', { ascending: false }).limit(limit)),
     recommendationMetrics: (days = 14) => run<RecommendationMetrics>(rpc('recommendation_metrics', { p_days: days })),
     updateBatch: (batchId: string, step: string, note?: string) =>
       run<{ updated: number; skipped: { fulfillment_id: string; reason: string }[] }>(

@@ -93,6 +93,7 @@ export const qk = {
   notifications: ['notifications'] as const,
   profile: ['profile'] as const,
   rate: ['rate'] as const,
+  pricing: ['pricing-today'] as const,
   methods: ['payment-methods'] as const,
   steps: ['fulfillment-steps'] as const,
   claims: ['claims'] as const,
