@@ -253,10 +253,11 @@ Bloqueado por Oliver o por servicios externos:
 
 1. **GitHub:** resuelto. La rama está subida y el PR #1 (borrador) espera revisión de Oliver; no se fusiona
    sin él. El repo no tiene CI: las pruebas se corren en local (sección 7).
-2. **Proyecto Supabase dedicado:** Oliver quiere usar otra cuenta de Supabase (la actual tiene muchos
-   proyectos). Se le pidió crearla y reconectar el conector. Cuando aparezca una organización que no sea la
-   de BingoCriollo: crear el proyecto en plan gratuito, aplicar migraciones y seed demo, desplegar funciones.
-   Pasos en `docs/INSTALACION.md`.
+2. **Proyecto Supabase dedicado:** Oliver creó la organización «Marketplace» (plan gratuito) con el proyecto
+   «Marketplace» (`mimnotafmfasvwrclxan`, us-east-1, Postgres 17), y el conector ya apunta a esa cuenta. Estaba
+   vacío; solo se activó `pg_net`. Aplicar las 20 migraciones espera su visto bueno explícito (la revisión de
+   permisos lo bloqueó sin él). Nunca cargar el seed demo en un proyecto remoto (tiene cuentas con clave
+   conocida). Después: funciones, avisos de seguridad y los pasos del panel en `docs/INSTALACION.md`.
 3. **Expo/EAS, Apple y Google** para builds instalables y publicación (costo). Ver `docs/PUBLICACION.md`.
 4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
 5. **Datos reales:** datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales.
