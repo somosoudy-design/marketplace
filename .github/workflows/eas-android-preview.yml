@@ -47,3 +47,7 @@ jobs:
       - name: Resultado
         if: always() && steps.build.outcome != 'skipped'
         run: node tools/eas/report.mjs eas-build.json
+
+      - name: Revisar el APK (backend, claves, proyecto)
+        if: steps.build.outcome == 'success'
+        run: node tools/eas/verify-apk.mjs --from-json eas-build.json

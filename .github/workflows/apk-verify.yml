@@ -1,0 +1,25 @@
+# Checks an already built APK (backend address, embedded keys, Expo project id) without building again.
+# Runs when .github/apk-verify-request changes on the work branch; that file holds the APK link.
+name: Revisar APK
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/apk-verify-request']
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+
+      - name: Revisar el APK
+        run: node tools/eas/verify-apk.mjs "$(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-verify-request | tail -1)"

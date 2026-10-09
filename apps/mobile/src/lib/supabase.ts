@@ -7,7 +7,8 @@ import { env } from './env';
 // Session tokens live in AsyncStorage (the Supabase-recommended storage for Expo). Only the public anon key ships
 // in the app; every permission is enforced by Row Level Security and database functions.
 export const supabase = createKoraClient({
-  url: env.supabaseUrl || 'http://127.0.0.1:54321',
+  // without configuration the app shows ConfigMissing; the placeholder only keeps the client constructible
+  url: env.supabaseUrl || 'https://not-configured.invalid',
   anonKey: env.supabaseAnonKey || 'missing-anon-key',
   storage: Platform.OS === 'web' && typeof window === 'undefined' ? undefined : AsyncStorage,
   detectSessionInUrl: Platform.OS === 'web',
