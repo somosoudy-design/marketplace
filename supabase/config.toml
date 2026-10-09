@@ -78,3 +78,7 @@ verify_jwt = false
 
 [functions.push-dispatch]
 verify_jwt = false
+
+# The hosted panel (a static site) calls it with the admin's session; the function also checks is_admin().
+[functions.panel-api]
+verify_jwt = true

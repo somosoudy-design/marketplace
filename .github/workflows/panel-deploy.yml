@@ -78,11 +78,15 @@ jobs:
           cat "$GITHUB_WORKSPACE/panel-deploy.json"
           node -e "
             const d = require(process.env.GITHUB_WORKSPACE + '/panel-deploy.json');
-            const urls = [d?.production?.url, d?.url].filter(Boolean);
-            console.log('url=' + (urls[0] ?? ''));
+            console.log('url=' + (d?.production?.url ?? d?.url ?? ''));
+            console.log('deployment=' + (d?.url ?? ''));
           " >> "$GITHUB_OUTPUT"
 
       - name: Comprobar la publicación
+        shell: bash
         env:
           PANEL_URL: ${{ steps.deploy.outputs.url }}
-        run: node tools/panel/check-deploy.mjs "$PANEL_URL" | tee -a "$GITHUB_STEP_SUMMARY"
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment }}
+        run: |
+          set -o pipefail
+          node tools/panel/check-deploy.mjs "$PANEL_URL" "$DEPLOYMENT_URL" | tee -a "$GITHUB_STEP_SUMMARY"

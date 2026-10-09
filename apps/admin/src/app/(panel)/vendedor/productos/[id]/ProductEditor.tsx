@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, ImagePlus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Textarea, cx } from '@/components/ui';
 import { dateTime, moderationTone } from '@/lib/format';
@@ -44,7 +43,6 @@ export default function ProductEditor() {
 function Editor({ product: p }: { product: Product | null }) {
   const { store } = useStore();
   const s = store!;
-  const router = useRouter();
   const qc = useQueryClient();
   const toast = useToast();
   const cats = useCategoriesIndex();
@@ -122,7 +120,9 @@ function Editor({ product: p }: { product: Product | null }) {
       qc.invalidateQueries({ queryKey: ['seller-product', r.id] });
       qc.invalidateQueries({ queryKey: ['stock'] });
       toast.ok(r.moderation_status === 'published' ? 'Guardado y publicado.' : r.moderation_status === 'suspended' ? 'Guardado. El producto sigue suspendido.' : 'Guardado. Quedó en revisión antes de publicarse.');
-      router.replace(`/vendedor/productos/${r.id}`);
+      // the address changes without a page load (the hosted panel has no page per product to navigate to);
+      // Next follows history.replaceState, so useRouteId() gives the new id and the editor loads it
+      if (!p) window.history.replaceState(null, '', `/vendedor/productos/${r.id}`);
     },
     onError: toast.error,
   });

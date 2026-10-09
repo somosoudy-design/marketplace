@@ -3,6 +3,7 @@
 // a script) and prints a Markdown table for the job summary. Fails if a page does not come back as HTML.
 // Usage: node tools/panel/check-deploy.mjs https://<dominio>
 const base = (process.argv[2] ?? '').replace(/\/$/, '');
+const extra = process.argv.slice(3).map((u) => u.replace(/\/$/, ''));
 if (!/^https:\/\//.test(base)) {
   console.log('No hubo URL de publicación.');
   process.exit(1);
@@ -18,6 +19,17 @@ const get = async (path) => {
   }
   return null;
 };
+// a new production deployment can take a moment to answer on its domain
+for (let i = 0; i < 24; i++) {
+  const res = await fetch(`${base}/login`).catch(() => null);
+  if (res?.status === 200) break;
+  await new Promise((r) => setTimeout(r, 5000));
+}
+// direct files tell "the hosting serves our files" apart from "the route manifest does not match"
+for (const path of ['/index.html', '/login.html', '/_expo/.routes.json']) {
+  const res = await get(path);
+  rows.push(`| ${path} (archivo) | ${res?.status ?? 'sin respuesta'} | ${res?.headers.get('content-type') ?? ''} | — |`);
+}
 for (const path of pages) {
   const res = await get(path);
   const type = res?.headers.get('content-type') ?? '';
@@ -39,4 +51,9 @@ console.log(`### Panel publicado: ${base}\n`);
 console.log('| Ruta | Estado | Tipo | Bien |\n|---|---|---|---|');
 console.log(rows.join('\n'));
 console.log(`\nCabeceras de /login: ${headers.join(' · ')}`);
+// the deployment's own address (kora-panel--<id>.expo.app) answers even before the production alias moves
+for (const other of extra) {
+  const r = await fetch(`${other}/login`).catch(() => null);
+  console.log(`\n${other}/login: ${r?.status ?? 'sin respuesta'} ${r?.headers.get('content-type') ?? ''}`);
+}
 if (!ok) process.exit(1);

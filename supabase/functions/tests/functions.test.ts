@@ -3,6 +3,7 @@
 // of each contract, not that the providers accept it. Nothing here touches a real provider or real money.
 import { createHandler as binanceWebhook } from '../binance-pay-webhook/handler.ts';
 import { createHandler as paymentsStart } from '../payments-start/handler.ts';
+import { createHandler as panelApi } from '../panel-api/handler.ts';
 import { createHandler as paypalWebhook } from '../paypal-webhook/handler.ts';
 import { createHandler as pushDispatch, EXPO_PUSH_URL, EXPO_RECEIPTS_URL } from '../push-dispatch/handler.ts';
 import { createHandler as ratesSync } from '../rates-sync/handler.ts';
@@ -37,9 +38,11 @@ const rpc = <T>(fn: string, args: Record<string, unknown>, token?: string) =>
 const service = <T>(path: string, init: RequestInit = {}) => api<T>(path, { ...init, key: SERVICE });
 const uid = () => crypto.randomUUID().slice(0, 8);
 
+/** A new confirmed buyer, whatever "Confirm email" says (the local stack asks for the code like production). */
 async function signUp() {
   const email = `fn-${uid()}@example.com`;
-  const r = await api<{ access_token: string; user: { id: string } }>('/auth/v1/signup', { method: 'POST', body: JSON.stringify({ email, password: 'Kora-prueba-2026', data: { full_name: 'Prueba funciones' } }) });
+  await service('/auth/v1/admin/users', { method: 'POST', body: JSON.stringify({ email, password: 'Kora-prueba-2026', email_confirm: true, user_metadata: { full_name: 'Prueba funciones' } }) });
+  const r = await api<{ access_token: string; user: { id: string } }>('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password: 'Kora-prueba-2026' }) });
   return { token: r.access_token, id: r.user.id };
 }
 
@@ -354,4 +357,58 @@ Deno.test('push receipts: checked once due, dead devices removed, undelivered no
   const denied = await fetch(`${URL_}/rest/v1/rpc/push_health`, { method: 'POST', headers: { apikey: ANON, authorization: `Bearer ${user.token}`, 'content-type': 'application/json' }, body: '{}' });
   eq(denied.status, 403);
   await denied.body?.cancel();
+});
+
+// ---------- panel-api (the hosted panel's server actions) ----------
+async function signIn(email: string) {
+  const r = await api<{ access_token: string }>('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password: 'Demo-1234' }) });
+  return r.access_token;
+}
+const publicDns = () => Promise.resolve(['93.184.215.14']);
+const panelCall = (h: (r: Request) => Promise<Response>, action: string, body: unknown, token?: string) =>
+  h(new Request(`http://functions.local/panel-api${action}`, { method: 'POST', headers: { 'content-type': 'application/json', ...(token ? { authorization: `Bearer ${token}` } : {}) }, body: JSON.stringify(body) }));
+
+Deno.test('panel-api: only admins; a buyer or a visitor gets nothing', async () => {
+  const h = panelApi({ env: envWith({}), fetch: noNetwork, resolve: publicDns });
+  eq((await panelCall(h, '/import', { url: 'https://www.amazon.com/dp/B0TEST' })).status, 401);
+  const buyer = await signUp();
+  eq((await panelCall(h, '/import', { url: 'https://www.amazon.com/dp/B0TEST' }, buyer.token)).status, 403);
+  eq((await panelCall(h, '/rates/sync', {}, buyer.token)).status, 403);
+});
+
+Deno.test('panel-api: Amazon stays manual and is never fetched; a public page gives its product metadata', async () => {
+  const admin = await signIn('admin@example.com');
+  let fetched = 0;
+  const page = '<html><head><script type="application/ld+json">{"@type":"Product","name":"Cable de prueba","offers":{"price":"9.99","priceCurrency":"USD"},"image":"https://shop.example.com/c.jpg"}</script></head></html>';
+  const fake: typeof fetch = () => { fetched++; return Promise.resolve(new Response(page, { headers: { 'content-type': 'text/html; charset=utf-8' } })); };
+  const h = panelApi({ env: envWith({}), fetch: fake, resolve: publicDns });
+
+  const manual = await (await panelCall(h, '/import', { url: 'https://www.amazon.com/dp/B0TEST' }, admin)).json() as { import: { status: string } };
+  eq([manual.import.status, fetched], ['manual_required', 0]);
+
+  const res = await panelCall(h, '/import', { url: 'https://shop.example.com/cable' }, admin);
+  const body = await res.json() as { import: { status: string; extracted: { title: string } } };
+  eq([res.status, body.import.status, body.import.extracted.title, fetched], [200, 'extracted', 'Cable de prueba', 1]);
+});
+
+Deno.test('panel-api: a name that resolves to a private address, or a redirect to one, is refused', async () => {
+  const admin = await signIn('admin@example.com');
+  const privateDns = () => Promise.resolve(['10.0.0.8']);
+  const h = panelApi({ env: envWith({}), fetch: () => Promise.reject(new Error('must not connect')), resolve: privateDns });
+  const r1 = await (await panelCall(h, '/import', { url: 'https://intranet.example.com/x' }, admin)).json() as { import: { status: string; message: string } };
+  eq([r1.import.status, r1.import.message], ['failed', 'Dirección no permitida.']);
+
+  const redirect: typeof fetch = () => Promise.resolve(new Response(null, { status: 302, headers: { location: 'http://169.254.169.254/latest/meta-data' } }));
+  const r2 = await (await panelCall(panelApi({ env: envWith({}), fetch: redirect, resolve: publicDns }), '/import', { url: 'https://shop.example.com/x' }, admin)).json() as { import: { message: string } };
+  eq(r2.import.message, 'Dirección no permitida.');
+});
+
+Deno.test('panel-api: rates sync acts as the admin and stores nothing when every source fails', async () => {
+  const admin = await signIn('admin@example.com');
+  const before = await service<unknown[]>('/rest/v1/exchange_rates?select=id');
+  const res = await panelCall(panelApi({ env: envWith({}), fetch: noNetwork, resolve: publicDns }), '/rates/sync', {}, admin);
+  const { results } = await res.json() as { results: { ok: boolean }[] };
+  eq(res.status, 200);
+  assert(results.length >= 4 && results.every((r) => !r.ok), JSON.stringify(results));
+  eq((await service<unknown[]>('/rest/v1/exchange_rates?select=id')).length, before.length, 'no rate stored');
 });
