@@ -54,6 +54,13 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
 - **catalog/**: `ProductCard`, `ProductGrid` (virtualizada), `ProductImage`, `CategoryTiles`, `StoreCard`,
   `Catalog` (búsqueda, filtros y orden con `OptionsSheet`).
 - **checkout/**: filas de opción y de resumen.
+- **Barras y hojas:** `Bars` (`useScrollY`, `CollapsingHeader` que aparece al pasar la foto, `BottomBar` fija
+  con la acción principal), `Sheet` (hoja inferior con asa, fondo y cierre por gesto).
+- **Tasa:** `RatePill` ("BCV · 100,00 Bs. por USD", variantes demo y sin tasa) y `RateSheet` (fuente, hora,
+  margen, qué se fija al pagar y qué no).
+- **Opiniones:** `reviews/Reviews` (resumen con barras, opinión con respuesta de la tienda, nota en línea) y
+  `ReviewSheet` (estrellas y comentario, editable).
+- **Catálogo:** `MiniProductCard` para listas compactas; `ProductRail` y `TrackedSection` miden lo que se ve.
 - `ErrorBoundary` por pantalla y `ConfigMissing` cuando faltan variables públicas.
 
 ## Estados comerciales del producto
@@ -96,7 +103,9 @@ reintentar), sin conexión (mensaje de red amable) y éxito (confirmación clara
 Mismos tokens vía CSS. Componentes en `apps/admin/src/components`: `ui.tsx` (botones, campos con ayuda y
 error accesibles, tablas, insignias, diálogos, pestañas, avisos), `Crud.tsx` (tablas editables de
 configuración), `Fulfillment.tsx`, `ProductReview.tsx`, `Claims.tsx`, `Payouts.tsx`, `StockTable.tsx`,
-`Shell.tsx`. El panel prioriza densidad y eficiencia sin perder la identidad.
+`Shell.tsx`, `Reviews.tsx` (moderación y respuesta de opiniones). El panel prioriza densidad y eficiencia sin
+perder la identidad: filtros en la misma línea que las pestañas, cifras tabulares, barras finas para comparar
+proporciones (CTR) y avisos honestos cuando los datos son de demostración o la muestra es pequeña.
 
 ## Accesibilidad
 

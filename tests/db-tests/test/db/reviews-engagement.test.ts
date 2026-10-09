@@ -47,6 +47,11 @@ describe('verified reviews', () => {
     await expect(
       asUser(buyer.id, (sql) => sql(`insert into public.reviews (order_item_id, product_id, store_id, user_id, rating) values ($1, $2, $3, $4, 5)`, [item, f.productId, f.storeId, buyer.id])),
     ).rejects.toMatchObject({ code: '42501' });
+
+    // editable for 60 days after publishing
+    await admin(`update public.reviews set created_at = now() - interval '61 days' where id = $1`, [r1.id]);
+    await expectHint(submit(buyer.id, item, 1, 'Cambio de opinión tardío'), 'review_locked');
+    await admin(`update public.reviews set created_at = now() where id = $1`, [r1.id]);
   });
 
   it('the summary aggregates published reviews and moderation hides them with a reason', async () => {

@@ -170,7 +170,7 @@ begin
    where reviews.user_id = v_user and reviews.created_at > now() - interval '60 days'
   returning * into v_review;
   if v_review.id is null then
-    raise exception 'review can no longer be edited' using errcode = 'P0001', hint = 'not_reviewable';
+    raise exception 'review can no longer be edited' using errcode = 'P0001', hint = 'review_locked';
   end if;
 
   perform public._refresh_ratings(v_item.product_id, v_item.store_id);

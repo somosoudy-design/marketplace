@@ -65,6 +65,10 @@ export const ERROR_MESSAGES: Record<string, string> = {
   instructions_required: 'Agrega los datos de pago (cuenta, teléfono o dirección) antes de activar este método.',
   rate_anomaly: 'La tasa recibida varía demasiado respecto a la anterior. Revísala manualmente.',
   invalid_setting: 'Ese valor no es válido para este parámetro.',
+  invalid_input: 'Revisa los datos: hay un valor fuera de lo permitido.',
+  not_found: 'No encontramos lo que buscas. Puede que ya no exista o no tengas acceso.',
+  not_reviewable: 'Podrás calificar este producto cuando se complete la entrega.',
+  review_locked: 'Una opinión se puede editar durante 60 días después de publicarla.',
   network: 'Sin conexión. Revisa tu internet e intenta de nuevo.',
   unknown: 'Algo salió mal. Intenta de nuevo.',
 };

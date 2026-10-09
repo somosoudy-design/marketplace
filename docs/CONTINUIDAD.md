@@ -3,13 +3,15 @@
 > Propósito: que cualquier sesión o persona continúe exactamente donde quedó el trabajo, sin rehacer nada
 > ni perder las directrices originales. Actualízalo al cerrar cada hito (sección 8 = bitácora).
 >
-> Última actualización: 2026-10-09 (cierre de v1). Rama de trabajo: `claude/marketplace-v1`.
+> Última actualización: 2026-10-09 (cierre de la ronda de profundidad). Rama de trabajo: `claude/marketplace-v1`.
 
 ## 0. Estado en una línea
 
 La v1 está construida, documentada y verificada en local: base de datos, motor financiero, app móvil, panel
-de administración y de vendedor, funciones de servidor y 138 pruebas en verde tras reconstruir la base desde
-cero. Lo que queda depende de Oliver o de servicios externos: acceso de GitHub para subir la rama, proyecto
+de administración y de vendedor, funciones de servidor, y una ronda de profundidad (opiniones verificadas,
+posventa como conversación, inicio editorial, tasa explicada, recomendaciones medidas con su panel,
+parámetros validados). 156 pruebas en verde tras reconstruir la base desde cero, revisión visual en claro y
+oscuro de lo nuevo. Lo que queda depende de Oliver o de servicios externos: acceso de GitHub para subir la rama, proyecto
 Supabase dedicado, cuentas de Expo/tiendas y credenciales de proveedores (ver sección 5).
 
 ## 1. Directrices originales que no se pueden perder
@@ -97,6 +99,34 @@ Decisiones clave:
   role. El importador por URL (`/api/import`) usa `safe-fetch.ts` con protección SSRF (IPv4/IPv6 privadas,
   redirecciones re-validadas, tamaño máximo). Limitación conocida: no protege contra DNS rebinding entre la
   validación y la conexión; es una herramienta solo para administradores.
+- **Opiniones verificadas** (migración `001700`): solo opina quien compró y recibió (`submit_review` por
+  línea de pedido, editable). La tienda responde en público (`reply_review`); la plataforma oculta con un
+  motivo que ve el autor (`moderate_review`). `rating_avg`/`rating_count` de productos y tiendas son datos
+  derivados: los recalcula `_refresh_ratings` y el trigger `guard_rating_fields` impide escribirlos a mano
+  (ni un vendedor ni un admin pueden inflar su nota).
+- **Recomendaciones medidas:** `track_recommendation(slot, kind, ids)` guarda impresiones (una por persona,
+  espacio y producto por hora) y clics en `rec_events`, con límite de frecuencia; respeta
+  `personalization_enabled`. `recommendation_metrics(días)` (solo admin) da por espacio impresiones, clics,
+  CTR, personas, agregados al carrito y compras dentro de 7 días tras el clic, los productos más tocados y
+  `demo_events`/`events` para avisar cuando la muestra es de cuentas demo. Retención:
+  `privacy.event_retention_days` (180) con `prune_activity()` (cron si existe pg_cron); `clear_my_activity`
+  también borra estas mediciones. Pesos del ranking en el ajuste `ranking`.
+- **Medición en la app:** `apps/mobile/src/lib/impressions.tsx`. `useViewportTracking()` + `ImpressionScope`
+  envuelven el scroll; `TrackedSection` (hijo directo del contenido del scroll) registra las tarjetas visibles
+  sin deslizar la primera vez que entra en pantalla; `ProductRail` registra las que se descubren deslizando y
+  el clic en la tarjeta. Espacios: `home_for_you`, `home_featured`, `home_popular`, `home_recent`,
+  `collection:<slug>`, `cart_empty`, `related`.
+- **Parámetros validados** (migración `001800`): el trigger `guard_setting_value` valida al escribir los
+  ajustes con los que calculan las funciones (horas de vencimiento, plazo del vendedor, comisión, prefijo de
+  pedido, `ranking`, `pricing.import`); `guard_setting_delete` impide borrarlos. El error lleva
+  `hint = invalid_setting` y un `detail` en español que `toAppError` muestra tal cual (lista `DETAILED`).
+- **Notificaciones:** `notify()` marca `is_test` si el destinatario es una cuenta demo o el pedido/producto
+  es demo, y esas nunca se envían por push (`push_status = skipped`). Los avisos de reclamo llevan
+  `order_id` y `fulfillment_id` para abrir la conversación; `notify_store` marca `audience: 'store'` (la app
+  no los abre: se gestionan en el panel). Montos con `_fmt_usd` ("$1.234,56").
+- **Reclamos:** conversación comprador–tienda; el comprador puede escalar cuando la tienda respondió o pasó
+  `claims.seller_response_hours` (48) sin respuesta; escalar deja un mensaje en la conversación y avisa a la
+  tienda. Un solo reclamo abierto por entrega.
 - **Storage:** buckets públicos `catalog` y `stores` (ruta `<store_id>/...`, solo jpeg/png/webp) y privados
   `payment-proofs` y `claims` (carpeta del usuario; jpeg/png/webp/pdf). En el cliente sube siempre `await file.arrayBuffer()` con `contentType`
   (el shim local rechaza multipart).
@@ -115,6 +145,19 @@ Decisiones clave:
 - Estados vacíos, de carga (skeleton), error de red amable y sin pantallas en blanco.
 - Accesibilidad: etiquetas reales, `aria-describedby` en ayudas y errores, foco visible, contraste AA.
 - Mensajes siempre en español de Venezuela, sin jerga técnica hacia el usuario.
+- Inicio con ritmo editorial: saludo, búsqueda (que se vuelve barra fija al bajar), píldora de la tasa,
+  categorías con foto, vistos recientemente, colecciones que alternan banda destacada / cuadrícula / carrusel
+  según su `layout`, tiendas, y un feed continuo "Para ti" que termina con un cierre, no con un corte.
+- La tasa nunca es un número suelto: la píldora "BCV · 100,00 Bs. por USD" abre una hoja que explica fuente,
+  hora, margen, que el precio de referencia es USD, que el monto en bolívares se fija al generar el pago y que
+  USDT usa su propia tasa. Estados de demostración y "sin tasa" con su propio texto.
+- Posventa como conversación: calificar desde el pedido, reportar un problema con motivos claros y seguir el
+  reclamo como chat con estado, plazo de la tienda y escalado explicado antes de confirmarlo.
+- Notificaciones agrupadas por día con icono y color por tipo; los avisos de demostración se anuncian una vez.
+- Formularios por secciones con sugerencias (direcciones: "Quién recibe", "Dónde", "Guárdala como";
+  ciudades sugeridas del estado; campos opcionales plegados) y botón de guardar fijo.
+- Panel: misma paleta y tipografía; tablas densas pero legibles, filtros en línea con las pestañas, avisos
+  honestos cuando los datos son de demostración o la muestra es pequeña.
 
 ## 4. Funcionalidades implementadas y verificadas
 
@@ -153,6 +196,19 @@ Verificadas = cubiertas por pruebas que se ejecutaron en verde (sección 6).
   automáticas), envíos propios (solo tarifas reales de entregas que despacha), perfil de tienda con logo,
   portada y acento, productos con editor completo (variantes, fotos, inventario, historial de moderación).
 - **Seguridad del panel:** la app rechaza una service role key; el panel solo usa anon key + sesión.
+- **Opiniones:** calificar desde el pedido entregado (hoja con estrellas y comentario, editable), resumen y
+  lista en la ficha, perfil de tienda con su nota; calificaciones derivadas a prueba de manipulación;
+  moderación con motivo (`/admin/opiniones`) y respuesta de la tienda con filtro "sin responder"
+  (`/vendedor/opiniones`).
+- **Reclamos en la app:** formulario por motivo, conversación con la tienda, estado y plazo visibles,
+  escalado con confirmación, decisión final visible; el pedido muestra el reclamo en lugar del botón.
+- **Notificaciones:** centro por día, marcadas como leídas al verlas, enlace al pedido o al reclamo,
+  avisos demo rotulados y nunca enviados por push.
+- **Inicio, tasa y carrito:** inicio editorial con feed continuo y medición de impresiones; píldora y hoja de
+  la tasa; carrito vacío con sugerencias medidas; relacionados medidos en la ficha.
+- **Recomendaciones en el panel** (`/admin/recomendaciones`): rendimiento por espacio y período, productos
+  más tocados, aviso de tráfico demo o muestra pequeña, editor de pesos validado igual que en la base.
+- **Parámetros validados:** un valor inválido en Configuración se rechaza con el motivo exacto.
 
 ## 5. Pendiente
 
@@ -161,7 +217,10 @@ Bloqueado por Oliver o por servicios externos:
 1. **GitHub:** la app de Claude no tiene acceso a `somosoudy-design/marketplace` (público). Cuando lo tenga:
    `git push -u origin claude/marketplace-v1` y abrir PR hacia `main` (el remoto solo tiene un README inicial;
    la rama ya está rebasada sobre él).
-2. **Proyecto Supabase dedicado** (autorización y posible costo). Pasos en `docs/INSTALACION.md`.
+2. **Proyecto Supabase dedicado:** Oliver quiere usar otra cuenta de Supabase (la actual tiene muchos
+   proyectos). Se le pidió crearla y reconectar el conector. Cuando aparezca una organización que no sea la
+   de BingoCriollo: crear el proyecto en plan gratuito, aplicar migraciones y seed demo, desplegar funciones.
+   Pasos en `docs/INSTALACION.md`.
 3. **Expo/EAS, Apple y Google** para builds instalables y publicación (costo). Ver `docs/PUBLICACION.md`.
 4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
 5. **Datos reales:** datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales.
@@ -171,8 +230,12 @@ Mejoras ejecutables sin bloqueo (siguiente trabajo sugerido):
 - Pruebas en Android/iOS reales cuando exista una build (Maestro o Detox).
 - Recibos de entrega de Expo Push (segunda fase) además de los tickets.
 - Verificación automática de pagos USDT en cadena.
-- Métricas del sistema de recomendaciones en el panel.
 - Protección contra DNS rebinding en el importador (resolver una vez y conectar a esa IP).
+- Persistencia de consultas sin conexión en la app (React Query persister) para abrir pedidos sin red.
+- Revisión visual completa en modo oscuro de todas las pantallas de la app (revisadas: inicio, hoja de tasa,
+  reclamo, notificaciones; faltan checkout, pagos y cuenta).
+- Ajustes del panel: "Parámetros" sigue siendo un editor JSON genérico; los críticos ya se validan en la base,
+  pero merecen formularios propios como el de pesos del ranking.
 
 ## 6. Integraciones: estado
 
@@ -180,17 +243,18 @@ Tabla completa y actualizada en `docs/INTEGRACIONES.md`.
 
 ## 7. Pruebas y resultados (ejecutadas de verdad)
 
-Tras `pnpm db:reset` el 2026-10-09 (detalle y casos críticos en `docs/PRUEBAS.md`):
+Tras `pnpm db:reset` el 2026-10-09, cierre de la ronda de profundidad: 156 pruebas en verde (detalle y casos
+críticos en `docs/PRUEBAS.md`):
 
 | Suite | Comando | Resultado |
 |---|---|---|
-| Base de datos | `pnpm test:db` | 58/58 |
+| Base de datos | `pnpm test:db` | 71/71 |
 | E2E por API pública | `pnpm test:e2e` | 8/8 |
 | Funciones del servidor (Deno) | `pnpm test:functions` | 9/9 |
-| Núcleo | `pnpm --filter @kora/core test` | 32/32 |
+| Núcleo | `pnpm --filter @kora/core test` | 34/34 |
 | Panel unitario (SSRF) | `pnpm test:admin` | 23/23 |
-| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 5/5 |
-| Panel entre roles (Playwright) | `pnpm test:panel` | 3/3 |
+| UI app (Playwright, Pixel 7) | `pnpm test:ui` | 6/6 |
+| Panel entre roles (Playwright) | `pnpm test:panel` | 5/5 |
 | Tipos / lint / build del panel | `pnpm typecheck`, `pnpm lint`, `pnpm --filter @kora/admin build` | sin errores |
 
 No ejecutado: builds nativas y dispositivos reales (sin Android SDK ni Google Maven ni macOS), proveedores
@@ -242,6 +306,15 @@ Convenciones:
   de `.local/gateway.pid`.
 - El servidor de desarrollo de Next a veces entra en bucle de recarga; reinícialo.
 - En Playwright los tabs del panel son `role="tab"`; usa `exact: true` con etiquetas que se solapan.
+- Datos para pruebas de UI que la interfaz no alcanza rápido (pedido pagado y entregado, opinión, eventos de
+  recomendación): `tests/app-e2e/tests/support/db.ts` (`deliveredOrderFor`, `reviewAs`,
+  `browseRecommendations`). Solo corre contra la base local y usa las mismas funciones que la app.
+- `tiendas@example.com` administra dos tiendas (Casa Lumen y Patitas & Co.); el selector "Tienda" del panel
+  decide cuál se ve. Los pedidos de `deliveredOrderFor` son de Patitas & Co.
+- Lint de la app (compilador de React): no leer ni escribir refs durante el render, nada impuro en el render
+  (`Date.now()` va en `useState(() => Date.now())`); refs se actualizan en efectos.
+- Ajuste nuevo que una función de la base convierta a número: agrégalo a `guard_setting_value` (migración
+  `001800`) y su prueba en `config-guards.test.ts`.
 
 ## 9. Bitácora
 
@@ -251,3 +324,9 @@ Convenciones:
 - 2026-10-09 — Funciones del servidor (pagos en línea, webhooks, tasas, push) con migración `001600`; pago en
   línea en la app (iniciar, retomar, cancelar); marca del panel desde `config/brand.json`; ESLint en app y
   panel; base reconstruida desde cero y 138 pruebas en verde; documentación final en `docs/`.
+- 2026-10-09 — Ronda de profundidad tras la directriz de Oliver ("implementar no es terminar"): opiniones
+  verificadas con calificaciones derivadas, perfil de tienda, barras fijas, inicio editorial con feed continuo,
+  hoja de la tasa, reclamos como conversación con escalado, centro de notificaciones por día con avisos demo
+  seguros, formulario de dirección por secciones, carrito vacío con sugerencias, medición de recomendaciones,
+  panel de opiniones y de recomendaciones, validación de parámetros en la base (migración `001800`).
+  Cada pieza con prueba y revisión de pantalla (claro y oscuro). Push a GitHub sigue rechazado (403).
