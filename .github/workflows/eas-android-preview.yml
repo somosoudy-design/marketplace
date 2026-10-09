@@ -1,0 +1,57 @@
+# Installable Android test build (APK) on EAS for https://expo.dev/accounts/marketplacebrand/projects/marketplace.
+# Runs when .github/apk-preview-request changes on the work branch (or a tag apk-preview-* is pushed).
+# Needs the repository secret EXPO_TOKEN (an Expo access token).
+# Internal distribution only: nothing is submitted to Google Play.
+name: APK de prueba (EAS)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/apk-preview-request']
+    tags: ['apk-preview-*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eas-android-preview
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Compilación en EAS (espera a que termine)
+        id: build
+        working-directory: apps/mobile
+        run: npx --yes eas-cli@24.12.1 build --platform android --profile preview --non-interactive --wait --json > "$GITHUB_WORKSPACE/eas-build.json"
+
+      - name: Resultado
+        if: always() && steps.build.outcome != 'skipped'
+        run: node tools/eas/report.mjs eas-build.json
+
+      - name: Revisar el APK (backend, claves, proyecto)
+        if: steps.build.outcome == 'success'
+        run: node tools/eas/verify-apk.mjs --from-json eas-build.json
+
+      - name: Datos de instalación (firma, versión, Android mínimo, procesadores)
+        if: steps.build.outcome == 'success'
+        run: bash tools/eas/inspect-apk.sh "$(node -e "const r=require('fs').readFileSync('eas-build.json','utf8'); console.log(JSON.parse(r.slice(r.indexOf('[')))[0].artifacts.buildUrl)")"

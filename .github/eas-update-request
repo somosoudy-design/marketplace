@@ -1,0 +1,5 @@
+# Cambiar este archivo en la rama de trabajo publica una actualización en el canal preview (workflow eas-update-preview).
+# Llega a los APK que tienen expo-updates (APK 4 en adelante) con el mismo runtime. La primera línea sin # es el mensaje.
+# runtime: el de los APK instalados; el workflow se detiene si el de esta versión es otro (algo nativo cambió).
+runtime: a4682c83c1bb738fc74c73153838ded0656f1912
+Pago más claro: métodos por moneda con su costo y botón fijo; colores Electric Violet en pantallas de error
