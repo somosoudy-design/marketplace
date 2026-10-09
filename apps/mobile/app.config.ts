@@ -8,13 +8,22 @@ const variant = (process.env.APP_VARIANT ?? 'development') as 'development' | 'p
 const suffix = variant === 'production' ? '' : `.${variant}`;
 const nameSuffix = variant === 'production' ? '' : variant === 'preview' ? ' (Preview)' : ' (Dev)';
 
+// The icon, splash and notification colour are compiled into the APK, so changing them changes the runtime
+// fingerprint and updates stop reaching the test APKs already installed. They switch with a new APK only:
+// 'original' is what APK 4 carries; 'violet' (assets/images/violet) is the Electric Violet identity.
+const NATIVE_IDENTITY: 'original' | 'violet' = 'original';
+const native = {
+  original: { dir: './assets/images', brand: '#0E5E54', splash: '#F6F0E7', splashDark: '#121416' },
+  violet: { dir: './assets/images/violet', brand: '#6D42E8', splash: '#F8F7FC', splashDark: '#110F18' },
+}[NATIVE_IDENTITY];
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: `${brand.name}${nameSuffix}`,
   slug: expo.slug,
   version: '0.1.0',
   orientation: 'portrait',
-  icon: './assets/images/icon.png',
+  icon: `${native.dir}/icon.png`,
   scheme: brand.scheme,
   userInterfaceStyle: 'automatic',
   ios: {
@@ -30,9 +39,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: `${brand.androidPackage}${suffix}`,
     adaptiveIcon: {
-      backgroundColor: '#6D42E8',
-      foregroundImage: './assets/images/android-icon-foreground.png',
-      backgroundImage: './assets/images/android-icon-background.png',
+      backgroundColor: native.brand,
+      foregroundImage: `${native.dir}/android-icon-foreground.png`,
+      backgroundImage: `${native.dir}/android-icon-background.png`,
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: true,
@@ -59,10 +68,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#F8F7FC',
-        image: './assets/images/splash-icon.png',
+        backgroundColor: native.splash,
+        image: `${native.dir}/splash-icon.png`,
         imageWidth: 96,
-        dark: { backgroundColor: '#110F18', image: './assets/images/splash-icon-dark.png' },
+        dark: { backgroundColor: native.splashDark, image: `${native.dir}/splash-icon-dark.png` },
       },
     ],
     [
@@ -73,7 +82,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         microphonePermission: false,
       },
     ],
-    ['expo-notifications', { icon: './assets/images/notification-icon.png', color: '#6D42E8' }],
+    ['expo-notifications', { icon: './assets/images/notification-icon.png', color: native.brand }],
     'expo-web-browser',
   ],
   // EAS Update: test builds pick up JavaScript and image changes without a new APK. The fingerprint changes

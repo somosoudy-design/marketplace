@@ -55,7 +55,10 @@ function encryptedStorage(): Storage | null {
       }
       try {
         const sealed = Crypto.AESSealedData.fromCombined(stored.slice(SEALED.length));
-        return utf8Decode(await Crypto.aesDecryptAsync(sealed, await sessionKey(), { output: 'bytes' }));
+        const bytes = await Crypto.aesDecryptAsync(sealed, await sessionKey(), { output: 'bytes' });
+        // On Android expo-crypto hands back the whole output buffer, which is a tag's length (16 zero bytes)
+        // longer than the plaintext; the plaintext is exactly as long as the ciphertext.
+        return utf8Decode(bytes.subarray(0, sealed.combinedSize - sealed.ivSize - sealed.tagSize));
       } catch {
         // the key is gone (restored from a backup, app data partly cleared): the session cannot be trusted
         await AsyncStorage.removeItem(name);

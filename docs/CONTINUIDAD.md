@@ -3,7 +3,7 @@
 > Propósito: que cualquier sesión o persona continúe exactamente donde quedó el trabajo, sin rehacer nada
 > ni perder las directrices originales. Actualízalo al cerrar cada hito (sección 8 = bitácora).
 >
-> Última actualización: 2026-10-09 (backend remoto operativo, APK de prueba entregado, catálogo demo remoto preparado). Rama de trabajo: `claude/marketplace-v1`,
+> Última actualización: 2026-10-09 21:30Z (Directriz maestra 02: APK 4 instalado en el Samsung de Oliver, catálogo demo cargado en el proyecto remoto, registro con código de 6 dígitos, identidad Electric Violet e Inicio de tienda). Rama de trabajo: `claude/marketplace-v1`,
 > subida a GitHub con PR en borrador: https://github.com/somosoudy-design/marketplace/pull/1
 
 ## 0. Estado en una línea
@@ -17,9 +17,13 @@ formularios propios, precio sugerido en el importador, contacto de soporte confi
 GitHub (PR #1 en borrador). Backend de pruebas en el proyecto Supabase «Marketplace»: 23 migraciones
 aplicadas, tasas en vivo cada 30 min y cola de push cada minuto, sin clave maestra en la base (token de
 trabajos en Vault). APK de prueba compilado en EAS (marketplacebrand/marketplace) y revisado
-automáticamente; entregado a Oliver con lo que se puede probar en el teléfono. 179 pruebas en verde tras
-reconstruir la base desde cero. Pendiente de Oliver: cargar o no el catálogo de demostración en el proyecto
-remoto (preparado y ensayado), `kora://**` en Redirect URLs y el correo de confirmación. Ver sección 5.
+automáticamente. El APK 4 (registro y recuperación con código de 6 dígitos, sesión cifrada, EAS Update y
+pantalla de diagnóstico) está instalado en el Samsung de Oliver, y el catálogo de demostración está cargado en
+el proyecto remoto. Plan vigente: Directriz maestra 02 (hitos A instalar, B catálogo y acceso, C Inicio e
+identidad, D compra completa, E validación). A y B hechos; C en curso (Electric Violet, Inicio de tienda);
+las actualizaciones de JavaScript llegan al APK 4 por EAS Update mientras no cambie nada nativo. Pendiente de
+Oliver: pegar las plantillas de correo con código en Supabase (`/mnt/project-files/marketplace/supabase/correos-con-codigo.md`).
+Ver sección 5.
 
 ## 1. Directrices originales que no se pueden perder
 
@@ -277,8 +281,11 @@ Bloqueado por Oliver o por servicios externos:
    **Catálogo de demostración remoto:** `supabase/remote-demo/catalogo-demo.sql` (sin usuarios, pedidos ni
    tasas; imágenes del repo fijadas a un commit; se niega a cargar dos veces) y `quitar-catalogo-demo.sql`
    (borra, o suspende si ya hay pedidos). Se regeneran con `pnpm catalog:remote` y se prueban con
-   `pnpm test:remote-catalog`. Se carga solo si Oliver lo aprueba en la tarjeta de decisión del hilo; el
-   archivo de carga solo hace `INSERT`/`UPDATE`, así que puede ir por el conector; el de quitar va al SQL Editor.
+   `pnpm test:remote-catalog`. **Cargado el 2026-10-09 ~21:00Z** con el visto bueno de Oliver («cargue el
+   catálogo»), en 5 partes por el conector: 5 tiendas, 16 categorías, 43 productos (42 publicados, uno en
+   revisión a propósito), 62 variantes, 100 imágenes, 7 colecciones, 5 métodos de pago con datos ficticios
+   «No transferir». El md5 del contenido coincide con una carga local del mismo archivo. Como visitante:
+   `home_feed` trae 7 colecciones y 16 recomendados; buscar «ugreen» da 11. El de quitar va al SQL Editor.
    Pasos de Oliver todavía abiertos: `kora://**` en Redirect URLs y desactivar «Confirm email» o configurar
    SMTP (`docs/INSTALACION.md`).
 3. **APK de prueba (EAS):** proyecto https://expo.dev/accounts/marketplacebrand/projects/marketplace (creado
@@ -292,7 +299,13 @@ Bloqueado por Oliver o por servicios externos:
    `.github/apk-emulator-request`) los instala en un Android 15 limpio: los tres se instalan; APK 1 y 2 abren y
    siguen funcionando; el 3 se cae al abrir (SoLoader no encuentra `libreactnative.so` bajo la traducción ARM
    del emulador), así que se volvió a todas las arquitecturas. En los Samsung S24 Ultra y S25 Ultra de Oliver
-   los tres dan «App no instalada»: bloqueo del teléfono, en revisión (Bloqueador automático, país).
+   los tres dan «App no instalada». El **APK 4** (build `5ee104fe`, versionCode 2, commit `3509547`) sí se
+   instaló en su Samsung el 2026-10-09 ~20:40Z. Runtime del APK 4: `a4682c83c1bb738fc74c73153838ded0656f1912`
+   (fingerprint). Las actualizaciones (`.github/eas-update-request`, workflow `eas-update-preview.yml`) solo
+   le llegan con ese mismo runtime: el workflow lo compara con la línea `runtime:` del archivo y se detiene si
+   cambió. Por eso el icono, el splash y el color de notificación siguen la constante `NATIVE_IDENTITY` de
+   `app.config.ts` (`'original'` hasta el próximo APK, luego `'violet'`). Local:
+   `APP_VARIANT=preview apps/mobile/node_modules/.bin/expo-updates fingerprint:generate --platform android`.
    Probado solo en la versión web, no en un
    teléfono físico. No publicar en Google Play. Tiendas: `docs/PUBLICACION.md` (costo).
 4. **Credenciales** de Binance Pay, PayPal, FCM/APNs y SMTP. Ver `docs/SERVICIOS_EXTERNOS.md`.
@@ -433,3 +446,11 @@ Convenciones:
   invitados. EAS por archivo de solicitud; APK 1 compilado, revisado por `verify-apk.mjs` y entregado con
   `que-probar.md`. Catálogo de demostración remoto preparado y ensayado contra una base solo con migraciones
   (compra y reporte de pago de un comprador nuevo); se carga solo con el visto bueno de Oliver. 179 pruebas.
+- 2026-10-09 — Directriz maestra 02. Registro y recuperación con código de 6 dígitos dentro de la app (sin
+  enlaces a localhost), sesión cifrada con AES-256-GCM y clave en el Keystore, EAS Update por canal y pantalla
+  de diagnóstico (`kora://diagnostico`). APK 4 instalado en el Samsung de Oliver. Catálogo de demostración
+  cargado en el proyecto remoto. El emulador mostró que en Android la sesión cifrada se leía con 16 bytes de
+  más (expo-crypto devuelve el búfer completo al descifrar): corregido recortando al largo del texto cifrado.
+  Identidad Electric Violet (Plus Jakarta Sans, violeta #6D42E8, tinta #1C1928, coral #FF746B) e Inicio de
+  tienda (buscador, categorías, colecciones, recomendados, tiendas destacadas, populares; sin bloques de tasa
+  ni de confianza). Lo nativo violeta queda para el próximo APK.

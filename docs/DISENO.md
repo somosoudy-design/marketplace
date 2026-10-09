@@ -1,4 +1,4 @@
-# Sistema de diseño "Arena y Jade"
+# Sistema de diseño "Electric Violet"
 
 Fuente única: `packages/design-tokens/src/index.ts`. La app la usa directamente (`apps/mobile/src/theme`),
 el panel la recibe como variables CSS
@@ -7,31 +7,42 @@ cambia los tres.
 
 ## Principios
 
+- **Esto es una tienda.** Lo primero que se ve son productos: buscador grande, categorías compactas,
+  colecciones con foto, recomendados, populares y tiendas destacadas. Nada de bloques institucionales, de
+  pago o de tasa en el Inicio (la tasa vive en la cuenta, el carrito y el checkout, donde se decide).
 - **La complejidad pertenece al sistema; la claridad, al usuario.** El comprador ve un monto exacto, un
   estado y una acción; las fórmulas, tasas y reglas quedan en el servidor y en el panel.
-- **El producto es protagonista.** Fotografía primero, luego nombre, precio y disponibilidad. Nada más en
-  la tarjeta salvo que aporte una decisión.
-- **Personalidad sin ruido.** Superficies arena cálidas, jade profundo como marca, ámbar para momentos de
-  alegría, coral solo para urgencia. Serif editorial (Fraunces) para títulos, sans humanista (Manrope) para
-  la interfaz. Nada de blanco clínico ni negro absoluto.
+- **El producto es protagonista.** Fotografía primero, luego nombre, precio y disponibilidad. El violeta marca
+  la acción y la selección, no rellena superficies; el coral solo señala descuentos, urgencia y el punto de la
+  marca. Sin degradados gratuitos ni sombras decorativas: la sombra es para lo que flota (hojas, barras fijas).
+- **Una sola familia tipográfica.** Plus Jakarta Sans (400 a 800) en títulos, interfaz y precios, con
+  tracking negativo en los tamaños grandes; las cifras van tabulares.
 - **Un universo.** Inicio, catálogo, ficha, carrito, checkout y perfil comparten tokens, componentes y ritmo.
+
+Las capturas de referencia que compartió el dueño (cuatro apps de compras) guían la personalidad y la calidad
+de la experiencia, no se copian. Están en los archivos del proyecto, fuera del repositorio.
 
 ## Tokens
 
 | Grupo | Contenido |
 |---|---|
-| `palette` | jade, ámbar, coral, ciruela, cielo, arena (0–900), noche |
-| `colors.light` / `colors.dark` | roles semánticos: fondo, superficie, hundida, elevada, borde, texto (primario, secundario, apagado, inverso), marca, acento, peligro, éxito, aviso, info, editorial, skeleton, barra de pestañas |
+| `palette` | violet (500 `#6D42E8` marca, 100 `#EDE6FF` lavanda), ink (900 `#1C1928` tinta, 600 `#777383` texto secundario, 50 `#F8F7FC` superficie), coral (400 `#FF746B` energía), green, amber, sky, night |
+| `colors.light` / `colors.dark` | roles semánticos: fondo, superficie, hundida, elevada, borde, texto (primario, secundario, apagado, inverso), marca, marca suave, acento, peligro, éxito, aviso, info, editorial, skeleton, barra de pestañas. Contraste AA del texto sobre su fondo en ambos modos |
 | `photoTones` | fondo, fondo profundo, sombra y oscuro para cada tono fotográfico (arena, salvia, rubor, niebla, arcilla, lila, noche) |
-| `typography` | displayXL/L/M (serif), title, subtitle, body, bodySmall, label, caption, overline, price, priceLarge, button |
+| `fontFamilies` / `typography` | Plus Jakarta Sans; displayXL 30, displayL 25, displayM 19, title 17, subtitle, body 15, bodySmall, label, caption, overline, price, priceLarge 26, button |
 | `space` | escala de 4 px (0–64) |
-| `radii` | xs 6, sm 10, md 14, lg 20, xl 28, pill |
-| `elevation` | none, low, high (sombras cálidas, nunca negras) |
+| `radii` | xs 6, sm 10, md 14, lg 18, xl 24, pill |
+| `elevation` | none, low, high (sombras teñidas de tinta, solo para lo que flota) |
 | `motion` | duraciones 90/160/240/360 ms, resortes snappy/gentle/sheet, escala al presionar 0,97 |
 | `imagery` | producto 4:5, portada 16:9, logo 56 |
 | `layout` | margen 16, ancho máximo 720, objetivo táctil mínimo 44 |
 | `availabilityStyles` | etiqueta y tono de cada estado comercial |
 | `storeAccents` | paleta curada para que cada tienda se exprese sin romper la coherencia |
+
+El icono, el splash y el color de notificación forman parte del APK: `apps/mobile/app.config.ts` los toma de
+`NATIVE_IDENTITY`. Hoy es `'original'` (lo que lleva el APK 4) para que las actualizaciones sigan llegando a
+los APK instalados; con el próximo APK pasa a `'violet'` (`assets/images/violet`, generado por
+`tools/demo-assets/generate-brand.mjs`).
 
 Modo oscuro: automático según el sistema, con los mismos roles semánticos.
 

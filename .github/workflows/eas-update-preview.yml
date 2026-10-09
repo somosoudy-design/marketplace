@@ -42,11 +42,24 @@ jobs:
         working-directory: apps/mobile
         run: node -e "for (const [k, v] of Object.entries(require('./eas.json').build.preview.env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
 
+      # An update only reaches APKs with the same fingerprint; a native change (icon, splash, a native module) makes
+      # it unreachable. The request names the runtime of the installed APKs, and the job stops if it no longer matches.
+      - name: Runtime de los APK instalados
+        working-directory: apps/mobile
+        run: |
+          want="$(grep -E '^runtime:' "$GITHUB_WORKSPACE/.github/eas-update-request" | head -1 | awk '{print $2}')"
+          have="$(node_modules/.bin/expo-updates fingerprint:generate --platform android | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).hash))")"
+          echo "runtime de esta versión: $have"
+          if [ -n "$want" ] && [ "$want" != "$have" ]; then
+            echo "::error::El runtime cambió ($have, se esperaba $want): algo nativo cambió y la actualización no llegaría a esos APK. Hace falta un APK nuevo."
+            exit 1
+          fi
+
       - name: Publicar en el canal preview
         id: update
         working-directory: apps/mobile
         run: |
-          msg="$(grep -v '^#' "$GITHUB_WORKSPACE/.github/eas-update-request" | grep -v '^\s*$' | head -1)"
+          msg="$(grep -v '^#' "$GITHUB_WORKSPACE/.github/eas-update-request" | grep -v '^runtime:' | grep -v '^\s*$' | head -1)"
           npx --yes eas-cli@24.12.1 update --channel preview --platform android --message "${msg:-Versión de prueba}" --non-interactive --json > "$GITHUB_WORKSPACE/eas-update.json"
 
       - name: Resultado

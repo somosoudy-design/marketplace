@@ -34,6 +34,19 @@ for apk in apks/*.apk; do
       diag=$(adb logcat -d 2>/dev/null | grep -o 'KoraDiag .*' | tail -1)
       echo "diagnóstico: ${diag:-sin pantalla de diagnóstico en esta versión}"
       adb exec-out screencap -p >"shots/$name-diagnostico.png" 2>/dev/null
+      if [ -n "$diag" ]; then
+        # an update published to the channel downloads on the first launch and runs from the next cold start
+        adb shell am force-stop "$PKG"
+        adb logcat -c
+        adb shell am start -a android.intent.action.VIEW -d "kora://diagnostico" "$PKG" >/dev/null 2>&1
+        sleep 20
+        diag=$(adb logcat -d 2>/dev/null | grep -o 'KoraDiag .*' | tail -1)
+        echo "diagnóstico al reabrir: ${diag:-no respondió}"
+        adb exec-out screencap -p >"shots/$name-reabierta.png" 2>/dev/null
+        adb shell am start -a android.intent.action.VIEW -d "kora://" "$PKG" >/dev/null 2>&1
+        sleep 8
+        adb exec-out screencap -p >"shots/$name-inicio.png" 2>/dev/null
+      fi
     fi
     echo '```'
   } >>"$out"
