@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 14:08 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 14:19 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -110,7 +110,10 @@ Pruebas nuevas añadidas para 320 px, estados reales, favoritos y movimiento red
 Primer pase completo: core **50/50**, API **12/12**, admin **28/28**, app **48 pasan + 1 omisión**
 (registro sin confirmación desactivado en local), panel **9/9**, tipos/lint en verde. Suite específica **17/17**.
 Segundo checkpoint antes de exportar: mejoras finales de accesibilidad y rotulación demo, pruebas ampliadas;
-falta el pase final de app, auditoría/capturas después y compatibilidad/publicación. Se preparó selección de
+Pase posterior: 50 casos pasan; los dos nuevos de scroll enviaban el gesto antes de cargar el catálogo,
+se corrige la espera. Stock local agotado en una repetición: reiniciado solo el stack local del protocolo.
+Auditoría axe: corregidas alternativas de imágenes decorativas, filtros con `aria-pressed` y foco del
+buscador oculto; falta repetir auditoría/app, capturas después y compatibilidad/publicación. Se preparó selección de
 recorridos/temas para probar solo visitantes en Android, sin escrituras remotas. No tocar motor financiero, Supabase remoto, Firebase, panel,
 marca/configuración nativa ni dependencias; sin APK nuevo ni Frente B.
 

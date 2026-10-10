@@ -130,20 +130,22 @@ for (const colorScheme of ['light', 'dark'] as const) {
 
     test('search stays reachable during Home scroll and hidden search controls stay out of the reader tree', async ({ page }) => {
       await page.goto('/');
+      await expect(page.getByTestId('home-recommended').locator('[data-testid^="product-surface-"]').first()).toBeVisible();
       await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true })).toHaveCount(1);
       const sticky = page.getByTestId('home-search-sticky');
       await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'true');
       const scroll = page.getByTestId('home-scroll');
-      await scroll.hover();
+      // The hero is a horizontal rail; send vertical input over the masthead, not that nested scroll view.
+      await page.mouse.move(150, 100);
       await page.mouse.wheel(0, 650);
+      await expect.poll(() => scroll.evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
       await expect(sticky).toBeVisible();
       await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'false');
       await sticky.click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();
       await page.getByTestId('buyer-tab-index').click();
       await expect.poll(() => scroll.evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
-      await scroll.hover();
-      await page.mouse.wheel(0, -3000);
+      await scroll.evaluate((el) => el.scrollTo({ top: 0 }));
       await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'true');
     });
   });

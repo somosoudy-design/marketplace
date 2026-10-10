@@ -36,18 +36,18 @@ export default function AccountScreen() {
       <Text variant="displayL">Cuenta</Text>
       {!user ? (
         <>
-        <Card style={{ gap: 14, padding: 20 }}>
-          <View style={{ width: 52, height: 52, borderRadius: 26, backgroundColor: t.colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}>
-            <Icon name="user" size={26} color={t.colors.brand} />
-          </View>
-          <Text variant="title">Entra para comprar y seguir tus pedidos</Text>
-          <Text color="textSecondary">Guarda direcciones, paga en bolívares o dólares y recibe avisos de cada entrega.</Text>
-          <Button testID="account-sign-in" title="Iniciar sesión" full onPress={() => router.push('/sign-in')} />
-          <Button title="Crear cuenta" variant="secondary" full onPress={() => router.push('/sign-up')} />
-        </Card>
-        <Card padded={false}>
-          <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle="Lo que guardas con el corazón" onPress={() => router.push('/favorites')} />
-        </Card>
+          <Card style={{ gap: 14, padding: 20 }}>
+            <View style={{ width: 52, height: 52, borderRadius: 26, backgroundColor: t.colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="user" size={26} color={t.colors.brand} />
+            </View>
+            <Text variant="title">Entra para comprar y seguir tus pedidos</Text>
+            <Text color="textSecondary">Guarda direcciones, paga en bolívares o dólares y recibe avisos de cada entrega.</Text>
+            <Button testID="account-sign-in" title="Iniciar sesión" full onPress={() => router.push('/sign-in')} />
+            <Button title="Crear cuenta" variant="secondary" full onPress={() => router.push('/sign-up')} />
+          </Card>
+          <Card padded={false}>
+            <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle="Lo que guardas con el corazón" onPress={() => router.push('/favorites')} />
+          </Card>
         </>
       ) : (
         <>

@@ -45,10 +45,12 @@ terceros y no se suben al repositorio (están en los archivos del proyecto de Cl
 
 ## Navegación contextual
 
-- En pantallas de exploración: navegación principal discreta, cuatro pestañas con nombre (Inicio, Buscar,
-  Carrito, Cuenta). Favoritos es una lista guardada, no un lugar para explorar: se abre con el corazón junto a
-  las notificaciones en el Inicio y desde Cuenta (decisión de Oliver, 2026-10-10). No se rellena el hueco con otra
-  pestaña.
+- En pantallas de exploración: Inicio, Buscar, Carrito y Cuenta. Solo la pestaña activa se expande con icono
+  y nombre; las otras conservan icono y etiqueta para lectores de pantalla. Electric Violet marca la selección,
+  transición de 180 ms (instantánea con movimiento reducido), objetivos mínimos de 44 px.
+  Favoritos se abre desde Cuenta (también como visitante) y desde productos/tarjetas; la cabecera de Inicio
+  reserva sus acciones para notificaciones reales y carrito. Carrito permanece en la barra porque esa
+  cabecera no está en Buscar/Cuenta. Ambos accesos comparten estado y contador, sin un carrito nuevo.
 - En la ficha de producto: sin navegación innecesaria; fotografía, información relevante y la acción de
   compra fija abajo.
 - En el checkout: menos distracciones, pasos numerados y el total con su botón fijos abajo.
@@ -63,7 +65,8 @@ Inicio → Buscar → Producto → Variantes → Carrito → Checkout → Métod
 
 UX-04 distingue Inicio (descubrimiento) de Buscar (el catálogo existente en `/explore`, con filtros).
 Se retira el botón duplicado de filtros junto al buscador de Inicio; capacidades y enlaces se conservan.
-Decisión y alcance: `docs/UX-04.md`. UX-06 requiere revisión de Oliver antes de empezar.
+Decisión inicial: `docs/UX-04.md`. El pedido Frente A V2 del 2026-10-10 autoriza pulir también Inicio y
+descubrimiento sobre las secciones existentes; decisiones vigentes en `docs/FRENTE_A_V2.md`. Sin Frente B.
 
 Todo el recorrido usa el mismo lenguaje visual y conserva las capacidades: multivendedor, tiendas
 independientes, disponibles, por encargo, reservables, carrito multivendedor, cuotas, anticipos, saldo en

@@ -28,7 +28,7 @@ export function ProductImage({ path, tone, alt, radius, aspect, style, priority 
           transition={180}
           priority={priority}
           recyclingKey={uri}
-          accessibilityLabel={alt}
+          accessibilityLabel={alt ?? ''}
           accessible={!!alt}
           cachePolicy="memory-disk"
         />

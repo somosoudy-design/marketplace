@@ -29,7 +29,7 @@ export function CategoryTiles({ categories }: { categories: CategorySummary[] })
           >
             <View style={{ width: SIZE, height: SIZE, borderRadius: SIZE / 2, backgroundColor: tone.bg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
               {uri ? (
-                <Image source={{ uri }} style={{ width: SIZE * 1.18, height: SIZE * 1.18 * 1.25, marginTop: SIZE * 0.08 }} contentFit="cover" transition={150} cachePolicy="memory-disk" accessible={false} />
+                <Image source={{ uri }} alt="" style={{ width: SIZE * 1.18, height: SIZE * 1.18 * 1.25, marginTop: SIZE * 0.08 }} contentFit="cover" transition={150} cachePolicy="memory-disk" accessible={false} />
               ) : (
                 <Icon name={c.icon ?? 'tag'} size={26} color={t.scheme === 'dark' ? t.colors.text : tone.dark} />
               )}

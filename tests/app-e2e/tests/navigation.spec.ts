@@ -45,13 +45,13 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page).toHaveURL(/\/cart$/);
       await page.getByRole('tab', { name: 'Buscar', exact: true }).click();
       await expect(search).toHaveValue('ugreen');
-      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-selected', 'true');
+      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'true');
       await products.first().click();
       await expect(page.getByTestId('product-title')).toBeVisible();
       await expect(page.getByRole('tab', { name: 'Buscar', exact: true })).toBeHidden();
       await page.getByTestId('product-back').click();
       await expect(search).toHaveValue('ugreen');
-      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-selected', 'true');
+      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'true');
       await expect(page.getByRole('tab', { name: 'Buscar', exact: true })).toHaveAttribute('aria-selected', 'true');
     });
 

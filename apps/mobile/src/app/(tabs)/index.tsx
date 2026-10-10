@@ -294,6 +294,8 @@ function StickySearch({ y }: { y: SharedValue<number> }) {
             scaleTo={0.99}
             accessibilityRole="button"
             accessibilityLabel="Buscar productos, marcas o tiendas"
+            focusable={visible}
+            tabIndex={visible ? 0 : -1}
             onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
             style={{ flex: 1, height: 44, borderRadius: t.radii.sm, backgroundColor: t.colors.surfaceSunken, flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12 }}
           >

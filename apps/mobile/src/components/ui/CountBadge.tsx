@@ -9,6 +9,7 @@ export function CountBadge({ count, testID }: { count: number; testID?: string }
   return (
     <View
       testID={testID}
+      aria-hidden
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
       style={{ position: 'absolute', right: -3, top: -3, minWidth: 20, height: 20, borderRadius: 10, paddingHorizontal: 4, backgroundColor: colors.brand, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: colors.surface }}

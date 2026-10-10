@@ -11,7 +11,8 @@ export function Chip({ label, selected, onPress, icon, count, testID }: { label:
     <ScalePressable
       testID={testID}
       accessibilityRole="button"
-      aria-selected={!!selected}
+      accessibilityState={{ selected }}
+      aria-pressed={selected}
       onPress={() => {
         haptics.select();
         onPress?.();

@@ -51,8 +51,8 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { name: string; icon:
         <Icon name={icon} size={23} color={color} strokeWidth={isFocused ? 2.2 : 1.8} />
         <CountBadge count={badge} testID="tab-cart-count" />
       </View>
-      <Animated.View style={[{ overflow: 'hidden', flexShrink: 1 }, caption]} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-        {isFocused ? <Text testID="active-tab-label" variant="caption" numberOfLines={1} style={{ marginLeft: 8, color, fontFamily: 'PlusJakartaSans_700Bold', fontSize: 12 }}>{label}</Text> : null}
+      <Animated.View style={[{ overflow: 'hidden', flexShrink: 1 }, caption]} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <Text testID={isFocused ? 'active-tab-label' : undefined} variant="caption" numberOfLines={1} style={{ marginLeft: 8, color, fontFamily: 'PlusJakartaSans_700Bold', fontSize: 12 }}>{label}</Text>
       </Animated.View>
     </AnimatedPressable>
   );

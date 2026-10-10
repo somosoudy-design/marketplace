@@ -40,9 +40,9 @@ de la experiencia, no se copian. Están en los archivos del proyecto, fuera del 
 | `storeAccents` | paleta curada para que cada tienda se exprese sin romper la coherencia |
 
 El icono, el splash y el color de notificación forman parte del APK: `apps/mobile/app.config.ts` los toma de
-`NATIVE_IDENTITY`. Hoy es `'original'` (lo que lleva el APK 4) para que las actualizaciones sigan llegando a
-los APK instalados; con el próximo APK pasa a `'violet'` (`assets/images/violet`, generado por
-`tools/demo-assets/generate-brand.mjs`).
+`NATIVE_IDENTITY`. APK 5 ya lleva `'violet'` (`assets/images/violet`, generado por
+`tools/demo-assets/generate-brand.mjs`). Frente A V2 conserva esa configuración y el runtime existente;
+las mejoras visuales son JavaScript/assets, sin APK nuevo.
 
 Modo oscuro: automático según el sistema, con los mismos roles semánticos.
 
@@ -68,8 +68,12 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
   en hoja inferior, igual en web, iOS y Android; el botón destructivo dice exactamente qué hace y el de volver
   conserva: "Conservar el pedido"), `Layout` (`Card`, `Divider`, `ListRow`, `SectionHeader`,
   `Stepper`), `Icon` (set propio de trazos).
-- **catalog/**: `ProductCard`, `ProductGrid` (virtualizada), `ProductImage`, `CategoryTiles`, `StoreCard`,
+- **catalog/**: `ProductCard` (foto/nombre de una línea/precio en una superficie redondeada con borde sutil),
+  `MiniProductCard` (misma estructura compacta), `ProductFavorite` (acción separada del enlace de la tarjeta,
+  44 px), `ProductGrid` (virtualizada), `ProductImage`, `CategoryTiles`, `StoreCard`,
   `Catalog` (búsqueda, filtros y orden con `OptionsSheet`).
+  Las tarjetas demo muestran «Demo» y anuncian demostración; solo las reales muestran descuento/escasez.
+  `ProductCardSkeleton` conserva la misma superficie para evitar saltos de composición al cargar.
 - **checkout/**: filas de opción y de resumen.
 - **Barras y hojas:** `Bars` (`useScrollY`, `CollapsingHeader` que aparece al pasar la foto, `BottomBar` fija
   con la acción principal), `Sheet` (hoja inferior con asa, fondo y cierre por gesto).
@@ -102,10 +106,13 @@ rango ("Estimado entre … y …"), no como promesa.
 
 ## Navegación
 
-- Descubrimiento (Inicio, Buscar, Carrito, Cuenta) con barra de pestañas compacta y todas las etiquetas visibles;
-  Favoritos se abre con el corazón del encabezado del Inicio y desde Cuenta.
+- Descubrimiento (Inicio, Buscar, Carrito, Cuenta) con barra redondeada común en web/nativo: activo expandido
+  con icono/nombre, inactivos con icono y etiqueta accesible. Violet en selección, 180 ms y movimiento reducido.
+  Favoritos desde Cuenta y productos; Inicio muestra notificaciones reales, carrito con contador y buscador.
+  El carrito sigue en la barra para acceder desde cualquier pestaña. Detalle: `docs/FRENTE_A_V2.md`.
 - Buscar reutiliza el catálogo `/explore`; Inicio conserva su buscador y retira el botón contiguo de filtros
-  que abría el mismo destino. Sin cambios en tokens, identidad ni secciones de descubrimiento (`docs/UX-04.md`).
+  que abría el mismo destino (`docs/UX-04.md`). V2 perfecciona hero, espaciado y carruseles existentes;
+  categorías, tracking y feed virtualizado se conservan. Sin cambios en tokens ni identidad nativa.
 - Ficha de producto sin barra principal: volver, favorito, compartir y barra fija con «Agregar» (se queda en la
   ficha con un enlace al carrito) y la acción principal («Comprar», «Encargar» o «Reservar»: agrega y abre el
   carrito). Orden de la ficha: marca, título, calificación, precio (principal; precio especial con Zelle/USDT en

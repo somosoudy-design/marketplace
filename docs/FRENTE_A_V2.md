@@ -32,7 +32,10 @@ Pruebas específicas **17/17** en claro/oscuro. Sin cambios en los módulos de b
 Revisión adicional: semántica tablist y selección explícita en web; buscador fijo oculto fuera del árbol
 accesible mientras no se ve y objetivo de 44 px; datos `is_demo` rotulados también en tarjeta/colección,
 sin mostrar descuento o escasez demo como oferta real. Se amplía la prueba para esos comportamientos.
-Capturas después, auditoría final y compatibilidad/publicación pendientes.
+Auditoría axe adicional: imágenes decorativas con alternativa vacía explícita, filtros como botones
+activados (`aria-pressed`, selección nativa conservada) y buscador oculto fuera del foco de teclado.
+La repetición de suite usa seed local limpio para no agotar stock entre compras de prueba. Prueba de scroll
+espera la carga del catálogo antes del gesto. Capturas después, pase final y compatibilidad/publicación pendientes.
 
 Modificar las pruebas que dependan del antiguo corazón de Inicio conservando las comprobaciones de
 Favoritos y Atrás desde Cuenta/productos. Verificar barras a 320/340 px, movimiento reducido, enfoque,
