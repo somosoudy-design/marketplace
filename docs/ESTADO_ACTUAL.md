@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:26 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 15:36 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -114,7 +114,7 @@ Oliver autorizó publicar y eligió expresamente el canal **production**. El APK
 primero validar esta misma actualización en ese APK por preview, luego publicarla en production con el mismo
 runtime compatible, sin crear APK ni cambiar configuración nativa/backend. No afirmar que APK 5 usa production.
 Preview publicado con Success: [run 38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216), fuente `b60b2cc`, guard APK 5 superado.
-Revisión 31 en curso: [run 38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), fuente `ade80e6`. Únicamente visitantes/favoritos/Atrás en ambos temas
+Revisión 31 **Success**, 6/6 (visitante oscuro al segundo intento): [run 38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), fuente `ade80e6`. Únicamente visitantes/favoritos/Atrás en ambos temas
 en el APK 5 existente. No ejecutar flujos remotos de registro, compra, pago o push.
 Sin cambios en motor financiero, Supabase remoto, Firebase, panel, marca, dependencias ni Frente B.
 
@@ -137,14 +137,15 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Verificar el run de APK en emulador iniciado por la revisión 31: solo APK 5 existente,
-`flows: frente-a-v2/01-visitante 01b-volver-favoritos 01c-volver-favoritos-atras`, `themes: light dark`.
-Fetch de `ci/capturas` para resumen/diagnóstico y revisión visual Android. Corregir cualquier fallo antes de publicar production.
-Promotor production preparado en `eas-update-production.yml` / `tools/eas/promote-update.mjs` (3/3 pruebas).
-Al pasar Android, crear `.github/eas-production-update-request` con fuente `b60b2cc29e4247333552c5841cb69e692e61a010`,
-Android `ade80e6d2c88e19a8c9349b23b5f723635e8a3c1`, runs preview 38079470216 / Android 38079644334, runtime APK 5.
-Reutiliza grupo inmutable, exige ambos runs Success y código/dependencias idénticos, consulta builds compatibles
-de production y no cambia los enlaces actuales de los canales. Registrar el resultado real antes de cerrar. Cerrar documentación, commit/push y revisión de Oliver. **Sin Frente B.**
+Verificar Success del workflow production solicitado en este checkpoint. La solicitud contiene los runs
+preview 38079470216 / Android 38079644334 aprobados y sus commits exactos; el promotor reutiliza el grupo
+inmutable, verifica APK 5/recorridos/ambos temas, misma huella y código/dependencias idénticos (guardas 4/4).
+Registrar grupo publicado y builds compatibles que informa el aviso público «EAS production» del run.
+Android comprobado: OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, canal preview, runtime APK 5, sesión cifrada sí
+al reabrir. Evidencia `.local/frente-a-v2/android/`, copia de `ci/capturas` run 38079644334.
+Las seis pruebas pasan; visitante oscuro necesitó un segundo intento automático. El resumen no identifica
+el paso fallido del primero: conservar esa salvedad, no afirmar seis pases al primer intento.
+Cerrar documentación/pendientes/historial, commit/push y revisión de Oliver. **Sin Frente B.**
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de
@@ -187,9 +188,8 @@ recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status
 Validación actual **Frente A V2**, base `9e4e1f5`, mismo stack local: tipos/lint sin errores, núcleo 50/50,
 admin 28/28, API 12/12, app **52 aprobadas + 1 omitida**, panel 9/9. App incluye 13 casos V2 y 6 de navegación
 UX-04. axe: 0 infracciones en 8 pantallas/temas a 320 px; contraste de texto seleccionado AA. Galería web autónoma
-`.local/frente-a-v2/comparacion.html`, 40 capturas antes / 50 después. Guardas del promotor production 3/3.
-Preview fuente `b60b2cc`: run 38079470216 Success, runtime exacto APK 5 comprobado. Android revisión 31 en curso;
-production esperará sus resultados. Sin validación en teléfono ni TalkBack/VoiceOver físicos. Detalle y límites en
+`.local/frente-a-v2/comparacion.html`, 40 capturas antes / 50 después. Guardas del promotor production 4/4.
+Preview fuente `b60b2cc`: run 38079470216 Success, runtime exacto APK 5 comprobado. Android revisión 31 **Success**, 6/6 (1 reintento); production solicitado en este checkpoint. Sin validación en teléfono ni TalkBack/VoiceOver físicos. Detalle y límites en
 `docs/PRUEBAS.md` / `docs/FRENTE_A_V2.md`.
 
 Validación **anterior** UX-04 (2026-10-10, entorno Codex cloud, Node 24.19.0, pnpm 10.28.0, Postgres 17.11,

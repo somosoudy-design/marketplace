@@ -17,11 +17,11 @@ ni configuración nativa. APK 5 existente; sin compilación nueva. Detalle: `doc
 | Panel entre roles | 9/9 |
 | axe WCAG A/AA, Inicio/Buscar/Carrito/Cuenta a 320 px en claro/oscuro | **0 infracciones en 8 comprobaciones** |
 | Contraste de texto manual | Pestaña activa 4,83:1 claro / 5,03:1 oscuro; contador 5,84 / 7,01; título tarjeta 17,23 / 15,59 |
-| Guardas del promotor production (`node --test tools/eas/promote-update.test.mjs`) | 3/3: rechaza runtime/destino incorrectos, validación fallida/de otro commit y update que no corresponde |
+| Guardas del promotor production (`node --test tools/eas/promote-update.test.mjs`) | 4/4: exige APK 5/recorridos/temas y rechaza runtime/destino incorrectos, validación fallida/de otro commit y update que no corresponde |
 | Capturas web | Antes 40; después 50, ambos temas, Pixel 7 + cinco vistas a 320 px |
 | EAS preview Android | **Success** [38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216), fuente `b60b2cc`; guard runtime APK 5 superado |
-| Android 15, APK 5 real existente, revisión 31 | En curso: [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334); tres recorridos de visitante en dos temas |
-| EAS production | Pendiente del resultado Android; promoverá el mismo grupo inmutable, sin reconstruir |
+| Android 15, APK 5 real existente, revisión 31 | **Success**, [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334): **6/6**, visitante oscuro al segundo intento; captura/diagnóstico OTA V2 confirmado |
+| EAS production | Solicitado después de Android; promueve el mismo grupo inmutable, sin reconstruir |
 
 La suite comprueba distintos estados de producto con fixtures locales, notificaciones de un pedido local y
 carrito/checkout, además de regresiones de perfil/tiendas. Se corrigieron selectores de pantallas retenidas,
@@ -36,6 +36,10 @@ Transición de pestañas 180 ms o inmediata con movimiento reducido; listas virt
 Observación Chromium local: navegación 399/174 ms claro/oscuro, frames mediana 16,7 ms, p95 83,3/16,8 ms
 con carga inicial. No equivale a FPS de un teléfono. TalkBack/VoiceOver, rendimiento físico y push físico
 siguen sin comprobar en este frente. Android visitante no crea cuentas/pedidos/pagos ni escribe Favoritos remotos.
+Evidencia Android en `.local/frente-a-v2/android/` y rama `ci/capturas`, run 38079644334; el diagnóstico
+confirma OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e` / runtime APK 5 / canal preview / sesión cifrada sí.
+Una ejecución del visitante oscuro falló y pasó al reintentar; el resumen no identifica el paso del fallo
+inicial. Se conserva la salvedad, sin desactivar ninguna comprobación.
 
 ## UX-04 — 2026-10-10 (Codex cloud)
 

@@ -25,7 +25,7 @@ se conserva; Electric Violet sigue siendo la identidad visual.
 Base sincronizada y limpia: `9e4e1f5`. Sin trabajo pendiente de otro agente. Regresión de UX-04 y cambios
 anteriores: **16/16**. Implementación visual validada hasta `622e227`; fuente OTA `b60b2cc`. Preview **Success** en
 [38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216). Android revisión 31
-en [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), pendiente de terminar.
+en [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), **Success**: seis recorridos aprobados, visitante oscuro al segundo intento.
 
 | Comprobación local | Resultado final |
 |---|---|
@@ -65,10 +65,25 @@ Oliver autorizó publicar al finalizar y especificó el canal **production**. El
 consume **preview** y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
 Primero publicar/verificar en preview y ejecutar Android 15 con ese APK existente, solo recorridos de visitante
 en claro/oscuro. Después promover el mismo grupo inmutable a production con `eas-update-production.yml` /
-`tools/eas/promote-update.mjs` (guardas unitarias **3/3**). Exige runs preview/Android aprobados y código nativo,
+`tools/eas/promote-update.mjs` (guardas unitarias **4/4**). Exige runs preview/Android aprobados y código nativo,
 app y dependencias idénticos a la fuente; consulta builds Android terminados con production y este runtime
 para indicar qué build lo consume. No reconstruye el paquete ni cambia el enlace de preview. No cambiar el perfil nativo ni crear un APK para cambiar de canal.
 
 No modificar panel, motor financiero, SQL, Supabase remoto, Firebase, identidad nativa ni dependencias.
 No ejecutar registro, pedidos, pagos o push remotos. Registrar runs/resultados antes del relevo final;
 no afirmar recepción de producción en APK 5 ni verificación física sin evidencia. Frente B fuera del alcance.
+
+### Android 15 — revisión 31
+
+Run [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334) **Success**,
+Maestro 2.11.0, APK 5 existente (único APK del request; el archivo se llama `apk1.apk`). Tres recorridos
+en cada tema: nuevo visitante V2, volver de Favoritos con flecha, volver con Atrás de Android. **6/6**;
+visitante oscuro pasó en el reintento automático. El resumen no conserva el paso fallido del primero;
+no presentarlo como seis pases al primer intento. Capturas revisadas: Inicio/Buscar/Cuenta/Carrito/contador
+en ambos temas. El nuevo `home-cart` confirma V2 y la ficha conserva la búsqueda al volver.
+
+Diagnóstico al reabrir: actualización `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, canal preview, runtime
+`eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend existente de pruebas, sesión cifrada sí.
+Evidencia recuperada mediante `git fetch origin ci/capturas`, `ultima/LEEME.md` / `resumen.md`;
+copia local `.local/frente-a-v2/android/`. Ninguna cuenta, pedido, pago, escritura de favoritos ni push remoto.
+Production solicitado tras esta comprobación; registrar el grupo/inventario real cuando termine.

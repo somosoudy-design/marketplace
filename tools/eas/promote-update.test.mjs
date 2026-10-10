@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { selectUpdate, validateRequest, validateRun } from './promote-update.mjs';
+import { selectUpdate, validateAndroidRequest, validateRequest, validateRun } from './promote-update.mjs';
 
 const request = {
   destinationChannel: 'production', sourceBranch: 'preview',
@@ -34,4 +34,18 @@ test('selects the tested Android update and rejects another commit, runtime, bra
     { runtimeVersion: 'old' }, { isRollBackToEmbedded: true }].map(bad => ({ ...update, ...bad }));
   assert.equal(selectUpdate(invalid, request), undefined);
   assert.equal(selectUpdate([...invalid, update], request), update);
+});
+
+test('requires the existing APK 5 and the complete visitor validation in both themes', () => {
+  const text = [
+    '# Only the existing APK 5',
+    'APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk',
+    'flows: frente-a-v2/01-visitante 01b-volver-favoritos 01c-volver-favoritos-atras',
+    'themes: light dark',
+  ].join('\n');
+  validateAndroidRequest(text);
+  for (const bad of [text.replace('d1d10c28', 'other'), text.replace('themes: light dark', 'themes: light'),
+    text.replace('frente-a-v2/01-visitante', '01-visitante'), text + '\nAPK 4: other.apk']) {
+    assert.throws(() => validateAndroidRequest(bad));
+  }
 });

@@ -10,6 +10,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url));
 const mobile = resolve(repo, 'apps/mobile');
 const trackedApp = ['apps/mobile', 'packages', 'config', 'pnpm-lock.yaml', 'package.json', 'pnpm-workspace.yaml'];
 const apk5Runtime = 'eb5ed1179b9c76c9c3cf27333aa48306728eb4ba';
+const apk5Url = 'https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk';
 
 export function validateRequest(request) {
   assert.equal(request.destinationChannel, 'production', 'Only the authorized production channel is allowed');
@@ -43,6 +44,15 @@ export function selectUpdate(updates, request) {
   );
 }
 
+export function validateAndroidRequest(text) {
+  const lines = text.split('\n').filter(line => line.trim() && !line.startsWith('#'));
+  assert.deepEqual(lines.filter(line => line.startsWith('APK ')), ['APK 5 (build d1d10c28): ' + apk5Url],
+    'Android validation must use the existing APK 5 only');
+  assert(lines.includes('flows: frente-a-v2/01-visitante 01b-volver-favoritos 01c-volver-favoritos-atras'),
+    'Android validation must include the Front A V2 visitor and both Back flows');
+  assert(lines.includes('themes: light dark'), 'Android validation must cover both themes');
+}
+
 function command(binary, args, cwd = repo) {
   const result = spawnSync(binary, args, {
     cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'],
@@ -74,6 +84,7 @@ async function main() {
   const request = validateRequest(JSON.parse(readFileSync(resolve(repo, '.github/eas-production-update-request'), 'utf8')));
   validateRun(await runInfo(request.previewRun), 'eas-update-preview.yml', request.sourceCommit);
   validateRun(await runInfo(request.androidRun), 'apk-emulator.yml', request.androidCommit);
+  validateAndroidRequest(command('git', ['show', request.androidCommit + ':.github/apk-emulator-request']));
   // Documentation/CI files may change after staging; app code, config and dependencies may not.
   for (const target of [request.androidCommit, 'HEAD']) {
     command('git', ['diff', '--exit-code', request.sourceCommit, target, '--', ...trackedApp]);

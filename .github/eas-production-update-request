@@ -1,0 +1,10 @@
+{
+  "destinationChannel": "production",
+  "sourceBranch": "preview",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "sourceCommit": "b60b2cc29e4247333552c5841cb69e692e61a010",
+  "androidCommit": "ade80e6d2c88e19a8c9349b23b5f723635e8a3c1",
+  "previewRun": 38079470216,
+  "androidRun": 38079644334,
+  "message": "Frente A V2: tarjetas integradas, cabecera y navegación expandible; APK 5 validado en claro y oscuro"
+}
