@@ -27,6 +27,26 @@ name: Comprador con cuenta hasta la cotización y cancelación
     visible:
       id: home-search
     timeout: 60000
+# a second attempt after a failure starts with the first attempt's session: sign out so it begins as a visitor
+- tapOn: Cuenta
+- extendedWaitUntil:
+    visible: (Iniciar sesión|Cerrar sesión)
+    timeout: 30000
+- runFlow:
+    when:
+      visible:
+        id: account-name
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: Cerrar sesión
+          direction: DOWN
+          timeout: 20000
+      - tapOn: Cerrar sesión
+      - extendedWaitUntil:
+          visible:
+            id: account-sign-in
+          timeout: 30000
 
 # 1. visitante compra el cable (1 m, el precio base): «Comprar» lo agrega y abre el carrito
 - openLink: kora://p/ugreen-cable-usb-c-100w
