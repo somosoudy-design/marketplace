@@ -27,11 +27,18 @@ name: Foto de perfil abre el selector de fotos
     id: account-photo
 - waitForAnimationToEnd:
     timeout: 5000
-- assertNotVisible:
-    id: account-name
 - takeScreenshot: foto-02-selector-de-fotos
+# Android's photo picker opens as a sheet over the bottom of the app, so the account name can stay visible above
+# it: look for the picker's own tabs instead (English on the emulator, Spanish on a phone set to Spanish).
+- extendedWaitUntil:
+    visible: (Photos|Albums|Fotos|Álbumes)
+    timeout: 20000
 - pressKey: back
 - extendedWaitUntil:
     visible:
       id: account-name
     timeout: 20000
+# closing the picker without a photo leaves nothing open over the account
+- assertNotVisible:
+    id: photo-sheet
+- takeScreenshot: foto-03-cuenta-sin-cambios
