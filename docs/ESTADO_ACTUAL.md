@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:44 (Caracas, UTC−4), por Codex (aclaración de entrega Android APK 5).
+**Última actualización:** 2026-10-10 15:44 (Caracas, UTC−4), por Codex (recepción Android confirmada por Oliver).
 
 ## Dónde está el trabajo
 
@@ -105,6 +105,9 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
+**Recepción en Android confirmada por Oliver:** «ya se actualizó» (2026-10-10). La entrega al APK instalado
+queda confirmada por el propietario; no equivale a haber probado todos los recorridos en su teléfono.
+
 **Aclaración vigente de Oliver:** «producción» significaba que la app de su Android se actualice
 directamente. Para su APK 5, las publicaciones autorizadas deben llegar al canal **preview**, ya integrado
 en ese APK. No interpretar esa palabra como cambiar al canal EAS production. V2 ya está publicado en
@@ -131,7 +134,7 @@ Evidencia: `.local/frente-a-v2/comparacion.html`, galería autónoma web antes (
 Android de ambos temas; `.local/frente-a-v2/android/` copiado de `ci/capturas` run 38079644334.
 Diagnóstico al reabrir: OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, canal preview, runtime APK 5,
 sesión cifrada sí. Capturas muestran el aviso conocido de tasa del día no disponible; no se modifica su lógica.
-Sin prueba física de lector, rendimiento, push ni recepción en el Samsung en este turno.
+Recepción Android confirmada por Oliver («ya se actualizó»). Sin prueba física de lector, rendimiento o push en este turno.
 
 Publicación autorizada por Oliver en **production**: [run 38080468671](https://github.com/somosoudy-design/marketplace/actions/runs/38080468671) **Success**.
 Grupo production `92b6bef2-56e7-4a3e-8012-40c030c48434`, promovido del grupo preview
@@ -163,7 +166,8 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Oliver revisa Frente A V2 en el APK 5 instalado y la galería `.local/frente-a-v2/comparacion.html`.
+Oliver confirmó la recepción del update en Android. Queda revisar la experiencia visual/funcional de Frente A V2
+en el APK 5 instalado y la galería `.local/frente-a-v2/comparacion.html`.
 Para recibir el update: abrir la app para descargar y volver a abrirla tras la descarga (canal preview).
 No repetir implementación/OTA ni generar APK: **ambos canales publicados** y Android ya comprobado.
 Si pide ajustes, sincronizar, partir de `b60b2cc` + cierre actual, usar componentes existentes y conservar

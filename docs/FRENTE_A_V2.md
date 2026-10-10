@@ -4,7 +4,7 @@ Pedido de Oliver del 2026-10-10. Parte del cierre de UX-04 (`9e4e1f5`) y autoriz
 y descubrimiento. El Frente B no forma parte de este trabajo. La marca/configuración nativa existente
 se conserva; Electric Violet sigue siendo la identidad visual.
 
-**Estado:** terminado, probado y publicado en preview/production. Revisión de Oliver pendiente.
+**Estado:** terminado, probado y publicado. Oliver confirmó la recepción en su Android («ya se actualizó»). Revisión de la experiencia pendiente.
 
 ## Decisiones de implementación
 
@@ -127,3 +127,7 @@ No es necesario cambiar canales, generar APK ni republicar el mismo paquete. La 
 en production permanece como antecedente; no era un pedido de migrar la app instalada a ese canal.
 La app descarga al abrir con internet y aplica en el siguiente inicio completo. Recepción física pendiente
 de Oliver; no afirmar que ya llegó a su teléfono sin comprobarlo.
+
+**Recepción física (2026-10-10 15:44 Caracas):** Oliver confirmó «ya se actualizó». Se registra entrega al Android
+instalado; la revisión visual/funcional en su teléfono y las pruebas físicas específicas siguen pendientes.
+No se republicó ni se generó un APK para esta confirmación.

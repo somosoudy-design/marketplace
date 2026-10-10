@@ -23,8 +23,9 @@ arriba de la bitácora, con este formato:
   fuente `b60b2cc`, ya validada en APK 5 Android 15 (revisión 31). No se repite una publicación ya hecha.
 - Documentado: objetivo de entrega Android en estado, pendientes y Frente A V2. La publicación adicional
   production se conserva como antecedente. Sin cambios de código/servicios ni necesidad de repetir pruebas.
-- Siguiente: abrir la app con internet para descargar, cerrarla completamente y abrir para aplicar.
-  Recepción en el teléfono físico pendiente de Oliver; no declararla comprobada por la prueba del emulador.
+- Confirmación posterior de Oliver: «ya se actualizó». Recepción del update en su Android confirmada por
+  el propietario, sin nueva publicación ni APK. No equivale a comprobar todos los recorridos físicos.
+- Siguiente: revisión visual/funcional de Oliver; conservar pendientes físicos específicos y no avanzar al Frente B.
 - Último commit: el de esta aclaración; `git log -1 origin/claude/marketplace-v1`.
 
 
