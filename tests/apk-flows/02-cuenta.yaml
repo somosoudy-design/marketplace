@@ -180,7 +180,8 @@ name: Comprador con cuenta hasta la cotización y cancelación
 - tapOn:
     id: checkout-place
 
-# 6. cotización de Pago Móvil en bolívares (sin reportar nada)
+# 6. cotización de Pago Móvil en bolívares (sin reportar nada). Sin una tasa BCV vigente (fines de semana, cuando la
+# fuente no publica) los bolívares no se cotizan y la app lo dice al elegir el método: entonces se cotiza con Zelle.
 - extendedWaitUntil:
     visible:
       id: method-pago_movil
@@ -188,17 +189,36 @@ name: Comprador con cuenta hasta la cotización y cancelación
 - takeScreenshot: flujo-cuenta-05-metodos
 - tapOn:
     id: method-pago_movil
+- evalScript: ${output.ves = true}
+- runFlow:
+    when:
+      visible:
+        id: method-rate-unavailable
+    commands:
+      - evalScript: ${output.ves = false}
+      - takeScreenshot: flujo-cuenta-05b-sin-tasa-bcv
+      - scrollUntilVisible:
+          element:
+            id: method-zelle
+          direction: DOWN
+          timeout: 20000
+      - tapOn:
+          id: method-zelle
 - tapOn:
     id: pay-quote
 - extendedWaitUntil:
     visible:
       id: quote-amount
     timeout: 30000
-- assertVisible:
-    id: quote-amount
-    text: .*Bs.*
-- assertVisible:
-    id: quote-rate
+- runFlow:
+    when:
+      true: ${output.ves}
+    commands:
+      - assertVisible:
+          id: quote-amount
+          text: .*Bs.*
+      - assertVisible:
+          id: quote-rate
 - takeScreenshot: flujo-cuenta-06-cotizacion
 
 # 7. el pedido se cancela desde su ficha

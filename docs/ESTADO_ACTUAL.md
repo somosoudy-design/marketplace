@@ -104,6 +104,10 @@ recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status
 
 ## Errores conocidos
 
+- Tasa BCV vencida desde el 2026-10-10 13:20Z: la última de DolarApi («oficial») es del 2026-10-09 04:00Z y la regla
+  de `rate_policies` (USD/VES, 2000 minutos) la da por vencida. Mientras tanto no se cotiza en bolívares (Pago Móvil,
+  transferencia) y la app lo dice al elegir el método; Zelle y USDT siguen. Es el comportamiento previsto (nunca usar
+  una tasa vencida); se arregla solo cuando la fuente publique, o con una tasa manual en el panel. Decisión de Oliver.
 - APK 4 (y anteriores): «atrás» de Android cierra la app en Android 13 a 15. Corregido en el APK 5.
 - Push comprobado solo en el emulador Android 15; en un teléfono real falta la prueba de Oliver. Los pedidos de
   prueba (también los del emulador automático) avisan a Oliver como dueño de la tienda demo «Kora» cuando tenga

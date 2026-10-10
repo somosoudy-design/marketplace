@@ -219,7 +219,7 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
                   <View key={m.code}>
                     {i > 0 ? <Divider inset={16} /> : null}
                     <RadioRow testID={`method-${m.code}`} selected={on} disabled={!!limit} icon={RAIL_ICON[m.rail] ?? 'wallet'} title={m.name} subtitle={limit ?? undefined} onPress={() => onSelect(m)} />
-                    {on ? <MethodDetail method={m} amountUsd={amountUsd} vesRate={vesRate} divisas={divisas} /> : null}
+                    {on ? <MethodDetail method={m} amountUsd={amountUsd} vesRate={vesRate} divisas={divisas} rateStale={rate?.available === false} /> : null}
                   </View>
                 );
               })}
@@ -234,7 +234,7 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
 
 /** What the selected method will ask for, as a reference: bolívares at today's BCV rate, or the divisas price through
  * today's gap (docs/PRECIOS.md), plus its fee and its note. */
-function MethodDetail({ method: m, amountUsd, vesRate, divisas }: { method: PaymentMethod; amountUsd: ReturnType<typeof D>; vesRate: ReturnType<typeof useVesRate>; divisas: ReturnType<typeof useDivisas> }) {
+function MethodDetail({ method: m, amountUsd, vesRate, divisas, rateStale }: { method: PaymentMethod; amountUsd: ReturnType<typeof D>; vesRate: ReturnType<typeof useVesRate>; divisas: ReturnType<typeof useDivisas>; rateStale: boolean }) {
   const t = useTheme();
   const fee = Number(m.fee_pct) > 0 ? `${String(Number(m.fee_pct)).replace('.', ',')} %` : Number(m.fee_fixed_usd) > 0 ? formatUSD(m.fee_fixed_usd) : null;
   const f = m.currency === 'VES' ? null : divisas?.factor(m.code);
@@ -245,6 +245,9 @@ function MethodDetail({ method: m, amountUsd, vesRate, divisas }: { method: Paym
       <View style={{ padding: 12, gap: 4, borderRadius: t.radii.md, backgroundColor: t.colors.surfaceSunken }}>
         {amount ? (
           <SummaryRow label="Pagarás" value={`≈ ${amount}`} strong testID={`method-amount-${m.code}`} />
+        ) : m.currency === 'VES' && rateStale ? (
+          // the server never quotes bolívares with an outdated rate (rate_policies), so say it before "Continuar"
+          <Text variant="bodySmall" color="warning" testID="method-rate-unavailable">Ahora no hay una tasa BCV vigente, así que no podemos calcular el monto en bolívares. Elige un método en divisas o vuelve más tarde.</Text>
         ) : (
           <Text variant="bodySmall" color="textSecondary">El monto en bolívares lo calculamos en el siguiente paso con la tasa del momento.</Text>
         )}
