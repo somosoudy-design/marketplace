@@ -222,10 +222,12 @@ name: Comprador con cuenta hasta la cotización y cancelación
     commands:
       - evalScript: ${output.ves = false}
       - takeScreenshot: flujo-cuenta-05b-sin-tasa-bcv
+      # centered, so the row is not under the bottom bar (a tap there would hit "Continuar")
       - scrollUntilVisible:
           element:
             id: method-zelle
           direction: DOWN
+          centerElement: true
           timeout: 20000
       - tapOn:
           id: method-zelle
