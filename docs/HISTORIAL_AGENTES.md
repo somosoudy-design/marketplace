@@ -16,6 +16,26 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 05:35Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Pedido: «Compilar APK 5 con notificaciones push» (Oliver, 2026-10-10 03:50Z), hitos 1 a 5.
+- Hecho:
+  - Firebase y Expo comprobados sin mostrar secretos (`tools/eas/check-firebase.mjs`, `firebase-check.yml`):
+    proyecto `hayazgo`, paquete `com.example.kora.preview`, clave FCM V1 del mismo proyecto, firma del APK 4 (`77662c3`).
+  - Push en la app: registro con permiso, canal «Pedidos y pagos», tocar un aviso abre el pedido, token borrado al
+    cerrar sesión; «atrás» de Android corregido; identidad nativa violeta; URL del panel en `eas.json` (`5d05346`).
+  - Las huellas incluyen el contenido de `google-services.json`: los workflows de APK y de actualización traen
+    `GOOGLE_SERVICES_JSON` con `eas env:pull` (`cc5b101`).
+  - Recorrido con cuenta que prueba permisos, aviso push real, sesión y volver a entrar (`50b5478`, `b01dd83`); el
+    script del emulador repite una vez un recorrido que falla y lo deja dicho en el resumen (`6175693`).
+- Pruebas: emulador Android 15, APK 4 y APK 5 encima, revisión 20: los cinco recorridos pasan al primer intento.
+  Aviso «Pedido P-100111 recibido» en la bandeja y abierto al tocarlo. Recibo de Expo «ok». Playwright de la app: 29
+  pasan, 1 omitida. Sin probar: un teléfono real.
+- Servicios: APK 5 compilado en EAS (build `d1d10c28`, versionCode 4; el intento `54b2be4f` se detuvo antes de
+  compilar). Primera actualización al runtime `eb5ed117…` publicada. Ningún cambio en Supabase (solo consultas de
+  lectura).
+- Siguiente: prueba de push de Oliver en su Samsung (`PENDIENTES.md` 1.5).
+- Último commit: el checkpoint «APK 5 delivered» en `claude/marketplace-v1`.
+
 ### 2026-10-10 02:50Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Pedido: «Mejora profesional de UI/UX en la app móvil» (Oliver, 2026-10-10 01:30Z), hitos 1 a 5.
 - Hecho:

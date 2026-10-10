@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 04:20Z.
+**Última revisión:** 2026-10-10 05:35Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 1.3 | Cierre del hito D: ficha, carrito, checkout, cuotas y seguimiento ya se revisaron en la versión web (claro y oscuro) y el selector de pago es nuevo; falta verlos en Android (capturas del artefacto `capturas-emulador`) y corregir lo que aparezca | Lista | `tools/design/screens.mjs` para la web; capturas de Maestro para el APK |
 | 1.4 | Validación integral (hito E): repasar la lista de recorridos de `DIRECCION_PRODUCTO.md` («Criterios de calidad») en el APK real, anotando qué se probó y dónde | Lista (parcial) | La parte con cuenta, tras P2.1 |
-| 1.5 | APK 5: avisos push con Firebase, arreglo de «atrás» de Android (`predictiveBackGestureEnabled: false`), identidad nativa violeta y dirección del panel en `eas.json` | En curso (autorizado por Oliver el 2026-10-10 03:50Z) | Código en `5d05346`; compilación en EAS, luego emulador (`02-cuenta` prueba permisos, un aviso push real y la sesión) y prueba de push en el Samsung S24 de Oliver. Tras instalarlo, actualizar la línea `runtime:` de `.github/eas-update-request` |
+| 1.5 | APK 5 en el Samsung S24 de Oliver: instalarlo encima del APK 4 y probar un aviso push real | Bloqueada (Oliver) | APK 5 compilado (`d1d10c28`) y probado en el emulador, push incluido (`ESTADO_ACTUAL.md`). Guía: `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo», aviso de prueba solo a su cuenta |
 
 ## Prioridad 1 bis: relevo del 2026-10-09 23Z (pedido de Oliver, en este orden)
 
@@ -22,7 +22,7 @@
 |---|---|---|---|
 | R.1 | Motor comercial de precios | Técnicamente terminado | Faltan solo decisiones de Oliver: recargo, flete, gastos, terminación, efectivo/PayPal en divisas; luego «Regla revisada». `docs/PRECIOS.md` |
 | R.2 | Repositorio privado | Autorizado; lo cambia Oliver (la sesión no puede escribir ajustes de GitHub); luego verificar Actions | Imágenes ya en Storage (hecho). Checklist en `docs/ENTORNO.md` §12 bis. **Pedir confirmación a Oliver** antes de cambiar la visibilidad |
-| R.3 | Push real en Android | En curso (P1.5) | Firebase y Expo configurados por Oliver y comprobados (proyecto `hayazgo`); falta probar un aviso real en su Samsung |
+| R.3 | Push real en Android | Probado en el emulador; falta el teléfono (P1.5) | Firebase y Expo configurados por Oliver y comprobados (proyecto `hayazgo`); aviso real entregado al emulador con recibo «ok» |
 
 ## Prioridad 2: lo que solo Oliver puede hacer
 
@@ -41,7 +41,6 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 |---|---|---|---|
 | 3.1 | Dominio y SMTP propio: vuelve el código de 6 dígitos por correo y «Olvidé mi contraseña» para cualquiera | Bloqueada | Dominio y proveedor SMTP (gasto, decisión de Oliver). Luego pegar `supabase/templates/` y activar «Confirm email» |
 | 3.2 | Binance Pay y PayPal en línea | Bloqueada | Cuentas de comercio aprobadas y credenciales (`docs/ENTORNO.md` §8); desplegar `payments-start` y webhooks |
-| 3.3 | Push en Android | En curso (P1.5) | Firebase listo; el APK 5 lo incluye |
 | 3.5 | Datos reales: datos de cobro, tarifas, comisiones, catálogo con fotos autorizadas y precios actuales | Bloqueada | Oliver y los vendedores |
 | 3.6 | Publicación en Google Play / App Store | Bloqueada | Oliver lo pidió explícitamente: todavía no. Lista de pasos en `docs/PUBLICACION.md` |
 

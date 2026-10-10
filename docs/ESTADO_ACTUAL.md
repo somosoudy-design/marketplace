@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 04:20Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 05:35Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `62e393f` (recorrido del visitante con la variante centrada) |
-| Plan vigente | «Mejora profesional de UI/UX en la app móvil» (Oliver, 2026-10-10 01:30Z): hitos 1 a 5 (abajo). Antes, Directriz maestra 02 |
-| Objetivo actual | Hitos 1 a 3 de la mejora de UI/UX publicados al APK 4 y validados en el emulador; esperan a Oliver el APK 5 (arreglo de «atrás») y la pantalla de preguntas del panel |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `b01dd83` (recorrido con cuenta que toca el aviso push desde otra pantalla) |
+| Plan vigente | «Compilar APK 5 con notificaciones push» (Oliver, 2026-10-10 03:50Z), hitos 1 a 5. Antes, «Mejora profesional de UI/UX» (hecha) y Directriz maestra 02 |
+| Objetivo actual | APK 5 compilado y probado en el emulador (push real incluido). Falta que Oliver lo instale en su Samsung S24 y pruebe un aviso push |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -40,9 +40,14 @@
   con el APK 4 dice «Sesión cifrada: sí» después de reabrir. En un teléfono real todavía no se ha comprobado.
 - Últimas actualizaciones publicadas al APK 4 (todas con el runtime `a4682c83…`): sesión corregida, registro
   sin código cuando el proyecto lo permite, etiquetas legibles sobre fotos en oscuro, selector de pago nuevo.
+- APK 5 (build `d1d10c28`, runtime `eb5ed117…`), en el emulador Android 15 de GitHub Actions el 2026-10-10 (revisión
+  20, run 38027029394): se instala encima del APK 4, recibe EAS Update, «atrás» de Android vuelve a la pantalla
+  anterior, y un aviso push real («Pedido P-… recibido») llega por `push-dispatch`, Expo y Firebase, y al tocarlo
+  abre el pedido. Recibo de Expo «ok» (entregado a Firebase). Capturas en
+  `/mnt/project-files/marketplace/telefono/capturas-apk5/`.
 - En local, con el stack sin Docker: todas las suites en verde en esta sesión (ver «Pruebas»).
 
-## Mejora de UI/UX (plan vigente)
+## Mejora de UI/UX (hecha el 2026-10-10)
 
 Pedido de Oliver del 2026-10-10 01:30Z: perfeccionar la app sin rediseñarla ni cambiar la identidad, por hitos, con
 commit y push al cerrar cada uno y publicación solo por EAS Update compatible con el APK 4 (un APK nuevo, solo con
@@ -59,24 +64,27 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-Pedido de Oliver del 2026-10-10 03:50Z: «Compilar APK 5 con notificaciones push» (autoriza el APK 5; Preguntas y
-respuestas queda pospuesto). Hitos: 1 push, 2 «atrás» de Android, 3 identidad violeta, 4 compilación, 5 pruebas.
+Pedido de Oliver del 2026-10-10 03:50Z: «Compilar APK 5 con notificaciones push». Hitos 1 a 5 hechos; solo falta la
+prueba de push en el teléfono de Oliver.
 
-- Hecho: Firebase y Expo comprobados (proyecto `hayazgo`, paquete `com.example.kora.preview`, clave FCM V1 del mismo
-  proyecto, firma del APK 4); cambios de código en `5d05346` (ver `PENDIENTES.md` 1.5); pruebas web 29 pasan y 1
-  omitida a propósito.
-- En curso: compilación del APK 5 en EAS (workflow «APK de prueba (EAS)» de `5d05346`). Luego el emulador con el APK 4
-  y el 5 encima, y la prueba de push en el Samsung S24 de Oliver.
-- Mientras el APK 5 no esté instalado, no publicar actualizaciones: el runtime cambió y el workflow lo rechaza.
+| Hito | Qué | Estado |
+|---|---|---|
+| 1 | Push | Hecho: Firebase `hayazgo` con el paquete `com.example.kora.preview` y clave FCM V1 del mismo proyecto (comprobado por `firebase-check.yml`); canal de Android «Pedidos y pagos»; registro al activar «Avisos en este dispositivo» y al entrar si ya hay permiso; el token se borra al cerrar sesión; tocar un aviso abre el pedido. `push-dispatch` solo envía a los dispositivos del destinatario y nunca avisos demo o de prueba |
+| 2 | «Atrás» de Android | Hecho: `predictiveBackGestureEnabled: false` (manifiesto del APK 5 con `enableOnBackInvokedCallback=false`) |
+| 3 | Identidad nativa violeta | Hecho: icono, splash y color de avisos (`NATIVE_IDENTITY = 'violet'`). Mismo nombre, paquete y configuración de producción |
+| 4 | Compilación | Hecho: build `d1d10c28`, versionCode 4, misma firma que el APK 4, Supabase de pruebas, canal `preview` |
+| 5 | Pruebas en el emulador | Hecho (revisión 20): los cinco recorridos pasan al primer intento. Ver «Pruebas» |
 
-Del relevo anterior siguen abiertos: la regla comercial del motor de precios (`pricing.import.configured = false`,
-la define Oliver) y el cambio del repositorio a privado (lo hace Oliver).
+Preguntas y respuestas sigue pospuesto por Oliver (`PENDIENTES.md` 2.5). Del relevo anterior siguen abiertos: la
+regla comercial del motor de precios (`pricing.import.configured = false`, la define Oliver) y el cambio del
+repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Cuando termine la compilación: anotar el enlace, el build y el runtime del APK 5 (`ENTORNO.md` §9 y §10 y la línea
-`runtime:` de `.github/eas-update-request`), poner el APK 4 y el 5 en `.github/apk-emulator-request` y correr el
-emulador. Después, la guía de prueba de push para el Samsung de Oliver.
+Esperar a Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
+`/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de
+prueba solo a su cuenta (`select public.notify(<su id>, 'system', …)` con el conector de Supabase) y comprobar el
+recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status`/`push_error` y `push_tickets`.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -84,19 +92,19 @@ emulador. Después, la guía de prueba de push para el Samsung de Oliver.
    (`/auth/v1/settings` → `mailer_autoconfirm: true`). Hecho.
 2. Supabase › Authentication › URL Configuration › Redirect URLs: agregar `kora://**`.
 3. Dar acceso al repositorio de GitHub a Kevin y Heisber si van a trabajar con sus propios agentes.
-4. Más adelante: dominio y SMTP propio (vuelve el código por correo), credenciales de Binance Pay, PayPal y
-   Firebase (push en Android), hosting del panel web. Detalle en `docs/SERVICIOS_EXTERNOS.md`.
+4. Instalar el APK 5 en su Samsung y probar los avisos push (`que-probar.md`).
+5. Más adelante: dominio y SMTP propio (vuelve el código por correo), credenciales de Binance Pay y PayPal. Detalle en `docs/SERVICIOS_EXTERNOS.md`.
 
 ## Errores conocidos
 
-- «Atrás» de Android (botón o gesto) cierra la app en vez de volver, en Android 13 a 15 (comprobado en el
-  emulador Android 15; 13 y 14 deducido del código). El APK 4 apunta a SDK 36 y pide el gesto predictivo, y
-  `ReactActivity` de React Native 0.86 solo atiende «atrás» si el teléfono también es Android 16. En Android 16
-  debería funcionar (deducido, sin probar). No se arregla por EAS Update: APK 5 (`PENDIENTES.md` 1.5). Mientras, se
-  vuelve con las flechas de la app.
+- APK 4 (y anteriores): «atrás» de Android cierra la app en Android 13 a 15. Corregido en el APK 5.
+- Push comprobado solo en el emulador Android 15; en un teléfono real falta la prueba de Oliver. Los pedidos de
+  prueba (también los del emulador automático) avisan a Oliver como dueño de la tienda demo «Kora» cuando tenga
+  los avisos activados.
+- Maestro a veces pierde el emulador unos segundos y un recorrido falla al empezar (revisión 18): el script
+  repite una vez el recorrido que falla y deja el primer fallo en el resumen.
 - Sin SMTP propio, «Olvidé mi contraseña» y el código de registro solo llegan a correos del equipo de
   Supabase de Oliver (límite de unas 2 por hora).
-- Push en Android no funciona hasta tener Firebase (`google-services.json`) en una build.
 - El panel publicado abre las fichas desde las listas con una carga completa la primera vez que se visitan (sitio
   estático); funciona igual.
 - Los artefactos de GitHub Actions no se pueden bajar desde el contenedor de Claude: usar la rama `ci/capturas`.
@@ -127,7 +135,14 @@ actualización de los hitos 1 a 3: `02-cuenta` (registro, carrito, dirección, c
 falló por el toque a la variante. Revisión 16 (`62e393f`): `01-visitante` pasa (variante de 2 m, «Agregar»,
 «Comprar» abre el carrito con 12 USD sin duplicar, carrito conservado al reabrir), igual que `01b` y `02-cuenta`.
 
-App, Playwright, 2026-10-10 con los hitos 1 a 3: 28 pasan, 1 omitida; `pay-divisas.spec.ts` (nueva) pasa sola.
+APK 5 (revisiones 17 a 20 del 2026-10-10, APK 4 instalado y luego el 5 encima): instalación encima «Success»,
+actualización recibida al reabrir, `01-visitante`, `01a` y `01c` («atrás» desde la ficha, Favoritos e iniciar sesión
+vuelve a Inicio), `01b` y `02-cuenta` pasan. `02-cuenta` ahora también: permiso de avisos rechazado y luego dado
+(«Avisos activados en este dispositivo.»), aviso push real del pedido tocado desde otra pantalla que abre el pedido,
+sesión conservada al reabrir, cerrar sesión y volver a entrar. En la base: el aviso solo fue al token de la cuenta de
+prueba, recibo «ok», y al cerrar sesión el token se borró y se registró de nuevo al entrar.
+
+App, Playwright, 2026-10-10 con el APK 5: 29 pasan, 1 omitida. Con los hitos 1 a 3: 28 pasan, 1 omitida; `pay-divisas.spec.ts` (nueva) pasa sola.
 
 Faltan: pruebas en un teléfono físico
 más allá de lo que Oliver prueba a mano.
@@ -141,8 +156,8 @@ Resumen; procedimientos en `docs/ENTORNO.md`.
 | Supabase de pruebas `mimnotafmfasvwrclxan` («Marketplace») | 24/24 migraciones (última `20261009233831_pricing_engine`), 4 funciones (`rates-sync`, `push-dispatch`, `panel-api`, `assets-mirror` de uso único), 7 trabajos de cron (nuevo `kora-pricing-snapshot`, hora :40), brecha del día vigente, imágenes demo en Storage, registro sin confirmación por correo |
 | EAS Hosting | Panel en https://kora-panel.expo.app (mismo proyecto Expo `marketplacebrand/marketplace`, plan sin costo) |
 | Supabase `bfuggvbgttvcygbexqyn` | **Prohibido tocarlo**: es de otros productos de Oliver (BingoCriollo) |
-| Expo `marketplacebrand/marketplace` | APK 4 (build `5ee104fe`, versionCode 2, runtime `a4682c83c1bb738fc74c73153838ded0656f1912`); actualizaciones por canal `preview` |
-| GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `apk-verify.yml`, `apk-emulator.yml` (capturas también en la rama `ci/capturas`), `panel-deploy.yml` (panel); secreto `EXPO_TOKEN` configurado |
+| Expo `marketplacebrand/marketplace` | APK 5 (build `d1d10c28`, versionCode 4, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`); actualizaciones por canal `preview`. `GOOGLE_SERVICES_JSON` (archivo, entorno preview) y clave FCM V1 cargadas por Oliver. El APK 4 ya no recibe actualizaciones |
+| GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `apk-verify.yml`, `apk-emulator.yml` (capturas también en la rama `ci/capturas`), `firebase-check.yml` (Firebase y credenciales de EAS), `panel-deploy.yml` (panel); secreto `EXPO_TOKEN` configurado |
 | Google Play / App Store | Nada publicado. Oliver dijo que todavía no |
 | Binance Pay, PayPal | Preparados en código, deshabilitados (`pending_credentials`) |
 
