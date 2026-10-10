@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:48 (Caracas, UTC−4), por Codex (preparación iOS Personal Team).
+**Última actualización:** 2026-10-10 15:59 (Caracas, UTC−4), por Codex (iOS local Personal Team preparado).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Frente A V2: fuente probada/publicada `b60b2cc`, solicitud production `d62b1fa`; cierre documental en el commit de esta actualización. Base `9e4e1f5` |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. iOS local: checkpoint `498c051`, cierre en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
 | Plan vigente | Instalación iOS gratuita: Xcode + Personal Team + compilación local en el Mac de Oliver. Frente A V2 cerrado; sin Frente B |
-| Objetivo actual | Auditar iOS SDK 57 y preparar una variante exclusivamente local sin APNs/Associated Domains. Sin alterar APK 5, Android, producción, backend, motor financiero ni panel |
+| Objetivo actual | Preparación iOS Personal Team terminada; compilación, firma e instalación pendientes del Mac/iPhone de Oliver. Guía: `docs/IOS_PERSONAL_TEAM.md`. APK 5/Android/producción intactos; sin Frente B |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -86,7 +86,7 @@
   anterior, y un aviso push real («Pedido P-… recibido») llega por `push-dispatch`, Expo y Firebase, y al tocarlo
   abre el pedido. Recibo de Expo «ok» (entregado a Firebase). Capturas en
   `/mnt/project-files/marketplace/telefono/capturas-apk5/`.
-- En local, con el stack sin Docker: todas las suites en verde en esta sesión (ver «Pruebas»).
+- Regresión local en este turno iOS: core 50/50 y comprador web 40/40; tipos/lint aprobados. El cierre anterior de Frente A V2 conserva sus suites completas históricas (ver «Pruebas»).
 
 ## Mejora de UI/UX (hecha el 2026-10-10)
 
@@ -105,8 +105,35 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**iOS Personal Team — preparación en curso.** Base `cf7a1b9` sincronizada, sin WIP ajeno. AGENTS/estado/pendientes/Frente A V2 revisados; Frente A V2 terminado y recepción Android confirmada. Entorno Linux sin Xcode, simulador ni acceso al Mac/iPhone. Configuración actual añade Associated Domains y el plugin `expo-notifications` añade APNs: ambos impiden firma gratuita. Preparar proyecto generado ignorado, sin modificar `apps/mobile` ni el runtime de APK 5. Validación y guía Mac pendientes; no se ha compilado ni instalado iOS.
+**iOS Personal Team — preparación terminada, instalación física pendiente.** Base `cf7a1b9` sincronizada;
+checkpoint de alcance `498c051`. Frente A V2 cerrado antes de comenzar; sin WIP ajeno ni nuevas modificaciones
+visuales. Solo helpers `tools/ios-personal/` y documentación. Guía exacta: `docs/IOS_PERSONAL_TEAM.md`.
 
+`node tools/ios-personal/prepare-personal-team.mjs` genera `.local/ios-personal`, copia aislada ignorada por Git,
+con backend Marketplace de pruebas del perfil preview y bundle ID `com.somosoudy.hayazgo.oliver.local` usado
+en la validación. No cambia ningún archivo de `apps/mobile`, configuración compartida, dependencia/lockfile,
+workflows o servicios. Conserva Electric Violet/nombre provisional. Solo allí se retiran Associated Domains/APNs,
+se desactiva OTA y se sustituyen registro/listeners push; campana/listado interno se conservan.
+El permiso local de fotos incluye perfil; cámara para comprobantes/reclamos, sin micrófono.
+
+Pruebas nuevas: guardas **5/5**; verificador Expo real y archivos nativos con `--native` aprobados, incluido
+rechazo de APNs insertado en el plist (restaurado). Generador repetido sin alterar fuente, prebuild iOS
+**sin Pods** terminado, 39 módulos Expo Apple/10 entradas RN iOS resueltos; 34 versiones SDK compatibles localmente.
+Plantilla: **iOS 16.4 mínimo**. Exportación Hermes iOS 5,5 MB, tipos de copia local y tipos/lint monorepo aprobados,
+núcleo **50/50**, web comprador **40/40**, sin omisiones: login/códigos, catálogo/ficha/Favoritos/carrito/checkout
+con datos locales, perfil/sesión, 13 V2 y 6 navegación claro/oscuro. Primera pasada web interrumpida por gateway
+apagado al salir del proceso de arranque: 4 fallos, 1 interrumpido, 35 sin ejecutar; segunda con backend vivo aprobada.
+Sin cambios/desactivación de tests. Logs `.local/logs/ios-personal-*.log`; guía conserva límites.
+
+Huella Android local sin Firebase idéntica antes/después `da033dbf2e656078bbc76aa353ad3ed3088134d1`;
+no confundir con runtime completo de APK 5, que requiere su archivo Firebase de EAS. Inputs originales sin cambios;
+no nuevo APK, EAS Update/build/publicación, panel, motor financiero, SQL ni Supabase/Firebase remoto.
+Online Expo/Apple y lecturas remotas Supabase bloqueadas por proxy HTTP 403; cotejo SDK offline realizado.
+
+**Bloqueo físico:** este entorno es Linux sin Xcode/simulador/Mac/iPhone. No se compilaron Pods/Swift,
+no se verificó firma, Keychain o gestos nativos ni se instaló en iPhone. Oliver debe usar Xcode/Personal Team
+y `npx expo run:ios --device` en su Mac; firma gratuita caduca en **7 días**. No TestFlight/ad hoc/EAS IPA/Expo Go,
+ni gasto/cuentas de pago/certificados privados. No avanzar al Frente B.
 
 **Recepción en Android confirmada por Oliver:** «ya se actualizó» (2026-10-10). La entrega al APK instalado
 queda confirmada por el propietario; no equivale a haber probado todos los recorridos en su teléfono.
@@ -169,9 +196,12 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Completar `tools/ios/` y `docs/IOS_PERSONAL_TEAM.md`: variante local, guardas de backend/entitlements,
-exportación iOS y regresión web local. No publicar ni compilar en EAS. Luego Oliver ejecuta Xcode/Personal Team
-en su Mac y verifica el iPhone; el agente cloud se detiene antes de ese paso físico.
+Oliver sigue `docs/IOS_PERSONAL_TEAM.md` en su Mac: Xcode completo, Apple ID Personal Team, Node 22/pnpm 10.28,
+`pnpm install --frozen-lockfile`, generar copia con `tools/ios-personal/prepare-personal-team.mjs`, prebuild iOS,
+abrir `ios/KoraDev.xcworkspace`, firma automática, conectar iPhone/modo desarrollador y `npx expo run:ios --device`.
+Después comprobar diagnóstico/sesión cifrada, claro/oscuro y recorridos del checklist. Registro real de macOS/Xcode,
+modelo/iOS/commit/resultados; sin datos privados. El siguiente agente retoma errores concretos del Mac y documenta
+solo lo realmente ejecutado. No afirmar instalación física ni iniciar Frente B. No publicar nada para esta tarea.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

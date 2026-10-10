@@ -81,6 +81,15 @@ pnpm --filter @kora/mobile start                     # Expo; "a" Android, "i" iO
 - Funciones que necesitan módulos nativos (sesión cifrada, push, sesión de pago en el navegador) requieren una
   build (`eas build --profile development` o el APK de prueba) en lugar de Expo Go.
 
+## 4 bis. iPhone con Apple ID gratuito (Personal Team)
+
+Guía vigente: **[IOS_PERSONAL_TEAM.md](IOS_PERSONAL_TEAM.md)**. Genera una copia exclusivamente local ignorada
+con `node tools/ios-personal/prepare-personal-team.mjs`; no modifica la configuración de APK 5. En el Mac,
+Xcode completo + Personal Team + iPhone físico, `npx expo prebuild --platform ios` y `npx expo run:ios --device`
+desde `.local/ios-personal`. Supabase de pruebas existente, APNs/Associated Domains/OTA desactivados solo allí.
+Sin EAS Build iOS, TestFlight, ad hoc o Expo Go; firma gratis 7 días. La nube Linux solo verificó configuración,
+prebuild sin Pods y exportación iOS; compilación/firma/simulador/iPhone pendientes del Mac.
+
 ## 5. Panel web (administración y vendedores)
 
 ```bash
@@ -167,6 +176,8 @@ Cada socio usa sus propias cuentas (GitHub, Expo, Supabase). No se comparten con
 administrador que no hagan falta.
 
 ## 9. Compilar Android e iOS (EAS)
+
+**Para el pedido iPhone gratuito de Oliver, usar la sección 4 bis y `IOS_PERSONAL_TEAM.md`, no EAS iOS.**
 
 El proyecto de Expo es https://expo.dev/accounts/marketplacebrand/projects/marketplace (cuenta
 `marketplacebrand`). `config/expo.json` fija `owner`, `slug` y `projectId`

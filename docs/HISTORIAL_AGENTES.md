@@ -16,6 +16,35 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 19:59Z (15:59 Caracas, UTC−4) · Codex (entorno cloud Linux) · Oliver
+- Pedido: preparar instalación gratuita iPhone con Xcode/Apple ID Personal Team/compilación local; sin EAS
+  iOS, TestFlight, ad hoc, Expo Go, gastos, App Store, secretos privados ni Frente B.
+- Continuidad: sincronizada `cf7a1b9`, AGENTS/estado/pendientes/Frente A V2 y últimos 15 commits revisados.
+  Frente A V2 cerrado y recepción Android confirmada; checkpoint/push `498c051`. No WIP de otro agente.
+- Hecho: `tools/ios-personal/` genera copia ignorada `.local/ios-personal` del código actual, backend de pruebas
+  existente y ID exclusivamente local. APNs/Associated Domains/OTA retirados solo allí; adaptadores push sin
+  registro/listeners, campana/listado conservados. Permiso local de perfil/fotos en español, sin micrófono.
+  Plugin final rechaza capabilities inesperadas; guardas de backend/anon/ID/overrides y carpeta administrada.
+  Generador repetible conserva ID/proyecto Xcode. Guía completa `docs/IOS_PERSONAL_TEAM.md` y continuidad actualizadas.
+- Pruebas Linux: guardas 5/5, config Expo/plists nativos reales (`--native`), rechazo de APNs insertado en
+  plist (restaurado), prebuild iOS sin Pods, autolinking 39 Expo Apple/10 entradas RN iOS, 34 dependencias
+  cotejadas con SDK sin discrepancias. Mínimo plantilla iOS 16.4; icono 1024 RGB generado.
+  Hermes iOS exportado (5,5 MB), tipos copia local/monorepo y lint aprobados; core 50/50 y web comprador 40/40,
+  incluidos login/códigos, catálogo, fichas, favoritos, carrito, checkout/pago ficticio local, perfil/sesión,
+  13 V2 y 6 navegación claro/oscuro. Primera pasada web detenida: 4 fallos, 1 interrumpido, 35 sin ejecutar
+  por gateway apagado al cerrar arranque; segunda con servicios vivos aprobada. Sin alterar/desactivar tests.
+- Aislamiento: `apps/mobile`, paquetes/config, dependencias/lockfile y workflows sin cambios; huella Android
+  sin Firebase igual antes/después `da033dbf2e656078bbc76aa353ad3ed3088134d1`. No afirmar comprobación del
+  runtime completo APK 5 sin su archivo Firebase. Sin APK ni EAS Update/publicación, motor financiero o panel.
+- Límites/servicios: cloud Linux sin Xcode, simulador ni Mac/iPhone; Pods/Swift/firma/instalación/Keychain iOS
+  no ejecutados. Red bloquea Expo/Apple y lectura Supabase remoto por proxy 403; ninguna escritura remota,
+  migración, Firebase, pago o gasto. Comparación SDK offline, no Doctor remoto certificado.
+- Siguiente: Oliver sigue guía en Mac, Personal Team, iPhone/modo desarrollador, `npx expo run:ios --device`
+  y checklist físico; registrar versiones/fecha/commit/resultados sin secretos. Firma 7 días, renovación local.
+  No afirmar instalación hasta comprobarla. Sin WIP de código; no iniciar Frente B ni publicar.
+- Último commit: el cierre de esta preparación; obtener con `git log -1 origin/claude/marketplace-v1`.
+
+
 ### 2026-10-10 19:44Z (15:44 Caracas, UTC−4) · Codex (entorno cloud) · Oliver
 - Aclaración: «producción» significa recibir la actualización directamente en el Android instalado.
   APK 5 utiliza **preview**; no hay pedido de cambiar su canal nativo ni de crear otro APK.

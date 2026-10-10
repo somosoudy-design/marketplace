@@ -195,3 +195,30 @@ Total: **179 pruebas automatizadas** en verde, más las 11 comprobaciones del ca
 - `Alert.alert` no funciona en web: cancelar un pedido no pedía confirmación allí. Ahora se usa una hoja
   propia en todas las plataformas.
 - El texto de solicitud de eliminación prometía un correo que el sistema no envía; ya no lo promete.
+
+## Preparación iOS Personal Team — 2026-10-10
+
+Guía y límites: `docs/IOS_PERSONAL_TEAM.md`. Cloud **Linux**, sin Xcode ni simulador/iPhone.
+
+```bash
+node --test tools/ios-personal/personal-team.test.mjs       # 5/5
+node tools/ios-personal/prepare-personal-team.mjs
+node tools/ios-personal/verify-personal-team.mjs
+# Solo generación validada en Linux; Pods/build/firma se hacen en el Mac:
+cd .local/ios-personal
+EXPO_OFFLINE=1 CI=1 npx expo prebuild --platform ios --no-install
+cd ../..
+node tools/ios-personal/verify-personal-team.mjs --native
+```
+
+Generador repetido, config real/plists/entitlements/identidad/permisos/OTA verificados; prueba de insertar APNs
+en plist detectada y archivo restaurado. 39 módulos Expo Apple/10 entradas RN iOS resueltos, 34 versiones SDK
+cotejadas; plantilla iOS 16.4. Tipo copia local y exportación Hermes iOS 5,5 MB aprobados. Tipos/lint monorepo,
+core 50/50 y **40/40 web** (sin omisiones) con exportación reconstruida: auth, browse, navigation, front-a-v2,
+product, favorites, purchase, profile-photo y session. Claro/oscuro/320 px incluidos; checkout/pago solo locales.
+Primera pasada: 4 fallos, 1 interrumpido y 35 no ejecutados por backend local detenido al cerrar proceso de
+arranque; repetición con backend mantenido durante tests, 40/40. No se cambiaron pruebas/casos.
+Logs `.local/logs/ios-personal-{export-final,web-build,ui-final}.log`. Huella Android sin Firebase antes/después
+idéntica; fuente/configuración de APK 5 intactas, sin nueva publicación. Online Expo/Apple/Supabase remoto bloqueados
+por proxy 403. No se ejecutó Doctor remoto, Pods/Swift, Xcode, firma, simulador, Keychain o teléfono iOS físico.
+La guía contiene los comandos Mac y el checklist para registrar esos resultados cuando Oliver los ejecute.

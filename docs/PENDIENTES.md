@@ -6,14 +6,18 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 15:48 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 15:59 (Caracas, UTC−4).
 
 ## iOS gratuita — pedido vigente de Oliver
 
+Preparación técnica terminada: `tools/ios-personal/` y `docs/IOS_PERSONAL_TEAM.md`, variante aislada con
+Supabase de pruebas, sin APNs/Associated Domains/OTA. Guardas 5/5, verificación de configuración/plists,
+prebuild sin Pods, exportación Hermes, tipos/lint, core 50/50 y web comprador 40/40. iOS 16.4 mínimo.
+No cambios en Android/APK 5/producción ni publicación; Frente A V2 cerrado antes de comenzar.
+
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| IOS-L | Preparar variante local y guía Xcode/Personal Team con Supabase de pruebas | En curso | Linux sin Xcode/simulador. APNs y Associated Domains incompatibles con Personal Team; aislar sin modificar Android/producción. Sin EAS iOS, TestFlight, Expo Go, gasto ni Frente B |
-| IOS-F | Compilar, firmar e instalar en el iPhone físico y comprobar recorridos | Bloqueada (Mac/iPhone de Oliver) | Después de IOS-L. No pedir contraseñas ni certificados; firma gratuita caduca a los 7 días |
+| IOS-F | Compilar, firmar e instalar en el iPhone físico y comprobar recorridos | Bloqueada (Mac/iPhone de Oliver) | Guía exacta `docs/IOS_PERSONAL_TEAM.md`. Xcode + Personal Team + `npx expo run:ios --device`; Linux sin Xcode/simulador. Firma gratis 7 días. No pedir contraseñas/certificados, pagar, EAS iOS/TestFlight/ad hoc/Expo Go ni Frente B. Pods, firma, Keychain y pruebas iOS reales pendientes |
 
 ## Frente A V2 — revisión del propietario
 
@@ -70,5 +74,5 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 | 4.3 | Franja sin conexión en Android real (anula el inset superior del native-stack; verificada solo en web) | Se puede revisar con un recorrido de Maestro en el emulador (modo avión con `adb`) |
 | 4.5 | Insignias «Tienda verificada» y «Tienda asociada» | El diseño está hecho; falta un dato que solo ponga un administrador, mostrarlo en la app y otorgarlo desde el panel. Detalle en `docs/INSIGNIAS_TIENDAS.md` |
 | 4.6 | Foto de perfil: al eliminar una cuenta, borrar también su archivo del bucket `avatars` | `process_account_deletion` ya deja `avatar_path` vacío, pero el archivo queda en la carpeta privada del usuario (nadie más puede verlo). Hacerlo desde una función con la API de Storage |
-| 4.7 | Texto del permiso de fotos en iOS (`app.config.ts`, `expo-image-picker`) | Hoy dice que las fotos son solo para comprobantes y reclamos; agregar la foto de perfil. Cambia la parte nativa: va con el próximo APK o build de iOS, no por OTA |
+| 4.7 | Texto del permiso de fotos en iOS (`app.config.ts`, `expo-image-picker`) | La variante iOS Personal Team ya incluye perfil; la configuración compartida permanece intacta para conservar APK 5. Cambiarla solo con el próximo build autorizado, no por OTA |
 | 4.4 | Comprobar la sesión cifrada en un teléfono físico (en el emulador ya dice «Sesión cifrada: sí») | Pantalla `kora://diagnostico` en el Samsung de Oliver |
