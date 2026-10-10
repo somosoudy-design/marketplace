@@ -30,7 +30,8 @@ name: Comprador con cuenta hasta la cotización y cancelación
 # a second attempt after a failure starts with the first attempt's session: sign out so it begins as a visitor
 - tapOn: Cuenta
 - extendedWaitUntil:
-    visible: (Iniciar sesión|Cerrar sesión)
+    visible:
+      id: (account-name|account-sign-in)
     timeout: 30000
 - runFlow:
     when:
