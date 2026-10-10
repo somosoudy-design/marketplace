@@ -184,7 +184,15 @@ recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status
 
 ## Pruebas
 
-Validación UX-04 (2026-10-10, entorno Codex cloud, Node 24.19.0, pnpm 10.28.0, Postgres 17.11,
+Validación actual **Frente A V2**, base `9e4e1f5`, mismo stack local: tipos/lint sin errores, núcleo 50/50,
+admin 28/28, API 12/12, app **52 aprobadas + 1 omitida**, panel 9/9. App incluye 13 casos V2 y 6 de navegación
+UX-04. axe: 0 infracciones en 8 pantallas/temas a 320 px; contraste de texto seleccionado AA. Galería web autónoma
+`.local/frente-a-v2/comparacion.html`, 40 capturas antes / 50 después. Guardas del promotor production 3/3.
+Preview fuente `b60b2cc`: run 38079470216 Success, runtime exacto APK 5 comprobado. Android revisión 31 en curso;
+production esperará sus resultados. Sin validación en teléfono ni TalkBack/VoiceOver físicos. Detalle y límites en
+`docs/PRUEBAS.md` / `docs/FRENTE_A_V2.md`.
+
+Validación **anterior** UX-04 (2026-10-10, entorno Codex cloud, Node 24.19.0, pnpm 10.28.0, Postgres 17.11,
 backend local sin Docker y Chromium; datos demo locales):
 
 | Suite | Resultado |
@@ -242,7 +250,7 @@ Resumen; procedimientos en `docs/ENTORNO.md`.
 | EAS Hosting | Panel en https://kora-panel.expo.app (mismo proyecto Expo `marketplacebrand/marketplace`, plan sin costo) |
 | Supabase `bfuggvbgttvcygbexqyn` | **Prohibido tocarlo**: es de otros productos de Oliver (BingoCriollo) |
 | Expo `marketplacebrand/marketplace` | APK 5 (build `d1d10c28`, versionCode 4, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`); actualizaciones por canal `preview`. `GOOGLE_SERVICES_JSON` (archivo, entorno preview) y clave FCM V1 cargadas por Oliver. El APK 4 ya no recibe actualizaciones |
-| GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `apk-verify.yml`, `apk-emulator.yml` (capturas también en la rama `ci/capturas`), `firebase-check.yml` (Firebase y credenciales de EAS), `panel-deploy.yml` (panel); secreto `EXPO_TOKEN` configurado |
+| GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `eas-update-production.yml` (promoción del bundle validado), `apk-verify.yml`, `apk-emulator.yml` (capturas también en la rama `ci/capturas`), `firebase-check.yml` (Firebase y credenciales de EAS), `panel-deploy.yml` (panel); secreto `EXPO_TOKEN` configurado |
 | Google Play / App Store | Nada publicado. Oliver dijo que todavía no |
 | Binance Pay, PayPal | Preparados en código, deshabilitados (`pending_credentials`) |
 
