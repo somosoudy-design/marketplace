@@ -6,13 +6,13 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 13:16 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 13:32 (Caracas, UTC−4).
 
 ## Frente A — experiencia del comprador (pedido vigente de Oliver)
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| UX-04 | Navegación inferior: evaluar Buscar/Explorar, retirar accesos redundantes y conservar capacidades | En curso (Codex) | Conservar cuatro destinos y catálogo existente. Pruebas claras/oscuras. EAS Update solo compatible con APK 5; sin APK nuevo, motor financiero ni panel |
+| UX-04 | Navegación inferior: evaluar Buscar/Explorar, retirar accesos redundantes y conservar capacidades | Código y pruebas terminados; publicación en verificación | Inicio · Buscar · Carrito · Cuenta; eliminado botón redundante de filtros junto al buscador. Claro/oscuro y 340 px revisados. `docs/UX-04.md`. Esperar revisión de Oliver antes de UX-06 |
 | UX-06 | Inicio y descubrimiento: scroll, distribución, banners, tendencias y carruseles | Espera revisión de UX-04 | No iniciar todavía; aprovechar secciones existentes y mantener Electric Violet |
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)

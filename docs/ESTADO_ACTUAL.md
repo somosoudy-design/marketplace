@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 13:16 (Caracas, UTC−4), por Codex (UX-04, entorno cloud).
+**Última actualización:** 2026-10-10 13:32 (Caracas, UTC−4), por Codex (UX-04, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -13,7 +13,7 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `3e6ff38` (emulador con las tarjetas simplificadas) |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Base de este turno: `9e50d2a`; implementación en el checkpoint `03c92ec`, completada por el de validación/publicación de UX-04 |
 | Plan vigente | Frente A — experiencia del comprador (Oliver, 2026-10-10): primero UX-04; UX-06 espera revisión de UX-04 |
 | Objetivo actual | UX-04: revisar navegación inferior, distinguir Buscar de Inicio y retirar accesos redundantes sin perder capacidades. APK 5 sigue siendo la base nativa; no generar otro APK |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
@@ -102,9 +102,14 @@ No cambiar motor financiero, panel, configuración nativa, dependencias ni ident
 
 Comprobación inicial web local: `browse`, `favorites`, `profile-photo` y `store-share`: **10/10** pasan,
 incluidos los últimos cambios de foto de perfil y compartir tiendas. Implementación de UX-04 completa en
-JavaScript y pruebas añadidas en ambos temas (`docs/UX-04.md`); tipos y lint comprobados antes de exportar.
-Pruebas funcionales de la versión nueva, revisión visual y publicación EAS Update todavía pendientes.
-El workflow existente comprueba el runtime de APK 5 antes de publicar.
+JavaScript y pruebas añadidas en ambos temas (`docs/UX-04.md`). Validación terminada: tipos/lint, núcleo
+50/50, panel unitario 28/28, API 12/12, app 39 aprobadas y 1 omitida por la configuración local de correo,
+panel entre roles 9/9. Se reconstruyó la exportación web; pruebas de búsqueda, filtros y contador pasan
+en claro y oscuro. Capturas revisadas de los cuatro destinos en ambos temas a tamaño Pixel 7 y de Inicio/Buscar
+a 340 px (`.local/ux04/light/`, `.local/ux04/dark/`). Sin prueba física nueva.
+
+Checkpoint previo a publicación: falta verificar el workflow EAS Update del push de esta versión.
+El guard existente compara contra el runtime de APK 5 antes de publicar; no generar APK ni tocar su configuración.
 
 Pendiente heredado, independiente de UX-04:
 
@@ -125,9 +130,10 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Completar **solo UX-04**, probar navegación y regresiones locales, revisar capturas en claro y oscuro,
-y publicar EAS Update únicamente si coincide el runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`
-de APK 5. Registrar el resultado, hacer commit/push y esperar revisión de Oliver antes de UX-06.
+Verificar el resultado del workflow **Actualización de prueba (EAS Update)** del checkpoint UX-04.
+Solo se publica si coincide el runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` de APK 5.
+Registrar el run y resultado en este documento e historial, hacer commit/push y esperar revisión de Oliver
+antes de UX-06. Código y validación local de UX-04 terminados; no rehacer navegación ni iniciar descubrimiento.
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de
@@ -167,7 +173,23 @@ recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status
 
 ## Pruebas
 
-Ejecutadas en esta sesión (2026-10-09, stack local):
+Validación UX-04 (2026-10-10, entorno Codex cloud, Node 24.19.0, pnpm 10.28.0, Postgres 17.11,
+backend local sin Docker y Chromium; datos demo locales):
+
+| Suite | Resultado |
+|---|---|
+| Tipos y lint | Sin errores |
+| Núcleo / panel unitario | 50/50 y 28/28 |
+| API de compra y avatar | 12/12 |
+| App Playwright, exportación web Pixel 7 | 39 aprobadas, 1 omitida (`signup-without-email`, requiere `AUTH_AUTOCONFIRM=true`; local usa confirmación) |
+| Navegación UX-04, incluidos en la app | 6/6, claro y oscuro |
+| Panel Playwright entre roles | 9/9 |
+| Revisión visual | Inicio, Buscar, Carrito y Cuenta en claro/oscuro, Pixel 7; Inicio/Buscar también a 340 px |
+
+No ejecutadas para UX-04: suites SQL/funciones (sin cambios en ellas) ni emulador/teléfono.
+La recepción de esta actualización en el Samsung queda para la revisión de Oliver.
+
+Resultados históricos (2026-10-09, stack local):
 
 | Suite | Comando | Resultado |
 |---|---|---|
@@ -178,7 +200,7 @@ Ejecutadas en esta sesión (2026-10-09, stack local):
 | Catálogo remoto en base aparte | `pnpm test:remote-catalog` | todas pasan |
 | Tipos y lint | `pnpm typecheck && pnpm lint` | sin errores |
 
-No ejecutadas en esta sesión: `pnpm test:db` (76), `pnpm test:e2e` (8) y `pnpm test:functions` (11); pasaron la
+No ejecutadas en aquella sesión: `pnpm test:db` (76), `pnpm test:e2e` (8) y `pnpm test:functions` (11); pasaron la
 última vez que se tocó la base (ver `docs/PRUEBAS.md`) y desde entonces no cambió ninguna migración ni función.
 
 En el APK real (GitHub Actions, Android 15, pantalla de Pixel 6), revisión 15 del 2026-10-10 con el APK 4 y la

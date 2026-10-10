@@ -1,5 +1,30 @@
 # Resultados de pruebas
 
+## UX-04 — 2026-10-10 (Codex cloud)
+
+Sobre `claude/marketplace-v1`, base `9e50d2a`; backend local sin Docker (Postgres 17.11), Node 24.19.0,
+pnpm 10.28.0 y Chromium. No se modificaron SQL, funciones del servidor, motor financiero ni código del panel.
+
+| Comprobación | Resultado |
+|---|---|
+| `pnpm typecheck` / `pnpm lint` | Sin errores |
+| `pnpm --filter @kora/core test` | 50/50 |
+| `pnpm test:admin` | 28/28 |
+| `pnpm test:e2e` | 12/12 (compra y avatar) |
+| `pnpm test:ui` (exportación reconstruida; suite repetida tras ajustar selectores de pruebas) | 39 aprobadas, 1 omitida por confirmación de correo activa en local |
+| `navigation.spec.ts`, incluido en la suite de la app | 6/6, claro y oscuro: cuatro destinos, foco desde Inicio, filtros/búsqueda conservados, ficha y regreso, contador del carrito |
+| `pnpm test:panel` | 9/9 |
+| Revisión visual | Inicio, Buscar, Carrito y Cuenta, Pixel 7 en claro/oscuro; Inicio/Buscar también a 340 px |
+
+Capturas: `node tools/design/screens.mjs .local/ux04/light light` y
+`node tools/design/screens.mjs .local/ux04/dark dark`. La evidencia queda local e ignorada por Git.
+Las pruebas de foto de perfil y compartir tiendas pasan junto a UX-04. La primera ejecución de las nuevas
+pruebas alcanzaba tarjetas/pantallas ocultas retenidas por el navegador; se corrigió el alcance de los
+selectores y la suite completa pasó. No se desactivaron casos. Sin nueva ejecución SQL/funciones ni pruebas
+de UX-04 en emulador/teléfono; la compatibilidad OTA la comprueba el workflow antes de publicar.
+
+## Validación inicial — 2026-10-09 (histórico)
+
 Ejecutadas el 2026-10-09 en el entorno de desarrollo (Linux, Node 22, Postgres 16, stack local sin Docker),
 inmediatamente después de `pnpm db:reset` (base reconstruida desde cero con las 23 migraciones y el seed).
 

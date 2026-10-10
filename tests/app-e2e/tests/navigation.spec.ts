@@ -35,7 +35,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(search).toBeFocused();
       await search.fill('ugreen');
       await page.getByTestId('chip-availability-available').click();
-      const products = page.locator('[data-testid^="product-card-ugreen"]');
+      const products = page.getByTestId('explore-list').locator('[data-testid^="product-card-ugreen"]');
       await expect(products.first()).toBeVisible();
 
       await page.getByRole('tab', { name: 'Carrito', exact: true }).click();
@@ -61,7 +61,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(cart).toHaveAttribute('aria-selected', 'true');
       await expect(cart).toContainText('1');
       await page.getByRole('tab', { name: 'Inicio', exact: true }).click();
-      await expect(page.getByTestId('home-search')).toBeVisible();
+      // A direct product link can leave an inactive Home mounted behind the current tabs.
+      await expect(page.locator('[data-testid="home-search"]:visible')).toHaveCount(1);
       await expect(cart).toContainText('1');
       await expect(cart).toHaveAttribute('aria-selected', 'false');
       await cart.click();
