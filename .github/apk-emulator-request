@@ -1,4 +1,4 @@
 # Cambiar este archivo en la rama de trabajo instala y abre estos APK en un emulador Android 15 (workflow apk-emulator).
-# Revisión 19: APK 5 encima del APK 4; un recorrido que falla se repite una vez (fallos de conexión de Maestro con el emulador).
+# Revisión 20: APK 5 encima del APK 4; un recorrido que falla se repite una vez; el aviso push se toca desde otra pantalla.
 APK 4 (build 5ee104fe): https://expo.dev/artifacts/eas/krgQkETt1GoFe0O_D6k9SG3I8XYPrc6GBRoGsfxP4_s.apk
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk

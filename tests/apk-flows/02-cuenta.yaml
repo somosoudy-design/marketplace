@@ -236,12 +236,21 @@ name: Comprador con cuenta hasta la cotización y cancelación
 
 # 8. aviso push real: el pedido creado arriba genera «Pedido P-… recibido» para esta cuenta de prueba, y push-dispatch
 # (cada minuto en el proyecto de pruebas) lo envía por Expo y Firebase a este dispositivo. Tocarlo abre el pedido
+# La app queda en otra pantalla, así que ver la ficha del pedido después de tocar el aviso prueba que el aviso la abrió.
+- openLink: kora://settings
+- extendedWaitUntil:
+    visible:
+      id: settings-push
+    timeout: 20000
 - swipe:
     start: 50%, 1%
     end: 50%, 75%
 - extendedWaitUntil:
     visible: Pedido P-.* recibido
     timeout: 240000
+# the emulator draws a new notification a moment after it is in the hierarchy
+- waitForAnimationToEnd:
+    timeout: 5000
 - takeScreenshot: flujo-cuenta-09-aviso-push
 - tapOn: Pedido P-.* recibido
 - extendedWaitUntil:
