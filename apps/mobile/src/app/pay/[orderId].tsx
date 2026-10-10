@@ -9,7 +9,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SummaryRow } from '@/components/checkout/Rows';
+import { RadioRow, SummaryRow } from '@/components/checkout/Rows';
 import { RateSheet } from '@/components/RateSheet';
 import { BottomBar } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -181,29 +181,19 @@ const RAIL_ICON: Record<string, IconName> = {
   pago_movil: 'smartphone', bank_transfer_ve: 'landmark', zelle: 'zap', usdt_trc20: 'coins', binance_pay: 'coins', paypal: 'globe', cash: 'banknote',
 };
 
-/** Methods grouped by the currency the buyer pays in, each with what it costs and its limits; the exact amount
- * comes from the server's quote in the next step. */
+/** Methods grouped by the currency the buyer pays in, as a compact list; the selected one opens what it costs and its
+ * note. The amount is an estimate (the quote of the next step is exact). */
 function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { methods: PaymentMethod[]; selected: string | null; amountUsd: ReturnType<typeof D>; onSelect: (m: PaymentMethod) => void; error: string | null }) {
-  const t = useTheme();
   const vesRate = useVesRate();
   const divisas = useDivisas();
   const rate = useRateStatus().data;
+  const t = useTheme();
   const [rateOpen, setRateOpen] = useState(false);
-  /** What the method will ask for, as a reference (the quote of the next step is exact): bolívares at today's BCV
-   * rate, or the divisas price through today's gap (docs/PRECIOS.md). Null when there is nothing current to show. */
-  const estimate = (m: PaymentMethod): { amount: string; saving: number | null } | null => {
-    if (m.currency === 'VES') return vesRate ? { amount: formatMoney(amountUsd.times(vesRate.rate), 'VES'), saving: null } : null;
-    const f = divisas?.factor(m.code);
-    if (!f) return { amount: formatMoney(amountUsd, m.currency as Currency), saving: null };
-    return { amount: formatMoney(amountUsd.times(f), m.currency as Currency), saving: D(1).minus(f).times(100).toDecimalPlaces(1).toNumber() };
-  };
   return (
     <View style={{ gap: 18 }}>
       <View style={{ gap: 4 }}>
         <Text variant="title">Elige cómo pagar</Text>
-        <Text variant="bodySmall" color="textSecondary">
-          Cada método muestra cuánto pagas{divisas ? `; con ${divisas.label} pagas menos` : ''}. El monto exacto lo ves en el siguiente paso.
-        </Text>
+        {divisas ? <Text variant="bodySmall" color="textSecondary">Con {divisas.label} pagas menos.</Text> : null}
         {rate ? (
           <Pressable testID="pay-rate-info" onPress={() => setRateOpen(true)} hitSlop={8} accessibilityRole="button" style={{ alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 2 }}>
             <Icon name="info" size={14} color={t.colors.brand} />
@@ -218,48 +208,18 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
         return (
           <View key={g.title} style={{ gap: 8 }}>
             <Text variant="overline" color="textMuted">{g.title.toUpperCase()}</Text>
-            <Card padded={false}>
+            <Card padded={false} style={{ overflow: 'hidden' }}>
               {list.map((m, i) => {
                 const min = Number(m.min_usd);
                 const max = m.max_usd == null ? null : Number(m.max_usd);
+                // a limit stays on the row: it is why the method can't be chosen for this amount
                 const limit = min > 0 && amountUsd.lt(min) ? `Desde ${formatUSD(min)}` : max != null && amountUsd.gt(max) ? `Hasta ${formatUSD(max)}` : null;
-                const fee = Number(m.fee_pct) > 0 ? `+${String(Number(m.fee_pct)).replace('.', ',')} %` : Number(m.fee_fixed_usd) > 0 ? `+${formatUSD(m.fee_fixed_usd)}` : null;
                 const on = selected === m.code;
                 return (
                   <View key={m.code}>
-                    {i > 0 ? <Divider inset={68} /> : null}
-                    <Pressable
-                      testID={`method-${m.code}`}
-                      accessibilityRole="radio"
-                      aria-checked={on}
-                      aria-disabled={!!limit}
-                      disabled={!!limit}
-                      onPress={() => { haptics.select(); onSelect(m); }}
-                      style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, opacity: limit ? 0.5 : 1, backgroundColor: on ? t.colors.brandSoft : pressed ? t.colors.surfaceSunken : 'transparent' })}
-                    >
-                      <View style={{ width: 42, height: 42, borderRadius: t.radii.md, alignItems: 'center', justifyContent: 'center', backgroundColor: on ? t.colors.brand : t.colors.surfaceSunken }}>
-                        <Icon name={RAIL_ICON[m.rail] ?? 'wallet'} size={20} color={on ? t.colors.onBrand : t.colors.text} />
-                      </View>
-                      <View style={{ flex: 1, gap: 2 }}>
-                        <Text variant="subtitle" style={{ fontSize: 15 }}>{m.name}</Text>
-                        {m.description ? <Text variant="caption" color="textMuted" numberOfLines={2}>{m.description}</Text> : null}
-                      </View>
-                      <View style={{ alignItems: 'flex-end', gap: 2 }}>
-                        {(() => {
-                          const e = estimate(m);
-                          return (
-                            <>
-                              <Text variant="label" tabular testID={`method-amount-${m.code}`}>{e ? `≈ ${e.amount}` : m.currency === 'VES' ? 'Bs.' : m.currency}</Text>
-                              {limit || fee || !e?.saving ? (
-                                <Text variant="caption" color={limit ? 'warning' : 'textMuted'}>{limit ?? fee ?? 'Sin comisión'}</Text>
-                              ) : (
-                                <Text variant="caption" color="success">{String(e.saving).replace('.', ',')} % menos</Text>
-                              )}
-                            </>
-                          );
-                        })()}
-                      </View>
-                    </Pressable>
+                    {i > 0 ? <Divider inset={16} /> : null}
+                    <RadioRow testID={`method-${m.code}`} selected={on} disabled={!!limit} icon={RAIL_ICON[m.rail] ?? 'wallet'} title={m.name} subtitle={limit ?? undefined} onPress={() => onSelect(m)} />
+                    {on ? <MethodDetail method={m} amountUsd={amountUsd} vesRate={vesRate} divisas={divisas} /> : null}
                   </View>
                 );
               })}
@@ -268,6 +228,33 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
         );
       })}
       {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
+    </View>
+  );
+}
+
+/** What the selected method will ask for, as a reference: bolívares at today's BCV rate, or the divisas price through
+ * today's gap (docs/PRECIOS.md), plus its fee and its note. */
+function MethodDetail({ method: m, amountUsd, vesRate, divisas }: { method: PaymentMethod; amountUsd: ReturnType<typeof D>; vesRate: ReturnType<typeof useVesRate>; divisas: ReturnType<typeof useDivisas> }) {
+  const t = useTheme();
+  const fee = Number(m.fee_pct) > 0 ? `${String(Number(m.fee_pct)).replace('.', ',')} %` : Number(m.fee_fixed_usd) > 0 ? formatUSD(m.fee_fixed_usd) : null;
+  const f = m.currency === 'VES' ? null : divisas?.factor(m.code);
+  const amount = m.currency === 'VES' ? (vesRate ? formatMoney(amountUsd.times(vesRate.rate), 'VES') : null) : formatMoney(f ? amountUsd.times(f) : amountUsd, m.currency as Currency);
+  const saving = f ? D(1).minus(f).times(100).toDecimalPlaces(1).toNumber() : 0;
+  return (
+    <View testID="method-detail" style={{ paddingHorizontal: 16, paddingBottom: 16, gap: 10 }}>
+      <View style={{ padding: 12, gap: 4, borderRadius: t.radii.md, backgroundColor: t.colors.surfaceSunken }}>
+        {amount ? (
+          <SummaryRow label="Pagarás" value={`≈ ${amount}`} strong testID={`method-amount-${m.code}`} />
+        ) : (
+          <Text variant="bodySmall" color="textSecondary">El monto en bolívares lo calculamos en el siguiente paso con la tasa del momento.</Text>
+        )}
+        {m.currency === 'VES' && vesRate ? (
+          <Text variant="caption" color="textMuted">{formatUSD(amountUsd)} {vesRate.demo ? 'con tasa de demostración' : 'a la tasa BCV de hoy'} ({formatRate(vesRate.rate)})</Text>
+        ) : null}
+        {saving >= 0.1 ? <Text variant="caption" color="success">{String(saving).replace('.', ',')} % menos que {formatUSD(amountUsd)} a tasa BCV</Text> : null}
+        <Text variant="caption" color={fee ? 'warning' : 'textMuted'}>{fee ? `Más comisión del método de ${fee}` : 'Sin comisión'}</Text>
+      </View>
+      {m.description ? <Text variant="caption" color="textSecondary">{m.description}</Text> : null}
     </View>
   );
 }

@@ -16,6 +16,18 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 13:30Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Pedidos: simplificar las tarjetas de producto (Oliver, 12:57Z) y la selección del método de pago (13:17Z).
+- Hecho: `ProductCard` muestra imagen, nombre en una línea y precio; el descuento y «Quedan N» van sobre la foto;
+  se quitó la prop `showStore`, que ya no se usaba (`Catalog`, página de tienda) (`1e3ca57`).
+  Pago: lista compacta con `RadioRow` (ahora con icono y estado deshabilitado) y el detalle del método elegido
+  (`MethodDetail` en `pay/[orderId].tsx`), sin tocar cálculos ni la cotización.
+- Pruebas: Playwright de la app, 29 pasan y 1 omitida (antes, `pnpm db:reset`: el stack local había agotado el
+  stock de prueba); capturas web en claro, oscuro, 340 px y 1280 px; emulador con el APK 5 y la actualización.
+- Servicios: dos actualizaciones por EAS Update al APK 5 (runtime `eb5ed117…`).
+- Siguiente: la prueba de push de Oliver en su Samsung (`PENDIENTES.md` 1.5).
+- Último commit: el checkpoint de las tarjetas en `claude/marketplace-v1`.
+
 ### 2026-10-10 05:35Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Pedido: «Compilar APK 5 con notificaciones push» (Oliver, 2026-10-10 03:50Z), hitos 1 a 5.
 - Hecho:
