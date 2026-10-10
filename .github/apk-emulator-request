@@ -1,4 +1,4 @@
 # Cambiar este archivo en la rama de trabajo instala y abre estos APK en un emulador Android 15 (workflow apk-emulator).
-# Revisión 27: APK 5 con la ficha simplificada; enlace kora://tienda/patitas abre esa tienda, compartir y copiar; insignia dorada en Kora.
+# Revisión 28: igual que la 27, con «Enlace copiado» fijo y la tienda en su propio recorrido (01d-tienda-enlace).
 APK 4 (build 5ee104fe): https://expo.dev/artifacts/eas/krgQkETt1GoFe0O_D6k9SG3I8XYPrc6GBRoGsfxP4_s.apk
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
