@@ -19,6 +19,10 @@ adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1
 sleep 30
 adb shell am force-stop "$PKG"
 
+run_flow() { # flow, log name
+  (cd shots/flujos && maestro test --format junit --output "$2.xml" "../../$1") >"shots/flujos/$2.log" 2>&1
+}
+
 status=0
 {
   echo "### Recorridos con Maestro ($(maestro --version 2>/dev/null | tail -1)) sobre $(basename "$apk")"
@@ -32,11 +36,18 @@ for flow in tests/apk-flows/*.yaml; do
     continue
   fi
   adb logcat -c
-  if (cd shots/flujos && maestro test --format junit --output "$name.xml" "../../$flow") >"shots/flujos/$name.log" 2>&1; then
+  if run_flow "$flow" "$name"; then
     echo "$name: pasó" >>"$report"
+  elif sleep 5 && adb shell am force-stop "$PKG" && run_flow "$flow" "$name-2"; then
+    # Maestro sometimes loses the emulator for a moment ("device not found", "Stream Closed") and the flow fails in
+    # its first seconds: one more attempt, with the first failure in the report so it is not hidden
+    echo "$name: pasó al segundo intento; el primero falló así:" >>"$report"
+    tail -15 "shots/flujos/$name.log" >>"$report"
   else
-    echo "$name: FALLÓ" >>"$report"
-    tail -60 "shots/flujos/$name.log" >>"$report"
+    echo "$name: FALLÓ (dos intentos)" >>"$report"
+    tail -20 "shots/flujos/$name.log" >>"$report"
+    echo "-- segundo intento --" >>"$report"
+    tail -60 "shots/flujos/$name-2.log" >>"$report"
     # whether the app crashed, was closed by a back press or stopped answering
     echo "-- logcat de la app --" >>"$report"
     adb logcat -d -b crash 2>/dev/null | grep -E "FATAL|Exception|Error|at " | head -25 >>"$report"
