@@ -1,32 +1,41 @@
-### Recorridos con Maestro (2.11.0) sobre apk1.apk
+### Recorridos con Maestro (2.11.0) sobre apk2.apk
 ```
 01-visitante: pasó
-01a-volver: FALLÓ
-
-Waiting for flows to complete...
-[Failed] Volver con atrás de Android (29s) (Assertion is false: id: home-search is visible)
-
-1/1 Flow Failed
-
--- logcat de la app --
-10-10 02:49:27.620   567  1619 I ActivityManager: Killing 5466:com.example.kora.preview/u0a211 (adj 0): stop com.example.kora.preview due to from pid 5971
-10-10 02:49:27.621   567  1619 W ActivityTaskManager: Force removing ActivityRecord{aa4bce2 u0 com.example.kora.preview/.MainActivity t13 f}}: app died, no saved state
-10-10 02:49:27.752   567   650 W WindowManager: Exception thrown during dispatchAppVisibility Window{3ded2cb u0 com.example.kora.preview/com.example.kora.preview.MainActivity EXITING}
-10-10 02:49:28.326   567   650 D CoreBackPreview: Window{17ce39c u0 com.example.kora.preview/com.example.kora.preview.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@
-10-10 02:49:38.246   567   823 D CoreBackPreview: Window{17ce39c u0 com.example.kora.preview/com.example.kora.preview.MainActivity}: Setting back callback null
+01a-volver: pasó
 01b-volver-favoritos: pasó
-01c-volver-favoritos-atras: FALLÓ
+01c-volver-favoritos-atras: pasó
+02-cuenta: FALLÓ
 
 Waiting for flows to complete...
-[Failed] Volver de Favoritos con atrás de Android (29s) (Assertion is false: id: home-search is visible)
+[Failed] Comprador con cuenta hasta la cotización y cancelación (39s)
 
 1/1 Flow Failed
 
+Exception in thread "Thread-5" java.io.IOException: Command failed (host:transport:emulator-5554): device 'emulator-5554' not found
+	at dadb.adbserver.AdbServer.send$dadb(AdbServer.kt:103)
+	at dadb.adbserver.AdbServerDadb.open(AdbServer.kt:148)
+	at dadb.Dadb$DefaultImpls.openShell(Dadb.kt:42)
+	at dadb.adbserver.AdbServerDadb.openShell(AdbServer.kt:122)
+	at dadb.Dadb$DefaultImpls.shell(Dadb.kt:35)
+	at dadb.adbserver.AdbServerDadb.shell(AdbServer.kt:122)
+	at maestro.android.AndroidDeviceConnection.shell(AndroidDeviceConnection.kt:153)
+	at maestro.drivers.AndroidDriver.shell(AndroidDriver.kt:1352)
+	at maestro.drivers.AndroidDriver.isPackageInstalled(AndroidDriver.kt:1335)
+	at maestro.drivers.AndroidDriver.bestEffortUninstall(AndroidDriver.kt:1310)
+	at maestro.drivers.AndroidDriver.uninstallMaestroDriverApp$lambda$89(AndroidDriver.kt:1296)
+	at maestro.utils.Metrics.measured(Metrics.kt:48)
+	at maestro.drivers.AndroidDriver.uninstallMaestroDriverApp(AndroidDriver.kt:1295)
+	at maestro.drivers.AndroidDriver.close(AndroidDriver.kt:182)
+	at maestro.Maestro.close(Maestro.kt:602)
+	at maestro.cli.session.MaestroSessionManager$MaestroSession.close(MaestroSessionManager.kt:471)
+	at maestro.cli.session.MaestroSessionManager.newSession$lambda$2(MaestroSessionManager.kt:129)
+	at kotlin.concurrent.ThreadsKt$thread$thread$1.run(Thread.kt:30)
 -- logcat de la app --
-10-10 02:50:24.727   567   585 I ActivityManager: Killing 6476:com.example.kora.preview/u0a211 (adj 0): stop com.example.kora.preview due to from pid 6949
-10-10 02:50:24.729   567   585 W ActivityTaskManager: Force removing ActivityRecord{ba7eb u0 com.example.kora.preview/.MainActivity t15 f}}: app died, no saved state
-10-10 02:50:24.898   567  2618 W WindowManager: Exception thrown during dispatchAppVisibility Window{6891543 u0 com.example.kora.preview/com.example.kora.preview.MainActivity}
-10-10 02:50:25.572   567   585 D CoreBackPreview: Window{e7ac2e6 u0 com.example.kora.preview/com.example.kora.preview.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@
-10-10 02:50:35.721   567   585 D CoreBackPreview: Window{e7ac2e6 u0 com.example.kora.preview/com.example.kora.preview.MainActivity}: Setting back callback null
-02-cuenta: pasó
+10-10 04:48:48.739   565  1775 I ActivityManager: Killing 7693:com.example.kora.preview/u0a212 (adj 0): stop com.example.kora.preview due to from pid 8189
+10-10 04:48:48.742   565  1775 W ActivityTaskManager: Force removing ActivityRecord{3b37d8e u0 com.example.kora.preview/.MainActivity t18 f}}: app died, no saved state
+10-10 04:48:48.895   565  1754 W WindowManager: Exception thrown during dispatchAppVisibility Window{1b1e34d u0 com.example.kora.preview/com.example.kora.preview.MainActivity}
+10-10 04:48:49.055   565  1775 D CoreBackPreview: Window{aa4874a u0 Splash Screen com.example.kora.preview}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@eac09f0, mPriority=0, mI
+10-10 04:48:49.470   565  1430 D CoreBackPreview: Window{9e1ad02 u0 com.example.kora.preview/com.example.kora.preview.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@
+10-10 04:48:50.790   565  1766 D CoreBackPreview: Window{aa4874a u0 Splash Screen com.example.kora.preview}: Setting back callback null
+10-10 04:49:21.255  8201  8201 E FrameTracker: force finish cuj, time out: J<IME_INSETS_SHOW_ANIMATION::0@0@com.example.kora.preview>
 ```
