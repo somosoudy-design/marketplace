@@ -21,12 +21,14 @@ export function Skeleton({ width = '100%', height = 14, radius, style }: { width
 }
 
 export function ProductCardSkeleton({ width }: { width: number }) {
-  const { radii } = useTheme();
+  const { radii, colors } = useTheme();
   return (
-    <View style={{ width, gap: 8 }}>
-      <Skeleton width={width} height={width * 1.25} radius={radii.lg} />
-      <Skeleton width={width * 0.8} height={12} />
-      <Skeleton width={width * 0.4} height={14} />
+    <View style={{ width, borderRadius: radii.lg, overflow: 'hidden', backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border }}>
+      <Skeleton height={(width - 2) * 1.25} radius={0} />
+      <View style={{ padding: 10, gap: 8 }}>
+        <Skeleton width="90%" height={12} />
+        <Skeleton width="45%" height={18} />
+      </View>
     </View>
   );
 }

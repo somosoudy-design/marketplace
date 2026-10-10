@@ -1,4 +1,4 @@
-# Favoritos (pantalla nueva del hito 1 de UI/UX) se cierra con la flecha del encabezado y vuelve a Inicio.
+# Frente A V2: Favoritos se abre desde Cuenta y vuelve a Cuenta con la flecha del encabezado.
 # Corre antes de 02-cuenta: necesita la app sin sesión (la cuenta de 02 queda abierta).
 appId: com.example.kora.preview
 name: Volver de Favoritos con la flecha
@@ -14,7 +14,9 @@ name: Volver de Favoritos con la flecha
       id: home-search
     timeout: 60000
 - tapOn:
-    id: home-favorites
+    id: buyer-tab-account
+- tapOn:
+    id: account-favorites
 - extendedWaitUntil:
     visible: Guarda lo que te gusta
     timeout: 15000
@@ -23,6 +25,8 @@ name: Volver de Favoritos con la flecha
     point: 7%,8%
 - extendedWaitUntil:
     visible:
-      id: home-search
+      id: account-favorites
     timeout: 15000
 - takeScreenshot: volver-03-favoritos-flecha
+- tapOn:
+    id: buyer-tab-index

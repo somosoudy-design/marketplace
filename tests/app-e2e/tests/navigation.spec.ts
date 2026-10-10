@@ -8,7 +8,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
 
     test('four destinations separate discovery from search without a second filter shortcut', async ({ page }) => {
       await page.goto('/');
-      await expect(page.getByRole('tab')).toHaveText(['Inicio', 'Buscar', 'Carrito', 'Cuenta']);
+      await expect(page.getByRole('tab')).toHaveCount(4);
+      for (const name of ['Inicio', 'Buscar', 'Carrito', 'Cuenta']) await expect(page.getByRole('tab', { name, exact: true })).toBeVisible();
+      await expect(page.getByTestId('active-tab-label')).toHaveText('Inicio');
       await expect(page.getByRole('tab', { name: 'Inicio', exact: true })).toHaveAttribute('aria-selected', 'true');
       await expect(page.getByTestId('home-search')).toBeVisible();
       await expect(page.getByTestId('home-filters')).toHaveCount(0);
@@ -25,7 +27,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('account-sign-in')).toBeVisible();
       await page.getByRole('tab', { name: 'Inicio', exact: true }).click();
       await expect(page.getByTestId('home-search')).toBeVisible();
-      await expect(page.getByTestId('home-favorites')).toBeVisible();
+      await expect(page.getByTestId('home-favorites')).toHaveCount(0);
+      await expect(page.getByTestId('home-cart')).toBeVisible();
     });
 
     test('the Home search focuses the same catalog and keeps filters across tabs and product details', async ({ page }) => {
@@ -57,7 +60,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('product-title')).toBeVisible();
       await page.getByTestId('product-cta').click();
       await expect(page).toHaveURL(/\/cart$/);
-      const cart = page.getByRole('tab', { name: 'Carrito', exact: true });
+      const cart = page.getByRole('tab', { name: /^Carrito(?:,|$)/ });
       await expect(cart).toHaveAttribute('aria-selected', 'true');
       await expect(cart).toContainText('1');
       await page.getByRole('tab', { name: 'Inicio', exact: true }).click();

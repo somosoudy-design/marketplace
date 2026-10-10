@@ -35,6 +35,7 @@ export default function AccountScreen() {
     <ScrollView style={{ flex: 1, backgroundColor: t.colors.background }} contentContainerStyle={{ paddingTop: insets.top + 8, paddingBottom: 48, paddingHorizontal: 16, gap: 18, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}>
       <Text variant="displayL">Cuenta</Text>
       {!user ? (
+        <>
         <Card style={{ gap: 14, padding: 20 }}>
           <View style={{ width: 52, height: 52, borderRadius: 26, backgroundColor: t.colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}>
             <Icon name="user" size={26} color={t.colors.brand} />
@@ -44,6 +45,10 @@ export default function AccountScreen() {
           <Button testID="account-sign-in" title="Iniciar sesión" full onPress={() => router.push('/sign-in')} />
           <Button title="Crear cuenta" variant="secondary" full onPress={() => router.push('/sign-up')} />
         </Card>
+        <Card padded={false}>
+          <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle="Lo que guardas con el corazón" onPress={() => router.push('/favorites')} />
+        </Card>
+        </>
       ) : (
         <>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>

@@ -1,4 +1,4 @@
-# Favoritos se cierra también con el botón o gesto «atrás» de Android y vuelve a Inicio, sin cerrar la app.
+# Frente A V2: Favoritos se abre desde Cuenta; «atrás» de Android vuelve a Cuenta sin cerrar la app.
 # Fallaba en el APK 4 con Android 13 a 15 (el gesto predictivo dejaba «atrás» al sistema); el APK 5 lo corrige.
 # Corre antes de 02-cuenta: necesita la app sin sesión (la cuenta de 02 queda abierta).
 appId: com.example.kora.preview
@@ -15,7 +15,9 @@ name: Volver de Favoritos con atrás de Android
       id: home-search
     timeout: 60000
 - tapOn:
-    id: home-favorites
+    id: buyer-tab-account
+- tapOn:
+    id: account-favorites
 - extendedWaitUntil:
     visible: Guarda lo que te gusta
     timeout: 15000
@@ -23,6 +25,8 @@ name: Volver de Favoritos con atrás de Android
 - back
 - extendedWaitUntil:
     visible:
-      id: home-search
+      id: account-favorites
     timeout: 15000
 - takeScreenshot: volver-04-favoritos-atras
+- tapOn:
+    id: buyer-tab-index

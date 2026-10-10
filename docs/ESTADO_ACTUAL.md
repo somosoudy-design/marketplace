@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 13:41 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 13:56 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -104,8 +104,10 @@ leídos AGENTS, estado, pendientes y cierre de UX-04. El nuevo pedido amplía el
 No hay WIP activo de otro agente. Decisiones y alcance: `docs/FRENTE_A_V2.md`.
 
 Regresión inicial de UX-04 y últimos cambios: **16/16** (`browse`, `favorites`, `navigation`,
-`profile-photo`, `store-share`). Capturando el antes en `.local/frente-a-v2/before/light/` y `before/dark/`.
-Implementación nueva todavía pendiente. No tocar motor financiero, Supabase remoto, Firebase, panel,
+`profile-photo`, `store-share`). Capturas antes terminadas en `.local/frente-a-v2/before/light/` y `before/dark/`.
+Primera implementación de tarjetas, cabecera, barra común e Inicio terminada; tipos/lint de la app en verde.
+Pruebas nuevas añadidas para 320 px, estados reales, favoritos y movimiento reducido.
+Checkpoint antes de exportar: falta validar recorridos nuevos, capturas después y compatibilidad/publicación. No tocar motor financiero, Supabase remoto, Firebase, panel,
 marca/configuración nativa ni dependencias; sin APK nuevo ni Frente B.
 
 UX-04 anterior: catálogo `/explore` llamado Buscar, cuatro destinos, sin botón contiguo redundante de filtros;
@@ -130,8 +132,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Completar capturas antes; implementar tarjetas/cabecera y barra expandible compartida; pulir las secciones
-existentes de Inicio. Ejecutar tipos/lint y regresiones, revisar claro/oscuro y pantallas pequeñas, capturar después.
+Reconstruir la exportación web y ejecutar `navigation`, `favorites`, `front-a-v2` y regresiones.
+Revisar/corregir claro/oscuro, 320/340 px, tarjetas/hero/barra; capturar después.
+Cerrar tipos/lint y suites del protocolo. La base se conserva; no rehacer funciones.
 Solo entonces solicitar EAS Update con el guard de runtime APK 5 y verificar su resultado.
 Actualizar este estado, pendientes e historial con commit/push. **No avanzar al Frente B.**
 

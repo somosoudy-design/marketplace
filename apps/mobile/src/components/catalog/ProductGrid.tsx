@@ -11,7 +11,7 @@ export function useGridColumns() {
   const { width } = useWindowDimensions();
   const content = Math.min(width, MAX_CONTENT);
   const columns = content >= 900 ? 4 : content >= 600 ? 3 : 2;
-  const gap = 14;
+  const gap = 12;
   const cardWidth = Math.floor((content - 32 - gap * (columns - 1)) / columns);
   return { columns, gap, cardWidth };
 }
@@ -19,7 +19,7 @@ export function useGridColumns() {
 /** Horizontal product rail with a peek of the next card, so it reads as scrollable. */
 export function ProductRail({ products, loading, testID, slot }: { products: Card[]; loading?: boolean; testID?: string; slot?: string }) {
   const { width } = useWindowDimensions();
-  const cardWidth = Math.min(Math.round((Math.min(width, MAX_CONTENT) - 32) / 2.35), 200);
+  const cardWidth = Math.min(Math.round((Math.min(width, MAX_CONTENT) - 32) / 2.2), 200);
   const tracking = useTrackingEnabled();
   const dragged = useRef(false);
   const slotRef = useRef<string | undefined>(undefined);
@@ -32,7 +32,7 @@ export function ProductRail({ products, loading, testID, slot }: { products: Car
   }, []);
   if (loading) {
     return (
-      <View style={{ flexDirection: 'row', gap: 14, paddingHorizontal: 16 }}>
+      <View style={{ flexDirection: 'row', gap: 12, paddingHorizontal: 16 }}>
         {[0, 1, 2].map((i) => <ProductCardSkeleton key={i} width={cardWidth} />)}
       </View>
     );
@@ -44,8 +44,8 @@ export function ProductRail({ products, loading, testID, slot }: { products: Car
       data={products}
       keyExtractor={(p) => p.id}
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ paddingHorizontal: 16, gap: 14 }}
-      snapToInterval={cardWidth + 14}
+      contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}
+      snapToInterval={cardWidth + 12}
       decelerationRate="fast"
       onScrollBeginDrag={() => (dragged.current = true)}
       onViewableItemsChanged={onViewable}

@@ -12,6 +12,7 @@ import { ProductImage } from '@/components/catalog/ProductImage';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { useScrollY } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
+import { CountBadge } from '@/components/ui/CountBadge';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
 import { SectionHeader } from '@/components/ui/Layout';
@@ -21,7 +22,7 @@ import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/compo
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
+import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
 import { ImpressionScope, recordImpressions, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { qk } from '@/lib/query';
 import { useTheme } from '@/theme';
@@ -58,7 +59,7 @@ export default function HomeScreen() {
     // a marketplace that has published nothing yet says so instead of showing empty shelves
     if (!first.length && !rest.length && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
     if (rest.length) {
-      out.push({ kind: 'title', key: 'popular', overline: 'Lo que más se está llevando', title: `Populares en ${brand.name}` });
+      out.push({ kind: 'title', key: 'popular', overline: 'Más del catálogo', title: 'Sigue descubriendo' });
       push('home_popular', rest);
     }
     if (more.isFetchingNextPage || (more.isLoading && !rest.length)) out.push({ kind: 'loading', key: 'more' });
@@ -106,7 +107,7 @@ export default function HomeScreen() {
           ListFooterComponent={data && !empty && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
           renderItem={({ item }) => {
             if (item.kind === 'empty') return <CatalogOpening signedIn={!!user} />;
-            if (item.kind === 'title') return <View style={{ marginTop: 32 }}><SectionHeader overline={item.overline} title={item.title} /></View>;
+            if (item.kind === 'title') return <View style={{ marginTop: 24 }}><SectionHeader overline={item.overline} title={item.title} /></View>;
             if (item.kind === 'loading') {
               return (
                 <View style={{ flexDirection: 'row', gap: grid.gap, paddingHorizontal: 16, marginTop: 8 }}>
@@ -115,7 +116,7 @@ export default function HomeScreen() {
               );
             }
             return (
-              <View style={{ flexDirection: 'row', gap: grid.gap, paddingHorizontal: 16, marginBottom: 22 }}>
+              <View style={{ flexDirection: 'row', gap: grid.gap, paddingHorizontal: 16, marginBottom: 14 }}>
                 {item.items.map((p) => <ProductCard key={p.id} product={p} width={grid.cardWidth} slot={item.slot} />)}
               </View>
             );
@@ -135,6 +136,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
   const { user } = useAuth();
   const profile = useProfile();
   const unread = useUnreadCount();
+  const cartCount = useCartCount();
   const data = home.data;
   const contentWidth = Math.min(width, MAX_CONTENT);
   const firstName = profile.data?.full_name?.trim().split(/\s+/)[0];
@@ -151,16 +153,19 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
     <View>
       <View style={{ height: insets.top + 6 }} />
 
-      {/* compact masthead: who we are, what you saved and the one thing that can need attention */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, marginBottom: 12, minHeight: 44 }}>
+      {/* Identity and real status; saved products live in Account and on each product. */}
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 14, minHeight: 48 }}>
         <View style={{ flex: 1 }}>
           <Wordmark />
           <Text variant="caption" color="textMuted" numberOfLines={1}>{firstName ? `Hola, ${firstName}` : brand.tagline}</Text>
         </View>
-        <IconButton testID="home-favorites" icon="heart" label="Favoritos" tone="surface" size={42} onPress={() => router.push('/favorites')} style={{ marginRight: 8 }} />
         <View>
-          <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} tone="surface" size={42} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
-          {unread ? <View style={{ position: 'absolute', right: 9, top: 9, width: 9, height: 9, borderRadius: 5, backgroundColor: t.colors.accent, borderWidth: 1.5, borderColor: t.colors.surface }} /> : null}
+          <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} tone="surface" size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
+          {unread ? <View testID="home-unread-indicator" pointerEvents="none" style={{ position: 'absolute', right: 9, top: 8, width: 9, height: 9, borderRadius: 5, backgroundColor: t.colors.accent, borderWidth: 1.5, borderColor: t.colors.surface }} /> : null}
+        </View>
+        <View>
+          <IconButton testID="home-cart" icon="shopping-bag" label={cartCount ? `Carrito, ${cartCount} ${cartCount === 1 ? 'producto' : 'productos'}` : 'Carrito'} tone="surface" size={44} onPress={() => router.navigate('/cart')} />
+          <CountBadge count={cartCount} testID="home-cart-count" />
         </View>
       </View>
 
@@ -168,7 +173,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 
-      <View style={{ marginTop: 18 }}>
+      <View style={{ marginTop: 16 }}>
         {data ? (
           <CategoryTiles categories={data.categories} />
         ) : (
@@ -183,7 +188,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       {data?.recently_viewed.length ? (
         <TrackedSection slot="home_recent" ids={data.recently_viewed.map((p) => p.id)} visible={2} testID="home-recent">
-          <View style={{ marginTop: 28 }}>
+          <View style={{ marginTop: 24 }}>
             <SectionHeader title="Retoma donde quedaste" />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
               {data.recently_viewed.slice(0, 10).map((p) => <MiniProductCard key={p.id} product={p} width={Math.min(250, contentWidth * 0.66)} slot="home_recent" />)}
@@ -194,7 +199,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       {data?.recommended.length ? (
         <TrackedSection slot={picksSlot} ids={data.recommended.map((p) => p.id)} visible={2} testID="home-recommended">
-          <View style={{ marginTop: 28 }}>
+          <View style={{ marginTop: 24 }}>
             <SectionHeader
               overline={personalized ? 'Según lo que te gusta' : 'Para empezar'}
               title={personalized ? 'Elegidos para ti' : 'Recomendados'}
@@ -209,7 +214,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
       {head.map((c) => <Collection key={c.id} block={c} />)}
 
       {data?.stores.length ? (
-        <View style={{ marginTop: 32 }} testID="home-stores">
+        <View style={{ marginTop: 24 }} testID="home-stores">
           <SectionHeader overline="Conoce quién vende" title="Tiendas destacadas" action="Ver todas" onAction={() => router.navigate('/explore')} />
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
             {data.stores.map((s) => <StoreChip key={s.id} store={s} width={Math.min(236, contentWidth * 0.62)} />)}
@@ -243,7 +248,7 @@ function SearchEntry() {
         accessibilityRole="search"
         accessibilityLabel="Buscar productos, marcas o tiendas"
         onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
-        style={{ flex: 1, height: 48, borderRadius: t.radii.md, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
+        style={{ flex: 1, height: 48, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
       >
         <Icon name="search" size={20} color={t.colors.textSecondary} />
         <Text color="textMuted" numberOfLines={1} style={{ flex: 1 }}>Buscar productos, marcas o tiendas</Text>
@@ -306,9 +311,9 @@ function Collection({ block }: { block: CollectionBlock }) {
     const shown = block.products.slice(0, n - (n % grid.columns));
     return (
       <TrackedSection slot={slot} ids={shown.map((p) => p.id)} visible={shown.length} testID={`collection-${block.slug}`}>
-        <View style={{ marginTop: 32 }}>
+        <View style={{ marginTop: 24 }}>
           <SectionHeader overline={block.subtitle ?? undefined} title={block.title} action="Ver todo" onAction={() => openCollection(block)} />
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: grid.gap, rowGap: 22, paddingHorizontal: 16 }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: grid.gap, rowGap: 14, paddingHorizontal: 16 }}>
             {shown.map((p) => <ProductCard key={p.id} product={p} width={grid.cardWidth} slot={slot} />)}
           </View>
         </View>
@@ -317,7 +322,7 @@ function Collection({ block }: { block: CollectionBlock }) {
   }
   return (
     <TrackedSection slot={slot} ids={ids} visible={2} testID={`collection-${block.slug}`}>
-      <View style={{ marginTop: 32 }}>
+      <View style={{ marginTop: 24 }}>
         <SectionHeader overline={block.subtitle ?? undefined} title={block.title} action="Ver todo" onAction={() => openCollection(block)} />
         <ProductRail products={block.products} slot={slot} />
       </View>
@@ -331,7 +336,7 @@ function Collection({ block }: { block: CollectionBlock }) {
  */
 function HeroCollections({ blocks, width }: { blocks: CollectionBlock[]; width: number }) {
   const [index, setIndex] = useState(0);
-  const slide = width - 32;
+  const slide = width - 44;
   const gap = 10;
   return (
     <View style={{ marginTop: 20 }} testID="home-hero">
@@ -369,8 +374,9 @@ function HeroSlide({ block, width }: { block: CollectionBlock; width: number }) 
   const tone = t.tone(block.tone);
   const slot = `collection:${block.slug}`;
   const [a, b] = block.products;
-  const height = Math.round(Math.min(200, Math.max(172, width * 0.52)));
-  const art = Math.min(width * 0.46, 220);
+  const { fontScale } = useWindowDimensions();
+  const height = Math.round(Math.min(184, Math.max(172, width * 0.48)) * Math.max(1, fontScale));
+  const art = Math.min(width * 0.38, 160);
   return (
     <TrackedSection slot={slot} ids={block.products.map((p) => p.id)} visible={2} testID={`collection-${block.slug}`}>
       <ScalePressable
@@ -381,15 +387,15 @@ function HeroSlide({ block, width }: { block: CollectionBlock; width: number }) 
         onPress={() => openCollection(block)}
         style={{ width, height, borderRadius: t.radii.xl, backgroundColor: t.scheme === 'dark' ? tone.dark : tone.bgDeep, overflow: 'hidden', flexDirection: 'row' }}
       >
-        <View style={{ flex: 1, padding: 18, paddingRight: 6, justifyContent: 'space-between' }}>
+        <View style={{ flex: 1, padding: 16, paddingRight: 6, justifyContent: 'space-between' }}>
           <View style={{ gap: 6 }}>
             <Text variant="overline" color="brand">COLECCIÓN</Text>
-            <Text variant="displayM" numberOfLines={3}>{block.title}</Text>
+            <Text variant="title" numberOfLines={2}>{block.title}</Text>
             {block.subtitle ? <Text variant="caption" color="textSecondary" numberOfLines={2}>{block.subtitle}</Text> : null}
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start', height: 34, paddingHorizontal: 14, borderRadius: t.radii.sm, backgroundColor: t.colors.text }}>
-            <Text variant="label" style={{ color: t.colors.background }}>Ver colección</Text>
-            <Icon name="arrow-right" size={15} color={t.colors.background} />
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start', height: 32 }}>
+            <Text variant="label" color="brand">Ver colección</Text>
+            <Icon name="arrow-right" size={15} color={t.colors.brand} />
           </View>
         </View>
         <View style={{ width: art }}>
@@ -424,7 +430,7 @@ function FeedEnd() {
   return (
     <View style={{ alignItems: 'center', gap: 12, paddingHorizontal: 32, paddingTop: 12, paddingBottom: 8 }} testID="home-feed-end">
       <Text variant="bodySmall" color="textMuted" align="center">Ya viste todo lo que hay por ahora. Usa los filtros para encontrar algo puntual.</Text>
-      <Button title="Explorar con filtros" variant="secondary" icon="sliders-horizontal" onPress={() => router.navigate('/explore')} />
+      <Button title="Buscar con filtros" variant="secondary" icon="sliders-horizontal" onPress={() => router.navigate('/explore')} />
     </View>
   );
 }

@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { newBuyer } from './support/db';
 
-// Favorites live outside the tab bar: saved from the product heart, opened from the heart next to notifications on
-// Home and from Account. The tab bar keeps four destinations.
+// Favorites live outside the tab bar: saved from cards/products, opened from Account, also for visitors.
+// The tab bar keeps four accessible destinations while only the active one shows its name.
 
-test('a buyer saves a product and finds it from Home and from Account', async ({ page }) => {
+test('a buyer saves a product and finds it from Account with its saved count', async ({ page }) => {
   const b = await newBuyer('ui-fav');
   await page.goto('/sign-in');
   await page.getByTestId('sign-in-email').fill(b.email);
@@ -14,16 +14,19 @@ test('a buyer saves a product and finds it from Home and from Account', async ({
 
   // four tabs, no Favoritos among them
   await page.goto('/');
-  await expect(page.getByRole('tab')).toHaveText(['Inicio', 'Buscar', 'Carrito', 'Cuenta']);
+  await expect(page.getByRole('tab')).toHaveCount(4);
+  for (const name of ['Inicio', 'Buscar', 'Carrito', 'Cuenta']) await expect(page.getByRole('tab', { name, exact: true })).toBeVisible();
+  await expect(page.getByTestId('home-favorites')).toHaveCount(0);
 
   await page.goto('/p/ugreen-cable-usb-c-100w');
   await expect(page.getByTestId('product-title')).toBeVisible();
   await page.getByTestId('product-favorite').click();
   await expect(page.getByTestId('product-favorite')).toHaveAttribute('aria-label', 'Quitar de favoritos');
 
-  // from the heart on Home
+  // from Account after returning to discovery
   await page.goto('/');
-  await page.getByTestId('home-favorites').click();
+  await page.getByRole('tab', { name: 'Cuenta', exact: true }).click();
+  await page.getByTestId('account-favorites').click();
   await expect(page).toHaveURL(/\/favorites$/);
   await expect(page.getByTestId('favorites-count')).toHaveText('1 producto guardado');
   await expect(page.getByTestId('favorites-list').getByText('UGREEN cable USB-C a USB-C')).toBeVisible();
@@ -38,7 +41,8 @@ test('a buyer saves a product and finds it from Home and from Account', async ({
 
 test('a visitor opening Favoritos is invited to sign in', async ({ page }) => {
   await page.goto('/');
-  await page.getByTestId('home-favorites').click();
+  await page.getByRole('tab', { name: 'Cuenta', exact: true }).click();
+  await page.getByTestId('account-favorites').click();
   await expect(page).toHaveURL(/\/favorites$/);
   await expect(page.getByText('Guarda lo que te gusta')).toBeVisible();
   await page.getByRole('button', { name: 'Iniciar sesión' }).click();
