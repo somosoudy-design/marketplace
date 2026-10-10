@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:23 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 15:26 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -114,7 +114,7 @@ Oliver autorizó publicar y eligió expresamente el canal **production**. El APK
 primero validar esta misma actualización en ese APK por preview, luego publicarla en production con el mismo
 runtime compatible, sin crear APK ni cambiar configuración nativa/backend. No afirmar que APK 5 usa production.
 Preview publicado con Success: [run 38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216), fuente `b60b2cc`, guard APK 5 superado.
-Se solicita revisión 31, únicamente visitantes/favoritos/Atrás en ambos temas
+Revisión 31 en curso: [run 38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), fuente `ade80e6`. Únicamente visitantes/favoritos/Atrás en ambos temas
 en el APK 5 existente. No ejecutar flujos remotos de registro, compra, pago o push.
 Sin cambios en motor financiero, Supabase remoto, Firebase, panel, marca, dependencias ni Frente B.
 
@@ -140,8 +140,11 @@ repositorio a privado (lo hace Oliver).
 Verificar el run de APK en emulador iniciado por la revisión 31: solo APK 5 existente,
 `flows: frente-a-v2/01-visitante 01b-volver-favoritos 01c-volver-favoritos-atras`, `themes: light dark`.
 Fetch de `ci/capturas` para resumen/diagnóstico y revisión visual Android. Corregir cualquier fallo antes de publicar production.
-Añadir destino production al workflow conservando perfil/fingerprint APK 5; comprobar inventario de builds y
-registrar qué APK consume cada canal. Cerrar documentación, commit/push y revisión de Oliver. **Sin Frente B.**
+Promotor production preparado en `eas-update-production.yml` / `tools/eas/promote-update.mjs` (3/3 pruebas).
+Al pasar Android, crear `.github/eas-production-update-request` con fuente `b60b2cc29e4247333552c5841cb69e692e61a010`,
+Android `ade80e6d2c88e19a8c9349b23b5f723635e8a3c1`, runs preview 38079470216 / Android 38079644334, runtime APK 5.
+Reutiliza grupo inmutable, exige ambos runs Success y código/dependencias idénticos, consulta builds compatibles
+de production y no cambia los enlaces actuales de los canales. Registrar el resultado real antes de cerrar. Cerrar documentación, commit/push y revisión de Oliver. **Sin Frente B.**
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de

@@ -256,6 +256,7 @@ Se disparan al cambiar un archivo de solicitud en `.github/` de la rama comparti
 | `.github/apk-verify-request` | `apk-verify.yml` | Revisa un APK ya compilado (último enlace del archivo) |
 | `.github/apk-emulator-request` | `apk-emulator.yml` | Instala y abre los APK listados en un Android 15 limpio (pantalla de Pixel 6), con capturas y registros, y corre los recorridos de Maestro de `tests/apk-flows` |
 | `.github/eas-update-request` | `eas-update-preview.yml` | Publica una actualización de JavaScript en el canal `preview` |
+| `.github/eas-production-update-request` | `eas-update-production.yml` | Promueve a `production` el mismo grupo Android probado en APK 5; exige runs preview/Android Success, commit/huella y código idénticos. Consulta builds consumidores; no genera APK ni cambia backend/perfil/enlace de preview |
 | `.github/panel-deploy-request` (o cualquier cambio en `apps/admin`, `packages/*`, `tools/panel`) | `panel-deploy.yml` | Exporta y publica el panel en https://kora-panel.expo.app y comprueba sus páginas |
 
 **Capturas del emulador sin bajar artefactos:** el contenedor de Claude no llega al almacenamiento de artefactos de
@@ -362,3 +363,19 @@ supabase/seed-assets/catalog/demo ss:///catalog/demo` y lo mismo para `stores`, 
   `bash tools/backup-to-project.sh` (`/mnt/project-files/marketplace/kora-repo.bundle` con toda la historia y
   `repo/` con el último commit). Recuperar desde ahí: `git clone kora-repo.bundle marketplace`.
 - Un commit que rompió algo se deshace con `git revert <commit>` (nueva historia), no reescribiendo la anterior.
+
+## Promoción de un paquete validado a production
+
+Con autorización de Oliver, el workflow `eas-update-production.yml` consume una solicitud JSON con
+`destinationChannel: "production"`, `sourceBranch: "preview"`, `runtime` APK 5, `sourceCommit`,
+`androidCommit`, `previewRun`, `androidRun` y `message`. `tools/eas/promote-update.mjs` verifica que los runs
+son Success de los workflows correctos y commits exactos, que app/configuración/dependencias no cambiaron,
+y que el grupo Android publicado en preview corresponde a la fuente y runtime. Solo entonces ejecuta
+`eas update:republish --group … --destination-channel production --platform android`.
+
+Reutiliza el bundle validado; **no** aplica las variables del perfil production al APK 5. Un canal y un
+entorno de compilación son distintos. APK 5 `d1d10c28` consume preview y mantiene allí la actualización;
+publicar production no cambia ese canal nativo. El reporte/aviso público del workflow muestra el grupo
+publicado y los builds Android terminados con canal production y el runtime exacto. Si son cero, el paquete
+queda publicado pero no hay un build compatible registrado para recibirlo por ese canal. No crear otro APK
+para resolverlo sin un nuevo pedido. No implica publicación en Google Play/App Store ni migrar backend.

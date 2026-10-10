@@ -23,7 +23,9 @@ se conserva; Electric Violet sigue siendo la identidad visual.
 ## Continuidad y validación
 
 Base sincronizada y limpia: `9e4e1f5`. Sin trabajo pendiente de otro agente. Regresión de UX-04 y cambios
-anteriores: **16/16**. Implementación visual validada hasta `622e227`; quedan publicación y Android real.
+anteriores: **16/16**. Implementación visual validada hasta `622e227`; fuente OTA `b60b2cc`. Preview **Success** en
+[38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216). Android revisión 31
+en [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), pendiente de terminar.
 
 | Comprobación local | Resultado final |
 |---|---|
@@ -62,8 +64,10 @@ p95 83,3 / 16,8 ms con carga inicial. No equivale a medir FPS en Android físico
 Oliver autorizó publicar al finalizar y especificó el canal **production**. El APK 5 (`d1d10c28`) documentado
 consume **preview** y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
 Primero publicar/verificar en preview y ejecutar Android 15 con ese APK existente, solo recorridos de visitante
-en claro/oscuro. Después publicar la versión validada en production con la misma huella; comprobar inventario
-para indicar qué build lo consume. No cambiar el perfil nativo ni crear un APK para cambiar de canal.
+en claro/oscuro. Después promover el mismo grupo inmutable a production con `eas-update-production.yml` /
+`tools/eas/promote-update.mjs` (guardas unitarias **3/3**). Exige runs preview/Android aprobados y código nativo,
+app y dependencias idénticos a la fuente; consulta builds Android terminados con production y este runtime
+para indicar qué build lo consume. No reconstruye el paquete ni cambia el enlace de preview. No cambiar el perfil nativo ni crear un APK para cambiar de canal.
 
 No modificar panel, motor financiero, SQL, Supabase remoto, Firebase, identidad nativa ni dependencias.
 No ejecutar registro, pedidos, pagos o push remotos. Registrar runs/resultados antes del relevo final;
