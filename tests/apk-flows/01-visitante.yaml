@@ -37,11 +37,12 @@ name: Visitante compra sin cuenta
 - assertVisible:
     id: product-title
     text: UGREEN cable USB-C a USB-C
-# las variantes quedan bajo la foto y la descripción
+# las variantes quedan bajo la foto; centradas, para que el toque no caiga en la barra fija de abajo
 - scrollUntilVisible:
     element:
       id: variant-2 m
     direction: DOWN
+    centerElement: true
     timeout: 20000
 - tapOn:
     id: variant-2 m
