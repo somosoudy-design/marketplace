@@ -16,6 +16,29 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 17:35Z (13:35 Caracas, UTC−4) · Codex (entorno cloud) · Oliver
+- Pedido: Frente A de HAYAZGO, **solo UX-04**; UX-06 espera revisión. Sin APK nuevo, motor financiero ni panel.
+- Continuidad: sincronizada `claude/marketplace-v1` desde `9e50d2a`; leídos AGENTS/estado/pendientes y últimos
+  commits. Regresión inicial de navegación, Favoritos, foto de perfil y compartir tiendas: 10/10.
+  Checkpoints y push: `8d9cf56` (alcance), `03c92ec` (implementación antes de exportar), `0a34aae` (validación/OTA).
+- Hecho: Inicio · Buscar · Carrito · Cuenta en layouts nativo/web. Encabezado Buscar, misma ruta `/explore`;
+  eliminado solo el botón de filtros contiguo al buscador de Inicio porque abría el mismo catálogo. Se conservan
+  categorías, filtros, contexto, Favoritos y contador. Decisión y archivos en `docs/UX-04.md`.
+- Pruebas locales: tipos/lint sin errores; núcleo 50/50, panel unitario 28/28, API compra/avatar 12/12,
+  app Playwright 39 aprobadas y 1 omitida por confirmación de correo activa; panel entre roles 9/9.
+  Seis casos nuevos de navegación en claro/oscuro. Primeros fallos de pruebas nuevas: selectores alcanzaban
+  pantallas ocultas retenidas; ajustado su alcance, suite completa en verde sin desactivar casos.
+- Diseño: exportación web reconstruida; capturas con `tools/design/screens.mjs` en `.local/ux04/light/` y
+  `.local/ux04/dark/`. Revisados los cuatro destinos a tamaño Pixel 7; Inicio/Buscar también a 340 px.
+  Electric Violet conservado. No probado este cambio en emulador ni teléfono físico.
+- Servicios: EAS Update Android `preview` desde `0a34aae`,
+  [run 38072209661](https://github.com/somosoudy-design/marketplace/actions/runs/38072209661) **Success**;
+  comparación con runtime APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` superada antes de publicar.
+  Sin APK/build nuevo ni cambios en Supabase remoto. No se comprobó recepción en el Samsung.
+- A medias: nada de UX-04. Pendiente la revisión de Oliver; UX-06 no se inició. Los pendientes heredados se conservan.
+- Siguiente: Oliver revisa navegación/estado en APK 5; ajustar si lo pide y solo después retomar UX-06.
+- Último commit: el de esta entrada de cierre documental; checkpoint funcional/publicación `0a34aae`.
+
 ### 2026-10-10 16:05Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Foto de perfil en el emulador: la revisión 29 falló porque el selector de fotos de Android se abre como hoja
   inferior y el nombre de la cuenta seguía visible; `03-foto-perfil.yaml` ahora espera las pestañas del selector. En la

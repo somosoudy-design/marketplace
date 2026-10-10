@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 13:32 (Caracas, UTC−4), por Codex (UX-04, entorno cloud).
+**Última actualización:** 2026-10-10 13:35 (Caracas, UTC−4), por Codex (UX-04 cerrado, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Base de este turno: `9e50d2a`; implementación en el checkpoint `03c92ec`, completada por el de validación/publicación de UX-04 |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. UX-04 validado y publicado desde `0a34aae`; cierre documental en el commit de esta actualización. Base de este turno: `9e50d2a` |
 | Plan vigente | Frente A — experiencia del comprador (Oliver, 2026-10-10): primero UX-04; UX-06 espera revisión de UX-04 |
-| Objetivo actual | UX-04: revisar navegación inferior, distinguir Buscar de Inicio y retirar accesos redundantes sin perder capacidades. APK 5 sigue siendo la base nativa; no generar otro APK |
+| Objetivo actual | UX-04 terminado y publicado; espera revisión de Oliver. UX-06 no se inicia hasta esa revisión. APK 5 sigue siendo la base nativa; no generar otro APK |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -69,6 +69,12 @@
   En el emulador Android 15 (revisión 30, run 38064708597), el APK 5 con la actualización `01a1266c` abre el
   selector de fotos de Android desde Cuenta y vuelve sin cambios al cerrarlo. Elegir y guardar una foto real en un
   teléfono queda para la prueba de Oliver.
+- UX-04 (HAYAZGO, Frente A, 2026-10-10): barra **Inicio · Buscar · Carrito · Cuenta**; catálogo existente
+  `/explore` con encabezado Buscar; retirado el botón contiguo de filtros de Inicio que abría el mismo destino.
+  Se conservan filtros, categorías, Favoritos y contexto. Pruebas locales y revisión visual claras/oscuras
+  cerradas. Publicado al APK 5 por EAS Update desde `0a34aae`,
+  [run 38072209661](https://github.com/somosoudy-design/marketplace/actions/runs/38072209661) en verde;
+  guard de runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` superado antes de publicar. Falta revisión de Oliver.
 - APK 5 (build `d1d10c28`, runtime `eb5ed117…`), en el emulador Android 15 de GitHub Actions el 2026-10-10 (revisión
   20, run 38027029394): se instala encima del APK 4, recibe EAS Update, «atrás» de Android vuelve a la pantalla
   anterior, y un aviso push real («Pedido P-… recibido») llega por `push-dispatch`, Expo y Firebase, y al tocarlo
@@ -93,7 +99,8 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Turno de Codex, 2026-10-10 — UX-04 (en curso).** Rama sincronizada desde `9e50d2a`, sin WIP previo.
+**Turno de Codex, 2026-10-10 — UX-04 terminado, espera revisión.** Sin WIP activo. Rama sincronizada
+desde `9e50d2a`, sin WIP previo.
 Revisados `AGENTS.md`, estado, pendientes y últimos cambios. La navegación ya tiene cuatro destinos;
 se conserva esa estructura y el catálogo existente. Decisión: «Buscar» para el destino de búsqueda/filtros,
 frente a Inicio para descubrimiento; retirar el botón de filtros junto al buscador que abre el mismo catálogo.
@@ -108,8 +115,10 @@ panel entre roles 9/9. Se reconstruyó la exportación web; pruebas de búsqueda
 en claro y oscuro. Capturas revisadas de los cuatro destinos en ambos temas a tamaño Pixel 7 y de Inicio/Buscar
 a 340 px (`.local/ux04/light/`, `.local/ux04/dark/`). Sin prueba física nueva.
 
-Checkpoint previo a publicación: falta verificar el workflow EAS Update del push de esta versión.
-El guard existente compara contra el runtime de APK 5 antes de publicar; no generar APK ni tocar su configuración.
+EAS Update publicado: [run 38072209661](https://github.com/somosoudy-design/marketplace/actions/runs/38072209661)
+**Success**, commit `0a34aae`, canal `preview`, Android. El workflow pasó el guard contra el runtime exacto
+de APK 5 y la publicación; comprobado en la página del run. No se generó APK ni se cambió configuración
+nativa, Supabase remoto, motor financiero ni código del panel. No se comprobó aún la recepción en el Samsung.
 
 Pendiente heredado, independiente de UX-04:
 
@@ -130,10 +139,12 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Verificar el resultado del workflow **Actualización de prueba (EAS Update)** del checkpoint UX-04.
-Solo se publica si coincide el runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` de APK 5.
-Registrar el run y resultado en este documento e historial, hacer commit/push y esperar revisión de Oliver
-antes de UX-06. Código y validación local de UX-04 terminados; no rehacer navegación ni iniciar descubrimiento.
+**Esperar la revisión de Oliver de UX-04.** Revisar en el APK 5 actualizado los cuatro destinos, el acceso
+desde el buscador de Inicio, filtros y búsqueda al volver de una ficha, y contador del carrito en claro/oscuro.
+Decisión y evidencia local: `docs/UX-04.md`; regresión: `navigation.spec.ts`.
+Si Oliver pide ajustes, hacerlos sobre lo existente. Solo después de esa revisión retomar UX-06
+(scroll, distribución, banners, tendencias y carruseles), conservando secciones e identidad Electric Violet.
+No rehacer UX-04 ni generar APK nuevo.
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de

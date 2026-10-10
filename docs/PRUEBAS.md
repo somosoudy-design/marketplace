@@ -15,13 +15,14 @@ pnpm 10.28.0 y Chromium. No se modificaron SQL, funciones del servidor, motor fi
 | `navigation.spec.ts`, incluido en la suite de la app | 6/6, claro y oscuro: cuatro destinos, foco desde Inicio, filtros/búsqueda conservados, ficha y regreso, contador del carrito |
 | `pnpm test:panel` | 9/9 |
 | Revisión visual | Inicio, Buscar, Carrito y Cuenta, Pixel 7 en claro/oscuro; Inicio/Buscar también a 340 px |
+| EAS Update Android `preview` | Run [38072209661](https://github.com/somosoudy-design/marketplace/actions/runs/38072209661) Success para `0a34aae`; guard del runtime de APK 5 superado y actualización publicada |
 
 Capturas: `node tools/design/screens.mjs .local/ux04/light light` y
 `node tools/design/screens.mjs .local/ux04/dark dark`. La evidencia queda local e ignorada por Git.
 Las pruebas de foto de perfil y compartir tiendas pasan junto a UX-04. La primera ejecución de las nuevas
 pruebas alcanzaba tarjetas/pantallas ocultas retenidas por el navegador; se corrigió el alcance de los
 selectores y la suite completa pasó. No se desactivaron casos. Sin nueva ejecución SQL/funciones ni pruebas
-de UX-04 en emulador/teléfono; la compatibilidad OTA la comprueba el workflow antes de publicar.
+de UX-04 en emulador/teléfono; compatibilidad OTA comprobada por el guard del workflow antes de publicar.
 
 ## Validación inicial — 2026-10-09 (histórico)
 
