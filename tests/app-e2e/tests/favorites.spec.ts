@@ -14,7 +14,7 @@ test('a buyer saves a product and finds it from Home and from Account', async ({
 
   // four tabs, no Favoritos among them
   await page.goto('/');
-  await expect(page.getByRole('tab')).toHaveText(['Inicio', 'Explorar', 'Carrito', 'Cuenta']);
+  await expect(page.getByRole('tab')).toHaveText(['Inicio', 'Buscar', 'Carrito', 'Cuenta']);
 
   await page.goto('/p/ugreen-cable-usb-c-100w');
   await expect(page.getByTestId('product-title')).toBeVisible();

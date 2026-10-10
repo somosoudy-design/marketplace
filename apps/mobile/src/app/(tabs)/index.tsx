@@ -248,16 +248,6 @@ function SearchEntry() {
         <Icon name="search" size={20} color={t.colors.textSecondary} />
         <Text color="textMuted" numberOfLines={1} style={{ flex: 1 }}>Buscar productos, marcas o tiendas</Text>
       </ScalePressable>
-      <ScalePressable
-        testID="home-filters"
-        scaleTo={0.94}
-        accessibilityRole="button"
-        accessibilityLabel="Explorar con filtros"
-        onPress={() => router.navigate('/explore')}
-        style={{ width: 48, height: 48, borderRadius: t.radii.md, backgroundColor: t.colors.brand, alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Icon name="sliders-horizontal" size={20} color={t.colors.onBrand} />
-      </ScalePressable>
     </View>
   );
 }

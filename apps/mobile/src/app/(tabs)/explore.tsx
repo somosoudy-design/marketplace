@@ -15,7 +15,7 @@ export default function ExploreScreen() {
         testID="explore-list"
         autoFocusKey={focus}
         topInset={insets.top + 8}
-        header={<Text variant="displayL" style={{ paddingHorizontal: 16, marginBottom: 2 }}>Explorar</Text>}
+        header={<Text variant="displayL" accessibilityRole="header" style={{ paddingHorizontal: 16, marginBottom: 2 }}>Buscar</Text>}
       />
     </View>
   );

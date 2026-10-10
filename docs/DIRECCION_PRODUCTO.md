@@ -45,7 +45,7 @@ terceros y no se suben al repositorio (están en los archivos del proyecto de Cl
 
 ## Navegación contextual
 
-- En pantallas de exploración: navegación principal discreta, cuatro pestañas con nombre (Inicio, Explorar,
+- En pantallas de exploración: navegación principal discreta, cuatro pestañas con nombre (Inicio, Buscar,
   Carrito, Cuenta). Favoritos es una lista guardada, no un lugar para explorar: se abre con el corazón junto a
   las notificaciones en el Inicio y desde Cuenta (decisión de Oliver, 2026-10-10). No se rellena el hueco con otra
   pestaña.
@@ -59,7 +59,11 @@ terceros y no se suben al repositorio (están en los archivos del proyecto de Cl
 
 ## Recorrido comercial
 
-Inicio → Explorar → Producto → Variantes → Carrito → Checkout → Método de pago → Confirmación → Seguimiento.
+Inicio → Buscar → Producto → Variantes → Carrito → Checkout → Método de pago → Confirmación → Seguimiento.
+
+UX-04 distingue Inicio (descubrimiento) de Buscar (el catálogo existente en `/explore`, con filtros).
+Se retira el botón duplicado de filtros junto al buscador de Inicio; capacidades y enlaces se conservan.
+Decisión y alcance: `docs/UX-04.md`. UX-06 requiere revisión de Oliver antes de empezar.
 
 Todo el recorrido usa el mismo lenguaje visual y conserva las capacidades: multivendedor, tiendas
 independientes, disponibles, por encargo, reservables, carrito multivendedor, cuotas, anticipos, saldo en

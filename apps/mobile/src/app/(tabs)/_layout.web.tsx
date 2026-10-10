@@ -13,7 +13,7 @@ export const ErrorBoundary = ScreenErrorBoundary;
 // Web has no system tab bar: a custom bottom bar with the same four destinations.
 const TABS: { name: string; href: '/' | '/explore' | '/cart' | '/account'; label: string; icon: IconName }[] = [
   { name: 'index', href: '/', label: 'Inicio', icon: 'house' },
-  { name: 'explore', href: '/explore', label: 'Explorar', icon: 'search' },
+  { name: 'explore', href: '/explore', label: 'Buscar', icon: 'search' },
   { name: 'cart', href: '/cart', label: 'Carrito', icon: 'shopping-bag' },
   { name: 'account', href: '/account', label: 'Cuenta', icon: 'user' },
 ];

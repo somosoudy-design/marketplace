@@ -26,7 +26,7 @@ export default function TabsLayout() {
         <NativeTabs.Trigger.Icon sf={{ default: 'house', selected: 'house.fill' }} md="home" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="explore">
-        <NativeTabs.Trigger.Label>Explorar</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>Buscar</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="magnifyingglass" md="search" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="cart">

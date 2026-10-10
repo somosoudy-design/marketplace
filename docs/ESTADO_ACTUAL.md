@@ -101,8 +101,10 @@ Conservar Favoritos, carrito, categorías, filtros y contexto al volver. UX-06 n
 No cambiar motor financiero, panel, configuración nativa, dependencias ni identidad Electric Violet.
 
 Comprobación inicial web local: `browse`, `favorites`, `profile-photo` y `store-share`: **10/10** pasan,
-incluidos los últimos cambios de foto de perfil y compartir tiendas. Implementación, pruebas en claro/oscuro
-y publicación EAS Update todavía pendientes. El workflow existente comprueba el runtime de APK 5 antes de publicar.
+incluidos los últimos cambios de foto de perfil y compartir tiendas. Implementación de UX-04 completa en
+JavaScript y pruebas añadidas en ambos temas (`docs/UX-04.md`); tipos y lint comprobados antes de exportar.
+Pruebas funcionales de la versión nueva, revisión visual y publicación EAS Update todavía pendientes.
+El workflow existente comprueba el runtime de APK 5 antes de publicar.
 
 Pendiente heredado, independiente de UX-04:
 

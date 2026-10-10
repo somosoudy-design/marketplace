@@ -58,7 +58,7 @@ test('search and filters survive opening a product and coming back', async ({ pa
   await expect(page).toHaveURL(/\/product\//);
   await expect(page.getByTestId('product-title')).toBeVisible();
   // product pages cover the tab bar
-  await expect(page.getByRole('tab', { name: 'Explorar' })).toBeHidden();
+  await expect(page.getByRole('tab', { name: 'Buscar' })).toBeHidden();
 
   await page.getByTestId('product-back').click();
   await expect(page).toHaveURL(/\/explore/);

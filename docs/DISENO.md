@@ -102,8 +102,10 @@ rango ("Estimado entre … y …"), no como promesa.
 
 ## Navegación
 
-- Descubrimiento (Inicio, Explorar, Carrito, Cuenta) con barra de pestañas compacta y todas las etiquetas visibles;
+- Descubrimiento (Inicio, Buscar, Carrito, Cuenta) con barra de pestañas compacta y todas las etiquetas visibles;
   Favoritos se abre con el corazón del encabezado del Inicio y desde Cuenta.
+- Buscar reutiliza el catálogo `/explore`; Inicio conserva su buscador y retira el botón contiguo de filtros
+  que abría el mismo destino. Sin cambios en tokens, identidad ni secciones de descubrimiento (`docs/UX-04.md`).
 - Ficha de producto sin barra principal: volver, favorito, compartir y barra fija con «Agregar» (se queda en la
   ficha con un enlace al carrito) y la acción principal («Comprar», «Encargar» o «Reservar»: agrega y abre el
   carrito). Orden de la ficha: marca, título, calificación, precio (principal; precio especial con Zelle/USDT en
