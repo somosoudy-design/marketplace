@@ -65,8 +65,11 @@ la revise en Configuración.
 
 ## Próxima acción
 
-1. Si Oliver confirma: GitHub › Settings › General › Danger Zone › Change visibility › Private. Luego una corrida de
-   «APK en emulador» para confirmar que el runner privado tiene KVM (`docs/ENTORNO.md` §12 bis).
+1. Oliver **autorizó** el repo privado (2026-10-10). El agente no puede cambiarlo (el acceso de GitHub de la sesión no
+   permite escribir ajustes del repositorio): lo hace Oliver en GitHub › Settings › General › Danger Zone › Change
+   visibility › Private. Luego una corrida de
+   «APK en emulador» para confirmar que el runner privado tiene KVM, y cambiar `.github/panel-deploy-request` para
+   comprobar la publicación del panel (`docs/ENTORNO.md` §12 bis). No cambiar reglas de precios sin Oliver.
 2. Con Oliver: parámetros comerciales definitivos (margen sobre costo puesto, flete, gastos, si efectivo lleva precio en
    divisas) y marcar la regla como revisada.
 3. Push en Android cuando Oliver tenga Firebase (APK 5 con identidad violeta).
