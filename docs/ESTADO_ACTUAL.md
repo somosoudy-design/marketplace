@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 02:58Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 04:20Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 
@@ -59,19 +59,24 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-Archivos sin commit: ninguno. Nada corriendo. La revisión 16 del emulador (2026-10-10 02:53Z) dejó en verde el
-recorrido del visitante; solo fallan `01a` y `01c` por «atrás» de Android (error conocido, comentado en el PR #1).
+Pedido de Oliver del 2026-10-10 03:50Z: «Compilar APK 5 con notificaciones push» (autoriza el APK 5; Preguntas y
+respuestas queda pospuesto). Hitos: 1 push, 2 «atrás» de Android, 3 identidad violeta, 4 compilación, 5 pruebas.
+
+- Hecho: Firebase y Expo comprobados (proyecto `hayazgo`, paquete `com.example.kora.preview`, clave FCM V1 del mismo
+  proyecto, firma del APK 4); cambios de código en `5d05346` (ver `PENDIENTES.md` 1.5); pruebas web 29 pasan y 1
+  omitida a propósito.
+- En curso: compilación del APK 5 en EAS (workflow «APK de prueba (EAS)» de `5d05346`). Luego el emulador con el APK 4
+  y el 5 encima, y la prueba de push en el Samsung S24 de Oliver.
+- Mientras el APK 5 no esté instalado, no publicar actualizaciones: el runtime cambió y el workflow lo rechaza.
 
 Del relevo anterior siguen abiertos: la regla comercial del motor de precios (`pricing.import.configured = false`,
-la define Oliver), push con Firebase (pasos de Oliver, APK 5 con su autorización) y el cambio del repositorio a
-privado (lo hace Oliver).
+la define Oliver) y el cambio del repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Esperar las decisiones de Oliver: APK 5 (`PENDIENTES.md` 1.5 y 2.6) y la pantalla «Preguntas» del panel (2.5,
-`docs/PREGUNTAS_Y_RESPUESTAS.md`). Mientras, `PENDIENTES.md` 1.3 y 1.4 (revisar en Android el resto del recorrido
-comercial). No compilar el APK 5 ni commitear `predictiveBackGestureEnabled: false` sin su autorización: cambia la
-huella y corta las actualizaciones del APK 4.
+Cuando termine la compilación: anotar el enlace, el build y el runtime del APK 5 (`ENTORNO.md` §9 y §10 y la línea
+`runtime:` de `.github/eas-update-request`), poner el APK 4 y el 5 en `.github/apk-emulator-request` y correr el
+emulador. Después, la guía de prueba de push para el Samsung de Oliver.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

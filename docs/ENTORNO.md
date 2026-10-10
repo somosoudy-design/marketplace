@@ -228,13 +228,20 @@ mismo **runtime** (huella de la parte nativa). Hoy: `a4682c83c1bb738fc74c7315383
    nuevo y que los testers lo instalen. El workflow se detiene solo para no publicar algo incompatible.
 
 **`apps/mobile/eas.json` es parte de la huella.** Agregarle una variable cambia el runtime aunque solo sea un valor
-público de JavaScript. Las variables `EXPO_PUBLIC_*` que una actualización necesita y el APK 4 no traía van en
-`UPDATE_ONLY_ENV` del paso «Variables del perfil preview» de `eas-update-preview.yml` (hoy:
-`EXPO_PUBLIC_PANEL_URL=https://kora-panel.expo.app`, el panel publicado). Al compilar el próximo APK, pásalas a
-`build.preview.env` de `eas.json` (allí ganan) y vacía `UPDATE_ONLY_ENV`.
+público de JavaScript. Las variables `EXPO_PUBLIC_*` que una actualización necesita y el APK instalado no traía van en
+`UPDATE_ONLY_ENV` del paso «Variables del perfil preview» de `eas-update-preview.yml` (hoy vacío: desde el APK 5,
+`EXPO_PUBLIC_PANEL_URL` está en `eas.json`). Al compilar el próximo APK, pásalas a `build.preview.env` de `eas.json`
+(allí ganan) y vacía `UPDATE_ONLY_ENV`.
+
+**`google-services.json` también es parte de la huella desde el APK 5** (su contenido, no su ruta). El archivo está en
+la variable `GOOGLE_SERVICES_JSON` (tipo archivo; su visibilidad no puede ser «Secret», que impide leerla fuera de EAS Build) del entorno `preview` de EAS y no en el
+repositorio, así que la huella del paso 1 calculada sin él no coincide con la del APK. Los workflows de
+actualización y de compilación lo bajan con `eas env:pull preview` antes de calcularla; el workflow «Firebase y Expo
+(push)» (`.github/firebase-check-request`) imprime el runtime con el archivo. Si alguien cambia el archivo en
+expo.dev, cambia el runtime y hace falta un APK nuevo.
 
 El icono, el splash y el color de notificación siguen la constante `NATIVE_IDENTITY` de
-`apps/mobile/app.config.ts`: `'original'` mientras se actualiza el APK 4; `'violet'` en el próximo APK.
+`apps/mobile/app.config.ts`: `'original'` en el APK 4; `'violet'` desde el APK 5.
 
 ## 11. Workflows de GitHub
 

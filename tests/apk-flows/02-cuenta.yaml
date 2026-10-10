@@ -80,10 +80,10 @@ name: Comprador con cuenta hasta la cotización y cancelación
     id: settings-push
 - extendedWaitUntil:
     visible:
-      id: com.android.permissioncontroller:id/permission_deny_button
+      id: .*:id/permission_deny_button
     timeout: 20000
 - tapOn:
-    id: com.android.permissioncontroller:id/permission_deny_button
+    id: .*:id/permission_deny_button
 - extendedWaitUntil:
     visible:
       id: settings-push-status
@@ -94,10 +94,10 @@ name: Comprador con cuenta hasta la cotización y cancelación
     id: settings-push
 - extendedWaitUntil:
     visible:
-      id: com.android.permissioncontroller:id/permission_allow_button
+      id: .*:id/permission_allow_button
     timeout: 20000
 - tapOn:
-    id: com.android.permissioncontroller:id/permission_allow_button
+    id: .*:id/permission_allow_button
 - extendedWaitUntil:
     visible:
       id: settings-push-status

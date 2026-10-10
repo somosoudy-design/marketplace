@@ -67,23 +67,26 @@ Panel > Configuración > Métodos de pago.
 
 ## Notificaciones push (Expo + Firebase Cloud Messaging)
 
-Código listo y probado (registro del dispositivo, envío por `push-dispatch` cada minuto, recibos, limpieza de
-dispositivos, salud en el panel; los avisos de prueba nunca se envían). En Android falta solo Firebase en la compilación;
-sin él la app dice «falta Firebase Cloud Messaging en esta compilación» y nada simula éxito.
+**Configurado por Oliver el 2026-10-10** y comprobado por el workflow «Firebase y Expo (push)» (03:55Z):
+- Firebase: proyecto `hayazgo`, app Android `com.example.kora.preview`.
+- Expo (`marketplacebrand/marketplace`): variable `GOOGLE_SERVICES_JSON` (tipo archivo, entorno `preview`) y clave
+  FCM V1 del mismo proyecto en Credentials › Android. La firma del paquete es la misma del APK 4.
+- El APK 5 es el primero con Firebase. El workflow de compilación se detiene antes de gastar una compilación si falta
+  algo (`tools/eas/check-firebase.mjs`; solo imprime identificadores, nunca claves).
 
-Lo que hace Oliver (gratis, ~15 min):
-1. https://console.firebase.google.com › Agregar proyecto «Kora» (Analytics opcional, puede quedar apagado).
-2. En el proyecto › Agregar app › Android › nombre del paquete **`com.example.kora.preview`** (el del APK de prueba;
-   para producción se agrega otra app con el paquete definitivo de `config/brand.json`). Descargar `google-services.json`.
-3. Firebase › Configuración del proyecto › Cuentas de servicio › «Generar nueva clave privada» (un JSON). Es **secreta**:
-   no va al repositorio ni por chat.
-4. https://expo.dev › marketplacebrand › marketplace:
-   - Environment variables › Add › nombre `GOOGLE_SERVICES_JSON`, tipo **File**, entorno **preview**, subir `google-services.json`.
-   - Credentials › Android › `com.example.kora.preview` › FCM V1 service account key › subir el JSON del paso 3.
-5. Avisar al agente: con la autorización de Oliver se compila el **APK 5** (incluye Firebase y la identidad violeta,
-   `NATIVE_IDENTITY = 'violet'`), se instala sobre el APK 4 y se prueba un aviso real desde el panel.
+Cómo funciona:
+- El teléfono se registra al activar «Avisos en este dispositivo» (Cuenta › Preferencias y privacidad), que pide el
+  permiso del sistema. Si el teléfono ya dio el permiso, se registra solo al entrar. Al cerrar sesión se borra su
+  token, para que no reciba avisos de esa cuenta.
+- `push-dispatch` envía cada minuto los avisos pendientes por Expo a los tokens del destinatario, y lee los recibos
+  unos 15 minutos después; los tokens que Expo da por muertos se borran.
+- Nunca se envían por push: avisos de prueba (`is_test`), de cuentas demo, de pedidos demo ni de productos demo. Los
+  pedidos que hace una cuenta de tester sobre el catálogo demo sí avisan («Pedido P-… recibido» al comprador y «Nuevo
+  pedido» a los miembros de la tienda; hoy Oliver es el dueño de la tienda demo «Kora»).
+- Tocar un aviso abre su pedido, reclamo o producto.
 
-`apps/mobile/app.config.ts` ya toma `GOOGLE_SERVICES_JSON` si existe; mientras no exista, la compilación no cambia.
+Si hace falta otro proyecto de Firebase: app Android con el paquete del APK, subir su `google-services.json` a la misma
+variable y su clave de cuenta de servicio a Credentials, y compilar otro APK (el archivo es parte del runtime).
 
 ## Correo
 
