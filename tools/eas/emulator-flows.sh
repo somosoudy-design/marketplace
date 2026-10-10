@@ -22,6 +22,12 @@ adb shell am force-stop "$PKG"
 run_flow() { # flow, log name
   (cd shots/flujos && maestro test --format junit --output "$2.xml" "../../$1") >"shots/flujos/$2.log" 2>&1
 }
+# a second attempt must see the notification prompt again: Android stops asking after the first attempt's answers
+reset_prompts() {
+  adb shell pm revoke "$PKG" android.permission.POST_NOTIFICATIONS >/dev/null 2>&1
+  adb shell pm clear-permission-flags "$PKG" android.permission.POST_NOTIFICATIONS user-set user-fixed >/dev/null 2>&1
+  return 0
+}
 
 status=0
 {
@@ -38,7 +44,7 @@ for flow in tests/apk-flows/*.yaml; do
   adb logcat -c
   if run_flow "$flow" "$name"; then
     echo "$name: pasó" >>"$report"
-  elif sleep 5 && adb shell am force-stop "$PKG" && run_flow "$flow" "$name-2"; then
+  elif sleep 5 && adb shell am force-stop "$PKG" && reset_prompts && run_flow "$flow" "$name-2"; then
     # Maestro sometimes loses the emulator for a moment ("device not found", "Stream Closed") and the flow fails in
     # its first seconds: one more attempt, with the first failure in the report so it is not hidden
     echo "$name: pasó al segundo intento; el primero falló así:" >>"$report"

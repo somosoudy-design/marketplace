@@ -26,7 +26,8 @@ find shots -name '*.png' | sort | while read -r png; do
   rel=${png#shots/}
   # Maestro's own failure folders keep long timestamped names; flatten them
   name=$(echo "${rel%.png}" | tr '/ ' '__')
-  convert "$png" -resize 540x -quality 72 "$out/$name.jpg"
+  # a screenshot taken while the app did not answer can be empty: skip it rather than lose the others
+  convert "$png" -resize 540x -quality 72 "$out/$name.jpg" 2>/dev/null || echo "captura ilegible omitida: $rel"
 done
 cp shots/flujos/resumen.md "$out/" 2>/dev/null || true
 {

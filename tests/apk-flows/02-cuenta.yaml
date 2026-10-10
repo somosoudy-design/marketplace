@@ -210,6 +210,10 @@ name: Comprador con cuenta hasta la cotización y cancelación
 - takeScreenshot: flujo-cuenta-05-metodos
 - tapOn:
     id: method-pago_movil
+- extendedWaitUntil:
+    visible:
+      id: (method-amount-pago_movil|method-rate-unavailable)
+    timeout: 20000
 - evalScript: ${output.ves = true}
 - runFlow:
     when:
