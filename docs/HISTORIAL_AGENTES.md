@@ -16,6 +16,19 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 14:40Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Pedido: optimizar la ficha de producto (Oliver, 14:17Z): un precio, sin precios por método ni «Disponible» fijos,
+  menos texto, y descripción, vendedor y entrega a mano.
+- Hecho: solo `apps/mobile/src/app/product/[id].tsx` (y su prueba `product.spec.ts`) (`e18f794`). `Price` sin
+  `vesRate` ni `divisas` en la ficha; estado solo si no es «Disponible»; plazo y fecha en «Entrega»; «Pagos» dice que
+  cada método muestra su monto al pagar; opiniones vacías en una línea.
+- Pruebas: Playwright de la app, 30 pasan y 1 omitida; capturas web en claro y oscuro de un producto disponible, uno
+  con opciones, uno por encargo, uno en camino y uno agotado. Antes, la revisión 26 del emulador (run 38058515793)
+  pasó en verde con el aviso de tasa BCV vencida y el cambio a Zelle.
+- Servicios: actualización por EAS Update al APK 5 (runtime `eb5ed117…`).
+- Siguiente: la decisión de Oliver sobre la tasa BCV vencida y su prueba de push en el Samsung.
+- Último commit: el checkpoint de la ficha en `claude/marketplace-v1`.
+
 ### 2026-10-10 13:30Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Pedidos: simplificar las tarjetas de producto (Oliver, 12:57Z) y la selección del método de pago (13:17Z).
 - Hecho: `ProductCard` muestra imagen, nombre en una línea y precio; el descuento y «Quedan N» van sobre la foto;
