@@ -196,20 +196,24 @@ function ShareStoreSheet({ store: s, visible, onClose }: { store: StoreProfile; 
   const share = async () => {
     const message = `${s.name} en ${brand.name}: ${link}`;
     await Share.share(Platform.OS === 'ios' ? { url: link, message: s.name } : Platform.OS === 'web' ? { title: s.name, message, url: link } : { message }).catch(() => undefined);
-    onClose();
+    close();
   };
+  // "Enlace copiado" stays until the sheet closes, so the confirmation can't be missed
   const copy = async () => {
     await Clipboard.setStringAsync(link);
     haptics.success();
     setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+  };
+  const close = () => {
+    setCopied(false);
+    onClose();
   };
 
   return (
     <Sheet
       visible={visible}
       title="Compartir tienda"
-      onClose={onClose}
+      onClose={close}
       testID="store-share-sheet"
       footer={
         <>

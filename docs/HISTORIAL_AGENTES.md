@@ -16,6 +16,18 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 15:00Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Pedido: compartir tiendas e insignias de tienda (Oliver, 14:36Z).
+- Hecho (`096828d`): `StoreBadge` y `storeTier` (`components/catalog/StoreBadge.tsx`), `storeLink`
+  (`lib/links.ts`), compartir y copiar en `store/[slug].tsx`, sello en `StoreCard.tsx`; Inicio ya no dice
+  «Vendedores verificados». Qué falta para la verificada y la asociada, y para enlaces sin la app:
+  `docs/INSIGNIAS_TIENDAS.md` (PENDIENTES 3.7 y 4.5).
+- Pruebas: Playwright de la app, 32 pasan y 1 omitida (nueva `store-share.spec.ts`: el enlace copiado abre la misma
+  tienda; la insignia solo en Kora). Capturas en claro y oscuro. Emulador revisión 27 pedido con `kora://tienda/patitas`.
+- Servicios: actualización por EAS Update al APK 5 (run 38060972803). Sin migraciones.
+- Siguiente: revisar el resultado de la revisión 27; decisiones de Oliver (tasa BCV, dominio, dato de verificación).
+- Último commit: el checkpoint de tiendas en `claude/marketplace-v1`.
+
 ### 2026-10-10 14:40Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Pedido: optimizar la ficha de producto (Oliver, 14:17Z): un precio, sin precios por método ni «Disponible» fijos,
   menos texto, y descripción, vendedor y entrega a mano.
