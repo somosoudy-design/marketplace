@@ -70,7 +70,6 @@ export default function StoreScreen() {
         header={<StoreHeader store={s} coverHeight={coverHeight} />}
         showSearch
         searchPlaceholder={s ? `Buscar en ${s.name}` : 'Buscar en esta tienda'}
-        showStore={false}
         categorySlugs={s?.categories.map((c) => c.slug) ?? []}
         onScroll={scroll.onScroll}
       />

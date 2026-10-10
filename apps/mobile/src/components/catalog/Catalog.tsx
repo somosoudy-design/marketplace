@@ -65,8 +65,6 @@ interface Props {
   header?: React.ReactElement | null;
   topInset?: number;
   testID?: string;
-  /** Hide the seller line on cards when every product comes from the same store. */
-  showStore?: boolean;
   /** Restricts the category chips (a store only shows the categories it sells in). */
   categorySlugs?: string[];
   onScroll?: ReturnType<typeof useAnimatedScrollHandler>;
@@ -77,7 +75,7 @@ interface Props {
  * Catalog with search, filters and infinite scroll. The screen stays mounted under pushed product pages,
  * so scroll position, query and filters are intact when the buyer comes back.
  */
-export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey, header, topInset = 0, testID, showStore = true, categorySlugs, onScroll, searchPlaceholder = 'Buscar productos, marcas o tiendas' }: Props) {
+export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey, header, topInset = 0, testID, categorySlugs, onScroll, searchPlaceholder = 'Buscar productos, marcas o tiendas' }: Props) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const grid = useGridColumns();
@@ -174,7 +172,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
         columnWrapperStyle={grid.columns > 1 ? { gap: grid.gap, paddingHorizontal: 16 } : undefined}
         ItemSeparatorComponent={() => <View style={{ height: 22 }} />}
         ListHeaderComponent={listHeader}
-        renderItem={({ item, index }) => <ProductCard product={item} width={grid.cardWidth} showStore={showStore} priority={index < 4 ? 'high' : 'normal'} />}
+        renderItem={({ item, index }) => <ProductCard product={item} width={grid.cardWidth} priority={index < 4 ? 'high' : 'normal'} />}
         onEndReachedThreshold={0.6}
         onEndReached={() => search.hasNextPage && !search.isFetchingNextPage && search.fetchNextPage()}
         ListEmptyComponent={
