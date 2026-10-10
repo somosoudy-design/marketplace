@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 15:41 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 15:44 (Caracas, UTC−4).
 
 ## Frente A V2 — revisión del propietario
 
@@ -15,7 +15,7 @@ Resultados/decisiones en `docs/FRENTE_A_V2.md` y relevo en `docs/HISTORIAL_AGENT
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| A-V2-R | Revisar tarjetas, cabecera, barra expandible e Inicio en el APK 5 | Pendiente de Oliver | Publicado: preview run 38079470216 / production run 38080468671 Success; APK 5 consume preview. Android 6/6 (1 reintento), app 52 + 1 omisión, capturas antes/después. Cero builds production compatibles registrados. Sin WIP ni APK nuevo; no avanzar al Frente B |
+| A-V2-R | Revisar tarjetas, cabecera, barra expandible e Inicio en el APK 5 | Pendiente de Oliver | Publicado: preview run 38079470216 / production run 38080468671 Success; Oliver aclaró que quería actualizar su Android directamente: APK 5 consume preview y la versión ya está allí. Android 6/6 (1 reintento), app 52 + 1 omisión, capturas antes/después. Cero builds production compatibles registrados. Sin WIP ni APK nuevo; no avanzar al Frente B |
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 

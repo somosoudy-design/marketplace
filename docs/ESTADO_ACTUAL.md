@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:41 (Caracas, UTC−4), por Codex (cierre Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 15:44 (Caracas, UTC−4), por Codex (aclaración de entrega Android APK 5).
 
 ## Dónde está el trabajo
 
@@ -104,6 +104,12 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**Aclaración vigente de Oliver:** «producción» significaba que la app de su Android se actualice
+directamente. Para su APK 5, las publicaciones autorizadas deben llegar al canal **preview**, ya integrado
+en ese APK. No interpretar esa palabra como cambiar al canal EAS production. V2 ya está publicado en
+preview y comprobado en el APK 5 del emulador; no hace falta republicar, cambiar configuración ni instalar
+otro APK. La publicación adicional en production queda como antecedente, sin consumidor APK 5 por ese canal.
 
 **Frente A V2 cerrado; no hay WIP activo de este agente.** Continuidad desde `9e4e1f5`, últimos cambios
 UX-04 revisados y regresión inicial 16/16. El pedido V2 autoriza Inicio/descubrimiento; no autoriza Frente B.

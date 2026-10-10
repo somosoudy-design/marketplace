@@ -16,6 +16,18 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 19:44Z (15:44 Caracas, UTC−4) · Codex (entorno cloud) · Oliver
+- Aclaración: «producción» significa recibir la actualización directamente en el Android instalado.
+  APK 5 utiliza **preview**; no hay pedido de cambiar su canal nativo ni de crear otro APK.
+- Comprobado: rama sincronizada/limpia y sin nuevos cambios; publicación preview run 38079470216 Success,
+  fuente `b60b2cc`, ya validada en APK 5 Android 15 (revisión 31). No se repite una publicación ya hecha.
+- Documentado: objetivo de entrega Android en estado, pendientes y Frente A V2. La publicación adicional
+  production se conserva como antecedente. Sin cambios de código/servicios ni necesidad de repetir pruebas.
+- Siguiente: abrir la app con internet para descargar, cerrarla completamente y abrir para aplicar.
+  Recepción en el teléfono físico pendiente de Oliver; no declararla comprobada por la prueba del emulador.
+- Último commit: el de esta aclaración; `git log -1 origin/claude/marketplace-v1`.
+
+
 ### 2026-10-10 19:41Z (15:41 Caracas, UTC−4) · Codex (entorno cloud) · Oliver
 - Pedido: **Frente A V2**, tarjetas integradas, cabecera, barra dinámica e Inicio/descubrimiento. Amplía el
   alcance anterior de solo UX-04. Publicación autorizada por Oliver; eligió explícitamente **production**.

@@ -117,3 +117,13 @@ APK 5 `d1d10c28` usa **preview** y recibió allí esta misma versión en el emul
 No quedan cambios parciales activos. Próxima acción: revisión visual/funcional de Oliver en su APK 5;
 solo ajustar este frente si lo pide. Física (lectores/FPS/push), tasa vencida y decisiones comerciales
 heredadas conservan su estado. No iniciar Frente B ni construir un APK para obtener un canal production.
+
+### Aclaración de entrega — 2026-10-10 15:44 Caracas
+
+Oliver aclaró: «me refiero a que se me actualice en mi Android directamente». El objetivo es entregar al
+APK 5 instalado, cuyo canal interno es **preview**. Esa entrega ya se publicó y se probó en el emulador
+(run 38079470216 / 38079644334, OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`).
+No es necesario cambiar canales, generar APK ni republicar el mismo paquete. La publicación adicional
+en production permanece como antecedente; no era un pedido de migrar la app instalada a ese canal.
+La app descarga al abrir con internet y aplica en el siguiente inicio completo. Recepción física pendiente
+de Oliver; no afirmar que ya llegó a su teléfono sin comprobarlo.
