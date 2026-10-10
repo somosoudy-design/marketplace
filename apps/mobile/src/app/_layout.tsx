@@ -18,6 +18,7 @@ import { AuthProvider, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/env';
 import { persistOptions, queryClient } from '@/lib/query';
 import { OfflineFrame } from '@/components/OfflineNotice';
+import { PushBridge } from '@/components/PushBridge';
 import { UpdateNotice } from '@/components/UpdateNotice';
 import { ThemeProvider, useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
@@ -89,6 +90,7 @@ function RootStack() {
           <Stack.Screen name="auth-callback" options={{ title: 'Confirmar correo', headerBackVisible: false }} />
         </Stack>
         <UpdateNotice />
+        <PushBridge />
       </OfflineFrame>
     </NavigationThemeProvider>
   );

@@ -280,6 +280,7 @@ export function createApi(client: KoraClient) {
     markNotificationsRead: (ids?: string[]) => run<number>(rpc('mark_notifications_read', { p_ids: ids ?? null })),
     registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
       run<void>(rpc('register_push_token', { p_token: token, p_platform: platform })),
+    unregisterPushToken: (token: string) => run<void>(from('push_tokens').delete().eq('token', token)),
     clearActivity: () => run<void>(rpc('clear_my_activity')),
     requestDeletion: (reason?: string) => run<string>(rpc('request_account_deletion', { p_reason: reason ?? null })),
     roles: (userId: string) => run<{ role: string }[]>(from('user_roles').select('role').eq('user_id', userId)),

@@ -1,6 +1,5 @@
 # Favoritos se cierra también con el botón o gesto «atrás» de Android y vuelve a Inicio, sin cerrar la app.
-# Falla en el APK 4 con Android 13 a 15 (el emulador es Android 15): el APK pide el gesto predictivo y apunta a
-# SDK 36, y React Native solo atiende «atrás» en Android 16. Se arregla en el APK 5 (docs/PENDIENTES.md 1.5).
+# Fallaba en el APK 4 con Android 13 a 15 (el gesto predictivo dejaba «atrás» al sistema); el APK 5 lo corrige.
 # Corre antes de 02-cuenta: necesita la app sin sesión (la cuenta de 02 queda abierta).
 appId: com.example.kora.preview
 name: Volver de Favoritos con atrás de Android

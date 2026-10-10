@@ -39,13 +39,22 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # The preview profile's variables, the same the APK was built with. eas.json is part of the fingerprint, so a
-      # public value added after APK 4 (the published panel) goes in UPDATE_ONLY_ENV until the next APK carries it in
-      # eas.json, which then wins.
+      # public value added after an APK goes in UPDATE_ONLY_ENV until the next APK carries it in eas.json, which then
+      # wins. Empty since APK 5 (the panel address is in eas.json).
       - name: Variables del perfil preview (las mismas del APK)
         working-directory: apps/mobile
         env:
-          UPDATE_ONLY_ENV: '{"EXPO_PUBLIC_PANEL_URL":"https://kora-panel.expo.app"}'
+          UPDATE_ONLY_ENV: '{}'
         run: node -e "const env = { ...JSON.parse(process.env.UPDATE_ONLY_ENV), ...require('./eas.json').build.preview.env }; for (const [k, v] of Object.entries(env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
+
+      # google-services.json (GOOGLE_SERVICES_JSON, a file variable of the EAS "preview" environment) is part of the
+      # APK's fingerprint since APK 5, so the update needs the same file to compute the same runtime. Only its path is
+      # written to the log.
+      - name: Firebase del entorno preview (google-services.json)
+        working-directory: apps/mobile
+        run: |
+          npx --yes eas-cli@24.12.1 env:pull preview --non-interactive --path "$RUNNER_TEMP/preview.env"
+          grep -E '^GOOGLE_SERVICES_JSON=' "$RUNNER_TEMP/preview.env" >> "$GITHUB_ENV" || echo "::warning::Sin GOOGLE_SERVICES_JSON en el entorno preview"
 
       # An update only reaches APKs with the same fingerprint; a native change (icon, splash, a native module) makes
       # it unreachable. The request names the runtime of the installed APKs, and the job stops if it no longer matches.

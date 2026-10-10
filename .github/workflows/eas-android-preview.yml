@@ -39,6 +39,14 @@ jobs:
       - name: Dependencias
         run: pnpm install --frozen-lockfile
 
+      # Push on Android: google-services.json in the EAS "preview" environment, FCM V1 key and signing keystore for the
+      # preview package. Stops before spending a build if any is missing (prints identifiers only).
+      - name: Firebase y credenciales de Expo
+        working-directory: apps/mobile
+        run: |
+          npx --yes eas-cli@24.12.1 env:pull preview --non-interactive --path "$RUNNER_TEMP/preview.env"
+          node "$GITHUB_WORKSPACE/tools/eas/check-firebase.mjs" "$RUNNER_TEMP/preview.env"
+
       - name: Compilación en EAS (espera a que termine)
         id: build
         working-directory: apps/mobile

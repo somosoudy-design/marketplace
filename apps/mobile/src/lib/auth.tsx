@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { authRedirect } from './auth-link';
 import { guestCart } from './guest-cart';
+import { unregisterPush } from './push';
 import { clearAccountCache } from './query';
 import { api, supabase } from './supabase';
 
@@ -149,6 +150,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!data.session) throw Object.assign(new Error('Auth session missing'), { code: 'session_not_found' });
       },
       signOut: async () => {
+        await unregisterPush();
         await supabase.auth.signOut();
       },
       updatePassword: async (password) => {

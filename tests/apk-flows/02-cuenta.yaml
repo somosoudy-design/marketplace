@@ -3,6 +3,8 @@
 # una cuenta de tester maestro-<hora>@example.com (sin correo: solo corre si el proyecto tiene «Confirm email»
 # desactivado; lo decide el workflow apk-emulator), conserva el carrito, agrega una dirección ficticia, confirma
 # el pedido, ve la cotización de Pago Móvil en bolívares con su tasa y cancela el pedido sin reportar ningún pago.
+# Desde el APK 5 también activa los avisos (rechazando el permiso la primera vez), espera el aviso push real del
+# pedido, lo toca, reabre la app con la sesión y vuelve a entrar.
 # Nada se paga ni se marca como pagado: queda un pedido cancelado de una cuenta @example.com.
 appId: com.example.kora.preview
 name: Comprador con cuenta hasta la cotización y cancelación
@@ -66,6 +68,47 @@ name: Comprador con cuenta hasta la cotización y cancelación
 - assertVisible:
     id: cart-line-.*
 - takeScreenshot: flujo-cuenta-02-carrito-con-cuenta
+
+# 3b. avisos push: primero sin permiso (el sistema lo pregunta y se rechaza), luego con permiso. Con permiso, el
+# dispositivo queda registrado para esta cuenta de prueba (token de Expo con Firebase)
+- openLink: kora://settings
+- extendedWaitUntil:
+    visible:
+      id: settings-push
+    timeout: 20000
+- tapOn:
+    id: settings-push
+- extendedWaitUntil:
+    visible:
+      id: com.android.permissioncontroller:id/permission_deny_button
+    timeout: 20000
+- tapOn:
+    id: com.android.permissioncontroller:id/permission_deny_button
+- extendedWaitUntil:
+    visible:
+      id: settings-push-status
+      text: No diste permiso.*
+    timeout: 20000
+- takeScreenshot: flujo-cuenta-02b-avisos-sin-permiso
+- tapOn:
+    id: settings-push
+- extendedWaitUntil:
+    visible:
+      id: com.android.permissioncontroller:id/permission_allow_button
+    timeout: 20000
+- tapOn:
+    id: com.android.permissioncontroller:id/permission_allow_button
+- extendedWaitUntil:
+    visible:
+      id: settings-push-status
+      text: Avisos activados en este dispositivo.
+    timeout: 60000
+- takeScreenshot: flujo-cuenta-02c-avisos-activados
+- openLink: kora://cart
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 20000
 - tapOn:
     id: cart-continue
 
@@ -186,3 +229,60 @@ name: Comprador con cuenta hasta la cotización y cancelación
     direction: UP
     timeout: 20000
 - takeScreenshot: flujo-cuenta-08-pedido-cancelado
+
+# 8. aviso push real: el pedido creado arriba genera «Pedido P-… recibido» para esta cuenta de prueba, y push-dispatch
+# (cada minuto en el proyecto de pruebas) lo envía por Expo y Firebase a este dispositivo. Tocarlo abre el pedido
+- swipe:
+    start: 50%, 1%
+    end: 50%, 75%
+- extendedWaitUntil:
+    visible: Pedido P-.* recibido
+    timeout: 240000
+- takeScreenshot: flujo-cuenta-09-aviso-push
+- tapOn: Pedido P-.* recibido
+- extendedWaitUntil:
+    visible:
+      id: order-number
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-10-pedido-desde-aviso
+
+# 9. la sesión sigue al cerrar y abrir la app; cerrar sesión y volver a entrar
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- tapOn: Cuenta
+- extendedWaitUntil:
+    visible:
+      id: account-name
+      text: Maestro Prueba
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      text: Cerrar sesión
+    direction: DOWN
+    timeout: 20000
+- tapOn: Cerrar sesión
+- extendedWaitUntil:
+    visible:
+      id: account-sign-in
+    timeout: 30000
+- tapOn:
+    id: account-sign-in
+- tapOn:
+    id: sign-in-email
+- inputText: ${output.email}
+- tapOn:
+    id: sign-in-password
+- inputText: Kora-prueba-2026
+- hideKeyboard
+- tapOn:
+    id: sign-in-submit
+- extendedWaitUntil:
+    visible:
+      id: account-name
+      text: Maestro Prueba
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-11-sesion-de-nuevo

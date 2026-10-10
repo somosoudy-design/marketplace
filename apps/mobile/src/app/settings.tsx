@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import { ScrollView, Switch, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Platform, ScrollView, Switch, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
 import { ConfirmSheet } from '@/components/ui/ConfirmSheet';
 import { Chip } from '@/components/ui/Chip';
@@ -10,7 +10,7 @@ import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { useAuth } from '@/lib/auth';
 import { useProfile } from '@/lib/hooks';
-import { registerForPush } from '@/lib/push';
+import { pushAllowed, registerForPush } from '@/lib/push';
 import { qk } from '@/lib/query';
 import { api } from '@/lib/supabase';
 import { useTheme, type SchemePreference } from '@/theme';
@@ -25,6 +25,11 @@ export default function SettingsScreen() {
   const [deletionRequested, setDeletionRequested] = useState(false);
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [pushStatus, setPushStatus] = useState<string | null>(null);
+  // On the phone the switch is on only when the system also lets the app notify; otherwise turning it on asks.
+  const [allowed, setAllowed] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (Platform.OS !== 'web') pushAllowed().then(setAllowed).catch(() => setAllowed(false));
+  }, []);
 
   const update = useMutation({
     mutationFn: (patch: Parameters<typeof api.account.updateProfile>[1]) => api.account.updateProfile(user!.id, patch),
@@ -53,13 +58,16 @@ export default function SettingsScreen() {
         <ToggleRow
           title="Avisos en este dispositivo"
           body="Pagos, envíos y reclamos. Nunca enviamos publicidad sin tu permiso."
-          value={notif.push !== false}
+          testID="settings-push"
+          value={notif.push !== false && allowed !== false}
           onChange={async (v) => {
             update.mutate({ preferences: { ...(p?.preferences as object), notifications: { ...notif, push: v } } });
-            if (v) setPushStatus(await registerForPush());
+            if (!v) return setPushStatus(null);
+            setPushStatus(await registerForPush());
+            if (Platform.OS !== 'web') setAllowed(await pushAllowed().catch(() => false));
           }}
         />
-        {pushStatus ? <Text variant="caption" color="textMuted">{pushStatus}</Text> : null}
+        {pushStatus ? <Text variant="caption" color="textMuted" testID="settings-push-status">{pushStatus}</Text> : null}
         <Divider />
         <ToggleRow title="Novedades y ofertas" body="Correos ocasionales con lanzamientos." value={!!p?.marketing_opt_in} onChange={(v) => update.mutate({ marketing_opt_in: v })} />
       </Card>
@@ -103,7 +111,7 @@ export default function SettingsScreen() {
   );
 }
 
-function ToggleRow({ title, body, value, onChange }: { title: string; body: string; value: boolean; onChange: (v: boolean) => void }) {
+function ToggleRow({ title, body, value, onChange, testID }: { title: string; body: string; value: boolean; onChange: (v: boolean) => void; testID?: string }) {
   const t = useTheme();
   return (
     <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
@@ -111,7 +119,7 @@ function ToggleRow({ title, body, value, onChange }: { title: string; body: stri
         <Text variant="subtitle" style={{ fontSize: 15 }}>{title}</Text>
         <Text variant="caption" color="textMuted">{body}</Text>
       </View>
-      <Switch accessibilityLabel={title} value={value} onValueChange={onChange} trackColor={{ true: t.colors.brand, false: t.colors.borderStrong }} />
+      <Switch testID={testID} accessibilityLabel={title} value={value} onValueChange={onChange} trackColor={{ true: t.colors.brand, false: t.colors.borderStrong }} />
     </View>
   );
 }

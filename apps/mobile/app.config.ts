@@ -10,8 +10,8 @@ const nameSuffix = variant === 'production' ? '' : variant === 'preview' ? ' (Pr
 
 // The icon, splash and notification colour are compiled into the APK, so changing them changes the runtime
 // fingerprint and updates stop reaching the test APKs already installed. They switch with a new APK only:
-// 'original' is what APK 4 carries; 'violet' (assets/images/violet) is the Electric Violet identity.
-const NATIVE_IDENTITY: 'original' | 'violet' = 'original';
+// 'original' is what APK 4 carried; 'violet' (assets/images/violet) is the Electric Violet identity, from APK 5.
+const NATIVE_IDENTITY: 'original' | 'violet' = 'violet';
 const native = {
   original: { dir: './assets/images', brand: '#0E5E54', splash: '#F6F0E7', splashDark: '#121416' },
   violet: { dir: './assets/images/violet', brand: '#6D42E8', splash: '#F8F7FC', splashDark: '#110F18' },
@@ -48,7 +48,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundImage: `${native.dir}/android-icon-background.png`,
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
-    predictiveBackGestureEnabled: true,
+    // Off on purpose: with the opt-in, Android 13 to 15 hand «atrás» to the system (it closed the app) because React
+    // Native 0.86 only listens for it on Android 16. Android 16 still goes through React Native either way.
+    predictiveBackGestureEnabled: false,
     // Only what the app uses; nothing else is requested.
     permissions: ['android.permission.POST_NOTIFICATIONS'],
     blockedPermissions: ['android.permission.RECORD_AUDIO', 'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.WRITE_EXTERNAL_STORAGE'],

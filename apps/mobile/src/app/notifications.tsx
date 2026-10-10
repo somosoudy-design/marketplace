@@ -1,6 +1,6 @@
 import type { Notification } from '@kora/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { router, type Href } from 'expo-router';
+import { router } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { RefreshControl, SectionList, StyleSheet, View } from 'react-native';
 import { Badge } from '@/components/ui/Badge';
@@ -11,6 +11,7 @@ import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from 
 import { Text } from '@/components/ui/Text';
 import { timeAgo } from '@/lib/format';
 import { useNotifications } from '@/lib/hooks';
+import { noticeTarget } from '@/lib/notice-target';
 import { qk } from '@/lib/query';
 import { api } from '@/lib/supabase';
 import { useTheme, type Theme } from '@/theme';
@@ -40,16 +41,6 @@ function swatch(t: Theme, k: Kind): [string, string] {
     case 'shipping': return [t.colors.infoSoft, t.colors.info];
     default: return [t.colors.brandSoft, t.colors.brand];
   }
-}
-
-/** Where tapping a notice leads. Store-team notices are handled in the seller panel, so they open nothing here. */
-function target(n: Notification): Href | null {
-  const d = (n.data ?? {}) as Record<string, string>;
-  if (d.audience === 'store') return null;
-  if (n.kind === 'claim_update' && d.fulfillment_id) return { pathname: '/claim/[fulfillmentId]', params: { fulfillmentId: d.fulfillment_id } };
-  if (d.order_id) return { pathname: '/orders/[id]', params: { id: d.order_id } };
-  if (d.product_id) return { pathname: '/product/[id]', params: { id: d.product_id } };
-  return null;
 }
 
 function dayBucket(iso: string): string {
@@ -131,7 +122,7 @@ function Row({ n, isNew, first, last, labelTest }: { n: Notification; isNew: boo
   const t = useTheme();
   const meta = KIND[n.kind] ?? { icon: 'bell' as IconName, kind: 'neutral' as Kind };
   const [bg, fg] = swatch(t, meta.kind);
-  const to = target(n);
+  const to = noticeTarget(n.kind, n.data as Record<string, unknown> | null);
   const store = ((n.data ?? {}) as Record<string, string>).audience === 'store';
   return (
     <ScalePressable

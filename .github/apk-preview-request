@@ -1,3 +1,5 @@
 # Cambiar este archivo en la rama de trabajo pide un APK de prueba nuevo (workflow eas-android-preview).
 # 5: APK 4, base para actualizaciones sin reinstalar (expo-updates, canal preview), sesión cifrada y registro con código.
 #    No es un intento de arreglar «App no instalada»: eso se diagnostica con ADB en el teléfono.
+# 6: APK 5 (autorizado por Oliver el 2026-10-10 03:50Z): avisos push con Firebase (proyecto hayazgo), «atrás» de
+#    Android sin el gesto predictivo, icono y splash violeta, dirección del panel en eas.json. Mismo paquete y firma.
