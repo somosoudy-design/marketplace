@@ -22,7 +22,7 @@ arriba de la bitácora, con este formato:
   revisión 30 (run 38064708597) pasa: se abre el selector y al cerrarlo Cuenta queda igual.
 - En la misma revisión, `02-cuenta` falló esperando el aviso push «Pedido P-100124 recibido»: `push-dispatch` lo
   envió a Expo (ticket sin error) pero el emulador no lo mostró y perdió adb. Misma intermitencia que la revisión 27.
-  Comentado en el PR #1 y job relanzado una vez.
+  Comentado en el PR #1; relanzado una vez, pasó completo (intento 2), aviso push incluido.
 - Último commit: el de esta entrada en `claude/marketplace-v1`.
 
 ### 2026-10-10 15:30Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
