@@ -1,5 +1,5 @@
 import type { OrderItem, ProductDetail, ProductVariant } from '@kora/api';
-import { describeLeadTime, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
+import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Platform, Share, useWindowDimensions, View } from 'react-native';
@@ -8,8 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { StoreChip } from '@/components/catalog/StoreCard';
-import { RateSheet } from '@/components/RateSheet';
-import { AvailabilityBadge } from '@/components/ui/Availability';
+import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
@@ -27,7 +26,7 @@ import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
-import { useAddToCart, useDivisas, useFavorites, usePaymentMethods, useProduct, useRateStatus, useVesRate } from '@/lib/hooks';
+import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
@@ -83,10 +82,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const { user } = useAuth();
   const qc = useQueryClient();
   const fav = useFavorites();
-  const vesRate = useVesRate();
-  const divisas = useDivisas();
-  const rate = useRateStatus().data;
-  const [rateOpen, setRateOpen] = useState(false);
   const methods = usePaymentMethods();
   const addToCart = useAddToCart();
   const purchasableVariants = p.variants.filter((v) => v.active && (v.stock == null || v.stock > 0));
@@ -101,11 +96,15 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const imageWidth = Math.min(width, MAX_W);
   const maxQty = Math.max(1, Math.min(p.max_per_order ?? 10, variant?.stock ?? 99));
   const lead = describeLeadTime(p.lead_min_days, p.lead_max_days, p.availability);
+  const leadShort = describeLeadTimeShort(p.lead_min_days, p.lead_max_days, p.availability);
   const eta = p.lead_min_days != null && p.lead_max_days != null && availability.purchasable ? etaFromToday(p.lead_min_days, p.lead_max_days) : null;
   const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id) || p.is_favorite;
   const images = p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }];
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
+  // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
+  const statusKey = variantSoldOut ? 'sold_out' : p.availability;
+  const status = presentAvailability(statusKey);
   const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
   // options with different prices say theirs, so nobody has to tap each one to compare
   const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
@@ -186,33 +185,31 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             ) : null}
           </View>
 
-          <View style={{ padding: 20, gap: 18, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
-            {/* brand, title and rating; the store has its own card further down */}
-            <View style={{ gap: 6 }}>
-              {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
-              <Text variant="displayM" testID="product-title">{p.title}</Text>
-              {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
+          <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+            {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
+            <View style={{ gap: 12 }}>
+              <View style={{ gap: 4 }}>
+                {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
+                <Text variant="displayM" testID="product-title">{p.title}</Text>
+                {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
+              </View>
               <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: true })} />
-            </View>
-            <View style={{ gap: 10 }}>
               {/* re-keyed so a variant with another price fades in instead of snapping */}
               <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
-                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} divisas={divisas} onRatePress={rate ? () => setRateOpen(true) : undefined} />
+                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" muted={!canBuy} />
               </Animated.View>
+              {statusKey !== 'available' || hint ? (
+                <View testID="product-status" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                  {/* sold out reads at a glance: a solid badge over a greyed price */}
+                  {statusKey !== 'available' ? <Badge label={status.label} tone={status.tone} solid={!status.purchasable} /> : null}
+                  {status.purchasable && leadShort ? <Text variant="caption" color="textSecondary">{leadShort}</Text> : null}
+                  {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
+                </View>
+              ) : null}
               {p.is_demo ? (
                 <View testID="product-demo" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 6, borderRadius: t.radii.sm, backgroundColor: t.colors.warningSoft }}>
                   <Icon name="info" size={14} color={t.colors.warning} />
                   <Text variant="caption" color="textSecondary" style={{ flexShrink: 1 }}>Producto de demostración: foto y precio de ejemplo, no es una oferta real.</Text>
-                </View>
-              ) : null}
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                <AvailabilityBadge value={variantSoldOut ? 'sold_out' : p.availability} />
-                {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
-              </View>
-              {lead ? (
-                <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                  <Icon name={p.availability === 'on_order' ? 'plane' : p.availability === 'in_transit' ? 'ship' : 'clock'} size={17} color={t.colors.textSecondary} />
-                  <Text variant="bodySmall" color="textSecondary" style={{ flex: 1 }}>{lead}{eta ? ` · ${eta}` : ''}</Text>
                 </View>
               ) : null}
             </View>
@@ -238,11 +235,12 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               </View>
             ) : null}
 
+            {/* delivery, protection and payment in one card, below what the buyer decides on */}
             <Card style={{ gap: 14 }}>
-              <InfoRow icon="truck" title="Entrega" body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
+              <InfoRow icon="truck" title="Entrega" lead={lead ? `${lead}${eta ? ` · ${eta}` : ''}` : undefined} body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
               {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Puedes pagar el 100 % o un anticipo del 50 % y el resto cuando llegue a Venezuela." /> : null}
               <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
-              {methods.data?.length ? <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. El monto exacto lo ves antes de pagar.`} /> : null}
+              {methods.data?.length ? <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. Cada método muestra su monto exacto al pagar.`} /> : null}
             </Card>
 
             <View testID="product-store">
@@ -337,7 +335,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <Button testID="product-cta" size="lg" full variant="secondary" icon="bell" title={p.alert_requested ? 'Te avisaremos · Cancelar aviso' : 'Avisarme cuando vuelva'} onPress={toggleAlert} />
           )}
       </BottomBar>
-      {rate ? <RateSheet rate={rate} visible={rateOpen} onClose={() => setRateOpen(false)} /> : null}
     </View>
   );
 }
@@ -351,7 +348,6 @@ const LONG_DESCRIPTION = 280;
  * delivered, unrated purchase of this product can rate it right here (the same sheet as the order screen).
  */
 function ProductReviewsSection({ product: p }: { product: ProductDetail }) {
-  const t = useTheme();
   const { user } = useAuth();
   const q = useInfiniteQuery({
     queryKey: qk.reviews(p.id),
@@ -381,12 +377,7 @@ function ProductReviewsSection({ product: p }: { product: ProductDetail }) {
       {summary?.count ? (
         <RatingSummary summary={summary} />
       ) : (
-        <View testID="product-reviews-empty" style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: t.radii.lg, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
-          <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: t.colors.accentSoft, alignItems: 'center', justifyContent: 'center' }}>
-            <Icon name="star" size={18} color={t.colors.accent} />
-          </View>
-          <Text variant="bodySmall" color="textSecondary" style={{ flex: 1 }}>Aún no hay opiniones de este producto.</Text>
-        </View>
+        <Text testID="product-reviews-empty" variant="bodySmall" color="textSecondary">Aún no hay opiniones de este producto.</Text>
       )}
       {toRate ? <Button testID="product-rate" title="Calificar tu compra" icon="star" variant="secondary" onPress={() => setRating(toRate)} /> : null}
       {items.map((r) => (
@@ -403,13 +394,14 @@ function ProductReviewsSection({ product: p }: { product: ProductDetail }) {
   );
 }
 
-function InfoRow({ icon, title, body }: { icon: 'truck' | 'wallet' | 'shield-check' | 'banknote'; title: string; body: string }) {
+function InfoRow({ icon, title, lead, body }: { icon: 'truck' | 'wallet' | 'shield-check' | 'banknote'; title: string; lead?: string; body: string }) {
   const { colors } = useTheme();
   return (
     <View style={{ flexDirection: 'row', gap: 12 }}>
       <Icon name={icon} size={20} color={colors.brand} />
       <View style={{ flex: 1, gap: 2 }}>
         <Text variant="label">{title}</Text>
+        {lead ? <Text variant="bodySmall" testID="product-lead">{lead}</Text> : null}
         <Text variant="bodySmall" color="textSecondary">{body}</Text>
       </View>
     </View>
