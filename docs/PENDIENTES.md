@@ -6,7 +6,14 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 15:44 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 15:48 (Caracas, UTC−4).
+
+## iOS gratuita — pedido vigente de Oliver
+
+| # | Tarea | Estado | Notas |
+|---|---|---|---|
+| IOS-L | Preparar variante local y guía Xcode/Personal Team con Supabase de pruebas | En curso | Linux sin Xcode/simulador. APNs y Associated Domains incompatibles con Personal Team; aislar sin modificar Android/producción. Sin EAS iOS, TestFlight, Expo Go, gasto ni Frente B |
+| IOS-F | Compilar, firmar e instalar en el iPhone físico y comprobar recorridos | Bloqueada (Mac/iPhone de Oliver) | Después de IOS-L. No pedir contraseñas ni certificados; firma gratuita caduca a los 7 días |
 
 ## Frente A V2 — revisión del propietario
 

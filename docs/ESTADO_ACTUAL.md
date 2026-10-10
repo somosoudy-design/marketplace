@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:44 (Caracas, UTC−4), por Codex (recepción Android confirmada por Oliver).
+**Última actualización:** 2026-10-10 15:48 (Caracas, UTC−4), por Codex (preparación iOS Personal Team).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Frente A V2: fuente probada/publicada `b60b2cc`, solicitud production `d62b1fa`; cierre documental en el commit de esta actualización. Base `9e4e1f5` |
-| Plan vigente | Frente A V2 (Oliver, 2026-10-10): tarjetas integradas, cabecera, barra expandible e Inicio/descubrimiento; sin Frente B |
-| Objetivo actual | Frente A V2 terminado, probado y publicado; revisión de Oliver. Runtime APK 5 conservado. Sin APK nuevo, motor financiero, backend, panel ni Frente B |
+| Plan vigente | Instalación iOS gratuita: Xcode + Personal Team + compilación local en el Mac de Oliver. Frente A V2 cerrado; sin Frente B |
+| Objetivo actual | Auditar iOS SDK 57 y preparar una variante exclusivamente local sin APNs/Associated Domains. Sin alterar APK 5, Android, producción, backend, motor financiero ni panel |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -105,6 +105,9 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
+**iOS Personal Team — preparación en curso.** Base `cf7a1b9` sincronizada, sin WIP ajeno. AGENTS/estado/pendientes/Frente A V2 revisados; Frente A V2 terminado y recepción Android confirmada. Entorno Linux sin Xcode, simulador ni acceso al Mac/iPhone. Configuración actual añade Associated Domains y el plugin `expo-notifications` añade APNs: ambos impiden firma gratuita. Preparar proyecto generado ignorado, sin modificar `apps/mobile` ni el runtime de APK 5. Validación y guía Mac pendientes; no se ha compilado ni instalado iOS.
+
+
 **Recepción en Android confirmada por Oliver:** «ya se actualizó» (2026-10-10). La entrega al APK instalado
 queda confirmada por el propietario; no equivale a haber probado todos los recorridos en su teléfono.
 
@@ -166,20 +169,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Oliver confirmó la recepción del update en Android. Queda revisar la experiencia visual/funcional de Frente A V2
-en el APK 5 instalado y la galería `.local/frente-a-v2/comparacion.html`.
-Para recibir el update: abrir la app para descargar y volver a abrirla tras la descarga (canal preview).
-No repetir implementación/OTA ni generar APK: **ambos canales publicados** y Android ya comprobado.
-Si pide ajustes, sincronizar, partir de `b60b2cc` + cierre actual, usar componentes existentes y conservar
-filtros, scroll, favoritos, carrito y guías de accesibilidad. No activar flujos remotos con cuenta ni modificar
-backend/finanzas/panel por este pedido. **No avanzar al Frente B sin nueva instrucción.**
-
-Los pendientes físicos/comerciales heredados siguen aparte; están en `docs/PENDIENTES.md`.
-
-La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
-`/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de
-prueba solo a su cuenta (`select public.notify(<su id>, 'system', …)` con el conector de Supabase) y comprobar el
-recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status`/`push_error` y `push_tickets`.
+Completar `tools/ios/` y `docs/IOS_PERSONAL_TEAM.md`: variante local, guardas de backend/entitlements,
+exportación iOS y regresión web local. No publicar ni compilar en EAS. Luego Oliver ejecuta Xcode/Personal Team
+en su Mac y verifica el iPhone; el agente cloud se detiene antes de ese paso físico.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

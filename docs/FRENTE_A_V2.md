@@ -125,9 +125,15 @@ APK 5 instalado, cuyo canal interno es **preview**. Esa entrega ya se publicó y
 (run 38079470216 / 38079644334, OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`).
 No es necesario cambiar canales, generar APK ni republicar el mismo paquete. La publicación adicional
 en production permanece como antecedente; no era un pedido de migrar la app instalada a ese canal.
-La app descarga al abrir con internet y aplica en el siguiente inicio completo. Recepción física pendiente
-de Oliver; no afirmar que ya llegó a su teléfono sin comprobarlo.
+La app descarga al abrir con internet y aplica en el siguiente inicio completo. La recepción física quedó
+confirmada después por Oliver, como consta a continuación.
 
 **Recepción física (2026-10-10 15:44 Caracas):** Oliver confirmó «ya se actualizó». Se registra entrega al Android
 instalado; la revisión visual/funcional en su teléfono y las pruebas físicas específicas siguen pendientes.
 No se republicó ni se generó un APK para esta confirmación.
+
+### Cierre previo a iOS — 2026-10-10
+
+Verificado el cierre desde `cf7a1b9`: no hay WIP de Frente A V2 ni cambios locales pendientes. Implementación,
+pruebas, publicaciones y confirmación de Oliver ya documentadas. El pedido siguiente prepara instalación
+iOS local con Personal Team; no reabre el diseño ni autoriza Frente B o una nueva publicación Android.
