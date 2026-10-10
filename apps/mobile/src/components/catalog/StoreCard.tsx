@@ -70,7 +70,7 @@ export function StoreChip({ store, width, overline }: { store: StoreSummary; wid
       style={{ width, flexDirection: 'row', alignItems: 'center', gap: 12, padding: 10, paddingRight: 12, backgroundColor: t.colors.surface, borderRadius: t.radii.lg, borderWidth: 1, borderColor: t.colors.border }}
     >
       <View style={{ width: 52, height: 52, borderRadius: t.radii.md, overflow: 'hidden', backgroundColor: accent }}>
-        {store.logo_path ? <Image source={{ uri: storeImage(store.logo_path) ?? undefined }} style={{ flex: 1 }} contentFit="cover" transition={150} /> : null}
+        {store.logo_path ? <Image source={{ uri: storeImage(store.logo_path) ?? undefined }} accessibilityLabel="" accessible={false} style={{ flex: 1 }} contentFit="cover" transition={150} /> : null}
       </View>
       <View style={{ flex: 1, gap: 2 }}>
         {overline ? <Text variant="caption" color="textMuted">{overline}</Text> : null}
