@@ -16,6 +16,27 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 02:50Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Pedido: «Mejora profesional de UI/UX en la app móvil» (Oliver, 2026-10-10 01:30Z), hitos 1 a 5.
+- Hecho:
+  - Hito 1, navegación: cuatro pestañas; Favoritos con el corazón del Inicio y desde Cuenta; accesos al panel
+    publicado (`2dc0d89`).
+  - Hito 2, ficha: marca, precio con descuento, píldora de divisas, bolívares discretos con la hoja de tasa,
+    precio por opción, «Vendido por», «Características», descripción plegada, «Agregar» y «Comprar» (`09ba8dd`).
+  - Hito 3, opiniones siempre visibles; calificar desde la ficha o el pedido entregado; «Compra verificada» y
+    respuesta de la tienda (`5b901e8`).
+  - Hito 4 evaluado y documentado, sin implementar (`docs/PREGUNTAS_Y_RESPUESTAS.md`).
+  - Pago con la tasa y la brecha a un toque (`e5e8b50`).
+- Pruebas:
+  - Playwright de la app: 28 pasan y 1 omitida; nueva `pay-divisas.spec.ts`.
+  - Emulador Android 15 con el APK 4 y las actualizaciones (revisión 15): cuenta, ficha, Favoritos y flecha de
+    Favoritos bien.
+  - «Atrás» de Android cierra la app: causa nativa comprobada (`PENDIENTES.md` 1.5).
+- Servicios: tres actualizaciones por EAS Update al APK 4, todas con el runtime `a4682c83…` (hito 1, hito 2,
+  hito 3 con el pago). Ningún APK nuevo, ningún cambio en Supabase.
+- Siguiente: decisiones de Oliver sobre el APK 5 (P2.6) y la pantalla «Preguntas» (P2.5).
+- Último commit: el checkpoint «Hand-off after the UI/UX milestones» en `claude/marketplace-v1`.
+
 ### 2026-10-09 22:10Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Hecho: adopción del protocolo de continuidad multiagente pedido por Oliver. `AGENTS.md` (manual universal),
   `CLAUDE.md`, `docs/ESTADO_ACTUAL.md`, `docs/PENDIENTES.md`, `docs/ARQUITECTURA.md`,

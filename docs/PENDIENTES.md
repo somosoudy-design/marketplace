@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 02:35Z.
+**Última revisión:** 2026-10-10 02:50Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 1.3 | Cierre del hito D: ficha, carrito, checkout, cuotas y seguimiento ya se revisaron en la versión web (claro y oscuro) y el selector de pago es nuevo; falta verlos en Android (capturas del artefacto `capturas-emulador`) y corregir lo que aparezca | Lista | `tools/design/screens.mjs` para la web; capturas de Maestro para el APK |
 | 1.4 | Validación integral (hito E): repasar la lista de recorridos de `DIRECCION_PRODUCTO.md` («Criterios de calidad») en el APK real, anotando qué se probó y dónde | Lista (parcial) | La parte con cuenta, tras P2.1 |
-| 1.5 | APK 5 con la identidad nativa violeta (`NATIVE_IDENTITY = 'violet'`: icono, splash, color de notificación) | Lista cuando convenga | Obliga a reinstalar; juntarlo con otro cambio nativo (por ejemplo Firebase, P3.3). Tras instalarlo, actualizar la línea `runtime:` de `.github/eas-update-request`. Mover `EXPO_PUBLIC_PANEL_URL` de `UPDATE_ONLY_ENV` (workflow de actualizaciones) a `eas.json` en la misma compilación (`ENTORNO.md` §10) |
+| 1.5 | APK 5: arreglo de «atrás» de Android (en Android 13 a 15 cierra la app en vez de volver) junto con la identidad nativa violeta (`NATIVE_IDENTITY = 'violet'`: icono, splash, color de notificación) | Bloqueada (autorización de Oliver, P2.6) | Causa comprobada: el APK 4 tiene `targetSdkVersion 36` y `enableOnBackInvokedCallback=true` (`predictiveBackGestureEnabled: true` en `apps/mobile/app.config.ts`), y `ReactActivity` (RN 0.86) solo registra su callback de «atrás» si el teléfono también es Android 16; en 13 a 15 el sistema cierra la app sin avisar a JavaScript. Arreglo de una línea: `predictiveBackGestureEnabled: false`. Cambia la huella: no commitearlo en la rama compartida hasta que Oliver autorice el APK 5, o bloquea las actualizaciones del APK 4. Tras instalarlo, actualizar la línea `runtime:` de `.github/eas-update-request` y quitar la nota de falla conocida de `tests/apk-flows/01a` y `01c`. Mover `EXPO_PUBLIC_PANEL_URL` de `UPDATE_ONLY_ENV` (workflow de actualizaciones) a `eas.json` en la misma compilación (`ENTORNO.md` §10). Si llega Firebase (P3.3) antes, va en la misma |
 
 ## Prioridad 1 bis: relevo del 2026-10-09 23Z (pedido de Oliver, en este orden)
 
@@ -28,6 +28,7 @@
 
 | # | Tarea | Estado | Dónde |
 |---|---|---|---|
+| 2.6 | Autorizar el APK 5 (arreglo de «atrás» de Android e identidad violeta; obliga a reinstalar) | Bloqueada (Oliver) | Detalle en P1.5. Sin su autorización no se compila |
 | 2.5 | Autorizar la pantalla «Preguntas» del panel de vendedor, para activar preguntas y respuestas en la ficha | Bloqueada (Oliver) | Diseño listo en `docs/PREGUNTAS_Y_RESPUESTAS.md`; se publica por EAS Update, sin APK nuevo |
 | 2.2 | Agregar `kora://**` a Redirect URLs | Bloqueada (Oliver) | Supabase › Authentication › URL Configuration |
 | 2.3 | Acceso al repositorio para Kevin y Heisber, si van a trabajar con sus agentes | Bloqueada (Oliver) | GitHub › somosoudy-design/marketplace › Settings › Collaborators (permiso *Write*, no *Admin*) |
