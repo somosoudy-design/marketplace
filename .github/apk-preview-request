@@ -3,3 +3,5 @@
 #    No es un intento de arreglar «App no instalada»: eso se diagnostica con ADB en el teléfono.
 # 6: APK 5 (autorizado por Oliver el 2026-10-10 03:50Z): avisos push con Firebase (proyecto hayazgo), «atrás» de
 #    Android sin el gesto predictivo, icono y splash violeta, dirección del panel en eas.json. Mismo paquete y firma.
+#    Reintento: el primer intento (build 54b2be4f) se detuvo antes de compilar porque eas-cli calculó el runtime sin
+#    google-services.json; ahora el workflow le pasa el mismo archivo que usa EAS.
