@@ -210,12 +210,14 @@ procesadores):
 | 1 | `037b11c5` | Abre en el emulador; «App no instalada» en los Samsung S24/S25 Ultra de Oliver |
 | 2 | `1a0f1922` (commit `b5eff0c`) | Igual que el 1 |
 | 3 | `bd3fa808` (solo ARM) | Se cae al abrir en el emulador; «App no instalada» en los Samsung |
-| 4 | `5ee104fe` (versionCode 2, commit `3509547`) | **Instalado en el Samsung de Oliver** (2026-10-09 ~20:40Z). Primero con `expo-updates`: recibe las actualizaciones del canal `preview` |
+| 4 | `5ee104fe` (versionCode 2, commit `3509547`) | Instalado en el Samsung de Oliver (2026-10-09 ~20:40Z). Primero con `expo-updates`. Runtime `a4682c83…`: ya no recibe actualizaciones nuevas |
+| 5 | `d1d10c28` (versionCode 4, commit `cc5b101`) | Firebase (push), «atrás» de Android corregido, icono y splash violeta, panel en `eas.json`. Misma firma que el 4 (se instala encima). Runtime `eb5ed117…`. El intento `54b2be4f` (versionCode 3) se detuvo antes de compilar |
 
 ## 10. Actualizaciones de JavaScript sin reinstalar (EAS Update)
 
 Los APK con `expo-updates` (del APK 4 en adelante) reciben el JavaScript nuevo del canal `preview` si tienen el
-mismo **runtime** (huella de la parte nativa). Hoy: `a4682c83c1bb738fc74c73153838ded0656f1912`.
+mismo **runtime** (huella de la parte nativa). Hoy (APK 5): `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; el APK 4
+tenía `a4682c83c1bb738fc74c73153838ded0656f1912`.
 
 1. Calcula la huella **desde `apps/mobile`** (desde la raíz da otra):
    ```bash
