@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:30Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 13:16 (Caracas, UTC−4), por Codex (UX-04, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `3e6ff38` (emulador con las tarjetas simplificadas) |
-| Plan vigente | «Compilar APK 5 con notificaciones push» (Oliver, 2026-10-10 03:50Z), hitos 1 a 5. Antes, «Mejora profesional de UI/UX» (hecha) y Directriz maestra 02 |
-| Objetivo actual | APK 5 compilado y probado en el emulador (push real incluido). Falta que Oliver lo instale en su Samsung S24 y pruebe un aviso push |
+| Plan vigente | Frente A — experiencia del comprador (Oliver, 2026-10-10): primero UX-04; UX-06 espera revisión de UX-04 |
+| Objetivo actual | UX-04: revisar navegación inferior, distinguir Buscar de Inicio y retirar accesos redundantes sin perder capacidades. APK 5 sigue siendo la base nativa; no generar otro APK |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -93,6 +93,19 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
+**Turno de Codex, 2026-10-10 — UX-04 (en curso).** Rama sincronizada desde `9e50d2a`, sin WIP previo.
+Revisados `AGENTS.md`, estado, pendientes y últimos cambios. La navegación ya tiene cuatro destinos;
+se conserva esa estructura y el catálogo existente. Decisión: «Buscar» para el destino de búsqueda/filtros,
+frente a Inicio para descubrimiento; retirar el botón de filtros junto al buscador que abre el mismo catálogo.
+Conservar Favoritos, carrito, categorías, filtros y contexto al volver. UX-06 no se inicia hasta revisión de Oliver.
+No cambiar motor financiero, panel, configuración nativa, dependencias ni identidad Electric Violet.
+
+Comprobación inicial web local: `browse`, `favorites`, `profile-photo` y `store-share`: **10/10** pasan,
+incluidos los últimos cambios de foto de perfil y compartir tiendas. Implementación, pruebas en claro/oscuro
+y publicación EAS Update todavía pendientes. El workflow existente comprueba el runtime de APK 5 antes de publicar.
+
+Pendiente heredado, independiente de UX-04:
+
 Pedido de Oliver del 2026-10-10 03:50Z: «Compilar APK 5 con notificaciones push». Hitos 1 a 5 hechos; solo falta la
 prueba de push en el teléfono de Oliver.
 
@@ -110,7 +123,11 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Esperar a Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
+Completar **solo UX-04**, probar navegación y regresiones locales, revisar capturas en claro y oscuro,
+y publicar EAS Update únicamente si coincide el runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`
+de APK 5. Registrar el resultado, hacer commit/push y esperar revisión de Oliver antes de UX-06.
+
+La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de
 prueba solo a su cuenta (`select public.notify(<su id>, 'system', …)` con el conector de Supabase) y comprobar el
 recibo en `push_tickets`. Si el aviso no llega, mirar `notifications.push_status`/`push_error` y `push_tickets`.
