@@ -16,6 +16,7 @@ import type {
   Notification,
   OrderDetail,
   Order,
+  OrderItem,
   Payment,
   PaymentMethod,
   PaymentQuote,
@@ -141,6 +142,16 @@ export function createApi(client: KoraClient) {
       orderItemIds.length
         ? run<MyReview[]>(from('reviews').select('id, order_item_id, rating, body, status, created_at').in('order_item_id', orderItemIds))
         : Promise.resolve([] as MyReview[]),
+    /** The signed-in buyer's delivered purchases of a product: what they can rate from its page. */
+    deliveredItems: (buyerId: string, productId: string) =>
+      run<OrderItem[]>(
+        from('order_items')
+          .select('*, orders!inner(buyer_id), fulfillments!inner(status)')
+          .eq('product_id', productId)
+          .eq('orders.buyer_id', buyerId)
+          .eq('fulfillments.status', 'delivered')
+          .limit(10),
+      ),
     submit: (orderItemId: string, rating: number, body?: string | null) =>
       run<MyReview>(rpc('submit_review', { p_order_item_id: orderItemId, p_rating: rating, p_body: body ?? null })),
     reply: (reviewId: string, body: string) => run<unknown>(rpc('reply_review', { p_review_id: reviewId, p_body: body })),

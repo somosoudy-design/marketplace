@@ -142,6 +142,11 @@ export async function reviewAs(userId: string, orderId: string, rating: number, 
   return r.id;
 }
 
+/** The store of the order fixtures (Patitas & Co.) answers a review, through the same function its panel calls. */
+export async function replyAsStore(reviewId: string, body: string) {
+  await runAs(SELLER2, `select public.reply_review($1, $2)`, [reviewId, body]);
+}
+
 /** Recommendation events as the app records them: impressions of the first products of a slot and a click on one. */
 export async function browseRecommendations(userId: string, slot: string, productSlugs: string[], clicked: string) {
   const ids = (await runAs<{ ids: string[] }>(userId, `select array_agg(id) as ids from public.products where slug = any ($1)`, [productSlugs])).ids;

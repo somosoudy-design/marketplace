@@ -1,4 +1,4 @@
-import type { ProductDetail, ProductVariant } from '@kora/api';
+import type { OrderItem, ProductDetail, ProductVariant } from '@kora/api';
 import { describeLeadTime, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -21,6 +21,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { BottomBar, CollapsingHeader, useScrollY } from '@/components/ui/Bars';
 import { RatingInline, RatingSummary, ReviewItem } from '@/components/reviews/Reviews';
+import { ReviewSheet } from '@/components/reviews/ReviewSheet';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
@@ -28,7 +29,7 @@ import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useDivisas, useFavorites, usePaymentMethods, useProduct, useRateStatus, useVesRate } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
 import { useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
@@ -273,11 +274,9 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             ) : null}
           </View>
 
-          {p.rating_count > 0 ? (
-            <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
-              <ProductReviewsSection productId={p.id} />
-            </View>
-          ) : null}
+          <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+            <ProductReviewsSection product={p} />
+          </View>
 
           {p.related.length ? (
             <TrackedSection slot="related" ids={p.related.map((r) => r.id)} visible={2} testID="product-related">
@@ -347,31 +346,59 @@ const REVIEWS_PAGE = 5;
 /** Longer descriptions start folded at five lines, behind "Ver más". */
 const LONG_DESCRIPTION = 280;
 
-function ProductReviewsSection({ productId }: { productId: string }) {
+/**
+ * Verified reviews, always present so a buyer sees at a glance whether anyone has rated it yet. A buyer with a
+ * delivered, unrated purchase of this product can rate it right here (the same sheet as the order screen).
+ */
+function ProductReviewsSection({ product: p }: { product: ProductDetail }) {
+  const t = useTheme();
+  const { user } = useAuth();
   const q = useInfiniteQuery({
-    queryKey: ['reviews', productId],
+    queryKey: qk.reviews(p.id),
     initialPageParam: 0,
-    queryFn: ({ pageParam }) => api.catalog.reviews(productId, REVIEWS_PAGE, pageParam),
+    queryFn: ({ pageParam }) => api.catalog.reviews(p.id, REVIEWS_PAGE, pageParam),
     getNextPageParam: (last, all) => (last.items.length < REVIEWS_PAGE ? undefined : all.length * REVIEWS_PAGE),
   });
+  const mine = useQuery({
+    queryKey: qk.reviewable(p.id),
+    enabled: !!user,
+    queryFn: async () => {
+      const items = await api.reviews.deliveredItems(user!.id, p.id);
+      return { items, reviews: await api.reviews.mine(items.map((i) => i.id)) };
+    },
+  });
+  const [rating, setRating] = useState<OrderItem | null>(null);
+  const toRate = mine.data?.items.find((i) => !mine.data!.reviews.some((r) => r.order_item_id === i.id));
   const summary = q.data?.pages[0]?.summary;
   const items = q.data?.pages.flatMap((pg) => pg.items) ?? [];
   if (q.isLoading) return <Skeleton height={120} />;
-  if (!summary || !summary.count) return null;
   return (
     <View style={{ gap: 16 }} testID="product-reviews">
-      <Text variant="title">Opiniones de compradores</Text>
-      <RatingSummary summary={summary} />
-      <Text variant="caption" color="textMuted">Solo pueden opinar quienes recibieron este producto.</Text>
+      <View style={{ gap: 2 }}>
+        <Text variant="title">Opiniones</Text>
+        <Text variant="caption" color="textMuted">Solo opinan quienes compraron y recibieron este producto.</Text>
+      </View>
+      {summary?.count ? (
+        <RatingSummary summary={summary} />
+      ) : (
+        <View testID="product-reviews-empty" style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: t.radii.lg, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
+          <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: t.colors.accentSoft, alignItems: 'center', justifyContent: 'center' }}>
+            <Icon name="star" size={18} color={t.colors.accent} />
+          </View>
+          <Text variant="bodySmall" color="textSecondary" style={{ flex: 1 }}>Aún no hay opiniones de este producto.</Text>
+        </View>
+      )}
+      {toRate ? <Button testID="product-rate" title="Calificar tu compra" icon="star" variant="secondary" onPress={() => setRating(toRate)} /> : null}
       {items.map((r) => (
         <View key={r.id} style={{ gap: 16 }}>
           <Divider />
-          <ReviewItem review={r} />
+          <ReviewItem review={r} storeName={p.store.name} />
         </View>
       ))}
       {q.hasNextPage ? (
         <Button title="Ver más opiniones" variant="secondary" loading={q.isFetchingNextPage} onPress={() => q.fetchNextPage()} />
       ) : null}
+      <ReviewSheet key={rating?.id ?? 'none'} item={rating} orderId={rating?.order_id ?? ''} onClose={() => setRating(null)} />
     </View>
   );
 }

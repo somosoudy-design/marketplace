@@ -89,7 +89,7 @@ export function RatingSummary({ summary }: { summary: ReviewSummary }) {
   );
 }
 
-export function ReviewItem({ review: r, showProduct }: { review: PublicReview; showProduct?: boolean }) {
+export function ReviewItem({ review: r, showProduct, storeName }: { review: PublicReview; showProduct?: boolean; storeName?: string }) {
   const t = useTheme();
   return (
     <View style={{ gap: 6 }} testID={`review-${r.id}`}>
@@ -98,13 +98,17 @@ export function ReviewItem({ review: r, showProduct }: { review: PublicReview; s
         <Text variant="caption" color="textMuted">{shortDate(r.created_at)}</Text>
       </View>
       {r.body ? <Text>{r.body}</Text> : null}
-      <Text variant="caption" color="textMuted">
-        {r.author} · Compra verificada{r.variant_title ? ` · ${r.variant_title}` : ''}{showProduct && r.product_title ? ` · ${r.product_title}` : ''}
-        {r.is_demo ? ' · Demostración' : ''}
-      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
+        <Text variant="caption" color="textMuted">{r.author} ·</Text>
+        <Icon name="badge-check" size={13} color={t.colors.success} />
+        <Text variant="caption" color="success">Compra verificada</Text>
+        <Text variant="caption" color="textMuted">
+          {r.variant_title ? `· ${r.variant_title}` : ''}{showProduct && r.product_title ? ` · ${r.product_title}` : ''}{r.is_demo ? ' · Demostración' : ''}
+        </Text>
+      </View>
       {r.reply_body ? (
-        <View style={{ marginTop: 4, paddingLeft: 12, borderLeftWidth: 2, borderLeftColor: t.colors.border, gap: 2 }}>
-          <Text variant="label">Respuesta de la tienda</Text>
+        <View style={{ marginTop: 4, padding: 12, borderRadius: t.radii.md, backgroundColor: t.colors.surfaceSunken, gap: 2 }} testID={`review-reply-${r.id}`}>
+          <Text variant="label">Respuesta de {storeName ?? 'la tienda'}</Text>
           <Text variant="bodySmall" color="textSecondary">{r.reply_body}</Text>
         </View>
       ) : null}

@@ -28,6 +28,7 @@ export function ReviewSheet({ item, existing, orderId, onClose }: { item: OrderI
       qc.invalidateQueries({ queryKey: qk.myReviews(orderId) });
       if (item) {
         qc.invalidateQueries({ queryKey: qk.reviews(item.product_id) });
+        qc.invalidateQueries({ queryKey: qk.reviewable(item.product_id) });
         qc.invalidateQueries({ queryKey: qk.product(item.product_id) });
       }
       onClose();

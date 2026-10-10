@@ -61,6 +61,10 @@ export default function OrderScreen() {
   // cancelling closes the lines as "refunded" so nothing stays owed; with nothing paid, no money went back
   const voided = o.status === 'cancelled' && D(o.paid_usd).isZero();
   const ship = o.ship_to as Record<string, string> | null;
+  // delivered items still without the buyer's opinion: one tap from the top of the order to rate the first
+  const unrated = myReviews.data
+    ? o.order_items.filter((it) => o.fulfillments.some((f) => f.id === it.fulfillment_id && f.status === 'delivered') && !myReviews.data.some((r) => r.order_item_id === it.id))
+    : [];
 
 
   return (
@@ -83,6 +87,11 @@ export default function OrderScreen() {
 
       {o.status === 'cancelled' ? <Banner tone="danger" icon="x" title="Pedido cancelado" body={o.cancel_reason ?? undefined} /> : null}
       {o.payment_status === 'refund_due' ? <Banner tone="info" icon="wallet" title="Reembolso en proceso" body="Te contactaremos para enviarte el reembolso por el método acordado." /> : null}
+      {unrated.length ? (
+        <Banner tone="brand" icon="star" title="¿Qué tal te llegó?" body={unrated.length === 1 ? 'Tu opinión ayuda a otros compradores y a la tienda.' : `Tienes ${unrated.length} productos por calificar. Tu opinión ayuda a otros compradores.`}>
+          <Button testID="order-rate" title={unrated.length === 1 ? 'Calificar' : 'Calificar el primero'} icon="star" size="sm" variant="secondary" onPress={() => setReviewing(unrated[0]!)} style={{ alignSelf: 'flex-start', marginTop: 8 }} />
+        </Banner>
+      ) : null}
 
       {/* payments */}
       <Card style={{ gap: 10 }}>

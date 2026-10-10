@@ -84,6 +84,8 @@ export const qk = {
   store: (slug: string) => ['store', slug] as const,
   reviews: (productId: string) => ['reviews', productId] as const,
   myReviews: (orderId: string) => ['my-reviews', orderId] as const,
+  /** The buyer's delivered purchases of a product and their reviews, for "Calificar tu compra" on its page. */
+  reviewable: (productId: string) => ['my-reviews', 'product', productId] as const,
   categories: ['categories'] as const,
   cart: (addressId?: string | null) => ['cart', addressId ?? null] as const,
   orders: ['orders'] as const,

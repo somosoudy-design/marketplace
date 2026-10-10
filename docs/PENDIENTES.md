@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 00:45Z.
+**Última revisión:** 2026-10-10 03:00Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
@@ -28,6 +28,7 @@
 
 | # | Tarea | Estado | Dónde |
 |---|---|---|---|
+| 2.5 | Autorizar la pantalla «Preguntas» del panel de vendedor, para activar preguntas y respuestas en la ficha | Bloqueada (Oliver) | Diseño listo en `docs/PREGUNTAS_Y_RESPUESTAS.md`; se publica por EAS Update, sin APK nuevo |
 | 2.2 | Agregar `kora://**` a Redirect URLs | Bloqueada (Oliver) | Supabase › Authentication › URL Configuration |
 | 2.3 | Acceso al repositorio para Kevin y Heisber, si van a trabajar con sus agentes | Bloqueada (Oliver) | GitHub › somosoudy-design/marketplace › Settings › Collaborators (permiso *Write*, no *Admin*) |
 | 2.4 | Revisar y, cuando quiera, fusionar el PR #1 a `main` | Bloqueada (Oliver) | https://github.com/somosoudy-design/marketplace/pull/1 |
