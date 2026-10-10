@@ -31,7 +31,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         testID={`product-card-${p.slug}`}
         scaleTo={0.985}
         accessibilityRole="link"
-        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}, ${availability.label}`}
+        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}, ${availability.label}${p.is_demo ? ', producto de demostración' : ''}`}
         onPress={() => {
           if (slot) recordClick(slot, p.id);
           router.push({ pathname: '/product/[id]', params: { id: p.id } });
@@ -39,10 +39,12 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
       >
         <View>
           <ProductImage path={p.image_path} tone={p.tone} priority={priority} radius={0} />
-          {/* Essential labels stay above the photo, leaving its demo mark visible at the bottom. */}
+          {/* Demo prices and stock never masquerade as a real promotion or scarcity claim. */}
           <View style={{ position: 'absolute', left: 8, top: 8, gap: 4 }}>
-            {discount && p.availability === 'available' ? <Badge onPhoto label={`−${discount} %`} tone="danger" /> : null}
-            {hint ? <Badge onPhoto label={hint} tone="warning" /> : null}
+            {p.is_demo ? <Badge onPhoto label="Demo" /> : <>
+              {discount && p.availability === 'available' ? <Badge onPhoto label={`−${discount} %`} tone="danger" /> : null}
+              {hint ? <Badge onPhoto label={hint} tone="warning" /> : null}
+            </>}
           </View>
         </View>
         <View style={{ padding: 10, gap: 4 }}>

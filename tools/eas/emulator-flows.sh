@@ -1,8 +1,28 @@
 #!/usr/bin/env bash
 # Run by .github/workflows/apk-emulator.yml after emulator-install.sh: installs the last APK of the request
 # clean, opens it once so it downloads the latest EAS Update (it runs from the next cold start), then runs every
-# Maestro flow in tests/apk-flows against it. Screenshots and Maestro's own report end up in shots/.
+# Maestro flow in tests/apk-flows against it. Optional "flows:" and "themes:" lines in the request restrict the
+# run to selected journeys/themes (e.g. visitor-only UI checks, without creating remote accounts or orders).
+# Screenshots and Maestro's own report end up in shots/.
 set -u
+repo_root=$(pwd)
+requested=$(sed -n 's/^flows: //p' .github/apk-emulator-request | head -1)
+themes=$(sed -n 's/^themes: //p' .github/apk-emulator-request | head -1)
+flows=(tests/apk-flows/*.yaml)
+if [ -n "$requested" ]; then
+  flows=()
+  for name in $requested; do
+    # Only paths beneath tests/apk-flows; reject typos before opening the emulator or running other journeys.
+    if ! [[ "$name" =~ ^[a-z0-9][a-z0-9/-]*$ ]] || [ ! -f "tests/apk-flows/$name.yaml" ]; then
+      echo "Recorrido solicitado inválido: $name" >&2
+      exit 1
+    fi
+    flows+=("tests/apk-flows/$name.yaml")
+  done
+fi
+for theme in ${themes:-system}; do
+  case "$theme" in system|light|dark) ;; *) echo "Tema solicitado inválido: $theme" >&2; exit 1 ;; esac
+done
 PKG=com.example.kora.preview
 report=shots/flujos/resumen.md
 apk=$(ls apks/*.apk | sort -V | tail -1)
@@ -20,7 +40,8 @@ sleep 30
 adb shell am force-stop "$PKG"
 
 run_flow() { # flow, log name
-  (cd shots/flujos && maestro test --format junit --output "$2.xml" "../../$1") >"shots/flujos/$2.log" 2>&1
+  mkdir -p "shots/flujos/$theme"
+  (cd "shots/flujos/$theme" && maestro test --format junit --output "$2.xml" "$repo_root/$1") >"shots/flujos/$2.log" 2>&1
 }
 # a second attempt must see the notification prompt again: Android stops asking after the first attempt's answers
 reset_prompts() {
@@ -34,8 +55,13 @@ status=0
   echo "### Recorridos con Maestro ($(maestro --version 2>/dev/null | tail -1)) sobre $(basename "$apk")"
   echo '```'
 } >>"$report"
-for flow in tests/apk-flows/*.yaml; do
+for theme in ${themes:-system}; do
+  if [ "$theme" = light ]; then adb shell cmd uimode night no >/dev/null; fi
+  if [ "$theme" = dark ]; then adb shell cmd uimode night yes >/dev/null; fi
+  adb shell am force-stop "$PKG"
+for flow in "${flows[@]}"; do
   name=$(basename "$flow" .yaml)
+  name="$theme-$name"
   # flows that create a tester account need the test project with "Confirm email" off (see the workflow)
   if grep -q '^# requiere: registro-sin-correo' "$flow" && [ "${KORA_SIGNUP_AUTOCONFIRM:-false}" != true ]; then
     echo "$name: omitido (el proyecto de pruebas pide confirmar el correo)" >>"$report"
@@ -61,6 +87,7 @@ for flow in tests/apk-flows/*.yaml; do
       | grep -iE "error|exception|fatal|died|finish|destroy|back|crash|ANR|kill" | cut -c1-240 | head -25 >>"$report"
     status=1
   fi
+done
 done
 echo '```' >>"$report"
 

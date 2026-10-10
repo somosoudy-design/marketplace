@@ -1,6 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 import { deliveredOrderFor, newBuyer } from './support/db';
 
+// Deep links can retain a hidden root stack. Only the current tab bar is part of the user's screen.
+const nav = (page: Page) => page.locator('[data-testid="buyer-tab-bar"]:visible');
+
 async function signIn(page: Page, buyer: { email: string; password: string }) {
   await page.goto('/sign-in');
   await page.getByTestId('sign-in-email').fill(buyer.email);
@@ -59,14 +62,14 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.goto('/p/ugreen-cable-usb-c-100w');
       await page.getByTestId('product-cta').click();
       await expect(page).toHaveURL(/\/cart$/);
-      await page.getByTestId('buyer-tab-index').click();
+      await page.getByRole('tab', { name: 'Inicio', exact: true }).click();
       await expect(page.locator('[data-testid="home-cart-count"]:visible')).toHaveText('1');
-      await expect(page.getByTestId('tab-cart-count')).toHaveText('1');
-      await expect(page.getByTestId('buyer-tab-cart')).toHaveAccessibleName('Carrito, 1 producto');
+      await expect(nav(page).getByTestId('tab-cart-count')).toHaveText('1');
+      await expect(nav(page).getByTestId('buyer-tab-cart')).toHaveAccessibleName('Carrito, 1 producto');
       await page.locator('[data-testid="home-cart"]:visible').click();
       await expect(page).toHaveURL(/\/cart$/);
       await expect(page.getByTestId('cart-continue')).toHaveText(/Iniciar sesión/);
-      await expect(page.getByTestId('active-tab-label')).toHaveText('Carrito');
+      await expect(nav(page).getByTestId('active-tab-label')).toHaveText('Carrito');
     });
 
     test('card favorites remain separate from opening the product in Home, search and collections', async ({ page }) => {
@@ -103,6 +106,46 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.goBack();
       await expect(page.getByTestId('active-tab-label')).toHaveText('Inicio');
     });
+
+    test('demonstration prices are labelled and never presented as real discounts or scarcity', async ({ page }) => {
+      await page.route('**/rest/v1/rpc/search_products*', async (route) => {
+        const response = await route.fetch();
+        const products = await response.json();
+        const product = products[0];
+        await route.fulfill({ json: [
+          { ...product, slug: 'ui-demo', is_demo: true, price_usd: 10, compare_at_usd: 20, availability: 'available', stock_total: 2 },
+          { ...product, id: '00000000-0000-0000-0000-000000000001', slug: 'ui-real', is_demo: false, price_usd: 10, compare_at_usd: 20, availability: 'available', stock_total: 2 },
+        ] });
+      });
+      await page.goto('/explore');
+      const demo = page.getByTestId('product-surface-ui-demo');
+      await expect(demo.getByText('Demo', { exact: true })).toBeVisible();
+      await expect(demo.getByRole('link')).toHaveAccessibleName(/producto de demostración/);
+      await expect(demo.getByText(/−50|Quedan/)).toHaveCount(0);
+      const real = page.getByTestId('product-surface-ui-real');
+      await expect(real.getByText('−50 %', { exact: true })).toBeVisible();
+      await expect(real.getByText('Quedan 2', { exact: true })).toBeVisible();
+      await expect(real.getByText('Demo', { exact: true })).toHaveCount(0);
+    });
+
+    test('search stays reachable during Home scroll and hidden search controls stay out of the reader tree', async ({ page }) => {
+      await page.goto('/');
+      await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true })).toHaveCount(1);
+      const sticky = page.getByTestId('home-search-sticky');
+      await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'true');
+      const scroll = page.getByTestId('home-scroll');
+      await scroll.hover();
+      await page.mouse.wheel(0, 650);
+      await expect(sticky).toBeVisible();
+      await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'false');
+      await sticky.click();
+      await expect(page.getByTestId('catalog-search')).toBeFocused();
+      await page.getByTestId('buyer-tab-index').click();
+      await expect.poll(() => scroll.evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
+      await scroll.hover();
+      await page.mouse.wheel(0, -3000);
+      await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'true');
+    });
   });
 
   test.describe(`Reduced motion (${colorScheme})`, () => {
@@ -124,9 +167,11 @@ test('the notification mark is driven by unread data and clears after opening th
   await page.goto('/');
   await expect(page.getByTestId('home-bell')).toHaveAttribute('aria-label', /^Notificaciones, \d+ sin leer$/);
   await expect(page.getByTestId('home-unread-indicator')).toBeVisible();
+  const marked = page.waitForResponse((response) => /\/rpc\/mark_notifications_read/.test(response.url()) && response.ok());
   await page.getByTestId('home-bell').click();
   await expect(page).toHaveURL(/\/notifications$/);
-  await expect(page.locator('[data-testid^="notice-"]').first()).toBeVisible();
+  await expect(page.locator('[data-testid^="notification-"]').first()).toBeVisible();
+  await marked;
   await page.goBack();
   await expect(page.locator('[data-testid="home-unread-indicator"]:visible')).toHaveCount(0);
   await expect(page.locator('[data-testid="home-bell"]:visible')).toHaveAttribute('aria-label', 'Notificaciones');

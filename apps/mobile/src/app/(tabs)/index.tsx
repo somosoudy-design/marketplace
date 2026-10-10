@@ -2,7 +2,8 @@ import type { CollectionBlock, ProductCard as Card } from '@kora/api';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View, useWindowDimensions, type ViewToken } from 'react-native';
-import Animated, { Extrapolation, interpolate, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
+import Animated, { Extrapolation, interpolate, useAnimatedReaction, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryTiles } from '@/components/catalog/CategoryTiles';
@@ -245,7 +246,7 @@ function SearchEntry() {
       <ScalePressable
         testID="home-search"
         scaleTo={0.99}
-        accessibilityRole="search"
+        accessibilityRole="button"
         accessibilityLabel="Buscar productos, marcas o tiendas"
         onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
         style={{ flex: 1, height: 48, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
@@ -261,6 +262,11 @@ function SearchEntry() {
 function StickySearch({ y }: { y: SharedValue<number> }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
+  const [visible, setVisible] = useState(false);
+  useAnimatedReaction(
+    () => y.value >= SEARCH_BOTTOM - 20,
+    (shown, before) => { if (shown !== before) scheduleOnRN(setVisible, shown); },
+  );
   const style = useAnimatedStyle(() => ({
     opacity: interpolate(y.value, [SEARCH_BOTTOM - 20, SEARCH_BOTTOM + 10], [0, 1], Extrapolation.CLAMP),
     // parked above the screen while hidden so it never intercepts touches
@@ -272,6 +278,10 @@ function StickySearch({ y }: { y: SharedValue<number> }) {
       {/* status bar backing: content never shows through the clock and battery */}
       <Animated.View pointerEvents="none" style={[{ position: 'absolute', top: 0, left: 0, right: 0, height: insets.top, backgroundColor: t.colors.chrome }, status]} />
       <Animated.View
+        accessibilityElementsHidden={!visible}
+        importantForAccessibility={visible ? 'auto' : 'no-hide-descendants'}
+        aria-hidden={!visible}
+        pointerEvents={visible ? 'auto' : 'none'}
         style={[
           { position: 'absolute', top: 0, left: 0, right: 0, paddingTop: insets.top + 6, paddingBottom: 10, paddingHorizontal: 16, backgroundColor: t.colors.chrome, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: t.colors.borderStrong },
           style,
@@ -282,10 +292,10 @@ function StickySearch({ y }: { y: SharedValue<number> }) {
           <ScalePressable
             testID="home-search-sticky"
             scaleTo={0.99}
-            accessibilityRole="search"
+            accessibilityRole="button"
             accessibilityLabel="Buscar productos, marcas o tiendas"
             onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
-            style={{ flex: 1, height: 40, borderRadius: t.radii.sm, backgroundColor: t.colors.surfaceSunken, flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12 }}
+            style={{ flex: 1, height: 44, borderRadius: t.radii.sm, backgroundColor: t.colors.surfaceSunken, flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12 }}
           >
             <Icon name="search" size={18} color={t.colors.textMuted} />
             <Text variant="bodySmall" color="textMuted" numberOfLines={1}>Buscar en {brand.name}</Text>
@@ -383,13 +393,13 @@ function HeroSlide({ block, width }: { block: CollectionBlock; width: number }) 
         testID={`collection-${block.slug}-all`}
         scaleTo={0.985}
         accessibilityRole="link"
-        accessibilityLabel={`Colección ${block.title}`}
+        accessibilityLabel={`Colección ${block.title}${block.products.every((p) => p.is_demo) ? ', demostración' : ''}`}
         onPress={() => openCollection(block)}
         style={{ width, height, borderRadius: t.radii.xl, backgroundColor: t.scheme === 'dark' ? tone.dark : tone.bgDeep, overflow: 'hidden', flexDirection: 'row' }}
       >
         <View style={{ flex: 1, padding: 16, paddingRight: 6, justifyContent: 'space-between' }}>
           <View style={{ gap: 6 }}>
-            <Text variant="overline" color="brand">COLECCIÓN</Text>
+            <Text variant="overline" color="brand">{block.products.every((p) => p.is_demo) ? 'COLECCIÓN DEMO' : 'COLECCIÓN'}</Text>
             <Text variant="title" numberOfLines={2}>{block.title}</Text>
             {block.subtitle ? <Text variant="caption" color="textSecondary" numberOfLines={2}>{block.subtitle}</Text> : null}
           </View>

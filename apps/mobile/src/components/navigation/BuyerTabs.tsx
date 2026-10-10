@@ -42,6 +42,7 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { name: string; icon:
       testID={`buyer-tab-${name}`}
       accessibilityRole="tab"
       accessibilityState={{ selected: !!isFocused }}
+      aria-selected={!!isFocused}
       accessibilityLabel={countLabel}
       onPress={(event) => { if (!isFocused) haptics.select(); onPress?.(event); }}
       style={[{ flexBasis: 0, minWidth: 44, height: 48, borderRadius: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 6 }, button]}
@@ -68,6 +69,7 @@ export function BuyerTabs() {
       <TabSlot style={{ flex: 1 }} />
       <TabList
         testID="buyer-tab-bar"
+        accessibilityRole="tablist"
         accessibilityLabel="Navegación principal"
         style={{ flexDirection: 'row', gap: 4, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 28, padding: 7, marginTop: 6, marginBottom: Math.max(insets.bottom, 8), width: Math.min(width - 24, 520), alignSelf: 'center' }}
       >

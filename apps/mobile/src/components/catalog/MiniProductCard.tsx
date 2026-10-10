@@ -19,7 +19,7 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
         testID={`mini-card-${p.slug}`}
         scaleTo={0.97}
         accessibilityRole="link"
-        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}`}
+        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}${p.is_demo ? ', producto de demostración' : ''}`}
         onPress={() => {
           if (slot) recordClick(slot, p.id);
           router.push({ pathname: '/product/[id]', params: { id: p.id } });
@@ -29,7 +29,7 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
         <ProductImage path={p.image_path} tone={p.tone} style={{ width: 52 }} aspect={1} radius={t.radii.md} />
         <View style={{ flex: 1, gap: 2 }}>
           <Text variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.title}</Text>
-          <Text variant="caption" color="textSecondary" tabular>{formatUSD(p.price_usd)}</Text>
+          <Text variant="caption" color="textSecondary" tabular>{p.is_demo ? 'Demo · ' : ''}{formatUSD(p.price_usd)}</Text>
         </View>
       </ScalePressable>
       <ProductFavorite id={p.id} slug={p.slug} />

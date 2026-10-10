@@ -25,7 +25,14 @@ se conserva; Electric Violet sigue siendo la identidad visual.
 Base sincronizada y limpia: `9e4e1f5`. No hay trabajo pendiente de otro agente.
 Comprobación inicial: `browse`, `favorites`, `navigation` (ambos temas), `profile-photo` y `store-share`,
 **16/16**. Capturas antes: `.local/frente-a-v2/before/light/` y `before/dark/` con
-`tools/design/screens.mjs`. Capturas después y pruebas de la nueva interfaz pendientes.
+`tools/design/screens.mjs`. Primera validación: tipos/lint de toda la rama, core **50/50**, API **12/12**,
+admin **28/28**, app **48 pasan + 1 omisión** (registro sin correo, desactivado en local), panel **9/9**.
+Pruebas específicas **17/17** en claro/oscuro. Sin cambios en los módulos de backend o panel.
+
+Revisión adicional: semántica tablist y selección explícita en web; buscador fijo oculto fuera del árbol
+accesible mientras no se ve y objetivo de 44 px; datos `is_demo` rotulados también en tarjeta/colección,
+sin mostrar descuento o escasez demo como oferta real. Se amplía la prueba para esos comportamientos.
+Capturas después, auditoría final y compatibilidad/publicación pendientes.
 
 Modificar las pruebas que dependan del antiguo corazón de Inicio conservando las comprobaciones de
 Favoritos y Atrás desde Cuenta/productos. Verificar barras a 320/340 px, movimiento reducido, enfoque,
