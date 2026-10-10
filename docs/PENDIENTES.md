@@ -6,13 +6,13 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 13:41 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 15:21 (Caracas, UTC−4).
 
 ## Frente A V2 — experiencia visual y navegación (pedido vigente de Oliver)
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| A-V2 | Tarjetas integradas, cabecera con datos reales, barra expandible e Inicio/descubrimiento | En curso (Codex) | Base UX-04 `9e4e1f5`; regresión inicial 16/16. `docs/FRENTE_A_V2.md`. Capturas antes/después, claro/oscuro y pantallas pequeñas. EAS Update solo APK 5; sin APK nuevo, backend, motor financiero, panel ni Frente B |
+| A-V2 | Tarjetas integradas, cabecera con datos reales, barra expandible e Inicio/descubrimiento | Validado localmente; publicación/Android en curso (Codex) | Base UX-04 `9e4e1f5`; app 52 + 1 omisión, core 50, API 12, admin 28, panel 9. `docs/FRENTE_A_V2.md`. Capturas antes/después, claro/oscuro y pantallas pequeñas. EAS Update solo APK 5; sin APK nuevo, backend, motor financiero, panel ni Frente B |
 | UX-04 | Navegación anterior: Buscar, filtros y contexto | Implementado; base de V2 | No duplicar el catálogo `/explore` ni sus capacidades. Historial y decisiones en `docs/UX-04.md` |
 | UX-06 | Inicio y descubrimiento | Incluido en A-V2 | El nuevo pedido autoriza pulir las secciones existentes; mantener Electric Violet y contenido real |
 

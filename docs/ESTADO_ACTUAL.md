@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 14:19 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 15:21 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -13,7 +13,7 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. UX-04 validado y publicado desde `0a34aae`; cierre documental en el commit de esta actualización. Base de este turno: `9e50d2a` |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Frente A V2 parte de `9e4e1f5`; código visual validado hasta `622e227`. Checkpoint de pruebas/publicación: el commit de esta actualización |
 | Plan vigente | Frente A V2 (Oliver, 2026-10-10): tarjetas integradas, cabecera, barra expandible e Inicio/descubrimiento; sin Frente B |
 | Objetivo actual | Implementar Frente A V2 sobre UX-04 existente. Pruebas y capturas antes/después; EAS Update solo compatible con APK 5. Sin APK nuevo, motor financiero, backend ni panel |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
@@ -99,26 +99,23 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Turno de Codex, 2026-10-10 — Frente A V2 en curso.** Base `9e4e1f5`, sincronizada y limpia;
-leídos AGENTS, estado, pendientes y cierre de UX-04. El nuevo pedido amplía el alcance a Inicio y descubrimiento.
-No hay WIP activo de otro agente. Decisiones y alcance: `docs/FRENTE_A_V2.md`.
+**Turno de Codex, 2026-10-10 — Frente A V2 implementado y validado localmente.** Base `9e4e1f5`,
+sincronizada, sin WIP de otro agente. El pedido V2 amplía el alcance a Inicio/descubrimiento.
+Tarjetas integradas y favoritas independientes, cabecera con contadores reales, cuatro pestañas expandibles,
+secciones existentes refinadas y contenido demo rotulado. Detalle: `docs/FRENTE_A_V2.md`.
 
-Regresión inicial de UX-04 y últimos cambios: **16/16** (`browse`, `favorites`, `navigation`,
-`profile-photo`, `store-share`). Capturas antes terminadas en `.local/frente-a-v2/before/light/` y `before/dark/`.
-Primera implementación de tarjetas, cabecera, barra común e Inicio terminada; tipos/lint de la app en verde.
-Pruebas nuevas añadidas para 320 px, estados reales, favoritos y movimiento reducido.
-Primer pase completo: core **50/50**, API **12/12**, admin **28/28**, app **48 pasan + 1 omisión**
-(registro sin confirmación desactivado en local), panel **9/9**, tipos/lint en verde. Suite específica **17/17**.
-Segundo checkpoint antes de exportar: mejoras finales de accesibilidad y rotulación demo, pruebas ampliadas;
-Pase posterior: 50 casos pasan; los dos nuevos de scroll enviaban el gesto antes de cargar el catálogo,
-se corrige la espera. Stock local agotado en una repetición: reiniciado solo el stack local del protocolo.
-Auditoría axe: corregidas alternativas de imágenes decorativas, filtros con `aria-pressed` y foco del
-buscador oculto; falta repetir auditoría/app, capturas después y compatibilidad/publicación. Se preparó selección de
-recorridos/temas para probar solo visitantes en Android, sin escrituras remotas. No tocar motor financiero, Supabase remoto, Firebase, panel,
-marca/configuración nativa ni dependencias; sin APK nuevo ni Frente B.
+Pase final: tipos/lint sin errores, core **50/50**, API **12/12**, admin **28/28**, app **52 aprobadas + 1 omitida**
+(confirmación de correo activa en local), panel **9/9**. Incluye 13 casos V2, claro/oscuro a 320 px, selección
+accesible, búsqueda/scroll, favoritos, carrito, avisos reales y movimiento reducido. Auditoría axe: **0 infracciones
+en 8 pantallas/temas**; contraste de texto seleccionado 4,83:1 claro / 5,03:1 oscuro. Sin pruebas físicas de lector.
+Capturas antes (40) y después (50) con galería autónoma `.local/frente-a-v2/comparacion.html`.
 
-UX-04 anterior: catálogo `/explore` llamado Buscar, cuatro destinos, sin botón contiguo redundante de filtros;
-publicado desde `0a34aae`, run 38072209661 en verde. Reutilizarlo, conservar filtros/scroll y navegación de pila.
+Oliver autorizó publicar y eligió expresamente el canal **production**. El APK 5 documentado usa **preview**:
+primero validar esta misma actualización en ese APK por preview, luego publicarla en production con el mismo
+runtime compatible, sin crear APK ni cambiar configuración nativa/backend. No afirmar que APK 5 usa production.
+Se inicia el workflow protegido de preview; después probar únicamente visitantes/favoritos/Atrás en ambos temas
+en el APK 5 existente. No ejecutar flujos remotos de registro, compra, pago o push.
+Sin cambios en motor financiero, Supabase remoto, Firebase, panel, marca, dependencias ni Frente B.
 
 Pendiente heredado, independiente de UX-04:
 
@@ -139,11 +136,11 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Reconstruir la exportación web y ejecutar el pase final de app (incluye `navigation`, `favorites`, `front-a-v2`).
-Revisar/corregir claro/oscuro, 320/340 px, tarjetas/hero/barra; capturar después.
-Cerrar tipos/lint y suites del protocolo. La base se conserva; no rehacer funciones.
-Solo entonces solicitar EAS Update con el guard de runtime APK 5 y verificar su resultado.
-Actualizar este estado, pendientes e historial con commit/push. **No avanzar al Frente B.**
+Verificar Success del EAS Update solicitado en este checkpoint (runtime exacto APK 5).
+Después solicitar Android 15 con solo APK 5 y `flows: frente-a-v2/01-visitante 01b-volver-favoritos
+01c-volver-favoritos-atras`, `themes: light dark`. Corregir cualquier fallo antes de publicar production.
+Añadir destino production al workflow conservando perfil/fingerprint APK 5; comprobar inventario de builds y
+registrar qué APK consume cada canal. Cerrar documentación, commit/push y revisión de Oliver. **Sin Frente B.**
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de

@@ -140,7 +140,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.mouse.wheel(0, 650);
       await expect.poll(() => scroll.evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
       await expect(sticky).toBeVisible();
-      await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'false');
+      await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true }).and(sticky)).toHaveCount(1);
+      await expect(sticky).toHaveAttribute('tabindex', '0');
       await sticky.click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();
       await page.getByTestId('buyer-tab-index').click();

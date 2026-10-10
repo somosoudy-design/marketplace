@@ -22,30 +22,49 @@ se conserva; Electric Violet sigue siendo la identidad visual.
 
 ## Continuidad y validación
 
-Base sincronizada y limpia: `9e4e1f5`. No hay trabajo pendiente de otro agente.
-Comprobación inicial: `browse`, `favorites`, `navigation` (ambos temas), `profile-photo` y `store-share`,
-**16/16**. Capturas antes: `.local/frente-a-v2/before/light/` y `before/dark/` con
-`tools/design/screens.mjs`. Primera validación: tipos/lint de toda la rama, core **50/50**, API **12/12**,
-admin **28/28**, app **48 pasan + 1 omisión** (registro sin correo, desactivado en local), panel **9/9**.
-Pruebas específicas **17/17** en claro/oscuro. Sin cambios en los módulos de backend o panel.
+Base sincronizada y limpia: `9e4e1f5`. Sin trabajo pendiente de otro agente. Regresión de UX-04 y cambios
+anteriores: **16/16**. Implementación visual validada hasta `622e227`; quedan publicación y Android real.
 
-Revisión adicional: semántica tablist y selección explícita en web; buscador fijo oculto fuera del árbol
-accesible mientras no se ve y objetivo de 44 px; datos `is_demo` rotulados también en tarjeta/colección,
-sin mostrar descuento o escasez demo como oferta real. Se amplía la prueba para esos comportamientos.
-Auditoría axe adicional: imágenes decorativas con alternativa vacía explícita, filtros como botones
-activados (`aria-pressed`, selección nativa conservada) y buscador oculto fuera del foco de teclado.
-La repetición de suite usa seed local limpio para no agotar stock entre compras de prueba. Prueba de scroll
-espera la carga del catálogo antes del gesto. Capturas después, pase final y compatibilidad/publicación pendientes.
+| Comprobación local | Resultado final |
+|---|---|
+| Tipos/lint de la rama; tipos/lint de app repetidos al terminar | Sin errores |
+| Núcleo / admin unitario / API pública / panel entre roles | 50/50 · 28/28 · 12/12 · 9/9 |
+| App, exportación web reconstruida | **52 aprobadas + 1 omitida** (registro sin correo; confirmación activa en local) |
+| Casos V2 incluidos | 13: dos temas, 320 px, selección, tarjetas, demo frente a oferta real local, favoritos, scroll/buscador fijo, contadores, avisos y movimiento reducido |
+| axe WCAG A/AA, Inicio/Buscar/Carrito/Cuenta a 320 px, ambos temas | **0 infracciones en 8 comprobaciones** |
+| Contraste manual | Pestaña activa 4,83:1 claro / 5,03:1 oscuro; contador 5,84 / 7,01; título de tarjeta 17,23 / 15,59 |
+| Capturas comparables | Antes: 40; después: 50, claro/oscuro incluyendo 320 px |
 
-Modificar las pruebas que dependan del antiguo corazón de Inicio conservando las comprobaciones de
-Favoritos y Atrás desde Cuenta/productos. Verificar barras a 320/340 px, movimiento reducido, enfoque,
-búsqueda/filtros/scroll, indicadores reales, distintos estados comerciales, carrito y checkout.
-Ejecutar tipos, lint y suites locales del protocolo. No ejecutar los recorridos remotos con cuenta/push:
-este frente no autoriza escribir datos de Supabase ni cambiar Firebase.
+Favoritos está en Cuenta también para visitantes. El favorito de tarjeta es un botón independiente de su
+acceso a la ficha. Los filtros usan `aria-pressed`; pestañas conservan nombres/selección accesibles; el buscador
+fijo oculto no recibe foco ni figura como acceso invisible. No se muestran descuentos/escasez demo como reales.
+Productos agotados, por encargo, en camino y ofertas reales se prueban con fixtures **locales**, sin datos remotos.
+
+Los fallos durante iteración se corrigieron en código/selectores: alcance de pantallas retenidas, semántica
+accesible, esperar datos antes de scroll y contador anunciado por su padre accesible. Stock agotado por repetir
+compras se reinició únicamente en local. El pase final se ejecutó aislado para conservar los artefactos de
+Playwright. No se borraron/desactivaron casos ni se modificó lógica comercial.
+
+Evidencia local ignorada por Git:
+- `.local/frente-a-v2/before/{light,dark}/` y `after/{light,dark}/`.
+- `.local/frente-a-v2/comparacion.html`: galería autónoma antes/después; `gallery.mjs` la regenera.
+- `.local/frente-a-v2/accessibility.json`, `contrast.json`, `performance.json`.
+- `.local/logs/frente-a-v2-ui-final.log`.
+
+`node tools/design/screens.mjs <carpeta> light|dark` genera las 20 pantallas estándar; `visual.mjs` añade cinco
+vistas a 320 px. Capturas y datos de ejemplo son del stack local. No presentar esa evidencia como teléfono.
+Transiciones: 180 ms, desactivadas al pedir movimiento reducido; virtualización, memoización y tracking previos
+conservados. Observación Chromium local: navegación 399 ms claro / 174 ms oscuro, mediana de frames 16,7 ms;
+p95 83,3 / 16,8 ms con carga inicial. No equivale a medir FPS en Android físico; esa evaluación sigue pendiente.
 
 ## Publicación y límites
 
-Sin cambios en panel, motor financiero, SQL, Supabase remoto, Firebase, identidad nativa ni dependencias.
-No generar APK. Publicación Android `preview` únicamente tras pruebas mediante el workflow existente,
-que exige el runtime de APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` antes de EAS Update.
-Registrar el run y resultado antes del relevo final; no presentar pruebas web como validación nativa.
+Oliver autorizó publicar al finalizar y especificó el canal **production**. El APK 5 (`d1d10c28`) documentado
+consume **preview** y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
+Primero publicar/verificar en preview y ejecutar Android 15 con ese APK existente, solo recorridos de visitante
+en claro/oscuro. Después publicar la versión validada en production con la misma huella; comprobar inventario
+para indicar qué build lo consume. No cambiar el perfil nativo ni crear un APK para cambiar de canal.
+
+No modificar panel, motor financiero, SQL, Supabase remoto, Firebase, identidad nativa ni dependencias.
+No ejecutar registro, pedidos, pagos o push remotos. Registrar runs/resultados antes del relevo final;
+no afirmar recepción de producción en APK 5 ni verificación física sin evidencia. Frente B fuera del alcance.

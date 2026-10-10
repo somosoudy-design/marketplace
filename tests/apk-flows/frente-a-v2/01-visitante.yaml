@@ -76,7 +76,8 @@ name: Frente A V2 — navegación, tarjetas y carrito de visitante
 - tapOn:
     id: buyer-tab-index
 - assertVisible:
-    id: home-cart-count
+    id: home-cart
+    text: 'Carrito, [0-9]+ productos?'
 - takeScreenshot: frente-a-v2-inicio-contador
 - tapOn:
     id: home-cart
