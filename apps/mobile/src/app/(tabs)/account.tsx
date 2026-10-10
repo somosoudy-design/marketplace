@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { Linking, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ProfilePhoto } from '@/components/account/ProfilePhoto';
 import { MAX_CONTENT } from '@/components/catalog/ProductGrid';
 import { RatePill } from '@/components/RateSheet';
 import { Button } from '@/components/ui/Button';
@@ -46,9 +47,7 @@ export default function AccountScreen() {
       ) : (
         <>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
-            <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: t.colors.brand, alignItems: 'center', justifyContent: 'center' }}>
-              <Text variant="title" style={{ color: t.colors.onBrand }}>{initials(profile.data?.full_name ?? user.email ?? '')}</Text>
-            </View>
+            <ProfilePhoto userId={user.id} name={profile.data?.full_name ?? user.email ?? ''} path={profile.data?.avatar_path ?? null} />
             <View style={{ flex: 1 }}>
               <Text variant="title" testID="account-name">{profile.data?.full_name ?? 'Tu cuenta'}</Text>
               <Text variant="bodySmall" color="textMuted">{user.email}</Text>
@@ -100,9 +99,4 @@ export default function AccountScreen() {
 
 function openPanel(path: string) {
   WebBrowser.openBrowserAsync(`${PANEL_URL}${path}`).catch(() => undefined);
-}
-
-function initials(s: string) {
-  const parts = s.replace(/@.*/, '').split(/[\s._-]+/).filter(Boolean);
-  return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase() || 'K';
 }

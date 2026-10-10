@@ -247,6 +247,29 @@ export function createApi(client: KoraClient) {
     profile: (userId: string) => run<Profile | null>(from('profiles').select('*').eq('id', userId).maybeSingle()),
     updateProfile: (userId: string, patch: Partial<Pick<Profile, 'full_name' | 'phone' | 'preferences' | 'personalization_enabled' | 'marketing_opt_in'>>) =>
       run<Profile>(from('profiles').update(patch).eq('id', userId).select().single()),
+    /** Uploads a profile photo to the private avatars bucket, in the user's own folder, and returns its path. */
+    uploadAvatar: async (userId: string, file: Blob | ArrayBuffer | Uint8Array, contentType: string, ext = 'jpg') => {
+      const path = `${userId}/${newIdempotencyKey('avatar')}.${ext}`;
+      const { error } = await client.storage.from('avatars').upload(path, file as Blob, { contentType, upsert: false });
+      if (error) throw new ApiError(toAppError(error));
+      return path;
+    },
+    /** Points the profile at a photo (null: back to the initials) and then removes the previous file, best effort. */
+    setAvatar: async (userId: string, path: string | null, previous?: string | null) => {
+      const profile = await run<Profile>(from('profiles').update({ avatar_path: path }).eq('id', userId).select().single());
+      if (previous && previous !== path) await client.storage.from('avatars').remove([previous]);
+      return profile;
+    },
+    /** Removes an uploaded photo that never made it to the profile (the save failed halfway). */
+    discardAvatar: async (path: string) => {
+      await client.storage.from('avatars').remove([path]);
+    },
+    /** Short-lived link to the user's own photo (the bucket is private). */
+    avatarUrl: async (path: string) => {
+      const { data, error } = await client.storage.from('avatars').createSignedUrl(path, 3600);
+      if (error) throw new ApiError(toAppError(error));
+      return data.signedUrl;
+    },
     addresses: () => run<Address[]>(from('addresses').select('*').order('is_default', { ascending: false }).order('created_at')),
     saveAddress: (a: Partial<Address> & { user_id: string }) =>
       a.id

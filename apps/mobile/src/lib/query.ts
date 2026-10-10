@@ -94,6 +94,8 @@ export const qk = {
   favorites: ['favorites'] as const,
   notifications: ['notifications'] as const,
   profile: ['profile'] as const,
+  /** Signed link to the user's own photo; not persisted, since the link expires. */
+  avatar: (path: string) => ['avatar', path] as const,
   rate: ['rate'] as const,
   pricing: ['pricing-today'] as const,
   methods: ['payment-methods'] as const,

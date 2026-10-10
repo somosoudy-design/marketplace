@@ -1,0 +1,37 @@
+# requiere: registro-sin-correo
+# Foto de perfil en el APK real: con la sesión que deja abierta 02-cuenta, tocar la foto abre el selector de fotos de
+# Android (expo-image-picker ya viene en el APK 5, así que basta la actualización OTA). Se cierra sin elegir nada:
+# elegir, previsualizar, guardar y quitar se prueban en la versión web (tests/app-e2e/tests/profile-photo.spec.ts)
+# y los permisos del bucket en tests/db-tests/test/e2e/avatars.test.ts.
+appId: com.example.kora.preview
+name: Foto de perfil abre el selector de fotos
+---
+- launchApp
+- runFlow:
+    # a slow emulator can show a system "isn't responding" dialog over the app
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- tapOn: Cuenta
+- extendedWaitUntil:
+    visible:
+      id: account-photo
+    timeout: 30000
+- takeScreenshot: foto-01-cuenta
+- tapOn:
+    id: account-photo
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertNotVisible:
+    id: account-name
+- takeScreenshot: foto-02-selector-de-fotos
+- pressKey: back
+- extendedWaitUntil:
+    visible:
+      id: account-name
+    timeout: 20000

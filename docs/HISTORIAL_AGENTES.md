@@ -16,6 +16,19 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 15:30Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Pedido: foto de perfil (Oliver, 15:09Z). Antes se cerró compartir tiendas: emulador revisión 28 en verde (run
+  38062623777), con `kora://tienda/patitas`, «Enlace copiado», el menú de Android y la insignia de Kora.
+- Hecho: bucket privado `avatars` con permisos solo del dueño y una restricción para que el perfil apunte solo a su
+  carpeta (`supabase/migrations/20261010151906_avatars.sql`, aplicada en `mimnotafmfasvwrclxan`); `uploadAvatar`,
+  `setAvatar`, `avatarUrl`, `discardAvatar` en `packages/api`; `components/account/ProfilePhoto.tsx` en Cuenta. El
+  emulador local de Storage (`tools/local-stack/gateway.mjs`) ahora firma enlaces, borra y respeta el límite por bucket.
+- Pruebas: `avatars.test.ts` (API local, 4), `profile-photo.spec.ts` (web), 33 pruebas web pasan y 1 omitida; en el
+  proyecto de pruebas, permisos comprobados con roles simulados dentro de una transacción deshecha.
+- Servicios: migración aplicada en Supabase; EAS Update al APK 5.
+- Siguiente: revisión 29 del emulador con `03-foto-perfil.yaml`; PENDIENTES 4.6 y 4.7.
+- Último commit: el checkpoint de la foto de perfil en `claude/marketplace-v1`.
+
 ### 2026-10-10 15:00Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Pedido: compartir tiendas e insignias de tienda (Oliver, 14:36Z).
 - Hecho (`096828d`): `StoreBadge` y `storeTier` (`components/catalog/StoreBadge.tsx`), `storeLink`

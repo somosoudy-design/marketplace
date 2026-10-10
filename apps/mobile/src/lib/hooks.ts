@@ -175,5 +175,9 @@ export const useProfile = () => {
   return useQuery({ queryKey: qk.profile, queryFn: () => api.account.profile(user!.id), enabled: !!user });
 };
 
+/** Link to show the user's photo (private bucket, signed for an hour; refreshed before it expires). */
+export const useAvatarUrl = (path: string | null | undefined) =>
+  useQuery({ queryKey: qk.avatar(path ?? ''), queryFn: () => api.account.avatarUrl(path!), enabled: !!path, staleTime: 50 * 60_000, gcTime: 55 * 60_000 });
+
 /** Support contact set by the operator; the brand file's email is the fallback while it loads or offline. */
 export const useSupport = () => useQuery({ queryKey: qk.support, queryFn: api.catalog.support, staleTime: 60 * 60_000 });

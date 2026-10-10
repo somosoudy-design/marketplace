@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:00Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 15:30Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 
@@ -60,6 +60,12 @@
   plataforma (`kind = 'platform'`, hoy solo «Kora»); la verificada (morada) y la asociada (gris) están diseñadas pero
   ninguna tienda las muestra porque no existe el dato. Se quitó «Vendedor verificado», que salía en todas las tiendas.
   Sin migraciones. Publicado al APK 5 por EAS Update.
+- Foto de perfil (pedido de Oliver del 2026-10-10 15:09Z): en Cuenta, tocar la foto (o las iniciales) abre la
+  galería con recorte cuadrado y compresión; se previsualiza y se guarda con «Usar esta foto» o se descarta con
+  «Cancelar»; con foto, la hoja permite cambiarla o quitarla (vuelven las iniciales). Se guarda en un bucket privado
+  nuevo `avatars` (3 MB, JPG/PNG/WebP), una carpeta por usuario; solo el dueño la lee, sube o borra, y el perfil solo
+  puede apuntar a su carpeta (migración `20261010151906_avatars`, aplicada en el proyecto de pruebas y comprobada con
+  roles simulados). `profiles.avatar_path` ya existía. `expo-image-picker` ya está en el APK 5: basta EAS Update.
 - APK 5 (build `d1d10c28`, runtime `eb5ed117…`), en el emulador Android 15 de GitHub Actions el 2026-10-10 (revisión
   20, run 38027029394): se instala encima del APK 4, recibe EAS Update, «atrás» de Android vuelve a la pantalla
   anterior, y un aviso push real («Pedido P-… recibido») llega por `push-dispatch`, Expo y Firebase, y al tocarlo
