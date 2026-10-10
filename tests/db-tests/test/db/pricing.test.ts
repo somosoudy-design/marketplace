@@ -144,6 +144,23 @@ describe('price engine: the day\'s gap, costs and divisas quotes', () => {
     expect(await ledgerBalanced(o.order_id)).toBe(true);
   });
 
+  it('cash in dollars pays the main price until an admin gives it the divisas price', async () => {
+    const buyer = await createUser('price-cash');
+    const f = await createStoreWithProduct({ kind: 'platform', price: 40, stock: 5 });
+    await snapshot(adm.id);
+    const o = await buy(buyer.id, f.variantId, 1);
+    const [{ total_usd }] = await admin(`select total_usd from public.orders where id = $1`, [o.order_id]);
+    const cash = await quote(buyer.id, o.order_id, 'efectivo_usd');
+    expect([cash.price_basis, Number(cash.amount_due)]).toEqual(['bcv', Number(total_usd)]);
+    expect((await today()).methods.map((m: any) => m.code)).not.toContain('efectivo_usd');
+    try {
+      await asUser(adm.id, (sql) => sql(`update public.payment_methods set price_basis = 'divisas' where code = 'efectivo_usd'`));
+      expect((await quote(buyer.id, o.order_id, 'efectivo_usd')).price_basis).toBe('divisas');
+    } finally {
+      await admin(`update public.payment_methods set price_basis = 'bcv' where code = 'efectivo_usd'`);
+    }
+  });
+
   it('without a snapshot in force, or with divisas prices off, Zelle pays the main price: no old gap is used', async () => {
     const buyer = await createUser('price-nosnap');
     const f = await createStoreWithProduct({ kind: 'platform', price: 50, stock: 5 });

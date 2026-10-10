@@ -96,7 +96,7 @@ const PRICING: Group = {
     </>
   ),
   specs: [
-    { id: 'markup', key: 'pricing.import', path: 'markup_pct', label: 'Margen sobre el costo puesto en Venezuela', kind: 'decimal', min: 0, max: 500, suffix: '%' },
+    { id: 'markup', key: 'pricing.import', path: 'markup_pct', label: 'Recargo sobre el costo total', kind: 'decimal', min: 0, max: 500, suffix: '%', explain: (v) => `Sobre compra + flete + gastos. Deja un margen de ${show(Math.round((v / (100 + v)) * 1000) / 10)} % sobre el precio de venta.` },
     { id: 'per-kg', key: 'pricing.import', path: 'per_kg_usd', label: 'Flete', kind: 'decimal', min: 0, max: 200, suffix: 'USD por kg' },
     { id: 'fixed', key: 'pricing.import', path: 'fixed_usd', label: 'Gastos logísticos', kind: 'decimal', min: 0, max: 1000, suffix: 'USD por unidad' },
     { id: 'round', key: 'pricing.import', path: 'round_to', label: 'Terminación del precio', kind: 'optional-decimal', min: 0, max: 0.99, hint: 'Por ejemplo 0,99 para $41,99. Vacío: sin redondear.' },
@@ -298,7 +298,7 @@ function PricingPreview({ values }: { values: Parsed }) {
     <div className="flex flex-col gap-3">
       <p className="rounded-[14px] bg-sunken px-4 py-3 text-[14px] text-ink-2" data-testid="pricing-preview">
         Ejemplo: un producto que nos cuesta {money(20, 'USD')} y pesa 0,5 kg queda puesto en {money(p.landed_usd, 'USD')} (flete{' '}
-        {money(p.freight_usd, 'USD')}, gastos {money(p.logistics_usd, 'USD')}) y con el margen debe dejar {money(p.target_divisas_usd, 'USD')} en divisas.{' '}
+        {money(p.freight_usd, 'USD')}, gastos {money(p.logistics_usd, 'USD')}) y con el recargo debe dejar {money(p.target_divisas_usd, 'USD')} en divisas.{' '}
         {gap.current ? (
           <>
             Con la brecha del día ({pct(p.gap_pct)}) su precio es <span className="tabular font-bold text-ink">{money(p.price_usd, 'USD')}</span> a tasa BCV;

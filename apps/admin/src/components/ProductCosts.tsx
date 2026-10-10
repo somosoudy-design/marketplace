@@ -114,7 +114,7 @@ function CostsForm({ data }: { data: ProductPricing }) {
           <Field label="Gastos logísticos (USD)" error={errors.logistics} hint={`Vacío: ${money(rule.fixed_usd, 'USD')} de la regla`}>
             <Input inputMode="decimal" className="tabular" value={d.logistics} onChange={(e) => set({ logistics: e.target.value })} data-testid="costs-logistics" />
           </Field>
-          <Field label="Margen (%)" error={errors.margin} hint={`Vacío: ${String(rule.markup_pct).replace('.', ',')} % de la regla`}>
+          <Field label="Recargo sobre el costo total (%)" error={errors.margin} hint={`Vacío: ${String(rule.markup_pct).replace('.', ',')} % de la regla. No es el margen sobre el precio.`}>
             <Input inputMode="decimal" className="tabular" value={d.margin} onChange={(e) => set({ margin: e.target.value })} data-testid="costs-margin" />
           </Field>
         </div>
@@ -123,8 +123,8 @@ function CostsForm({ data }: { data: ProductPricing }) {
           <table className="w-full text-[13.5px]">
             <thead>
               <tr className="text-left text-[12px] font-bold uppercase tracking-wide text-ink-3">
-                <th className="py-1.5 pr-3">Variante</th><th className="py-1.5 pr-3">Costo USD</th><th className="py-1.5 pr-3">Debe dejar</th>
-                <th className="py-1.5 pr-3">Precio BCV</th><th className="py-1.5 pr-3">Zelle / USDT</th><th className="py-1.5">Ganancia</th>
+                <th className="py-1.5 pr-3">Variante</th><th className="py-1.5 pr-3">Costo de compra</th><th className="py-1.5 pr-3">Cuesta traerlo</th><th className="py-1.5 pr-3">Debe dejar</th>
+                <th className="py-1.5 pr-3">Precio sugerido (BCV)</th><th className="py-1.5 pr-3">Recibimos con Zelle / USDT</th><th className="py-1.5">Ganancia · margen sobre venta</th>
               </tr>
             </thead>
             <tbody>
@@ -137,6 +137,7 @@ function CostsForm({ data }: { data: ProductPricing }) {
                       <Input inputMode="decimal" className="tabular max-w-28" value={d.costs[v.variant_id] ?? ''} placeholder="0.00" aria-label={`Costo de ${v.title}`}
                         onChange={(e) => set({ costs: { ...d.costs, [v.variant_id]: e.target.value } })} data-testid={`costs-variant-${v.title}`} />
                     </td>
+                    <td className="tabular py-2 pr-3 text-ink-2">{b ? money(b.landed_usd, 'USD') : '—'}</td>
                     <td className="tabular py-2 pr-3 text-ink-2">{b ? money(b.target_divisas_usd, 'USD') : '—'}</td>
                     <td className="tabular py-2 pr-3 font-bold" data-testid={`costs-price-${v.title}`}>{b && snap ? money(b.price_usd, 'USD') : '—'}</td>
                     <td className="tabular py-2 pr-3 text-success">{b && snap ? `${money(b.price_divisas_usd, 'USD')} (−${pct(b.divisas_discount_pct)})` : '—'}</td>
@@ -148,6 +149,11 @@ function CostsForm({ data }: { data: ProductPricing }) {
           </table>
         </div>
         {errors.costs ? <p className="text-[13px] text-danger">{errors.costs}</p> : null}
+        <p className="text-[12.5px] text-ink-3">
+          «Cuesta traerlo» = compra + flete + gastos. «Debe dejar» = eso más el recargo. Con Pago Móvil o transferencia se cobra el
+          precio sugerido en bolívares a tasa BCV, que al cambiarlos a USDT vuelve a ser lo que «debe dejar»; con Zelle o USDT se
+          recibe directamente. El margen sobre venta es la ganancia dividida entre lo que se recibe.
+        </p>
         {!snap ? (
           <Notice tone="warning">Sin brecha del día no se puede calcular el precio a tasa BCV. Se toma sola cada día; también a mano en Tasas.</Notice>
         ) : (

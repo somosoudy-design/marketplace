@@ -23,6 +23,9 @@ interface Method {
   enabled: boolean;
   fee_pct: string;
   fee_fixed_usd: string;
+  /** 'divisas': charged through the day's gap (docs/PRECIOS.md); 'bcv': the main price at the method's rate */
+  price_basis: 'bcv' | 'divisas';
+  basis_adjust_pct: string;
   min_usd: string;
   max_usd: string | null;
   quote_ttl_minutes: number;
@@ -161,6 +164,7 @@ function PaymentMethods() {
                 <Badge tone={integrationTone[m.integration_status]}>{INTEGRATION_LABEL[m.integration_status]}</Badge>
                 {m.enabled ? <Badge tone="success">Visible en el checkout</Badge> : <Badge>Oculto</Badge>}
                 {m.requires_proof ? <Badge tone="info">Pide comprobante</Badge> : null}
+                {m.currency !== 'VES' ? (m.price_basis === 'divisas' ? <Badge tone="success">Precio en divisas (brecha del día)</Badge> : <Badge>Precio principal, sin descuento</Badge>) : null}
               </div>
               {m.description ? <p className="mt-3 text-sm text-ink-2">{m.description}</p> : null}
               <dl className="mt-3 grid grid-cols-3 gap-2 text-[13px]">
@@ -189,6 +193,7 @@ function MethodDialog({ method: m, onClose }: { method: Method; onClose: () => v
   const [f, setF] = useState({
     name: m.name, description: m.description ?? '', fee_pct: String(Number(m.fee_pct)), fee_fixed_usd: String(Number(m.fee_fixed_usd)), min_usd: String(Number(m.min_usd)),
     max_usd: m.max_usd ? String(Number(m.max_usd)) : '', ttl: String(m.quote_ttl_minutes), requires_reference: m.requires_reference, requires_proof: m.requires_proof, reference_pattern: m.reference_pattern ?? '',
+    divisas: m.price_basis === 'divisas', adjust: String(Number(m.basis_adjust_pct ?? 0)),
   });
   const [rows, setRows] = useState<{ k: string; v: string }[]>(Object.entries(m.instructions ?? {}).map(([k, v]) => ({ k, v: String(v) })));
   const [error, setError] = useState<string | null>(null);
@@ -202,6 +207,7 @@ function MethodDialog({ method: m, onClose }: { method: Method; onClose: () => v
         : f.max_usd.trim() && Number(n(f.max_usd)) <= Number(n(f.min_usd)) ? 'El máximo debe ser mayor que el mínimo.'
         : !Number.isInteger(ttl) || ttl < 5 || ttl > 4320 ? 'La vigencia del monto debe estar entre 5 minutos y 72 horas.'
         : rows.some((r) => !r.k.trim() || !r.v.trim()) ? 'Completa o quita las filas vacías de los datos de pago.'
+        : !/^-?\d{1,2}([.,]\d{1,2})?$/.test(f.adjust.trim()) || Math.abs(Number(n(f.adjust))) > 20 ? 'El ajuste del precio en divisas debe estar entre -20 y 20 %.'
         : null;
       if (!err && f.reference_pattern.trim()) {
         try { new RegExp(f.reference_pattern.trim()); } catch { setError('El formato de referencia no es una expresión válida.'); throw null; }
@@ -211,6 +217,7 @@ function MethodDialog({ method: m, onClose }: { method: Method; onClose: () => v
         name: f.name.trim(), description: f.description.trim() || null, fee_pct: n(f.fee_pct), fee_fixed_usd: n(f.fee_fixed_usd), min_usd: n(f.min_usd),
         max_usd: f.max_usd.trim() ? n(f.max_usd) : null, quote_ttl_minutes: ttl, requires_reference: f.requires_reference, requires_proof: f.requires_proof,
         reference_pattern: f.reference_pattern.trim() || null, instructions: Object.fromEntries(rows.map((r) => [r.k.trim(), r.v.trim()])),
+        ...(m.currency !== 'VES' ? { price_basis: f.divisas ? 'divisas' : 'bcv', basis_adjust_pct: n(f.adjust) } : {}),
       }).eq('code', m.code));
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['payment-methods'] }); toast.ok('Método actualizado.'); onClose(); },
@@ -229,6 +236,18 @@ function MethodDialog({ method: m, onClose }: { method: Method; onClose: () => v
           <Field label="Monto mínimo (USD)"><Input inputMode="decimal" className="tabular" value={f.min_usd} onChange={(e) => setF({ ...f, min_usd: e.target.value })} /></Field>
           <Field label="Monto máximo (USD)" hint="Vacío: sin tope."><Input inputMode="decimal" className="tabular" value={f.max_usd} onChange={(e) => setF({ ...f, max_usd: e.target.value })} /></Field>
         </div>
+        {m.currency !== 'VES' ? (
+          <div className="grid gap-3 rounded-[14px] border border-line p-3.5 sm:grid-cols-[1fr_200px]">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold text-ink-2">Cobrar el precio en divisas</p>
+                <p className="text-[13px] text-ink-3">Encendido: paga el precio a tasa BCV sin la brecha del día, como Zelle y USDT. Apagado: paga el precio principal, sin descuento. Es una decisión comercial (docs/PRECIOS.md).</p>
+              </div>
+              <Toggle checked={f.divisas} label="Cobrar el precio en divisas" onChange={(v) => setF({ ...f, divisas: v })} />
+            </div>
+            <Field label="Ajuste sobre el precio en divisas (%)" hint="0 = exactamente la brecha. Positivo cubre costos de recibirlo."><Input inputMode="decimal" className="tabular" disabled={!f.divisas} value={f.adjust} onChange={(e) => setF({ ...f, adjust: e.target.value })} /></Field>
+          </div>
+        ) : null}
         {m.kind === 'manual' ? (
           <>
             <div className="grid gap-3 sm:grid-cols-2">
