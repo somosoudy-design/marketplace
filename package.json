@@ -1,0 +1,52 @@
+{
+  "name": "kora-marketplace",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "stack:start": "bash tools/local-stack/start.sh",
+    "stack:stop": "bash tools/local-stack/stop.sh",
+    "db:reset": "bash tools/local-stack/reset-db.sh",
+    "test:db": "pnpm --filter @kora/db-tests test",
+    "test:e2e": "pnpm --filter @kora/db-tests test:e2e",
+    "test:ui": "pnpm --filter @kora/app-e2e build:web && pnpm --filter @kora/app-e2e test:ui",
+    "db:types": "bash -c 'source .local/keys.env && supabase gen types typescript --db-url \"$DATABASE_URL\" --schema public > packages/api/src/database.types.ts && prettier --write packages/api/src/database.types.ts >/dev/null'",
+    "seed:build": "pnpm --filter @kora/demo-assets seed",
+    "catalog:remote": "node tools/demo-assets/build-remote-catalog.mjs",
+    "assets:generate": "pnpm --filter @kora/demo-assets generate",
+    "test:panel": "pnpm --filter @kora/app-e2e test:panel",
+    "test:admin": "pnpm --filter @kora/admin test",
+    "edge:sync": "node tools/sync-edge-shared.mjs",
+    "functions:serve": "bash tools/local-stack/functions.sh serve",
+    "test:functions": "bash tools/local-stack/functions.sh test",
+    "test:remote-catalog": "bash tools/local-stack/remote-catalog-check.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "supabase",
+      "esbuild",
+      "@swc/core",
+      "unrs-resolver",
+      "deno"
+    ],
+    "overrides": {
+      "react": "19.2.3",
+      "react-dom": "19.2.3"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.9",
+    "supabase": "^2.120.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.7",
+    "deno": "2.9.6"
+  }
+}

@@ -1,0 +1,86 @@
+# Installs each APK listed in .github/apk-emulator-request on an Android 15 emulator and opens it: prints the
+# exact install result (Android hides it behind "App not installed" on the phone), whether the app starts
+# without crashing, and keeps a screenshot of the first screen as an artifact. Then runs the Maestro flows of
+# tests/apk-flows on the last APK of the list (tools/eas/emulator-flows.sh) and copies the screenshots, reduced, to
+# the branch ci/capturas (tools/eas/publish-shots.sh) so agents that cannot download artifacts can see them.
+name: APK en emulador
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/apk-emulator-request']
+
+permissions:
+  contents: write  # only to push screenshots to ci/capturas
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: KVM para el emulador
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Descargar los APK
+        run: |
+          mkdir -p apks shots
+          i=0
+          for url in $(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-emulator-request); do
+            i=$((i+1)); curl -sSfL --retry 3 -o "apks/apk$i.apk" "$url"
+          done
+          ls -la apks
+
+      - name: Proyecto de pruebas (registro sin correo)
+        # Flows marked "requiere: registro-sin-correo" create a tester account: they only run when the test project
+        # has "Confirm email" off. /auth/v1/settings is public and answers with the anon key of the preview build.
+        run: |
+          url=$(node -p "require('./apps/mobile/eas.json').build.preview.env.EXPO_PUBLIC_SUPABASE_URL")
+          key=$(node -p "require('./apps/mobile/eas.json').build.preview.env.EXPO_PUBLIC_SUPABASE_ANON_KEY")
+          auto=$(curl -sS --retry 3 -H "apikey: $key" "$url/auth/v1/settings" | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{try{console.log(JSON.parse(d).mailer_autoconfirm===true)}catch{console.log(false)}})')
+          echo "Registro sin correo en el proyecto de pruebas: $auto" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "KORA_SIGNUP_AUTOCONFIRM=$auto" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Maestro
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+        run: |
+          curl -fsSL --retry 3 https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Instalar, abrir y recorrer en Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+          MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            bash tools/eas/emulator-install.sh
+            bash tools/eas/emulator-flows.sh
+
+      - name: Capturas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-emulador
+          path: shots/
+          if-no-files-found: ignore
+
+      - name: Capturas a la rama ci/capturas
+        if: always()
+        run: bash tools/eas/publish-shots.sh

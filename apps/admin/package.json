@@ -1,0 +1,38 @@
+{
+  "name": "@kora/admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "build": "next build",
+    "start": "next start -p 3100",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint .",
+    "tokens": "node --experimental-strip-types ../../packages/design-tokens/scripts/css.ts src/app/tokens.css",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@kora/api": "workspace:*",
+    "@kora/core": "workspace:*",
+    "@kora/design-tokens": "workspace:*",
+    "@supabase/supabase-js": "^2.117.3",
+    "@tanstack/react-query": "^5.104.1",
+    "lucide-react": "1.53.0",
+    "next": "16.4.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "server-only": "0.0.1",
+    "undici": "^7.30.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "~5.9.3"
+  }
+}

@@ -1,0 +1,5 @@
+# Revisión 31: Frente A V2 en APK 5 existente + OTA, Android 15, claro/oscuro.
+# Solo visitantes: lectura pública del catálogo y carrito del dispositivo; sin registro, pedidos, pagos ni push.
+APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
+flows: frente-a-v2/01-visitante 01b-volver-favoritos 01c-volver-favoritos-atras
+themes: light dark
