@@ -21,7 +21,7 @@ ni configuración nativa. APK 5 existente; sin compilación nueva. Detalle: `doc
 | Capturas web | Antes 40; después 50, ambos temas, Pixel 7 + cinco vistas a 320 px |
 | EAS preview Android | **Success** [38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216), fuente `b60b2cc`; guard runtime APK 5 superado |
 | Android 15, APK 5 real existente, revisión 31 | **Success**, [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334): **6/6**, visitante oscuro al segundo intento; captura/diagnóstico OTA V2 confirmado |
-| EAS production | Solicitado después de Android; promueve el mismo grupo inmutable, sin reconstruir |
+| EAS production | **Success**, [38080468671](https://github.com/somosoudy-design/marketplace/actions/runs/38080468671): grupo `92b6bef2-56e7-4a3e-8012-40c030c48434`, mismo bundle/runtime APK 5; inventario production compatible 0 |
 
 La suite comprueba distintos estados de producto con fixtures locales, notificaciones de un pedido local y
 carrito/checkout, además de regresiones de perfil/tiendas. Se corrigieron selectores de pantallas retenidas,
@@ -31,7 +31,7 @@ No se desactivaron casos. No se ejecutaron suites SQL/funciones porque esos mód
 
 Capturas/galería: `.local/frente-a-v2/comparacion.html`, `before/{light,dark}/`, `after/{light,dark}/`.
 Informes: `accessibility.json`, `contrast.json`, `performance.json` en esa carpeta; log final en
-`.local/logs/frente-a-v2-ui-final.log`. Evidencia local ignorada por Git. La galería distingue datos de demo.
+`.local/logs/frente-a-v2-ui-final.log`. Evidencia local ignorada por Git. La galería distingue datos de demo e incluye diez capturas Android; sus selectores/imágenes cargan correctamente.
 Transición de pestañas 180 ms o inmediata con movimiento reducido; listas virtualizadas previas conservadas.
 Observación Chromium local: navegación 399/174 ms claro/oscuro, frames mediana 16,7 ms, p95 83,3/16,8 ms
 con carga inicial. No equivale a FPS de un teléfono. TalkBack/VoiceOver, rendimiento físico y push físico
@@ -40,6 +40,9 @@ Evidencia Android en `.local/frente-a-v2/android/` y rama `ci/capturas`, run 380
 confirma OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e` / runtime APK 5 / canal preview / sesión cifrada sí.
 Una ejecución del visitante oscuro falló y pasó al reintentar; el resumen no identifica el paso del fallo
 inicial. Se conserva la salvedad, sin desactivar ninguna comprobación.
+Cuenta Android muestra el aviso conocido de tasa del día no disponible; no se modificó su origen/regla.
+APK 5 consume preview y el diagnóstico prueba ese update. La publicación production no cambia su canal;
+no hay build terminado compatible registrado para recibir esta huella desde production.
 
 ## UX-04 — 2026-10-10 (Codex cloud)
 

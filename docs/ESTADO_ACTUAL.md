@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:36 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
+**Última actualización:** 2026-10-10 15:41 (Caracas, UTC−4), por Codex (cierre Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Frente A V2 parte de `9e4e1f5`; código visual validado hasta `622e227`. Checkpoint de pruebas/publicación: el commit de esta actualización |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Frente A V2: fuente probada/publicada `b60b2cc`, solicitud production `d62b1fa`; cierre documental en el commit de esta actualización. Base `9e4e1f5` |
 | Plan vigente | Frente A V2 (Oliver, 2026-10-10): tarjetas integradas, cabecera, barra expandible e Inicio/descubrimiento; sin Frente B |
-| Objetivo actual | Implementar Frente A V2 sobre UX-04 existente. Pruebas y capturas antes/después; EAS Update solo compatible con APK 5. Sin APK nuevo, motor financiero, backend ni panel |
+| Objetivo actual | Frente A V2 terminado, probado y publicado; revisión de Oliver. Runtime APK 5 conservado. Sin APK nuevo, motor financiero, backend, panel ni Frente B |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -24,10 +24,10 @@
 | Hito | Qué es | Estado |
 |---|---|---|
 | A | Instalar en el Android físico de Oliver | Hecho: APK 4 instalado en su Samsung (2026-10-09 ~20:40Z) |
-| B | Catálogo remoto visible y acceso (registro con código) | Hecho: catálogo demo cargado; registro con código de 6 dígitos hecho y probado; registro sin confirmación para testers decidido (falta el clic de Oliver, ver «Pendiente de Oliver») |
-| C | Inicio nuevo e identidad Electric Violet | Hecho y publicado por EAS Update: Inicio de tienda, 20 pantallas revisadas en claro y oscuro, logos de tiendas, panel con la misma tipografía y marca. Lo nativo violeta (icono, splash) espera al APK 5 |
-| D | Rediseño del recorrido comercial completo | En curso: selector de pago rediseñado y publicado. Ficha, carrito, checkout, cuotas y seguimiento revisados en la versión web; falta verlos en Android (`PENDIENTES.md` 1.3) |
-| E | Validación integral | En curso: recorrido de visitante automático en el APK real, en verde. Falta el recorrido con cuenta (espera «Confirm email») |
+| B | Catálogo remoto visible y acceso (registro con código) | Hecho: catálogo demo cargado; registro con código probado; registro sin confirmación para testers observado activo el 2026-10-09 22:40Z |
+| C | Inicio nuevo e identidad Electric Violet | Hecho y publicado por EAS Update: Inicio de tienda, 20 pantallas revisadas en claro y oscuro, logos de tiendas, panel con la misma tipografía y marca. Identidad nativa violeta en APK 5; Frente A V2 publicado |
+| D | Rediseño del recorrido comercial completo | En curso: selector de pago rediseñado y publicado. Ficha, carrito, checkout, cuotas y seguimiento revisados en web; carrito visitante validado V2 en Android. Checkout con cuenta/cuotas/seguimiento esperan revisión actual Android (`PENDIENTES.md` 1.3) |
+| E | Validación integral | En curso: V2 visitante en APK 5, claro/oscuro, 6/6 (un reintento). Recorrido con cuenta anterior en revisión 20; no repetido en V2. Teléfono físico pendiente |
 
 ## Qué funciona hoy (verificado)
 
@@ -35,7 +35,7 @@
   aplicadas (las mismas 23 de `supabase/migrations`), funciones `rates-sync` y `push-dispatch` activas (versión 1,
   con la validación del token de tareas), 6 trabajos de `pg_cron`, última tasa leída 21:30Z, 43 productos
   demo, 1 usuario (Oliver) y 2 pedidos de prueba.
-- APK 4 en el teléfono de Oliver recibe las actualizaciones de JavaScript (EAS Update, canal `preview`). La
+- Histórico APK 4 en el teléfono de Oliver: canal `preview`, runtime `a4682c83…` (no recibe los updates de APK 5). La
   sesión cifrada en Android quedó corregida en la actualización del 2026-10-09 21:14Z: el emulador Android 15
   con el APK 4 dice «Sesión cifrada: sí» después de reabrir. En un teléfono real todavía no se ha comprobado.
 - Últimas actualizaciones publicadas al APK 4 (todas con el runtime `a4682c83…`): sesión corregida, registro
@@ -69,6 +69,12 @@
   En el emulador Android 15 (revisión 30, run 38064708597), el APK 5 con la actualización `01a1266c` abre el
   selector de fotos de Android desde Cuenta y vuelve sin cambios al cerrarlo. Elegir y guardar una foto real en un
   teléfono queda para la prueba de Oliver.
+- **Frente A V2 terminado** (2026-10-10): tarjetas integradas, cabecera con avisos/carrito reales,
+  Favoritos en Cuenta/productos, barra Inicio · Buscar · Carrito · Cuenta expandible e Inicio refinado.
+  App local 52 + 1 omisión, Android 15 APK 5 claro/oscuro 6/6 (un reintento), capturas comparativas y axe AA.
+  EAS preview run 38079470216 y production run 38080468671 **Success**; mismo paquete validado/runtime APK 5.
+  Production grupo `92b6bef2-56e7-4a3e-8012-40c030c48434`; inventario EAS: **0 builds production compatibles**.
+  APK 5 recibe por preview. Detalle/pruebas/límites: `docs/FRENTE_A_V2.md`. Sin APK nuevo ni servicios alterados.
 - UX-04 (HAYAZGO, Frente A, 2026-10-10): barra **Inicio · Buscar · Carrito · Cuenta**; catálogo existente
   `/explore` con encabezado Buscar; retirado el botón contiguo de filtros de Inicio que abría el mismo destino.
   Se conservan filtros, categorías, Favoritos y contexto. Pruebas locales y revisión visual claras/oscuras
@@ -99,24 +105,38 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Turno de Codex, 2026-10-10 — Frente A V2 implementado y validado localmente.** Base `9e4e1f5`,
-sincronizada, sin WIP de otro agente. El pedido V2 amplía el alcance a Inicio/descubrimiento.
-Tarjetas integradas y favoritas independientes, cabecera con contadores reales, cuatro pestañas expandibles,
-secciones existentes refinadas y contenido demo rotulado. Detalle: `docs/FRENTE_A_V2.md`.
+**Frente A V2 cerrado; no hay WIP activo de este agente.** Continuidad desde `9e4e1f5`, últimos cambios
+UX-04 revisados y regresión inicial 16/16. El pedido V2 autoriza Inicio/descubrimiento; no autoriza Frente B.
+Fuente de la interfaz validada `b60b2cc`; publicación production solicitada en `d62b1fa`.
 
-Pase final: tipos/lint sin errores, core **50/50**, API **12/12**, admin **28/28**, app **52 aprobadas + 1 omitida**
-(confirmación de correo activa en local), panel **9/9**. Incluye 13 casos V2, claro/oscuro a 320 px, selección
-accesible, búsqueda/scroll, favoritos, carrito, avisos reales y movimiento reducido. Auditoría axe: **0 infracciones
-en 8 pantallas/temas**; contraste de texto seleccionado 4,83:1 claro / 5,03:1 oscuro. Sin pruebas físicas de lector.
-Capturas antes (40) y después (50) con galería autónoma `.local/frente-a-v2/comparacion.html`.
+Tarjetas compartidas integradas y favoritas independientes; cabecera con contadores reales; barra común
+expandible de cuatro destinos (44 px mínimo, 180 ms/movimiento reducido); secciones existentes refinadas,
+virtualización/tracking conservados y contenido demo rotulado. Electric Violet y marca/configuración nativa
+existente conservados. Decisiones/archivos: `docs/FRENTE_A_V2.md`.
 
-Oliver autorizó publicar y eligió expresamente el canal **production**. El APK 5 documentado usa **preview**:
-primero validar esta misma actualización en ese APK por preview, luego publicarla en production con el mismo
-runtime compatible, sin crear APK ni cambiar configuración nativa/backend. No afirmar que APK 5 usa production.
-Preview publicado con Success: [run 38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216), fuente `b60b2cc`, guard APK 5 superado.
-Revisión 31 **Success**, 6/6 (visitante oscuro al segundo intento): [run 38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334), fuente `ade80e6`. Únicamente visitantes/favoritos/Atrás en ambos temas
-en el APK 5 existente. No ejecutar flujos remotos de registro, compra, pago o push.
-Sin cambios en motor financiero, Supabase remoto, Firebase, panel, marca, dependencias ni Frente B.
+Pruebas: tipos/lint sin errores; core **50/50**, API **12/12**, admin **28/28**, app **52 aprobadas + 1 omitida**
+(confirmación de correo activa en local), panel **9/9**, guardas production **4/4**. App incluye 13 casos V2 y
+6 de navegación UX-04. axe **0 infracciones en 8 pantallas/temas**, 320 px; contraste texto seleccionado AA.
+Android 15 con APK 5 existente: **6/6**, visitante oscuro al segundo intento; informe conserva ese fallo inicial
+sin identificar su paso. No afirmar seis pases al primer intento. Favoritos/Atrás y carrito visitante comprobados.
+Checkout completo/cuenta y distintos estados comerciales probados en local; no compra/pago/push remoto.
+
+Evidencia: `.local/frente-a-v2/comparacion.html`, galería autónoma web antes (40)/después (50) + 10 capturas
+Android de ambos temas; `.local/frente-a-v2/android/` copiado de `ci/capturas` run 38079644334.
+Diagnóstico al reabrir: OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, canal preview, runtime APK 5,
+sesión cifrada sí. Capturas muestran el aviso conocido de tasa del día no disponible; no se modifica su lógica.
+Sin prueba física de lector, rendimiento, push ni recepción en el Samsung en este turno.
+
+Publicación autorizada por Oliver en **production**: [run 38080468671](https://github.com/somosoudy-design/marketplace/actions/runs/38080468671) **Success**.
+Grupo production `92b6bef2-56e7-4a3e-8012-40c030c48434`, promovido del grupo preview
+`5abecd05-a0e4-4d5c-ae6f-79b30984b4a2` sin reconstruir. El promotor comprobó los runs preview
+38079470216 / Android 38079644334 aprobados, commits exactos, APK/recorridos/temas y código/dependencias
+idénticos. Runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
+Inventario EAS: **0 builds Android terminados con canal production y este runtime**. APK 5 (`d1d10c28`)
+consume preview, donde también conserva esta versión validada. No cambiar su canal/perfil ni crear un APK.
+
+Sin cambios en motor financiero, SQL, Supabase remoto, Firebase, panel, nombre definitivo, dependencias,
+configuración nativa ni Frente B. Registro de cierre en `docs/HISTORIAL_AGENTES.md`.
 
 Pendiente heredado, independiente de UX-04:
 
@@ -137,15 +157,14 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Verificar Success del workflow production solicitado en este checkpoint. La solicitud contiene los runs
-preview 38079470216 / Android 38079644334 aprobados y sus commits exactos; el promotor reutiliza el grupo
-inmutable, verifica APK 5/recorridos/ambos temas, misma huella y código/dependencias idénticos (guardas 4/4).
-Registrar grupo publicado y builds compatibles que informa el aviso público «EAS production» del run.
-Android comprobado: OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, canal preview, runtime APK 5, sesión cifrada sí
-al reabrir. Evidencia `.local/frente-a-v2/android/`, copia de `ci/capturas` run 38079644334.
-Las seis pruebas pasan; visitante oscuro necesitó un segundo intento automático. El resumen no identifica
-el paso fallido del primero: conservar esa salvedad, no afirmar seis pases al primer intento.
-Cerrar documentación/pendientes/historial, commit/push y revisión de Oliver. **Sin Frente B.**
+Oliver revisa Frente A V2 en el APK 5 instalado y la galería `.local/frente-a-v2/comparacion.html`.
+Para recibir el update: abrir la app para descargar y volver a abrirla tras la descarga (canal preview).
+No repetir implementación/OTA ni generar APK: **ambos canales publicados** y Android ya comprobado.
+Si pide ajustes, sincronizar, partir de `b60b2cc` + cierre actual, usar componentes existentes y conservar
+filtros, scroll, favoritos, carrito y guías de accesibilidad. No activar flujos remotos con cuenta ni modificar
+backend/finanzas/panel por este pedido. **No avanzar al Frente B sin nueva instrucción.**
+
+Los pendientes físicos/comerciales heredados siguen aparte; están en `docs/PENDIENTES.md`.
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de
@@ -189,7 +208,7 @@ Validación actual **Frente A V2**, base `9e4e1f5`, mismo stack local: tipos/lin
 admin 28/28, API 12/12, app **52 aprobadas + 1 omitida**, panel 9/9. App incluye 13 casos V2 y 6 de navegación
 UX-04. axe: 0 infracciones en 8 pantallas/temas a 320 px; contraste de texto seleccionado AA. Galería web autónoma
 `.local/frente-a-v2/comparacion.html`, 40 capturas antes / 50 después. Guardas del promotor production 4/4.
-Preview fuente `b60b2cc`: run 38079470216 Success, runtime exacto APK 5 comprobado. Android revisión 31 **Success**, 6/6 (1 reintento); production solicitado en este checkpoint. Sin validación en teléfono ni TalkBack/VoiceOver físicos. Detalle y límites en
+Preview fuente `b60b2cc`: run 38079470216 Success, runtime exacto APK 5 comprobado. Android revisión 31 **Success**, 6/6 (1 reintento); production run 38080468671 **Success**, grupo `92b6bef2…`, cero builds consumidores compatibles registrados. Sin validación en teléfono ni TalkBack/VoiceOver físicos. Detalle y límites en
 `docs/PRUEBAS.md` / `docs/FRENTE_A_V2.md`.
 
 Validación **anterior** UX-04 (2026-10-10, entorno Codex cloud, Node 24.19.0, pnpm 10.28.0, Postgres 17.11,
@@ -249,7 +268,7 @@ Resumen; procedimientos en `docs/ENTORNO.md`.
 | Supabase de pruebas `mimnotafmfasvwrclxan` («Marketplace») | 24/24 migraciones (última `20261009233831_pricing_engine`), 4 funciones (`rates-sync`, `push-dispatch`, `panel-api`, `assets-mirror` de uso único), 7 trabajos de cron (nuevo `kora-pricing-snapshot`, hora :40), brecha del día vigente, imágenes demo en Storage, registro sin confirmación por correo |
 | EAS Hosting | Panel en https://kora-panel.expo.app (mismo proyecto Expo `marketplacebrand/marketplace`, plan sin costo) |
 | Supabase `bfuggvbgttvcygbexqyn` | **Prohibido tocarlo**: es de otros productos de Oliver (BingoCriollo) |
-| Expo `marketplacebrand/marketplace` | APK 5 (build `d1d10c28`, versionCode 4, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`); actualizaciones por canal `preview`. `GOOGLE_SERVICES_JSON` (archivo, entorno preview) y clave FCM V1 cargadas por Oliver. El APK 4 ya no recibe actualizaciones |
+| Expo `marketplacebrand/marketplace` | APK 5 (build `d1d10c28`, versionCode 4, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`); Frente A V2 publicado en preview y production; APK 5 consume preview, inventario production compatible 0. `GOOGLE_SERVICES_JSON` (archivo, entorno preview) y clave FCM V1 cargadas por Oliver. El APK 4 ya no recibe actualizaciones |
 | GitHub Actions | `eas-android-preview.yml` (APK), `eas-update-preview.yml` (actualización), `eas-update-production.yml` (promoción del bundle validado), `apk-verify.yml`, `apk-emulator.yml` (capturas también en la rama `ci/capturas`), `firebase-check.yml` (Firebase y credenciales de EAS), `panel-deploy.yml` (panel); secreto `EXPO_TOKEN` configurado |
 | Google Play / App Store | Nada publicado. Oliver dijo que todavía no |
 | Binance Pay, PayPal | Preparados en código, deshabilitados (`pending_credentials`) |

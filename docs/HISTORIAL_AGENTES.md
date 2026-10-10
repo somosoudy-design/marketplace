@@ -16,6 +16,48 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 19:41Z (15:41 Caracas, UTC−4) · Codex (entorno cloud) · Oliver
+- Pedido: **Frente A V2**, tarjetas integradas, cabecera, barra dinámica e Inicio/descubrimiento. Amplía el
+  alcance anterior de solo UX-04. Publicación autorizada por Oliver; eligió explícitamente **production**.
+- Continuidad: base sincronizada `9e4e1f5`; AGENTS/estado/pendientes y últimos cambios revisados, regresión
+  inicial 16/16. Sin trabajo pendiente de otro agente. Checkpoints/push `c12b46b`, `9efedb8`, `05abb86`,
+  `3ec5600`, `622e227`; fuente visual validada/OTA `b60b2cc`; Android `ade80e6`; promotor `27ab49c`;
+  resultados `5466e74`; solicitud production `d62b1fa`. No hay WIP activo al cierre.
+- Hecho: una superficie foto/nombre de una línea/precio/indicadores/favorito compartida en Inicio/Buscar/
+  colecciones; favorito independiente de la ficha. Cabecera marca/avisos y carrito con datos reales/buscador;
+  Favoritos en Cuenta y productos, también para visitantes. Barra Inicio · Buscar · Carrito · Cuenta,
+  activa expandida/inactivas icono, 180 ms/movimiento reducido, 44 px mínimo y etiquetas accesibles.
+  Secciones/carruseles existentes refinados con Electric Violet; demo rotulado sin falsa oferta/escasez.
+  Carrito inferior conservado para acceso desde todas las pestañas; superior contextual en Inicio.
+- Pruebas locales: tipos/lint sin errores, core 50/50, API 12/12, admin 28/28, app **52 pasan + 1 omisión**
+  (confirmación de correo local activa), panel 9/9, promotor 4/4. App incluye 13 casos V2 y 6 UX-04; checkout,
+  favoritos/avisos con cuenta y estados comerciales en local. axe **0 infracciones en 8 pantallas/temas**
+  a 320 px; contraste texto seleccionado AA. Virtualización conservada; observación web, sin afirmar FPS físicos.
+- Android: APK 5 existente, Android 15/Maestro 2.11.0, revisión 31/run
+  [38079644334](https://github.com/somosoudy-design/marketplace/actions/runs/38079644334) **Success**.
+  Tres recorridos de visitante en claro/oscuro, **6/6**; visitante oscuro necesitó segundo intento automático.
+  Primer fallo conservado en resumen, paso inicial no identificado. Capturas comprueban V2/navegación/carrito/
+  Favoritos/Atrás. Diagnóstico al reabrir: OTA `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, runtime APK 5,
+  canal preview, sesión cifrada sí. Cuenta muestra aviso conocido de tasa no disponible; regla sin cambios.
+- Diseño/evidencia: 40 capturas web antes/50 después, ambos temas + 320 px; galería autónoma
+  `.local/frente-a-v2/comparacion.html` también incorpora 10 capturas Android/ambos temas y controles verificados.
+  Evidencia Android en rama `ci/capturas`, copia `.local/frente-a-v2/android/`. Informes/límites en
+  `docs/FRENTE_A_V2.md` / `docs/PRUEBAS.md`. No se comprobó Samsung, TalkBack/VoiceOver/FPS/push físicos.
+- Servicios: EAS preview [38079470216](https://github.com/somosoudy-design/marketplace/actions/runs/38079470216)
+  **Success**, guard runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` superado.
+  Production [38080468671](https://github.com/somosoudy-design/marketplace/actions/runs/38080468671) **Success**,
+  grupo `92b6bef2-56e7-4a3e-8012-40c030c48434`, promovido del grupo `5abecd05-a0e4-4d5c-ae6f-79b30984b4a2`
+  sin reconstruir, con runs/commits/código/huella/APK/recorridos/temas comprobados. Inventario EAS:
+  **0 builds Android terminados con canal production y este runtime**. APK 5 (`d1d10c28`) consume preview;
+  conserva allí la misma versión; no se cambia su canal. Sin APK nuevo ni cambios de perfil/backend.
+  Sin Supabase/Firebase remotos, pedidos/pagos/cuentas/favoritos/push remotos, motor financiero, SQL, panel,
+  dependencias, identidad nativa o Frente B. Las pruebas del panel fueron regresión local, no trabajo en el panel.
+- Siguiente: Oliver revisa Frente A V2 en su APK 5 y la galería. No repetir funciones ni despliegues completos;
+  ajustar solo este frente si lo pide. Pendientes comerciales/físicos heredados siguen en PENDIENTES.
+  **No avanzar al Frente B sin nueva instrucción.** Documentos de continuidad actualizados y push a la rama compartida.
+- Último commit: el cierre documental de esta entrada; obtenerlo con `git log -1 origin/claude/marketplace-v1`.
+
+
 ### 2026-10-10 17:35Z (13:35 Caracas, UTC−4) · Codex (entorno cloud) · Oliver
 - Pedido: Frente A de HAYAZGO, **solo UX-04**; UX-06 espera revisión. Sin APK nuevo, motor financiero ni panel.
 - Continuidad: sincronizada `claude/marketplace-v1` desde `9e50d2a`; leídos AGENTS/estado/pendientes y últimos

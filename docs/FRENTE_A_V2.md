@@ -4,6 +4,8 @@ Pedido de Oliver del 2026-10-10. Parte del cierre de UX-04 (`9e4e1f5`) y autoriz
 y descubrimiento. El Frente B no forma parte de este trabajo. La marca/configuración nativa existente
 se conserva; Electric Violet sigue siendo la identidad visual.
 
+**Estado:** terminado, probado y publicado en preview/production. Revisión de Oliver pendiente.
+
 ## Decisiones de implementación
 
 - Reutilizar `ProductCard` en Inicio, Buscar, colecciones y Favoritos: foto, nombre de una línea, precio,
@@ -48,8 +50,9 @@ compras se reinició únicamente en local. El pase final se ejecutó aislado par
 Playwright. No se borraron/desactivaron casos ni se modificó lógica comercial.
 
 Evidencia local ignorada por Git:
+
 - `.local/frente-a-v2/before/{light,dark}/` y `after/{light,dark}/`.
-- `.local/frente-a-v2/comparacion.html`: galería autónoma antes/después; `gallery.mjs` la regenera.
+- `.local/frente-a-v2/comparacion.html`: galería autónoma antes/después + diez capturas Android; `gallery.mjs` la regenera. Controles/imágenes comprobados.
 - `.local/frente-a-v2/accessibility.json`, `contrast.json`, `performance.json`.
 - `.local/logs/frente-a-v2-ui-final.log`.
 
@@ -86,4 +89,31 @@ Diagnóstico al reabrir: actualización `01a12744-8ffc-7c8b-bfb0-b32cfae9a11e`, 
 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend existente de pruebas, sesión cifrada sí.
 Evidencia recuperada mediante `git fetch origin ci/capturas`, `ultima/LEEME.md` / `resumen.md`;
 copia local `.local/frente-a-v2/android/`. Ninguna cuenta, pedido, pago, escritura de favoritos ni push remoto.
-Production solicitado tras esta comprobación; registrar el grupo/inventario real cuando termine.
+Production publicado tras esta comprobación, sin cambiar código ni reconstruir el bundle.
+Cuenta Android conserva el aviso conocido «Tasa del día no disponible»; no se altera finanzas/tasas.
+
+### Production — publicación confirmada
+
+[Run 38080468671](https://github.com/somosoudy-design/marketplace/actions/runs/38080468671) **Success**, fuente
+solicitud `d62b1fa`. Grupo [92b6bef2-56e7-4a3e-8012-40c030c48434](https://expo.dev/accounts/marketplacebrand/projects/marketplace/updates/92b6bef2-56e7-4a3e-8012-40c030c48434),
+promovido del grupo preview `5abecd05-a0e4-4d5c-ae6f-79b30984b4a2` correspondiente a `b60b2cc`.
+Se reutilizan exactamente sus assets/JavaScript; runtime APK 5 conservado. El aviso público «EAS production»
+y artefacto `eas-production-release` confirman resultado y **0 builds Android terminados con canal production
+y ese runtime**. No afirmar que un APK production lo recibió: no hay consumidor compatible registrado.
+APK 5 `d1d10c28` usa **preview** y recibió allí esta misma versión en el emulador; su canal no se modificó.
+
+### Archivos para retomar
+
+- `src/components/catalog/{ProductCard,MiniProductCard,ProductFavorite,ProductGrid,ProductImage}.tsx`
+  y `ui/Skeleton.tsx`, bajo `apps/mobile`: superficies/indicadores/favoritos compartidos.
+- `apps/mobile/src/components/navigation/BuyerTabs.tsx`: destinos, expansión, accesibilidad/movimiento reducido;
+  ambos `_layout` de `(tabs)` lo reutilizan. `ui/CountBadge.tsx`: contador real compartido.
+- `apps/mobile/src/app/(tabs)/{index,account}.tsx`: cabecera/Inicio y acceso de visitante a Favoritos.
+- `tests/app-e2e/tests/front-a-v2.spec.ts` (13 casos), navegación/favoritos adaptados; nunca desactivar casos.
+- `tests/apk-flows/frente-a-v2/01-visitante.yaml`, `01b`, `01c`; selección/temas en `tools/eas/emulator-flows.sh`.
+- `.github/eas-production-update-request`, workflow `eas-update-production.yml` y
+  `tools/eas/promote-update.mjs`: promoción protegida del grupo probado, sin APK ni cambios de entornos.
+
+No quedan cambios parciales activos. Próxima acción: revisión visual/funcional de Oliver en su APK 5;
+solo ajustar este frente si lo pide. Física (lectores/FPS/push), tasa vencida y decisiones comerciales
+heredadas conservan su estado. No iniciar Frente B ni construir un APK para obtener un canal production.
