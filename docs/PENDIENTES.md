@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 00:20Z.
+**Última revisión:** 2026-10-10 00:45Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
@@ -20,9 +20,9 @@
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| R.1 | Motor comercial de precios | Publicado (pruebas) | Base, panel y app (EAS Update) publicados y verificados en emulador. Falta definir con Oliver los parámetros definitivos y marcar la regla como revisada. `docs/PRECIOS.md` |
+| R.1 | Motor comercial de precios | Técnicamente terminado | Faltan solo decisiones de Oliver: recargo, flete, gastos, terminación, efectivo/PayPal en divisas; luego «Regla revisada». `docs/PRECIOS.md` |
 | R.2 | Repositorio privado | Autorizado; lo cambia Oliver (la sesión no puede escribir ajustes de GitHub); luego verificar Actions | Imágenes ya en Storage (hecho). Checklist en `docs/ENTORNO.md` §12 bis. **Pedir confirmación a Oliver** antes de cambiar la visibilidad |
-| R.3 | Push real en Android | Bloqueada en parte | Código y workflow se preparan; falta el proyecto Firebase de Oliver (P3.3) |
+| R.3 | Push real en Android | Bloqueada (Oliver) | Código y configuración listos; pasos de Oliver en `SERVICIOS_EXTERNOS.md`; luego APK 5 con su autorización |
 
 ## Prioridad 2: lo que solo Oliver puede hacer
 

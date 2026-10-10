@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 00:20Z, por Claude (sesión en la nube, presupuesto limitado).
+**Última actualización:** 2026-10-10 00:45Z, por Claude (sesión en la nube, presupuesto limitado).
 
 ## Dónde está el trabajo
 
@@ -42,37 +42,27 @@
   sin código cuando el proyecto lo permite, etiquetas legibles sobre fotos en oscuro, selector de pago nuevo.
 - En local, con el stack sin Docker: todas las suites en verde en esta sesión (ver «Pruebas»).
 
-## Trabajo en curso (2026-10-10 00:20Z)
+## Trabajo en curso (2026-10-10 00:45Z)
 
-Archivos sin commit: ninguno. Publicado y verificado en esta ronda:
+Archivos sin commit: ninguno.
 
-- **EAS Update al APK 4** (runtime `a4682c83…`, 2026-10-10 00:04Z): precio con Zelle/USDT/efectivo por la brecha del día,
-  montos por método, explicación de la cotización en divisas, «Cancelado» en pedidos cancelados sin pago, barra de la
-  ficha. **Emulador revisión 12 (APK 4 + esta actualización): `01-visitante` y `02-cuenta` pasan**; capturas en
-  `ci/capturas/ultima/` (ficha «$10,34 con Zelle, USDT o efectivo · 13,8 % menos», Zelle ≈ $18,08 en un pedido de $21,
-  líneas «Cancelado», fotos desde Storage).
-- **Panel** https://kora-panel.expo.app con la última versión (workflow 23:57Z en verde, rutas comprobadas). El hook de
-  token da `superadmin` a la cuenta de Oliver. Oliver se agregó como miembro (`owner`) de la tienda de plataforma «Kora»
-  para usar «Costos y precio» en el panel de vendedor (debe cerrar y abrir sesión para que el token lo incluya).
-- **Repositorio privado: listo.** Ni la app, ni el panel, ni los workflows dependen de GitHub público (búsqueda en
-  `apps`, `packages`, `config`, `.github`, `tools`: solo Supabase, Expo y Maestro). Falta solo la confirmación de Oliver.
-
-Notas: en el selector de pago, Pago Móvil muestra «Bs.» sin monto un instante tras iniciar sesión (la tasa se recarga
-al cambiar de cuenta); la cotización siempre trae el monto exacto. `efectivo_usd` también recibe el precio en
-divisas (es un método en dólares): decisión comercial a confirmar con Oliver. La regla de precios del proyecto de
-pruebas sigue «sin revisar» (`pricing.import.configured = false`): el importador no sugiere precios hasta que Oliver
-la revise en Configuración.
+- **Motor de precios: técnicamente terminado y publicado en pruebas** (base, panel, app vía EAS Update, emulador rev. 12
+  en verde). Último ajuste: el precio en divisas es una elección por método en Configuración › Métodos de pago;
+  efectivo y PayPal vuelven al precio principal hasta que Oliver decida (migración `20261010003308`, aplicada). Panel
+  con «Recargo sobre el costo total» vs «margen sobre venta» y qué se recibe por método. Pruebas: db 83/83, panel 9/9.
+  **La regla comercial sigue sin activar** (`pricing.import.configured = false`, valores de ejemplo): la define Oliver.
+- **Push:** código completo; `app.config.ts` toma `GOOGLE_SERVICES_JSON` (variable de archivo de EAS) sin cambiar el
+  runtime del APK 4. Faltan los pasos de Oliver en `docs/SERVICIOS_EXTERNOS.md` («Notificaciones push») y su
+  autorización para el APK 5.
+- **Repo privado:** autorizado; lo cambia Oliver (la sesión no puede escribir ajustes de GitHub).
 
 ## Próxima acción
 
-1. Oliver **autorizó** el repo privado (2026-10-10). El agente no puede cambiarlo (el acceso de GitHub de la sesión no
-   permite escribir ajustes del repositorio): lo hace Oliver en GitHub › Settings › General › Danger Zone › Change
-   visibility › Private. Luego una corrida de
-   «APK en emulador» para confirmar que el runner privado tiene KVM, y cambiar `.github/panel-deploy-request` para
-   comprobar la publicación del panel (`docs/ENTORNO.md` §12 bis). No cambiar reglas de precios sin Oliver.
-2. Con Oliver: parámetros comerciales definitivos (margen sobre costo puesto, flete, gastos, si efectivo lleva precio en
-   divisas) y marcar la regla como revisada.
-3. Push en Android cuando Oliver tenga Firebase (APK 5 con identidad violeta).
+1. Con Oliver: recargo, flete por kg, gastos logísticos, terminación, si efectivo/PayPal llevan precio en divisas; luego
+   marcar «Regla revisada» en Configuración.
+2. Cuando Oliver complete Firebase y lo autorice: APK 5 (`NATIVE_IDENTITY = 'violet'`, `.github/apk-preview-request`),
+   actualizar `runtime:` de `.github/eas-update-request`, emulador y prueba real de un aviso.
+3. Tras el cambio a privado: una corrida de `panel-deploy` y una del emulador para confirmar Actions.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

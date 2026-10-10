@@ -65,14 +65,25 @@ comprobante, y un administrador verifica contra el banco o la billetera. Zelle n
 universal para comercios. Antes de producción, reemplazar los datos de cobro ficticios desde
 Panel > Configuración > Métodos de pago.
 
-## Notificaciones push (Expo)
+## Notificaciones push (Expo + Firebase Cloud Messaging)
 
-- **Necesario:** proyecto EAS (`eas init`), credenciales FCM v1 para Android y APNs para iOS (EAS las
-  gestiona con `eas credentials`), y una build nativa (Expo Go no recibe push de producción).
-- **Servidor:** `push-dispatch` corre cada minuto (cron) y envía las notificaciones pendientes. Las
-  notificaciones de prueba (`is_test`) nunca se envían. Opcional: `EXPO_ACCESS_TOKEN` si se activa
-  seguridad reforzada en Expo.
-- **Limitación v1:** se leen los tickets de envío; los recibos de entrega (segunda fase de Expo) aún no.
+Código listo y probado (registro del dispositivo, envío por `push-dispatch` cada minuto, recibos, limpieza de
+dispositivos, salud en el panel; los avisos de prueba nunca se envían). En Android falta solo Firebase en la compilación;
+sin él la app dice «falta Firebase Cloud Messaging en esta compilación» y nada simula éxito.
+
+Lo que hace Oliver (gratis, ~15 min):
+1. https://console.firebase.google.com › Agregar proyecto «Kora» (Analytics opcional, puede quedar apagado).
+2. En el proyecto › Agregar app › Android › nombre del paquete **`com.example.kora.preview`** (el del APK de prueba;
+   para producción se agrega otra app con el paquete definitivo de `config/brand.json`). Descargar `google-services.json`.
+3. Firebase › Configuración del proyecto › Cuentas de servicio › «Generar nueva clave privada» (un JSON). Es **secreta**:
+   no va al repositorio ni por chat.
+4. https://expo.dev › marketplacebrand › marketplace:
+   - Environment variables › Add › nombre `GOOGLE_SERVICES_JSON`, tipo **File**, entorno **preview**, subir `google-services.json`.
+   - Credentials › Android › `com.example.kora.preview` › FCM V1 service account key › subir el JSON del paso 3.
+5. Avisar al agente: con la autorización de Oliver se compila el **APK 5** (incluye Firebase y la identidad violeta,
+   `NATIVE_IDENTITY = 'violet'`), se instala sobre el APK 4 y se prueba un aviso real desde el panel.
+
+`apps/mobile/app.config.ts` ya toma `GOOGLE_SERVICES_JSON` si existe; mientras no exista, la compilación no cambia.
 
 ## Correo
 

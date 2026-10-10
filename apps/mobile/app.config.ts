@@ -38,6 +38,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     package: `${brand.androidPackage}${suffix}`,
+    // Firebase Cloud Messaging (push on Android). EAS injects the file from an environment variable of type
+    // "file" named GOOGLE_SERVICES_JSON (expo.dev › project › Environment variables); without it the key is absent and
+    // the build is the same as today (docs/SERVICIOS_EXTERNOS.md, «Notificaciones push»).
+    ...(process.env.GOOGLE_SERVICES_JSON ? { googleServicesFile: process.env.GOOGLE_SERVICES_JSON } : {}),
     adaptiveIcon: {
       backgroundColor: native.brand,
       foregroundImage: `${native.dir}/android-icon-foreground.png`,

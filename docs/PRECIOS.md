@@ -18,11 +18,12 @@ brecha, que se descuenta **una sola vez** con las tasas del día, visibles en la
 | Flete | peso × USD por kg, o el monto que se escriba para ese producto | Regla general (`pricing.import.per_kg_usd`) o la ficha |
 | Gastos logísticos | monto fijo por unidad, o el de ese producto | Regla general (`pricing.import.fixed_usd`) o la ficha |
 | Costo puesto en Venezuela | costo + flete + gastos logísticos | — |
-| Margen | % sobre el costo puesto en Venezuela | Regla general (`pricing.import.markup_pct`) o la ficha |
+| Recargo | % sobre el costo puesto en Venezuela (no es el margen sobre el precio de venta: un recargo de 30 % deja un margen de 23,1 %) | Regla general (`pricing.import.markup_pct`) o la ficha |
 | **Precio en divisas (objetivo)** | costo puesto × (1 + margen) | — |
 | Brecha del día | P2P (Bs por USDT) ÷ BCV (Bs por dólar) − 1; nunca negativa | Se toma sola cada 24 h (`pricing.gap`) o con «Actualizar brecha ahora» |
 | **Precio principal (USD BCV)** | precio en divisas × (1 + brecha), con la terminación (por ejemplo ,99) | Se guarda en la variante cuando el producto «sigue su costo» |
 | **Pago Móvil / transferencia** | precio principal × BCV | Igual que antes |
+| **Métodos con precio en divisas** (hoy Zelle, USDT, Binance Pay; efectivo y PayPal no hasta que Oliver decida, `20261010003308`) — se cambia por método en Configuración › Métodos de pago |
 | **Zelle / USDT** | precio principal × BCV ÷ P2P (Zelle además ÷ USDT por dólar) × (1 + ajuste del método) | Ajuste por método (`payment_methods.basis_adjust_pct`, 0 por defecto) |
 
 ### Por qué la brecha no se aplica dos veces
