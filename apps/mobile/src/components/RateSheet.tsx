@@ -1,6 +1,5 @@
 import type { RateStatus } from '@kora/api';
 import { formatRate } from '@kora/core';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Button } from '@/components/ui/Button';
@@ -12,8 +11,7 @@ import { Skeleton } from '@/components/ui/Skeleton';
 import { Banner } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { SOURCE_LABEL, shortDateTime, timeAgo } from '@/lib/format';
-import { qk } from '@/lib/query';
-import { api } from '@/lib/supabase';
+import { useDivisas, useRateStatus } from '@/lib/hooks';
 import { useTheme } from '@/theme';
 
 const SHORT: Record<string, string> = { bcv_official: 'BCV', dolarapi_oficial: 'BCV', manual: 'Tasa fijada', demo: 'Tasa demo' };
@@ -22,7 +20,7 @@ const SHORT: Record<string, string> = { bcv_official: 'BCV', dolarapi_oficial: '
 export function RatePill({ testID = 'home-rate' }: { testID?: string }) {
   const t = useTheme();
   const [open, setOpen] = useState(false);
-  const q = useQuery({ queryKey: qk.rate, queryFn: () => api.catalog.rate('USD/VES'), staleTime: 5 * 60_000 });
+  const q = useRateStatus();
   const r = q.data;
   if (!r) return q.isLoading ? <Skeleton width={190} height={30} radius={15} /> : null;
   const ok = r.available;
@@ -61,6 +59,8 @@ export function RatePill({ testID = 'home-rate' }: { testID?: string }) {
 
 export function RateSheet({ rate: r, visible, onClose }: { rate: RateStatus; visible: boolean; onClose: () => void }) {
   const t = useTheme();
+  const divisas = useDivisas();
+  const saving = divisas && divisas.best < 1 ? (1 - divisas.best) * 100 : 0;
   const margin = r.available && Number(r.base) > 0 ? (Number(r.rate) / Number(r.base) - 1) * 100 : 0;
   return (
     <Sheet visible={visible} title="Precios y tasa de cambio" onClose={onClose} testID="rate-sheet" footer={<Button title="Entendido" variant="secondary" full onPress={onClose} />}>
@@ -101,7 +101,11 @@ export function RateSheet({ rate: r, visible, onClose }: { rate: RateStatus; vis
         <View style={{ gap: 12 }}>
           <Point icon="tag" text="Los precios se publican en dólares (USD)." />
           <Point icon="banknote" text="Si pagas en bolívares, el monto se calcula con la tasa vigente al generar el pago y queda fijo durante el tiempo que te indicamos en ese paso." />
-          <Point icon="coins" text="En USDT se aplica la tasa USD/USDT de ese momento. Si un método cobra comisión, la ves antes de pagar." />
+          {saving >= 0.1 ? (
+            <Point icon="coins" text={`Con ${divisas!.label} pagas el precio en divisas, hoy ${saving.toFixed(1).replace('.', ',')} % menos: el precio principal sin la diferencia del día entre la tasa BCV y el mercado. El monto exacto lo ves al elegir el método.`} />
+          ) : (
+            <Point icon="coins" text="En USDT se aplica la tasa USD/USDT de ese momento. Si un método cobra comisión, la ves antes de pagar." />
+          )}
         </View>
       </View>
     </Sheet>

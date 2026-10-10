@@ -1,0 +1,27 @@
+# Favoritos (pantalla nueva del hito 1 de UI/UX) se cierra con la flecha del encabezado y vuelve a Inicio.
+appId: com.example.kora.preview
+name: Volver de Favoritos con la flecha
+---
+- launchApp
+- runFlow:
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- tapOn:
+    id: home-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+# la flecha del encabezado nativo (arriba a la izquierda)
+- tapOn:
+    point: 7%,8%
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- takeScreenshot: volver-03-favoritos-flecha

@@ -9,7 +9,7 @@ import { inbox } from './support/mail';
 test('with confirmation off, a visitor signs up and keeps shopping with the same cart, no email involved', async ({ page }) => {
   test.skip(!(await signUpWithoutEmail()), 'el servidor pide confirmar por correo (flujo con código: auth.spec)');
   await page.goto('/p/ugreen-cable-usb-c-100w');
-  await page.getByTestId('product-cta').click();
+  await page.getByTestId('product-add').click();
   await expect(page.getByTestId('added-to-cart')).toBeVisible();
 
   const email = `ui-sin-correo-${Date.now()}@example.com`;

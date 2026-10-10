@@ -12,8 +12,7 @@ test('a new buyer completes checkout and submits a Pago Móvil payment for verif
   // 1. visitor adds a product
   await page.goto('/p/ugreen-cable-usb-c-100w');
   await page.getByTestId('product-cta').click();
-  await expect(page.getByTestId('added-to-cart')).toBeVisible();
-  await page.getByTestId('added-to-cart').click();
+  await expect(page).toHaveURL(/\/cart$/);
   await page.getByTestId('cart-continue').click();
 
   // 2. sign up from the sign-in sheet

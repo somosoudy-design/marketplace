@@ -72,9 +72,9 @@ test('search and filters survive opening a product and coming back', async ({ pa
 test('visitors keep a cart and are asked to sign in to pay', async ({ page }) => {
   await page.goto('/p/ugreen-cable-usb-c-100w');
   await expect(page.getByTestId('product-title')).toContainText('UGREEN');
+  // "Comprar" adds and opens the cart in one step
   await page.getByTestId('product-cta').click();
-  await expect(page.getByTestId('added-to-cart')).toBeVisible();
-  await page.getByTestId('added-to-cart').click();
+  await expect(page).toHaveURL(/\/cart$/);
   await expect(page.getByTestId('cart-subtotal')).toHaveText(/\$\s?9,00/);
   await expect(page.getByTestId('cart-continue')).toHaveText(/Iniciar sesión/);
   // the cart persists across reloads for visitors

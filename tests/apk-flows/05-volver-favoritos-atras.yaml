@@ -1,0 +1,26 @@
+# Favoritos se cierra también con el botón o gesto «atrás» de Android y vuelve a Inicio, sin cerrar la app.
+appId: com.example.kora.preview
+name: Volver de Favoritos con atrás de Android
+---
+- launchApp
+- runFlow:
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- tapOn:
+    id: home-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+- takeScreenshot: flujo-visitante-01b-favoritos
+- back
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- takeScreenshot: volver-04-favoritos-atras

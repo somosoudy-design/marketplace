@@ -13,8 +13,13 @@ export const useProduct = (id: string | undefined) =>
 
 /** Reference USD/VES rate for showing bolívar equivalents. Returns null when no fresh rate exists. */
 /** Current USD/VES reference rate, or null when none is valid. `demo` marks the development rate. */
+/** Today's USD/VES rate with its source and age, for the rate details sheet. */
+export function useRateStatus() {
+  return useQuery({ queryKey: qk.rate, queryFn: () => api.catalog.rate('USD/VES'), staleTime: 5 * 60_000 });
+}
+
 export function useVesRate(): { rate: number; demo: boolean } | null {
-  const q = useQuery({ queryKey: qk.rate, queryFn: () => api.catalog.rate('USD/VES'), staleTime: 5 * 60_000 });
+  const q = useRateStatus();
   return q.data && q.data.available ? { rate: Number(q.data.rate), demo: q.data.source === 'demo' } : null;
 }
 

@@ -1,6 +1,5 @@
 import type { ProductDetail, ProductVariant } from '@kora/api';
-import { describeLeadTime, etaFromToday, presentAvailability, stockHint } from '@kora/core';
-import { Image } from 'expo-image';
+import { describeLeadTime, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Platform, Share, useWindowDimensions, View } from 'react-native';
@@ -8,6 +7,8 @@ import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
 import { ProductImage } from '@/components/catalog/ProductImage';
+import { StoreChip } from '@/components/catalog/StoreCard';
+import { RateSheet } from '@/components/RateSheet';
 import { AvailabilityBadge } from '@/components/ui/Availability';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
@@ -17,7 +18,7 @@ import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { Price } from '@/components/ui/Price';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { BottomBar, CollapsingHeader, useScrollY } from '@/components/ui/Bars';
 import { RatingInline, RatingSummary, ReviewItem } from '@/components/reviews/Reviews';
 import { Text } from '@/components/ui/Text';
@@ -25,8 +26,8 @@ import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
-import { useAddToCart, useDivisas, useFavorites, usePaymentMethods, useProduct, useVesRate } from '@/lib/hooks';
-import { api, storeImage } from '@/lib/supabase';
+import { useAddToCart, useDivisas, useFavorites, usePaymentMethods, useProduct, useRateStatus, useVesRate } from '@/lib/hooks';
+import { api } from '@/lib/supabase';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
 import { useTheme } from '@/theme';
@@ -83,12 +84,17 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const fav = useFavorites();
   const vesRate = useVesRate();
   const divisas = useDivisas();
+  const rate = useRateStatus().data;
+  const [rateOpen, setRateOpen] = useState(false);
   const methods = usePaymentMethods();
   const addToCart = useAddToCart();
   const purchasableVariants = p.variants.filter((v) => v.active && (v.stock == null || v.stock > 0));
   const [variant, setVariant] = useState<ProductVariant | undefined>(purchasableVariants[0] ?? p.variants[0]);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  // what this screen last put in the cart (variant and quantity), so "Comprar" after "Agregar" doesn't add it twice
+  const [inCart, setInCart] = useState<string | null>(null);
+  const [pending, setPending] = useState<'add' | 'buy' | null>(null);
   const [page, setPage] = useState(0);
   const availability = presentAvailability(p.availability);
   const imageWidth = Math.min(width, MAX_W);
@@ -100,6 +106,11 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const images = p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }];
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
+  // options with different prices say theirs, so nobody has to tap each one to compare
+  const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
+  const canBuy = availability.purchasable && !variantSoldOut;
+  const [moreText, setMoreText] = useState(false);
+  const longText = (p.description?.length ?? 0) > LONG_DESCRIPTION;
   // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
   const tracking = useViewportTracking();
   const scroll = useScrollY(tracking.onWindow);
@@ -114,24 +125,31 @@ function ProductView({ product: p }: { product: ProductDetail }) {
     setQty(1);
   }
 
-  const onPrimary = async () => {
-    if (!availability.purchasable || variantSoldOut) {
-      if (!user) return router.push('/sign-in');
-      await api.account.setStockAlert(user.id, p.id, !p.alert_requested);
-      haptics.success();
-      qc.invalidateQueries({ queryKey: qk.product(p.id) });
-      return;
-    }
+  const toggleAlert = async () => {
+    if (!user) return router.push('/sign-in');
+    await api.account.setStockAlert(user.id, p.id, !p.alert_requested);
+    haptics.success();
+    qc.invalidateQueries({ queryKey: qk.product(p.id) });
+  };
+
+  // "Agregar" keeps the buyer here with a link to the cart; "Comprar" adds and opens the cart to pay
+  const add = (buy: boolean) => {
     if (!variant) return;
+    const key = `${variant.id}:${qty}`;
+    if (buy && inCart === key) return router.navigate('/cart');
+    setPending(buy ? 'buy' : 'add');
     addToCart.mutate(
       { product: p, variant, quantity: qty },
       {
         onSuccess: () => {
           haptics.success();
+          setInCart(key);
+          if (buy) return router.navigate('/cart');
           setAdded(true);
           setTimeout(() => setAdded(false), 4000);
         },
         onError: () => haptics.warning(),
+        onSettled: () => setPending(null),
       },
     );
   };
@@ -168,15 +186,9 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           </View>
 
           <View style={{ padding: 20, gap: 18, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
-            {/* store + title */}
-            <ScalePressable accessibilityRole="link" accessibilityLabel={`Tienda ${p.store.name}`} onPress={() => router.push({ pathname: '/store/[slug]', params: { slug: p.store.slug } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-              <View style={{ width: 30, height: 30, borderRadius: 10, overflow: 'hidden', backgroundColor: t.colors.surfaceSunken }}>
-                {p.store.logo_path ? <Image source={{ uri: storeImage(p.store.logo_path) ?? undefined }} style={{ flex: 1 }} /> : null}
-              </View>
-              <Text variant="label" color="textSecondary" style={{ flex: 1 }}>{p.brand_name ? `${p.brand_name} · ` : ''}{p.store.name}</Text>
-              <Icon name="chevron-right" size={16} color={t.colors.textMuted} />
-            </ScalePressable>
+            {/* brand, title and rating; the store has its own card further down */}
             <View style={{ gap: 6 }}>
+              {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
               <Text variant="displayM" testID="product-title">{p.title}</Text>
               {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
               <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: true })} />
@@ -184,8 +196,14 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <View style={{ gap: 10 }}>
               {/* re-keyed so a variant with another price fades in instead of snapping */}
               <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
-                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} divisas={divisas} />
+                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" vesRate={vesRate} divisas={divisas} onRatePress={rate ? () => setRateOpen(true) : undefined} />
               </Animated.View>
+              {p.is_demo ? (
+                <View testID="product-demo" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 6, borderRadius: t.radii.sm, backgroundColor: t.colors.warningSoft }}>
+                  <Icon name="info" size={14} color={t.colors.warning} />
+                  <Text variant="caption" color="textSecondary" style={{ flexShrink: 1 }}>Producto de demostración: foto y precio de ejemplo, no es una oferta real.</Text>
+                </View>
+              ) : null}
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                 <AvailabilityBadge value={variantSoldOut ? 'sold_out' : p.availability} />
                 {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
@@ -198,8 +216,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               ) : null}
             </View>
 
-            {p.is_demo ? <Banner tone="warning" icon="info" title="Producto de demostración" body="Foto ilustrativa y precio de ejemplo para probar la tienda. No es una oferta real." /> : null}
-
             {/* variants */}
             {p.variants.length > 1 ? (
               <View style={{ gap: 10 }}>
@@ -207,21 +223,34 @@ function ProductView({ product: p }: { product: ProductDetail }) {
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                   {p.variants.map((v) => {
                     const out = v.stock != null && v.stock <= 0;
-                    return <Chip key={v.id} testID={`variant-${v.title}`} label={out ? `${v.title} · agotado` : v.title} selected={variant?.id === v.id} onPress={() => setVariant(v)} />;
+                    const label = `${v.title}${variantPrices ? ` · ${formatUSD(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
+                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} onPress={() => setVariant(v)} />;
                   })}
                 </View>
               </View>
             ) : null}
 
-            {availability.purchasable && !variantSoldOut ? (
+            {canBuy ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text variant="label" color="textSecondary">Cantidad</Text>
                 <Stepper value={qty} max={maxQty} onChange={setQty} />
               </View>
             ) : null}
 
+            <Card style={{ gap: 14 }}>
+              <InfoRow icon="truck" title="Entrega" body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
+              {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Puedes pagar el 100 % o un anticipo del 50 % y el resto cuando llegue a Venezuela." /> : null}
+              <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
+              {methods.data?.length ? <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. El monto exacto lo ves antes de pagar.`} /> : null}
+            </Card>
+
+            <View testID="product-store">
+              <StoreChip store={{ ...p.store, tagline: null, cover_path: null }} overline="Vendido por" />
+            </View>
+
             {p.highlights?.length ? (
               <View style={{ gap: 10 }}>
+                <Text variant="title">Características</Text>
                 {p.highlights.map((h) => (
                   <View key={h} style={{ flexDirection: 'row', gap: 10 }}>
                     <Icon name="check" size={18} color={t.colors.brand} strokeWidth={2.2} />
@@ -234,18 +263,14 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             {p.description ? (
               <View style={{ gap: 8 }}>
                 <Text variant="title">Descripción</Text>
-                <Text color="textSecondary" style={{ lineHeight: 24 }}>{p.description}</Text>
+                <Text color="textSecondary" style={{ lineHeight: 24 }} numberOfLines={longText && !moreText ? 5 : undefined} testID="product-description">{p.description}</Text>
+                {longText ? (
+                  <ScalePressable accessibilityRole="button" hitSlop={8} onPress={() => setMoreText((v) => !v)} style={{ alignSelf: 'flex-start' }}>
+                    <Text variant="label" color="brand">{moreText ? 'Ver menos' : 'Ver más'}</Text>
+                  </ScalePressable>
+                ) : null}
               </View>
             ) : null}
-
-            <Card style={{ gap: 14 }}>
-              <InfoRow icon="truck" title="Entrega" body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
-              {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Puedes pagar el 100 % o un anticipo del 50 % y el resto cuando llegue a Venezuela." /> : null}
-              <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
-              {methods.data?.length ? (
-                <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. En bolívares calculamos el monto al momento de pagar.`} />
-              ) : null}
-            </Card>
           </View>
 
           {p.rating_count > 0 ? (
@@ -304,28 +329,23 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             </Animated.View>
           ) : null}
           {addToCart.error ? <Text variant="caption" color="danger">{(addToCart.error as Error).message}</Text> : null}
-          <Button
-            testID="product-cta"
-            size="lg"
-            full
-            variant={availability.purchasable && !variantSoldOut ? 'primary' : 'secondary'}
-            icon={availability.purchasable && !variantSoldOut ? 'shopping-bag' : 'bell'}
-            loading={addToCart.isPending}
-            title={
-              availability.purchasable && !variantSoldOut
-                ? `${availability.action}${qty > 1 ? ` · ${qty}` : ''}`
-                : p.alert_requested
-                  ? 'Te avisaremos · Cancelar aviso'
-                  : 'Avisarme cuando vuelva'
-            }
-            onPress={onPrimary}
-          />
+          {canBuy ? (
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+              <Button testID="product-add" size="lg" variant="secondary" icon="shopping-bag" title="Agregar" accessibilityLabel="Agregar al carrito" loading={pending === 'add'} disabled={pending === 'buy'} onPress={() => add(false)} style={{ flex: 1 }} />
+              <Button testID="product-cta" size="lg" title={availability.action} loading={pending === 'buy'} disabled={pending === 'add'} onPress={() => add(true)} style={{ flex: 1.3 }} />
+            </View>
+          ) : (
+            <Button testID="product-cta" size="lg" full variant="secondary" icon="bell" title={p.alert_requested ? 'Te avisaremos · Cancelar aviso' : 'Avisarme cuando vuelva'} onPress={toggleAlert} />
+          )}
       </BottomBar>
+      {rate ? <RateSheet rate={rate} visible={rateOpen} onClose={() => setRateOpen(false)} /> : null}
     </View>
   );
 }
 
 const REVIEWS_PAGE = 5;
+/** Longer descriptions start folded at five lines, behind "Ver más". */
+const LONG_DESCRIPTION = 280;
 
 function ProductReviewsSection({ productId }: { productId: string }) {
   const q = useInfiniteQuery({

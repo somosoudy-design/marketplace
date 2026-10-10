@@ -104,7 +104,11 @@ rango ("Estimado entre … y …"), no como promesa.
 
 - Descubrimiento (Inicio, Explorar, Carrito, Cuenta) con barra de pestañas compacta y todas las etiquetas visibles;
   Favoritos se abre con el corazón del encabezado del Inicio y desde Cuenta.
-- Ficha de producto sin barra principal: volver, favorito, compartir y CTA persistente.
+- Ficha de producto sin barra principal: volver, favorito, compartir y barra fija con «Agregar» (se queda en la
+  ficha con un enlace al carrito) y la acción principal («Comprar», «Encargar» o «Reservar»: agrega y abre el
+  carrito). Orden de la ficha: marca, título, calificación, precio (principal; precio especial con Zelle/USDT en
+  píldora; bolívares en una línea discreta que abre la tasa), disponibilidad y plazo, opciones con su precio,
+  cantidad, entrega/compra protegida/pagos, «Vendido por» con reputación, características, descripción, opiniones.
 - Checkout y pago sin distracciones; modales para dirección, acceso y reclamos.
 - Al volver al catálogo se conservan búsqueda, filtros, orden y posición (probado).
 - Atrás de Android con gesto predictivo, gestos de iOS y enlaces profundos (`kora://`, `/p/<slug>`,

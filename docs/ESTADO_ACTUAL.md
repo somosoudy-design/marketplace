@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 02:05Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 02:40Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 
@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `dc93a53` («Publish an update for APK 4: clearer payment picker») |
 | Plan vigente | «Mejora profesional de UI/UX en la app móvil» (Oliver, 2026-10-10 01:30Z): hitos 1 a 5 (abajo). Antes, Directriz maestra 02 |
-| Objetivo actual | Hito 1 de la mejora de UI/UX publicado; sigue el hito 2 (fichas de producto) |
+| Objetivo actual | Hitos 1 y 2 de la mejora de UI/UX publicados; validación en Android de ambos y la tecla «atrás»; sigue el hito 3 |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -51,16 +51,17 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 | Hito | Qué | Estado |
 |---|---|---|
-| 1 | Navegación, Favoritos y accesos al panel | Hecho: cuatro pestañas con nombre (Inicio, Explorar, Carrito, Cuenta); Favoritos es una pantalla aparte que se abre con el corazón junto a la campana del Inicio y desde Cuenta; los accesos «Panel de vendedor» y «Administración» abren https://kora-panel.expo.app (la variable `EXPO_PUBLIC_PANEL_URL` no estaba en el perfil `preview`; va en `UPDATE_ONLY_ENV` del workflow de actualizaciones porque `eas.json` cambia la huella). Runtime sin cambios (`a4682c83…`) |
-| 2 | Fichas de producto y presentación comercial | Siguiente |
-| 3 | Opiniones y calificaciones más visibles (sin reconstruir el sistema) | Pendiente |
+| 1 | Navegación, Favoritos y accesos al panel | Hecho: cuatro pestañas con nombre (Inicio, Explorar, Carrito, Cuenta); Favoritos es una pantalla aparte que se abre con el corazón junto a la campana del Inicio y desde Cuenta; los accesos «Panel de vendedor» y «Administración» abren https://kora-panel.expo.app (la variable `EXPO_PUBLIC_PANEL_URL` no estaba en el perfil `preview`; va en `UPDATE_ONLY_ENV` del workflow de actualizaciones porque `eas.json` cambia la huella). Runtime sin cambios (`a4682c83…`). En el emulador (APK 4 con la actualización): Favoritos abre bien y el recorrido con cuenta pasó, pero «atrás» de Android al salir de Favoritos dejó la app fuera de pantalla; se investiga con los recorridos 03 a 05 |
+| 2 | Fichas de producto y presentación comercial | Hecho en código y pruebas web: marca sobre el título; precio principal con descuento si hay precio anterior; precio especial con Zelle/USDT como píldora verde; bolívares en una línea discreta que abre «Precios y tasa de cambio» (ahora explica el precio en divisas); nota de demostración compacta; cada opción con su precio cuando difieren; tarjeta «Vendido por» con reputación; «Características» y descripción larga plegada; barra con «Agregar» y «Comprar» (agrega y abre el carrito, sin duplicar si ya se agregó). Fórmulas sin tocar |
+| 3 | Opiniones y calificaciones más visibles (sin reconstruir el sistema) | Siguiente |
 | 4 | Preguntas y respuestas, según viabilidad (responder exige pantalla de vendedor: decidir con Oliver) | Pendiente |
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Pendiente |
 
 ## Trabajo en curso
 
-Archivos sin commit: ninguno. Hito 1 commiteado; su actualización se publica al APK 4 y se valida con el
-emulador (recorrido de visitante ampliado: pestañas con nombre y corazón de Favoritos).
+Archivos sin commit: ninguno. Hito 2 commiteado; su actualización se publica al APK 4 y se valida con el
+emulador, junto con los recorridos nuevos de «atrás» (`tests/apk-flows/03` a `05`; el script de recorridos ahora
+copia el logcat de la app cuando uno falla).
 
 Del relevo anterior siguen abiertos: la regla comercial del motor de precios (`pricing.import.configured = false`,
 la define Oliver), push con Firebase (pasos de Oliver, APK 5 con su autorización) y el cambio del repositorio a
@@ -68,10 +69,10 @@ privado (lo hace Oliver).
 
 ## Próxima acción
 
-Hito 2 (fichas): jerarquía foto, título, marca y precio; precio principal frente al precio con Zelle/USDT; la
-equivalencia en bolívares y la tasa, discretas (hito 6 del pedido, sin tocar fórmulas); variantes, cantidad,
-entrega y tienda con su reputación; información progresiva. Archivo principal: `apps/mobile/src/app/product/[id].tsx`
-y `components/ui/Price.tsx`.
+Leer el resultado del emulador (capturas en la rama `ci/capturas`, carpeta `ultima/`): si «atrás» cierra la app,
+corregirlo antes de seguir. Luego hito 3 (opiniones): resumen visible aunque no haya opiniones, con un estado vacío
+natural; calificar fácil tras la entrega; respuestas de la tienda. Archivos: `product/[id].tsx` (sección de
+opiniones) y `components/reviews/Reviews.tsx`.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

@@ -22,7 +22,7 @@ name: Comprador con cuenta hasta la cotización y cancelación
       id: home-search
     timeout: 60000
 
-# 1. visitante agrega el cable (1 m, el precio base)
+# 1. visitante compra el cable (1 m, el precio base): «Comprar» lo agrega y abre el carrito
 - openLink: kora://p/ugreen-cable-usb-c-100w
 - extendedWaitUntil:
     visible:
@@ -30,12 +30,6 @@ name: Comprador con cuenta hasta la cotización y cancelación
     timeout: 30000
 - tapOn:
     id: product-cta
-- extendedWaitUntil:
-    visible:
-      id: added-to-cart
-    timeout: 20000
-- tapOn:
-    id: added-to-cart
 - extendedWaitUntil:
     visible:
       id: cart-continue

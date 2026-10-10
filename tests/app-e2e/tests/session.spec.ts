@@ -22,11 +22,11 @@ test('when the stored session is gone, the app says to sign in instead of blamin
   await page.getByRole('tab', { name: 'Inicio' }).click();
   await page.locator('[data-testid^="product-card-"]').first().click();
   await expect(page.getByTestId('product-title')).toBeVisible();
-  await page.getByTestId('product-cta').click();
+  await page.getByTestId('product-add').click();
   await expect(page.getByText('Inicia sesión para continuar.')).toBeVisible();
 
   // the app falls back to the visitor's: adding works again, and the account tab offers to sign in
-  await page.getByTestId('product-cta').click();
+  await page.getByTestId('product-add').click();
   await expect(page.getByTestId('added-to-cart')).toBeVisible();
   await page.getByTestId('product-back').click();
   await page.getByRole('tab', { name: 'Cuenta' }).click();

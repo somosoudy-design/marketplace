@@ -1,0 +1,48 @@
+# Volver con el botón o gesto «atrás» de Android desde pantallas abiertas encima de Inicio: la ficha de un producto
+# y la de iniciar sesión (campana de un visitante). Debe volver a Inicio, nunca cerrar la app.
+appId: com.example.kora.preview
+name: Volver con atrás de Android
+---
+- launchApp
+- runFlow:
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+
+# la campana de un visitante abre iniciar sesión
+- tapOn:
+    id: home-bell
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 15000
+- back
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- takeScreenshot: volver-01-desde-iniciar-sesion
+
+# una ficha abierta desde una tarjeta de Inicio
+- scrollUntilVisible:
+    element:
+      id: product-card-.*
+    direction: DOWN
+    timeout: 30000
+- tapOn:
+    id: product-card-.*
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 30000
+- back
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- takeScreenshot: volver-02-desde-ficha

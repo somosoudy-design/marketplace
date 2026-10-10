@@ -18,10 +18,12 @@ interface Props {
   full?: boolean;
   style?: StyleProp<ViewStyle>;
   accessibilityHint?: string;
+  /** When the visible title is a short form of the action (defaults to the title). */
+  accessibilityLabel?: string;
   testID?: string;
 }
 
-export function Button({ title, onPress, variant = 'primary', size = 'md', icon, loading, disabled, full, style, accessibilityHint, testID }: Props) {
+export function Button({ title, onPress, variant = 'primary', size = 'md', icon, loading, disabled, full, style, accessibilityHint, accessibilityLabel, testID }: Props) {
   const { colors, radii } = useTheme();
   const palette: Record<Variant, { bg: string; fg: string; border?: string }> = {
     primary: { bg: colors.brand, fg: colors.onBrand },
@@ -37,7 +39,7 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
     <ScalePressable
       testID={testID}
       accessibilityRole="button"
-      accessibilityLabel={title}
+      accessibilityLabel={accessibilityLabel ?? title}
       accessibilityHint={accessibilityHint}
       aria-disabled={!!inactive}
       aria-busy={!!loading}

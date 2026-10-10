@@ -17,21 +17,10 @@ name: Visitante compra sin cuenta
       id: home-search
     timeout: 60000
 
-# Cuatro pestañas con su nombre a la vista; Favoritos se abre con el corazón junto a las notificaciones
+# Cuatro pestañas con su nombre a la vista (Favoritos se abre con el corazón: 04 y 05)
 - assertVisible: Explorar
 - assertVisible: Carrito
 - assertVisible: Cuenta
-- tapOn:
-    id: home-favorites
-- extendedWaitUntil:
-    visible: Guarda lo que te gusta
-    timeout: 15000
-- takeScreenshot: flujo-visitante-01b-favoritos
-- back
-- extendedWaitUntil:
-    visible:
-      id: home-search
-    timeout: 15000
 - scrollUntilVisible:
     element:
       id: home-recommended
@@ -58,7 +47,7 @@ name: Visitante compra sin cuenta
     id: variant-2 m
 - takeScreenshot: flujo-visitante-02-ficha
 - tapOn:
-    id: product-cta
+    id: product-add
 - extendedWaitUntil:
     visible:
       id: added-to-cart
