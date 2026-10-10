@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 13:35 (Caracas, UTC−4), por Codex (UX-04 cerrado, entorno cloud).
+**Última actualización:** 2026-10-10 13:41 (Caracas, UTC−4), por Codex (Frente A V2, entorno cloud).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. UX-04 validado y publicado desde `0a34aae`; cierre documental en el commit de esta actualización. Base de este turno: `9e50d2a` |
-| Plan vigente | Frente A — experiencia del comprador (Oliver, 2026-10-10): primero UX-04; UX-06 espera revisión de UX-04 |
-| Objetivo actual | UX-04 terminado y publicado; espera revisión de Oliver. UX-06 no se inicia hasta esa revisión. APK 5 sigue siendo la base nativa; no generar otro APK |
+| Plan vigente | Frente A V2 (Oliver, 2026-10-10): tarjetas integradas, cabecera, barra expandible e Inicio/descubrimiento; sin Frente B |
+| Objetivo actual | Implementar Frente A V2 sobre UX-04 existente. Pruebas y capturas antes/después; EAS Update solo compatible con APK 5. Sin APK nuevo, motor financiero, backend ni panel |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -99,26 +99,17 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Turno de Codex, 2026-10-10 — UX-04 terminado, espera revisión.** Sin WIP activo. Rama sincronizada
-desde `9e50d2a`, sin WIP previo.
-Revisados `AGENTS.md`, estado, pendientes y últimos cambios. La navegación ya tiene cuatro destinos;
-se conserva esa estructura y el catálogo existente. Decisión: «Buscar» para el destino de búsqueda/filtros,
-frente a Inicio para descubrimiento; retirar el botón de filtros junto al buscador que abre el mismo catálogo.
-Conservar Favoritos, carrito, categorías, filtros y contexto al volver. UX-06 no se inicia hasta revisión de Oliver.
-No cambiar motor financiero, panel, configuración nativa, dependencias ni identidad Electric Violet.
+**Turno de Codex, 2026-10-10 — Frente A V2 en curso.** Base `9e4e1f5`, sincronizada y limpia;
+leídos AGENTS, estado, pendientes y cierre de UX-04. El nuevo pedido amplía el alcance a Inicio y descubrimiento.
+No hay WIP activo de otro agente. Decisiones y alcance: `docs/FRENTE_A_V2.md`.
 
-Comprobación inicial web local: `browse`, `favorites`, `profile-photo` y `store-share`: **10/10** pasan,
-incluidos los últimos cambios de foto de perfil y compartir tiendas. Implementación de UX-04 completa en
-JavaScript y pruebas añadidas en ambos temas (`docs/UX-04.md`). Validación terminada: tipos/lint, núcleo
-50/50, panel unitario 28/28, API 12/12, app 39 aprobadas y 1 omitida por la configuración local de correo,
-panel entre roles 9/9. Se reconstruyó la exportación web; pruebas de búsqueda, filtros y contador pasan
-en claro y oscuro. Capturas revisadas de los cuatro destinos en ambos temas a tamaño Pixel 7 y de Inicio/Buscar
-a 340 px (`.local/ux04/light/`, `.local/ux04/dark/`). Sin prueba física nueva.
+Regresión inicial de UX-04 y últimos cambios: **16/16** (`browse`, `favorites`, `navigation`,
+`profile-photo`, `store-share`). Capturando el antes en `.local/frente-a-v2/before/light/` y `before/dark/`.
+Implementación nueva todavía pendiente. No tocar motor financiero, Supabase remoto, Firebase, panel,
+marca/configuración nativa ni dependencias; sin APK nuevo ni Frente B.
 
-EAS Update publicado: [run 38072209661](https://github.com/somosoudy-design/marketplace/actions/runs/38072209661)
-**Success**, commit `0a34aae`, canal `preview`, Android. El workflow pasó el guard contra el runtime exacto
-de APK 5 y la publicación; comprobado en la página del run. No se generó APK ni se cambió configuración
-nativa, Supabase remoto, motor financiero ni código del panel. No se comprobó aún la recepción en el Samsung.
+UX-04 anterior: catálogo `/explore` llamado Buscar, cuatro destinos, sin botón contiguo redundante de filtros;
+publicado desde `0a34aae`, run 38072209661 en verde. Reutilizarlo, conservar filtros/scroll y navegación de pila.
 
 Pendiente heredado, independiente de UX-04:
 
@@ -139,12 +130,10 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**Esperar la revisión de Oliver de UX-04.** Revisar en el APK 5 actualizado los cuatro destinos, el acceso
-desde el buscador de Inicio, filtros y búsqueda al volver de una ficha, y contador del carrito en claro/oscuro.
-Decisión y evidencia local: `docs/UX-04.md`; regresión: `navigation.spec.ts`.
-Si Oliver pide ajustes, hacerlos sobre lo existente. Solo después de esa revisión retomar UX-06
-(scroll, distribución, banners, tendencias y carruseles), conservando secciones e identidad Electric Violet.
-No rehacer UX-04 ni generar APK nuevo.
+Completar capturas antes; implementar tarjetas/cabecera y barra expandible compartida; pulir las secciones
+existentes de Inicio. Ejecutar tipos/lint y regresiones, revisar claro/oscuro y pantallas pequeñas, capturar después.
+Solo entonces solicitar EAS Update con el guard de runtime APK 5 y verificar su resultado.
+Actualizar este estado, pendientes e historial con commit/push. **No avanzar al Frente B.**
 
 La prueba física heredada sigue pendiente de Oliver: instala el APK 5 encima del APK 4 en su Samsung S24 y prueba los avisos con
 `/mnt/project-files/marketplace/telefono/que-probar.md`. Si dice «listo» sin hacer un pedido, enviarle un aviso de

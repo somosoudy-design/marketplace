@@ -6,14 +6,15 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 13:35 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 13:41 (Caracas, UTC−4).
 
-## Frente A — experiencia del comprador (pedido vigente de Oliver)
+## Frente A V2 — experiencia visual y navegación (pedido vigente de Oliver)
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| UX-04 | Revisar la navegación inferior terminada: Buscar/Explorar, accesos y capacidades | Espera revisión de Oliver | Implementado, probado en claro/oscuro y 340 px, publicado al APK 5 por EAS Update (`0a34aae`, run 38072209661 en verde). Inicio · Buscar · Carrito · Cuenta; retirado botón redundante junto al buscador. `docs/UX-04.md`; no duplicar el trabajo |
-| UX-06 | Inicio y descubrimiento: scroll, distribución, banners, tendencias y carruseles | Espera revisión de UX-04 | No iniciar todavía; aprovechar secciones existentes y mantener Electric Violet |
+| A-V2 | Tarjetas integradas, cabecera con datos reales, barra expandible e Inicio/descubrimiento | En curso (Codex) | Base UX-04 `9e4e1f5`; regresión inicial 16/16. `docs/FRENTE_A_V2.md`. Capturas antes/después, claro/oscuro y pantallas pequeñas. EAS Update solo APK 5; sin APK nuevo, backend, motor financiero, panel ni Frente B |
+| UX-04 | Navegación anterior: Buscar, filtros y contexto | Implementado; base de V2 | No duplicar el catálogo `/explore` ni sus capacidades. Historial y decisiones en `docs/UX-04.md` |
+| UX-06 | Inicio y descubrimiento | Incluido en A-V2 | El nuevo pedido autoriza pulir las secciones existentes; mantener Electric Violet y contenido real |
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
