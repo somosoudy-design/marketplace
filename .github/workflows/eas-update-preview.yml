@@ -38,9 +38,14 @@ jobs:
       - name: Dependencias
         run: pnpm install --frozen-lockfile
 
+      # The preview profile's variables, the same the APK was built with. eas.json is part of the fingerprint, so a
+      # public value added after APK 4 (the published panel) goes in UPDATE_ONLY_ENV until the next APK carries it in
+      # eas.json, which then wins.
       - name: Variables del perfil preview (las mismas del APK)
         working-directory: apps/mobile
-        run: node -e "for (const [k, v] of Object.entries(require('./eas.json').build.preview.env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
+        env:
+          UPDATE_ONLY_ENV: '{"EXPO_PUBLIC_PANEL_URL":"https://kora-panel.expo.app"}'
+        run: node -e "const env = { ...JSON.parse(process.env.UPDATE_ONLY_ENV), ...require('./eas.json').build.preview.env }; for (const [k, v] of Object.entries(env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
 
       # An update only reaches APKs with the same fingerprint; a native change (icon, splash, a native module) makes
       # it unreachable. The request names the runtime of the installed APKs, and the job stops if it no longer matches.

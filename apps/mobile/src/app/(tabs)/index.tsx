@@ -151,12 +151,13 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
     <View>
       <View style={{ height: insets.top + 6 }} />
 
-      {/* compact masthead: who we are, and the one thing that can need attention */}
+      {/* compact masthead: who we are, what you saved and the one thing that can need attention */}
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, marginBottom: 12, minHeight: 44 }}>
         <View style={{ flex: 1 }}>
           <Wordmark />
           <Text variant="caption" color="textMuted" numberOfLines={1}>{firstName ? `Hola, ${firstName}` : brand.tagline}</Text>
         </View>
+        <IconButton testID="home-favorites" icon="heart" label="Favoritos" tone="surface" size={42} onPress={() => router.push('/favorites')} style={{ marginRight: 8 }} />
         <View>
           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} tone="surface" size={42} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
           {unread ? <View style={{ position: 'absolute', right: 9, top: 9, width: 9, height: 9, borderRadius: 5, backgroundColor: t.colors.accent, borderWidth: 1.5, borderColor: t.colors.surface }} /> : null}

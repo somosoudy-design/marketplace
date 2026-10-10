@@ -10,11 +10,10 @@ import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
 
 export const ErrorBoundary = ScreenErrorBoundary;
 
-// Web has no system tab bar: a custom bottom bar with the same five destinations.
-const TABS: { name: string; href: '/' | '/explore' | '/favorites' | '/cart' | '/account'; label: string; icon: IconName }[] = [
+// Web has no system tab bar: a custom bottom bar with the same four destinations.
+const TABS: { name: string; href: '/' | '/explore' | '/cart' | '/account'; label: string; icon: IconName }[] = [
   { name: 'index', href: '/', label: 'Inicio', icon: 'house' },
   { name: 'explore', href: '/explore', label: 'Explorar', icon: 'search' },
-  { name: 'favorites', href: '/favorites', label: 'Favoritos', icon: 'heart' },
   { name: 'cart', href: '/cart', label: 'Carrito', icon: 'shopping-bag' },
   { name: 'account', href: '/account', label: 'Cuenta', icon: 'user' },
 ];

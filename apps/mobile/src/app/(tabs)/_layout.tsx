@@ -7,6 +7,8 @@ export const ErrorBoundary = ScreenErrorBoundary;
 
 // System tab bar (UITabBarController / Material bottom navigation). Product, checkout and other flows are pushed on
 // the root stack, so the tab bar is naturally hidden there and each tab keeps its scroll and filters underneath.
+// Four destinations, each with its label (Material hides the labels of unselected items by default). Favorites is
+// a saved list rather than a place to browse: it opens from the heart next to notifications and from Account.
 export default function TabsLayout() {
   const { colors } = useTheme();
   const cartCount = useCartCount();
@@ -16,6 +18,7 @@ export default function TabsLayout() {
       indicatorColor={colors.brandSoft}
       tintColor={colors.brand}
       labelStyle={{ selected: { color: colors.brand } }}
+      labelVisibilityMode="labeled"
       minimizeBehavior="onScrollDown"
     >
       <NativeTabs.Trigger name="index">
@@ -25,10 +28,6 @@ export default function TabsLayout() {
       <NativeTabs.Trigger name="explore">
         <NativeTabs.Trigger.Label>Explorar</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="magnifyingglass" md="search" />
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="favorites">
-        <NativeTabs.Trigger.Label>Favoritos</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf={{ default: 'heart', selected: 'heart.fill' }} md="favorite" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="cart">
         <NativeTabs.Trigger.Label>Carrito</NativeTabs.Trigger.Label>

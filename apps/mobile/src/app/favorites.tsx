@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { FlatList, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MAX_CONTENT, ProductCard, useGridColumns } from '@/components/catalog/ProductGrid';
 import { ProductCardSkeleton } from '@/components/ui/Skeleton';
 import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
@@ -11,26 +10,31 @@ import { useFavorites } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 
+// Saved products. A pushed screen (the stack header carries the title), opened from the heart next to notifications
+// on Home and from Account.
 export default function FavoritesScreen() {
   const t = useTheme();
-  const insets = useSafeAreaInsets();
   const grid = useGridColumns();
   const { user } = useAuth();
   const fav = useFavorites();
   const products = useQuery({ queryKey: ['favorite-products', [...fav.ids].sort().join(',')], queryFn: api.account.favoriteProducts, enabled: !!user });
-  const header = <Text variant="displayL" style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 16 }}>Favoritos</Text>;
 
   if (!user) {
     return (
       <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-        {header}
         <EmptyState icon="heart" title="Guarda lo que te gusta" body="Inicia sesión para guardar productos y recibir avisos cuando vuelvan a estar disponibles." action="Iniciar sesión" onAction={() => router.push('/sign-in')} />
       </View>
     );
   }
   const items = (products.data ?? []).filter((p) => fav.ids.has(p.id));
+  const header = items.length ? (
+    <Text variant="bodySmall" color="textMuted" style={{ paddingHorizontal: 16, paddingTop: 14, paddingBottom: 14 }} testID="favorites-count">
+      {items.length === 1 ? '1 producto guardado' : `${items.length} productos guardados`}
+    </Text>
+  ) : <View style={{ height: 16 }} />;
   return (
     <FlatList
+      testID="favorites-list"
       key={grid.columns}
       data={items}
       numColumns={grid.columns}

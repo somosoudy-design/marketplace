@@ -12,7 +12,7 @@ import { Card, Divider, ListRow } from '@/components/ui/Layout';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { useOrders, useProfile, useSupport, useUnreadCount } from '@/lib/hooks';
+import { useFavorites, useOrders, useProfile, useSupport, useUnreadCount } from '@/lib/hooks';
 import { useTheme } from '@/theme';
 
 const PANEL_URL = process.env.EXPO_PUBLIC_PANEL_URL ?? '';
@@ -27,6 +27,7 @@ export default function AccountScreen() {
   const orders = useOrders();
   const unread = useUnreadCount();
   const support = useSupport();
+  const fav = useFavorites();
   const open = (orders.data ?? []).filter((o) => o.status === 'placed' || o.status === 'in_progress').length;
 
   return (
@@ -55,6 +56,8 @@ export default function AccountScreen() {
           </View>
           <Card padded={false}>
             <ListRow testID="account-orders" icon="receipt" title="Mis pedidos" subtitle={open ? `${open} en curso` : 'Historial y seguimiento'} onPress={() => router.push('/orders')} />
+            <Divider inset={52} />
+            <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle={fav.ids.size ? (fav.ids.size === 1 ? '1 producto guardado' : `${fav.ids.size} productos guardados`) : 'Lo que guardas con el corazón'} onPress={() => router.push('/favorites')} />
             <Divider inset={52} />
             <ListRow icon="map-pin" title="Direcciones" subtitle="Dónde recibes tus compras" onPress={() => router.push('/addresses')} />
             <Divider inset={52} />

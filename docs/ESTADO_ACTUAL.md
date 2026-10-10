@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 00:45Z, por Claude (sesión en la nube, presupuesto limitado).
+**Última actualización:** 2026-10-10 02:05Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Antes de este checkpoint era `dc93a53` («Publish an update for APK 4: clearer payment picker») |
-| Plan vigente | Directriz maestra 02 de Oliver: hitos A a E (abajo) |
-| Objetivo actual | Relevo del 2026-10-09 23Z: Android (D/E), panel publicado (hecho), push, imágenes a Storage, motor de precios |
+| Plan vigente | «Mejora profesional de UI/UX en la app móvil» (Oliver, 2026-10-10 01:30Z): hitos 1 a 5 (abajo). Antes, Directriz maestra 02 |
+| Objetivo actual | Hito 1 de la mejora de UI/UX publicado; sigue el hito 2 (fichas de producto) |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -42,27 +42,36 @@
   sin código cuando el proyecto lo permite, etiquetas legibles sobre fotos en oscuro, selector de pago nuevo.
 - En local, con el stack sin Docker: todas las suites en verde en esta sesión (ver «Pruebas»).
 
-## Trabajo en curso (2026-10-10 00:45Z)
+## Mejora de UI/UX (plan vigente)
 
-Archivos sin commit: ninguno.
+Pedido de Oliver del 2026-10-10 01:30Z: perfeccionar la app sin rediseñarla ni cambiar la identidad, por hitos, con
+commit y push al cerrar cada uno y publicación solo por EAS Update compatible con el APK 4 (un APK nuevo, solo con
+su autorización). Restricciones: no tocar el motor de precios, ni iOS, ni Firebase, ni agregar funciones al panel,
+ni borrar datos demo, ni hacer la interfaz más compacta.
 
-- **Motor de precios: técnicamente terminado y publicado en pruebas** (base, panel, app vía EAS Update, emulador rev. 12
-  en verde). Último ajuste: el precio en divisas es una elección por método en Configuración › Métodos de pago;
-  efectivo y PayPal vuelven al precio principal hasta que Oliver decida (migración `20261010003308`, aplicada). Panel
-  con «Recargo sobre el costo total» vs «margen sobre venta» y qué se recibe por método. Pruebas: db 83/83, panel 9/9.
-  **La regla comercial sigue sin activar** (`pricing.import.configured = false`, valores de ejemplo): la define Oliver.
-- **Push:** código completo; `app.config.ts` toma `GOOGLE_SERVICES_JSON` (variable de archivo de EAS) sin cambiar el
-  runtime del APK 4. Faltan los pasos de Oliver en `docs/SERVICIOS_EXTERNOS.md` («Notificaciones push») y su
-  autorización para el APK 5.
-- **Repo privado:** autorizado; lo cambia Oliver (la sesión no puede escribir ajustes de GitHub).
+| Hito | Qué | Estado |
+|---|---|---|
+| 1 | Navegación, Favoritos y accesos al panel | Hecho: cuatro pestañas con nombre (Inicio, Explorar, Carrito, Cuenta); Favoritos es una pantalla aparte que se abre con el corazón junto a la campana del Inicio y desde Cuenta; los accesos «Panel de vendedor» y «Administración» abren https://kora-panel.expo.app (la variable `EXPO_PUBLIC_PANEL_URL` no estaba en el perfil `preview`; va en `UPDATE_ONLY_ENV` del workflow de actualizaciones porque `eas.json` cambia la huella). Runtime sin cambios (`a4682c83…`) |
+| 2 | Fichas de producto y presentación comercial | Siguiente |
+| 3 | Opiniones y calificaciones más visibles (sin reconstruir el sistema) | Pendiente |
+| 4 | Preguntas y respuestas, según viabilidad (responder exige pantalla de vendedor: decidir con Oliver) | Pendiente |
+| 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Pendiente |
+
+## Trabajo en curso
+
+Archivos sin commit: ninguno. Hito 1 commiteado; su actualización se publica al APK 4 y se valida con el
+emulador (recorrido de visitante ampliado: pestañas con nombre y corazón de Favoritos).
+
+Del relevo anterior siguen abiertos: la regla comercial del motor de precios (`pricing.import.configured = false`,
+la define Oliver), push con Firebase (pasos de Oliver, APK 5 con su autorización) y el cambio del repositorio a
+privado (lo hace Oliver).
 
 ## Próxima acción
 
-1. Con Oliver: recargo, flete por kg, gastos logísticos, terminación, si efectivo/PayPal llevan precio en divisas; luego
-   marcar «Regla revisada» en Configuración.
-2. Cuando Oliver complete Firebase y lo autorice: APK 5 (`NATIVE_IDENTITY = 'violet'`, `.github/apk-preview-request`),
-   actualizar `runtime:` de `.github/eas-update-request`, emulador y prueba real de un aviso.
-3. Tras el cambio a privado: una corrida de `panel-deploy` y una del emulador para confirmar Actions.
+Hito 2 (fichas): jerarquía foto, título, marca y precio; precio principal frente al precio con Zelle/USDT; la
+equivalencia en bolívares y la tasa, discretas (hito 6 del pedido, sin tocar fórmulas); variantes, cantidad,
+entrega y tienda con su reputación; información progresiva. Archivo principal: `apps/mobile/src/app/product/[id].tsx`
+y `components/ui/Price.tsx`.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

@@ -75,6 +75,7 @@ function RootStack() {
           <Stack.Screen name="addresses/index" options={{ title: 'Direcciones' }} />
           <Stack.Screen name="addresses/edit" options={{ title: 'Dirección', presentation: 'modal' }} />
           <Stack.Screen name="notifications" options={{ title: 'Notificaciones' }} />
+          <Stack.Screen name="favorites" options={{ title: 'Favoritos' }} />
           <Stack.Screen name="settings" options={{ title: 'Preferencias y privacidad' }} />
           <Stack.Screen name="diagnostico" options={{ title: 'Diagnóstico' }} />
           <Stack.Screen name="claim/[fulfillmentId]" options={{ title: 'Reclamo' }} />

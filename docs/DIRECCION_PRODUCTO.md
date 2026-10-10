@@ -45,8 +45,10 @@ terceros y no se suben al repositorio (están en los archivos del proyecto de Cl
 
 ## Navegación contextual
 
-- En pantallas de exploración: navegación principal discreta (pestañas Inicio, Explorar, Favoritos, Carrito,
-  Cuenta).
+- En pantallas de exploración: navegación principal discreta, cuatro pestañas con nombre (Inicio, Explorar,
+  Carrito, Cuenta). Favoritos es una lista guardada, no un lugar para explorar: se abre con el corazón junto a
+  las notificaciones en el Inicio y desde Cuenta (decisión de Oliver, 2026-10-10). No se rellena el hueco con otra
+  pestaña.
 - En la ficha de producto: sin navegación innecesaria; fotografía, información relevante y la acción de
   compra fija abajo.
 - En el checkout: menos distracciones, pasos numerados y el total con su botón fijos abajo.

@@ -102,7 +102,8 @@ rango ("Estimado entre … y …"), no como promesa.
 
 ## Navegación
 
-- Descubrimiento (Inicio, Explorar, Favoritos, Carrito, Cuenta) con barra de pestañas compacta.
+- Descubrimiento (Inicio, Explorar, Carrito, Cuenta) con barra de pestañas compacta y todas las etiquetas visibles;
+  Favoritos se abre con el corazón del encabezado del Inicio y desde Cuenta.
 - Ficha de producto sin barra principal: volver, favorito, compartir y CTA persistente.
 - Checkout y pago sin distracciones; modales para dirección, acceso y reclamos.
 - Al volver al catálogo se conservan búsqueda, filtros, orden y posición (probado).

@@ -10,7 +10,7 @@ if (!/^https?:\/\//.test(deployment)) {
   console.log('No hubo URL de publicación.');
   process.exit(1);
 }
-const pages = ['/', '/login', '/admin', '/admin/pedidos', '/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000', '/admin/tasas'];
+const pages = ['/', '/login', '/admin', '/vendedor', '/admin/pedidos', '/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000', '/admin/tasas'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const get = async (url) => {
   for (let i = 0; i < 4; i++) {

@@ -227,6 +227,12 @@ mismo **runtime** (huella de la parte nativa). Hoy: `a4682c83c1bb738fc74c7315383
 3. Si no coincide, algo nativo cambió (dependencia nativa, permisos, icono, `app.config.ts`): hace falta un APK
    nuevo y que los testers lo instalen. El workflow se detiene solo para no publicar algo incompatible.
 
+**`apps/mobile/eas.json` es parte de la huella.** Agregarle una variable cambia el runtime aunque solo sea un valor
+público de JavaScript. Las variables `EXPO_PUBLIC_*` que una actualización necesita y el APK 4 no traía van en
+`UPDATE_ONLY_ENV` del paso «Variables del perfil preview» de `eas-update-preview.yml` (hoy:
+`EXPO_PUBLIC_PANEL_URL=https://kora-panel.expo.app`, el panel publicado). Al compilar el próximo APK, pásalas a
+`build.preview.env` de `eas.json` (allí ganan) y vacía `UPDATE_ONLY_ENV`.
+
 El icono, el splash y el color de notificación siguen la constante `NATIVE_IDENTITY` de
 `apps/mobile/app.config.ts`: `'original'` mientras se actualiza el APK 4; `'violet'` en el próximo APK.
 
