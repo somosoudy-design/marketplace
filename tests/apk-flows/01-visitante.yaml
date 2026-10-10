@@ -17,7 +17,7 @@ name: Visitante compra sin cuenta
       id: home-search
     timeout: 60000
 
-# Cuatro pestañas con su nombre a la vista (Favoritos se abre con el corazón: 04 y 05)
+# Cuatro pestañas con su nombre a la vista (Favoritos se abre con el corazón: 01b y 01c)
 - assertVisible: Explorar
 - assertVisible: Carrito
 - assertVisible: Cuenta
@@ -46,6 +46,13 @@ name: Visitante compra sin cuenta
 - tapOn:
     id: variant-2 m
 - takeScreenshot: flujo-visitante-02-ficha
+# la sección de opiniones está siempre, con o sin opiniones
+- scrollUntilVisible:
+    element:
+      id: product-reviews
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: flujo-visitante-02b-opiniones
 - tapOn:
     id: product-add
 - extendedWaitUntil:
@@ -54,9 +61,10 @@ name: Visitante compra sin cuenta
     timeout: 20000
 - takeScreenshot: flujo-visitante-03-agregado
 
-# Carrito de visitante (variante de 2 m: 12 USD)
+# Carrito de visitante (variante de 2 m: 12 USD). «Comprar» justo después de «Agregar» abre el carrito sin sumar
+# otra unidad (el aviso «Agregado» dura unos segundos y en un emulador lento puede irse antes del toque)
 - tapOn:
-    id: added-to-cart
+    id: product-cta
 - extendedWaitUntil:
     visible:
       id: cart-subtotal

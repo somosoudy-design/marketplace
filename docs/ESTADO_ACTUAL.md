@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 02:40Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 02:35Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 

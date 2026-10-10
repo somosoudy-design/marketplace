@@ -1,5 +1,6 @@
 # Volver con el botón o gesto «atrás» de Android desde pantallas abiertas encima de Inicio: la ficha de un producto
 # y la de iniciar sesión (campana de un visitante). Debe volver a Inicio, nunca cerrar la app.
+# Corre antes de 02-cuenta: necesita la app sin sesión (la cuenta de 02 queda abierta).
 appId: com.example.kora.preview
 name: Volver con atrás de Android
 ---

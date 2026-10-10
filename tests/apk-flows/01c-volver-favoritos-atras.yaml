@@ -1,6 +1,7 @@
-# Favoritos (pantalla nueva del hito 1 de UI/UX) se cierra con la flecha del encabezado y vuelve a Inicio.
+# Favoritos se cierra también con el botón o gesto «atrás» de Android y vuelve a Inicio, sin cerrar la app.
+# Corre antes de 02-cuenta: necesita la app sin sesión (la cuenta de 02 queda abierta).
 appId: com.example.kora.preview
-name: Volver de Favoritos con la flecha
+name: Volver de Favoritos con atrás de Android
 ---
 - launchApp
 - runFlow:
@@ -17,11 +18,10 @@ name: Volver de Favoritos con la flecha
 - extendedWaitUntil:
     visible: Guarda lo que te gusta
     timeout: 15000
-# la flecha del encabezado nativo (arriba a la izquierda)
-- tapOn:
-    point: 7%,8%
+- takeScreenshot: flujo-visitante-01b-favoritos
+- back
 - extendedWaitUntil:
     visible:
       id: home-search
     timeout: 15000
-- takeScreenshot: volver-03-favoritos-flecha
+- takeScreenshot: volver-04-favoritos-atras

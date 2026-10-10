@@ -40,8 +40,8 @@ for flow in tests/apk-flows/*.yaml; do
     # whether the app crashed, was closed by a back press or stopped answering
     echo "-- logcat de la app --" >>"$report"
     adb logcat -d -b crash 2>/dev/null | grep -E "FATAL|Exception|Error|at " | head -25 >>"$report"
-    adb logcat -d 2>/dev/null | grep -E "ReactNativeJS|AndroidRuntime|$PKG|ActivityTaskManager|WindowManager: .*kora" \
-      | grep -iE "error|exception|fatal|died|finish|destroy|back|crash|ANR" | head -25 >>"$report"
+    adb logcat -d 2>/dev/null | grep -vE " I Maestro|ConnectivityService" | grep -E "ReactNativeJS|AndroidRuntime|$PKG|ActivityTaskManager|lowmemorykiller|lmkd" \
+      | grep -iE "error|exception|fatal|died|finish|destroy|back|crash|ANR|kill" | cut -c1-240 | head -25 >>"$report"
     status=1
   fi
 done

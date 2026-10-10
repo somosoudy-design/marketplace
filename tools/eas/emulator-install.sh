@@ -16,6 +16,9 @@ for apk in apks/*.apk; do
     echo '```'
     "$BT/zipalign" -c -p 4 "$apk" >/dev/null 2>&1 && echo "zipalign 4 KB (librerías alineadas a página): sí" || echo "zipalign 4 KB: NO"
     "$BT/zipalign" -c -P 16 4 "$apk" >/dev/null 2>&1 && echo "zipalign 16 KB: sí" || echo "zipalign 16 KB: no"
+    # the Android back press reaches the app only if it registers for it: with predictive back on, React Native does
+    # so from targetSdk 36 (ReactActivity); below that the system's own back closes the app
+    echo "manifiesto: $("$BT/aapt2" dump badging "$apk" 2>/dev/null | grep -oE "(sdkVersion|targetSdkVersion):'[0-9]+'" | tr '\n' ' ')$("$BT/aapt2" dump xmltree --file AndroidManifest.xml "$apk" 2>/dev/null | grep -oE 'enableOnBackInvokedCallback[^ ]*=[^ ]*' | head -1)"
     adb uninstall "$PKG" >/dev/null 2>&1
     echo "instalación limpia: $(adb install "$apk" 2>&1 | tr -d '\r' | tail -1)"
     if adb shell pm path "$PKG" >/dev/null 2>&1; then

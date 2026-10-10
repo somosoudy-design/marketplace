@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 03:00Z.
+**Última revisión:** 2026-10-10 02:35Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
