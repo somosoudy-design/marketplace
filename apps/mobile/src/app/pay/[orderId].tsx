@@ -10,6 +10,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SummaryRow } from '@/components/checkout/Rows';
+import { RateSheet } from '@/components/RateSheet';
 import { BottomBar } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
 import { Icon, type IconName } from '@/components/ui/Icon';
@@ -22,7 +23,7 @@ import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
 import { SOURCE_LABEL, shortDate, shortDateTime } from '@/lib/format';
 import { haptics } from '@/lib/haptics';
-import { useDivisas, useOrder, usePaymentMethods, useVesRate } from '@/lib/hooks';
+import { useDivisas, useOrder, usePaymentMethods, useRateStatus, useVesRate } from '@/lib/hooks';
 import { intentKey } from '@/lib/ids';
 import { qk } from '@/lib/query';
 import { api } from '@/lib/supabase';
@@ -186,6 +187,8 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
   const t = useTheme();
   const vesRate = useVesRate();
   const divisas = useDivisas();
+  const rate = useRateStatus().data;
+  const [rateOpen, setRateOpen] = useState(false);
   /** What the method will ask for, as a reference (the quote of the next step is exact): bolívares at today's BCV
    * rate, or the divisas price through today's gap (docs/PRECIOS.md). Null when there is nothing current to show. */
   const estimate = (m: PaymentMethod): { amount: string; saving: number | null } | null => {
@@ -199,9 +202,16 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
       <View style={{ gap: 4 }}>
         <Text variant="title">Elige cómo pagar</Text>
         <Text variant="bodySmall" color="textSecondary">
-          Ahora pagas {formatUSD(amountUsd)} a tasa BCV. En bolívares lo convertimos con la tasa del momento{divisas ? `; con ${divisas.label} pagas menos, por la brecha del día` : ''}.
+          Cada método muestra cuánto pagas{divisas ? `; con ${divisas.label} pagas menos` : ''}. El monto exacto lo ves en el siguiente paso.
         </Text>
+        {rate ? (
+          <Pressable testID="pay-rate-info" onPress={() => setRateOpen(true)} hitSlop={8} accessibilityRole="button" style={{ alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 2 }}>
+            <Icon name="info" size={14} color={t.colors.brand} />
+            <Text variant="label" color="brand">Cómo calculamos los montos</Text>
+          </Pressable>
+        ) : null}
       </View>
+      {rate ? <RateSheet rate={rate} visible={rateOpen} onClose={() => setRateOpen(false)} /> : null}
       {METHOD_GROUPS.map((g) => {
         const list = methods.filter(g.match);
         if (!list.length) return null;
@@ -297,7 +307,9 @@ function useCountdown(expiresAt: string) {
     return () => clearInterval(id);
   }, []);
   const ms = new Date(expiresAt).getTime() - now;
-  return { expired: ms <= 0, label: ms <= 0 ? '0:00' : `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, '0')}`, ms };
+  // minutes and seconds while it matters; long validities (divisas quotes can last a day) read in hours
+  const label = ms <= 0 ? '0:00 min' : ms >= 3_600_000 ? `${Math.floor(ms / 3_600_000)} h ${Math.floor((ms % 3_600_000) / 60000)} min` : `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, '0')} min`;
+  return { expired: ms <= 0, label, ms };
 }
 
 function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitted }: { quote: PaymentQuote; onRequote: () => void; requoting: boolean; onChangeMethod: () => void; onSubmitted: (number: string, online?: string) => void }) {
@@ -305,6 +317,8 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const countdown = useCountdown(q.expires_at);
+  // the gap and its two rates stay one tap away: the amount and the saving are what the buyer acts on
+  const [showMath, setShowMath] = useState(false);
   const [reference, setReference] = useState('');
   const [payerBank, setPayerBank] = useState('');
   const [proof, setProof] = useState<{ uri: string; path?: string; uploading?: boolean } | null>(null);
@@ -368,26 +382,32 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
           </View>
         </Pressable>
         {isVes ? (
-          <Text variant="bodySmall" color="textSecondary" testID="quote-rate">
+          <Text variant="caption" color="textMuted" testID="quote-rate">
             {formatUSD(D(q.base_usd).plus(q.fee_usd))} × {formatRate(q.rate_applied)} · {SOURCE_LABEL[q.rate_source] ?? q.rate_source}, {shortDateTime(q.rate_observed_at)}
           </Text>
         ) : q.divisas ? (
           // verifiable: the price at the BCV rate and the two rates of the day's gap that turn it into this amount
-          <View style={{ gap: 2 }} testID="quote-divisas">
+          <View style={{ gap: 4 }} testID="quote-divisas">
             <Text variant="bodySmall" color="success">
-              Precio en divisas: {formatUSD(q.divisas.main_usd)} a tasa BCV, {String(D(1).minus(D(q.amount_due).div(q.divisas.main_usd)).times(100).toDecimalPlaces(1)).replace('.', ',')} % menos
+              Precio en divisas: {String(D(1).minus(D(q.amount_due).div(q.divisas.main_usd)).times(100).toDecimalPlaces(1)).replace('.', ',')} % menos que {formatUSD(q.divisas.main_usd)} a tasa BCV
             </Text>
-            <Text variant="caption" color="textMuted">
-              Brecha del día {String(D(q.divisas.gap_pct).toDecimalPlaces(2)).replace('.', ',')} %: dólar BCV a {formatMoney(q.divisas.bcv_rate, 'VES')} y USDT a {formatMoney(q.divisas.usdt_ves_rate, 'VES')} ({shortDateTime(q.divisas.taken_at)}){Number(q.fee_usd) > 0 ? ` · incluye comisión de ${formatUSD(q.fee_usd)}` : ''}
-            </Text>
+            {showMath ? (
+              <Text variant="caption" color="textMuted" testID="quote-divisas-math">
+                Brecha del día {String(D(q.divisas.gap_pct).toDecimalPlaces(2)).replace('.', ',')} %: dólar BCV a {formatMoney(q.divisas.bcv_rate, 'VES')} y USDT a {formatMoney(q.divisas.usdt_ves_rate, 'VES')} ({shortDateTime(q.divisas.taken_at)}){Number(q.fee_usd) > 0 ? ` · incluye comisión de ${formatUSD(q.fee_usd)}` : ''}
+              </Text>
+            ) : (
+              <Pressable testID="quote-divisas-more" onPress={() => setShowMath(true)} hitSlop={8} accessibilityRole="button" style={{ alignSelf: 'flex-start' }}>
+                <Text variant="label" color="brand">Ver cálculo</Text>
+              </Pressable>
+            )}
           </View>
         ) : Number(q.fee_usd) > 0 ? (
           <Text variant="bodySmall" color="textSecondary">Incluye comisión del método de {formatUSD(q.fee_usd)}</Text>
         ) : null}
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Icon name="clock" size={16} color={countdown.expired ? t.colors.danger : t.colors.textMuted} />
-          <Text variant="caption" color={countdown.expired ? 'danger' : 'textMuted'} testID="quote-expiry">
-            {countdown.expired ? 'Este monto expiró. Actualízalo antes de pagar.' : `Monto válido por ${countdown.label} min. Después lo recalculamos con la tasa vigente.`}
+          <Text variant="caption" color={countdown.expired ? 'danger' : 'textMuted'} testID="quote-expiry" style={{ flex: 1 }}>
+            {countdown.expired ? 'Este monto expiró. Actualízalo antes de pagar.' : `Monto válido por ${countdown.label}. Después lo recalculamos con la tasa vigente.`}
           </Text>
         </View>
         {countdown.expired ? <Button testID="quote-refresh" title="Actualizar monto" icon="refresh-cw" loading={requoting} onPress={onRequote} /> : null}

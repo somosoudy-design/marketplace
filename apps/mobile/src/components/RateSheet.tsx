@@ -102,7 +102,7 @@ export function RateSheet({ rate: r, visible, onClose }: { rate: RateStatus; vis
           <Point icon="tag" text="Los precios se publican en dólares (USD)." />
           <Point icon="banknote" text="Si pagas en bolívares, el monto se calcula con la tasa vigente al generar el pago y queda fijo durante el tiempo que te indicamos en ese paso." />
           {saving >= 0.1 ? (
-            <Point icon="coins" text={`Con ${divisas!.label} pagas el precio en divisas, hoy ${saving.toFixed(1).replace('.', ',')} % menos: el precio principal sin la diferencia del día entre la tasa BCV y el mercado. El monto exacto lo ves al elegir el método.`} />
+            <Point icon="coins" text={`Con ${divisas!.label} pagas el precio en divisas, hoy al menos ${saving.toFixed(1).replace('.', ',')} % menos: el precio principal sin la diferencia del día entre la tasa BCV y el mercado. El monto exacto lo ves al elegir el método.`} />
           ) : (
             <Point icon="coins" text="En USDT se aplica la tasa USD/USDT de ese momento. Si un método cobra comisión, la ves antes de pagar." />
           )}
