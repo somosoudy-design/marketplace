@@ -1,16 +1,17 @@
 import type { StoreProfile } from '@kora/api';
 import { storeAccents } from '@kora/design-tokens';
 import { useQuery } from '@tanstack/react-query';
+import * as Clipboard from 'expo-clipboard';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { Platform, Share, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Catalog } from '@/components/catalog/Catalog';
 import { MAX_CONTENT } from '@/components/catalog/ProductGrid';
+import { StoreBadge, storeTier } from '@/components/catalog/StoreBadge';
 import { RatingInline, ReviewItem } from '@/components/reviews/Reviews';
-import { Badge } from '@/components/ui/Badge';
 import { CollapsingHeader, useScrollY } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -21,7 +22,10 @@ import { Sheet } from '@/components/ui/Sheet';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { EmptyState, ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
+import { brand } from '@/lib/brand';
 import { monthYear } from '@/lib/format';
+import { haptics } from '@/lib/haptics';
+import { appOnlyLinks, storeLink } from '@/lib/links';
 import { qk } from '@/lib/query';
 import { api, storeImage } from '@/lib/supabase';
 import { useTheme } from '@/theme';
@@ -40,6 +44,7 @@ export default function StoreScreen() {
   const s = q.data;
   const scroll = useScrollY();
   const coverHeight = Math.min(width, MAX_CONTENT) * (9 / 16);
+  const [sharing, setSharing] = useState(false);
 
   useEffect(() => {
     if (s?.id) void api.catalog.track('store_view', { storeId: s.id });
@@ -73,7 +78,14 @@ export default function StoreScreen() {
         categorySlugs={s?.categories.map((c) => c.slug) ?? []}
         onScroll={scroll.onScroll}
       />
-      <CollapsingHeader y={scroll.y} threshold={coverHeight} title={s?.name} left={back} />
+      <CollapsingHeader
+        y={scroll.y}
+        threshold={coverHeight}
+        title={s?.name}
+        left={back}
+        right={s ? <IconButton testID="store-share" icon="share-2" label="Compartir tienda" tone="glass" onPress={() => setSharing(true)} /> : undefined}
+      />
+      {s ? <ShareStoreSheet store={s} visible={sharing} onClose={() => setSharing(false)} /> : null}
     </View>
   );
 }
@@ -84,7 +96,6 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
   const [expanded, setExpanded] = useState(false);
   const accent = s ? (storeAccents[s.accent as keyof typeof storeAccents] ?? t.colors.brand) : t.colors.surfaceSunken;
   const policies = Object.entries(s?.policies ?? {}).filter(([, v]) => !!v);
-  const verified = s?.kind === 'platform' ? <Badge label="Tienda oficial" tone="brand" /> : <Badge label="Vendedor verificado" tone="info" />;
 
   return (
     <View style={{ marginBottom: 4 }}>
@@ -104,9 +115,11 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
         {s ? (
           <>
             <View style={{ gap: 6 }}>
-              <Text variant="displayL" accessibilityRole="header">{s.name}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <Text variant="displayL" accessibilityRole="header" testID="store-name" style={{ flexShrink: 1 }}>{s.name}</Text>
+                <StoreBadge tier={storeTier(s)} size={22} explain />
+              </View>
               <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', columnGap: 10, rowGap: 6 }}>
-                {verified}
                 {s.rating_count > 0 ? <RatingInline avg={s.rating_avg} count={s.rating_count} /> : <Text variant="caption" color="textMuted">Aún sin opiniones</Text>}
                 <Text variant="caption" color="textMuted">{s.product_count === 1 ? '1 producto' : `${s.product_count} productos`} · desde {monthYear(s.since)}</Text>
               </View>
@@ -167,5 +180,50 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
         </View>
       </Sheet>
     </View>
+  );
+}
+
+/**
+ * The store's link, to send with the device's share menu (where there is one) or to copy. It opens this store's
+ * catalog, never the home screen.
+ */
+function ShareStoreSheet({ store: s, visible, onClose }: { store: StoreProfile; visible: boolean; onClose: () => void }) {
+  const t = useTheme();
+  const [copied, setCopied] = useState(false);
+  const link = storeLink(s.slug);
+  const canShare = Platform.OS !== 'web' || (typeof navigator !== 'undefined' && typeof navigator.share === 'function');
+
+  const share = async () => {
+    const message = `${s.name} en ${brand.name}: ${link}`;
+    await Share.share(Platform.OS === 'ios' ? { url: link, message: s.name } : Platform.OS === 'web' ? { title: s.name, message, url: link } : { message }).catch(() => undefined);
+    onClose();
+  };
+  const copy = async () => {
+    await Clipboard.setStringAsync(link);
+    haptics.success();
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  return (
+    <Sheet
+      visible={visible}
+      title="Compartir tienda"
+      onClose={onClose}
+      testID="store-share-sheet"
+      footer={
+        <>
+          {canShare ? <Button testID="store-share-native" title="Compartir" icon="share-2" full onPress={share} /> : null}
+          <Button testID="store-share-copy" title={copied ? 'Enlace copiado' : 'Copiar enlace'} icon={copied ? 'check' : 'copy'} variant="secondary" full onPress={copy} />
+        </>
+      }
+    >
+      <View style={{ gap: 8 }}>
+        <View style={{ padding: 12, borderRadius: t.radii.md, backgroundColor: t.colors.surfaceSunken }}>
+          <Text testID="store-share-link" variant="bodySmall" selectable numberOfLines={2}>{link}</Text>
+        </View>
+        {appOnlyLinks ? <Text variant="caption" color="textMuted">Abre {s.name} en la app {brand.name}.</Text> : null}
+      </View>
+    </Sheet>
   );
 }

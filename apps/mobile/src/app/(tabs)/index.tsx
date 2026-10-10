@@ -210,7 +210,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       {data?.stores.length ? (
         <View style={{ marginTop: 32 }} testID="home-stores">
-          <SectionHeader overline="Vendedores verificados" title="Tiendas destacadas" action="Ver todas" onAction={() => router.navigate('/explore')} />
+          <SectionHeader overline="Conoce quién vende" title="Tiendas destacadas" action="Ver todas" onAction={() => router.navigate('/explore')} />
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
             {data.stores.map((s) => <StoreChip key={s.id} store={s} width={Math.min(236, contentWidth * 0.62)} />)}
           </ScrollView>
