@@ -16,6 +16,15 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-10 16:05Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
+- Foto de perfil en el emulador: la revisión 29 falló porque el selector de fotos de Android se abre como hoja
+  inferior y el nombre de la cuenta seguía visible; `03-foto-perfil.yaml` ahora espera las pestañas del selector. En la
+  revisión 30 (run 38064708597) pasa: se abre el selector y al cerrarlo Cuenta queda igual.
+- En la misma revisión, `02-cuenta` falló esperando el aviso push «Pedido P-100124 recibido»: `push-dispatch` lo
+  envió a Expo (ticket sin error) pero el emulador no lo mostró y perdió adb. Misma intermitencia que la revisión 27.
+  Comentado en el PR #1 y job relanzado una vez.
+- Último commit: el de esta entrada en `claude/marketplace-v1`.
+
 ### 2026-10-10 15:30Z · Claude (sesión de Claude Code en la nube, proyecto «TIENDA ONLINE») · Oliver
 - Pedido: foto de perfil (Oliver, 15:09Z). Antes se cerró compartir tiendas: emulador revisión 28 en verde (run
   38062623777), con `kora://tienda/patitas`, «Enlace copiado», el menú de Android y la insignia de Kora.

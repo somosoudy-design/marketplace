@@ -66,6 +66,9 @@
   nuevo `avatars` (3 MB, JPG/PNG/WebP), una carpeta por usuario; solo el dueño la lee, sube o borra, y el perfil solo
   puede apuntar a su carpeta (migración `20261010151906_avatars`, aplicada en el proyecto de pruebas y comprobada con
   roles simulados). `profiles.avatar_path` ya existía. `expo-image-picker` ya está en el APK 5: basta EAS Update.
+  En el emulador Android 15 (revisión 30, run 38064708597), el APK 5 con la actualización `01a1266c` abre el
+  selector de fotos de Android desde Cuenta y vuelve sin cambios al cerrarlo. Elegir y guardar una foto real en un
+  teléfono queda para la prueba de Oliver.
 - APK 5 (build `d1d10c28`, runtime `eb5ed117…`), en el emulador Android 15 de GitHub Actions el 2026-10-10 (revisión
   20, run 38027029394): se instala encima del APK 4, recibe EAS Update, «atrás» de Android vuelve a la pantalla
   anterior, y un aviso push real («Pedido P-… recibido») llega por `push-dispatch`, Expo y Firebase, y al tocarlo
