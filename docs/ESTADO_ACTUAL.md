@@ -4,8 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 00:05Z, por Claude (sesión en la nube). Oliver pidió detenerse para cuidar los
-créditos: este es el checkpoint de cierre del relevo.
+**Última actualización:** 2026-10-10 00:20Z, por Claude (sesión en la nube, presupuesto limitado).
 
 ## Dónde está el trabajo
 
@@ -43,42 +42,34 @@ créditos: este es el checkpoint de cierre del relevo.
   sin código cuando el proyecto lo permite, etiquetas legibles sobre fotos en oscuro, selector de pago nuevo.
 - En local, con el stack sin Docker: todas las suites en verde en esta sesión (ver «Pruebas»).
 
-## Trabajo en curso (checkpoint de cierre, 2026-10-10 00:05Z)
+## Trabajo en curso (2026-10-10 00:20Z)
 
-Archivos sin commit: ninguno. Nada a medio escribir. Qué quedó, por bloque:
+Archivos sin commit: ninguno. Publicado y verificado en esta ronda:
 
-- **Panel publicado:** https://kora-panel.expo.app (EAS Hosting, sin costo). Se vuelve a publicar solo con cada push
-  que toque `apps/admin`, `packages/*` o `tools/panel` (workflow `panel-deploy.yml`). Acciones de servidor en la
-  función `panel-api` (desplegada). Fichas con id en la consulta (`/admin/pedidos/ver?id=…`).
-- **Android (APK 4 en emulador):** el recorrido de visitante pasa; el de cuenta llega hasta la cotización de Pago
-  Móvil y la cancelación (revisión 11). Corregido después en el repo (sin volver a correr el emulador): la aserción
-  final del recorrido y el texto «Reembolsado» de un pedido cancelado sin pagar (ahora «Cancelado»).
-- **Imágenes a Storage: HECHO en el proyecto de pruebas.** 110 archivos copiados (100 fotos, 5 logos, 5 portadas) con
-  la función `assets-mirror`; filas de `product_images`, `stores` y `order_items` apuntan a `demo/…` en Storage;
-  comprobado que Storage los sirve (HTTP 200). Ninguna referencia a GitHub queda en datos visibles (solo en
-  `audit_log`, historial). El generador del catálogo remoto ya produce rutas de Storage.
-- **Motor de precios: avanzado, NO publicado a los teléfonos.** Base de datos aplicada en el proyecto de pruebas
-  (migración `20261009233831_pricing_engine`, mismas definiciones que el repo), tarea horaria activa y primera
-  brecha tomada sola (23:40Z: BCV 875,65, P2P 1.016,00, 16,03 %). Desde entonces, **en el proyecto de pruebas Zelle y
-  USDT ya cotizan con el descuento de la brecha**. Panel (Costos y precio, Brecha del día en Tasas, regla y brecha
-  en Configuración, importador) en el repo y probado en local; se publica solo con este push. App (precio en
-  divisas, montos por método, explicación de la cotización): en el repo y probada en web, **sin EAS Update**.
-  Diseño en `docs/PRECIOS.md`.
-- Cambio de regla a revisar con Oliver: el margen ahora se aplica sobre el costo puesto en Venezuela (costo + flete +
-  gastos), no solo sobre el costo, y el precio principal incluye la brecha.
+- **EAS Update al APK 4** (runtime `a4682c83…`, 2026-10-10 00:04Z): precio con Zelle/USDT/efectivo por la brecha del día,
+  montos por método, explicación de la cotización en divisas, «Cancelado» en pedidos cancelados sin pago, barra de la
+  ficha. **Emulador revisión 12 (APK 4 + esta actualización): `01-visitante` y `02-cuenta` pasan**; capturas en
+  `ci/capturas/ultima/` (ficha «$10,34 con Zelle, USDT o efectivo · 13,8 % menos», Zelle ≈ $18,08 en un pedido de $21,
+  líneas «Cancelado», fotos desde Storage).
+- **Panel** https://kora-panel.expo.app con la última versión (workflow 23:57Z en verde, rutas comprobadas). El hook de
+  token da `superadmin` a la cuenta de Oliver. Oliver se agregó como miembro (`owner`) de la tienda de plataforma «Kora»
+  para usar «Costos y precio» en el panel de vendedor (debe cerrar y abrir sesión para que el token lo incluya).
+- **Repositorio privado: listo.** Ni la app, ni el panel, ni los workflows dependen de GitHub público (búsqueda en
+  `apps`, `packages`, `config`, `.github`, `tools`: solo Supabase, Expo y Maestro). Falta solo la confirmación de Oliver.
 
-## Próxima acción (para el siguiente agente, en este orden)
+Notas: en el selector de pago, Pago Móvil muestra «Bs.» sin monto un instante tras iniciar sesión (la tasa se recarga
+al cambiar de cuenta); la cotización siempre trae el monto exacto. `efectivo_usd` también recibe el precio en
+divisas (es un método en dólares): decisión comercial a confirmar con Oliver. La regla de precios del proyecto de
+pruebas sigue «sin revisar» (`pricing.import.configured = false`): el importador no sugiere precios hasta que Oliver
+la revise en Configuración.
 
-1. `git fetch origin && git checkout claude/marketplace-v1 && git pull --ff-only`; crear `apps/mobile/.env.local` y
-   `apps/admin/.env.local` (ver `docs/ENTORNO.md` §4) y `pnpm stack:start && pnpm db:reset`.
-2. Comprobar que el último `panel-deploy` quedó en verde (`gh run list --branch claude/marketplace-v1 --limit 3`) y
-   que https://kora-panel.expo.app/admin/tasas muestra «Brecha del día».
-3. Publicar la app al APK 4: comprobar el runtime (`docs/ENTORNO.md` §10), cambiar la primera línea sin `#` de
-   `.github/eas-update-request`, push. Luego una corrida del emulador (`.github/apk-emulator-request`, revisión 12) y
-   ver `ci/capturas/ultima/`: debe pasar `02-cuenta.yaml` y la ficha debe mostrar el precio con Zelle/USDT.
-4. Revisar con Oliver la regla de precios (margen sobre costo puesto) y cargar costos reales en «Costos y precio».
-5. Push en Android (Firebase de Oliver), APK 5 con identidad violeta.
-6. Proponer a Oliver pasar el repo a privado (checklist en `docs/ENTORNO.md` §12 bis); **pedir confirmación antes**.
+## Próxima acción
+
+1. Si Oliver confirma: GitHub › Settings › General › Danger Zone › Change visibility › Private. Luego una corrida de
+   «APK en emulador» para confirmar que el runner privado tiene KVM (`docs/ENTORNO.md` §12 bis).
+2. Con Oliver: parámetros comerciales definitivos (margen sobre costo puesto, flete, gastos, si efectivo lleva precio en
+   divisas) y marcar la regla como revisada.
+3. Push en Android cuando Oliver tenga Firebase (APK 5 con identidad violeta).
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

@@ -6,13 +6,12 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 00:05Z (checkpoint de cierre por créditos).
+**Última revisión:** 2026-10-10 00:20Z.
 
 ## Prioridad 1: Directriz maestra 02 (hitos D y E)
 
 | # | Tarea | Estado | Depende de / notas |
 |---|---|---|---|
-| 1.2 | Recorrido con cuenta en el APK real (`tests/apk-flows/02-cuenta.yaml`) | Casi | Llegó a la cotización y la cancelación (rev. 11); la aserción final ya está corregida: falta una corrida (rev. 12) tras publicar la EAS Update |
 | 1.3 | Cierre del hito D: ficha, carrito, checkout, cuotas y seguimiento ya se revisaron en la versión web (claro y oscuro) y el selector de pago es nuevo; falta verlos en Android (capturas del artefacto `capturas-emulador`) y corregir lo que aparezca | Lista | `tools/design/screens.mjs` para la web; capturas de Maestro para el APK |
 | 1.4 | Validación integral (hito E): repasar la lista de recorridos de `DIRECCION_PRODUCTO.md` («Criterios de calidad») en el APK real, anotando qué se probó y dónde | Lista (parcial) | La parte con cuenta, tras P2.1 |
 | 1.5 | APK 5 con la identidad nativa violeta (`NATIVE_IDENTITY = 'violet'`: icono, splash, color de notificación) | Lista cuando convenga | Obliga a reinstalar; juntarlo con otro cambio nativo (por ejemplo Firebase, P3.3). Tras instalarlo, actualizar la línea `runtime:` de `.github/eas-update-request` |
@@ -21,8 +20,8 @@
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| R.1 | Motor comercial de precios | En curso (avanzado) | Base aplicada en pruebas y probada; panel probado y publicado con el push; app probada en web pero falta EAS Update al APK 4 y verlo en el emulador. Revisar con Oliver la regla (margen sobre costo puesto). `docs/PRECIOS.md` |
-| R.2 | Repositorio privado | Lista para decidir | Imágenes ya en Storage (hecho). Checklist en `docs/ENTORNO.md` §12 bis. **Pedir confirmación a Oliver** antes de cambiar la visibilidad |
+| R.1 | Motor comercial de precios | Publicado (pruebas) | Base, panel y app (EAS Update) publicados y verificados en emulador. Falta definir con Oliver los parámetros definitivos y marcar la regla como revisada. `docs/PRECIOS.md` |
+| R.2 | Repositorio privado | Esperando confirmación de Oliver | Imágenes ya en Storage (hecho). Checklist en `docs/ENTORNO.md` §12 bis. **Pedir confirmación a Oliver** antes de cambiar la visibilidad |
 | R.3 | Push real en Android | Bloqueada en parte | Código y workflow se preparan; falta el proyecto Firebase de Oliver (P3.3) |
 
 ## Prioridad 2: lo que solo Oliver puede hacer
