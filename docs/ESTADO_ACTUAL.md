@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 02:50Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
+**Última actualización:** 2026-10-10 02:58Z, por Claude (sesión en la nube, hilo «Marketplace nativo premium»).
 
 ## Dónde está el trabajo
 
@@ -59,8 +59,8 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-Archivos sin commit: ninguno. Corre la revisión 16 del emulador (recorrido del visitante con la variante centrada:
-en la 15 el toque caía en la barra fija y agregaba la opción de 1 m).
+Archivos sin commit: ninguno. Nada corriendo. La revisión 16 del emulador (2026-10-10 02:53Z) dejó en verde el
+recorrido del visitante; solo fallan `01a` y `01c` por «atrás» de Android (error conocido, comentado en el PR #1).
 
 Del relevo anterior siguen abiertos: la regla comercial del motor de precios (`pricing.import.configured = false`,
 la define Oliver), push con Firebase (pasos de Oliver, APK 5 con su autorización) y el cambio del repositorio a
@@ -119,7 +119,8 @@ No ejecutadas en esta sesión: `pnpm test:db` (76), `pnpm test:e2e` (8) y `pnpm 
 En el APK real (GitHub Actions, Android 15, pantalla de Pixel 6), revisión 15 del 2026-10-10 con el APK 4 y la
 actualización de los hitos 1 a 3: `02-cuenta` (registro, carrito, dirección, checkout, métodos, monto, cancelar) y
 `01b` (flecha de Favoritos) pasan; `01a` y `01c` fallan por «atrás» de Android (error conocido); `01-visitante`
-falló por el toque a la variante (corregido en la revisión 16).
+falló por el toque a la variante. Revisión 16 (`62e393f`): `01-visitante` pasa (variante de 2 m, «Agregar»,
+«Comprar» abre el carrito con 12 USD sin duplicar, carrito conservado al reabrir), igual que `01b` y `02-cuenta`.
 
 App, Playwright, 2026-10-10 con los hitos 1 a 3: 28 pasan, 1 omitida; `pay-divisas.spec.ts` (nueva) pasa sola.
 
