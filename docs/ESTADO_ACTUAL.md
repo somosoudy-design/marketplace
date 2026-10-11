@@ -114,7 +114,10 @@ build Xcode 22:13 falla escribiendo `ip.txt` en la fase RN con sandbox activo, n
 Aplicado helper aislado `tools/ios-personal/repair-native-startup.mjs` al proyecto existente: escena Expo,
 factory proporcionada por AppDelegate sin doble arranque, output Metro declarado sin desactivar sandbox.
 Respaldos/logs privados en `.local/ios-diagnosis/`; firma, Bundle ID, certificados, configuración Node/Pods
-y datos preservados. Plugin/generador/verificador local actualizados; 18/18, tipos/lint y `--native` aprobados.
+y datos preservados. Plugin/generador/verificador local actualizados; 19/19, tipos/lint y `--native` aprobados.
+
+Primera build: Swift/escenas y fase RN pasan; segunda salida CocoaPods no declarada identificada y
+corregida (`resources-to-copy-$(TARGETNAME).txt`). Checkpoint: aún pendiente la build final y prueba física.
 
 **Próxima acción inmediata:** compilar workspace existente KoraDev Debug para el iPhone, instalar encima
 y probar bajo depurador, Metro, reapertura y recorridos. No afirmar éxito físico antes de observarlo.

@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import test from 'node:test';
-import { adoptScenes, declareMetroIpOutput, metroIpOutput, sceneManifest, verifySceneManifest } from './native-startup.cjs';
+import { adoptScenes, declareMetroIpOutput, metroIpOutput, sceneManifest, verifySceneManifest,
+  declarePodsResourceOutput, podsResourceOutput } from './native-startup.cjs';
 
 const mobile = createRequire(new URL('../../apps/mobile/package.json', import.meta.url));
 const expo = createRequire(mobile.resolve('expo/config-plugins'));
@@ -66,6 +67,16 @@ test('Metro output is declared once without changing scripts or sandbox settings
 
 test('unexpected bundle phases fail closed', () => {
   assert.throws(() => declareMetroIpOutput({ hash: { project: { objects: {} } } }));
+});
+
+test('CocoaPods temporary resource list is allowed without editing its generated script', () => {
+  const phase = { name: '"[CP] Copy Pods Resources"', shellScript: 'Pods-KoraDev-resources.sh', outputPaths: ['existing.bundle'] };
+  const project = { hash: { project: { objects: { PBXShellScriptBuildPhase: { phase } } } } };
+  declarePodsResourceOutput(project);
+  declarePodsResourceOutput(project);
+  assert.deepEqual(phase.outputPaths, ['existing.bundle', podsResourceOutput]);
+  assert.equal(phase.shellScript, 'Pods-KoraDev-resources.sh');
+  declarePodsResourceOutput({ hash: { project: { objects: {} } } });
 });
 
 test('repair stays in the existing isolated project and never regenerates or modifies Pods', () => {

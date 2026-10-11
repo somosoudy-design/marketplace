@@ -25,7 +25,10 @@ conectado por cable, emparejado y con modo desarrollador activo. Proyecto/scheme
   Se conserva `ENABLE_USER_SCRIPT_SANDBOXING=YES`, Bundle ID, Team, entitlements, Node local, Pods y datos.
   Originals respaldados en `.local/ios-diagnosis/startup-backup-*`. No prebuild, borrados ni dependencias nuevas.
 - Plugin/generador local incorpora la misma corrección para futuras variantes; verificador comprueba escenas,
-  AppDelegate y output además de sus guardas anteriores. Pruebas **18/18**, tipos/lint y `--native` aprobados.
+  AppDelegate y output además de sus guardas anteriores. Pruebas **19/19**, tipos/lint y `--native` aprobados.
+  Primera build corregida: AppDelegate compiló y fase RN pasó; apareció otra salida sin declarar del
+  script CocoaPods de recursos (`resources-to-copy-$(TARGETNAME).txt`). Se declaró ese archivo temporal
+  en el proyecto de la app, sin editar el script generado ni desactivar sandbox.
   **Checkpoint antes de compilar: build, firma y arranque físico corregidos todavía pendientes.**
 
 Referencias primarias: [requisito UIKit de Apple](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle),

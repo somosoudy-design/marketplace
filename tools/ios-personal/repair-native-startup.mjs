@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { verifyNativeBundleId } from './native-project.cjs';
-import { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput } from './native-startup.cjs';
+import { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput, declarePodsResourceOutput } from './native-startup.cjs';
 
 // Repair the existing native project in place. No prebuild, Pods, signing or data reset.
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -32,6 +32,7 @@ if (info.UIApplicationSceneManifest) {
 }
 info.UIApplicationSceneManifest = sceneManifest();
 declareMetroIpOutput(project);
+declarePodsResourceOutput(project);
 // Validate everything before the first write; keep originals privately, including local signing settings.
 const backup = join(root, '.local/ios-diagnosis', `startup-backup-${Date.now()}`);
 mkdirSync(backup, { recursive: true });

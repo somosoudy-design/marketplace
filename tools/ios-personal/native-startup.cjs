@@ -35,6 +35,7 @@ function adoptScenes(source) {
 }
 
 const metroIpOutput = '"$(CONFIGURATION_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ip.txt"';
+const podsResourceOutput = '"$(PODS_ROOT)/resources-to-copy-$(TARGETNAME).txt"';
 
 function declareMetroIpOutput(project) {
   const phases = Object.values(project.hash.project.objects.PBXShellScriptBuildPhase ?? {})
@@ -46,4 +47,15 @@ function declareMetroIpOutput(project) {
   if (!phase.outputPaths.includes(metroIpOutput)) phase.outputPaths.push(metroIpOutput);
 }
 
-module.exports = { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput, metroIpOutput };
+function declarePodsResourceOutput(project) {
+  const phase = Object.values(project.hash.project.objects.PBXShellScriptBuildPhase ?? {})
+    .find((entry) => typeof entry === 'object' && entry.name === '"[CP] Copy Pods Resources"');
+  // During a first prebuild CocoaPods has not created this phase yet.
+  if (!phase) return;
+  assert.match(phase.shellScript, /Pods-.*-resources\.sh/);
+  phase.outputPaths ??= [];
+  if (!phase.outputPaths.includes(podsResourceOutput)) phase.outputPaths.push(podsResourceOutput);
+}
+
+module.exports = { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput, metroIpOutput,
+  declarePodsResourceOutput, podsResourceOutput };
