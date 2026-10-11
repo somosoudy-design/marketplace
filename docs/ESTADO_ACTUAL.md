@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 00:00 (Caracas, UTC−4), por Codex local (arranque físico resuelto; iOS pospuesto por Oliver).
+**Última actualización:** 2026-10-11 00:35 (Caracas, UTC−4), por Codex cloud (sesión corta comprador; iOS pospuesto).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Preparación iOS `264112b`; arranque físico corregido tras checkpoints `cff0d52` → `db33ab9`, cierre en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
-| Plan vigente | iOS local abre y queda pospuesto por Oliver. Frente A V2 cerrado; sin Frente B |
-| Objetivo actual | KoraDev abre en iPhone: escenas Expo corregidas y scripts compatibles en Debug. Reapertura/Metro comprobados. Oliver probará la app; no continuar iOS. APK 5/Android/producción intactos |
+| Plan vigente | Sesión corta: franja sin conexión si es reproducible, uno/dos fallos de carrito/checkout y VEN-01 solo en backlog. iOS abre y queda pospuesto; sin Frente B |
+| Objetivo actual | Corregir carga/error de direcciones en checkout y error de actualización de cantidad en carrito. Franja Android pendiente de herramienta nativa. Sin APK nuevo, publicación, cambios financieros ni producción |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -104,6 +104,16 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**Sesión corta comprador — bloque de continuidad terminado.** Sincronizada `9d22155`, incluidos los cinco
+commits locales de iOS y su cierre físico; no WIP funcional ajeno. iOS queda pospuesto y no se tocarán sus helpers.
+VEN-01 registrada en `PENDIENTES.md`, prioridad alta después de estabilizar comprador, fases A/B/C, sin implementación.
+
+4.3: leídos `OfflineNotice.tsx`, layout y test web existente. Se cambia el inset JS mientras el navegador se
+desplaza; el efecto en native-stack necesita reproducción Android. Esta nube no tiene ADB/emulador ni teléfono;
+no se aplica una corrección especulativa. Siguiente bloque: reproducir y corregir dos fallos acotados:
+direcciones de checkout fallidas dejan skeleton indefinido; cambios de cantidad del carrito fallan sin mensaje.
+Pruebas enfocadas en claro/oscuro, sin suite general ni publicación.
 
 **Cierre iOS local — arranque resuelto y probado; continuación pospuesta por Oliver.**
 2026-10-11 00:00 Caracas. Causas demostradas en registros Xcode/iPhone: falta de ciclo UIScene (crash UIKit)
@@ -212,10 +222,11 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Oliver prueba la app ya instalada **Kora (Dev)** con Metro activo en el Mac. No continuar trabajo iOS
-por ahora; no iniciar validaciones ampliadas ni Release/simulador/publicación. Si vuelve a solicitar iOS,
-leer primero `docs/IOS_DIAGNOSTICO.md` y preservar `.local/ios-personal`, firma/certificados/configuración.
-El cierre documentado solo demuestra arranque y reapertura; el resto del checklist queda pospuesto.
+Bloque actual: pruebas Playwright enfocadas para fallo/reintento de direcciones de checkout y fallo al guardar
+cantidad del carrito; corregir solo presentación/carga/errores. Verificar franja web en claro/oscuro y guardar
+commit/push. 4.3 nativo exige APK 5 existente en Android con ADB/Maestro; no generar APK ni publicar para probarlo.
+VEN-01 solo backlog. No continuar iOS; si Oliver vuelve a solicitarlo, leer `docs/IOS_DIAGNOSTICO.md` y conservar
+instalación/firma local. No avanzar al Frente B.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

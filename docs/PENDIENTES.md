@@ -6,9 +6,28 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 00:00 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 00:35 (Caracas, UTC−4).
 
-## iOS gratuita — pedido vigente de Oliver
+## Sesión corta — prioridad vigente
+
+Cerrar uno o dos errores reproducibles de carrito/checkout, sin modificar cálculos, pagos, diseño global,
+producción o dependencias. No generar APK ni publicar actualizaciones. iOS **pospuesto por el propietario**;
+la app ya abre en iPhone (cierre local `9d22155`).
+
+### VEN-01 — Gestión de vendedores dentro de la app
+
+**Prioridad alta del backlog, después de estabilizar la experiencia del comprador. Solo documentada;
+no iniciar implementación sin un nuevo pedido de Oliver.** Los vendedores administrarán su tienda sin salir
+de HAYAZGO; el panel web seguirá disponible para funciones avanzadas. Reutilizar roles/permisos y operaciones
+existentes del panel/backend; no duplicar reglas comerciales ni crear permisos decididos por el cliente.
+
+| Fase | Alcance previsto | Estado |
+|---|---|---|
+| VEN-01A | Acceso «Mi tienda», roles, resumen y navegación | Backlog, no autorizada en esta sesión |
+| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Después de VEN-01A |
+| VEN-01C | Pedidos recibidos, configuración de tienda y acciones comerciales básicas | Después de VEN-01B |
+
+## iOS gratuita — pospuesta por Oliver
 
 Preparación técnica terminada: `tools/ios-personal/` y `docs/IOS_PERSONAL_TEAM.md`, variante aislada con
 Supabase de pruebas, sin APNs/Associated Domains/OTA. Guardas 5/5, verificación de configuración/plists,
@@ -75,7 +94,7 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 |---|---|---|
 | 4.1 | CI en GitHub Actions con el stack local (hoy las suites corren solo en la máquina de quien trabaja) | El stack sin Docker ya funciona en Linux; falta el workflow |
 | 4.2 | Verificación automática de pagos USDT en cadena (TRC20) | Sin custodiar fondos; solo leer la transacción y comparar monto y destino |
-| 4.3 | Franja sin conexión en Android real (anula el inset superior del native-stack; verificada solo en web) | Se puede revisar con un recorrido de Maestro en el emulador (modo avión con `adb`) |
+| 4.3 | Franja sin conexión en Android real (anula el inset superior del native-stack; verificada solo en web) | Revisada en sesión corta: `OfflineNotice.tsx` desplaza el navegador y cambia `SafeAreaInsetsContext.top`; comprobar su efecto en encabezados nativos antes de corregir. Cloud sin ADB/emulador/teléfono; pendiente reproducir en APK 5 existente, claro/oscuro, con y sin conexión. No instalar toolchain ni generar APK para esta sesión |
 | 4.5 | Insignias «Tienda verificada» y «Tienda asociada» | El diseño está hecho; falta un dato que solo ponga un administrador, mostrarlo en la app y otorgarlo desde el panel. Detalle en `docs/INSIGNIAS_TIENDAS.md` |
 | 4.6 | Foto de perfil: al eliminar una cuenta, borrar también su archivo del bucket `avatars` | `process_account_deletion` ya deja `avatar_path` vacío, pero el archivo queda en la carpeta privada del usuario (nadie más puede verlo). Hacerlo desde una función con la API de Storage |
 | 4.7 | Texto del permiso de fotos en iOS (`app.config.ts`, `expo-image-picker`) | La variante iOS Personal Team ya incluye perfil; la configuración compartida permanece intacta para conservar APK 5. Cambiarla solo con el próximo build autorizado, no por OTA |

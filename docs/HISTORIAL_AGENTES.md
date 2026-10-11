@@ -16,6 +16,19 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 04:35Z (00:35 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · bloque 1
+- Continuidad: rama limpia antes de sincronizar; fast-forward `f5efec4` → `9d22155`, últimos 15 commits y
+  AGENTS/estado/pendientes revisados. Cierre iOS físico confirmado en relevo del Mac; iOS pospuesto por Oliver.
+- Hecho: VEN-01 registrada con prioridad alta tras estabilizar comprador, fases Mi tienda/roles/navegación,
+  productos/fotos/precios/existencias y pedidos/configuración/acciones básicas. Panel avanzado conservado;
+  iniciativa sin implementar ni autorización para iniciarla en esta sesión.
+- 4.3: revisión acotada de `OfflineNotice.tsx`, root layout y prueba web. Falta reproducción Android del inset
+  native-stack; no ADB/emulador/teléfono disponibles. Sin cambios especulativos ni instalación de dependencias.
+- Siguiente bloque: reproducir error de direcciones que deja checkout cargando y cambio de cantidad del carrito
+  fallido sin mensaje. Corregir presentación/error, probar claro/oscuro y commit/push independiente.
+- Servicios: ninguno; sin APK, EAS Update, producción, iOS/Xcode, motor financiero ni panel.
+- Último commit: el checkpoint de este bloque (`git log -1` al guardarlo).
+
 ### 2026-10-11 04:00Z (2026-10-11 00:00 Caracas, UTC−4) · Codex (Mac local de Oliver) · Oliver
 - Continuidad: sincronizado `f5efec4`; proyecto `.local/ios-personal` existente, firma y configuración privada
   preservados. Consultados directamente logs Xcode/Expo e informes KoraDev del iPhone.
