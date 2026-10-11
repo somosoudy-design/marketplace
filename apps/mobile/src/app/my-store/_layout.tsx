@@ -14,6 +14,7 @@ export default function SellerLayout() {
     contentStyle: { backgroundColor: t.colors.background },
   }}>
     <Stack.Screen name="index" options={{ title: 'Mi tienda', headerLeft: () => <IconButton testID="seller-account-back" icon="chevron-left" label="Volver a Cuenta" size={44} onPress={() => router.dismissTo('/account')} /> }} />
+    <Stack.Screen name="product" options={{ title: 'Producto de mi tienda', headerBackButtonMenuEnabled: false }} />
     <Stack.Screen name="products" options={{ title: 'Mis productos' }} />
     <Stack.Screen name="orders" options={{ title: 'Pedidos de mi tienda' }} />
     <Stack.Screen name="settings" options={{ title: 'Configuración de tienda' }} />

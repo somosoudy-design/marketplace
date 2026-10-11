@@ -43,14 +43,56 @@ la nube Linux no puede ejecutar la galería nativa nueva sin publicar, lo que es
 
 Cierre bloque 1: UI **26/26** (1,8 min), permisos **6/6**, tipos/lint/export web aprobados. Ocho capturas de perfil antes/después, página pública y error en ambos temas; revisión directa de campos, botones y confirmación/error. No prueba nativa nueva. Commit de cierre: consultar historial/`git log`; publicación pausada.
 
-## Bloques 2 y 3
+## Bloque 2 — catálogo operativo
 
-Todavía pendientes. El editor web actual guarda producto/variantes/fotos en llamadas separadas; revisar
-confiabilidad y reintentos antes de trasladarlo. El backend no tiene estado draft en su enum de moderación:
-no presentar «pendiente» como borrador privado. La moderación corresponde a triggers/RPC administrativos.
-Precios automáticos dependen de `product_pricing`/`set_product_costs`; no duplicar fórmulas.
+Pantalla de catálogo ampliada, nuevo `/my-store/product` para crear/editar. Ficha (nombre/subtítulo/
+descripción/seis características/categoría), variantes, precio principal manual, SKU, inventario, disponibilidad,
+peso/máximo por pedido/precio anterior y fotografías de galería. Puede pausar la venta con No disponible,
+pausar/activar variantes sin borrarlas, agregar variantes manuales y cambiar la portada entre las fotos.
+Estados reales y motivos/historial de moderación; corrige y reenvía un rechazo, suspensión requiere administración.
 
-Los pedidos usan `seller_fulfillments` y `advance_fulfillment`: el servidor decide pasos `seller_can_set`,
-pago requerido, avance solo hacia delante y guía requerida para despacho a domicilio. La app nunca
-verifica pagos, liquida saldos ni permite cancelación administrativa. Reutilizar el historial de eventos y
-el destino/datos ya incluidos en la consulta del panel, limitados a las entregas de la tienda.
+Para productos ya automáticos, precio de solo lectura y edición de costo por variante, flete, gastos y margen
+mediante `set_product_costs` existente. No se cambió fórmula, tasa, cobro o checkout. Cambiar el modo de precio/
+origen/enlace de costos y ampliar variantes automáticas quedan en el panel. No se eliminan productos,
+variantes vendidas ni fotos guardadas. El servidor no admite drafts: no hay botón falso de borradores.
+
+### Guardado y migración preparada
+
+`20261011172600_seller_product_editor.sql` aplicada **solo localmente**, incluida copia de pruebas.
+`seller_save_product` SECURITY INVOKER agrupa operaciones del editor existente: RLS/triggers siguen activos,
+campos permitidos explícitos, sin aprobar/reasignar tienda. Variantes y referencias de fotos se guardan en
+la misma transacción; costo opcional delega al RPC existente. UUID estables por intención y rutas subidas
+conservadas: una respuesta perdida se reintenta sin duplicar producto, variante o imagen. Error de una variante
+revierte ficha/otras variantes. No borra datos. Storage no participa en la transacción: archivos subidos sin
+asociar pueden quedar huérfanos (no ampliar permisos ni limpiarlos automáticamente).
+
+Fallo real reproducido antes de arreglarlo: tras rechazo, editar ficha y precio publicaba un producto de bajo
+riesgo. La migración conserva revisión manual/pending usando el último evento administrativo existente;
+actualizar variantes/costos ya no aprueba un rechazo. Suspensión y categorías sensibles mantienen revisión.
+La aprobación continúa en `moderate_product` con permiso administrativo real. Regresión roja/verde conservada
+en `.local/logs/seller-moderation-{before,after}.log`.
+
+`seller_editor_ready` comprueba soporte del servidor. Sin la migración, el catálogo de lectura/panel funciona,
+pero no aparecen acciones móviles de edición. No hay variable cliente que conceda permisos.
+**No está listo para publicar completo en APK 5 hasta autorizar/aplicar/verificar la migración remota** y
+comprobar el guard nativo existente. Nada remoto se desplegó; no EAS Update.
+
+### Pruebas bloque 2
+
+- Backend **20/20**: seis nuevas operaciones/RLS/rollback/idempotencia/moderación/reprecio con snapshot local,
+  siete reglas existentes de precios, dos autoría y cinco privilegios (allowlist actualizada para dos RPC nuevos).
+- Núcleo **50/50**, tipos/lint/export web aprobados.
+- UI **30/30**: 22 regresiones VEN-01A + ocho operaciones de catálogo, claro/oscuro, 320 px. Crear/galería/
+  dos variantes/SKU, precio/stock/pausa/reanudación, ficha pública, respuesta perdida sin duplicar foto/producto,
+  dirty/Atrás, costo automático, rechazo pendiente, aislamiento y servidor sin migración. Esperan `aria-busy=false`
+  y confirmación final, no dan por guardado el estado de carga. Perfil también pasó **4/4** en corrida conjunta
+  anterior (12/12 con catálogo). Capturas de formulario/error/historial revisadas en ambos temas.
+- La galería se valida por picker web + gateway local; permisos de Storage además por SQL contra RLS.
+  No equivale a selección física Android, TalkBack o rendimiento nativo.
+
+## Bloque 3 — siguiente
+
+Implementar detalle/acciones sobre pantallas de pedidos existentes. Reutilizar `advance_fulfillment`: servidor
+controla `seller_can_set`, pago requerido, avance solo hacia delante y guía obligatoria para despacho a domicilio.
+La app no verificará pagos o cancelará entregas administrativamente. Consulta/historial deben seguir limitados
+a la entrega de la tienda, sin depender del límite de 200 registros para abrir un detalle.

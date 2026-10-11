@@ -16,6 +16,13 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 17:40Z · Codex cloud · Oliver · cierre bloque 2 catálogo operativo
+- Hecho: ampliar catálogo y crear editor móvil, ficha/categoría/características, variantes manuales/SKU/precios/stock/pausa, galería/portada, estados/notas/historial, costos automáticos con RPC financiero existente sin modificar fórmulas. Sin drafts falsos ni borrados. Panel conserva modo de precios/origen de costos/variantes automáticas y avanzado.
+- SQL local: `20261011172600_seller_product_editor.sql`. RPC INVOKER atómico/RLS/ids estables y guardas de pertenencia; revisión manual sigue pendiente tras editar variante/costo. Prueba previa roja publicó indebidamente un rechazo; corregida con historial real. No migración remota/despliegue.
+- Pruebas: UI 30/30 claro/oscuro/320 px (22 regresiones + 8 catálogo), 4 perfil en corrida anterior; DB 20/20, core 50/50, tipos/lint/web. Revisión capturas formulario/error/historial. Test auto usa readonly web, no disabled; tests de guardado esperan busy=false + confirmación final. Denegaciones servidor not_found/variant inválida comprobadas y datos ajenos intactos.
+- Límites: nube sin Android conectado, sin prueba física de picker/TalkBack. Compatibilidad técnica sin dependencias/config nativa nuevas; publicación completa bloqueada por migración remota pendiente y guard APK 5. Storage conserva huérfanos por permisos actuales, sin borrar.
+- Servicios: ninguno remoto, ningún APK/EAS/iOS/checkout/BCV/panel o financiero modificado. `[skip ci]` evita autodespliegue del panel por API. Siguiente: bloque 3 detalle/acciones de pedidos, confirmar pago/permissions/historial y reintentos antes de cerrar.
+
 ### 2026-10-11 17:27Z · Codex cloud · Oliver · checkpoint previo a migración local de catálogo
 - Bloque 1 completo y push `928494d`. Bloque 2: prueba roja real `seller-moderation-before.log` confirma que corregir rechazo y precio publica automáticamente; exige mantener revisión administrativa.
 - SQL preparado, sin aplicar: `20261011172600_seller_product_editor.sql`, historial existente preserva revisión; RPC SECURITY INVOKER agrupa writes del editor web con RLS/triggers existentes, ids estables para reintentos, costos mediante set_product_costs sin cambiar fórmulas. No delete, aprobación o cambio de tienda.

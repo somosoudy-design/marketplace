@@ -40,8 +40,8 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 |---|---|---|
 | VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Oliver comprobó VEN-01A: funciona como lectura, solicita operaciones. TalkBack/fluidez detallados pendientes. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización `01a12bd4` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
 | VEN-01-PERFIL | Perfil editable, logotipo/portada, contacto/políticas | Completado local: UI 26/26, permisos 6/6, tipos/lint/web. Publicación pausada, prueba física pendiente |
-| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Autorizada; después de cerrar edición de tienda con pruebas/commit/push |
-| VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | Autorizada: configuración editable primero; acciones de pedidos después del catálogo. Reusar consulta existente |
+| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Completada local: catálogo operativo, UI 30/30, DB 20/20. Migración 20261011172600 pendiente de autorización/aplicación remota; publicación pausada |
+| VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | En curso: acciones de pedidos. Perfil y catálogo locales cerrados; reutilizar advance_fulfillment y permisos/gates reales |
 
 ## iOS gratuita — pospuesta por Oliver
 

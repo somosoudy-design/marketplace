@@ -457,3 +457,16 @@ export interface SupportContact {
 
 /** Only editable seller profile fields, matching the existing web panel. */
 export type SellerStoreInput = Pick<Store, "name" | "tagline" | "description" | "contact_email" | "shipping_info" | "policies" | "accent" | "logo_path" | "cover_path">;
+
+export type SellerEditableProduct = Tables['products']['Row'] & {
+  product_images: Pick<Tables['product_images']['Row'], 'id' | 'path' | 'sort'>[];
+  product_variants: Pick<Tables['product_variants']['Row'], 'id' | 'title' | 'sku' | 'price_usd' | 'stock' | 'active' | 'sort'>[];
+  moderation_events: Pick<Tables['moderation_events']['Row'], 'id' | 'to_status' | 'note' | 'automatic' | 'created_at'>[];
+};
+export interface SellerProductInput {
+  fields: Pick<SellerEditableProduct, 'title' | 'subtitle' | 'description' | 'category_id' | 'availability' | 'highlights' | 'compare_at_usd' | 'weight_kg' | 'max_per_order'>;
+  variants: SellerEditableProduct['product_variants'];
+  images: SellerEditableProduct['product_images'];
+  costs?: Partial<ProductCosts>;
+  variantCosts?: { variant_id: string; cost_usd: number | null }[];
+}

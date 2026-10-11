@@ -40,6 +40,8 @@ import type {
   ShippingSelection,
   StartOnlineResult,
   Store,
+  SellerEditableProduct,
+  SellerProductInput,
   SellerStoreInput,
   SellerDashboard,
   SellerProduct,
@@ -338,6 +340,17 @@ export function createApi(client: KoraClient) {
   };
 
   const seller = {
+    editorReady: async () => {
+      try { return await run<boolean>(rpc('seller_editor_ready')); }
+      catch (e) { if (e instanceof ApiError && e.code === 'PGRST202') return false; throw e; }
+    },
+    product: (storeId: string, productId: string) => run<SellerEditableProduct>(from('products')
+      .select('*, product_images(id,path,sort), product_variants(id,title,sku,price_usd,stock,active,sort), moderation_events(id,to_status,note,automatic,created_at)')
+      .eq('id', productId).eq('store_id', storeId).single()),
+    saveProduct: (storeId: string, productId: string, input: SellerProductInput) => run<string>(rpc('seller_save_product', {
+      p_store_id: storeId, p_product_id: productId, p_fields: input.fields, p_variants: input.variants,
+      p_images: input.images, p_costs: input.costs ?? null, p_variant_costs: input.variantCosts ?? [],
+    })),
     updateStore: (storeId: string, fields: SellerStoreInput) =>
       run<Store>(from('stores').update(fields).eq('id', storeId).select('*').single()),
     // New immutable paths: the existing Storage policy grants INSERT, not UPDATE or DELETE.

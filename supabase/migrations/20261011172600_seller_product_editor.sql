@@ -63,7 +63,9 @@ language plpgsql security invoker set search_path = public as $$
 declare
   v jsonb; v_count int; v_existing public.products; v_kind public.store_kind;
 begin
-  perform public.require_store_member(p_store_id);
+  if not (public.is_store_member(p_store_id) or public.is_admin() or current_user='service_role') then
+    raise exception 'store access denied' using errcode='42501', hint='store_access_denied';
+  end if;
   if jsonb_typeof(p_fields) is distinct from 'object' or jsonb_typeof(p_variants) is distinct from 'array'
      or jsonb_typeof(p_images) is distinct from 'array' then
     raise exception 'invalid input' using errcode='22023', hint='invalid_input';

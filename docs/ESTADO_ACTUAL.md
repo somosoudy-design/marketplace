@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 13:25 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa autorizada; bloque 1 completo; catálogo siguiente).
+**Última actualización:** 2026-10-11 13:40 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa autorizada; bloques 1/2 completos localmente; pedidos siguiente).
 
 ## Dónde está el trabajo
 
@@ -114,7 +114,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 **Mi tienda operativa — bloque 1 terminado.** Base `887197b`, checkpoint `66465ff`. Perfil real editable, logo/portada desde galería, validación, reintento/dirty/back y conservación al desconectar. Se guardan nombre/frase/descripción/contacto/envíos/políticas/acento/rutas de imágenes en `stores`; página pública/cache actualizadas. RLS/estado/slug/kind/demo/ratings preservados, sin migración. API usa filas devueltas, no éxito sin persistencia. Tipos/lint/web aprobados; UI **26/26** en 1,8 min, ambos temas/320 px, incluye las 22 regresiones VEN-01A. Permisos **6/6**, copia `kora_seller_ops_171524`. Capturas perfil/tienda pública/error revisadas. Detalle en `docs/MI_TIENDA_OPERATIVA.md`.
 
-Bloque 1 cerrado/push `928494d`. Bloque 2 en curso: prueba local reproduce aprobación indebida después de rechazo + edición de variante. Migración `20261011172600_seller_product_editor.sql` preparada: mantener revisión manual usando historial y RPC INVOKER transaccional para operaciones existentes, sin fórmulas nuevas. Todavía no aplicada ni desplegada; editor móvil aún no enlazado. Siguiente: validar migración local y permisos/rollback/reintentos, implementar editor, luego pedidos. No EAS/APK/servicios o datos remotos, finanzas, checkout/iOS. Módulos ya presentes en APK 5; ejecución nativa/galería física pendiente de publicación autorizada. `[skip ci]` evita despliegue automático del panel por API. BCV crítico separado.
+Bloque 1 cerrado/push `928494d`. **Bloque 2 completo localmente:** crear/editar productos, variantes manuales/precios/inventario/SKU/disponibilidad/fotos/moderación y costos automáticos por RPC existente. UI 30/30 (22 regresiones + 8 catálogo), 4 perfil previas, DB 20/20, core 50/50, tipos/lint/web. Migración `20261011172600_seller_product_editor.sql` local solamente: guardado transaccional INVOKER con RLS e ids estables, protección de revisión administrativa ante edición de variantes (fallo rojo reproducido). Servidor sin migración conserva consulta/panel y no ofrece acciones móviles. Informe/capturas/límites: `docs/MI_TIENDA_OPERATIVA.md`. Siguiente: bloque 3 pedidos con permisos y pago del backend existente. La publicación completa requiere primero autorización/aplicación/verificación de migración remota; no está autorizado aquí. No EAS/APK/servicios o datos remotos, finanzas, checkout/iOS. Módulos ya presentes en APK 5; ejecución nativa/galería física pendiente de publicación autorizada. `[skip ci]` evita despliegue automático del panel por API. BCV crítico separado.
 
 ### Antecedente VEN-01A cerrado
 
@@ -316,7 +316,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Bloque 2: ampliar `my-store/products.tsx` con crear/editar, variantes/precios/inventario/fotos/moderación del backend. Investigar guardado transaccional frente a llamadas separadas del editor web; si requiere migración prepararla y probarla solo localmente. No publicar antes de autorización y checks APK 5. Luego acciones de pedidos con `advance_fulfillment` y gates de pago existentes. Bloque 1 está cerrado; no repetirlo ni franja/checkout/BCV.
+Bloque 3: ampliar `my-store/orders.tsx` con detalle y acciones sobre `advance_fulfillment`; confirmar estados reales/seller_can_set/pago/guía y eventos. Detalle aislado de 200 filas, preparar RPC de lectura local si hace falta. Probar permisos entre tiendas, acciones pagadas/bloqueadas, errores/reintento/concurrencia, historial/back y ambos temas antes de commit/push. No EAS/servicios remotos, APK nuevo, iOS, checkout o BCV. Bloques 1/2 cerrados: no reconstruirlos.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
