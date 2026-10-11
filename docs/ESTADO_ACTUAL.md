@@ -117,7 +117,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Publicación autorizada en curso.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes». Solicitud EAS preview/Android para APK 5, misma huella requerida, fuente móvil 5a3b884/cierre be661bf; todavía no afirmar publicación o recepción hasta comprobar workflow/diagnóstico. Sin APK nuevo o cambio de canal.
+**Publicación autorizada completada; validación Android en curso.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes». Solicitud EAS preview/Android para APK 5, misma huella requerida, fuente móvil 5a3b884/cierre be661bf; Workflow preview 38165223060/fuente 2a38dfb **Success**: guard APK 5 y Publicar/Resultado success, publicación terminada 18:48:30Z. Emulador revisión 36 solicitado para comprobar recepción; teléfono físico no conectado. Sin APK nuevo o cambio de canal.
 El cloud no tiene credencial/conector Supabase y api.github.com/proyecto Supabase responden Tunnel 403 de red; Git fetch/push sí funciona. Usar workflow existente y lectura pública de Actions en github.com, sin extraer credenciales. Migraciones 20261011172600/20261011174200 registradas solo locales, estado remoto todavía sin verificar. Perfil funciona con contrato actual; catálogo/acciones protegidos por RPC de soporte y conservan consulta/panel si faltan. Preparar aplicación exacta y pruebas locales mientras se publica; no atribuir habilitación remota a una OTA.
 
 **Mi tienda operativa — tres bloques terminados localmente, sin WIP funcional pendiente.** Base `887197b`.

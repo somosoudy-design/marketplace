@@ -16,6 +16,11 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 18:51Z · Codex cloud · Oliver · preview publicado y checkpoint validación Android
+- EAS preview 38165223060/job 114546276314/fuente 2a38dfb: Success. Guard exacto APK 5, publicación y resultado en success; término publicación 18:48:30Z. Confirmado por páginas públicas run/job de GitHub; API bloqueada por red. No se afirma recepción física.
+- Revisión 36: ampliar flow existente de visita a seis rutas, editor de producto y detalle de entrega protegidos, sin acceso o botones privados; Cuenta/Atrás/diagnóstico y ambos temas, APK 5 existente. No cuentas/pagos/escrituras remotas.
+- Pendiente: confirmar emulador/OTA y preparar SQL limitado/verificado para migraciones; Supabase sin acceso en cloud, estado remoto desconocido. Borrador de entorno guardado con dominios api.github.com/api.supabase.com/proyecto correcto y requisito SUPABASE_ACCESS_TOKEN para acceso seguro; todavía sin aplicar al runtime.
+
 ### 2026-10-11 18:46Z · Codex cloud · Oliver · checkpoint publicación Mi tienda autorizada
 - Oliver autoriza publicar primero para revisar Android y continuar pendientes de esta entrega. Mismo APK 5, canal preview, fuente móvil 5a3b884 y cierre be661bf. Guard exacto obligatorio; solicitud preparada, publicación aún pendiente de evidencia.
 - Git sincronizado/limpio sobre be661bf, pruebas previas 42/42 + 20/20 + pedidos 8/8, DB 31/31, tipos/lint/web/Hermes aprobados. No cambios móviles nuevos.

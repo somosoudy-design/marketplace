@@ -1,4 +1,4 @@
-# VEN-01A, APK 5 existente, visitante: verifica las rutas nuevas y su guarda nativa.
+# Mi tienda operativa, APK 5 existente, visitante: seis rutas protegidas y guarda nativa.
 # Solo lecturas; no crea cuentas, tiendas, productos, pedidos, pagos o datos remotos.
 appId: com.example.kora.preview
 name: Mi tienda requiere sesión y conserva Cuenta
@@ -53,6 +53,23 @@ name: Mi tienda requiere sesión y conserva Cuenta
     timeout: 15000
 - assertVisible: Mis productos
 - takeScreenshot: ven01a-03-productos-protegidos
+- openLink: kora://my-store/product
+- extendedWaitUntil:
+    visible: Producto de mi tienda
+    timeout: 15000
+- assertVisible: Entra a tu cuenta
+- assertNotVisible:
+    id: product-edit-save
+- takeScreenshot: venops-08-editor-protegido
+- openLink: kora://my-store/order
+- extendedWaitUntil:
+    visible: Detalle de entrega
+    timeout: 15000
+- assertVisible: Entra a tu cuenta
+- assertNotVisible:
+    id: delivery-review
+- takeScreenshot: venops-09-entrega-protegida
+
 - openLink: kora://my-store/orders
 - extendedWaitUntil:
     visible: Pedidos de mi tienda
