@@ -16,6 +16,20 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 16:35Z (12:35 Caracas) · Codex (cloud Linux) · Oliver · checkpoint antes de publicar VEN-01A
+- Autorización nueva: Oliver respondió «Sí, publica» tras aclarar que preview actualiza su Android.
+  Levantada la pausa de publicación; fases B/C, panel/backend, iOS, finanzas y APK nuevo fuera de alcance.
+- Continuidad: rama limpia/sincronizada `a22f84b`, código móvil sin cambios desde la validación
+  `5f90e27` (UI 22/22, permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS, 18 capturas).
+- Solicitud: cambiado únicamente el mensaje de `.github/eas-update-request`; runtime exacto APK 5
+  `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` conservado. El workflow carga Firebase preview y verifica
+  el runtime antes de ejecutar EAS Update Android; no cambiar configuración nativa o crear APK.
+- Seguimiento: GitHub API responde Forbidden en este cloud; páginas públicas de Actions y Git HTTPS
+  funcionan. Usar esas evidencias sin pedir/exponer tokens o afirmar éxito antes de verlo.
+- Servicios: publicación solicitada, todavía sin resultado. Siguiente: confirmar run/guard/grupo y
+  documentar publicación y límites de validación Android. No publicar production o desplegar panel.
+- Último commit: este checkpoint de solicitud autorizada; obtener con `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 16:22Z (12:22 Caracas) · Codex (cloud Linux) · Oliver · cierre VEN-01A sin publicación
 - Hecho: Mi tienda nativa desde Cuenta, roles/pertenencias reales, selector multitienda, resumen de productos/
   entregas, catálogo paginado, pedidos y configuración solo consulta. Acceso al panel existente para editar;

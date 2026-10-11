@@ -1,8 +1,9 @@
 # VEN-01A — Mi tienda en HAYAZGO
 
 Implementación terminada y validada localmente el 2026-10-11. Fuente: `cc6db73`, con separación de
-pedidos compradores para cuentas con varios roles en `5f90e27`. **Sin publicación móvil ni despliegue
-del panel.** Oliver está validando el paquete Android anterior; esperar su confirmación antes de publicar.
+pedidos compradores para cuentas con varios roles en `5f90e27`. Oliver confirmó y autorizó **«Sí, publica»**
+posteriormente. Solicitud de EAS preview en curso; registrar guard runtime APK 5 y resultado antes de
+afirmar publicación. Sin APK nuevo ni despliegue del panel/backend.
 
 ## Experiencia implementada
 

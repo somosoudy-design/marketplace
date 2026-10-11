@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 12:22 (Caracas, UTC−4), por Codex cloud (VEN-01A terminado y validado localmente, sin publicación; espera revisión de Oliver).
+**Última actualización:** 2026-10-11 12:35 (Caracas, UTC−4), por Codex cloud (Oliver autorizó publicar VEN-01A; solicitud preview con guard APK 5 en curso).
 
 ## Dónde está el trabajo
 
@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + pedidos compradores multirrol `5f90e27`, cierre documental posterior. Último paquete APK 5 publicado: fuente `41d415f`, anterior a VEN-01A |
 | Plan vigente | VEN-01A terminado y validado localmente: Cuenta + Mi tienda, resumen y consulta de productos/pedidos/configuración. Validación Android pendiente; VEN-01B/C fuera de alcance, iOS pospuesto |
-| Objetivo actual | Esperar confirmación de Oliver sobre el paquete anterior antes de una futura publicación/prueba Android de VEN-01A. Sin EAS Update, APK nuevo o cambios financieros/remotos en este bloque |
+| Objetivo actual | Publicar VEN-01A por EAS Update preview, autorizado por Oliver «Sí, publica». Guard runtime exacto APK 5 obligatorio. Sin APK nuevo o cambios financieros/backend/panel/iOS |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -132,8 +132,11 @@ Primeros fallos de prueba documentados en historial; corregidos sin desactivar c
 Commits de API llevan `[skip ci]`: `panel-deploy.yml` despliega automáticamente por `packages/api/**`;
 evita publicar el panel contra la restricción vigente. No cambiar workflows ni solicitudes EAS.
 Sin Android/emulador disponible: Atrás físico, TalkBack, fluidez y apertura nativa del panel pendientes.
-**No publicar EAS Update:** Oliver revisa la actualización anterior. No iOS/Xcode, checkout, pagos, servicios
-remotos, dependencias o APK nuevo. No repetir correcciones comprador/franja ni empezar VEN-01B/C.
+**Publicación autorizada posteriormente:** Oliver confirmó y pidió «Sí, publica» el 2026-10-11.
+Solicitud `.github/eas-update-request` actualizada únicamente con el mensaje de VEN-01A; runtime APK 5
+conservado. El workflow verifica el proyecto, carga Firebase preview y compara la huella antes de publicar.
+Esperar resultado: aún no se afirma envío/recepción de este paquete. Sin iOS/Xcode, checkout, pagos,
+dependencias, servicios backend/panel o APK nuevo. No repetir comprador/franja ni empezar VEN-01B/C.
 
 ### Antecedentes cerrados — 4.3 y sesión comprador
 
@@ -296,12 +299,12 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**Esperar confirmación de Oliver sobre la actualización anterior.** VEN-01A ya está implementado y
-probado localmente; no volver a construir Mi tienda o corregir carrito/checkout/franja sin un fallo nuevo.
-No disparar EAS Update, workflows del panel o APK ni reutilizar permisos de publicación anteriores.
+**Publicación VEN-01A en curso, autorizada por Oliver «Sí, publica».** Seguir el run de
+`eas-update-preview.yml` generado por este checkpoint; comprobar guard runtime exacto APK 5 y resultado
+EAS antes de afirmar publicado. VEN-01A ya está probado localmente; no reconstruir Mi tienda ni repetir
+carrito/checkout/franja sin un fallo nuevo. No disparar workflows del panel, production o APK.
 
-Cuando Oliver confirme que se puede actualizar: preparar la publicación controlada de VEN-01A con el
-guard de runtime exacto APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; luego validar comprador,
+Tras preview Success con runtime APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`: validar comprador,
 vendedor, admin/multirrol, cambio de tienda, cierre de sesión y Atrás físico en claro/oscuro. Registrar TalkBack,
 fluidez y apertura del panel. No se ha ejecutado esa prueba nativa en este bloque.
 
