@@ -16,6 +16,18 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 14:41Z (10:41 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint antes de EAS Update
+- Autorización: respuesta explícita «Autorizar actualización para APK 5»; pregunta especificaba preview y
+  entrega a su Android. Autoriza publicar este paquete pese a la prohibición de la sesión corta anterior.
+- Fuente: rama sincronizada `ca0923d`, corrección 4.3 `adf3c78` y errores comprador `e9b56a0`, sin nuevos
+  cambios de app. Tipos/lint, geometría 9/9, web 6/6 y exportaciones aprobados; flujo 04 ampliado preparado.
+- Solicitud: workflow preview existente, solo Android, runtime APK 5 obligatorio
+  `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Si no coincide, abortar sin APK nuevo ni eludir el guard.
+- Pendiente: publicación real/Success y luego emulador con la OTA nueva; revisar 14 capturas y diagnóstico.
+  No afirmar todavía que el fallo está resuelto en APK 5 ni recibido en el teléfono del propietario.
+- Restricciones: sin canal production, APK nuevo, iOS/Xcode, Frente B/VEN-01, motor financiero, panel o datos remotos.
+- Último commit: este checkpoint WIP de solicitud autorizada; cerrar con resultados de publicación y pruebas.
+
 ### 2026-10-11 14:38Z (10:38 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · preparación de validación 4.3
 - Continuidad: rama `adf3c78` limpia/sincronizada; últimos 15 commits y AGENTS/estado/pendientes revisados.
   No WIP funcional activo ni cambios de otro agente. Corrección existente conservada, sin duplicar funcionalidad.
