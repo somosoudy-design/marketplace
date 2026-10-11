@@ -2,8 +2,32 @@
 
 Implementación terminada y validada localmente el 2026-10-11. Fuente: `cc6db73`, con separación de
 pedidos compradores para cuentas con varios roles en `5f90e27`. Oliver confirmó y autorizó **«Sí, publica»**
-posteriormente. Solicitud de EAS preview en curso; registrar guard runtime APK 5 y resultado antes de
-afirmar publicación. Sin APK nuevo ni despliegue del panel/backend.
+posteriormente. **Publicado en preview y ejecutado en APK 5 en emulador Android**, sin APK nuevo ni
+despliegue del panel/backend. El teléfono físico de Oliver no está conectado a esta sesión.
+
+## Publicación y recepción comprobada
+
+| Dato | Resultado |
+|---|---|
+| EAS preview | [Run 38156171005](https://github.com/somosoudy-design/marketplace/actions/runs/38156171005) **Success**, fuente `2d00f96` |
+| Destino | Android, canal `preview`, APK 5 existente `d1d10c28` |
+| Runtime | `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; guard aprobado antes de publicar |
+| OTA ejecutada | `01a12bd4-1483-7096-b0c2-de39d35f4c15` |
+| Publicada | 2026-10-11 16:38 UTC (12:38 Caracas) |
+| Comprobación Android | [Run 38156560856](https://github.com/somosoudy-design/marketplace/actions/runs/38156560856) **Success**, revisión 35/fuente `098f430`, Android 15/Pixel 6 |
+| Prueba nativa | `05-mi-tienda-acceso.yaml`: **2/2**, claro/oscuro, sin reintentos, flujo de 41 pasos por tema |
+| Evidencia inmutable | [Capturas y resumen](https://github.com/somosoudy-design/marketplace/tree/61ebb1d0e2e03d9b18beb991b59351eadbaf9985/ultima) |
+
+El diagnóstico en ambos temas confirma esa OTA, canal preview/runtime APK 5, backend de pruebas correcto
+y sesión cifrada. Las cuatro rutas nuevas exigen sesión; Cuenta de visitante conserva sus funciones,
+la flecha y Atrás físico vuelven a Cuenta, e «Iniciar sesión» abre el formulario y permite regresar.
+Se revisaron **14 capturas nativas del recorrido**. Sin creación de cuentas/pedidos/pagos o escrituras
+remotas. El código móvil/API del checkpoint de la prueba es idéntico al publicado.
+
+En el Android de Oliver: abrir con conexión, cerrar/abrir o pulsar «Reiniciar» cuando aparezca «Hay una
+versión nueva lista». Al pie de Cuenta debe indicar **actualización `01a12bd4`**; diagnóstico completo
+en `kora://diagnostico`. «Mi tienda» aparece únicamente si su cuenta tiene una tienda asignada en el backend.
+Un administrador sin pertenencias conserva Administración; no se inventa una tienda para mostrar el acceso.
 
 ## Experiencia implementada
 
@@ -75,6 +99,7 @@ locales sin pagar; no se borraron datos ni se utilizaron cuentas/operaciones rem
 | Exportación Android JS/Hermes final | Aprobada sobre `5f90e27`; un bundle `.hbc`, sin generar APK |
 | Revisión visual | **18 capturas**, nueve por tema; recorrido principal a 320 × 780 px |
 | Contraste de tokens usados | **22 pares** de texto, todos ≥4,5:1; mínimo 4,78:1 |
+| APK 5 en Android 15, revisión 35 | **2/2** visitante en claro/oscuro, sin reintentos; OTA nueva y rutas protegidas comprobadas |
 
 Los casos cubren visitante en las cuatro rutas, comprador sin tienda, vendedor, admin sin tienda con una
 compra propia, cuenta con varios roles sin compras, dos tiendas, producto privado propio, paginación,
@@ -89,6 +114,7 @@ Evidencia ignorada en esta máquina: galería autónoma `.local/ven01a/galeria.h
 y `.local/logs/ven01a-{ui-final,permissions,core,
 web-build-final,android-export-final,buyer-scope-before}.log`. Las capturas se regeneran con el spec.
 El test de permisos conserva la copia `kora_ven01a_154805`; su nombre está en `.local/ven01a/test-db-name`.
+Evidencia Android local: `.local/ven01a/release/native/ultima/`; copia inmutable enlazada arriba.
 
 Para repetir los recorridos, con el entorno de `ENTORNO.md` instalado:
 
@@ -104,13 +130,14 @@ de desarrollo para reproducir este bloque. No cargar fixtures o seed en proyecto
 
 ## Límites y siguiente etapa
 
-Este entorno no tiene Android/emulador conectado. No se ejecutó el código nuevo en APK 5 ni se comprobó
-Atrás físico, TalkBack, aperturas nativas del navegador o fluidez del teléfono. La revisión en web y la
-exportación Hermes no sustituyen esas pruebas. El contraste medido no es una auditoría completa de accesibilidad.
+El cloud no tiene un Android local conectado; la comprobación nativa se ejecutó por GitHub Actions.
+Visitante/rutas protegidas/Atrás/recepción OTA aprobados en Android 15. Vendedor/admin/multirrol con sesión,
+tienda real, navegador externo, TalkBack y fluidez del teléfono quedan para la revisión física de Oliver.
+Los 22 casos con roles/datos reales se ejecutaron en web contra el backend local, no en su teléfono.
+El contraste medido no es una auditoría completa de accesibilidad.
 
-No se añadió un módulo nativo, dependencia o cambio de configuración Android. Antes de una futura OTA,
-esperar la confirmación de Oliver, ejecutar el guard de runtime exacto APK 5 y validar en Android el
-paquete publicado. No reutilizar autorizaciones de publicación de bloques anteriores ni disparar workflows ahora.
+No se añadió un módulo nativo, dependencia o cambio de configuración Android. Publicación autorizada
+cerrada, guard runtime APK 5 y comprobación nativa aprobados; no repetir esta publicación o generar APK.
 Los commits de API usan `[skip ci]` porque el workflow del panel despliega por cambios en `packages/api/**`;
 las comprobaciones locales sí se ejecutaron.
 

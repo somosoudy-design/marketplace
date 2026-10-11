@@ -16,6 +16,29 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 16:52Z (12:52 Caracas) · Codex (cloud Linux) · Oliver · cierre publicación VEN-01A APK 5
+- Autorización: Oliver «Sí, publica». EAS preview run 38156171005 **Success**, fuente `2d00f96`,
+  guard runtime exacto APK 5 aprobado antes de publicar. Publicación Android 2026-10-11 16:38 UTC.
+- Comprobación real: run 38156560856 **Success**, revisión 35/fuente `098f430`, Android 15/Pixel 6,
+  APK 5 existente `d1d10c28`. `05-mi-tienda-acceso.yaml`: 2/2 claro/oscuro, sin reintentos, flujo 41 pasos.
+  Visitante sin Mi tienda en Cuenta; cuatro rutas nuevas exigen sesión, flecha/Atrás vuelven a Cuenta,
+  login y regreso funcionan. Código móvil/API idéntico al publicado; sin escrituras remotas.
+- Recepción: diagnóstico en ambos temas confirma OTA `01a12bd4-1483-7096-b0c2-de39d35f4c15`,
+  publicada 16:38 UTC, preview/runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend correcto
+  y sesión cifrada. No se afirma recepción o validación en el teléfono físico de Oliver.
+- Diseño: 14 capturas nativas del recorrido revisadas, claro/oscuro, sin recortes o superposiciones en
+  cabeceras/guardas/login/Cuenta. Evidencia inmutable ci/capturas `61ebb1d`; enlaces en `docs/VEN-01A.md`.
+- Pruebas previas con roles/datos: UI 22/22, permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y
+  18 capturas, ya aprobadas sobre este código. No repetir suites generales. Sintaxis YAML aprobada con
+  parser ya instalado en pnpm; no se añadieron dependencias. Logs privados de Actions/API no accesibles
+  desde este cloud: pasos Success y diagnóstico/capturas son la evidencia; no inventar grupo EAS.
+- Servicios: únicamente EAS Update Android preview autorizada y prueba en emulador descartable.
+  Sin APK nuevo, production, cambios en Supabase/Firebase/backend/panel, checkout, finanzas, iOS/Xcode,
+  cuentas/pedidos/pagos remotos o Frente B. Checkpoints `2d00f96`/`098f430` cerrados; sin WIP funcional.
+- Siguiente: revisión física con tienda/roles reales, TalkBack/fluidez/navegador. Confirmar actualización
+  `01a12bd4` en Cuenta; no republicar por defecto. VEN-01B solo con nuevo alcance de Oliver.
+- Último commit: este cierre documental; comprobar `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 16:41Z (12:41 Caracas) · Codex (cloud Linux) · Oliver · checkpoint tras publicar VEN-01A
 - EAS preview run 38156171005 **Success**, fuente `2d00f96`, publicación finalizada 16:38 UTC.
   Pasos Proyecto/Firebase/Runtime/Publicar/Resultado success; guard exacto APK 5 aprobado antes del envío.

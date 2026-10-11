@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 12:41 (Caracas, UTC−4), por Codex cloud (VEN-01A preview publicado; comprobación nativa visitante en curso).
+**Última actualización:** 2026-10-11 12:52 (Caracas, UTC−4), por Codex cloud (VEN-01A publicado en preview y comprobado en APK 5; sin WIP activo).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + pedidos compradores multirrol `5f90e27`, cierre documental posterior. Último paquete APK 5 publicado: fuente `41d415f`, anterior a VEN-01A |
-| Plan vigente | VEN-01A terminado y validado localmente: Cuenta + Mi tienda, resumen y consulta de productos/pedidos/configuración. Validación Android pendiente; VEN-01B/C fuera de alcance, iOS pospuesto |
-| Objetivo actual | VEN-01A preview publicado, run 38156171005 Success/fuente 2d00f96, guard exacto APK 5 aprobado. Comprobar rutas nuevas y OTA en el APK existente; sin APK nuevo o cambios financieros/backend/panel/iOS |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + multirrol `5f90e27`, publicado fuente `2d00f96`, prueba nativa `098f430`; cierre documental posterior |
+| Plan vigente | VEN-01A terminado/publicado: Mi tienda, resumen y consulta de productos/pedidos/configuración. Android visitante aprobado; revisión física con roles pendiente. VEN-01B/C fuera de alcance, iOS pospuesto |
+| Objetivo actual | Bloque cerrado: preview run 38156171005 y Android run 38156560856 Success; runtime APK 5/OTA nueva comprobados. Esperar revisión de Oliver con tienda real; sin APK nuevo o cambios financieros/backend/panel/iOS |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -34,8 +34,10 @@
 - **VEN-01A (local, 2026-10-11):** Mi tienda nativa desde Cuenta, roles/pertenencias reales, selector de
   tiendas, resumen, catálogo paginado, entregas recibidas y configuración solo consulta; panel avanzado
   conservado. Comprador/admin multirrol con pedidos compradores propios. UI 22/22, permisos 6/6,
-  núcleo 50/50, tipos/lint, web/Android JS y revisión visual claro/oscuro aprobados. **No publicado ni
-  ejecutado aún en APK 5.** Detalle y límites: `docs/VEN-01A.md`.
+  núcleo 50/50, tipos/lint, web/Android JS y revisión visual claro/oscuro aprobados. Publicado en preview,
+  run 38156171005/fuente `2d00f96`; guard APK 5 aprobado. Android 15, revisión 35/run 38156560856:
+  visitante **2/2**, ambos temas, sin reintentos; OTA `01a12bd4-1483-7096-b0c2-de39d35f4c15` de
+  16:38 UTC comprobada. **Teléfono físico no conectado.** Detalle: `docs/VEN-01A.md`.
 - Backend del proyecto de pruebas en Supabase, comprobado con el conector el 2026-10-09 22:00Z: 23 migraciones
   aplicadas (las mismas 23 de `supabase/migrations`), funciones `rates-sync` y `push-dispatch` activas (versión 1,
   con la validación del token de tareas), 6 trabajos de `pg_cron`, última tasa leída 21:30Z, 43 productos
@@ -131,14 +133,19 @@ Prueba de abrir panel intercepta solo el destino externo: verifica URL/ventana/s
 Primeros fallos de prueba documentados en historial; corregidos sin desactivar casos.
 Commits de API llevan `[skip ci]`: `panel-deploy.yml` despliega automáticamente por `packages/api/**`;
 evita publicar el panel contra la restricción vigente. No cambiar workflows ni solicitudes EAS.
-Sin Android/emulador disponible: Atrás físico, TalkBack, fluidez y apertura nativa del panel pendientes.
+Android visitante comprobado por CI; TalkBack, fluidez, navegador externo y sesión vendedor/admin en
+teléfono físico pendientes. No se afirma recepción en el Samsung de Oliver.
 **Publicación autorizada posteriormente:** Oliver confirmó y pidió «Sí, publica» el 2026-10-11.
 Solicitud `.github/eas-update-request` actualizada únicamente con el mensaje de VEN-01A; runtime APK 5
 conservado. El workflow verifica el proyecto, carga Firebase preview y compara la huella antes de publicar.
 [EAS preview 38156171005](https://github.com/somosoudy-design/marketplace/actions/runs/38156171005)
 **Success**, fuente `2d00f96`; guard runtime y publicación Android terminados en verde, 16:38 UTC.
-Comprobación nativa visitante: revisión 35, `05-mi-tienda-acceso.yaml`, ambos temas. Verifica las cuatro
-rutas nuevas protegidas, regreso a Cuenta/flecha/Atrás físico, acceso a login y diagnóstico de OTA.
+[Android 38156560856](https://github.com/somosoudy-design/marketplace/actions/runs/38156560856)
+**Success**, revisión 35/fuente `098f430`: `05-mi-tienda-acceso.yaml`, **2/2**, ambos temas, sin reintentos.
+Cuatro rutas nuevas protegidas, Cuenta/flecha/Atrás físico, login y regreso aprobados. Diagnóstico:
+OTA `01a12bd4-1483-7096-b0c2-de39d35f4c15`, preview/runtime APK 5, publicada 2026-10-11 16:38 UTC.
+Las **14 capturas nativas del recorrido se revisaron**; código móvil/API idéntico al publicado.
+[Evidencia inmutable](https://github.com/somosoudy-design/marketplace/tree/61ebb1d0e2e03d9b18beb991b59351eadbaf9985/ultima).
 Sin cuentas o escrituras remotas; no sustituye los 22 casos locales con vendedor/admin. Sin iOS/Xcode, checkout, pagos,
 dependencias, servicios backend/panel o APK nuevo. No repetir comprador/franja ni empezar VEN-01B/C.
 
@@ -303,16 +310,17 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**VEN-01A preview Success, fuente `2d00f96`/run 38156171005; guard APK 5 aprobado.** Seguir el run
-`apk-emulator.yml` de la revisión 35 (este checkpoint): comprobar ejecución de `05-mi-tienda-acceso`
-en claro/oscuro, diagnóstico de la OTA nueva y capturas; registrar límites y cerrar. No repetir
-carrito/checkout/franja ni disparar workflows del panel, production o APK nuevo.
+**VEN-01A publicado y comprobado, sin WIP activo.** No repetir publicación, implementación ni pruebas
+de franja/carrito/checkout sin un fallo nuevo. Revisión física de Oliver con tienda asignada: Cuenta →
+Mi tienda, productos/pedidos/configuración, cambio entre tiendas, vuelta a comprar; vendedor/admin/multirrol,
+cambio de cuenta, modo claro/oscuro, TalkBack/fluidez/navegador. No usar clientes para simular permisos.
 
-Tras preview Success con runtime APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`: validar comprador,
-vendedor, admin/multirrol, cambio de tienda, cierre de sesión y Atrás físico en claro/oscuro. Registrar TalkBack,
-fluidez y apertura del panel. No se ha ejecutado esa prueba nativa en este bloque.
+Para confirmar recepción: en Cuenta, al pie, actualización **`01a12bd4`**; en `kora://diagnostico`,
+OTA completa `01a12bd4-1483-7096-b0c2-de39d35f4c15`, publicada 2026-10-11 16:38 UTC, preview/runtime
+APK 5. Abrir con conexión, cerrar/abrir o pulsar «Reiniciar» si aparece el aviso. No reinstalar ni borrar datos.
+Mi tienda requiere pertenencia real; admin sin tienda conserva Administración. No hubo cambios de roles remotos.
 
-Si aparecen cambios/fallos nuevos antes de publicar, reproducirlos con los archivos de `docs/VEN-01A.md`:
+Si aparece un fallo nuevo, reproducirlo con los archivos de `docs/VEN-01A.md`:
 `pnpm --filter @kora/app-e2e build:web` y `seller-app.spec.ts` con el runner app. Las suites actuales ya están
 aprobadas; no repetir auditorías generales ni borrar/resetear datos locales. Siguiente desarrollo previsto,
 solo con nuevo alcance de Oliver: VEN-01B (editor/productos/fotografías/existencias). Sin iOS ni Frente B.
@@ -357,8 +365,14 @@ VEN-01A, cierre local (2026-10-11 12:22 Caracas): `seller-app.spec.ts` **22/22**
 sin reintentos/omisiones; 320 px en recorrido principal. Permisos existentes + herramientas vendedor **6/6**
 en copia local conservada, núcleo **50/50**, tipos/lint aprobados. Web y Android JS/Hermes exportados desde
 `5f90e27`. Dieciocho capturas revisadas; contraste de 22 pares ≥4,5:1. Logs, casos, reproducción y límites
-en `docs/VEN-01A.md`. No prueba Android nativa/TalkBack ni publicación móvil; no repetir la validación
-comprador anterior o afirmar que el nuevo código ya llegó al teléfono de Oliver.
+en `docs/VEN-01A.md`. Ese cierre local fue anterior a la publicación/comprobación nativa siguiente;
+no se probó TalkBack ni el teléfono físico de Oliver.
+
+VEN-01A publicado (2026-10-11 12:38 Caracas): EAS preview 38156171005 **Success**, fuente `2d00f96`,
+guard runtime exacto APK 5 aprobado. Revisión 35/run 38156560856 **Success**, Android 15/Pixel 6/APK 5:
+visitante **2/2 sin reintentos**, cuatro rutas protegidas, flecha/Atrás/Cuenta/login; 14 capturas revisadas.
+Diagnóstico de ambos temas confirma OTA `01a12bd4-1483-7096-b0c2-de39d35f4c15` de 16:38 UTC,
+preview/runtime APK 5. Sin cuentas/pedidos/pagos/escrituras remotas. No prueba física ni roles con sesión nativa.
 
 4.3, cierre (2026-10-11 10:55 Caracas): EAS preview 38148288379 **Success**, runtime APK 5 aprobado.
 Android 15/Pixel 6, revisión 34/run 38148610558 **2/2 sin reintentos**; diagnóstico confirma OTA

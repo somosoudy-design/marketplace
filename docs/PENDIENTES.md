@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 12:41 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 12:52 (Caracas, UTC−4).
 
 ## Comprador — bloque cerrado, revisión de Oliver en curso
 
@@ -24,9 +24,11 @@ sin reinstalar, borrar datos ni repetir implementación. Evidencias antes/despu�
 
 ### VEN-01 — Gestión de vendedores dentro de la app
 
-**VEN-01A terminada y validada localmente; Oliver confirmó y autorizó «Sí, publica».**
+**VEN-01A terminada/publicada; Oliver confirmó y autorizó «Sí, publica».**
 EAS preview run 38156171005 **Success**, fuente `2d00f96`, guard runtime APK 5 aprobado.
-Comprobación nativa visitante en curso, revisión 35; sin cuentas o escrituras remotas.
+Revisión 35/run 38156560856 **Success**, visitante 2/2 en Android 15/APK 5, claro/oscuro sin reintentos;
+OTA `01a12bd4-1483-7096-b0c2-de39d35f4c15` de 16:38 UTC comprobada, 14 capturas del recorrido revisadas.
+Sin cuentas o escrituras remotas. No se afirma recepción en el teléfono físico de Oliver.
 Mi tienda y sus secciones de consulta funcionan con roles/pertenencias/RLS reales, conservando compras
 propias del usuario incluso con permisos administrativos. Fuentes `cc6db73`/`5f90e27`; UI 22/22,
 permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y revisión de 18 capturas. Detalle: `docs/VEN-01A.md`.
@@ -36,7 +38,7 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A-R | Comprobación de Mi tienda en APK 5 (Atrás físico, TalkBack, fluidez, navegador, roles y cambio de cuenta) | Preview publicado/guard aprobado. En curso revisión 35 visitante en emulador, ambos temas; vendedor/admin/multirrol y teléfono real pendientes. No generar APK |
+| VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Pendiente de Oliver. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización `01a12bd4` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
 | VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Prioridad alta, después de revisión de VEN-01A y nuevo alcance de Oliver |
 | VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | Después de VEN-01B; la consulta de pedidos/configuración ya existe en VEN-01A, no duplicarla |
 

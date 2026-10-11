@@ -1,5 +1,28 @@
 # Resultados de pruebas
 
+## VEN-01A — 2026-10-11 (local + APK 5)
+
+Detalle y reproducción: `docs/VEN-01A.md`. Cuenta/Mi tienda con roles y pertenencias reales, sin escrituras
+nuevas, cambios financieros o dependencias. Datos locales demo marcados; ninguna cuenta/pedido/pago remoto.
+
+| Comprobación | Resultado |
+|---|---|
+| Playwright `seller-app.spec.ts` | **22/22**, 1,4 min, claro/oscuro, recorrido 320 px, sin omisiones/reintentos |
+| Permisos/RLS + herramientas vendedor | **6/6** en copia local nueva conservada |
+| Núcleo | **50/50**, sin cambios |
+| Tipos/lint, web y Android JS/Hermes | Aprobados sobre `5f90e27`; no APK nuevo |
+| Revisión visual/contraste local | 18 capturas; 22 pares AA, mínimo 4,78:1 |
+| EAS Android preview | [38156171005](https://github.com/somosoudy-design/marketplace/actions/runs/38156171005) **Success**, fuente `2d00f96`, guard exacto APK 5 aprobado |
+| Android 15/Pixel 6/APK 5, revisión 35 | [38156560856](https://github.com/somosoudy-design/marketplace/actions/runs/38156560856) **Success**, fuente `098f430`: **2/2** claro/oscuro sin reintentos |
+
+Nuevo `05-mi-tienda-acceso.yaml`: cuatro rutas protegidas sin sesión, Cuenta/flecha/Atrás físico/login y
+diagnóstico de OTA. Ambos temas confirman `01a12bd4-1483-7096-b0c2-de39d35f4c15`, 16:38 UTC,
+preview/runtime APK 5. Catorce capturas del recorrido revisadas;
+[evidencia inmutable](https://github.com/somosoudy-design/marketplace/tree/61ebb1d0e2e03d9b18beb991b59351eadbaf9985/ultima).
+No se ejecutaron vendedor/admin/multirrol con sesión en Android, TalkBack, navegador externo o teléfono
+físico de Oliver; esos roles/datos sí se probaron en web/backend local. No contar la prueba visitante
+como validación nativa completa. No repetir publicación/flujo comprador anterior o crear APK.
+
 ## Frente A V2 — 2026-10-10 (Codex cloud)
 
 Base `9e4e1f5`, tras revisar y probar UX-04. Datos del stack **local** sin Docker, Node 24.19.0,
