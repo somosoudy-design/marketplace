@@ -16,6 +16,16 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 15:38Z (11:38 Caracas) · Codex (cloud Linux) · Oliver · inicio VEN-01A
+- Base `da4dd54` sincronizada y limpia; leídos AGENTS, ESTADO, PENDIENTES, ARQUITECTURA y DIRECCION_PRODUCTO.
+- Autorización nueva: Mi tienda nativa desde Cuenta, resumen real y consultas de productos/pedidos/configuración;
+  mantener funciones comprador y panel avanzado. Fases B/C, editor y escrituras fuera de alcance.
+- Backend existente revisado: pertenencia `store_members`, roles `user_roles`, RLS y `require_store_member`.
+  No hace falta migración ni servicio nuevo; usar las mismas lecturas/RPC del panel con sesión y anon key.
+- Restricción vigente: sin EAS Update mientras Oliver valida el paquete anterior. No repetir franja/carrito/
+  checkout, no APK, iOS/Xcode, finanzas, panel o servicios remotos. Próximo: implementación y pruebas focalizadas.
+- Último commit: checkpoint de alcance; consultar `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 14:55Z (10:55 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · cierre publicado y validado 4.3
 - Hecho: OTA Android preview autorizada, fuente `41d415f`, EAS run 38148288379 Success; runtime APK 5
   `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` aprobado antes de publicar. Incluye `adf3c78` (franja)

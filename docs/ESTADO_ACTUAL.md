@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 10:55 (Caracas, UTC−4), por Codex cloud (4.3 publicada y validada en Android claro/oscuro; sesión cerrada).
+**Última actualización:** 2026-10-11 11:38 (Caracas, UTC−4), por Codex cloud (inicio autorizado VEN-01A; sin publicación móvil).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Corrección 4.3 `adf3c78`, flujo ampliado `ca0923d`; preview fuente `41d415f`, validación nativa `19067d6`, cerrados por este relevo. Comprador `e9b56a0`, VEN-01 `70443c0`; iOS cerrado `9d22155` |
-| Plan vigente | Sesión corta cerrada: dos fallos comprador y franja corregidos, publicados a APK 5 preview y validados. VEN-01 solo backlog; iOS pospuesto. Sin Frente B |
-| Objetivo actual | Revisión física de Oliver de la OTA nueva. Android 15/APK 5 claro/oscuro 2/2 y 14 capturas aprobadas. Sin WIP, APK nuevo o canal production |
+| Plan vigente | VEN-01A autorizado: Cuenta + Mi tienda nativa, resumen y consulta de productos/pedidos/configuración. VEN-01B/C fuera de alcance; iOS pospuesto |
+| Objetivo actual | Implementar y probar VEN-01A, sin EAS Update mientras Oliver valida el paquete anterior en Android. Sin APK nuevo o cambios financieros/remotos |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -104,6 +104,16 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**VEN-01A en curso, autorizado por Oliver.** Base `da4dd54` sincronizada, sin WIP ajeno ni cambios locales.
+Revisados roles y pertenencia: comprador implícito; `user_roles` administrativos y `store_members` de vendedor.
+Reutilizar `api.profile.roles/stores`, `seller_dashboard`, `seller_fulfillments` y lectura RLS de productos.
+Implementación prevista: acceso Cuenta, selector para varias tiendas, resumen real, productos/pedidos y
+configuración solo consulta, panel avanzado existente. Sin editor, fotos, inventario avanzado o mutaciones.
+Servidor valida pertenencia en cada RPC; no conceder permisos desde metadatos editables por cliente.
+Próximo bloque: API tipada y pantallas nativas; probar roles/aislamiento, vacíos, errores y regreso en ambos temas.
+**No publicar EAS Update:** Oliver revisa la actualización anterior. No iOS/Xcode, checkout, pagos, servicios
+remotos, dependencias o APK nuevo. No repetir correcciones comprador/franja ni empezar VEN-01B/C.
 
 **Sesión cerrada: 4.3 corregida, publicada y validada en emulador Android; sin WIP activo.**
 Oliver autorizó explícitamente «Autorizar actualización para APK 5» por EAS Update `preview`, con entrega
@@ -262,6 +272,9 @@ regla comercial del motor de precios (`pricing.import.configured = false`, la de
 repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
+
+Agente: completar VEN-01A según el bloque activo arriba y pruebas focalizadas. No solicitar actualizaciones
+o workflows de APK. Revisión de Oliver del paquete anterior continúa independientemente:
 
 Revisión física de Oliver, **sin otro APK ni otra publicación**: abrir HAYAZGO con conexión, dejar descargar
 la actualización y pulsar «Reiniciar» si aparece «Hay una versión nueva lista» (o cerrar y abrir de nuevo).

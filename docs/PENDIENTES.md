@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 10:55 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 11:38 (Caracas, UTC−4).
 
 ## Sesión corta — prioridad vigente
 
@@ -24,14 +24,14 @@ sin reinstalar, borrar datos ni repetir implementación. Evidencias antes/despu�
 
 ### VEN-01 — Gestión de vendedores dentro de la app
 
-**Prioridad alta del backlog, después de estabilizar la experiencia del comprador. Solo documentada;
-no iniciar implementación sin un nuevo pedido de Oliver.** Los vendedores administrarán su tienda sin salir
+**VEN-01A autorizada y en curso por nuevo pedido de Oliver; no publicar mientras valida su Android.**
+VEN-01B/C siguen en backlog, sin autorización para implementarlas. Los vendedores administrarán su tienda sin salir
 de HAYAZGO; el panel web seguirá disponible para funciones avanzadas. Reutilizar roles/permisos y operaciones
 existentes del panel/backend; no duplicar reglas comerciales ni crear permisos decididos por el cliente.
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A | Acceso «Mi tienda», roles, resumen y navegación | Backlog, no autorizada en esta sesión |
+| VEN-01A | Acceso «Mi tienda», roles reales, resumen y consulta de productos/pedidos/configuración, navegación | En curso; pruebas y capturas pendientes, sin EAS Update |
 | VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Después de VEN-01A |
 | VEN-01C | Pedidos recibidos, configuración de tienda y acciones comerciales básicas | Después de VEN-01B |
 
