@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 12:52 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 14:10 (Caracas, UTC−4).
 
 ## Comprador — bloque cerrado, revisión de Oliver en curso
 
@@ -39,9 +39,29 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 | Fase | Alcance previsto | Estado |
 |---|---|---|
 | VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Oliver comprobó VEN-01A: funciona como lectura, solicita operaciones. TalkBack/fluidez detallados pendientes. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización `01a12bd4` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
-| VEN-01-PERFIL | Perfil editable, logotipo/portada, contacto/políticas | Completado local: UI 26/26, permisos 6/6, tipos/lint/web. Publicación pausada, prueba física pendiente |
-| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Completada local: catálogo operativo, UI 30/30, DB 20/20. Migración 20261011172600 pendiente de autorización/aplicación remota; publicación pausada |
-| VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | En curso: acciones de pedidos. Perfil y catálogo locales cerrados; reutilizar advance_fulfillment y permisos/gates reales |
+| VEN-01-PERFIL | Perfil editable, logotipo/portada, contacto/políticas | Completado local: UI 26/26 inicial y 4/4 finales, permisos 6/6, tipos/lint/web/Hermes. Publicación pausada, prueba física pendiente |
+| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Completada local: catálogo operativo, UI 30/30 inicial y 8/8 finales, DB 20/20 del bloque. Migración 20261011172600 pendiente de autorización/aplicación remota; publicación pausada |
+| VEN-01C | Detalle y acciones de pedidos recibidos, configuración y acciones comerciales básicas | Completada local: pedidos UI 8/8, DB 10/10 del bloque; perfil/catálogo/pedidos conjunto UI 42/42 + 20/20 operativos + 8/8 pedidos finales, DB 31/31. SQL 20261011174200 solo local, advance_fulfillment intacto, OTA pausada |
+
+### VEN-OPS-R — activación y validación pendientes
+
+Código de los tres bloques cerrado y subido, fuente 5a3b884; cierre documental en git log. Informe:
+MI_TIENDA_OPERATIVA.md. No repetir implementación ni considerar la exportación una prueba en el teléfono.
+
+1. Autorización específica para SQL remoto: aplicar únicamente 20261011172600 y 20261011174200, en orden,
+   al proyecto Marketplace autorizado. Revisar pendientes, no seed ni datos de prueba remotos automáticos.
+   Verificar capacidad del servidor, permisos por tienda y persistencia con datos/cuentas autorizados.
+2. Autorización de publicación móvil todavía pendiente. Guard exacto runtime APK 5/entorno preview, después
+   EAS preview y comprobación Android de galería/teclado/Atrás/sesión/roles/TalkBack/fluidez. Ningún APK nuevo.
+3. Panel conserva modo/origen/enlace de costos, variantes automáticas nuevas, operaciones avanzadas,
+   importación/lotes, revisión de pagos/cancelaciones/reembolsos/finanzas con los permisos existentes.
+   Fotos guardadas no se eliminan por móvil; no hay drafts persistidos en el backend actual.
+
+### BCV — prioridad crítica separada
+
+Pendiente de diagnóstico/corrección específica de tasas BCV. No se investigó, implementó o desplegó en
+Mi tienda operativa; conserva su prioridad crítica. No resolver con valores fijos o tasas vencidas silenciosas.
+Retomar como bloque independiente cuando Oliver lo indique; no ampliar el alcance vendedor por esta prioridad.
 
 ## iOS gratuita — pospuesta por Oliver
 

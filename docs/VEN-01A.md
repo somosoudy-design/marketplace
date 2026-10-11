@@ -1,5 +1,9 @@
 # VEN-01A — Mi tienda en HAYAZGO
 
+> Informe histórico de la base de lectura publicada. Oliver autorizó posteriormente Mi tienda operativa:
+> perfil, catálogo y acciones de pedidos cerrados localmente en `docs/MI_TIENDA_OPERATIVA.md` (2026-10-11).
+> Dos migraciones solo locales y publicación de operaciones pausada; no repetir VEN-01A ni su OTA.
+
 Implementación terminada y validada localmente el 2026-10-11. Fuente: `cc6db73`, con separación de
 pedidos compradores para cuentas con varios roles en `5f90e27`. Oliver confirmó y autorizó **«Sí, publica»**
 posteriormente. **Publicado en preview y ejecutado en APK 5 en emulador Android**, sin APK nuevo ni

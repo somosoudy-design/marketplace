@@ -16,6 +16,15 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 18:10Z · Codex cloud · Oliver · cierre Mi tienda operativa, tres bloques
+- Hecho: perfil editable/galería/página pública (928494d), catálogo real/atómico/RLS/moderación/costos existentes (9648e35), detalle y acciones de entrega con pasos/pago/pertenencia del servidor, confirmación/guía/notas/historial y reintento sin duplicar (5a3b884). Checkpoints 66465ff/d3bf8dd/656160b/8889952/5a3b884 resueltos; sin WIP funcional pendiente.
+- Persistencia: stores/Storage; products/variants/images/costos por transacción; fulfillments/events por advance_fulfillment existente e intacto. No cambia finanzas/cálculos/pagos/checkout o el panel, ni da facultades administrativas a un vendedor.
+- Pruebas: UI conjunta 42/42 (3,6 min), luego 20/20 operativos (2,5 min) con textos, disponibilidad desde mapa compartido/En camino persistido y captura estable. Revisión adicional de notas concurrentes: otro cliente completa el mismo paso con datos distintos, se conserva el borrador sin éxito falso; pedidos 8/8 finales (1 min) en ambos temas. DB 31/31 en copia local kora_seller_ops_171524 conservada; core 50/50 bloque 2 sin cambios posteriores. Tipos/lint/web/Android JS-Hermes finales sobre 5a3b884 aprobados. Visual 22 capturas, claro/oscuro/320 px. Sin omisiones o runner retries. Fallo inicial proof_required era fixture incompleta: ruta propia añadida, requisito del servidor intacto.
+- A medias: ninguna operación de pantalla falsa o WIP funcional. Pendientes externos: dos migraciones remotas autorizadas/guard/publicación/Android físico. Backend sin drafts; móvil no borra fotos/variantes/productos. Panel conserva avanzado/modo-origen de costos/variantes automáticas/importación/pasos admin/pagos/finanzas con permisos reales.
+- Servicios: SQL 20261011172600/20261011174200 solo stack/copia local. Ningún servicio/dato remoto, actualización EAS o APK; sin iOS/Xcode/Firebase. [skip ci] evita autodespliegue de panel por API; requests/workflows intactos. BCV conserva prioridad crítica separada, sin cambios.
+- Siguiente exacto: leer MI_TIENDA_OPERATIVA.md; no repetir tres bloques/VEN-01A/franja. Esperar autorización SQL y aplicar solo esas dos migraciones en orden al proyecto Marketplace correcto, verificar soporte/permiso/persistencia; EAS preview/guard APK 5 solo con autorización nueva, luego galería/teclado/Atrás físico/TalkBack/fluidez y flujos de vendedor en Android.
+- Último commit funcional: 5a3b884. Este cierre documental se obtiene con git log -1 origin/claude/marketplace-v1 tras push.
+
 ### 2026-10-11 18:05Z · Codex cloud · Oliver · checkpoint revisión concurrente de nota/guía
 - Operativa local implementada, UI conjunta 42/42 y último pase 20/20, DB 31/31, tipos/lint/web/Hermes aprobados sobre 8889952; docs de cierre en preparación.
 - Revisión adicional: otra sesión puede completar el mismo paso con datos distintos; antes se confirmaba el estado y descartaba la nota pendiente. Preparado cotejo de evento/nota/guía/transportista para conservar el borrador y mostrar conflicto, sin avanzar dos veces ni alterar SQL/finanzas.

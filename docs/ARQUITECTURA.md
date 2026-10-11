@@ -22,7 +22,7 @@ apps/mobile/src/app          pantallas (expo-router): (tabs), product, cart, che
 apps/mobile/src/components   ui/ (Text, Button, Badge, Card, States, Bars…), catalog/, checkout/, seller/
 apps/mobile/src/lib          auth, supabase, query (caché y modo sin conexión), session-storage, hooks, seller
 apps/admin/src/app           rutas del panel; components/ con ui.tsx, Shell, Crud, Settings…
-supabase/migrations          24 migraciones (`20261009000100` … `20261009233831`)
+supabase/migrations          28 migraciones; las dos de Mi tienda del 2026-10-11 solo aplicadas localmente
 supabase/functions           rates-sync, push-dispatch, panel-api, assets-mirror (copia única), payments-start, binance-pay-webhook, paypal-webhook
 supabase/remote-demo         catálogo demo para el proyecto remoto y el script para quitarlo
 tools/supabase-remote        archivos SQL para el SQL Editor cuando el conector no sirve
@@ -55,10 +55,16 @@ se ha probado menos; lo comprobado allí está en `docs/ESTADO_ACTUAL.md`.
   (abrir, responder, escalar, resolver).
 - **Cuentas:** registro, inicio de sesión, recuperación, direcciones, notificaciones en la app, solicitud de
   eliminación de cuenta (anonimiza, conserva pedidos, espera si hay pedidos abiertos).
-- **Mi tienda nativa (VEN-01A):** Cuenta consulta pertenencias/roles reales; resumen, productos paginados,
-  entregas recibidas y configuración solo consulta en `/my-store/*`. Mismas RLS/RPC que el panel; sin quinta
-  pestaña o escrituras nuevas. Cuenta con varios roles conserva compras propias y herramientas administrativas.
-  Detalle de consultas, pruebas y límites nativos en `docs/VEN-01A.md`; edición y acciones son fases futuras.
+- **Mi tienda nativa:** base VEN-01A con Cuenta/roles/pertenencias/selector, resumen y listas. Ampliación
+  operativa en `/my-store/settings`, `/my-store/product` y `/my-store/order`: perfil/galería, catálogo y
+  acciones logísticas. Sin quinta pestaña, compra propia/admin/multirrol conservados, datos privados por
+  usuario/tienda sin drafts persistidos en disco. Perfil usa RLS UPDATE/Storage INSERT; catálogo usa nuevo
+  `seller_save_product` INVOKER atómico con triggers/RLS y costos por RPC existente; detalle por
+  `seller_fulfillment_detail` con pertenencia/alcance servidor y avances por `advance_fulfillment` intacto.
+  Revisiones administrativas no se autoaprueban al editar variantes/costos. Disponibilidad/acciones de
+  edición requieren RPC de soporte; sin SQL nuevo se conserva lectura/panel. Dos migraciones preparadas
+  solo localmente, ninguna publicación o modificación remota. Detalle: `docs/MI_TIENDA_OPERATIVA.md`;
+  `docs/VEN-01A.md` documenta el antecedente de lectura publicado.
 - **Panel de administración** (`/admin/*`): resumen, pedidos y detalle, pagos (verificar/rechazar/reembolsar),
   productos y moderación, inventario, categorías, tiendas, usuarios y roles (solo superadmin), importar por
   URL con confirmación de derechos de imagen, contenido/colecciones, envíos y tarifas (tarifas, métodos,

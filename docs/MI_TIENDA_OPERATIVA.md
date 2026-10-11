@@ -41,7 +41,7 @@ la nube Linux no puede ejecutar la galería nativa nueva sin publicar, lo que es
   `pnpm --filter @kora/app-e2e exec playwright test -c playwright-app.config.ts seller-store-edit.spec.ts seller-app.spec.ts`.
 - Logs ignorados `.local/logs/seller-store-*`, capturas `.local/seller-ops/screens/`.
 
-Cierre bloque 1: UI **26/26** (1,8 min), permisos **6/6**, tipos/lint/export web aprobados. Ocho capturas de perfil antes/después, página pública y error en ambos temas; revisión directa de campos, botones y confirmación/error. No prueba nativa nueva. Commit de cierre: consultar historial/`git log`; publicación pausada.
+Cierre bloque 1: UI **26/26** (1,8 min), permisos **6/6**, tipos/lint/export web aprobados. Ocho capturas de perfil antes/después, página pública y error en ambos temas; revisión directa de campos, botones y confirmación/error. No prueba nativa nueva. Commit de cierre: `928494d`; publicación pausada.
 
 ## Bloque 2 — catálogo operativo
 
@@ -90,9 +90,116 @@ comprobar el guard nativo existente. Nada remoto se desplegó; no EAS Update.
 - La galería se valida por picker web + gateway local; permisos de Storage además por SQL contra RLS.
   No equivale a selección física Android, TalkBack o rendimiento nativo.
 
-## Bloque 3 — siguiente
+## Bloque 3 — pedidos operativos
 
-Implementar detalle/acciones sobre pantallas de pedidos existentes. Reutilizar `advance_fulfillment`: servidor
-controla `seller_can_set`, pago requerido, avance solo hacia delante y guía obligatoria para despacho a domicilio.
-La app no verificará pagos o cancelará entregas administrativamente. Consulta/historial deben seguir limitados
-a la entrega de la tienda, sin depender del límite de 200 registros para abrir un detalle.
+Listado existente ampliado con «Ver entrega y acciones» y detalle `/my-store/order?id=...`.
+Nombre/número, solo líneas de esa entrega, destino, método, transportista/guía, nivel de pago, siguiente tarea
+permitida e historial real. El vendedor puede confirmar/preparar/despachar/registrar tránsito/entregar cuando
+los pasos del servidor y el pago lo permiten. Las importaciones y otros pasos administrados por la plataforma
+explican quién debe actuar; no ofrecen una acción falsa. Se conservan consulta y panel sin la migración.
+
+Antes de confirmar y antes de guardar se vuelve a consultar la entrega y los pasos reales. Confirmación explícita
+con nota/guía, bloqueo de doble toque y salida durante guardado, advertencia al abandonar cambios, error/reintento
+con formulario conservado. Una respuesta perdida se reintenta consultando primero el estado guardado: si el paso
+ya se completó, no vuelve a avanzar ni duplica historial. Si otra sesión avanzó más, se bloquea la acción obsoleta. Si completó el mismo paso con datos distintos,
+se comparan evento/nota/guía/transportista: se muestra el conflicto, se conserva el borrador y no se afirma
+que se guardaron datos que no persistieron.
+Cerrar una entrega actualiza el listado y conserva su detalle/historial; regreso a Pedidos y Cuenta verificado.
+
+### Persistencia y límites de permisos
+
+Las escrituras utilizan **advance_fulfillment existente, sin modificarlo**. Guarda status, nota/historial,
+guía, transportista y fecha de entrega según sus reglas existentes; actualiza los estados derivados y avisos
+como ya lo hacía el panel. No hay UPDATE directo a órdenes/pagos/saldos, cálculo o liquidación nueva.
+La contabilización existente al entregar permanece en ese procedimiento; se comprobó su balance local.
+El servidor exige pertenencia, seller_can_set, avance hacia delante, pago requerido y guía al despachar a
+domicilio. No hay verificación de pago, cancelación administrativa o estados de importación en la app vendedor.
+
+`20261011174200_seller_fulfillment_detail.sql`, aplicada **solo al stack local y copia de pruebas**:
+consulta de detalle con el mismo modelo del panel, require_store_member y filtros tienda/id, sin límite de
+200 filas o 180 días; retorna null para una entrega ajena dentro del alcance propio. Incluye solo líneas,
+dirección e historial de esa entrega. No cambia permisos de tablas o advance_fulfillment. Dos RPC nuevos de
+lectura; anon no los ejecuta. seller_orders_ready señala disponibilidad del servidor, nunca concede un rol.
+
+### Pruebas del bloque 3
+
+- SQL **10/10**: tres casos nuevos, dos herramientas existentes y cinco privilegios. Pago no confirmado,
+  paso administrado, vendedor ajeno, comprador y visitante denegados; preparación/guía/historial persistidos,
+  dos despachos simultáneos dejan un solo evento, terminal no retrocede y detalle antiguo sigue legible.
+- UI **8/8**, ambos temas/320 px: entrega sin pagar y plataforma, aislamiento/servidor sin RPC, confirmación
+  cancelada sin escritura, preparación/despacho/entrega, guía/transportista/nota, historial, dirty/Atrás,
+  regreso/lista cerrada, error de lectura/reintento, respuesta perdida sin duplicar y confirmación obsoleta.
+- Las fixtures pagadas **locales** usan comprador/quote/submit con ruta de comprobante y un administrador demo
+  que aprueba por review_payment antes de probar vendedor. La app vendedor nunca llama ese procedimiento.
+- Ocho capturas de entrega sin pago, confirmación, cerrada y reintento en ambos temas; revisión directa.
+  Captura de confirmación espera estabilidad del botón, no un fotograma de entrada de la hoja.
+
+## Cierre conjunto — 2026-10-11
+
+Fuente funcional de los tres bloques: `5a3b884`, checkpoints `8889952`/`5a3b884` resueltos por este cierre; perfil `928494d`,
+catálogo `9648e35`, SQL preparatorios `d3bf8dd`/`656160b`. Cierre documental: `git log -1` de la rama.
+
+- UI conjunta **42/42** (3,6 min): 22 regresiones VEN-01A, cuatro perfil, ocho catálogo y ocho pedidos.
+  Tras aclarar textos y tomar disponibilidad desde AVAILABILITY compartida (incluido En camino), se reexportó
+  web y repitieron **20/20** operativos (2,5 min), con persistencia de En camino y retorno a Disponible.
+- Después de revisar concurrencia de notas/guía, pedidos **8/8** finales (1 min), ambos temas: respuesta
+  perdida reintenta sin duplicar; mismo paso con datos distintos conserva el borrador sin éxito falso;
+  un paso posterior bloquea la confirmación antigua. Tipos/lint/web/Hermes repetidos sobre `5a3b884`.
+- Backend conjunto **31/31** en copia local conservada `kora_seller_ops_171524`: perfil 2, acceso 4,
+  catálogo 6, pedidos 3, herramientas 2, reglas de precio 7, autoría 2 y privilegios 5.
+- Núcleo **50/50** durante bloque 2, sin cambios posteriores. Tipos/lint de toda la rama y exportación web
+  final aprobados. Exportación **Android JS/Hermes** final aprobada sobre `5a3b884`; no es un APK o prueba nativa.
+- Revisión visual en claro/oscuro/320 px: formularios, vista pública, confirmación/errores/reintento,
+  estados de moderación y entrega. Botones/hojas/campos reutilizan tokens Electric Violet y áreas táctiles
+  existentes. No se afirma prueba de TalkBack, teclado/picker o rendimiento en teléfono físico.
+- Logs `.local/logs/seller-ops-{types-final,lint-final,build-final,ui-final,ui-settled,db-final,android-final}.log` y `.local/logs/seller-orders-ui-final.log`.
+  22 capturas operativas `.local/seller-ops/screens/*-{store-before,store-saved,public-store,store-retry,
+  product-form,product-retry,product-review,delivery-unpaid,delivery-confirm,delivery-history,delivery-retry}.png`.
+  Revisión combinada `.local/seller-ops/review-final.png`, evidencia local ignorada por Git.
+
+### Reproducir sin borrar datos ni escribir en remoto
+
+Preparar Node/pnpm y stack según ENTORNO.md. No usar db:reset/test:db (su wrapper elimina kora_test).
+Conservar la copia local o crear una nueva por pg_dump/pg_restore, aplicar únicamente SQL nuevo a esa copia
+y definir TEST_DATABASE_URL local con las variables de tools/local-stack/env.sh; no imprimir credenciales.
+
+```bash
+pnpm typecheck && pnpm lint
+pnpm --filter @kora/db-tests exec vitest run --no-file-parallelism \
+  test/db/seller-store-write.test.ts test/db/seller-access.test.ts \
+  test/db/seller-product-write.test.ts test/db/seller-order-actions.test.ts \
+  test/db/seller-tools.test.ts test/db/pricing.test.ts \
+  test/db/catalog-authoring.test.ts test/db/privileges.test.ts
+pnpm --filter @kora/app-e2e build:web
+# En cloud, stack y runner en la misma invocación; esperar su fin antes de otra exportación web.
+pnpm stack:stop && pnpm stack:start && \
+  pnpm --filter @kora/app-e2e exec playwright test -c playwright-app.config.ts \
+  seller-app.spec.ts seller-store-edit.spec.ts seller-product-edit.spec.ts seller-order-actions.spec.ts
+pnpm --filter @kora/mobile exec expo export --platform android --output-dir ../../.local/seller-ops/android
+```
+
+### Operaciones que conservan el panel
+
+- Perfil: administración de estado/identidad de tienda y operaciones avanzadas; la app no inventa
+  teléfono/dirección de contacto que no estén en el contrato editable actual.
+- Catálogo: cambiar modo/origen/enlace de costos, agregar variantes a un producto automático y gestión
+  avanzada; fotos guardadas no se eliminan desde móvil. No hay borradores persistidos en el backend actual.
+- Pedidos: importación/lotes, pasos de plataforma, cancelaciones/reembolsos, revisión de pagos y finanzas;
+  el vendedor conserva únicamente sus permisos reales en el panel, no obtiene facultades administrativas.
+
+### APK 5 y próxima acción exacta
+
+**Código preparado; publicación completa todavía pendiente.** Sin cambios desde la OTA de VEN-01A en
+package.json, lockfile, configuración Expo/EAS, Firebase o assets nativos. ImagePicker/Crypto/Image y navegación
+ya están incluidos en APK 5. Runtime esperado `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; el guard exacto del
+workflow debe ejecutarse antes de una publicación futura con su entorno preview/Firebase original.
+No se generó APK, no se publicó EAS, no se modificó panel ni servicio/dato remoto o iOS/checkout/BCV.
+Todos los commits con API llevan [skip ci] para impedir el autodespliegue del panel.
+
+No repetir VEN-01A, perfil/catálogo/pedidos o la franja. Primero obtener autorización específica para aplicar
+**en el proyecto Marketplace correcto**, en orden, 20261011172600 y 20261011174200; revisar migraciones
+remotas pendientes y evitar aplicar otras por accidente. No seed/demo remoto ni db push indiscriminado.
+Verificar disponibilidad de ambos RPC de capacidad, pertenencia y lectura/guardado con cuentas/datos autorizados.
+Después, solo con autorización de publicación, guard APK 5 + EAS preview + validación Android de galería,
+permiso de fotos, teclado, Atrás físico, sesión, TalkBack y fluidez. El teléfono de Oliver sigue usando la OTA
+anterior; esta entrega no la actualiza. BCV sigue siendo una prioridad crítica separada.

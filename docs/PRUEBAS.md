@@ -1,5 +1,31 @@
 # Resultados de pruebas
 
+## Mi tienda operativa — 2026-10-11 (solo local)
+
+Informe, comandos y límites: MI_TIENDA_OPERATIVA.md. Fuente final 5a3b884; ningún nuevo APK/EAS/servicio o
+dato remoto. Datos demo/aditivos del stack local; SQL probado en copia conservada sin db:reset/test:db.
+
+| Comprobación | Resultado |
+|---|---|
+| UI VEN-01A + perfil/catálogo/pedidos | **42/42**, 3,6 min, ambos temas; luego **20/20** operativos, 2,5 min, últimos textos/disponibilidad/captura estable, 320 px; **8/8** pedidos finales con conflicto concurrente de nota/guía |
+| DB acceso/perfil/catálogo/pedidos/precios/autoría/privilegios | **31/31**, ocho archivos, copia local kora_seller_ops_171524 |
+| Núcleo | **50/50** durante catálogo; sin cambios posteriores |
+| Tipos/lint/web y Android JS/Hermes finales | Aprobados, sin dependencias/configuración nativa nuevas; no ejecución nativa |
+| Visual | 22 capturas operativas, ambos temas: perfil/formulario/galería/página pública/guardado/errores/catálogo/moderación/entrega/confirmación/reintento |
+
+Pruebas de persistencia real por API pública/gateway/SQL, roles/RLS/aislamiento, rollback/idempotencia,
+fotos/stock/precio/pausa/disponibilidad En camino y reanudación. Rechazo y suspensión no se aprueban desde
+el vendedor; repricing sigue la función existente. Logística impide pago pendiente, estados de plataforma,
+despacho sin guía, retroceso, duplicación concurrente y confirmación obsoleta. Mismo paso completado por otra sesión con nota distinta
+conserva el borrador y no presenta éxito falso. Datos de otro vendedor intactos.
+Las fixtures pagadas locales usan los RPC de comprador y aprobación por admin demo antes de probar vendedor;
+la app no verifica pagos. Exportar Hermes no valida el picker nativo, teclado, TalkBack o fluidez del Android
+físico; esos casos quedan después de autorización/aplicación SQL remoto, guard APK 5 y publicación autorizada.
+No hubo omisiones o reintentos del runner en los pases finales. Fallos durante desarrollo de fixtures
+(proof_required) corregidos usando una ruta propia válida, sin cambiar la exigencia de comprobante.
+Logs seller-ops-*/seller-orders-ui-final.log y capturas/review-final.png en .local/seller-ops, ignorados por Git.
+
+
 ## VEN-01A — 2026-10-11 (local + APK 5)
 
 Detalle y reproducción: `docs/VEN-01A.md`. Cuenta/Mi tienda con roles y pertenencias reales, sin escrituras
