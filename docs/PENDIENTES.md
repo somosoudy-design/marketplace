@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 22:29 (Caracas, UTC−4).
+**Última revisión:** 2026-10-10 22:41 (Caracas, UTC−4).
 
 ## iOS gratuita — pedido vigente de Oliver
 
@@ -15,16 +15,14 @@ Supabase de pruebas, sin APNs/Associated Domains/OTA. Guardas 5/5, verificación
 prebuild sin Pods, exportación Hermes, tipos/lint, core 50/50 y web comprador 40/40. iOS 16.4 mínimo.
 No cambios en Android/APK 5/producción ni publicación; Frente A V2 cerrado antes de comenzar.
 
-Actualización: Oliver reporta instalación en su iPhone, pero KoraDev se cierra inmediatamente sin actividad
-Metro; Xcode 27 también falla en `expo-dev-launcher / Copy generated compatibility header`. Verificador de
-Bundle ID sin comillas corregido, 11/11 y `--native` aprobados; causa de los errores nativos todavía sin registros.
-La sesión actual es Linux sin acceso/transferencia al Mac. Oliver autorizó obtener registros directamente;
-retomar como proyecto local `~/marketplace`, conservar instalación y seguir `docs/IOS_DIAGNOSTICO.md`.
+Actualización local: registros obtenidos directamente en el Mac/iPhone. Crash UIKit por falta de escenas
+y fallo separado al escribir `ip.txt` con sandbox activo; expo-dev-launcher terminó su fase correctamente.
+Helper local aplicado y 18/18/tipos/lint/verificador aprobados. Falta build y validación física corregida.
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| IOS-D | Diagnosticar fase Xcode y cierre al abrir; corregir causas demostradas sobre instalación existente | Bloqueada (ejecución local en Mac) | `docs/IOS_DIAGNOSTICO.md`; consultar logs directamente, distinguir fallo de build y binario instalado. Sin reconstrucción, borrados ni actualización indiscriminada. Verificador corregido; no atribuirle el crash |
-| IOS-F | Verificar arranque, firma y recorridos en el iPhone físico | Bloqueada (IOS-D) | Instalación reportada por Oliver; funcionamiento pendiente. Checklist `docs/IOS_PERSONAL_TEAM.md`; firma gratis 7 días. Sin contraseñas/certificados privados, pago, EAS iOS/TestFlight/ad hoc/Expo Go ni Frente B. Pruebas Keychain, navegación, fotos y checkout físico pendientes |
+| IOS-D | Compilar y comprobar correcciones de escenas y output Metro | En curso (Mac local) | `docs/IOS_DIAGNOSTICO.md`; proyecto existente conservado, sin prebuild/Pods/borrados ni cambio de sandbox/firma |
+| IOS-F | Verificar arranque, firma y recorridos en el iPhone físico | En curso (tras build) | `docs/IOS_PERSONAL_TEAM.md`; Metro, reapertura, claro/oscuro, navegación, carrito y checkout de pruebas; login/fotos según acceso disponible |
 
 ## Frente A V2 — revisión del propietario
 

@@ -6,6 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import personal from './personal-team.cjs';
 import { verifyNativeBundleId } from './native-project.cjs';
+import { adoptScenes, verifySceneManifest, metroIpOutput } from './native-startup.cjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const target = join(root, '.local/ios-personal');
@@ -30,6 +31,7 @@ assert.match(ios.infoPlist.NSCameraUsageDescription, /comprobante/);
 assert.equal(ios.infoPlist.NSMicrophoneUsageDescription, undefined);
 assert.match(ios.infoPlist.NSLocalNetworkUsageDescription, /Metro/);
 assert.equal(ios.infoPlist.UIBackgroundModes?.includes('remote-notification') ?? false, false);
+verifySceneManifest(ios.infoPlist.UIApplicationSceneManifest);
 assert.equal(config.icon, './assets/images/violet/icon.png');
 assert.equal(config.plugins.find((p) => Array.isArray(p) && p[0] === 'expo-splash-screen')[1].backgroundColor, '#F8F7FC');
 const push = readFileSync(join(target, 'src/lib/push.ts'), 'utf8');
@@ -48,6 +50,9 @@ if (process.argv.includes('--native')) {
   const readPlist = (path) => plist.parse(readFileSync(path, 'utf8'));
   assert.deepEqual(Object.keys(readPlist(join(iosRoot, app, `${app}.entitlements`))), [], 'Revisar las capabilities realmente guardadas por Xcode');
   const info = readPlist(join(iosRoot, app, 'Info.plist'));
+  verifySceneManifest(info.UIApplicationSceneManifest);
+  const delegate = readFileSync(join(iosRoot, app, 'AppDelegate.swift'), 'utf8');
+  assert.equal(adoptScenes(delegate), delegate, 'Aplicar repair-native-startup.mjs al proyecto existente');
   assert.match(info.NSPhotoLibraryUsageDescription, /perfil/);
   assert.equal(info.NSMicrophoneUsageDescription, undefined);
   const updates = readPlist(join(iosRoot, app, 'Supporting/Expo.plist'));
@@ -57,6 +62,9 @@ if (process.argv.includes('--native')) {
   const project = pluginRequire('xcode').project(projectPath);
   project.parseSync();
   verifyNativeBundleId(project, app, marker.bundleId);
+  const bundlePhase = Object.values(project.hash.project.objects.PBXShellScriptBuildPhase)
+    .find((phase) => typeof phase === 'object' && phase.name === '"Bundle React Native code and images"');
+  assert.ok(bundlePhase?.outputPaths.includes(metroIpOutput), 'La fase de React Native debe declarar ip.txt');
   assert.match(readFileSync(projectPath, 'utf8'), /IPHONEOS_DEPLOYMENT_TARGET = 16\.4;/);
   console.log('PASS: archivos nativos iOS existentes (entitlements, permisos, OTA, bundle ID e iOS 16.4). Esta comprobación no verifica compilación, firma ni ejecución.');
 }

@@ -4,7 +4,35 @@ Relevo del 2026-10-10 22:29 Caracas (2026-10-11 02:29Z). Proyecto del Mac: **`~/
 rama **`claude/marketplace-v1`**, variante **`.local/ios-personal`**, app **KoraDev / Kora (Dev)**.
 Frente A V2 cerrado. Android/APK 5/producción, Firebase/Supabase remoto, motor financiero y panel intactos.
 
-## Evidencia y límites actuales
+## Diagnóstico comprobado en Mac — 2026-10-10 22:41 Caracas
+
+Ejecución local en `~/marketplace`, rama sincronizada desde `f5efec4`. macOS 27.0.1, Xcode 27.0
+(27A266a), SDK iOS 27.0, Node 22.23.3, pnpm 10.28.0, CocoaPods 1.17.0; iPhone físico iOS 27.0.1,
+conectado por cable, emparejado y con modo desarrollador activo. Proyecto/scheme KoraDev, Debug existente.
+
+- Se consultaron directamente 17 informes KoraDev del iPhone con `devicectl`, el log Expo de las 22:09
+  y los tres activity logs de Xcode. Evidencia privada en `.local/ios-diagnosis/`.
+- Cierre de las 22:27:37: `EXC_BREAKPOINT / SIGTRAP`, terminación `SIGNAL / Trace/BPT trap: 5`, hilo principal
+  en `___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke`. El Info.plist no tenía
+  `UIApplicationSceneManifest`; AppDelegate creaba UIWindow y arrancaba RN con el ciclo antiguo.
+  Expo 57.0.27 instalado ya incluye `EXExpoAppSceneDelegate` y `ExpoReactNativeFactoryProvider`.
+- Expo compiló correctamente a las 22:09; el intento Xcode de las 22:13 falló en **Bundle React Native code
+  and images**, `react-native-xcode.sh:27`, escritura `KoraDev.app/ip.txt: Operation not permitted`.
+  Sandbox de scripts activo y fase sin outputs declarados. La fase **Copy generated compatibility header**
+  de expo-dev-launcher terminó correctamente; la cabecera generada existe. No se parchea el launcher/Pods.
+- Corrección aplicada con `node tools/ios-personal/repair-native-startup.mjs`: manifest de una escena Expo,
+  AppDelegate proporciona factory sin arrancar RN dos veces, y salida `ip.txt` declarada en la fase RN.
+  Se conserva `ENABLE_USER_SCRIPT_SANDBOXING=YES`, Bundle ID, Team, entitlements, Node local, Pods y datos.
+  Originals respaldados en `.local/ios-diagnosis/startup-backup-*`. No prebuild, borrados ni dependencias nuevas.
+- Plugin/generador local incorpora la misma corrección para futuras variantes; verificador comprueba escenas,
+  AppDelegate y output además de sus guardas anteriores. Pruebas **18/18**, tipos/lint y `--native` aprobados.
+  **Checkpoint antes de compilar: build, firma y arranque físico corregidos todavía pendientes.**
+
+Referencias primarias: [requisito UIKit de Apple](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle),
+[transformación oficial Expo SDK 57](https://github.com/expo/expo/blob/sdk-57/packages/expo-build-properties/src/iosSceneSupport.ts),
+[sandbox de scripts Xcode](https://developer.apple.com/documentation/Xcode/build-settings-reference).
+
+## Antecedente del relevo cloud (superado el acceso al Mac)
 
 Oliver reporta que `npx expo run:ios --device` compiló e instaló, pero la app se cierra inmediatamente y Metro
 no recibe solicitudes. También reporta Xcode 27, target `expo-dev-launcher`, fase

@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 22:29 (Caracas, UTC−4), por Codex (verificador iOS corregido; diagnóstico nativo pendiente de acceso al Mac).
+**Última actualización:** 2026-10-10 22:41 (Caracas, UTC−4), por Codex local (causas iOS comprobadas; checkpoint previo a build físico).
 
 ## Dónde está el trabajo
 
@@ -105,28 +105,20 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Diagnóstico iOS vigente — instalación reportada, aplicación no operativa.** Base `264112b` sincronizada;
-continuidad y últimos cambios revisados. Oliver reporta compilación/instalación con `npx expo run:ios --device`,
-cierre inmediato de KoraDev sin solicitudes a Metro y fallo en Xcode 27: target `expo-dev-launcher`, fase
-`Copy generated compatibility header`, mensaje final `Command PhaseScriptExecution failed`.
-Ese mensaje no contiene el comando/error causante; tampoco se obtuvo el informe de cierre. No se ha establecido
-que ambos fallos tengan la misma causa ni que el binario instalado corresponda al último intento de compilación.
+**Diagnóstico iOS local — causas comprobadas, corrección pendiente de build/prueba física.**
+Mac en `~/marketplace`, rama sincronizada desde `f5efec4`, Xcode 27/iPhone iOS 27.0.1 conectados.
+Se obtuvieron directamente los logs Xcode/Expo y 17 informes KoraDev del dispositivo.
+Cierre: `EXC_BREAKPOINT` en comprobación UIKit por no adoptar escenas. Build Expo 22:09 aprobado;
+build Xcode 22:13 falla escribiendo `ip.txt` en la fase RN con sandbox activo, no en expo-dev-launcher.
 
-Defecto confirmado y corregido: `verify-personal-team.mjs --native` exigía comillas literales en
-`PRODUCT_BUNDLE_IDENTIFIER`. Ahora usa el parser Xcode ya instalado y comprueba el ID esperado en **todas las
-configuraciones del target principal**, con o sin comillas. No basta un ID coincidente en otro target/configuración.
-Regresión 6/6 + guardas existentes 5/5, plists/proyecto existentes aprobados; copia temporal del proyecto real
-con IDs sin comillas aprobada en Debug/Release, sin editar el original. Tipos/lint aprobados.
+Aplicado helper aislado `tools/ios-personal/repair-native-startup.mjs` al proyecto existente: escena Expo,
+factory proporcionada por AppDelegate sin doble arranque, output Metro declarado sin desactivar sandbox.
+Respaldos/logs privados en `.local/ios-diagnosis/`; firma, Bundle ID, certificados, configuración Node/Pods
+y datos preservados. Plugin/generador/verificador local actualizados; 18/18, tipos/lint y `--native` aprobados.
 
-**Bloqueo comprobado:** ejecución en `/workspace/marketplace`, Linux; no existe `~/marketplace`, ni `xcodebuild`
-o `xcrun`, ni terminal Mac adjunta/destino de transferencia disponible. No se encontraron registros Xcode/iPhone
-en este entorno. Oliver autoriza al agente a obtenerlos directamente en su Mac; no pedirle que copie registros
-accesibles allí. Hace falta abrir/continuar esta tarea como proyecto **local de Codex en `~/marketplace`**.
-Relevo exacto: `docs/IOS_DIAGNOSTICO.md`. No es un permiso de macOS pendiente en este contenedor.
-
-Sin correcciones especulativas al launcher, firma o dependencias. Sin regeneración/prebuild, Pods, borrados,
-compilación ni instalación en este turno. `apps/mobile`, paquetes/config, lockfile y workflows intactos.
-La investigación del cierre y de la fase de compilación permanece pendiente; no hay WIP de código activo.
+**Próxima acción inmediata:** compilar workspace existente KoraDev Debug para el iPhone, instalar encima
+y probar bajo depurador, Metro, reapertura y recorridos. No afirmar éxito físico antes de observarlo.
+Detalle `docs/IOS_DIAGNOSTICO.md`. Sin Android/APK 5/producción, prebuild, Pods o dependencias nuevas.
 
 **Antecedente: preparación iOS terminada en `264112b`.** Base `cf7a1b9` sincronizada;
 checkpoint de alcance `498c051`. Frente A V2 cerrado antes de comenzar; sin WIP ajeno ni nuevas modificaciones

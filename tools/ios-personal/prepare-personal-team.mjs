@@ -51,7 +51,7 @@ const pkg = JSON.parse(readFileSync(join(mobile, 'package.json'), 'utf8'));
 pkg.name = '@kora/ios-personal-local';
 writeFileSync(join(target, 'package.json'), `${JSON.stringify(pkg, null, 2)}\n`);
 writeFileSync(join(target, 'app.json'), `${JSON.stringify({ expo: config }, null, 2)}\n`);
-for (const file of ['with-personal-team.cjs', 'personal-team.cjs']) cpSync(join(root, 'tools/ios-personal', file), join(target, file));
+for (const file of ['with-personal-team.cjs', 'personal-team.cjs', 'native-startup.cjs']) cpSync(join(root, 'tools/ios-personal', file), join(target, file));
 cpSync(join(root, 'tools/ios-personal/local-push.ts'), join(target, 'src/lib/push.ts'));
 cpSync(join(root, 'tools/ios-personal/local-push-bridge.tsx'), join(target, 'src/components/PushBridge.tsx'));
 if (!existsSync(modules)) {
