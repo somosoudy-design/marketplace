@@ -16,6 +16,30 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 02:29Z (2026-10-10 22:29 Caracas, UTC−4) · Codex (entorno cloud Linux) · Oliver
+- Pedido: diagnosticar cierre inmediato de la instalación Personal Team y fallo Xcode 27
+  `expo-dev-launcher / Copy generated compatibility header`; corregir también Bundle ID sin comillas.
+  Oliver autoriza obtener registros directamente del Mac/iPhone, corregir y probar; no pedirle copiarlos.
+- Continuidad: sincronizada `264112b`, últimos commits/AGENTS/estado/pendientes/guía revisados; sin WIP ajeno.
+  Instalación reportada por Oliver, funcionamiento pendiente; Frente A V2 cerrado.
+- Hecho: eliminado falso rechazo del Bundle ID. Verificador usa parser Xcode ya instalado y valida cada
+  configuración del target principal; comillas opcionales, ID exacto obligatorio. Sin nueva dependencia.
+  `native-project.cjs` y seis regresiones del parser; documentación vigente y relevo `docs/IOS_DIAGNOSTICO.md`.
+- Pruebas Linux: 11/11 (6 nuevas + 5 guardas existentes), `--native` contra archivos existentes aprobado;
+  copia temporal del pbxproj real sin comillas, Debug/Release aprobados y original intacto. Tipos/lint aprobados.
+- Investigación disponible: podspec expo-dev-launcher 57.0.20 no declara literalmente esa fase; faltan Pods,
+  script generado y logs reales para atribuir causa. Mensaje final de Xcode y Metro vacío no son suficientes.
+  Sin fix especulativo al launcher, firma, arquitectura o dependencias; no se relacionó el verificador con el crash.
+- Bloqueo: `/workspace/marketplace` en Linux, sin `~/marketplace`, Xcode/xcrun, logs del Mac/iPhone, terminal Mac
+  adjunta o destino de transferencia callable. Autorización concedida; requiere ejecución local en el Mac,
+  no otro permiso en Linux. No se consultaron registros nativos ni se compiló/instaló/reprodujo el cierre.
+- Aislamiento/servicios: sin regeneración, prebuild, Pods, borrados, cambios en `apps/mobile`, paquetes/config,
+  lockfile/workflows, Android/APK 5/producción, motor financiero/panel ni Supabase/Firebase. Sin publicación/gasto.
+- Siguiente: abrir esta tarea en Codex local `~/marketplace`; agente consulta directamente logs de fase e informe
+  KoraDev, identifica binario/configuración, corrige causa demostrada y prueba iPhone. Seguir `IOS_DIAGNOSTICO.md`.
+  Diagnóstico nativo pendiente, sin WIP de código activo. No avanzar al Frente B.
+- Último commit: el de esta corrección/relevo; obtener con `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-10 19:59Z (15:59 Caracas, UTC−4) · Codex (entorno cloud Linux) · Oliver
 - Pedido: preparar instalación gratuita iPhone con Xcode/Apple ID Personal Team/compilación local; sin EAS
   iOS, TestFlight, ad hoc, Expo Go, gastos, App Store, secretos privados ni Frente B.

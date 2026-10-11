@@ -5,9 +5,13 @@ Frente A V2 está cerrado y Oliver confirmó la recepción en Android (`cf7a1b9`
 el diseño ni inicia Frente B. La marca provisional sigue siendo **Kora** en `config/brand.json`;
 la app de prueba aparecerá como **Kora (Dev)**, con el icono Electric Violet existente.
 
-**Estado:** configuración y generación del proyecto iOS verificadas en Linux. La compilación de Swift/CocoaPods,
-firma gratuita, simulador e instalación física deben comprobarse en el Mac de Oliver. No hay una app iOS
-instalada por este agente ni una IPA para descargar. No se usa EAS Build, TestFlight, distribución ad hoc o Expo Go.
+**Estado vigente:** Oliver reporta compilación e instalación en su iPhone con `npx expo run:ios --device`,
+pero KoraDev se cierra al abrir sin actividad Metro. También reporta fallo de Xcode 27 en el script
+`Copy generated compatibility header` de `expo-dev-launcher`. Funcionamiento/firma nativa sin comprobar por
+este agente. Verificador de Bundle ID corregido y probado con y sin comillas; no es un diagnóstico del cierre.
+Retomar **la instalación existente** con [el protocolo de diagnóstico](IOS_DIAGNOSTICO.md), sin regenerarla.
+Esta sesión es Linux y no accede al Mac/iPhone. No hay IPA para descargar; no se usa EAS Build, TestFlight,
+distribución ad hoc o Expo Go.
 
 ## Auditoría de compatibilidad
 
@@ -54,6 +58,10 @@ No se modifica ningún archivo de `apps/mobile`, `eas.json`, `config/`, dependen
 Firebase Android, Supabase remoto, motor financiero o panel. Esta preparación no dispara workflows de publicación.
 
 ## Instalación paso a paso en tu Mac
+
+Este procedimiento es para una primera instalación. Para el fallo actual de la instalación existente,
+seguir `docs/IOS_DIAGNOSTICO.md`; no repetir generación/prebuild ni sustituir Debug por Release como arreglo
+sin haber obtenido los errores concretos.
 
 Los siguientes comandos **son para el Mac**, no para el contenedor Linux. No requieren suscripción de Apple
 ni iniciar sesión en Expo. No compartas contraseñas o certificados: el Apple ID se introduce solo en Xcode.
@@ -243,6 +251,12 @@ Esta tarea no compra ni contrata nada. Android/APK 5 conserva su instalación y 
 
 Resultados finales se registran también en `docs/ESTADO_ACTUAL.md` y `docs/HISTORIAL_AGENTES.md`.
 
+Corrección posterior del verificador (2026-10-10 22:29 Caracas): **11/11** (6 regresiones de parser Xcode
+y 5 guardas), `--native` contra archivos existentes, copia temporal del proyecto con Bundle IDs sin comillas
+en Debug/Release y tipos/lint aprobados. No se regeneró ni compiló. Diagnóstico nativo pendiente de acceso
+al Mac, no de permiso adicional ni de registros copiados por Oliver. Los siguientes resultados son históricos
+de la preparación en `264112b`:
+
 - Guardas `node --test tools/ios-personal/personal-team.test.mjs`: **5/5**; backend/anon, ID local, overrides de entorno,
   capabilities y aislamiento de configuración.
 - Generador reejecutado y `node tools/ios-personal/verify-personal-team.mjs`: configuración real con plugins conservados,
@@ -266,8 +280,9 @@ Resultados finales se registran también en `docs/ESTADO_ACTUAL.md` y `docs/HIST
   No se cambiaron servicios remotos; confirmar conectividad/configuración en el Mac con diagnóstico de la app.
 
 Artefactos ignorados: `.local/ios-personal/ios/`, `dist-ios/` y `.local/logs/ios-personal-*.log`.
-No afirmar compilación Xcode, funcionamiento de Keychain nativo, ejecución en simulador o instalación en iPhone
-hasta obtener evidencia del Mac/teléfono. El siguiente paso obligatorio es físico y corresponde a Oliver.
+No afirmar compilación Xcode verificada por el agente, funcionamiento de Keychain nativo, ejecución en simulador
+o arranque correcto hasta obtener evidencia del Mac/teléfono. Oliver ya reportó instalación; el siguiente agente
+local debe consultar los registros y comprobar el funcionamiento, según `docs/IOS_DIAGNOSTICO.md`.
 
 Referencias oficiales para consultar desde el Mac (no accesibles desde este proxy):
 [membresías Apple](https://developer.apple.com/support/compare-memberships/),

@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import personal from './personal-team.cjs';
+import { verifyNativeBundleId } from './native-project.cjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const target = join(root, '.local/ios-personal');
@@ -52,9 +53,11 @@ if (process.argv.includes('--native')) {
   const updates = readPlist(join(iosRoot, app, 'Supporting/Expo.plist'));
   assert.equal(updates.EXUpdatesEnabled, false);
   assert.equal(updates.EXUpdatesURL, undefined);
-  const project = readFileSync(join(iosRoot, `${app}.xcodeproj/project.pbxproj`), 'utf8');
-  assert.ok(project.includes(`PRODUCT_BUNDLE_IDENTIFIER = "${marker.bundleId}"`));
-  assert.match(project, /IPHONEOS_DEPLOYMENT_TARGET = 16\.4;/);
-  console.log('PASS: archivos nativos iOS generados (entitlements, permisos, OTA, bundle ID e iOS 16.4). Compilación y firma pendientes del Mac.');
+  const projectPath = join(iosRoot, `${app}.xcodeproj/project.pbxproj`);
+  const project = pluginRequire('xcode').project(projectPath);
+  project.parseSync();
+  verifyNativeBundleId(project, app, marker.bundleId);
+  assert.match(readFileSync(projectPath, 'utf8'), /IPHONEOS_DEPLOYMENT_TARGET = 16\.4;/);
+  console.log('PASS: archivos nativos iOS existentes (entitlements, permisos, OTA, bundle ID e iOS 16.4). Esta comprobación no verifica compilación, firma ni ejecución.');
 }
 console.log('PASS: iOS local, bundle ID aislado, entitlements vacíos, OTA/APNs desactivados, permisos mínimos en español e identidad violeta conservada.');

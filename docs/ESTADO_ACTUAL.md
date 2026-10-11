@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 15:59 (Caracas, UTC−4), por Codex (iOS local Personal Team preparado).
+**Última actualización:** 2026-10-10 22:29 (Caracas, UTC−4), por Codex (verificador iOS corregido; diagnóstico nativo pendiente de acceso al Mac).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. iOS local: checkpoint `498c051`, cierre en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
-| Plan vigente | Instalación iOS gratuita: Xcode + Personal Team + compilación local en el Mac de Oliver. Frente A V2 cerrado; sin Frente B |
-| Objetivo actual | Preparación iOS Personal Team terminada; compilación, firma e instalación pendientes del Mac/iPhone de Oliver. Guía: `docs/IOS_PERSONAL_TEAM.md`. APK 5/Android/producción intactos; sin Frente B |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Preparación iOS `264112b`; corrección del verificador en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
+| Plan vigente | Diagnóstico iOS Personal Team sobre la instalación local existente en `~/marketplace`. Frente A V2 cerrado; sin Frente B |
+| Objetivo actual | Oliver reporta instalación en iPhone, cierre inmediato sin actividad en Metro y fallo de script de expo-dev-launcher en Xcode 27. Verificador corregido; causas nativas sin comprobar. Retomar en Mac con `docs/IOS_DIAGNOSTICO.md`. APK 5/Android/producción intactos |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -86,7 +86,7 @@
   anterior, y un aviso push real («Pedido P-… recibido») llega por `push-dispatch`, Expo y Firebase, y al tocarlo
   abre el pedido. Recibo de Expo «ok» (entregado a Firebase). Capturas en
   `/mnt/project-files/marketplace/telefono/capturas-apk5/`.
-- Regresión local en este turno iOS: core 50/50 y comprador web 40/40; tipos/lint aprobados. El cierre anterior de Frente A V2 conserva sus suites completas históricas (ver «Pruebas»).
+- Preparación iOS anterior (`264112b`): core 50/50 y comprador web 40/40; tipos/lint aprobados. Corrección actual: guardas/verificador 11/11, verificación nativa de archivos y tipos/lint aprobados. No equivale a probar el arranque en iPhone.
 
 ## Mejora de UI/UX (hecha el 2026-10-10)
 
@@ -105,7 +105,30 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**iOS Personal Team — preparación terminada, instalación física pendiente.** Base `cf7a1b9` sincronizada;
+**Diagnóstico iOS vigente — instalación reportada, aplicación no operativa.** Base `264112b` sincronizada;
+continuidad y últimos cambios revisados. Oliver reporta compilación/instalación con `npx expo run:ios --device`,
+cierre inmediato de KoraDev sin solicitudes a Metro y fallo en Xcode 27: target `expo-dev-launcher`, fase
+`Copy generated compatibility header`, mensaje final `Command PhaseScriptExecution failed`.
+Ese mensaje no contiene el comando/error causante; tampoco se obtuvo el informe de cierre. No se ha establecido
+que ambos fallos tengan la misma causa ni que el binario instalado corresponda al último intento de compilación.
+
+Defecto confirmado y corregido: `verify-personal-team.mjs --native` exigía comillas literales en
+`PRODUCT_BUNDLE_IDENTIFIER`. Ahora usa el parser Xcode ya instalado y comprueba el ID esperado en **todas las
+configuraciones del target principal**, con o sin comillas. No basta un ID coincidente en otro target/configuración.
+Regresión 6/6 + guardas existentes 5/5, plists/proyecto existentes aprobados; copia temporal del proyecto real
+con IDs sin comillas aprobada en Debug/Release, sin editar el original. Tipos/lint aprobados.
+
+**Bloqueo comprobado:** ejecución en `/workspace/marketplace`, Linux; no existe `~/marketplace`, ni `xcodebuild`
+o `xcrun`, ni terminal Mac adjunta/destino de transferencia disponible. No se encontraron registros Xcode/iPhone
+en este entorno. Oliver autoriza al agente a obtenerlos directamente en su Mac; no pedirle que copie registros
+accesibles allí. Hace falta abrir/continuar esta tarea como proyecto **local de Codex en `~/marketplace`**.
+Relevo exacto: `docs/IOS_DIAGNOSTICO.md`. No es un permiso de macOS pendiente en este contenedor.
+
+Sin correcciones especulativas al launcher, firma o dependencias. Sin regeneración/prebuild, Pods, borrados,
+compilación ni instalación en este turno. `apps/mobile`, paquetes/config, lockfile y workflows intactos.
+La investigación del cierre y de la fase de compilación permanece pendiente; no hay WIP de código activo.
+
+**Antecedente: preparación iOS terminada en `264112b`.** Base `cf7a1b9` sincronizada;
 checkpoint de alcance `498c051`. Frente A V2 cerrado antes de comenzar; sin WIP ajeno ni nuevas modificaciones
 visuales. Solo helpers `tools/ios-personal/` y documentación. Guía exacta: `docs/IOS_PERSONAL_TEAM.md`.
 
@@ -116,7 +139,7 @@ workflows o servicios. Conserva Electric Violet/nombre provisional. Solo allí s
 se desactiva OTA y se sustituyen registro/listeners push; campana/listado interno se conservan.
 El permiso local de fotos incluye perfil; cámara para comprobantes/reclamos, sin micrófono.
 
-Pruebas nuevas: guardas **5/5**; verificador Expo real y archivos nativos con `--native` aprobados, incluido
+Pruebas de esa preparación: guardas **5/5**; verificador Expo real y archivos nativos con `--native` aprobados, incluido
 rechazo de APNs insertado en el plist (restaurado). Generador repetido sin alterar fuente, prebuild iOS
 **sin Pods** terminado, 39 módulos Expo Apple/10 entradas RN iOS resueltos; 34 versiones SDK compatibles localmente.
 Plantilla: **iOS 16.4 mínimo**. Exportación Hermes iOS 5,5 MB, tipos de copia local y tipos/lint monorepo aprobados,
@@ -130,10 +153,10 @@ no confundir con runtime completo de APK 5, que requiere su archivo Firebase de 
 no nuevo APK, EAS Update/build/publicación, panel, motor financiero, SQL ni Supabase/Firebase remoto.
 Online Expo/Apple y lecturas remotas Supabase bloqueadas por proxy HTTP 403; cotejo SDK offline realizado.
 
-**Bloqueo físico:** este entorno es Linux sin Xcode/simulador/Mac/iPhone. No se compilaron Pods/Swift,
-no se verificó firma, Keychain o gestos nativos ni se instaló en iPhone. Oliver debe usar Xcode/Personal Team
-y `npx expo run:ios --device` en su Mac; firma gratuita caduca en **7 días**. No TestFlight/ad hoc/EAS IPA/Expo Go,
-ni gasto/cuentas de pago/certificados privados. No avanzar al Frente B.
+**Límite de esa preparación:** Linux sin Xcode/simulador/Mac/iPhone. Este agente no compiló Pods/Swift,
+verificó firma/Keychain/gestos ni instaló en iPhone. Posteriormente Oliver reportó instalación con cierre al abrir;
+no volver a generar el proyecto como primer paso del diagnóstico. Firma gratuita caduca en **7 días**.
+No TestFlight/ad hoc/EAS IPA/Expo Go, gastos/cuentas de pago/certificados privados ni Frente B.
 
 **Recepción en Android confirmada por Oliver:** «ya se actualizó» (2026-10-10). La entrega al APK instalado
 queda confirmada por el propietario; no equivale a haber probado todos los recorridos en su teléfono.
@@ -196,12 +219,13 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Oliver sigue `docs/IOS_PERSONAL_TEAM.md` en su Mac: Xcode completo, Apple ID Personal Team, Node 22/pnpm 10.28,
-`pnpm install --frozen-lockfile`, generar copia con `tools/ios-personal/prepare-personal-team.mjs`, prebuild iOS,
-abrir `ios/KoraDev.xcworkspace`, firma automática, conectar iPhone/modo desarrollador y `npx expo run:ios --device`.
-Después comprobar diagnóstico/sesión cifrada, claro/oscuro y recorridos del checklist. Registro real de macOS/Xcode,
-modelo/iOS/commit/resultados; sin datos privados. El siguiente agente retoma errores concretos del Mac y documenta
-solo lo realmente ejecutado. No afirmar instalación física ni iniciar Frente B. No publicar nada para esta tarea.
+Abrir/continuar esta tarea en Codex **local**, proyecto `~/marketplace` del Mac; esta sesión cloud no tiene acceso.
+El agente sigue `docs/IOS_DIAGNOSTICO.md`: preserva cambios/instalación, sincroniza la rama, ejecuta el verificador
+corregido y obtiene directamente la fase completa en los registros Xcode y el informe de cierre de KoraDev.
+Relaciona binario instalado/configuración/fecha antes de modificar código. Solo después corrige la causa demostrada,
+compila con la configuración existente y prueba iPhone/checklist claro/oscuro de `docs/IOS_PERSONAL_TEAM.md`.
+No regenerar, limpiar Pods/DerivedData, actualizar dependencias o cambiar producción para adivinar la causa.
+Sin publicación, Frente B ni petición de contraseñas/certificados privados. Commit/push y relevo con evidencia real.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -214,6 +238,9 @@ solo lo realmente ejecutado. No afirmar instalación física ni iniciar Frente B
 
 ## Errores conocidos
 
+- iOS Personal Team: cierre inmediato sin actividad Metro y fallo `expo-dev-launcher / Copy generated
+  compatibility header` reportados por Oliver; causa pendiente de registros del Mac/iPhone. El falso rechazo
+  del Bundle ID sin comillas está corregido y probado; no se atribuye a ese verificador el cierre de la app.
 - Tasa BCV vencida desde el 2026-10-10 13:20Z: la última de DolarApi («oficial») es del 2026-10-09 04:00Z y la regla
   de `rate_policies` (USD/VES, 2000 minutos) la da por vencida. Mientras tanto no se cotiza en bolívares (Pago Móvil,
   transferencia) y la app lo dice al elegir el método; Zelle y USDT siguen. Es el comportamiento previsto (nunca usar
@@ -236,7 +263,15 @@ solo lo realmente ejecutado. No afirmar instalación física ni iniciar Frente B
 
 ## Pruebas
 
-Validación actual **Frente A V2**, base `9e4e1f5`, mismo stack local: tipos/lint sin errores, núcleo 50/50,
+Corrección del verificador iOS (2026-10-10 22:29 Caracas, Linux):
+
+- `node --test tools/ios-personal/*.test.mjs`: **11/11**, sin omisiones (6 regresiones pbxproj + 5 guardas).
+- `node tools/ios-personal/verify-personal-team.mjs --native`: aprobado contra los archivos existentes.
+- Proyecto existente copiado a temporal con IDs sin comillas: Debug y Release aprobados; original sin cambios.
+- `pnpm typecheck && pnpm lint`: aprobados. Sin cambios de UI/app/SQL; no repetidas suites web/DB/Android.
+- No ejecutados: compilación/firma/simulador, consulta de logs del Mac/iPhone ni prueba de arranque físico.
+
+Validación histórica **Frente A V2**, base `9e4e1f5`, mismo stack local: tipos/lint sin errores, núcleo 50/50,
 admin 28/28, API 12/12, app **52 aprobadas + 1 omitida**, panel 9/9. App incluye 13 casos V2 y 6 de navegación
 UX-04. axe: 0 infracciones en 8 pantallas/temas a 320 px; contraste de texto seleccionado AA. Galería web autónoma
 `.local/frente-a-v2/comparacion.html`, 40 capturas antes / 50 después. Guardas del promotor production 4/4.
