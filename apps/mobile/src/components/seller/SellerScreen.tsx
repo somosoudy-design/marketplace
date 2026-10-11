@@ -22,18 +22,18 @@ export function SellerScreen({ children }: { children: ReactNode }) {
   const online = useOnline();
   if (!ready) return <SellerLoading />;
   if (!user) return <EmptyState icon="user" title="Entra a tu cuenta" body="Inicia sesión para consultar las tiendas que tienes asignadas." action="Iniciar sesión" onAction={() => router.push('/sign-in')} />;
-  if (!online) return <OfflineState />;
+  if (!online && !store) return <OfflineState />;
   if (access.isError) return <ErrorState error={access.error} onRetry={() => access.refetch()} />;
   if (access.isPending) return <SellerLoading />;
   if (!store) return <EmptyState icon="store" title="No tienes una tienda asignada" body="Puedes seguir comprando desde tu cuenta. El acceso de vendedor aparece cuando la plataforma te asigna una tienda." action="Volver a Cuenta" onAction={() => router.dismissTo('/account')} />;
   // Remount the content on store/account change: filters and paginated rows never leak across stores.
-  return <View key={`${user.id}:${store.id}`} style={{ flex: 1 }}>{children}</View>;
+  return <View key={`${user.id}:${store.id}`} style={{ flex: 1 }}>{!online ? <OfflineState /> : null}<View style={{ flex: 1, display: online ? 'flex' : 'none' }}>{children}</View></View>;
 }
 
 export function SellerScroll({ children, refresh, refreshing = false }: { children: ReactNode; refresh?: () => void; refreshing?: boolean }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  return <ScrollView style={{ flex: 1, backgroundColor: t.colors.background }} refreshControl={refresh ? <RefreshControl refreshing={refreshing} onRefresh={refresh} tintColor={t.colors.brand} colors={[t.colors.brand]} /> : undefined}
+  return <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" automaticallyAdjustKeyboardInsets style={{ flex: 1, backgroundColor: t.colors.background }} refreshControl={refresh ? <RefreshControl refreshing={refreshing} onRefresh={refresh} tintColor={t.colors.brand} colors={[t.colors.brand]} /> : undefined}
     contentContainerStyle={{ padding: 16, paddingBottom: Math.max(insets.bottom, 16) + 16, gap: 18, width: '100%', maxWidth: 720, alignSelf: 'center' }}>{children}</ScrollView>;
 }
 
@@ -42,7 +42,7 @@ export function AdvancedPanel({ path = '/vendedor' }: { path?: string }) {
   const [error, setError] = useState(false);
   const [opening, setOpening] = useState(false);
   return <View style={{ gap: 10 }}>
-    <Text variant="bodySmall" color="textSecondary">Para editar o realizar operaciones avanzadas, usa el panel web con tu cuenta habitual.</Text>
+    <Text variant="bodySmall" color="textSecondary">Para operaciones avanzadas, usa el panel web con tu cuenta habitual.</Text>
     {url ? <Button testID="seller-panel" title="Abrir panel web" icon="arrow-right" variant="secondary" full loading={opening} onPress={async () => {
       setError(false); setOpening(true);
       try { await WebBrowser.openBrowserAsync(`${url}${path}`); } catch { setError(true); } finally { setOpening(false); }

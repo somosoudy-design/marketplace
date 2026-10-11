@@ -115,8 +115,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByText('Sin entregas cerradas', { exact: true })).toBeVisible();
       await page.goBack();
       await page.getByTestId('seller-settings-link').click();
-      await expect(page.getByText(seller.email, { exact: true }).filter({ visible: true })).toBeVisible();
-      await expect(page.getByText('Consulta las condiciones en el panel.', { exact: true })).toBeVisible();
+      await expect(page.getByTestId('store-email')).toHaveValue(seller.email);
+      await expect(page.getByTestId('store-returns')).toHaveValue('Consulta las condiciones en el panel.');
       await page.screenshot({ path: `${shots}/${colorScheme}-settings.png`, fullPage: true });
       await page.goBack();
       await page.getByTestId(`seller-store-${seller.secondStoreId}`).click();
@@ -141,7 +141,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.goBack(); await page.getByTestId('seller-orders-link').click();
       await expect(page.getByText('No hay entregas pendientes', { exact: true })).toBeVisible();
       await page.goBack(); await page.getByTestId('seller-settings-link').click();
-      await expect(page.getByText('Sin registrar', { exact: true })).toBeVisible();
+      await expect(page.getByTestId('store-shipping')).toHaveValue('');
+      await expect(page.getByTestId('store-warranty')).toHaveValue('');
     });
 
     test('summary loading never invents zeros; a failed request retries and restores real counts', async ({ page }) => {
@@ -174,7 +175,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('seller-product-count')).toHaveText('32');
       await context.setOffline(true);
       await expect(page.getByText('Sin conexión', { exact: true })).toBeVisible();
-      await expect(page.getByTestId('seller-store-name')).toHaveCount(0);
+      await expect(page.getByTestId('seller-store-name')).toBeHidden();
       await page.screenshot({ path: `${shots}/${colorScheme}-offline.png` });
       await context.setOffline(false);
       await expect(page.getByTestId('seller-product-count')).toHaveText('32');
@@ -207,7 +208,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect.poll(() => panel.url()).toContain('/vendedor/tienda');
       await panel.close();
       await expect(page).toHaveURL(/\/my-store\/settings$/);
-      await expect(page.getByText(seller.email, { exact: true }).filter({ visible: true })).toBeVisible();
+      await expect(page.getByTestId('store-email')).toHaveValue(seller.email);
     });
 
     test('signing out removes seller access and another buyer never sees cached store data', async ({ page }) => {

@@ -40,6 +40,7 @@ import type {
   ShippingSelection,
   StartOnlineResult,
   Store,
+  SellerStoreInput,
   SellerDashboard,
   SellerProduct,
   SellerFulfillment,
@@ -337,6 +338,14 @@ export function createApi(client: KoraClient) {
   };
 
   const seller = {
+    updateStore: (storeId: string, fields: SellerStoreInput) =>
+      run<Store>(from('stores').update(fields).eq('id', storeId).select('*').single()),
+    // New immutable paths: the existing Storage policy grants INSERT, not UPDATE or DELETE.
+    uploadImage: async (bucket: 'stores' | 'catalog', path: string, bytes: ArrayBuffer, contentType: string) => {
+      const { error } = await client.storage.from(bucket).upload(path, bytes, { contentType, upsert: false });
+      if (error) throw new ApiError(toAppError(error));
+      return path;
+    },
     /** Cost structure and price breakdown of a product of the store (docs/PRECIOS.md). */
     productPricing: (productId: string) => run<ProductPricing>(rpc('product_pricing', { p_product_id: productId })),
     setProductCosts: (productId: string, costs: Partial<Omit<ProductCosts, 'product_id' | 'updated_at'>>, variantCosts: { variant_id: string; cost_usd: number | null }[]) =>

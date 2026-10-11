@@ -454,3 +454,6 @@ export interface SupportContact {
   email: string;
   hours: string;
 }
+
+/** Only editable seller profile fields, matching the existing web panel. */
+export type SellerStoreInput = Pick<Store, "name" | "tagline" | "description" | "contact_email" | "shipping_info" | "policies" | "accent" | "logo_path" | "cover_path">;

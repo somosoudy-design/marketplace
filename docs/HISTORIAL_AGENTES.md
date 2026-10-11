@@ -16,6 +16,13 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 17:25Z · Codex cloud · Oliver · cierre bloque 1 perfil operativo
+- Hecho: perfil editable en pantalla existente, logo/portada con picker del APK 5, validación/dirty/back, bloqueo de duplicados, reintento sin perder formulario o rutas ya subidas; cache pública actualizada. Datos guardados en stores con sesión y RLS, sin migración.
+- Pruebas: UI 26/26 (22 regresiones + 4 operaciones), ambos temas/320 px; permisos 6/6 en copia nueva, tipos/lint/export web aprobados; capturas perfil/error/página pública revisadas. Upload y contenido público comprobados contra gateway local; permisos Storage SQL contra políticas reales. Teléfono/galería nativa no conectados.
+- Primeras corridas: asserts de consulta vacía/offline actualizados para formulario y conservación oculta del draft; guest UPDATE da 42501, correcto; test back web usa enlace real. Un intento intermedio perdió el servidor web reutilizado al cerrar su proceso anterior: ERR_CONNECTION_REFUSED, resuelto iniciando stack/runner juntos; corrida final limpia 26/26.
+- Servicios: ninguno remoto, solo fixtures demo locales aditivos y copia nueva. Sin APK/EAS/panel/backend/iOS/finanzas. `[skip ci]` evita auto deploy de API. Panel conserva avanzado; sin limpieza de archivos huérfanos por permisos actuales.
+- Siguiente: bloque 2 catálogo operativo; después bloque 3 pedidos. Informe `docs/MI_TIENDA_OPERATIVA.md`. Este commit cierra el módulo y conserva cambios antes de avanzar.
+
 ### 2026-10-11 17:15Z · Codex cloud · Oliver · checkpoint Mi tienda operativa
 - Nuevo alcance: Oliver probó VEN-01A y autoriza perfil, productos y acciones de pedidos, por bloques y en ese orden. No repetir lectura/carrito/franja.
 - Base `887197b` limpia y sincronizada; AGENTS/estado/pendientes/arquitectura/dirección leídos. Un solo agente.

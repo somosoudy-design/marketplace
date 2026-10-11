@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 13:15 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa autorizada; bloque 1 en validación local).
+**Última actualización:** 2026-10-11 13:25 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa autorizada; bloque 1 completo; catálogo siguiente).
 
 ## Dónde está el trabajo
 
@@ -112,7 +112,9 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Nuevo alcance autorizado: Mi tienda operativa.** Base sincronizada `887197b`. Bloque 1 en implementación/validación local; código todavía sin publicar. Tipos/lint aprobados. Se reutilizan campos y RLS de perfil del panel, bucket `stores` (INSERT, sin overwrite/delete), picker ya presente en APK 5. Antes del build se conserva este checkpoint de alcance; cierre del bloque solo después de pruebas reales. Bloques 2/3 pendientes, en ese orden. BCV mantiene prioridad crítica separada. **No publicar EAS ni desplegar backend/panel**; commits API con `[skip ci]` evitan el deploy automático.
+**Mi tienda operativa — bloque 1 terminado.** Base `887197b`, checkpoint `66465ff`. Perfil real editable, logo/portada desde galería, validación, reintento/dirty/back y conservación al desconectar. Se guardan nombre/frase/descripción/contacto/envíos/políticas/acento/rutas de imágenes en `stores`; página pública/cache actualizadas. RLS/estado/slug/kind/demo/ratings preservados, sin migración. API usa filas devueltas, no éxito sin persistencia. Tipos/lint/web aprobados; UI **26/26** en 1,8 min, ambos temas/320 px, incluye las 22 regresiones VEN-01A. Permisos **6/6**, copia `kora_seller_ops_171524`. Capturas perfil/tienda pública/error revisadas. Detalle en `docs/MI_TIENDA_OPERATIVA.md`.
+
+Siguiente bloque catálogo autorizado, después pedidos. No EAS/APK/servicios o datos remotos, finanzas, checkout/iOS. Módulos ya presentes en APK 5; ejecución nativa/galería física pendiente de publicación autorizada. `[skip ci]` evita despliegue automático del panel por API. BCV crítico separado.
 
 ### Antecedente VEN-01A cerrado
 
@@ -314,7 +316,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Terminar bloque 1: ejecutar `seller-store-edit.spec.ts` y regresiones `seller-app.spec.ts` sobre export web con stack local; permisos `seller-store-write.test.ts` en copia nueva sin reset. Revisar capturas de formularios/errores/página pública en ambos temas. Cerrar con documentación, commit y push antes de enlazar gestión de productos. Después: bloque 2 y bloque 3 según contratos existentes; no tocar tasas BCV, iOS ni solicitudes de publicación. Android físico no conectado; la OTA instalada sigue siendo VEN-01A `01a12bd4`.
+Bloque 2: ampliar `my-store/products.tsx` con crear/editar, variantes/precios/inventario/fotos/moderación del backend. Investigar guardado transaccional frente a llamadas separadas del editor web; si requiere migración prepararla y probarla solo localmente. No publicar antes de autorización y checks APK 5. Luego acciones de pedidos con `advance_fulfillment` y gates de pago existentes. Bloque 1 está cerrado; no repetirlo ni franja/checkout/BCV.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
