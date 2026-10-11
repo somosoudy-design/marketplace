@@ -16,6 +16,27 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 12:39Z (08:39 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · cierre 4.3 en código
+- Continuidad: AGENTS/estado/pendientes revisados, rama sincronizada `2323eb2` sin cambios ajenos. Cerrados
+  checkpoints `6c4f1be`/`2323eb2`; no duplicar los arreglos comprador `e9b56a0` ni iniciar VEN-01/iOS.
+- Reproducción: revisión 33, run 38113135559 Success, Android 15/Pixel 6/APK 5 existente con OTA anterior.
+  Visitante Favoritos, conexión/modo avión/Atrás/reentrada/reconexión: 2/2, claro/oscuro, sin reintentos.
+  Ocho capturas revisadas en commit ci/capturas `17a77d7`: navegación correcta, pero espacio adicional bajo
+  la franja y contenido desplazado demasiado. Reconexión restaura el diseño. Sin cuentas/pedidos/pagos.
+- Causa/corrección: el encabezado nativo conserva inset aunque el contexto JS pase a cero; setter Android
+  `setTopInsetEnabled` es no-op en screens 4.26.2. `OfflineNotice.tsx` mantiene inset real y compensa solo
+  la reserva superior duplicada en Android; wrapper estable, franja encima, sin otro encabezado/diseño global.
+  Helper de geometría y regresión acotada añadidos, sin dependencias o cambios nativos.
+- Pruebas: geometría 9/9 (dos fallos Android de la política anterior), tipos/lint, exportaciones web/Hermes
+  Android, `buyer-errors.spec.ts` 6/6 en 22,4 s, ambos temas; capturas web revisadas. Un CLI con proyecto
+  mal delimitado y un arranque local con puerto PostgREST ocupado no ejecutaron pruebas; corregidos sin reset.
+  **Sin ejecutar todavía la corrección en Android**; run/capturas de APK 5 son «antes», no «después».
+- Servicios/restricciones: ninguno cambiado; sin publicación/EAS Update, APK nuevo, producción, iOS/Xcode,
+  motor financiero/SQL, panel, Supabase/Firebase remotos ni nuevas dependencias. VEN-01 solo backlog.
+- Siguiente: validar el JS nuevo en Android local existente, flujo 04 y capturas claro/oscuro de Favoritos e
+  Inicio; si no hay runtime local, conservar pendiente sin publicar. No relanzar la OTA vieja como validación.
+- Último commit: este cierre de código/documentación; consultar `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 04:55Z (00:55 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint de prueba 4.3
 - Resultado de revisión 32: run 38112674559 / `6c4f1be`, parsing fallido en ambos temas, dos intentos cada uno.
   El recorrido no se ejecutó; no es un fallo de HAYAZGO. Solo capturas de instalación/diagnóstico del APK existente.

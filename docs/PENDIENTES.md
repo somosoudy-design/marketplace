@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 00:55 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 08:39 (Caracas, UTC−4).
 
 ## Sesión corta — prioridad vigente
 
@@ -14,6 +14,10 @@
 6/6 Playwright en claro/oscuro, tipos/lint y capturas aprobados. Solo en Git, sin actualización publicada.
 Sin cálculos/pagos, diseño global, producción o dependencias. No generar APK ni publicar actualizaciones.
 iOS **pospuesto por el propietario**; la app ya abre en iPhone (cierre local `9d22155`).
+
+4.3 reproducida en Android 15/APK 5 con OTA anterior: recorrido 2/2, pero ocho capturas muestran el espacio
+extra en claro/oscuro. Corrección JS Android guardada y probada (geometría 9/9, comprador web 6/6,
+tipos/lint y exportaciones aprobados). Falta ejecutar esa corrección en Android; no se publicó.
 
 ### VEN-01 — Gestión de vendedores dentro de la app
 
@@ -95,7 +99,7 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 |---|---|---|
 | 4.1 | CI en GitHub Actions con el stack local (hoy las suites corren solo en la máquina de quien trabaja) | El stack sin Docker ya funciona en Linux; falta el workflow |
 | 4.2 | Verificación automática de pagos USDT en cadena (TRC20) | Sin custodiar fondos; solo leer la transacción y comparar monto y destino |
-| 4.3 | Franja sin conexión / inset superior de native-stack | En curso: revisión 33, Android 15/APK 5, visitante Favoritos, modo avión/Atrás/reentrada/reconexión, claro/oscuro. Primera revisión falló al parsear booleanos de modo avión; corregidos por `enabled/disabled` según Maestro 2.11. Resultado/capturas pendientes; franja/layout sin modificar. Sin APK nuevo ni publicación |
+| 4.3 | Franja sin conexión / inset superior de native-stack | Corrección JS implementada; validación nativa del cambio pendiente. Run 38113135559/revisión 33, APK 5/OTA anterior, 2/2; capturas reproducen espacio extra en ambos temas. Android conserva inset real y compensa la reserva duplicada; geometría 9/9, web 6/6, tipos/lint/bundles aprobados. Próximo: ejecutar el JS nuevo en Android local existente, verificar Favoritos/Inicio y ambos temas. APK 5 instalado conserva el fallo; no nueva actualización/APK sin autorización |
 | 4.5 | Insignias «Tienda verificada» y «Tienda asociada» | El diseño está hecho; falta un dato que solo ponga un administrador, mostrarlo en la app y otorgarlo desde el panel. Detalle en `docs/INSIGNIAS_TIENDAS.md` |
 | 4.6 | Foto de perfil: al eliminar una cuenta, borrar también su archivo del bucket `avatars` | `process_account_deletion` ya deja `avatar_path` vacío, pero el archivo queda en la carpeta privada del usuario (nadie más puede verlo). Hacerlo desde una función con la API de Storage |
 | 4.7 | Texto del permiso de fotos en iOS (`app.config.ts`, `expo-image-picker`) | La variante iOS Personal Team ya incluye perfil; la configuración compartida permanece intacta para conservar APK 5. Cambiarla solo con el próximo build autorizado, no por OTA |

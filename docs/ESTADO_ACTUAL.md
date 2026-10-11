@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 00:55 (Caracas, UTC−4), por Codex cloud (4.3: sintaxis Maestro corregida; reproducción pendiente).
+**Última actualización:** 2026-10-11 08:39 (Caracas, UTC−4), por Codex cloud (4.3 reproducida; corrección JS probada, pendiente Android actualizado).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Sesión corta: checkpoint `70443c0`, cierre comprador en este commit. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
-| Plan vigente | Sesión corta cerrada: dos fallos comprador corregidos y VEN-01 en backlog. 4.3 pendiente de Android; iOS abre y queda pospuesto. Sin Frente B |
-| Objetivo actual | Reproducir 4.3 con workflow existente Android 15, APK 5 ya compilado, solo visitante y claro/oscuro. Revisar capturas del encabezado antes de corregir. Sin publicación, APK nuevo ni cambios financieros |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Reproducción 4.3 `2323eb2`, corrección JS en este cierre; comprador `e9b56a0`, VEN-01 `70443c0`. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
+| Plan vigente | Sesión corta cerrada: dos fallos comprador corregidos, VEN-01 en backlog y 4.3 reproducida/corregida en JS. Validación del código nuevo en Android pendiente; iOS pospuesto. Sin Frente B |
+| Objetivo actual | Cierre guardado sin publicación. Siguiente: comprobar la corrección 4.3 en Android con el código actualizado; el APK 5 instalado conserva la OTA anterior. Sin APK nuevo ni cambios financieros |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -105,18 +105,31 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**4.3 — reproducción nativa en curso.** Continuación autorizada por Oliver; sincronizada `e9b56a0` limpia.
-Aunque aquí no hay Android/ADB, se reutiliza `.github/workflows/apk-emulator.yml` sin cambiarlo. Solicitud
-revisión 33: únicamente `04-franja-sin-conexion`, claro/oscuro, APK 5 existente `d1d10c28` y OTA ya publicada.
-Flujo visitante Favoritos: captura con conexión, modo avión, Atrás/reentrada al encabezado y reconexión;
-sin cuentas/pedidos/pagos/push ni escrituras remotas. Capturas permitirán revisar inset/barra/flecha.
-Pendiente de resultado real del emulador; no atribuir causa ni corregir franja todavía. El workflow descarga
-el APK existente; **no compila ni publica**. Carrito/checkout `e9b56a0`, iOS y VEN-01 se mantienen cerrados/pospuestos.
+**4.3 — bloque cerrado en Git; validación del cambio en Android pendiente.** Sincronizada `2323eb2`
+sin cambios ajenos antes de corregir. Revisión 33, [run 38113135559](https://github.com/somosoudy-design/marketplace/actions/runs/38113135559)
+**Success**, APK 5 existente `d1d10c28` con su OTA anterior: visitante Favoritos, modo avión, Atrás/reentrada
+y reconexión; **2/2**, claro/oscuro, sin reintentos. Ocho capturas revisadas:
+[evidencia conservada en ci/capturas](https://github.com/somosoudy-design/marketplace/tree/17a77d7f7a123b4383974702d16b6d8222910560/ultima).
+No cuentas/pedidos/pagos/push ni escrituras remotas; workflow sin cambios, no compila ni publica.
 
-Primera ejecución [38112674559](https://github.com/somosoudy-design/marketplace/actions/runs/38112674559),
-commit `6c4f1be`: error de parsing del test en ambos temas, antes de abrir el recorrido. No prueba el fallo
-de la app. Causa confirmada en `YamlSetAirplaneMode.kt` de Maestro `cli-2.11.0`: espera `enabled/disabled`,
-no booleanos. Corregidos los tres comandos; revisión 33 vuelve a pedir solo este recorrido. Sin cambio a HAYAZGO.
+La prueba funcional pasa, pero las imágenes **sí reproducen espacio adicional** bajo la franja y un
+desplazamiento excesivo del contenido en ambos temas, también al reentrar. Al reconectar se restaura.
+Causa acotada: `OfflineFrame` reservaba el inset arriba y pasaba `top: 0` al navegador; el encabezado
+Android conserva su inset nativo. En react-native-screens 4.26.2, `ScreenStackHeaderConfigViewManager.kt`
+implementa `setTopInsetEnabled` como no-op: el contexto JS no elimina esa reserva nativa.
+
+Corrección exclusivamente JS Android: `OfflineNotice.tsx`/`offline-layout.ts` conservan el inset real,
+compensan la reserva superior de la franja con un margen y mantienen la franja encima. El navegador se
+desplaza solo por la altura del aviso, sin desmontarlo ni sustituir el encabezado. Comportamiento de otras
+plataformas, texto, colores, demora y diseño global conservados; sin cambios nativos o dependencias.
+
+Pruebas del código corregido: geometría **9/9** (antes, dos fallos Android con inset distinto de cero),
+tipos/lint, exportación web y bundle Hermes Android aprobados. `buyer-errors.spec.ts` **6/6**, 22,4 s,
+claro/oscuro, capturas web revisadas. **La corrección no se ha ejecutado en Android**: las capturas/run
+anteriores son reproducción sobre la OTA previa, no una validación del nuevo código. Sin WIP funcional activo.
+
+Primer intento `6c4f1be` / run 38112674559: parsing del test fallido, sin recorrido. Maestro 2.11 exige
+`enabled/disabled`, no booleanos; corregido en `2323eb2` y aprobado por la revisión 33. Checkpoints cerrados.
 
 **Sesión corta comprador terminada, sin WIP activo.** Sincronizada `9d22155`, cierre iOS revisado;
 checkpoint de continuidad/VEN-01 `70443c0`. iOS pospuesto; helpers/proyecto nativo intactos. VEN-01 registrada
@@ -135,8 +148,7 @@ cantidad/rollback/reintento y controles bloqueados, franja web/reconexión sin t
 aprobados. Capturas revisadas `.local/buyer-errors/{light,dark}-*.png`; antes en `before/`.
 Pruebas contra backend local conservando sus datos; sin suites generales, transacciones remotas o pagos.
 
-4.3: franja web aprobada en ambos temas; source de franja/layout **sin modificar**. No ADB/emulador/teléfono
-en esta nube para reproducir el inset de native-stack Android; pendiente físico, sin corrección especulativa.
+En el primer bloque, 4.3 solo se comprobó en web; la reproducción Android y corrección posterior constan arriba.
 Cambios comprador solo en Git: **sin publicar ni actualizar APK 5**. No nuevo APK, producción, configuración
 nativa, dependencias/lockfile, SQL/motor financiero ni panel. No compilación/pruebas iOS.
 
@@ -247,19 +259,17 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Primero obtener resultado/capturas de la revisión 33 de `APK en emulador`; `git fetch origin ci/capturas` y
-comprobar `ultima/LEEME.md` contra el commit de esta solicitud antes de usar `ultima/resumen.md` e imágenes
-`offline-01…04`. No mezclar capturas de otro run. Revisar encabezado/flecha/espacio superior en ambos temas;
-si falla la prueba, leer la causa concreta. Cerrar/documentar o aplicar solo una corrección sustentada por evidencia.
-Sin APK nuevo ni publicación; una corrección de JS no se considera validada en APK hasta probarla realmente.
+Validar **el código corregido de 4.3** en un entorno Android local ya disponible, sin generar APK ni publicar.
+Usar `tests/apk-flows/04-franja-sin-conexion.yaml`: Cuenta → Favoritos, conexión/modo avión/Atrás/reentrada/
+reconexión, claro/oscuro. Revisar que título, flecha y contenido bajen solo por la altura de la franja; probar
+también Inicio (sin encabezado nativo). Restaurar conexión al terminar. Si no existe un runtime local capaz
+de cargar este JS, mantener pendiente: el APK 5 actual no contiene el cambio. No repetir la revisión 33 sobre
+la OTA anterior como si validase la corrección. Cualquier EAS Update espera un nuevo pedido de Oliver.
 
-Alternativa física para **4.3**, usando el APK 5 ya instalado y su versión actual: abrir Cuenta →
-Direcciones (encabezado native-stack), registrar espacio superior y flecha, activar modo avión, esperar al menos
-1,2 s, volver y navegar a otra pantalla con encabezado; repetir claro/oscuro y reconectar. Capturar antes/durante/
-después, incluidas barras del sistema. Restaurar conexión al terminar. Comparar `OfflineNotice.tsx` y `_layout.tsx`
-solo si se reproduce; no generar APK ni publicar para esta prueba. No repetir los errores comprador ya cerrados.
-Regresión acotada si hace falta: `pnpm --filter @kora/app-e2e exec playwright test --project=app tests/buyer-errors.spec.ts`
-con backend local y exportación web vigente. VEN-01 solo backlog; iOS pospuesto; no Frente B/publicación.
+Regresión de geometría: `pnpm exec vitest run tests/mobile/offline-layout.test.ts`. Web, solo si hay cambios:
+exportar de nuevo y ejecutar `buyer-errors.spec.ts` con backend local en el mismo comando y el runner app
+ignorado `.local/buyer-errors/playwright-app.config.ts` (`--project=app`, sin panel). VEN-01 solo backlog,
+iOS pospuesto; no repetir los dos errores comprador ya cerrados ni iniciar Frente B.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -296,6 +306,14 @@ con backend local y exportación web vigente. VEN-01 solo backlog; iOS pospuesto
   conector de GitHub o por la API de jobs.
 
 ## Pruebas
+
+4.3 (2026-10-11 08:39 Caracas): Android 15/Pixel 6, APK 5 con OTA anterior, run 38113135559 **2/2**;
+ocho capturas muestran el fallo visual pese al éxito de navegación. Código corregido: geometría **9/9**,
+tipos/lint, exportaciones web/Hermes Android y comprador web **6/6**, 22,4 s, ambos temas. Nueva corrección
+Android sin prueba de ejecución nativa ni capturas «después». No APK nuevo/actualización/publicación.
+Primer CLI web consumió el spec como otro proyecto (cero pruebas); corregido con `--project=app`. Arranque
+local siguiente falló por puerto PostgREST aún ocupado; reintentado tras liberarse, sin reset de datos ni cambios
+de herramientas. No contados como pases. Sin suites generales ni pagos.
 
 Sesión corta comprador (2026-10-11 00:38 Caracas, Linux): `buyer-errors.spec.ts` **6/6**, claro/oscuro,
 Pixel 7 web, 20,2 s; tipos/lint aprobados y seis capturas revisadas. Antes del fix, 2 fallos confirman carga

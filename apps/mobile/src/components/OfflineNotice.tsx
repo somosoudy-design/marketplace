@@ -1,11 +1,12 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { SafeAreaInsetsContext, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon } from '@/components/ui/Icon';
 import { Text } from '@/components/ui/Text';
 import { useOnline } from '@/lib/query';
 import { useTheme } from '@/theme';
+import { offlineLayout } from './offline-layout';
 
 // a connection that drops for a moment (switching towers, leaving wifi) should not make the whole app jump
 const SETTLE_MS = 1200;
@@ -33,10 +34,11 @@ export function OfflineFrame({ children }: { children: ReactNode }) {
   const offline = useShownOffline();
   const insets = useSafeAreaInsets();
   const t = useTheme();
+  const layout = offlineLayout(Platform.OS, offline, insets);
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       {offline ? (
-        <View style={{ paddingTop: insets.top, backgroundColor: t.colors.background }}>
+        <View style={{ paddingTop: insets.top, backgroundColor: t.colors.background, zIndex: Platform.OS === 'android' ? 1 : undefined }}>
           <Animated.View
             testID="offline-notice"
             entering={FadeIn.duration(200)}
@@ -50,8 +52,11 @@ export function OfflineFrame({ children }: { children: ReactNode }) {
           </Animated.View>
         </View>
       ) : null}
-      {/* the strip already clears the status bar, so headers below it must not add that space again */}
-      <SafeAreaInsetsContext.Provider value={offline ? { ...insets, top: 0 } : insets}>{children}</SafeAreaInsetsContext.Provider>
+      <SafeAreaInsetsContext.Provider value={layout.navigatorInsets}>
+        {Platform.OS === 'android' ? (
+          <View style={{ flex: 1, marginTop: layout.navigatorMarginTop }}>{children}</View>
+        ) : children}
+      </SafeAreaInsetsContext.Provider>
     </View>
   );
 }
