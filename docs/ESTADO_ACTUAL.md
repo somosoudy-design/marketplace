@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 13:58 (Caracas, UTC−4), por Codex cloud (checkpoint de acciones de pedidos; validación final pendiente).
+**Última actualización:** 2026-10-11 14:05 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa, tres bloques cerrados localmente; sin publicación).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + multirrol `5f90e27`, publicado fuente `2d00f96`, prueba nativa `098f430`; cierre documental posterior |
+| Último commit confirmado | Fuente operativa `8889952`, perfil `928494d`, catálogo `9648e35`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA anterior VEN-01A `2d00f96`/prueba `098f430` |
 | Plan vigente | Oliver comprobó VEN-01A en Android y solicita ampliación operativa: 1 edición de tienda, 2 productos, 3 pedidos. Cerrar cada bloque con pruebas locales, commit y push. iOS pospuesto |
-| Objetivo actual | Cerrar pruebas/exportaciones/documentación de los tres bloques operativos. No EAS Update, APK nuevo, servicios remotos, finanzas, checkout o iOS |
+| Objetivo actual | Tres bloques operativos cerrados con pruebas locales. Siguiente: autorización de dos migraciones remotas y publicación/validación APK 5; ninguna autorizada en este bloque |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -30,6 +30,11 @@
 | E | Validación integral | En curso: V2 visitante en APK 5, claro/oscuro, 6/6 (un reintento). Recorrido con cuenta anterior en revisión 20; no repetido en V2. Teléfono físico pendiente |
 
 ## Qué funciona hoy (verificado)
+
+- **Mi tienda operativa (solo local, 2026-10-11):** perfil/fotos, catálogo y acciones de entrega con persistencia/
+  permisos/errores/aislamiento reales; UI 42/42 + último pase operativo 20/20, DB 31/31, core 50/50, tipos/lint,
+  web/Hermes y visual claro/oscuro. Dos migraciones locales pendientes de autorización remota y OTA pausada.
+  Fuente 8889952; informe: `docs/MI_TIENDA_OPERATIVA.md`. VEN-01A debajo es el antecedente publicado de lectura.
 
 - **VEN-01A (local, 2026-10-11):** Mi tienda nativa desde Cuenta, roles/pertenencias reales, selector de
   tiendas, resumen, catálogo paginado, entregas recibidas y configuración solo consulta; panel avanzado
@@ -112,9 +117,31 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Mi tienda operativa — bloque 1 terminado.** Base `887197b`, checkpoint `66465ff`. Perfil real editable, logo/portada desde galería, validación, reintento/dirty/back y conservación al desconectar. Se guardan nombre/frase/descripción/contacto/envíos/políticas/acento/rutas de imágenes en `stores`; página pública/cache actualizadas. RLS/estado/slug/kind/demo/ratings preservados, sin migración. API usa filas devueltas, no éxito sin persistencia. Tipos/lint/web aprobados; UI **26/26** en 1,8 min, ambos temas/320 px, incluye las 22 regresiones VEN-01A. Permisos **6/6**, copia `kora_seller_ops_171524`. Capturas perfil/tienda pública/error revisadas. Detalle en `docs/MI_TIENDA_OPERATIVA.md`.
+**Mi tienda operativa — tres bloques implementados localmente; revisión final adicional en curso.** Base `887197b`.
+1. Perfil (`928494d`): campos permitidos, logo/portada por galería, guardado real/public storefront, errores/
+   reintento/dirty/Atrás y desconexión, RLS sin ampliar permisos.
+2. Catálogo (`9648e35`): creación/edición, variantes manuales/fotos/precio/stock/disponibilidad/moderación;
+   costos automáticos por regla/RPC existente. Guardado transaccional INVOKER + ids estables, rechazo/revisión
+   no se autopublica al cambiar variantes/costos. Sin drafts falsos o borrados.
+3. Pedidos (fuente `8889952`, checkpoint resuelto): detalle aislado por tienda, tarea real/pago, confirmación,
+   preparación/despacho/guía/transportista/avance/entrega/historial. advance_fulfillment intacto, sin verificar
+   pagos o alterar saldos directamente. Reintento de respuesta perdida no duplica avance y confirmación
+   obsoleta se bloquea. Consulta/panel conservados donde faltan migraciones o permisos.
 
-Bloque 1 cerrado/push `928494d`. **Bloque 2 completo localmente:** crear/editar productos, variantes manuales/precios/inventario/SKU/disponibilidad/fotos/moderación y costos automáticos por RPC existente. UI 30/30 (22 regresiones + 8 catálogo), 4 perfil previas, DB 20/20, core 50/50, tipos/lint/web. Migración `20261011172600_seller_product_editor.sql` local solamente: guardado transaccional INVOKER con RLS e ids estables, protección de revisión administrativa ante edición de variantes (fallo rojo reproducido). Servidor sin migración conserva consulta/panel y no ofrece acciones móviles. Informe/capturas/límites: `docs/MI_TIENDA_OPERATIVA.md`. Bloque 2 cerrado/push `9648e35`. Bloque 3 funcional local: detalle por tienda/entrega, pasos del backend, bloqueo por pago, preparación/guía/transportista/historial/confirmación y reintento sin duplicar. advance_fulfillment permanece intacto. SQL 20261011174200 aplicado solo local/copia. DB combinado 31/31, UI pedidos 8/8 en ambos temas; regresión conjunta en cierre. Checkpoint antes de exportación final: repetir tipos/lint/web y UI perfil/catálogo/pedidos por ajuste de textos, disponibilidad En camino desde el mapa compartido y captura de confirmación estable; después Android JS (no APK). La publicación completa requiere primero autorización/aplicación/verificación de migración remota; no está autorizado aquí. No EAS/APK/servicios o datos remotos, finanzas, checkout/iOS. Módulos ya presentes en APK 5; ejecución nativa/galería física pendiente de publicación autorizada. `[skip ci]` evita despliegue automático del panel por API. BCV crítico separado.
+**Validación final:** UI conjunta 42/42 (3,6 min), luego 20/20 operativos tras textos/disponibilidad compartida/
+captura estable (2,5 min), ambos temas/320 px. Backend combinado 31/31 en copia local `kora_seller_ops_171524`
+conservada, sin reset; core 50/50 durante catálogo sin cambios posteriores. Tipos/lint/web finales y Android
+JS/Hermes sobre 8889952 aprobados. Revisión visual formularios/errores/confirmación/página pública/historial en
+ambos temas; 22 capturas operativas. Detalle, comandos, datos persistidos y límites: `docs/MI_TIENDA_OPERATIVA.md`.
+
+SQL `20261011172600_seller_product_editor.sql` y `20261011174200_seller_fulfillment_detail.sql` aplicados
+**solo local/copia**, no remotamente. Servidor sin migración conserva consulta/panel, no ofrece edición/
+acciones inexistentes; los RPC de capacidad nunca conceden un rol. Publicación completa pendiente de
+**autorización específica de SQL remoto**, verificación y guard APK 5, luego autorización EAS preview y prueba
+nativa. No generar APK. Sin dependencias/configuración nativa/Firebase/panel/checkout/iOS/BCV nuevos o cambios
+financieros; ningún servicio/dato remoto o EAS publicado. [skip ci] evita el despliegue automático del panel
+por cambios en API. El Android de Oliver conserva la OTA anterior. Galería/teclado/Atrás físico/TalkBack/
+fluidez de estos cambios pendientes; exportar Hermes y probar web no equivale a ejecución en teléfono.
 
 ### Antecedente VEN-01A cerrado
 
@@ -316,7 +343,15 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Terminar tipos/lint/export web y suite focalizada de Mi tienda (perfil/catálogo/pedidos) tras textos y disponibilidad compartida; exportar Android JS/Hermes, revisar capturas claro/oscuro y cerrar docs/commit/push. DB 31/31 y pedidos UI 8/8 aprobados. No aplicar SQL remoto ni publicar: 20261011172600 y 20261011174200 siguen solo locales.
+Primero cerrar la regresión adicional de pedidos: dos sesiones completan el mismo paso con notas distintas. La app conserva el borrador y exige revisar el historial en vez de informar un guardado falso. Código preparado; repetir tipos/lint/web, ocho pruebas de pedidos y Android JS/Hermes antes de cierre.
+
+No repetir los tres bloques o VEN-01A. Leer MI_TIENDA_OPERATIVA.md y verificar `git status`/último cierre.
+Esperar autorización específica de Oliver para aplicar solo 20261011172600 y 20261011174200 al proyecto
+Marketplace correcto, en ese orden; comprobar pendientes remotos para no aplicar cambios ajenos, sin seed,
+db push indiscriminado ni datos reales no autorizados. Verificar soporte/pertenencia/guardado. Publicación
+EAS preview y guard APK 5 únicamente con nueva autorización; después validar galería, teclado, Atrás,
+TalkBack y flujos operativos en Android. BCV conserva prioridad crítica separada; no se trabajó aquí.
+
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -353,6 +388,12 @@ Terminar tipos/lint/export web y suite focalizada de Mi tienda (perfil/catálogo
   conector de GitHub o por la API de jobs.
 
 ## Pruebas
+
+**Mi tienda operativa — cierre 2026-10-11:** 42/42 UI conjunta y 20/20 operativos finales tras refinamientos,
+31/31 backend en copia conservada, core 50/50 durante catálogo (sin cambios posteriores), tipos/lint/web/
+Android JS/Hermes aprobados. Claro/oscuro/320 px; galería y persistencia real mediante web/gateway local,
+permisos SQL, atomicidad/moderación/costos/logística/reintentos probados. No prueba nativa nueva ni publicación.
+Reproducción/evidencias/alcance en MI_TIENDA_OPERATIVA.md y PRUEBAS.md; no usar wrapper destructivo test:db.
 
 VEN-01A, cierre local (2026-10-11 12:22 Caracas): `seller-app.spec.ts` **22/22** en 1,4 min, ambos temas,
 sin reintentos/omisiones; 320 px en recorrido principal. Permisos existentes + herramientas vendedor **6/6**

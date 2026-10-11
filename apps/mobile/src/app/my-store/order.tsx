@@ -67,7 +67,13 @@ function Delivery({ f, steps, refresh }: { f: SellerFulfillment; steps: Fulfillm
     lock.current = true; setBusy(true); setError(null);
     try {
       const [now, actualSteps] = await Promise.all([fresh(), api.orders.steps()]);
-      if (now.status !== confirm.code) {
+      if (now.status === confirm.code) {
+        const event = [...now.fulfillment_events].sort((a, b) => b.id - a.id).find((e) => e.step_code === confirm.code);
+        const matches = (event?.note ?? '') === note.trim()
+          && (!tracking.trim() || now.tracking_number === tracking.trim())
+          && (!carrier.trim() || now.carrier_name === carrier.trim());
+        if (!matches) throw new Error('Otra sesión completó este paso con datos distintos. Conservamos tu nota y guía; revisa el historial antes de continuar.');
+      } else {
         if (!optionsFor(actualSteps, now).some((s) => s.code === confirm.code)) throw new Error('Esta acción ya no está permitida. Revisa el pago y el estado actual.');
         await api.seller.advance(f.id, confirm.code, { note: note.trim() || undefined, tracking: tracking.trim() || undefined, carrier: carrier.trim() || undefined });
       }

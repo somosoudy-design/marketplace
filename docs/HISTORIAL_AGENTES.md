@@ -16,6 +16,11 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 18:05Z · Codex cloud · Oliver · checkpoint revisión concurrente de nota/guía
+- Operativa local implementada, UI conjunta 42/42 y último pase 20/20, DB 31/31, tipos/lint/web/Hermes aprobados sobre 8889952; docs de cierre en preparación.
+- Revisión adicional: otra sesión puede completar el mismo paso con datos distintos; antes se confirmaba el estado y descartaba la nota pendiente. Preparado cotejo de evento/nota/guía/transportista para conservar el borrador y mostrar conflicto, sin avanzar dos veces ni alterar SQL/finanzas.
+- Pendiente: tipos/lint/web, ocho pruebas de pedidos (incluyen respuesta perdida, mismo paso/datos distintos y avance posterior obsoleto) y Hermes final; revisar capturas y cerrar documentación. Sin migración/publicación remota o APK.
+
 ### 2026-10-11 17:58Z · Codex cloud · Oliver · checkpoint previo a exportaciones finales Mi tienda
 - Perfil/catálogo cerrados con push 928494d/9648e35. Pedidos operativos local: detalle por tienda, flags/pago reales, preparar/despachar/entregar con confirmación, guía, notas/historial y reintento de respuesta perdida sin duplicar. advance_fulfillment sin modificar.
 - SQL de detalle aplicado solo local y copia conservada. DB conjunto 31/31; UI pedidos 8/8, claro/oscuro/320 px. Regresión conjunta en ejecución; tipos/lint y export web anteriores aprobados.
