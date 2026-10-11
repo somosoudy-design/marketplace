@@ -1,15 +1,17 @@
 ### Recorridos con Maestro (2.11.0) sobre apk1.apk
 ```
-light-01-visitante: pasó
-light-01b-volver-favoritos: pasó
-light-01c-volver-favoritos-atras: pasó
-dark-01-visitante: pasó al segundo intento; el primero falló así:
+light-04-franja-sin-conexion: FALLÓ (dos intentos)
 
-Waiting for flows to complete...
-[Failed] Frente A V2 — navegación, tarjetas y carrito de visitante (16s)
+Parsing Failed at /home/runner/work/marketplace/marketplace/tests/apk-flows/04-franja-sin-conexion.yaml:6:25
+-- segundo intento --
 
-1/1 Flow Failed
+Parsing Failed at /home/runner/work/marketplace/marketplace/tests/apk-flows/04-franja-sin-conexion.yaml:6:25
+-- logcat de la app --
+dark-04-franja-sin-conexion: FALLÓ (dos intentos)
 
-dark-01b-volver-favoritos: pasó
-dark-01c-volver-favoritos-atras: pasó
+Parsing Failed at /home/runner/work/marketplace/marketplace/tests/apk-flows/04-franja-sin-conexion.yaml:6:25
+-- segundo intento --
+
+Parsing Failed at /home/runner/work/marketplace/marketplace/tests/apk-flows/04-franja-sin-conexion.yaml:6:25
+-- logcat de la app --
 ```
