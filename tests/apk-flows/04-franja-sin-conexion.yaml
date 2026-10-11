@@ -3,7 +3,7 @@
 appId: com.example.kora.preview
 name: Franja sin conexión y encabezado nativo
 ---
-- setAirplaneMode: false
+- setAirplaneMode: disabled
 - launchApp
 - runFlow:
     when:
@@ -22,7 +22,7 @@ name: Franja sin conexión y encabezado nativo
     visible: Guarda lo que te gusta
     timeout: 15000
 - takeScreenshot: offline-01-encabezado-conexion
-- setAirplaneMode: true
+- setAirplaneMode: enabled
 - extendedWaitUntil:
     visible:
       id: offline-notice
@@ -42,7 +42,7 @@ name: Franja sin conexión y encabezado nativo
 - assertVisible:
     id: offline-notice
 - takeScreenshot: offline-03-encabezado-al-volver
-- setAirplaneMode: false
+- setAirplaneMode: disabled
 - extendedWaitUntil:
     notVisible:
       id: offline-notice

@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 00:45 (Caracas, UTC−4), por Codex cloud (reproducción 4.3 con APK 5 en Actions; iOS pospuesto).
+**Última actualización:** 2026-10-11 00:55 (Caracas, UTC−4), por Codex cloud (4.3: sintaxis Maestro corregida; reproducción pendiente).
 
 ## Dónde está el trabajo
 
@@ -107,11 +107,16 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 **4.3 — reproducción nativa en curso.** Continuación autorizada por Oliver; sincronizada `e9b56a0` limpia.
 Aunque aquí no hay Android/ADB, se reutiliza `.github/workflows/apk-emulator.yml` sin cambiarlo. Solicitud
-revisión 32: únicamente `04-franja-sin-conexion`, claro/oscuro, APK 5 existente `d1d10c28` y OTA ya publicada.
+revisión 33: únicamente `04-franja-sin-conexion`, claro/oscuro, APK 5 existente `d1d10c28` y OTA ya publicada.
 Flujo visitante Favoritos: captura con conexión, modo avión, Atrás/reentrada al encabezado y reconexión;
 sin cuentas/pedidos/pagos/push ni escrituras remotas. Capturas permitirán revisar inset/barra/flecha.
 Pendiente de resultado real del emulador; no atribuir causa ni corregir franja todavía. El workflow descarga
 el APK existente; **no compila ni publica**. Carrito/checkout `e9b56a0`, iOS y VEN-01 se mantienen cerrados/pospuestos.
+
+Primera ejecución [38112674559](https://github.com/somosoudy-design/marketplace/actions/runs/38112674559),
+commit `6c4f1be`: error de parsing del test en ambos temas, antes de abrir el recorrido. No prueba el fallo
+de la app. Causa confirmada en `YamlSetAirplaneMode.kt` de Maestro `cli-2.11.0`: espera `enabled/disabled`,
+no booleanos. Corregidos los tres comandos; revisión 33 vuelve a pedir solo este recorrido. Sin cambio a HAYAZGO.
 
 **Sesión corta comprador terminada, sin WIP activo.** Sincronizada `9d22155`, cierre iOS revisado;
 checkpoint de continuidad/VEN-01 `70443c0`. iOS pospuesto; helpers/proyecto nativo intactos. VEN-01 registrada
@@ -242,7 +247,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Primero obtener resultado/capturas de la revisión 32 de `APK en emulador`; `git fetch origin ci/capturas` y
+Primero obtener resultado/capturas de la revisión 33 de `APK en emulador`; `git fetch origin ci/capturas` y
 comprobar `ultima/LEEME.md` contra el commit de esta solicitud antes de usar `ultima/resumen.md` e imágenes
 `offline-01…04`. No mezclar capturas de otro run. Revisar encabezado/flecha/espacio superior en ambos temas;
 si falla la prueba, leer la causa concreta. Cerrar/documentar o aplicar solo una corrección sustentada por evidencia.

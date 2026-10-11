@@ -16,6 +16,15 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 04:55Z (00:55 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint de prueba 4.3
+- Resultado de revisión 32: run 38112674559 / `6c4f1be`, parsing fallido en ambos temas, dos intentos cada uno.
+  El recorrido no se ejecutó; no es un fallo de HAYAZGO. Solo capturas de instalación/diagnóstico del APK existente.
+- Causa/corrección: fuente oficial `YamlSetAirplaneMode.kt` de Maestro `cli-2.11.0` acepta cadenas
+  `enabled/disabled`, rechaza booleanos. Corregidos tres comandos y solicitada revisión 33 del mismo flujo.
+  Sin cambios de app, dependencias o workflow; sin APK nuevo ni publicación.
+- Siguiente: esperar capturas del nuevo commit en `ci/capturas`, revisar ambos temas; no usar las del run fallido.
+- Último commit: este checkpoint WIP, pendiente de la ejecución real de la prueba corregida.
+
 ### 2026-10-11 04:45Z (00:45 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint 4.3
 - Continuidad: rama `e9b56a0` limpia/sin cambios remotos; AGENTS/estado/pendientes y cierre anterior revisados.
   iOS pospuesto, VEN-01 solo backlog y dos fallos comprador cerrados; no duplicar ese trabajo.
