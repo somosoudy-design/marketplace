@@ -16,6 +16,26 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 14:55Z (10:55 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · cierre publicado y validado 4.3
+- Hecho: OTA Android preview autorizada, fuente `41d415f`, EAS run 38148288379 Success; runtime APK 5
+  `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` aprobado antes de publicar. Incluye `adf3c78` (franja)
+  y `e9b56a0` (errores carrito/checkout). Sin APK nuevo, canal production o cambios financieros/nativos.
+- Prueba real: run 38148610558/revisión 34/fuente `19067d6`, Android 15/Pixel 6/APK 5 existente: 2/2,
+  claro/oscuro, sin reintentos. Flujo visitante ampliado `ca0923d`, 39 pasos; Favoritos/Atrás/reentrada,
+  Inicio conectado/sin conexión/reconectado. Sin cuentas/pedidos/pagos o escrituras remotas.
+- Recepción: diagnóstico al reabrir confirma OTA `01a12b6c-3da0-7ce9-a45b-b2dd018a9c13`, publicada
+  2026-10-11 14:44 UTC, preview/runtime APK 5. No se afirma recepción en el teléfono físico de Oliver.
+- Diseño: 14 capturas revisadas; espacio duplicado desaparece en ambos temas, contenido/header bajan
+  solo por el aviso, Atrás/reentrada y reconexión conservan posiciones. Evidencia «después» en ci/capturas
+  `2919b0c`; «antes» en `17a77d7`. Enlaces inmutables guardados en `ESTADO_ACTUAL.md`.
+- Pruebas complementarias: geometría 9/9 repetida; web 6/6, tipos/lint y bundles aprobados sobre el mismo
+  código de app. Sin repetir suites generales. Manifiesto EAS directo bloqueado por proxy; no contado como pase.
+- Continuidad: checkpoints `41d415f`/`19067d6` cerrados, 4.3 retirada de pendientes de implementación.
+  VEN-01 solo backlog; iOS pospuesto, sin Frente B. Sin WIP funcional activo.
+- Siguiente: Oliver descarga/reinicia la OTA, verifica diagnóstico y modo avión/Atrás/reconexión en su
+  Samsung, claro/oscuro; registrar solo un fallo nuevo si aparece. No nuevo APK/publicación por defecto.
+- Último commit: este cierre de documentación; obtener con `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 14:46Z (10:46 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint después de preview
 - Publicación autorizada: EAS run 38148288379 Success, fuente `41d415f`. Guard APK 5 aprobado 14:43:35Z;
   Android/preview publicado 14:44:36Z, reporte Success. Sin build nuevo, canal production o servicios alterados.
