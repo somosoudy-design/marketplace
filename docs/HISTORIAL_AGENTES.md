@@ -16,6 +16,12 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 18:46Z · Codex cloud · Oliver · checkpoint publicación Mi tienda autorizada
+- Oliver autoriza publicar primero para revisar Android y continuar pendientes de esta entrega. Mismo APK 5, canal preview, fuente móvil 5a3b884 y cierre be661bf. Guard exacto obligatorio; solicitud preparada, publicación aún pendiente de evidencia.
+- Git sincronizado/limpio sobre be661bf, pruebas previas 42/42 + 20/20 + pedidos 8/8, DB 31/31, tipos/lint/web/Hermes aprobados. No cambios móviles nuevos.
+- Supabase sin credencial/conector y conexión directa bloqueada por Tunnel 403; api.github.com bloqueado, lectura pública github.com como fallback. No afirmar migración remota aplicada. Perfil usa contrato actual; catálogo y pedidos mantienen consulta/panel si falta soporte.
+- Siguiente: confirmar workflow preview, preparar SQL exacto/verificado y validar OTA por emulador existente. Sin APK, iOS, finanzas, datos reales o nueva funcionalidad.
+
 ### 2026-10-11 18:10Z · Codex cloud · Oliver · cierre Mi tienda operativa, tres bloques
 - Hecho: perfil editable/galería/página pública (928494d), catálogo real/atómico/RLS/moderación/costos existentes (9648e35), detalle y acciones de entrega con pasos/pago/pertenencia del servidor, confirmación/guía/notas/historial y reintento sin duplicar (5a3b884). Checkpoints 66465ff/d3bf8dd/656160b/8889952/5a3b884 resueltos; sin WIP funcional pendiente.
 - Persistencia: stores/Storage; products/variants/images/costos por transacción; fulfillments/events por advance_fulfillment existente e intacto. No cambia finanzas/cálculos/pagos/checkout o el panel, ni da facultades administrativas a un vendedor.

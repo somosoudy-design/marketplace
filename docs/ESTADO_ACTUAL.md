@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 14:10 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa, tres bloques cerrados localmente; sin publicación).
+**Última actualización:** 2026-10-11 14:46 (Caracas, UTC−4), por Codex cloud (Oliver autoriza publicación; preview solicitado, resultado pendiente).
 
 ## Dónde está el trabajo
 
@@ -116,6 +116,9 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**Publicación autorizada en curso.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes». Solicitud EAS preview/Android para APK 5, misma huella requerida, fuente móvil 5a3b884/cierre be661bf; todavía no afirmar publicación o recepción hasta comprobar workflow/diagnóstico. Sin APK nuevo o cambio de canal.
+El cloud no tiene credencial/conector Supabase y api.github.com/proyecto Supabase responden Tunnel 403 de red; Git fetch/push sí funciona. Usar workflow existente y lectura pública de Actions en github.com, sin extraer credenciales. Migraciones 20261011172600/20261011174200 registradas solo locales, estado remoto todavía sin verificar. Perfil funciona con contrato actual; catálogo/acciones protegidos por RPC de soporte y conservan consulta/panel si faltan. Preparar aplicación exacta y pruebas locales mientras se publica; no atribuir habilitación remota a una OTA.
 
 **Mi tienda operativa — tres bloques terminados localmente, sin WIP funcional pendiente.** Base `887197b`.
 
@@ -345,12 +348,11 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-No repetir los tres bloques o VEN-01A. Leer MI_TIENDA_OPERATIVA.md y verificar `git status`/último cierre.
-Esperar autorización específica de Oliver para aplicar solo 20261011172600 y 20261011174200 al proyecto
-Marketplace correcto, en ese orden; comprobar pendientes remotos para no aplicar cambios ajenos, sin seed,
-db push indiscriminado ni datos reales no autorizados. Verificar soporte/pertenencia/guardado. Publicación
-EAS preview y guard APK 5 únicamente con nueva autorización; después validar galería, teclado, Atrás,
-TalkBack y flujos operativos en Android. BCV conserva prioridad crítica separada; no se trabajó aquí.
+Confirmar run preview correspondiente al commit de solicitud, guard exacto APK 5 y publicación Success.
+Preparar/verificar SQL limitado a dos migraciones y su historial para Marketplace; acceso Supabase ausente,
+no afirmar aplicación remota. Luego validar APK 5 existente por workflow de emulador, visitante/temas/Atrás/
+recepción OTA sin cuentas ni operaciones remotas. Oliver valida galería y sesión vendedor en su teléfono.
+No repetir implementación ni iniciar funciones nuevas/BCV/iOS sin instrucciones específicas.
 
 
 ## Pendiente de Oliver (solo él puede hacerlo)
