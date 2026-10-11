@@ -40,6 +40,9 @@ import type {
   ShippingSelection,
   StartOnlineResult,
   Store,
+  SellerDashboard,
+  SellerProduct,
+  SellerFulfillment,
   SubmitPaymentInput,
   SubmitPaymentResult,
 } from './types';
@@ -335,7 +338,14 @@ export function createApi(client: KoraClient) {
     productPricing: (productId: string) => run<ProductPricing>(rpc('product_pricing', { p_product_id: productId })),
     setProductCosts: (productId: string, costs: Partial<Omit<ProductCosts, 'product_id' | 'updated_at'>>, variantCosts: { variant_id: string; cost_usd: number | null }[]) =>
       run<ProductPricing>(rpc('set_product_costs', { p_product_id: productId, p_costs: costs as never, p_variant_costs: variantCosts as never })),
-    dashboard: (storeId: string) => run<Record<string, any>>(rpc('seller_dashboard', { p_store_id: storeId })),
+    dashboard: (storeId: string) => run<SellerDashboard>(rpc('seller_dashboard', { p_store_id: storeId })),
+    products: (storeId: string, offset = 0, limit = 30) =>
+      run<SellerProduct[]>(from('products')
+        .select('id, store_id, title, base_price_usd, availability, moderation_status, moderation_note, is_demo, product_images(path, sort)')
+        .eq('store_id', storeId).order('created_at', { ascending: false }).order('id')
+        .range(offset, offset + limit - 1)),
+    fulfillments: (storeId: string, scope: 'open' | 'done' = 'open') =>
+      run<SellerFulfillment[]>(rpc('seller_fulfillments', { p_store_id: storeId, p_scope: scope })),
     balance: (storeId: string) => run<Record<string, number>>(rpc('seller_balance', { p_store_id: storeId })),
     advance: (fulfillmentId: string, step: string, opts: { note?: string; tracking?: string; carrier?: string } = {}) =>
       run<unknown>(

@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 11:38 (Caracas, UTC−4), por Codex cloud (inicio autorizado VEN-01A; sin publicación móvil).
+**Última actualización:** 2026-10-11 12:06 (Caracas, UTC−4), por Codex cloud (VEN-01A implementado y probado; cierre visual/documentación pendiente, sin publicación).
 
 ## Dónde está el trabajo
 
@@ -105,13 +105,19 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**VEN-01A en curso, autorizado por Oliver.** Base `da4dd54` sincronizada, sin WIP ajeno ni cambios locales.
-Revisados roles y pertenencia: comprador implícito; `user_roles` administrativos y `store_members` de vendedor.
-Reutilizar `api.profile.roles/stores`, `seller_dashboard`, `seller_fulfillments` y lectura RLS de productos.
-Implementación prevista: acceso Cuenta, selector para varias tiendas, resumen real, productos/pedidos y
-configuración solo consulta, panel avanzado existente. Sin editor, fotos, inventario avanzado o mutaciones.
-Servidor valida pertenencia en cada RPC; no conceder permisos desde metadatos editables por cliente.
-Próximo bloque: API tipada y pantallas nativas; probar roles/aislamiento, vacíos, errores y regreso en ambos temas.
+**VEN-01A implementado; cierre de revisión visual/documentación en curso.** Base `da4dd54`, checkpoint `c2a9910`.
+Cuenta usa `api.account.roles/stores` (filas reales), conserva compra/administración y abre `/my-store`.
+Selector multitienda; resumen `seller_dashboard`, productos RLS paginados de 30 en 30, pedidos con
+`seller_fulfillments`/etiquetas de pasos del backend y configuración solo consulta. Panel avanzado existente.
+Lecturas con sesión/anon; ninguna escritura nueva, permiso simulado, RPC o migración. Datos de tienda no
+persistidos en disco; claves por usuario/tienda y limpieza al salir/cambiar cuenta.
+Pruebas aprobadas: UI **22/22**, claro/oscuro (1,6 min, 320 px en recorrido principal), servidor **6/6**
+en copia local nueva sin borrar datos, núcleo **50/50**, tipos/lint y exportación web. Contraste: 22 pares
+AA, mínimo 4,78:1. Capturas `.local/ven01a/screens/`; falta terminar revisión completa y exportación Android final.
+Prueba de abrir panel intercepta solo el destino externo: verifica URL/ventana/sesión, no reconstruye el panel.
+Primeros fallos de prueba documentados en historial; corregidos sin desactivar casos.
+Commits de API llevan `[skip ci]`: `panel-deploy.yml` despliega automáticamente por `packages/api/**`;
+evita publicar el panel contra la restricción vigente. No cambiar workflows ni solicitudes EAS.
 **No publicar EAS Update:** Oliver revisa la actualización anterior. No iOS/Xcode, checkout, pagos, servicios
 remotos, dependencias o APK nuevo. No repetir correcciones comprador/franja ni empezar VEN-01B/C.
 
@@ -273,7 +279,8 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Agente: completar VEN-01A según el bloque activo arriba y pruebas focalizadas. No solicitar actualizaciones
+Agente: cerrar revisión visual de `.local/ven01a/screens/`, exportación Android (solo JS/Hermes) y documentación.
+UI/servidor/núcleo ya aprobados; no repetir suites generales. No solicitar actualizaciones
 o workflows de APK. Revisión de Oliver del paquete anterior continúa independientemente:
 
 Revisión física de Oliver, **sin otro APK ni otra publicación**: abrir HAYAZGO con conexión, dejar descargar

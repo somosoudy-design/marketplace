@@ -14,6 +14,8 @@ import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
 import { useFavorites, useOrders, useProfile, useSupport, useUnreadCount } from '@/lib/hooks';
+import { useSellerAccess } from '@/lib/seller';
+import { useOnline } from '@/lib/query';
 import { useTheme } from '@/theme';
 
 const PANEL_URL = process.env.EXPO_PUBLIC_PANEL_URL ?? '';
@@ -23,7 +25,11 @@ const PANEL_PENDING = 'El panel web todavía no está publicado para esta versi�
 export default function AccountScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  const { user, roles, storeIds, signOut } = useAuth();
+  const { user, signOut } = useAuth();
+  const access = useSellerAccess();
+  const online = useOnline();
+  const hasStores = !access.isError && !!access.data?.stores.length;
+  const isAdmin = !access.isError && !!access.data?.isAdmin;
   const profile = useProfile();
   const orders = useOrders();
   const unread = useUnreadCount();
@@ -69,15 +75,16 @@ export default function AccountScreen() {
             <Divider inset={52} />
             <ListRow icon="settings" title="Preferencias y privacidad" subtitle="Tema, recomendaciones, eliminar cuenta" onPress={() => router.push('/settings')} />
           </Card>
-          {storeIds.length || roles.length ? (
+          {hasStores || isAdmin ? (
             <Card padded={false}>
-              {storeIds.length ? (
-                <ListRow icon="store" title="Panel de vendedor" subtitle={PANEL_URL ? 'Pedidos, productos, inventario y liquidaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/vendedor') : undefined} />
+              {hasStores ? (
+                <ListRow testID="account-my-store" icon="store" title="Mi tienda" subtitle="Tu negocio dentro de HAYAZGO" onPress={() => router.push('/my-store')} />
               ) : null}
-              {storeIds.length && roles.length ? <Divider inset={52} /> : null}
-              {roles.length ? <ListRow icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
+              {hasStores && isAdmin ? <Divider inset={52} /> : null}
+              {isAdmin ? <ListRow testID="account-admin" icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
             </Card>
           ) : null}
+          {access.isError ? <Card style={{ gap: 10 }}><Text variant="bodySmall" color="textSecondary">No pudimos comprobar tus accesos de tienda y administración.</Text><Button title="Reintentar accesos" variant="secondary" full onPress={() => access.refetch()} /></Card> : !online && !access.data ? <Text variant="bodySmall" color="textSecondary">Tus accesos de tienda se consultan cuando vuelva la conexión.</Text> : null}
         </>
       )}
       <Card padded={false}>

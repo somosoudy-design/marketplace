@@ -5,7 +5,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import pg from 'pg';
 
-function databaseUrl() {
+export function databaseUrl() {
   const p = join(import.meta.dirname, '../../../../.local/keys.env');
   const env: Record<string, string> = {};
   if (existsSync(p)) for (const line of readFileSync(p, 'utf8').split('\n')) {
@@ -23,7 +23,7 @@ const ADMIN = '00000000-0000-4000-a000-000000000001';
 type As = <T>(user: string, sql: string, params?: unknown[]) => Promise<T>;
 
 /** Runs one statement as a signed-in user (RLS and auth.uid() apply) on an open connection. */
-const asOn = (client: pg.Client): As => async <T>(user: string, sql: string, params: unknown[] = []) => {
+export const asOn = (client: pg.Client): As => async <T>(user: string, sql: string, params: unknown[] = []) => {
   await client.query('begin');
   try {
     await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify({ sub: user, role: 'authenticated' })]);

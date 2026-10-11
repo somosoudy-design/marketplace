@@ -16,6 +16,24 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 16:06Z (12:06 Caracas) · Codex (cloud Linux) · Oliver · checkpoint implementación VEN-01A
+- Implementado: Cuenta con roles/pertenencia reales (`api.account.roles/stores`), Mi tienda nativa,
+  selección entre tiendas, resumen, catálogo paginado, pedidos recibidos/cerrados y configuración solo consulta.
+  Comprador/administración conservados; panel avanzado abre su destino. Sin quinta pestaña o escrituras nuevas.
+- Pruebas: Playwright 22/22 (1,6 min, claro/oscuro); aislamiento/permisos 6/6 en copia local nueva,
+  núcleo 50/50, tipos/lint y web aprobados. Contraste de 22 pares AA, mínimo 4,78:1.
+- Fallos iniciales UI: 14/18; cuenta admin demo sí tenía tienda y selector encontraba correo en pantalla
+  oculta. Fixtures/selector corregidos; siguiente 20/22 por selector de botón oculto. Luego el destino local
+  del panel no respondía al popup; instrumentación confirmó `window.open` y destino correctos. La prueba
+  intercepta solo navegación externa, sin simular datos de la app o probar operaciones del panel; 22/22 final.
+- Un diagnóstico local de arranque quedó con puertos ocupados por procesos propios; stop/start sin reset
+  recuperó el stack. Debug eligió primero comprador de pedido en lugar de vendedor; consulta corregida para
+  exigir pertenencia. Intentos fallidos no contados como pases. Datos originales/credenciales preservados.
+- Pendiente: revisión visual completa de capturas, exportación final Android JS/Hermes y relevo final.
+- Servicios: ninguno remoto. Commits `[skip ci]` evitan autodespliegue del panel por cambios en API compartida.
+  No EAS Update/APK/iOS/Xcode, checkout, pagos, cálculos, dependencias, panel o fases B/C.
+- Último commit: checkpoint de implementación; obtener con `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 15:38Z (11:38 Caracas) · Codex (cloud Linux) · Oliver · inicio VEN-01A
 - Base `da4dd54` sincronizada y limpia; leídos AGENTS, ESTADO, PENDIENTES, ARQUITECTURA y DIRECCION_PRODUCTO.
 - Autorización nueva: Mi tienda nativa desde Cuenta, resumen real y consultas de productos/pedidos/configuración;

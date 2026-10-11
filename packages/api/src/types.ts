@@ -345,9 +345,29 @@ export interface OrderDetail extends Order {
 }
 
 export interface SellerDashboard {
-  store: Store;
-  [k: string]: unknown;
+  balance: Record<string, number>;
+  to_prepare: number;
+  in_transit: number;
+  sales_30d_usd: number;
+  units_30d: number;
+  products: Partial<Record<ModerationStatus, number>> | null;
+  low_stock: number;
+  claims_open: number;
 }
+
+/** Same RLS-protected catalogue read used by the seller panel; no costs or financial fields. */
+export type SellerProduct = Pick<Tables['products']['Row'], 'id' | 'store_id' | 'title' | 'base_price_usd' | 'availability' | 'moderation_status' | 'moderation_note' | 'is_demo'> & {
+  product_images: { path: string; sort: number }[];
+};
+
+/** Delivery scoped to one store by seller_fulfillments; never the other stores' order totals. */
+export type SellerFulfillment = Pick<Fulfillment, 'id' | 'store_id' | 'flow' | 'status' | 'order_id' | 'seq' | 'shipping_method_name' | 'tracking_number' | 'carrier_name'> & {
+  order_number: string;
+  placed_at: string;
+  order_status: OrderStatus;
+  payment_level: 'none' | 'down_payment' | 'full';
+  items: Pick<OrderItem, 'id' | 'title' | 'variant_title' | 'quantity' | 'refunded_qty' | 'image_path'>[];
+};
 
 // ---------- reviews ----------
 export interface ReviewSummary {
