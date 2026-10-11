@@ -14,6 +14,7 @@ name: Franja sin conexión y encabezado nativo
     visible:
       id: home-search
     timeout: 60000
+- takeScreenshot: offline-home-01-conexion
 - tapOn:
     id: buyer-tab-account
 - tapOn:
@@ -42,6 +43,29 @@ name: Franja sin conexión y encabezado nativo
 - assertVisible:
     id: offline-notice
 - takeScreenshot: offline-03-encabezado-al-volver
+- back
+- extendedWaitUntil:
+    visible:
+      id: account-favorites
+    timeout: 15000
+- tapOn:
+    id: buyer-tab-index
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- assertVisible:
+    id: offline-notice
+- takeScreenshot: offline-home-02-sin-conexion
+- tapOn:
+    id: buyer-tab-account
+- tapOn:
+    id: account-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+- assertVisible:
+    id: offline-notice
 - setAirplaneMode: disabled
 - extendedWaitUntil:
     notVisible:
@@ -54,3 +78,12 @@ name: Franja sin conexión y encabezado nativo
     visible:
       id: account-favorites
     timeout: 15000
+- tapOn:
+    id: buyer-tab-index
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- assertNotVisible:
+    id: offline-notice
+- takeScreenshot: offline-home-03-reconexion

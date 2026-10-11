@@ -16,6 +16,22 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 14:38Z (10:38 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · preparación de validación 4.3
+- Continuidad: rama `adf3c78` limpia/sincronizada; últimos 15 commits y AGENTS/estado/pendientes revisados.
+  No WIP funcional activo ni cambios de otro agente. Corrección existente conservada, sin duplicar funcionalidad.
+- Hecho: flujo 04 ampliado con Inicio conectado/sin conexión/reconectado, manteniendo Favoritos y Atrás.
+  39 pasos, siete capturas por tema. Comprobación YAML, modos `disabled/enabled/disabled`, IDs y capturas únicas.
+  Sin modificar app, dependencias, workflow o solicitudes que disparan APK/OTA/emulador.
+- Pruebas: regresión de geometría 9/9 (289 ms). **Flujo nativo ampliado sin ejecutar**; no repetidas las
+  suites web/tipos/lint ya aprobadas sobre el mismo código. No se presenta la revisión 33 antigua como «después».
+- Bloqueo: Linux sin ADB/emulador/terminal local operativo; perfil development definido, pero sin APK de
+  desarrollo disponible. APK 5 preview no carga Metro. Aclaración pendiente: mantener prohibición de publicar
+  o autorizar EAS Update preview compatible; ese canal llega al Android de Oliver. No autorización recibida.
+- Servicios: ninguno; sin APK/EAS Update/producción, iOS/Xcode, datos remotos, pagos, motor financiero o panel.
+- Siguiente: revisar respuesta; si autoriza, guard del runtime APK 5 antes de preview y luego flujo 04/capturas
+  ambos temas. En ausencia de autorización/runtime local, mantener bloqueo y no relanzar OTA anterior.
+- Último commit: cierre de este bloque de pruebas/documentación; código de la corrección `adf3c78`.
+
 ### 2026-10-11 12:39Z (08:39 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · cierre 4.3 en código
 - Continuidad: AGENTS/estado/pendientes revisados, rama sincronizada `2323eb2` sin cambios ajenos. Cerrados
   checkpoints `6c4f1be`/`2323eb2`; no duplicar los arreglos comprador `e9b56a0` ni iniciar VEN-01/iOS.

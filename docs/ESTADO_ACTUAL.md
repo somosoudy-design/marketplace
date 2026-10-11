@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 08:39 (Caracas, UTC−4), por Codex cloud (4.3 reproducida; corrección JS probada, pendiente Android actualizado).
+**Última actualización:** 2026-10-11 10:38 (Caracas, UTC−4), por Codex cloud (4.3: recorrido preparado con Inicio; ejecución del JS nuevo bloqueada por runtime).
 
 ## Dónde está el trabajo
 
@@ -13,7 +13,7 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Reproducción 4.3 `2323eb2`, corrección JS en este cierre; comprador `e9b56a0`, VEN-01 `70443c0`. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Corrección JS 4.3 `adf3c78`, reproducción `2323eb2`; recorrido ampliado en este cierre. Comprador `e9b56a0`, VEN-01 `70443c0`. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
 | Plan vigente | Sesión corta cerrada: dos fallos comprador corregidos, VEN-01 en backlog y 4.3 reproducida/corregida en JS. Validación del código nuevo en Android pendiente; iOS pospuesto. Sin Frente B |
 | Objetivo actual | Cierre guardado sin publicación. Siguiente: comprobar la corrección 4.3 en Android con el código actualizado; el APK 5 instalado conserva la OTA anterior. Sin APK nuevo ni cambios financieros |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
@@ -104,6 +104,21 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**Continuación 4.3 (10:38 Caracas): preparación terminada; ejecución nativa bloqueada.** Rama `adf3c78`
+sincronizada y documentos revisados; geometría repetida **9/9**, 289 ms. Sin ADB/emulador Android o terminal
+local operativo en esta nube. Existe perfil EAS `development`, pero no se encontró una compilación de
+desarrollo Android disponible/documentada; el APK 5 es `preview`, no un cliente para Metro.
+
+Ampliado el mismo `04-franja-sin-conexion.yaml` para incluir Inicio conectado, sin conexión y reconectado,
+además de Favoritos/Atrás/reentrada. **39 pasos y siete capturas por tema** (14 claro/oscuro). YAML/comandos
+de modo avión/IDs/capturas únicos revisados estáticamente; **flujo ampliado todavía no ejecutado en Maestro**.
+No cambios nuevos a la app, dependencias o workflows; `.github/apk-emulator-request` y
+`.github/eas-update-request` sin modificar: no se disparó una prueba contra la OTA vieja ni una publicación.
+
+Se pidió aclarar si Oliver mantiene «No publicar actualizaciones» o autoriza EAS Update `preview` para
+APK 5; respuesta pendiente al cierre. Ese canal también actualiza su Android. Hasta recibir autorización,
+no publicar ni generar APK. VEN-01/iOS y los dos arreglos comprador no se retoman.
 
 **4.3 — bloque cerrado en Git; validación del cambio en Android pendiente.** Sincronizada `2323eb2`
 sin cambios ajenos antes de corregir. Revisión 33, [run 38113135559](https://github.com/somosoudy-design/marketplace/actions/runs/38113135559)
@@ -259,7 +274,16 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Validar **el código corregido de 4.3** en un entorno Android local ya disponible, sin generar APK ni publicar.
+Primero revisar la respuesta de Oliver a la aclaración pendiente. Si autoriza una actualización de prueba,
+usar el workflow existente `.github/workflows/eas-update-preview.yml`: runtime obligatorio
+`eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, solo Android/preview, fuente con `adf3c78` y `e9b56a0`.
+El guard de fingerprint debe aprobar **antes** de publicar; no cambiar configuración nativa, runtime o
+workflows para eludirlo. Después ejecutar únicamente el flujo 04 ampliado en ambos temas sobre APK 5,
+verificar el commit/run de las capturas y el diagnóstico de la OTA cargada; revisar visualmente las siete
+capturas por tema. Una respuesta «mantener sin publicar» o la ausencia de respuesta conserva el bloqueo.
+No asumir autorización a partir de otro «continúa» ni publicar en `production`.
+
+Alternativa sin publicación: validar **el código corregido de 4.3** en un entorno Android local ya disponible.
 Usar `tests/apk-flows/04-franja-sin-conexion.yaml`: Cuenta → Favoritos, conexión/modo avión/Atrás/reentrada/
 reconexión, claro/oscuro. Revisar que título, flecha y contenido bajen solo por la altura de la franja; probar
 también Inicio (sin encabezado nativo). Restaurar conexión al terminar. Si no existe un runtime local capaz
