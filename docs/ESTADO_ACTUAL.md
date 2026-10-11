@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 00:38 (Caracas, UTC−4), por Codex cloud (sesión corta comprador terminada; iOS pospuesto).
+**Última actualización:** 2026-10-11 00:45 (Caracas, UTC−4), por Codex cloud (reproducción 4.3 con APK 5 en Actions; iOS pospuesto).
 
 ## Dónde está el trabajo
 
@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Sesión corta: checkpoint `70443c0`, cierre comprador en este commit. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
 | Plan vigente | Sesión corta cerrada: dos fallos comprador corregidos y VEN-01 en backlog. 4.3 pendiente de Android; iOS abre y queda pospuesto. Sin Frente B |
-| Objetivo actual | Reproducir 4.3 sobre APK 5 existente cuando haya Android/ADB. Checkout/carrito corregidos y probados en web claro/oscuro; cambios guardados, sin publicación, APK nuevo ni cambios financieros |
+| Objetivo actual | Reproducir 4.3 con workflow existente Android 15, APK 5 ya compilado, solo visitante y claro/oscuro. Revisar capturas del encabezado antes de corregir. Sin publicación, APK nuevo ni cambios financieros |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -104,6 +104,14 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**4.3 — reproducción nativa en curso.** Continuación autorizada por Oliver; sincronizada `e9b56a0` limpia.
+Aunque aquí no hay Android/ADB, se reutiliza `.github/workflows/apk-emulator.yml` sin cambiarlo. Solicitud
+revisión 32: únicamente `04-franja-sin-conexion`, claro/oscuro, APK 5 existente `d1d10c28` y OTA ya publicada.
+Flujo visitante Favoritos: captura con conexión, modo avión, Atrás/reentrada al encabezado y reconexión;
+sin cuentas/pedidos/pagos/push ni escrituras remotas. Capturas permitirán revisar inset/barra/flecha.
+Pendiente de resultado real del emulador; no atribuir causa ni corregir franja todavía. El workflow descarga
+el APK existente; **no compila ni publica**. Carrito/checkout `e9b56a0`, iOS y VEN-01 se mantienen cerrados/pospuestos.
 
 **Sesión corta comprador terminada, sin WIP activo.** Sincronizada `9d22155`, cierre iOS revisado;
 checkpoint de continuidad/VEN-01 `70443c0`. iOS pospuesto; helpers/proyecto nativo intactos. VEN-01 registrada
@@ -234,7 +242,13 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Retomar **4.3 en un entorno con Android/ADB**, usando el APK 5 ya instalado y su versión actual: abrir Cuenta →
+Primero obtener resultado/capturas de la revisión 32 de `APK en emulador`; `git fetch origin ci/capturas` y
+comprobar `ultima/LEEME.md` contra el commit de esta solicitud antes de usar `ultima/resumen.md` e imágenes
+`offline-01…04`. No mezclar capturas de otro run. Revisar encabezado/flecha/espacio superior en ambos temas;
+si falla la prueba, leer la causa concreta. Cerrar/documentar o aplicar solo una corrección sustentada por evidencia.
+Sin APK nuevo ni publicación; una corrección de JS no se considera validada en APK hasta probarla realmente.
+
+Alternativa física para **4.3**, usando el APK 5 ya instalado y su versión actual: abrir Cuenta →
 Direcciones (encabezado native-stack), registrar espacio superior y flecha, activar modo avión, esperar al menos
 1,2 s, volver y navegar a otra pantalla con encabezado; repetir claro/oscuro y reconectar. Capturar antes/durante/
 después, incluidas barras del sistema. Restaurar conexión al terminar. Comparar `OfflineNotice.tsx` y `_layout.tsx`

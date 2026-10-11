@@ -16,6 +16,17 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 04:45Z (00:45 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint 4.3
+- Continuidad: rama `e9b56a0` limpia/sin cambios remotos; AGENTS/estado/pendientes y cierre anterior revisados.
+  iOS pospuesto, VEN-01 solo backlog y dos fallos comprador cerrados; no duplicar ese trabajo.
+- Camino de reproducción: workflow existente `apk-emulator.yml`, APK 5 ya compilado. Añadido un flujo breve
+  visitante con conexión/modo avión/Atrás/reentrada/reconexión y ocho capturas entre claro/oscuro. Solicitud
+  revisión 32 selecciona solo ese flujo; sin modificar el workflow o dependencias ni crear usuarios/pedidos/pagos.
+- Pendiente: resultado real de Actions y revisión de capturas del commit correcto en `ci/capturas`.
+  No se aplica todavía ningún cambio a franja/layout; una captura web no sustituye esta reproducción.
+- Restricciones: no APK nuevo/EAS Update/publicación, producción, iOS/Xcode, motor financiero/panel ni servicios remotos.
+- Último commit: el checkpoint WIP de esta reproducción; cerrar tras obtener resultado.
+
 ### 2026-10-11 04:38Z (00:38 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · bloque 2
 - Hecho: checkout muestra error/reintento si falla direcciones en lugar de skeleton indefinido. Carrito muestra
   aviso si falla guardar cantidad; controles de cantidad/Continuar bloqueados durante guardado y Continuar
