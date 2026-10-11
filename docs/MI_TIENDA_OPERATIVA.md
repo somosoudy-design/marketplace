@@ -2,7 +2,10 @@
 
 Oliver probó VEN-01A en Android y solicitó administración móvil real. Base `887197b`;
 orden autorizado: perfil, catálogo, acciones de pedidos. Conservar la lectura/navegación ya publicada.
-**Publicación pausada:** no EAS Update ni APK nuevo, no servicios/datos remotos, iOS o checkout.
+**Estado vigente (18:59 UTC):** Oliver autorizó publicar primero; EAS preview/guard APK 5 aprobados,
+OTA `01a12c4b` recibida en emulador. Dos migraciones nuevas probadas solo localmente, estado remoto sin
+verificar por falta de acceso. Perfil usa contrato existente; catálogo/acciones mantienen consulta/panel si
+falta soporte del servidor. Ningún APK nuevo ni cambio de servicio/dato backend remoto, iOS o checkout.
 La corrección de tasas BCV conserva su prioridad crítica separada.
 
 ## Bloque 1 — perfil
@@ -26,7 +29,7 @@ real en caché y se invalidan tienda pública, Inicio, catálogo y fichas; los c
 
 El panel continúa ofreciendo las operaciones avanzadas y su vista previa. No se cambia RLS, el panel ni
 la configuración nativa. Compatibilidad técnica prevista con APK 5 por usar módulos ya presentes;
-la nube Linux no puede ejecutar la galería nativa nueva sin publicar, lo que está expresamente pausado.
+la galería nativa autenticada sigue para la revisión física de Oliver; Android visitante se validó tras publicación.
 
 ### Validación y reproducción
 
@@ -41,7 +44,7 @@ la nube Linux no puede ejecutar la galería nativa nueva sin publicar, lo que es
   `pnpm --filter @kora/app-e2e exec playwright test -c playwright-app.config.ts seller-store-edit.spec.ts seller-app.spec.ts`.
 - Logs ignorados `.local/logs/seller-store-*`, capturas `.local/seller-ops/screens/`.
 
-Cierre bloque 1: UI **26/26** (1,8 min), permisos **6/6**, tipos/lint/export web aprobados. Ocho capturas de perfil antes/después, página pública y error en ambos temas; revisión directa de campos, botones y confirmación/error. No prueba nativa nueva. Commit de cierre: `928494d`; publicación pausada.
+Cierre bloque 1: UI **26/26** (1,8 min), permisos **6/6**, tipos/lint/export web aprobados. Ocho capturas de perfil antes/después, página pública y error en ambos temas; revisión directa de campos, botones y confirmación/error. No prueba nativa nueva. Commit de cierre: `928494d`; en aquel cierre la publicación estaba pausada. Autorizada/publicada posteriormente (abajo).
 
 ## Bloque 2 — catálogo operativo
 
@@ -74,8 +77,8 @@ en `.local/logs/seller-moderation-{before,after}.log`.
 
 `seller_editor_ready` comprueba soporte del servidor. Sin la migración, el catálogo de lectura/panel funciona,
 pero no aparecen acciones móviles de edición. No hay variable cliente que conceda permisos.
-**No está listo para publicar completo en APK 5 hasta autorizar/aplicar/verificar la migración remota** y
-comprobar el guard nativo existente. Nada remoto se desplegó; no EAS Update.
+**La edición depende de activar/verificar la migración remota.** OTA publicada con autorización posterior
+y guard nativo aprobado; la publicación de JavaScript no aplica SQL. Ningún SQL remoto ejecutado desde este cloud.
 
 ### Pruebas bloque 2
 
@@ -187,19 +190,96 @@ pnpm --filter @kora/mobile exec expo export --platform android --output-dir ../.
 - Pedidos: importación/lotes, pasos de plataforma, cancelaciones/reembolsos, revisión de pagos y finanzas;
   el vendedor conserva únicamente sus permisos reales en el panel, no obtiene facultades administrativas.
 
-### APK 5 y próxima acción exacta
+### Publicación y Android — 2026-10-11 18:59 UTC
 
-**Código preparado; publicación completa todavía pendiente.** Sin cambios desde la OTA de VEN-01A en
-package.json, lockfile, configuración Expo/EAS, Firebase o assets nativos. ImagePicker/Crypto/Image y navegación
-ya están incluidos en APK 5. Runtime esperado `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; el guard exacto del
-workflow debe ejecutarse antes de una publicación futura con su entorno preview/Firebase original.
-No se generó APK, no se publicó EAS, no se modificó panel ni servicio/dato remoto o iOS/checkout/BCV.
-Todos los commits con API llevan [skip ci] para impedir el autodespliegue del panel.
+Oliver: «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes».
+[EAS preview 38165223060](https://github.com/somosoudy-design/marketplace/actions/runs/38165223060),
+fuente `2a38dfb`, **Success**, guard exacto APK 5 aprobado antes de publicar, 18:48:30Z.
+Código móvil/API idéntico a `5a3b884`; package.json, lockfile, Expo/EAS, Firebase y assets nativos sin cambios.
+Runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; no nuevo APK, panel o iOS/checkout/BCV.
 
-No repetir VEN-01A, perfil/catálogo/pedidos o la franja. Primero obtener autorización específica para aplicar
-**en el proyecto Marketplace correcto**, en orden, 20261011172600 y 20261011174200; revisar migraciones
-remotas pendientes y evitar aplicar otras por accidente. No seed/demo remoto ni db push indiscriminado.
-Verificar disponibilidad de ambos RPC de capacidad, pertenencia y lectura/guardado con cuentas/datos autorizados.
-Después, solo con autorización de publicación, guard APK 5 + EAS preview + validación Android de galería,
-permiso de fotos, teclado, Atrás físico, sesión, TalkBack y fluidez. El teléfono de Oliver sigue usando la OTA
-anterior; esta entrega no la actualiza. BCV sigue siendo una prioridad crítica separada.
+[Android 15 revisión 36, run 38165564922](https://github.com/somosoudy-design/marketplace/actions/runs/38165564922),
+fuente `3ea956e`, **Success**: visitante **2/2** claro/oscuro sin reintentos; seis rutas protegidas (incluidos
+editor de producto y detalle de entrega), Cuenta/login/flecha/Atrás, inicio/reapertura. Diagnóstico en ambos
+confirma OTA **`01a12c4b-86a2-7565-9f95-ae8e8a6f7711`**, 18:48 UTC, preview/runtime APK 5,
+backend Marketplace responde y sesión cifrada. 18 capturas del recorrido revisadas, sin recortes/superposiciones.
+[Evidencia inmutable](https://github.com/somosoudy-design/marketplace/tree/ac77702b7701fa4bc212a86446ac5c635ab626cf/ultima).
+No afirmar instalación/recepción en el teléfono físico ni guardado con sesión vendedor en Android por este flujo.
+
+Oliver puede cerrar completamente la app, abrir con conexión y volver a abrirla tras la descarga; confirmar
+`01a12c4b` al pie de Cuenta o en Diagnóstico. Revisar perfil/galería, teclado, formularios/Atrás, roles,
+TalkBack y fluidez. Si no aparecen acciones de catálogo/pedidos, comprobar primero soporte del servidor;
+no republicar ni cambiar permisos del cliente como remedio.
+
+### Activación pendiente del servidor — paquete preparado
+
+No hubo SQL remoto. Las llamadas desde este cloud al proyecto y api.github.com fallan por Tunnel 403,
+no por un fallo demostrado del servidor. No hay conector/credencial Supabase. Borrador de configuración
+cloud aditiva guardado para api.github.com/api.supabase.com/Marketplace y entrada segura
+`SUPABASE_ACCESS_TOKEN` limitada a api.supabase.com; necesita publicación/configuración del entorno,
+no está activo. No pedir tokens/contraseñas por chat ni extraer credenciales del proxy.
+
+Se preparó `tools/supabase-remote/aplicar-mi-tienda-operativa.sql` con builder específico
+`build-mi-tienda.py`: **exactamente** `20261011172600_seller_product_editor.sql` y
+`20261011174200_seller_fulfillment_detail.sql`, en ese orden. No usar el `build.py` antiguo ni `db push`
+general: podrían incluir migraciones ajenas y reescribir historial antiguo.
+
+Una transacción/advisory lock, identidad de proyecto desde `vault.decrypted_secrets.kora_project_url`,
+prerequisitos existentes, conflicto nombre/versión aborta. Migraciones ya registradas se omiten; no se
+reemplazan por reejecutar. Registra únicamente sus dos versiones, verifica RPC/grants/modo de seguridad
+y notifica a PostgREST. No seeds/cuentas, UPDATE/DELETE de datos comerciales, historial reescrito,
+reglas financieras o permisos nuevos de tabla. La identidad Vault debe estar configurada y coincidir;
+si falta, detenerse y revisar el proyecto en vez de modificar secretos como atajo.
+
+Pruebas del archivo **8/8** (0,4 s): aplicación real/reejecución sin reescribir funciones/historial,
+proyecto incorrecto, conflicto por nombre/versión, prerequisito/RPC ausente y grants inconsistentes
+abortan/rollback. Copia nueva conservada `kora_seller_release_20261011185732`, ninguna eliminación/reset.
+Tras aplicar el paquete, suites de permisos/persistencia existentes **24/24** (2,22 s, siete archivos);
+advance_fulfillment/set_product_costs intactos. Logs `.local/logs/seller-release-{activation,permissions}.log`.
+
+### Pasos exactos para el operador autorizado en Supabase
+
+1. Obtener/reconocer autorización **del SQL remoto**, distinta de publicar la OTA. Abrir exclusivamente
+   [Marketplace — SQL Editor](https://supabase.com/dashboard/project/mimnotafmfasvwrclxan/sql/new).
+   Confirmar proyecto/ref `mimnotafmfasvwrclxan`; nunca `bfuggvbgttvcygbexqyn`.
+2. Revisar el archivo `tools/supabase-remote/aplicar-mi-tienda-operativa.sql` de esta rama y las dos
+   migraciones originales. Copiar el archivo completo al editor; no seleccionar trozos aislados.
+   Ejecutar como postgres. Si alguna protección falla, la transacción revierte; conservar error y revisar
+   prerequisitos/historia/identidad. No borrar datos, reescribir versiones o ampliar RLS para forzarlo.
+3. Resultado esperado: filas `20261011172600 / seller_product_editor` y
+   `20261011174200 / seller_fulfillment_detail`, más `catalog_supported = true` y `orders_supported = true`.
+   Si ambas ya estaban registradas, se omiten y verifican; si el nombre tiene otra versión, aborta para revisión.
+4. Cerrar/reabrir HAYAZGO con sesión autorizada para renovar consultas de soporte. Comprobar edición de
+   tienda, catálogo/fotos/stock/moderación y entregas permitidas con cuentas/datos explícitamente autorizados.
+   Guardar, volver a entrar y confirmar persistencia; permisos ajenos/admin/pago siguen en servidor.
+   No crear datos/demo, pedidos o pagos remotos automáticamente para probar.
+5. Registrar fecha, resultado y versiones en ESTADO_ACTUAL/PENDIENTES/HISTORIAL. Publicación ya terminada:
+   activar estos RPC no requiere otra OTA mientras el código publicado permanezca igual.
+
+### Reproducir las pruebas del paquete local
+
+Con Node/pnpm/Postgres y stack preparados, usar la copia anterior que tiene las funciones pero todavía no
+las dos versiones registradas (`.local/seller-ops-db-name`); retener las copias viejas y crear una nueva:
+
+```bash
+source /workspace/.onboarding/env.sh # solo cloud; en otra máquina preparar PATH según ENTORNO.md
+source tools/local-stack/env.sh
+export PGHOST=127.0.0.1 PGPORT PGUSER=postgres PGPASSWORD="$DB_PASSWORD"
+export KORA_RELEASE_TEST_DATABASE="kora_seller_release_$(date -u +%Y%m%d%H%M%S)"
+createdb "$KORA_RELEASE_TEST_DATABASE"
+pg_dump -Fc -d "$(cat .local/seller-ops-db-name)" -f .local/seller-ops/release/backend-before.dump
+pg_restore --exit-on-error -d "$KORA_RELEASE_TEST_DATABASE" .local/seller-ops/release/backend-before.dump
+python3 tools/supabase-remote/build-mi-tienda.py --check
+python3 tools/supabase-remote/test-mi-tienda.py
+```
+
+El test exige localhost/nombre de copia específico; nunca conecta al remoto. Su fixture Vault de identidad
+solo vive en esa copia nueva. No elimina bases ni filas. Para los 24 casos de acceso/persistencia, definir
+TEST_DATABASE_URL hacia esa copia y ejecutar el comando de siete suites de PRUEBAS.md sin pricing (ya probado).
+
+### Próxima acción exacta
+
+No repetir VEN-01A/perfil/catálogo/pedidos/franja o publicación. Esperar resultados físicos de Oliver;
+activar/verificar únicamente las dos migraciones con acceso/autorización SQL al proyecto correcto.
+Sin soporte remoto las acciones conservan consulta/panel. BCV sigue como prioridad crítica separada,
+no se aborda mientras Oliver revisa sin una instrucción específica. No hay nuevo WIP funcional pendiente.

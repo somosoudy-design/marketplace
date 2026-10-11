@@ -1,9 +1,10 @@
 # Resultados de pruebas
 
-## Mi tienda operativa — 2026-10-11 (solo local)
+## Mi tienda operativa — 2026-10-11 (local + OTA APK 5)
 
-Informe, comandos y límites: MI_TIENDA_OPERATIVA.md. Fuente final 5a3b884; ningún nuevo APK/EAS/servicio o
-dato remoto. Datos demo/aditivos del stack local; SQL probado en copia conservada sin db:reset/test:db.
+Informe, comandos y límites: MI_TIENDA_OPERATIVA.md. Fuente funcional 5a3b884, publicación 2a38dfb.
+EAS preview autorizada y validada abajo; sin nuevo APK o servicio/dato backend remoto.
+Datos demo/aditivos del stack local; SQL probado en copias conservadas sin db:reset/test:db.
 
 | Comprobación | Resultado |
 |---|---|
@@ -12,6 +13,11 @@ dato remoto. Datos demo/aditivos del stack local; SQL probado en copia conservad
 | Núcleo | **50/50** durante catálogo; sin cambios posteriores |
 | Tipos/lint/web y Android JS/Hermes finales | Aprobados, sin dependencias/configuración nativa nuevas; no ejecución nativa |
 | Visual | 22 capturas operativas, ambos temas: perfil/formulario/galería/página pública/guardado/errores/catálogo/moderación/entrega/confirmación/reintento |
+| EAS Android preview | [38165223060](https://github.com/somosoudy-design/marketplace/actions/runs/38165223060) **Success**, 2a38dfb, guard exacto APK 5 aprobado |
+| Android 15 APK 5, revisión 36 | [38165564922](https://github.com/somosoudy-design/marketplace/actions/runs/38165564922) **Success**, 3ea956e, visitante **2/2** claro/oscuro sin reintentos; seis rutas protegidas, Cuenta/flecha/Atrás/login |
+| Paquete SQL exacto, tools/supabase-remote/test-mi-tienda.py | **8/8**, 0,4 s: aplicación real, reejecución sin reescritura y seis abortos de protección con rollback |
+| Permisos/persistencia tras paquete | **24/24**, siete suites, 2,22 s, copia kora_seller_release_20261011185732; sin repetir precios/núcleo intactos |
+
 
 Pruebas de persistencia real por API pública/gateway/SQL, roles/RLS/aislamiento, rollback/idempotencia,
 fotos/stock/precio/pausa/disponibilidad En camino y reanudación. Rechazo y suspensión no se aprueban desde
@@ -20,10 +26,18 @@ despacho sin guía, retroceso, duplicación concurrente y confirmación obsoleta
 conserva el borrador y no presenta éxito falso. Datos de otro vendedor intactos.
 Las fixtures pagadas locales usan los RPC de comprador y aprobación por admin demo antes de probar vendedor;
 la app no verifica pagos. Exportar Hermes no valida el picker nativo, teclado, TalkBack o fluidez del Android
-físico; esos casos quedan después de autorización/aplicación SQL remoto, guard APK 5 y publicación autorizada.
+físico; esas comprobaciones siguen para Oliver. Publicación/guard ya terminados; activación SQL remota no verificada.
 No hubo omisiones o reintentos del runner en los pases finales. Fallos durante desarrollo de fixtures
 (proof_required) corregidos usando una ruta propia válida, sin cambiar la exigencia de comprobante.
 Logs seller-ops-*/seller-orders-ui-final.log y capturas/review-final.png en .local/seller-ops, ignorados por Git.
+Recepción nativa en ambos temas: `01a12c4b-86a2-7565-9f95-ae8e8a6f7711`, 18:48 UTC, preview/runtime
+`eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend Marketplace responde, sesión cifrada. Dieciocho
+capturas revisadas, [evidencia inmutable](https://github.com/somosoudy-design/marketplace/tree/ac77702b7701fa4bc212a86446ac5c635ab626cf/ultima).
+El flujo visitante no prueba edición con sesión, galería ni operaciones autenticadas Android. No recepción
+física afirmada, SQL remoto no ejecutado. Nuevos logs seller-release-{activation,permissions}.log;
+evidencia local .local/seller-ops/release/native-36. Se extrajo FETCH_HEAD del fetch ci/capturas: la referencia
+origin/ci/capturas local podía ser antigua (no usarla como prueba del run sin comprobar LEEME.md).
+
 
 
 ## VEN-01A — 2026-10-11 (local + APK 5)

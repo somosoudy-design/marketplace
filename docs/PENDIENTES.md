@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 14:10 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 14:59 (Caracas, UTC−4).
 
 ## Comprador — bloque cerrado, revisión de Oliver en curso
 
@@ -32,27 +32,34 @@ Sin cuentas o escrituras remotas. No se afirma recepción en el teléfono físic
 Mi tienda y sus secciones de consulta funcionan con roles/pertenencias/RLS reales, conservando compras
 propias del usuario incluso con permisos administrativos. Fuentes `cc6db73`/`5f90e27`; UI 22/22,
 permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y revisión de 18 capturas. Detalle: `docs/VEN-01A.md`.
-Oliver probó la base de lectura en Android y autorizó Mi tienda operativa; orden obligatorio: perfil, catálogo y pedidos. Publicación pausada. Los vendedores administrarán su tienda sin salir
+Oliver probó la base de lectura en Android y autorizó Mi tienda operativa; orden obligatorio: perfil, catálogo y pedidos. Posteriormente autorizó publicación: OTA operativa `01a12c4b`, preview 38165223060 Success, Android revisión 36 visitante 2/2. Backend nuevo sin verificar remotamente. Los vendedores administrarán su tienda sin salir
 de HAYAZGO; el panel web seguirá disponible para funciones avanzadas. Reutilizar roles/permisos y operaciones
 existentes del panel/backend; no duplicar reglas comerciales ni crear permisos decididos por el cliente.
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Oliver comprobó VEN-01A: funciona como lectura, solicita operaciones. TalkBack/fluidez detallados pendientes. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización `01a12bd4` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
-| VEN-01-PERFIL | Perfil editable, logotipo/portada, contacto/políticas | Completado local: UI 26/26 inicial y 4/4 finales, permisos 6/6, tipos/lint/web/Hermes. Publicación pausada, prueba física pendiente |
-| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Completada local: catálogo operativo, UI 30/30 inicial y 8/8 finales, DB 20/20 del bloque. Migración 20261011172600 pendiente de autorización/aplicación remota; publicación pausada |
-| VEN-01C | Detalle y acciones de pedidos recibidos, configuración y acciones comerciales básicas | Completada local: pedidos UI 8/8, DB 10/10 del bloque; perfil/catálogo/pedidos conjunto UI 42/42 + 20/20 operativos + 8/8 pedidos finales, DB 31/31. SQL 20261011174200 solo local, advance_fulfillment intacto, OTA pausada |
+| VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Oliver comprobó VEN-01A: funciona como lectura, solicita operaciones. TalkBack/fluidez detallados pendientes. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización operativa `01a12c4b` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
+| VEN-01-PERFIL | Perfil editable, logotipo/portada, contacto/políticas | Completado local: UI 26/26 inicial y 4/4 finales, permisos 6/6, tipos/lint/web/Hermes. OTA publicada/guard APK 5 aprobado, prueba física pendiente |
+| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Completada local: catálogo operativo, UI 30/30 inicial y 8/8 finales, DB 20/20 del bloque. Migración 20261011172600 pendiente de acceso/revisión/autorización/aplicación remota; OTA publicada con fallback de lectura si falta |
+| VEN-01C | Detalle y acciones de pedidos recibidos, configuración y acciones comerciales básicas | Completada local: pedidos UI 8/8, DB 10/10 del bloque; perfil/catálogo/pedidos conjunto UI 42/42 + 20/20 operativos + 8/8 pedidos finales, DB 31/31. SQL 20261011174200 solo local, advance_fulfillment intacto, OTA publicada con fallback de consulta |
 
 ### VEN-OPS-R — activación y validación pendientes
 
 Código de los tres bloques cerrado y subido, fuente 5a3b884; cierre documental en git log. Informe:
 MI_TIENDA_OPERATIVA.md. No repetir implementación ni considerar la exportación una prueba en el teléfono.
 
-1. Autorización específica para SQL remoto: aplicar únicamente 20261011172600 y 20261011174200, en orden,
-   al proyecto Marketplace autorizado. Revisar pendientes, no seed ni datos de prueba remotos automáticos.
-   Verificar capacidad del servidor, permisos por tienda y persistencia con datos/cuentas autorizados.
-2. Autorización de publicación móvil todavía pendiente. Guard exacto runtime APK 5/entorno preview, después
-   EAS preview y comprobación Android de galería/teclado/Atrás/sesión/roles/TalkBack/fluidez. Ningún APK nuevo.
+1. **Activación remota sin verificar:** acceso Supabase ausente. Paquete exacto preparado en
+   tools/supabase-remote/aplicar-mi-tienda-operativa.sql y probado **8/8** más **24/24** permisos/persistencia
+   sobre copia local nueva conservada. Solo 20261011172600/20261011174200; identidad Marketplace/Vault,
+   transacción, historia conflictiva aborta, registradas se omiten. Revisar/autorización SQL y verificar
+   historia/soporte/permisos con cuentas permitidas; sin seed/db push general/build.py antiguo.
+   Configuración cloud aditiva guardada pendiente de publicar/valor seguro SUPABASE_ACCESS_TOKEN;
+   alternativa operador SQL Editor documentada. No pedir claves por chat.
+2. **Publicación cumplida:** preview 38165223060/2a38dfb, guard APK 5, OTA `01a12c4b` de 18:48 UTC.
+   Android 15 revisión 36/run 38165564922 visitante 2/2 claro/oscuro, seis rutas protegidas, Atrás/inicio/
+   recepción comprobados; 18 capturas revisadas. Sin APK nuevo, cuentas o escrituras remotas.
+   Oliver comprueba galería/teclado/formularios/Atrás/sesión/roles/TalkBack/fluidez físicamente.
+   No repetir publicación por defecto ni considerar el flujo visitante como guardado nativo autenticado.
 3. Panel conserva modo/origen/enlace de costos, variantes automáticas nuevas, operaciones avanzadas,
    importación/lotes, revisión de pagos/cancelaciones/reembolsos/finanzas con los permisos existentes.
    Fotos guardadas no se eliminan por móvil; no hay drafts persistidos en el backend actual.

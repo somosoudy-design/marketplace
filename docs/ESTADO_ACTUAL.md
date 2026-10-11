@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 14:57 (Caracas, UTC−4), por Codex cloud (preview publicado; Android revisión 36 y paquete SQL limitado en validación).
+**Última actualización:** 2026-10-11 14:59 (Caracas, UTC−4), por Codex cloud (preview publicado y recibido en APK 5; activación SQL preparada/probada localmente).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Fuente operativa `5a3b884`, perfil `928494d`, catálogo `9648e35`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA anterior VEN-01A `2d00f96`/prueba `098f430` |
+| Último commit confirmado | Fuente operativa `5a3b884`; publicación `2a38dfb`, Android `3ea956e`, SQL preparado `59f2974`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a12c4b` |
 | Plan vigente | Oliver comprobó VEN-01A en Android y solicita ampliación operativa: 1 edición de tienda, 2 productos, 3 pedidos. Cerrar cada bloque con pruebas locales, commit y push. iOS pospuesto |
-| Objetivo actual | Tres bloques operativos cerrados con pruebas locales. Siguiente: autorización de dos migraciones remotas y publicación/validación APK 5; ninguna autorizada en este bloque |
+| Objetivo actual | Mi tienda publicada en preview con autorización de Oliver y APK 5 validado visitante. Activación de dos migraciones remotas sin verificar; paquete SQL probado localmente, acceso Supabase ausente |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -31,9 +31,10 @@
 
 ## Qué funciona hoy (verificado)
 
-- **Mi tienda operativa (solo local, 2026-10-11):** perfil/fotos, catálogo y acciones de entrega con persistencia/
+- **Mi tienda operativa (local + OTA APK 5, 2026-10-11):** perfil/fotos, catálogo y acciones de entrega con persistencia/
   permisos/errores/aislamiento reales; UI 42/42 + último pase operativo 20/20, DB 31/31, core 50/50, tipos/lint,
-  web/Hermes y visual claro/oscuro. Dos migraciones locales pendientes de autorización remota y OTA pausada.
+  web/Hermes y visual claro/oscuro. OTA `01a12c4b` publicada 18:48 UTC, Android visitante 2/2;
+  dos migraciones remotas sin verificar. Paquete exclusivo probado 8/8 y permisos/persistencia 24/24 local.
   Fuente 5a3b884; informe: `docs/MI_TIENDA_OPERATIVA.md`. VEN-01A debajo es el antecedente publicado de lectura.
 
 - **VEN-01A (local, 2026-10-11):** Mi tienda nativa desde Cuenta, roles/pertenencias reales, selector de
@@ -117,8 +118,17 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Publicación autorizada completada; validación Android en curso.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes». Solicitud EAS preview/Android para APK 5, misma huella requerida, fuente móvil 5a3b884/cierre be661bf; Workflow preview 38165223060/fuente 2a38dfb **Success**: guard APK 5 y Publicar/Resultado success, publicación terminada 18:48:30Z. Emulador revisión 36 solicitado para comprobar recepción; teléfono físico no conectado. Sin APK nuevo o cambio de canal.
-El cloud no tiene credencial/conector Supabase y api.github.com/proyecto Supabase responden Tunnel 403 de red; Git fetch/push sí funciona. Usar workflow existente y lectura pública de Actions en github.com, sin extraer credenciales. Migraciones 20261011172600/20261011174200 registradas solo locales, estado remoto todavía sin verificar. Perfil funciona con contrato actual; catálogo/acciones protegidos por RPC de soporte y conservan consulta/panel si faltan. Preparado tools/supabase-remote/aplicar-mi-tienda-operativa.sql: solo dos migraciones, transacción, identidad Marketplace desde Vault, historial sin reescrituras, reejecución segura y grants. Builder limitado independiente del antiguo build.py. Checkpoint previo a ejecución local en copia nueva; test-mi-tienda.py verifica aplicación, idempotencia y abortos sin borrar/reset. No desplegar SQL sin acceso/autorización correspondiente; no atribuir habilitación remota a una OTA.
+**Publicación autorizada y validación visitante Android terminadas.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes».
+EAS preview [38165223060](https://github.com/somosoudy-design/marketplace/actions/runs/38165223060), fuente `2a38dfb`, **Success**, guard exacto APK 5 aprobado; publicación 18:48:30Z.
+Android revisión 36 [38165564922](https://github.com/somosoudy-design/marketplace/actions/runs/38165564922), fuente `3ea956e`, **Success**: visitante **2/2** claro/oscuro sin reintentos, seis rutas protegidas, Cuenta/login/flecha/Atrás, inicio/reapertura.
+Diagnóstico en ambos temas: actualización `01a12c4b-86a2-7565-9f95-ae8e8a6f7711`, 2026-10-11 18:48 UTC, preview/runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend Marketplace responde, sesión cifrada. No se afirma recepción en el teléfono de Oliver.
+18 capturas del recorrido revisadas; [evidencia inmutable](https://github.com/somosoudy-design/marketplace/tree/ac77702b7701fa4bc212a86446ac5c635ab626cf/ultima). Sin APK nuevo ni cambio de canal.
+
+**Activación del servidor: paquete preparado y probado, aplicación remota sin verificar.** El cloud no tiene conector/credencial Supabase y su red actual bloquea api.github.com/proyecto Supabase (Tunnel 403); Git fetch/push y HTML público de Actions funcionan. Eso no demuestra que falten migraciones remotas.
+`tools/supabase-remote/aplicar-mi-tienda-operativa.sql` contiene solo `20261011172600`/`20261011174200`, transacción/advisory lock, identidad Marketplace desde Vault, prerequisitos, historia sin reescrituras y grants finales. Builder específico independiente del build.py antiguo; no usar db push general.
+Pruebas del paquete **8/8**: aplicación real/ejecución repetida, proyecto incorrecto, historia conflictiva por nombre/versión, prerequisito/RPC ausente y grants inconsistentes abortan sin cambios. Copia nueva conservada `kora_seller_release_20261011185732`, sin reset/borrados. Permisos/persistencia tras aplicarlo **24/24** (7 suites existentes); funciones protegidas financieras/logísticas no cambiaron. SQL remoto no ejecutado.
+Borrador de configuración cloud guardado (no publicado): dominios exactos de GitHub API, Supabase Management API y Marketplace; secreto `SUPABASE_ACCESS_TOKEN` por entrada segura limitada a api.supabase.com. Alternativa: operador autorizado ejecuta el paquete en SQL Editor de Marketplace siguiendo MI_TIENDA_OPERATIVA.md. No pedir secretos por chat.
+Perfil usa contrato actual. Catálogo/acciones consultan RPC de soporte y conservan lectura/panel si faltan; publicar OTA no habilita esas migraciones. Galería/teclado/Atrás con formularios/TalkBack/fluidez/roles nativos siguen para revisión física de Oliver. No iniciar otras funciones mientras revisa.
 
 **Mi tienda operativa — tres bloques terminados localmente, sin WIP funcional pendiente.** Base `887197b`.
 
@@ -140,13 +150,11 @@ JS/Hermes sobre 5a3b884 aprobados. Revisión visual formularios/errores/confirma
 ambos temas; 22 capturas operativas. Detalle, comandos, datos persistidos y límites: `docs/MI_TIENDA_OPERATIVA.md`.
 
 SQL `20261011172600_seller_product_editor.sql` y `20261011174200_seller_fulfillment_detail.sql` aplicados
-**solo local/copia**, no remotamente. Servidor sin migración conserva consulta/panel, no ofrece edición/
-acciones inexistentes; los RPC de capacidad nunca conceden un rol. Publicación completa pendiente de
-**autorización específica de SQL remoto**, verificación y guard APK 5, luego autorización EAS preview y prueba
-nativa. No generar APK. Sin dependencias/configuración nativa/Firebase/panel/checkout/iOS/BCV nuevos o cambios
-financieros; ningún servicio/dato remoto o EAS publicado. [skip ci] evita el despliegue automático del panel
-por cambios en API. El Android de Oliver conserva la OTA anterior. Galería/teclado/Atrás físico/TalkBack/
-fluidez de estos cambios pendientes; exportar Hermes y probar web no equivale a ejecución en teléfono.
+**solo local/copia**, sin afirmar estado remoto. Servidor sin migración conserva consulta/panel; los RPC de
+capacidad nunca conceden un rol. OTA autorizada/publicada y guard APK 5 ya aprobados (arriba). Activación
+remota requiere acceso al proyecto Marketplace, revisión/autorización específica del SQL y comprobación.
+Sin nuevas dependencias/configuración nativa/Firebase/panel/checkout/iOS/BCV o reglas financieras.
+[skip ci] en API evita despliegue automático del panel. Prueba física de formularios/galería pendiente.
 
 ### Antecedente VEN-01A cerrado
 
@@ -348,11 +356,13 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Confirmar run preview correspondiente al commit de solicitud, guard exacto APK 5 y publicación Success.
-Preparar/verificar SQL limitado a dos migraciones y su historial para Marketplace; acceso Supabase ausente,
-no afirmar aplicación remota. Luego validar APK 5 existente por workflow de emulador, visitante/temas/Atrás/
-recepción OTA sin cuentas ni operaciones remotas. Oliver valida galería y sesión vendedor en su teléfono.
-No repetir implementación ni iniciar funciones nuevas/BCV/iOS sin instrucciones específicas.
+Oliver revisa OTA `01a12c4b` en su APK 5. No republicar por defecto ni repetir implementación/pruebas ya aprobadas.
+Retomar activación solo con acceso/autorización SQL en Marketplace: leer historia y comprobar identidad/prerequisitos,
+aplicar exclusivamente tools/supabase-remote/aplicar-mi-tienda-operativa.sql, verificar las dos versiones/soporte y
+permisos/persistencia con cuentas/datos autorizados. Alternativa SQL Editor: pasos exactos en MI_TIENDA_OPERATIVA.md.
+No seed, db push general o build.py antiguo. Si el backend ya tiene las dos versiones, no reescribirlas.
+Cuando Oliver informe resultados físicos, corregir únicamente problemas reproducibles de este bloque.
+BCV sigue crítico separado; iOS y funciones nuevas esperan instrucciones. Sin WIP funcional pendiente.
 
 
 ## Pendiente de Oliver (solo él puede hacerlo)
