@@ -111,3 +111,7 @@ Estos comandos de Xcode/CocoaPods son instrucciones para el Mac; no fueron ejecu
 Abrir **el workspace existente**, no el `.xcodeproj` aislado, para incluir los Pods. Conservar firma/Apple ID
 y datos de la aplicación. Firma Personal Team caduca a los 7 días; no asumir que esa es la causa sin registro.
 Sin EAS Update/build, APK nuevo, App Store/TestFlight/ad hoc, gastos ni Frente B.
+
+Checkpoint 2026-10-10 22:44 Caracas: segunda build revela que Xcode 27 permite escritura literal de
+outputs `.bundle` y rechaza sus archivos interiores (rsync utimensat/unlinkat). Se marcan esos outputs
+como directorios con `/` final; pruebas 19/19 y verificador aprobados. Tercera build/prueba física pendientes.

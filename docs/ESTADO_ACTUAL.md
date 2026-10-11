@@ -345,3 +345,7 @@ pnpm stack:start && pnpm db:reset      # backend local con datos demo
 pnpm test:ui                           # comprueba que la app sigue verde
 # luego la «Próxima acción» de arriba o la primera tarea de docs/PENDIENTES.md
 ```
+
+Checkpoint 2026-10-10 22:44 Caracas: segunda build revela que Xcode 27 permite escritura literal de
+outputs `.bundle` y rechaza sus archivos interiores (rsync utimensat/unlinkat). Se marcan esos outputs
+como directorios con `/` final; pruebas 19/19 y verificador aprobados. Tercera build/prueba física pendientes.

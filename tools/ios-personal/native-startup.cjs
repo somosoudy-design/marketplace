@@ -54,6 +54,9 @@ function declarePodsResourceOutput(project) {
   if (!phase) return;
   assert.match(phase.shellScript, /Pods-.*-resources\.sh/);
   phase.outputPaths ??= [];
+  // Xcode 27 treats wrapper outputs without a trailing slash as literal files.
+  // CocoaPods copies files inside these bundle directories with rsync.
+  phase.outputPaths = phase.outputPaths.map((path) => path.replace(/\.bundle"$/, '.bundle/"'));
   if (!phase.outputPaths.includes(podsResourceOutput)) phase.outputPaths.push(podsResourceOutput);
 }
 

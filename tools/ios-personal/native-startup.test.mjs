@@ -70,11 +70,11 @@ test('unexpected bundle phases fail closed', () => {
 });
 
 test('CocoaPods temporary resource list is allowed without editing its generated script', () => {
-  const phase = { name: '"[CP] Copy Pods Resources"', shellScript: 'Pods-KoraDev-resources.sh', outputPaths: ['existing.bundle'] };
+  const phase = { name: '"[CP] Copy Pods Resources"', shellScript: 'Pods-KoraDev-resources.sh', outputPaths: ['"$(TARGET_BUILD_DIR)/existing.bundle"'] };
   const project = { hash: { project: { objects: { PBXShellScriptBuildPhase: { phase } } } } };
   declarePodsResourceOutput(project);
   declarePodsResourceOutput(project);
-  assert.deepEqual(phase.outputPaths, ['existing.bundle', podsResourceOutput]);
+  assert.deepEqual(phase.outputPaths, ['"$(TARGET_BUILD_DIR)/existing.bundle/"', podsResourceOutput]);
   assert.equal(phase.shellScript, 'Pods-KoraDev-resources.sh');
   declarePodsResourceOutput({ hash: { project: { objects: {} } } });
 });
