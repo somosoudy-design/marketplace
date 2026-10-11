@@ -16,6 +16,11 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 17:42Z · Codex cloud · Oliver · checkpoint previo a SQL local detalle de entrega
+- Bloques 1/2 cerrados y push `928494d`/`9648e35`. Preparado `20261011174200_seller_fulfillment_detail.sql`: mismo modelo de lectura que seller_fulfillments, filtrado por tienda/id, sin paginación/antigüedad para abrir cualquier entrega listada y volver después de cerrarla.
+- Permisos: require_store_member del servidor, anon no ejecuta; retorna solo líneas/destino/historial de esa entrega. No cambia advance_fulfillment, verificación de pagos, saldos, estados o finanzas.
+- Todavía sin aplicar/enlazar, checkpoint antes de migración local. Siguiente: SQL local + pruebas de permisos/acciones pagadas/bloqueadas/guía/reintentos y diseño. No remoto/EAS/APK/iOS/BCV.
+
 ### 2026-10-11 17:40Z · Codex cloud · Oliver · cierre bloque 2 catálogo operativo
 - Hecho: ampliar catálogo y crear editor móvil, ficha/categoría/características, variantes manuales/SKU/precios/stock/pausa, galería/portada, estados/notas/historial, costos automáticos con RPC financiero existente sin modificar fórmulas. Sin drafts falsos ni borrados. Panel conserva modo de precios/origen de costos/variantes automáticas y avanzado.
 - SQL local: `20261011172600_seller_product_editor.sql`. RPC INVOKER atómico/RLS/ids estables y guardas de pertenencia; revisión manual sigue pendiente tras editar variante/costo. Prueba previa roja publicó indebidamente un rechazo; corregida con historial real. No migración remota/despliegue.
