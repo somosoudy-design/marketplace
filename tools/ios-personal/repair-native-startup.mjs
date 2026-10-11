@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { verifyNativeBundleId } from './native-project.cjs';
-import { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput, declarePodsResourceOutput } from './native-startup.cjs';
+import { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput, configureDebugScripts } from './native-startup.cjs';
 
 // Repair the existing native project in place. No prebuild, Pods, signing or data reset.
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -32,7 +32,7 @@ if (info.UIApplicationSceneManifest) {
 }
 info.UIApplicationSceneManifest = sceneManifest();
 declareMetroIpOutput(project);
-declarePodsResourceOutput(project);
+configureDebugScripts(project);
 // Validate everything before the first write; keep originals privately, including local signing settings.
 const backup = join(root, '.local/ios-diagnosis', `startup-backup-${Date.now()}`);
 mkdirSync(backup, { recursive: true });
@@ -43,4 +43,4 @@ writeFileSync(projectPath, project.writeSync());
 for (const file of ['with-personal-team.cjs', 'native-startup.cjs']) {
   copyFileSync(join(root, 'tools/ios-personal', file), join(target, file));
 }
-console.log('PASS: proyecto iOS existente preparado para escenas y salida Metro declarada; firma y sandbox conservados.');
+console.log('PASS: escenas Expo y scripts compatibles en Debug del target local; firma, Release, Pods y configuración del proyecto conservados.');

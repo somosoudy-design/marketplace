@@ -35,7 +35,6 @@ function adoptScenes(source) {
 }
 
 const metroIpOutput = '"$(CONFIGURATION_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/ip.txt"';
-const podsResourceOutput = '"$(PODS_ROOT)/resources-to-copy-$(TARGETNAME).txt"';
 
 function declareMetroIpOutput(project) {
   const phases = Object.values(project.hash.project.objects.PBXShellScriptBuildPhase ?? {})
@@ -47,18 +46,30 @@ function declareMetroIpOutput(project) {
   if (!phase.outputPaths.includes(metroIpOutput)) phase.outputPaths.push(metroIpOutput);
 }
 
-function declarePodsResourceOutput(project) {
+function configureDebugScripts(project, appName = 'KoraDev') {
+  const unquote = (value) => typeof value === 'string' ? value.replace(/^"(.*)"$/, '$1') : value;
+  const targets = Object.values(project.pbxNativeTargetSection())
+    .filter((target) => target?.isa === 'PBXNativeTarget' && unquote(target.name) === appName);
+  assert.equal(targets.length, 1, 'Se requiere solo el target local de la app');
+  const list = project.pbxXCConfigurationList()[targets[0].buildConfigurationList];
+  const configs = project.pbxXCBuildConfigurationSection();
+  const debug = list.buildConfigurations.map((ref) => configs[unquote(typeof ref === 'string' ? ref : ref.value)])
+    .filter((config) => unquote(config?.name) === 'Debug');
+  assert.equal(debug.length, 1, 'Se requiere solo la configuración Debug local');
+  // Xcode 27's sandbox grants literal bundle outputs, but CocoaPods rsync writes
+  // their descendants and temporary files. Limit the compatibility setting to
+  // this app's Debug scripts; leave project defaults, Release and Pods untouched.
+  debug[0].buildSettings.ENABLE_USER_SCRIPT_SANDBOXING = 'NO';
+
+  // Restore resource output declarations changed by the earlier diagnostic attempts.
   const phase = Object.values(project.hash.project.objects.PBXShellScriptBuildPhase ?? {})
     .find((entry) => typeof entry === 'object' && entry.name === '"[CP] Copy Pods Resources"');
-  // During a first prebuild CocoaPods has not created this phase yet.
   if (!phase) return;
   assert.match(phase.shellScript, /Pods-.*-resources\.sh/);
-  phase.outputPaths ??= [];
-  // Xcode 27 treats wrapper outputs without a trailing slash as literal files.
-  // CocoaPods copies files inside these bundle directories with rsync.
-  phase.outputPaths = phase.outputPaths.map((path) => path.replace(/\.bundle"$/, '.bundle/"'));
-  if (!phase.outputPaths.includes(podsResourceOutput)) phase.outputPaths.push(podsResourceOutput);
+  phase.outputPaths = (phase.outputPaths ?? [])
+    .filter((path) => path !== '"$(PODS_ROOT)/resources-to-copy-$(TARGETNAME).txt"')
+    .map((path) => path.replace(/\.bundle\/"$/, '.bundle"'));
 }
 
 module.exports = { sceneManifest, verifySceneManifest, adoptScenes, declareMetroIpOutput, metroIpOutput,
-  declarePodsResourceOutput, podsResourceOutput };
+  configureDebugScripts };

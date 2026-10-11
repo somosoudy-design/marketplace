@@ -115,3 +115,10 @@ Sin EAS Update/build, APK nuevo, App Store/TestFlight/ad hoc, gastos ni Frente B
 Checkpoint 2026-10-10 22:44 Caracas: segunda build revela que Xcode 27 permite escritura literal de
 outputs `.bundle` y rechaza sus archivos interiores (rsync utimensat/unlinkat). Se marcan esos outputs
 como directorios con `/` final; pruebas 19/19 y verificador aprobados. Tercera build/prueba física pendientes.
+
+Checkpoint 2026-10-10 22:48 Caracas: el slash final tampoco cambia el permiso literal de Xcode.
+La fuente Apple swift-build documenta que los scripts con contenidos/temporales no conocidos no pueden
+adoptar ese sandbox. Se conserva el ajuste global del proyecto y Release; solo el **target KoraDev Debug**
+sobrescribe `ENABLE_USER_SCRIPT_SANDBOXING=NO`. Outputs CocoaPods restaurados. No se toca el sandbox de
+iOS ni macOS, firma/certificados ni scripts de dependencias. Cuarta build/prueba física pendientes.
+Fuente: https://github.com/swiftlang/swift-build/blob/main/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift

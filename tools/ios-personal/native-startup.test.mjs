@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import test from 'node:test';
 import { adoptScenes, declareMetroIpOutput, metroIpOutput, sceneManifest, verifySceneManifest,
-  declarePodsResourceOutput, podsResourceOutput } from './native-startup.cjs';
+  configureDebugScripts } from './native-startup.cjs';
 
 const mobile = createRequire(new URL('../../apps/mobile/package.json', import.meta.url));
 const expo = createRequire(mobile.resolve('expo/config-plugins'));
@@ -69,14 +69,24 @@ test('unexpected bundle phases fail closed', () => {
   assert.throws(() => declareMetroIpOutput({ hash: { project: { objects: {} } } }));
 });
 
-test('CocoaPods temporary resource list is allowed without editing its generated script', () => {
-  const phase = { name: '"[CP] Copy Pods Resources"', shellScript: 'Pods-KoraDev-resources.sh', outputPaths: ['"$(TARGET_BUILD_DIR)/existing.bundle"'] };
-  const project = { hash: { project: { objects: { PBXShellScriptBuildPhase: { phase } } } } };
-  declarePodsResourceOutput(project);
-  declarePodsResourceOutput(project);
-  assert.deepEqual(phase.outputPaths, ['"$(TARGET_BUILD_DIR)/existing.bundle/"', podsResourceOutput]);
+test('script compatibility is limited to app Debug and preserves Release, project defaults and signing', () => {
+  const phase = { name: '"[CP] Copy Pods Resources"', shellScript: 'Pods-KoraDev-resources.sh', outputPaths: ['"$(TARGET_BUILD_DIR)/existing.bundle/"', '"$(PODS_ROOT)/resources-to-copy-$(TARGETNAME).txt"'] };
+  const debug = { name: 'Debug', buildSettings: { DEVELOPMENT_TEAM: 'unchanged', PRODUCT_BUNDLE_IDENTIFIER: 'com.test.local' } };
+  const release = { name: 'Release', buildSettings: { ENABLE_USER_SCRIPT_SANDBOXING: 'YES' } };
+  const other = { name: 'Debug', buildSettings: { ENABLE_USER_SCRIPT_SANDBOXING: 'YES' } };
+  const project = {
+    hash: { project: { objects: { PBXShellScriptBuildPhase: { phase } } } },
+    pbxNativeTargetSection: () => ({ app: { isa: 'PBXNativeTarget', name: 'KoraDev', buildConfigurationList: 'configs' } }),
+    pbxXCConfigurationList: () => ({ configs: { buildConfigurations: [{ value: 'debug' }, { value: 'release' }] } }),
+    pbxXCBuildConfigurationSection: () => ({ debug, release, other }),
+  };
+  configureDebugScripts(project);
+  configureDebugScripts(project);
+  assert.deepEqual(debug.buildSettings, { DEVELOPMENT_TEAM: 'unchanged', PRODUCT_BUNDLE_IDENTIFIER: 'com.test.local', ENABLE_USER_SCRIPT_SANDBOXING: 'NO' });
+  assert.equal(release.buildSettings.ENABLE_USER_SCRIPT_SANDBOXING, 'YES');
+  assert.equal(other.buildSettings.ENABLE_USER_SCRIPT_SANDBOXING, 'YES');
+  assert.deepEqual(phase.outputPaths, ['"$(TARGET_BUILD_DIR)/existing.bundle"']);
   assert.equal(phase.shellScript, 'Pods-KoraDev-resources.sh');
-  declarePodsResourceOutput({ hash: { project: { objects: {} } } });
 });
 
 test('repair stays in the existing isolated project and never regenerates or modifies Pods', () => {

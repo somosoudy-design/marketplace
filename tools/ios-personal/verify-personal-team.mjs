@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import personal from './personal-team.cjs';
 import { verifyNativeBundleId } from './native-project.cjs';
-import { adoptScenes, verifySceneManifest, metroIpOutput } from './native-startup.cjs';
+import { adoptScenes, verifySceneManifest, metroIpOutput, configureDebugScripts } from './native-startup.cjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const target = join(root, '.local/ios-personal');
@@ -65,6 +65,9 @@ if (process.argv.includes('--native')) {
   const bundlePhase = Object.values(project.hash.project.objects.PBXShellScriptBuildPhase)
     .find((phase) => typeof phase === 'object' && phase.name === '"Bundle React Native code and images"');
   assert.ok(bundlePhase?.outputPaths.includes(metroIpOutput), 'La fase de React Native debe declarar ip.txt');
+  const originalSettings = JSON.stringify(project.hash);
+  configureDebugScripts(project, app);
+  assert.equal(JSON.stringify(project.hash), originalSettings, 'Aplicar compatibilidad Debug con repair-native-startup.mjs');
   assert.match(readFileSync(projectPath, 'utf8'), /IPHONEOS_DEPLOYMENT_TARGET = 16\.4;/);
   console.log('PASS: archivos nativos iOS existentes (entitlements, permisos, OTA, bundle ID e iOS 16.4). Esta comprobación no verifica compilación, firma ni ejecución.');
 }
