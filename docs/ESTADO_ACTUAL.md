@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 00:35 (Caracas, UTC−4), por Codex cloud (sesión corta comprador; iOS pospuesto).
+**Última actualización:** 2026-10-11 00:38 (Caracas, UTC−4), por Codex cloud (sesión corta comprador terminada; iOS pospuesto).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Preparación iOS `264112b`; arranque físico corregido tras checkpoints `cff0d52` → `db33ab9`, cierre en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
-| Plan vigente | Sesión corta: franja sin conexión si es reproducible, uno/dos fallos de carrito/checkout y VEN-01 solo en backlog. iOS abre y queda pospuesto; sin Frente B |
-| Objetivo actual | Corregir carga/error de direcciones en checkout y error de actualización de cantidad en carrito. Franja Android pendiente de herramienta nativa. Sin APK nuevo, publicación, cambios financieros ni producción |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Sesión corta: checkpoint `70443c0`, cierre comprador en este commit. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
+| Plan vigente | Sesión corta cerrada: dos fallos comprador corregidos y VEN-01 en backlog. 4.3 pendiente de Android; iOS abre y queda pospuesto. Sin Frente B |
+| Objetivo actual | Reproducir 4.3 sobre APK 5 existente cuando haya Android/ADB. Checkout/carrito corregidos y probados en web claro/oscuro; cambios guardados, sin publicación, APK nuevo ni cambios financieros |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -105,15 +105,27 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Sesión corta comprador — bloque de continuidad terminado.** Sincronizada `9d22155`, incluidos los cinco
-commits locales de iOS y su cierre físico; no WIP funcional ajeno. iOS queda pospuesto y no se tocarán sus helpers.
-VEN-01 registrada en `PENDIENTES.md`, prioridad alta después de estabilizar comprador, fases A/B/C, sin implementación.
+**Sesión corta comprador terminada, sin WIP activo.** Sincronizada `9d22155`, cierre iOS revisado;
+checkpoint de continuidad/VEN-01 `70443c0`. iOS pospuesto; helpers/proyecto nativo intactos. VEN-01 registrada
+con prioridad alta tras estabilizar comprador, fases A/B/C, solo backlog; no implementarla aún.
 
-4.3: leídos `OfflineNotice.tsx`, layout y test web existente. Se cambia el inset JS mientras el navegador se
-desplaza; el efecto en native-stack necesita reproducción Android. Esta nube no tiene ADB/emulador ni teléfono;
-no se aplica una corrección especulativa. Siguiente bloque: reproducir y corregir dos fallos acotados:
-direcciones de checkout fallidas dejan skeleton indefinido; cambios de cantidad del carrito fallan sin mensaje.
-Pruebas enfocadas en claro/oscuro, sin suite general ni publicación.
+Dos problemas reproducidos antes de corregirlos (2 fallos esperados en web local):
+
+- `checkout.tsx`: si falla la consulta de direcciones, la consulta de resumen no arranca y quedaba un skeleton
+  indefinido. Ahora muestra `ErrorState` y «Reintentar» sobre direcciones; recupera resumen/botón tras el éxito.
+- `(tabs)/cart.tsx`: un cambio de cantidad fallido se revertía sin explicación. Ahora muestra aviso accesible
+  con el componente existente; steppers y «Continuar» se bloquean durante guardado y este último también
+  durante actualización del carrito. El rollback/operaciones existentes y cálculos no cambian.
+
+`buyer-errors.spec.ts`: **6/6**, 20,2 s, claro/oscuro; fallo/reintento de direcciones sin crear pedido,
+cantidad/rollback/reintento y controles bloqueados, franja web/reconexión sin tapar encabezado. Tipos/lint
+aprobados. Capturas revisadas `.local/buyer-errors/{light,dark}-*.png`; antes en `before/`.
+Pruebas contra backend local conservando sus datos; sin suites generales, transacciones remotas o pagos.
+
+4.3: franja web aprobada en ambos temas; source de franja/layout **sin modificar**. No ADB/emulador/teléfono
+en esta nube para reproducir el inset de native-stack Android; pendiente físico, sin corrección especulativa.
+Cambios comprador solo en Git: **sin publicar ni actualizar APK 5**. No nuevo APK, producción, configuración
+nativa, dependencias/lockfile, SQL/motor financiero ni panel. No compilación/pruebas iOS.
 
 **Cierre iOS local — arranque resuelto y probado; continuación pospuesta por Oliver.**
 2026-10-11 00:00 Caracas. Causas demostradas en registros Xcode/iPhone: falta de ciclo UIScene (crash UIKit)
@@ -222,11 +234,13 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Bloque actual: pruebas Playwright enfocadas para fallo/reintento de direcciones de checkout y fallo al guardar
-cantidad del carrito; corregir solo presentación/carga/errores. Verificar franja web en claro/oscuro y guardar
-commit/push. 4.3 nativo exige APK 5 existente en Android con ADB/Maestro; no generar APK ni publicar para probarlo.
-VEN-01 solo backlog. No continuar iOS; si Oliver vuelve a solicitarlo, leer `docs/IOS_DIAGNOSTICO.md` y conservar
-instalación/firma local. No avanzar al Frente B.
+Retomar **4.3 en un entorno con Android/ADB**, usando el APK 5 ya instalado y su versión actual: abrir Cuenta →
+Direcciones (encabezado native-stack), registrar espacio superior y flecha, activar modo avión, esperar al menos
+1,2 s, volver y navegar a otra pantalla con encabezado; repetir claro/oscuro y reconectar. Capturar antes/durante/
+después, incluidas barras del sistema. Restaurar conexión al terminar. Comparar `OfflineNotice.tsx` y `_layout.tsx`
+solo si se reproduce; no generar APK ni publicar para esta prueba. No repetir los errores comprador ya cerrados.
+Regresión acotada si hace falta: `pnpm --filter @kora/app-e2e exec playwright test --project=app tests/buyer-errors.spec.ts`
+con backend local y exportación web vigente. VEN-01 solo backlog; iOS pospuesto; no Frente B/publicación.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -263,6 +277,13 @@ instalación/firma local. No avanzar al Frente B.
   conector de GitHub o por la API de jobs.
 
 ## Pruebas
+
+Sesión corta comprador (2026-10-11 00:38 Caracas, Linux): `buyer-errors.spec.ts` **6/6**, claro/oscuro,
+Pixel 7 web, 20,2 s; tipos/lint aprobados y seis capturas revisadas. Antes del fix, 2 fallos confirman carga
+indefinida de direcciones y error de cantidad invisible. Franja web aprobada; **no valida native-stack Android**.
+Runner temporal ignorado `.local/buyer-errors/playwright-app.config.ts` usa el mismo proyecto app sin levantar
+el panel, cuyo arranque demoraba el runner general (interrumpido). Un intento inicial sin backend persistente
+también se interrumpió; no se cuenta como verificación. Sin suites generales, pruebas nativas ni pagos.
 
 Corrección del verificador iOS (2026-10-10 22:29 Caracas, Linux):
 

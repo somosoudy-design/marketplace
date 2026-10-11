@@ -6,13 +6,14 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 00:35 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 00:38 (Caracas, UTC−4).
 
 ## Sesión corta — prioridad vigente
 
-Cerrar uno o dos errores reproducibles de carrito/checkout, sin modificar cálculos, pagos, diseño global,
-producción o dependencias. No generar APK ni publicar actualizaciones. iOS **pospuesto por el propietario**;
-la app ya abre en iPhone (cierre local `9d22155`).
+**Terminada:** error/reintento de direcciones en checkout y error/guardado de cantidades en carrito corregidos;
+6/6 Playwright en claro/oscuro, tipos/lint y capturas aprobados. Solo en Git, sin actualización publicada.
+Sin cálculos/pagos, diseño global, producción o dependencias. No generar APK ni publicar actualizaciones.
+iOS **pospuesto por el propietario**; la app ya abre en iPhone (cierre local `9d22155`).
 
 ### VEN-01 — Gestión de vendedores dentro de la app
 
@@ -94,7 +95,7 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 |---|---|---|
 | 4.1 | CI en GitHub Actions con el stack local (hoy las suites corren solo en la máquina de quien trabaja) | El stack sin Docker ya funciona en Linux; falta el workflow |
 | 4.2 | Verificación automática de pagos USDT en cadena (TRC20) | Sin custodiar fondos; solo leer la transacción y comparar monto y destino |
-| 4.3 | Franja sin conexión en Android real (anula el inset superior del native-stack; verificada solo en web) | Revisada en sesión corta: `OfflineNotice.tsx` desplaza el navegador y cambia `SafeAreaInsetsContext.top`; comprobar su efecto en encabezados nativos antes de corregir. Cloud sin ADB/emulador/teléfono; pendiente reproducir en APK 5 existente, claro/oscuro, con y sin conexión. No instalar toolchain ni generar APK para esta sesión |
+| 4.3 | Franja sin conexión en Android real (anula el inset superior del native-stack; verificada solo en web) | Sesión corta: web claro/oscuro y reconexión aprobados, encabezado visible; franja/layout sin cambios. Cloud sin ADB/emulador/teléfono; pendiente reproducir en APK 5 existente, Cuenta → Direcciones, claro/oscuro, con/sin modo avión. Pasos exactos en `ESTADO_ACTUAL.md`. No generar APK ni publicar para esta prueba |
 | 4.5 | Insignias «Tienda verificada» y «Tienda asociada» | El diseño está hecho; falta un dato que solo ponga un administrador, mostrarlo en la app y otorgarlo desde el panel. Detalle en `docs/INSIGNIAS_TIENDAS.md` |
 | 4.6 | Foto de perfil: al eliminar una cuenta, borrar también su archivo del bucket `avatars` | `process_account_deletion` ya deja `avatar_path` vacío, pero el archivo queda en la carpeta privada del usuario (nadie más puede verlo). Hacerlo desde una función con la API de Storage |
 | 4.7 | Texto del permiso de fotos en iOS (`app.config.ts`, `expo-image-picker`) | La variante iOS Personal Team ya incluye perfil; la configuración compartida permanece intacta para conservar APK 5. Cambiarla solo con el próximo build autorizado, no por OTA |

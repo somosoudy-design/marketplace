@@ -65,6 +65,7 @@ export default function CheckoutScreen() {
   });
 
   if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace('/sign-in')} />;
+  if (addresses.isError) return <ErrorState error={addresses.error} onRetry={() => addresses.refetch()} />;
   if (preview.isError && !s) return <ErrorState error={preview.error} onRetry={() => preview.refetch()} />;
   if (!s) {
     return (

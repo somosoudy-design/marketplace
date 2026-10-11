@@ -16,7 +16,25 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
-### 2026-10-11 04:35Z (00:35 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · bloque 1
+### 2026-10-11 04:38Z (00:38 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · bloque 2
+- Hecho: checkout muestra error/reintento si falla direcciones en lugar de skeleton indefinido. Carrito muestra
+  aviso si falla guardar cantidad; controles de cantidad/Continuar bloqueados durante guardado y Continuar
+  también durante actualización. Reutilizados ErrorState/Banner/Stepper; rollback y cálculos intactos.
+- Reproducción: 2 fallos esperados antes del cambio, backend local activo; captura de carga infinita y carrito
+  sin mensaje conservadas en `.local/buyer-errors/before/`. Datos locales conservados, sin reset.
+- Pruebas: `buyer-errors.spec.ts` 6/6 (20,2 s), errores/reintentos, rollback/bloqueos y franja web/reconexión
+  en claro/oscuro. Tipos/lint aprobados; seis capturas revisadas en `.local/buyer-errors/`. Ningún pedido
+  confirmado ni pago. Runner temporal app sin panel; arranque general lento interrumpido y primer intento
+  sin backend persistente interrumpido; no contados como pases. Sin suites extensas ni pruebas nativas.
+- Pendiente: 4.3 Android no reproducible aquí sin ADB/emulador/teléfono; franja/layout conservados. Próxima
+  acción exacta en estado: APK 5 actual, Cuenta → Direcciones, modo avión, navegación y ambos temas, restaurar red.
+- Continuidad: VEN-01 registrada en `70443c0`, sin implementar; iOS abre y está pospuesto. Sin WIP activo.
+  Estado/pendientes/historial actualizados. Cambios guardados sin publicar: APK 5 conserva la OTA anterior.
+- Servicios/restricciones: sin actualización/APK, producción, módulos/config iOS/Xcode, dependencias, motor
+  financiero/SQL, procedimientos de pago, panel ni cambios remotos Supabase/Firebase.
+- Último commit: el cierre de este bloque; obtener con `git log -1 origin/claude/marketplace-v1`.
+
+### 2026-10-11 04:33Z (00:33 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · bloque 1
 - Continuidad: rama limpia antes de sincronizar; fast-forward `f5efec4` → `9d22155`, últimos 15 commits y
   AGENTS/estado/pendientes revisados. Cierre iOS físico confirmado en relevo del Mac; iOS pospuesto por Oliver.
 - Hecho: VEN-01 registrada con prioridad alta tras estabilizar comprador, fases Mi tienda/roles/navegación,
@@ -27,7 +45,7 @@ arriba de la bitácora, con este formato:
 - Siguiente bloque: reproducir error de direcciones que deja checkout cargando y cambio de cantidad del carrito
   fallido sin mensaje. Corregir presentación/error, probar claro/oscuro y commit/push independiente.
 - Servicios: ninguno; sin APK, EAS Update, producción, iOS/Xcode, motor financiero ni panel.
-- Último commit: el checkpoint de este bloque (`git log -1` al guardarlo).
+- Último commit: `70443c0` (checkpoint de continuidad y VEN-01).
 
 ### 2026-10-11 04:00Z (2026-10-11 00:00 Caracas, UTC−4) · Codex (Mac local de Oliver) · Oliver
 - Continuidad: sincronizado `f5efec4`; proyecto `.local/ios-personal` existente, firma y configuración privada

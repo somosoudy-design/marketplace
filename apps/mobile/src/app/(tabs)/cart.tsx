@@ -70,12 +70,13 @@ function AccountCart({ header }: { header: React.ReactNode }) {
       >
         {header}
         <View style={{ paddingHorizontal: 16, gap: 16 }}>
+          {setQty.isError ? <Banner tone="danger" icon="circle-alert" body="No pudimos actualizar la cantidad. Intenta de nuevo." /> : null}
           {groups.length > 1 ? (
             <Banner tone="brand" icon="package" title={`Tu compra llega en ${groups.length} entregas`} body="Los productos salen de lugares o tiempos distintos. Cada entrega tiene su propio seguimiento." />
           ) : null}
           {s.issues > 0 ? <Banner tone="warning" icon="circle-alert" title="Revisa tu carrito" body="Algunos productos cambiaron. Ajusta las cantidades marcadas para continuar." /> : null}
           {groups.map((g, i) => (
-            <GroupCard key={g.key} group={g} index={i} total={groups.length} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
+            <GroupCard key={g.key} group={g} index={i} total={groups.length} disabled={setQty.isPending} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
           ))}
         </View>
       </ScrollView>
@@ -83,14 +84,14 @@ function AccountCart({ header }: { header: React.ReactNode }) {
         items={s.items_usd}
         note="El envío y el total final se calculan con tu dirección en el siguiente paso."
         cta="Continuar"
-        disabled={s.issues > 0}
+        disabled={s.issues > 0 || setQty.isPending || cart.isFetching}
         onPress={() => router.push('/checkout')}
       />
     </>
   );
 }
 
-function GroupCard({ group: g, index, total, onQty }: { group: DeliveryGroup; index: number; total: number; onQty: (variantId: string, q: number) => void }) {
+function GroupCard({ group: g, index, total, onQty, disabled }: { group: DeliveryGroup; index: number; total: number; onQty: (variantId: string, q: number) => void; disabled?: boolean }) {
   const t = useTheme();
   return (
     <Card padded={false} style={{ overflow: 'hidden' }}>
@@ -104,14 +105,14 @@ function GroupCard({ group: g, index, total, onQty }: { group: DeliveryGroup; in
       {g.lines.map((l, i) => (
         <View key={l.variant_id}>
           {i > 0 ? <Divider inset={14} /> : null}
-          <LineRow line={l} onQty={onQty} />
+          <LineRow line={l} onQty={onQty} disabled={disabled} />
         </View>
       ))}
     </Card>
   );
 }
 
-function LineRow({ line: l, onQty }: { line: CartLine; onQty: (variantId: string, q: number) => void }) {
+function LineRow({ line: l, onQty, disabled }: { line: CartLine; onQty: (variantId: string, q: number) => void; disabled?: boolean }) {
   const t = useTheme();
   const a = presentAvailability(l.availability);
   return (
@@ -125,7 +126,7 @@ function LineRow({ line: l, onQty }: { line: CartLine; onQty: (variantId: string
         {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
         {l.issue ? <Text variant="caption" color="danger">{ISSUE_TEXT[l.issue] ?? 'Revisa este producto.'}</Text> : null}
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
-          <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} onChange={(q) => onQty(l.variant_id, q)} />
+          <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} disabled={disabled} onChange={(q) => onQty(l.variant_id, q)} />
           <Text variant="price" tabular>{formatUSD(l.line_total_usd)}</Text>
         </View>
       </View>
