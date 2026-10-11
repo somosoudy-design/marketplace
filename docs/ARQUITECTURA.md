@@ -5,7 +5,7 @@
 | Pieza | Tecnología | Dónde |
 |---|---|---|
 | Monorepo | pnpm 10.28, Node 22, TypeScript 5.9 (la app, 6.0), vitest 3 | raíz (`apps/*`, `packages/*`, `tests/*`, `tools/*`) |
-| App de compradores | Expo SDK 57, React Native 0.86, expo-router, React Query 5, Reanimated 4 | `apps/mobile` (también exporta a web para las pruebas) |
+| App móvil (compradores + Mi tienda) | Expo SDK 57, React Native 0.86, expo-router, React Query 5, Reanimated 4 | `apps/mobile` (también exporta a web para las pruebas) |
 | Panel web (admin + vendedor) | Next.js 16 (App Router), Tailwind v4, React Query | `apps/admin` (puerto 3100; `/admin` y `/vendedor`) |
 | Backend | Supabase: Postgres, Auth (GoTrue), PostgREST, Storage, Edge Functions (Deno) | `supabase/migrations`, `supabase/functions` |
 | Lógica compartida | dinero exacto, planes, tasas, pagos, sesión, errores en español, importador | `packages/core` |
@@ -18,9 +18,9 @@
 | Pruebas | vitest (base, API, núcleo, panel), Deno (funciones), Playwright (app web y panel) | `tests/db-tests`, `tests/app-e2e`, `supabase/functions/tests` |
 
 ```
-apps/mobile/src/app          pantallas (expo-router): (tabs), product, cart, checkout, pay, orders, claim…
-apps/mobile/src/components   ui/ (Text, Button, Badge, Card, States, Bars…), catalog/, checkout/
-apps/mobile/src/lib          auth, supabase, query (caché y modo sin conexión), session-storage, hooks
+apps/mobile/src/app          pantallas (expo-router): (tabs), product, cart, checkout, pay, orders, my-store, claim…
+apps/mobile/src/components   ui/ (Text, Button, Badge, Card, States, Bars…), catalog/, checkout/, seller/
+apps/mobile/src/lib          auth, supabase, query (caché y modo sin conexión), session-storage, hooks, seller
 apps/admin/src/app           rutas del panel; components/ con ui.tsx, Shell, Crud, Settings…
 supabase/migrations          24 migraciones (`20261009000100` … `20261009233831`)
 supabase/functions           rates-sync, push-dispatch, panel-api, assets-mirror (copia única), payments-start, binance-pay-webhook, paypal-webhook
@@ -55,6 +55,10 @@ se ha probado menos; lo comprobado allí está en `docs/ESTADO_ACTUAL.md`.
   (abrir, responder, escalar, resolver).
 - **Cuentas:** registro, inicio de sesión, recuperación, direcciones, notificaciones en la app, solicitud de
   eliminación de cuenta (anonimiza, conserva pedidos, espera si hay pedidos abiertos).
+- **Mi tienda nativa (VEN-01A):** Cuenta consulta pertenencias/roles reales; resumen, productos paginados,
+  entregas recibidas y configuración solo consulta en `/my-store/*`. Mismas RLS/RPC que el panel; sin quinta
+  pestaña o escrituras nuevas. Cuenta con varios roles conserva compras propias y herramientas administrativas.
+  Detalle de consultas, pruebas y límites nativos en `docs/VEN-01A.md`; edición y acciones son fases futuras.
 - **Panel de administración** (`/admin/*`): resumen, pedidos y detalle, pagos (verificar/rechazar/reembolsar),
   productos y moderación, inventario, categorías, tiendas, usuarios y roles (solo superadmin), importar por
   URL con confirmación de derechos de imagen, contenido/colecciones, envíos y tarifas (tarifas, métodos,

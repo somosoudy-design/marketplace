@@ -6,9 +6,9 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 12:16 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 12:22 (Caracas, UTC−4).
 
-## Sesión corta — prioridad vigente
+## Comprador — bloque cerrado, revisión de Oliver en curso
 
 **Terminada:** error/reintento de direcciones en checkout y error/guardado de cantidades en carrito corregidos;
 6/6 Playwright en claro/oscuro, tipos/lint y capturas aprobados. Publicados con autorización de Oliver por
@@ -24,16 +24,19 @@ sin reinstalar, borrar datos ni repetir implementación. Evidencias antes/despu�
 
 ### VEN-01 — Gestión de vendedores dentro de la app
 
-**VEN-01A autorizada y en curso por nuevo pedido de Oliver; no publicar mientras valida su Android.**
+**VEN-01A terminada y validada localmente; no publicar mientras Oliver valida el paquete anterior en Android.**
+Mi tienda y sus secciones de consulta funcionan con roles/pertenencias/RLS reales, conservando compras
+propias del usuario incluso con permisos administrativos. Fuentes `cc6db73`/`5f90e27`; UI 22/22,
+permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y revisión de 18 capturas. Detalle: `docs/VEN-01A.md`.
 VEN-01B/C siguen en backlog, sin autorización para implementarlas. Los vendedores administrarán su tienda sin salir
 de HAYAZGO; el panel web seguirá disponible para funciones avanzadas. Reutilizar roles/permisos y operaciones
 existentes del panel/backend; no duplicar reglas comerciales ni crear permisos decididos por el cliente.
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A | Acceso «Mi tienda», roles reales, resumen y consulta de productos/pedidos/configuración, navegación | Implementado; revisión visual detectó pedidos ajenos en vista compradora admin. Filtro por comprador corregido, tipos/lint aprobados; repetir UI 22 casos, actualizar bundle JS Android y cerrar documentos. Servidor 6/6, núcleo 50/50. Sin EAS Update |
-| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Después de VEN-01A |
-| VEN-01C | Pedidos recibidos, configuración de tienda y acciones comerciales básicas | Después de VEN-01B |
+| VEN-01A-R | Publicación controlada y comprobación de Mi tienda en APK 5 (Atrás físico, TalkBack, fluidez, navegador, roles y cambio de cuenta) | Bloqueada por confirmación de Oliver. Código listo; sin publicación en este bloque. Ejecutar guard runtime APK 5 antes de cualquier OTA; no generar APK |
+| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Prioridad alta, después de revisión de VEN-01A y nuevo alcance de Oliver |
+| VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | Después de VEN-01B; la consulta de pedidos/configuración ya existe en VEN-01A, no duplicarla |
 
 ## iOS gratuita — pospuesta por Oliver
 

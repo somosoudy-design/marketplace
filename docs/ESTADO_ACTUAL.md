@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 12:16 (Caracas, UTC−4), por Codex cloud (VEN-01A: corregido alcance comprador para cuentas con varios roles; repetir UI y cerrar, sin publicación).
+**Última actualización:** 2026-10-11 12:22 (Caracas, UTC−4), por Codex cloud (VEN-01A terminado y validado localmente, sin publicación; espera revisión de Oliver).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Corrección 4.3 `adf3c78`, flujo ampliado `ca0923d`; preview fuente `41d415f`, validación nativa `19067d6`, cerrados por este relevo. Comprador `e9b56a0`, VEN-01 `70443c0`; iOS cerrado `9d22155` |
-| Plan vigente | VEN-01A autorizado: Cuenta + Mi tienda nativa, resumen y consulta de productos/pedidos/configuración. VEN-01B/C fuera de alcance; iOS pospuesto |
-| Objetivo actual | Implementar y probar VEN-01A, sin EAS Update mientras Oliver valida el paquete anterior en Android. Sin APK nuevo o cambios financieros/remotos |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + pedidos compradores multirrol `5f90e27`, cierre documental posterior. Último paquete APK 5 publicado: fuente `41d415f`, anterior a VEN-01A |
+| Plan vigente | VEN-01A terminado y validado localmente: Cuenta + Mi tienda, resumen y consulta de productos/pedidos/configuración. Validación Android pendiente; VEN-01B/C fuera de alcance, iOS pospuesto |
+| Objetivo actual | Esperar confirmación de Oliver sobre el paquete anterior antes de una futura publicación/prueba Android de VEN-01A. Sin EAS Update, APK nuevo o cambios financieros/remotos en este bloque |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -31,6 +31,11 @@
 
 ## Qué funciona hoy (verificado)
 
+- **VEN-01A (local, 2026-10-11):** Mi tienda nativa desde Cuenta, roles/pertenencias reales, selector de
+  tiendas, resumen, catálogo paginado, entregas recibidas y configuración solo consulta; panel avanzado
+  conservado. Comprador/admin multirrol con pedidos compradores propios. UI 22/22, permisos 6/6,
+  núcleo 50/50, tipos/lint, web/Android JS y revisión visual claro/oscuro aprobados. **No publicado ni
+  ejecutado aún en APK 5.** Detalle y límites: `docs/VEN-01A.md`.
 - Backend del proyecto de pruebas en Supabase, comprobado con el conector el 2026-10-09 22:00Z: 23 migraciones
   aplicadas (las mismas 23 de `supabase/migrations`), funciones `rates-sync` y `push-dispatch` activas (versión 1,
   con la validación del token de tareas), 6 trabajos de `pg_cron`, última tasa leída 21:30Z, 43 productos
@@ -105,27 +110,32 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**VEN-01A implementado; cierre de revisión visual/documentación en curso.** Base `da4dd54`, alcance `c2a9910`, implementación `cc6db73`.
+**VEN-01A terminado, sin WIP funcional activo.** Base `da4dd54`, alcance `c2a9910`, implementación `cc6db73`,
+separación de pedidos compradores por cuenta `5f90e27`. Informe de consultas, pruebas y límites: `docs/VEN-01A.md`.
 Cuenta usa `api.account.roles/stores` (filas reales), conserva compra/administración y abre `/my-store`.
 Selector multitienda; resumen `seller_dashboard`, productos RLS paginados de 30 en 30, pedidos con
 `seller_fulfillments`/etiquetas de pasos del backend y configuración solo consulta. Panel avanzado existente.
-Lecturas con sesión/anon; ninguna escritura nueva, permiso simulado, RPC o migración. Datos de tienda no
+Lecturas con sesión/anon; ninguna escritura nueva, permiso simulado, RPC o migración. Datos privados de tienda no
 persistidos en disco; claves por usuario/tienda y limpieza al salir/cambiar cuenta.
-Pruebas aprobadas: UI **22/22**, claro/oscuro (1,6 min, 320 px en recorrido principal), servidor **6/6**
-en copia local nueva sin borrar datos, núcleo **50/50**, tipos/lint y exportación web. Contraste: 22 pares
-AA, mínimo 4,78:1. Capturas `.local/ven01a/screens/`; exportación Android JS/Hermes aprobada para `cc6db73`.
+Pruebas finales aprobadas: UI **22/22**, claro/oscuro (1,4 min, sin omisiones/reintentos; 320 px en recorrido
+principal), servidor **6/6** en copia local nueva sin borrar datos, núcleo **50/50**, tipos/lint y web.
+**18 capturas revisadas** en `.local/ven01a/screens/`. Contraste de 22 pares AA, mínimo 4,78:1.
+Exportación Android JS/Hermes aprobada para `5f90e27`; no es compilación de APK ni ejecución nativa.
 La revisión visual detectó que «Mis pedidos» de administradores incluía pedidos ajenos: su RLS permite
 consultarlos y la consulta compradora no filtraba `buyer_id`. Cuatro regresiones reproducidas antes del arreglo.
 Corregido únicamente el alcance de lectura de `useOrders`: filtro por comprador y clave de caché por usuario,
 sin alterar RLS, herramientas administrativas, checkout o finanzas. API conserva la lectura amplia cuando no
-se solicita filtro. Tipos/lint aprobados; repetir los 22 casos UI, incluidos pedidos propios del administrador,
-y actualizar el bundle Android antes de cerrar. No restaurar caché antigua sin usuario en esta vista.
+se solicita filtro. Los casos finales verifican una compra propia del administrador y ninguna compra ajena
+en la cuenta con varios roles sin compras. La caché antigua sin usuario no se reutiliza en esta vista.
 Prueba de abrir panel intercepta solo el destino externo: verifica URL/ventana/sesión, no reconstruye el panel.
 Primeros fallos de prueba documentados en historial; corregidos sin desactivar casos.
 Commits de API llevan `[skip ci]`: `panel-deploy.yml` despliega automáticamente por `packages/api/**`;
 evita publicar el panel contra la restricción vigente. No cambiar workflows ni solicitudes EAS.
+Sin Android/emulador disponible: Atrás físico, TalkBack, fluidez y apertura nativa del panel pendientes.
 **No publicar EAS Update:** Oliver revisa la actualización anterior. No iOS/Xcode, checkout, pagos, servicios
 remotos, dependencias o APK nuevo. No repetir correcciones comprador/franja ni empezar VEN-01B/C.
+
+### Antecedentes cerrados — 4.3 y sesión comprador
 
 **Sesión cerrada: 4.3 corregida, publicada y validada en emulador Android; sin WIP activo.**
 Oliver autorizó explícitamente «Autorizar actualización para APK 5» por EAS Update `preview`, con entrega
@@ -155,11 +165,12 @@ Android, sin desmontar el navegador o cambiar el diseño. Geometría **9/9**, co
 No repetidas suites generales. La lectura directa de manifiesto EAS dio proxy 403; diagnóstico/capturas
 del emulador y Success del workflow son la evidencia. Checkpoints `41d415f`/`19067d6` cerrados.
 
-VEN-01 sigue solo en backlog; iOS pospuesto. No iniciar otros frentes ni publicar otro paquete por defecto.
+En ese bloque VEN-01 era solo backlog. El nuevo pedido de Oliver autorizó VEN-01A, terminado arriba;
+las fases B/C e iOS siguen pospuestos. No publicar otro paquete por defecto.
 
 **Sesión corta comprador terminada, sin WIP activo.** Sincronizada `9d22155`, cierre iOS revisado;
 checkpoint de continuidad/VEN-01 `70443c0`. iOS pospuesto; helpers/proyecto nativo intactos. VEN-01 registrada
-con prioridad alta tras estabilizar comprador, fases A/B/C, solo backlog; no implementarla aún.
+con prioridad alta tras estabilizar comprador, fases A/B/C, solo backlog en ese momento. Alcance vigente arriba.
 
 Dos problemas reproducidos antes de corregirlos (2 fallos esperados en web local):
 
@@ -285,24 +296,19 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Agente: reconstruir web y repetir `seller-app.spec.ts` con `playwright-app.config.ts` tras el filtro comprador;
-cerrar revisión visual de `.local/ven01a/screens/`, exportación Android (solo JS/Hermes) y documentación.
-Servidor/núcleo ya aprobados; no repetir suites generales. No solicitar actualizaciones
-o workflows de APK. Revisión de Oliver del paquete anterior continúa independientemente:
+**Esperar confirmación de Oliver sobre la actualización anterior.** VEN-01A ya está implementado y
+probado localmente; no volver a construir Mi tienda o corregir carrito/checkout/franja sin un fallo nuevo.
+No disparar EAS Update, workflows del panel o APK ni reutilizar permisos de publicación anteriores.
 
-Revisión física de Oliver, **sin otro APK ni otra publicación**: abrir HAYAZGO con conexión, dejar descargar
-la actualización y pulsar «Reiniciar» si aparece «Hay una versión nueva lista» (o cerrar y abrir de nuevo).
-En `kora://diagnostico`, confirmar OTA `01a12b6c-3da0-7ce9-a45b-b2dd018a9c13`, preview, publicada
-2026-10-11 14:44 UTC. En su Samsung: Favoritos/Inicio, modo avión, esperar 1,2 s, Atrás/reentrada y
-reconexión, claro/oscuro. No cerrar sesión ni borrar datos para aplicar el flujo visitante del emulador.
-Registrar solo un fallo concreto si aparece y comparar con las evidencias guardadas arriba; 4.3 ya pasó
-en emulador. Restaurar conexión al terminar. No repetir la implementación ni volver a solicitar el paquete
-ya publicado. Otro desarrollo espera una nueva prioridad de Oliver.
+Cuando Oliver confirme que se puede actualizar: preparar la publicación controlada de VEN-01A con el
+guard de runtime exacto APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; luego validar comprador,
+vendedor, admin/multirrol, cambio de tienda, cierre de sesión y Atrás físico en claro/oscuro. Registrar TalkBack,
+fluidez y apertura del panel. No se ha ejecutado esa prueba nativa en este bloque.
 
-Regresión de geometría: `pnpm exec vitest run tests/mobile/offline-layout.test.ts`. Web, solo si hay cambios:
-exportar de nuevo y ejecutar `buyer-errors.spec.ts` con backend local en el mismo comando y el runner app
-ignorado `.local/buyer-errors/playwright-app.config.ts` (`--project=app`, sin panel). VEN-01 solo backlog,
-iOS pospuesto; no repetir los dos errores comprador ya cerrados ni iniciar Frente B.
+Si aparecen cambios/fallos nuevos antes de publicar, reproducirlos con los archivos de `docs/VEN-01A.md`:
+`pnpm --filter @kora/app-e2e build:web` y `seller-app.spec.ts` con el runner app. Las suites actuales ya están
+aprobadas; no repetir auditorías generales ni borrar/resetear datos locales. Siguiente desarrollo previsto,
+solo con nuevo alcance de Oliver: VEN-01B (editor/productos/fotografías/existencias). Sin iOS ni Frente B.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -339,6 +345,13 @@ iOS pospuesto; no repetir los dos errores comprador ya cerrados ni iniciar Frent
   conector de GitHub o por la API de jobs.
 
 ## Pruebas
+
+VEN-01A, cierre local (2026-10-11 12:22 Caracas): `seller-app.spec.ts` **22/22** en 1,4 min, ambos temas,
+sin reintentos/omisiones; 320 px en recorrido principal. Permisos existentes + herramientas vendedor **6/6**
+en copia local conservada, núcleo **50/50**, tipos/lint aprobados. Web y Android JS/Hermes exportados desde
+`5f90e27`. Dieciocho capturas revisadas; contraste de 22 pares ≥4,5:1. Logs, casos, reproducción y límites
+en `docs/VEN-01A.md`. No prueba Android nativa/TalkBack ni publicación móvil; no repetir la validación
+comprador anterior o afirmar que el nuevo código ya llegó al teléfono de Oliver.
 
 4.3, cierre (2026-10-11 10:55 Caracas): EAS preview 38148288379 **Success**, runtime APK 5 aprobado.
 Android 15/Pixel 6, revisión 34/run 38148610558 **2/2 sin reintentos**; diagnóstico confirma OTA

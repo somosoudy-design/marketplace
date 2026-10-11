@@ -16,6 +16,30 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 16:22Z (12:22 Caracas) · Codex (cloud Linux) · Oliver · cierre VEN-01A sin publicación
+- Hecho: Mi tienda nativa desde Cuenta, roles/pertenencias reales, selector multitienda, resumen de productos/
+  entregas, catálogo paginado, pedidos y configuración solo consulta. Acceso al panel existente para editar;
+  compradores, vendedores y admin conservan funciones. Sin quinta pestaña, permisos del cliente o escrituras.
+- Commits: alcance `c2a9910`, implementación `cc6db73`, separación de compras por cuenta `5f90e27`;
+  este cierre agrega `docs/VEN-01A.md` y actualiza arquitectura/continuidad. Sin WIP funcional pendiente.
+- Hallazgo visual corregido: un admin sin compras veía pedidos ajenos por la lectura amplia permitida por RLS.
+  Cuatro regresiones antes del arreglo; filtro `buyer_id`/caché por usuario en vista compradora. RLS y herramientas
+  administrativas preservadas; API sin filtro conserva su alcance anterior. Admin con una compra real local
+  ve solo esa compra; multirrol sin compras no ve pedidos ajenos.
+- Pruebas finales: UI 22/22, 1,4 min, claro/oscuro, sin omisiones/reintentos; recorrido 320 × 780 px,
+  regreso, cambio de tienda/sesión, cargas/errores/vacíos/reconexión. Permisos + herramientas 6/6 en copia
+  local nueva, núcleo 50/50, tipos/lint y exports web/Android JS/Hermes aprobados. Dieciocho capturas
+  revisadas; 22 pares de contraste AA, mínimo 4,78:1. Evidencia/reproducción en `docs/VEN-01A.md`.
+- Límites: Linux sin dispositivo/emulador; no ejecutar nuevo JS en APK 5, Atrás físico, TalkBack o navegador
+  nativo. La prueba del panel intercepta solo el destino externo y valida apertura/URL/sesión móvil;
+  no se ejecutaron operaciones del panel. No afirmar recepción en el Android de Oliver.
+- Servicios: ninguno remoto. Fixtures locales aditivos/demo, sin pagos/borrados. Sin APK, EAS Update,
+  dependencias, configuración nativa, SQL/finanzas, checkout, panel, iOS/Xcode o Frente B. `[skip ci]` evita
+  autodespliegue del panel por cambios en API; checks locales ejecutados. No se tocaron solicitudes/workflows.
+- Siguiente: esperar confirmación de Oliver sobre el paquete anterior; después publicación/prueba controlada
+  de VEN-01A con guard runtime APK 5. VEN-01B solo con nueva instrucción; no duplicar consultas ya hechas.
+- Último commit: este cierre documental; comprobar `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 16:16Z (12:16 Caracas) · Codex (cloud Linux) · Oliver · checkpoint alcance comprador multirrol
 - Revisión visual de VEN-01A detectó que un administrador recién creado veía pedidos de otros compradores.
   Cuatro casos fallaron antes del arreglo en ambos temas; RLS permite esas lecturas a administradores.
