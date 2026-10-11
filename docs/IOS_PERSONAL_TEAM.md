@@ -5,13 +5,11 @@ Frente A V2 está cerrado y Oliver confirmó la recepción en Android (`cf7a1b9`
 el diseño ni inicia Frente B. La marca provisional sigue siendo **Kora** en `config/brand.json`;
 la app de prueba aparecerá como **Kora (Dev)**, con el icono Electric Violet existente.
 
-**Estado vigente:** Oliver reporta compilación e instalación en su iPhone con `npx expo run:ios --device`,
-pero KoraDev se cierra al abrir sin actividad Metro. También reporta fallo de Xcode 27 en el script
-`Copy generated compatibility header` de `expo-dev-launcher`. Funcionamiento/firma nativa sin comprobar por
-este agente. Verificador de Bundle ID corregido y probado con y sin comillas; no es un diagnóstico del cierre.
-Retomar **la instalación existente** con [el protocolo de diagnóstico](IOS_DIAGNOSTICO.md), sin regenerarla.
-Esta sesión es Linux y no accede al Mac/iPhone. No hay IPA para descargar; no se usa EAS Build, TestFlight,
-distribución ad hoc o Expo Go.
+**Estado vigente (2026-10-11 00:00 Caracas):** KoraDev ya compila, instala y abre en el iPhone de Oliver;
+Metro carga el catálogo y la reapertura normal fuera del depurador está comprobada. Se adoptaron escenas
+Expo para iOS 27 y compatibilidad de scripts solo en KoraDev Debug, preservando configuración/firma/datos.
+Detalle: [diagnóstico local](IOS_DIAGNOSTICO.md). Oliver pidió detener aquí iOS y probar por su cuenta.
+La validación ampliada y Release quedan pospuestas. No se publicó una IPA ni se usó EAS/TestFlight/Expo Go.
 
 ## Auditoría de compatibilidad
 
@@ -188,9 +186,11 @@ del Mac. Abre **Kora (Dev)** y selecciona el servidor Metro; si no aparece, util
 muestra la Terminal, nunca `localhost` en el iPhone. Se abre la app nativa propia, sin Expo Go.
 El backend sigue siendo Supabase HTTPS de pruebas; solo Metro usa la red del Mac.
 
-### 7. Opción para abrirla sin Metro
+### 7. Opción futura para abrirla sin Metro (no probada)
 
-Después de comprobar Debug y su firma, puedes instalar localmente una configuración con JS incluido:
+Oliver pospuso continuar iOS. La instalación Debug actual requiere Metro. **No ejecutar esta opción ahora**:
+Release conserva sus ajustes anteriores y no se ha compilado/probado con Xcode 27 en este diagnóstico.
+Cuando Oliver autorice retomarlo, se puede evaluar una configuración con JS incluido:
 
 ```bash
 cd marketplace/.local/ios-personal

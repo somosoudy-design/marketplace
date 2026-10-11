@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-10 22:41 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 00:00 (Caracas, UTC−4).
 
 ## iOS gratuita — pedido vigente de Oliver
 
@@ -15,14 +15,13 @@ Supabase de pruebas, sin APNs/Associated Domains/OTA. Guardas 5/5, verificación
 prebuild sin Pods, exportación Hermes, tipos/lint, core 50/50 y web comprador 40/40. iOS 16.4 mínimo.
 No cambios en Android/APK 5/producción ni publicación; Frente A V2 cerrado antes de comenzar.
 
-Actualización local: registros obtenidos directamente en el Mac/iPhone. Crash UIKit por falta de escenas
-y fallo separado al escribir `ip.txt` con sandbox activo; expo-dev-launcher terminó su fase correctamente.
-Helper local aplicado y 18/18/tipos/lint/verificador aprobados. Falta build y validación física corregida.
+Arranque resuelto en el Mac/iPhone físico: build Debug, firma, Xcode/Metro, Inicio y reapertura normal
+aprobados. 19/19, verificador, tipos/lint y core 50/50. Causas y límites en `docs/IOS_DIAGNOSTICO.md`.
+Oliver pidió cerrar tras poder abrir la app para probar y **no seguir todavía con iOS**.
 
 | # | Tarea | Estado | Notas |
 |---|---|---|---|
-| IOS-D | Compilar y comprobar correcciones de escenas y output Metro | En curso (Mac local) | `docs/IOS_DIAGNOSTICO.md`; proyecto existente conservado, sin prebuild/Pods/borrados ni cambio de sandbox/firma |
-| IOS-F | Verificar arranque, firma y recorridos en el iPhone físico | En curso (tras build) | `docs/IOS_PERSONAL_TEAM.md`; Metro, reapertura, claro/oscuro, navegación, carrito y checkout de pruebas; login/fotos según acceso disponible |
+| IOS-F | Validación física ampliada (sesión/Keychain, fotos, temas, compra de pruebas, accesibilidad) | Pospuesta por Oliver | Arranque ya funciona. Solo retomar cuando lo solicite; no se prueba Release ni se publica nada por iniciativa propia |
 
 ## Frente A V2 — revisión del propietario
 

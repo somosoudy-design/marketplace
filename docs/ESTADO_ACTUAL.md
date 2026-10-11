@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-10 22:41 (Caracas, UTC−4), por Codex local (causas iOS comprobadas; checkpoint previo a build físico).
+**Última actualización:** 2026-10-11 00:00 (Caracas, UTC−4), por Codex local (arranque físico resuelto; iOS pospuesto por Oliver).
 
 ## Dónde está el trabajo
 
@@ -13,9 +13,9 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Preparación iOS `264112b`; corrección del verificador en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
-| Plan vigente | Diagnóstico iOS Personal Team sobre la instalación local existente en `~/marketplace`. Frente A V2 cerrado; sin Frente B |
-| Objetivo actual | Oliver reporta instalación en iPhone, cierre inmediato sin actividad en Metro y fallo de script de expo-dev-launcher en Xcode 27. Verificador corregido; causas nativas sin comprobar. Retomar en Mac con `docs/IOS_DIAGNOSTICO.md`. APK 5/Android/producción intactos |
+| Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Preparación iOS `264112b`; arranque físico corregido tras checkpoints `cff0d52` → `db33ab9`, cierre en el commit de esta actualización. Frente A V2 cerrado `cf7a1b9`, fuente OTA `b60b2cc` |
+| Plan vigente | iOS local abre y queda pospuesto por Oliver. Frente A V2 cerrado; sin Frente B |
+| Objetivo actual | KoraDev abre en iPhone: escenas Expo corregidas y scripts compatibles en Debug. Reapertura/Metro comprobados. Oliver probará la app; no continuar iOS. APK 5/Android/producción intactos |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -105,23 +105,21 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**Diagnóstico iOS local — causas comprobadas, corrección pendiente de build/prueba física.**
-Mac en `~/marketplace`, rama sincronizada desde `f5efec4`, Xcode 27/iPhone iOS 27.0.1 conectados.
-Se obtuvieron directamente los logs Xcode/Expo y 17 informes KoraDev del dispositivo.
-Cierre: `EXC_BREAKPOINT` en comprobación UIKit por no adoptar escenas. Build Expo 22:09 aprobado;
-build Xcode 22:13 falla escribiendo `ip.txt` en la fase RN con sandbox activo, no en expo-dev-launcher.
+**Cierre iOS local — arranque resuelto y probado; continuación pospuesta por Oliver.**
+2026-10-11 00:00 Caracas. Causas demostradas en registros Xcode/iPhone: falta de ciclo UIScene (crash UIKit)
+y restricciones separadas del sandbox de scripts RN/CocoaPods. Reparación aislada en el proyecto existente:
+escena Expo y compatibilidad **solo KoraDev/Debug**, con firma/Team/Bundle ID/datos preservados.
+Detalle definitivo y evidencia: `docs/IOS_DIAGNOSTICO.md`. Checkpoints `cff0d52`, `12686cb`, `0d30497`,
+`db33ab9` cerrados por la verificación física; no WIP funcional activo.
 
-Aplicado helper aislado `tools/ios-personal/repair-native-startup.mjs` al proyecto existente: escena Expo,
-factory proporcionada por AppDelegate sin doble arranque, output Metro declarado sin desactivar sandbox.
-Respaldos/logs privados en `.local/ios-diagnosis/`; firma, Bundle ID, certificados, configuración Node/Pods
-y datos preservados. Plugin/generador/verificador local actualizados; 19/19, tipos/lint y `--native` aprobados.
+Pruebas ejecutadas: 19/19, verificador `--native`, tipos/lint, core 50/50; workspace Debug **BUILD SUCCEEDED**,
+Xcode Run/LLDB físico, firma validada, Metro entrega bundle Hermes, Inicio/Cuenta observados y reapertura
+normal fuera del depurador aprobada. Sesión existente y contador de carrito conservados al reabrir.
+Sin nuevos crash reports del binario corregido. Logs/capturas/respaldos privados en `.local/ios-diagnosis/`.
 
-Primera build: Swift/escenas y fase RN pasan; segunda salida CocoaPods no declarada identificada y
-corregida (`resources-to-copy-$(TARGETNAME).txt`). Checkpoint: aún pendiente la build final y prueba física.
-
-**Próxima acción inmediata:** compilar workspace existente KoraDev Debug para el iPhone, instalar encima
-y probar bajo depurador, Metro, reapertura y recorridos. No afirmar éxito físico antes de observarlo.
-Detalle `docs/IOS_DIAGNOSTICO.md`. Sin Android/APK 5/producción, prebuild, Pods o dependencias nuevas.
+**Alcance final de Oliver:** solo quería abrir la app para probar. No continuar iOS todavía; sin pruebas
+ampliadas de checkout/pagos/fotos/Keychain/temas/VoiceOver ni Release/simulador. Metro existente queda activo
+para sus pruebas. No Android/APK 5/producción, prebuild, cambios de Pods, dependencias o servicios remotos.
 
 **Antecedente: preparación iOS terminada en `264112b`.** Base `cf7a1b9` sincronizada;
 checkpoint de alcance `498c051`. Frente A V2 cerrado antes de comenzar; sin WIP ajeno ni nuevas modificaciones
@@ -214,13 +212,10 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Abrir/continuar esta tarea en Codex **local**, proyecto `~/marketplace` del Mac; esta sesión cloud no tiene acceso.
-El agente sigue `docs/IOS_DIAGNOSTICO.md`: preserva cambios/instalación, sincroniza la rama, ejecuta el verificador
-corregido y obtiene directamente la fase completa en los registros Xcode y el informe de cierre de KoraDev.
-Relaciona binario instalado/configuración/fecha antes de modificar código. Solo después corrige la causa demostrada,
-compila con la configuración existente y prueba iPhone/checklist claro/oscuro de `docs/IOS_PERSONAL_TEAM.md`.
-No regenerar, limpiar Pods/DerivedData, actualizar dependencias o cambiar producción para adivinar la causa.
-Sin publicación, Frente B ni petición de contraseñas/certificados privados. Commit/push y relevo con evidencia real.
+Oliver prueba la app ya instalada **Kora (Dev)** con Metro activo en el Mac. No continuar trabajo iOS
+por ahora; no iniciar validaciones ampliadas ni Release/simulador/publicación. Si vuelve a solicitar iOS,
+leer primero `docs/IOS_DIAGNOSTICO.md` y preservar `.local/ios-personal`, firma/certificados/configuración.
+El cierre documentado solo demuestra arranque y reapertura; el resto del checklist queda pospuesto.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -233,9 +228,9 @@ Sin publicación, Frente B ni petición de contraseñas/certificados privados. C
 
 ## Errores conocidos
 
-- iOS Personal Team: cierre inmediato sin actividad Metro y fallo `expo-dev-launcher / Copy generated
-  compatibility header` reportados por Oliver; causa pendiente de registros del Mac/iPhone. El falso rechazo
-  del Bundle ID sin comillas está corregido y probado; no se atribuye a ese verificador el cierre de la app.
+- iOS Personal Team: cierre UIKit y fallo de scripts **resueltos en Debug local**; build/firma/Metro y
+  reapertura física aprobados. Release y checklist ampliado no probados, pospuestos por Oliver. Sin nuevos
+  informes de cierre del binario corregido; evidencia en `docs/IOS_DIAGNOSTICO.md`.
 - Tasa BCV vencida desde el 2026-10-10 13:20Z: la última de DolarApi («oficial») es del 2026-10-09 04:00Z y la regla
   de `rate_policies` (USD/VES, 2000 minutos) la da por vencida. Mientras tanto no se cotiza en bolívares (Pago Móvil,
   transferencia) y la app lo dice al elegir el método; Zelle y USDT siguen. Es el comportamiento previsto (nunca usar
@@ -345,14 +340,3 @@ pnpm stack:start && pnpm db:reset      # backend local con datos demo
 pnpm test:ui                           # comprueba que la app sigue verde
 # luego la «Próxima acción» de arriba o la primera tarea de docs/PENDIENTES.md
 ```
-
-Checkpoint 2026-10-10 22:44 Caracas: segunda build revela que Xcode 27 permite escritura literal de
-outputs `.bundle` y rechaza sus archivos interiores (rsync utimensat/unlinkat). Se marcan esos outputs
-como directorios con `/` final; pruebas 19/19 y verificador aprobados. Tercera build/prueba física pendientes.
-
-Checkpoint 2026-10-10 22:48 Caracas: el slash final tampoco cambia el permiso literal de Xcode.
-La fuente Apple swift-build documenta que los scripts con contenidos/temporales no conocidos no pueden
-adoptar ese sandbox. Se conserva el ajuste global del proyecto y Release; solo el **target KoraDev Debug**
-sobrescribe `ENABLE_USER_SCRIPT_SANDBOXING=NO`. Outputs CocoaPods restaurados. No se toca el sandbox de
-iOS ni macOS, firma/certificados ni scripts de dependencias. Cuarta build/prueba física pendientes.
-Fuente: https://github.com/swiftlang/swift-build/blob/main/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift

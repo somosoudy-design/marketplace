@@ -1,63 +1,88 @@
-# Diagnóstico de la instalación iOS existente
+# Diagnóstico iOS local: cierre resuelto
 
-Relevo del 2026-10-10 22:29 Caracas (2026-10-11 02:29Z). Proyecto del Mac: **`~/marketplace`**,
-rama **`claude/marketplace-v1`**, variante **`.local/ios-personal`**, app **KoraDev / Kora (Dev)**.
-Frente A V2 cerrado. Android/APK 5/producción, Firebase/Supabase remoto, motor financiero y panel intactos.
+**Cierre:** 2026-10-11 00:00 Caracas (UTC−4). Proyecto `~/marketplace`, rama `claude/marketplace-v1`,
+variante `.local/ios-personal`, scheme/target KoraDev, Debug y Personal Team existentes.
+Oliver pidió terminar tras poder abrir la app para probar; **no continuar el desarrollo iOS todavía**.
+Android, APK 5, producción, panel, servicios remotos y reglas financieras intactos.
 
-## Diagnóstico comprobado en Mac — 2026-10-10 22:41 Caracas
+## Causas comprobadas
 
-Ejecución local en `~/marketplace`, rama sincronizada desde `f5efec4`. macOS 27.0.1, Xcode 27.0
-(27A266a), SDK iOS 27.0, Node 22.23.3, pnpm 10.28.0, CocoaPods 1.17.0; iPhone físico iOS 27.0.1,
-conectado por cable, emparejado y con modo desarrollador activo. Proyecto/scheme KoraDev, Debug existente.
+Se sincronizó `f5efec4` y se consultaron directamente los activity logs de Xcode, el log Expo y los
+informes KoraDev del iPhone mediante `xcrun devicectl`. Evidencia privada en `.local/ios-diagnosis/`;
+no publicar UDID, Team ID, certificados, perfiles o logs crudos.
 
-- Se consultaron directamente 17 informes KoraDev del iPhone con `devicectl`, el log Expo de las 22:09
-  y los tres activity logs de Xcode. Evidencia privada en `.local/ios-diagnosis/`.
-- Cierre de las 22:27:37: `EXC_BREAKPOINT / SIGTRAP`, terminación `SIGNAL / Trace/BPT trap: 5`, hilo principal
-  en `___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke`. El Info.plist no tenía
-  `UIApplicationSceneManifest`; AppDelegate creaba UIWindow y arrancaba RN con el ciclo antiguo.
-  Expo 57.0.27 instalado ya incluye `EXExpoAppSceneDelegate` y `ExpoReactNativeFactoryProvider`.
-- Expo compiló correctamente a las 22:09; el intento Xcode de las 22:13 falló en **Bundle React Native code
-  and images**, `react-native-xcode.sh:27`, escritura `KoraDev.app/ip.txt: Operation not permitted`.
-  Sandbox de scripts activo y fase sin outputs declarados. La fase **Copy generated compatibility header**
-  de expo-dev-launcher terminó correctamente; la cabecera generada existe. No se parchea el launcher/Pods.
-- Corrección aplicada con `node tools/ios-personal/repair-native-startup.mjs`: manifest de una escena Expo,
-  AppDelegate proporciona factory sin arrancar RN dos veces, y salida `ip.txt` declarada en la fase RN.
-  Se conserva `ENABLE_USER_SCRIPT_SANDBOXING=YES`, Bundle ID, Team, entitlements, Node local, Pods y datos.
-  Originals respaldados en `.local/ios-diagnosis/startup-backup-*`. No prebuild, borrados ni dependencias nuevas.
-- Plugin/generador local incorpora la misma corrección para futuras variantes; verificador comprueba escenas,
-  AppDelegate y output además de sus guardas anteriores. Pruebas **19/19**, tipos/lint y `--native` aprobados.
-  Primera build corregida: AppDelegate compiló y fase RN pasó; apareció otra salida sin declarar del
-  script CocoaPods de recursos (`resources-to-copy-$(TARGETNAME).txt`). Se declaró ese archivo temporal
-  en el proyecto de la app, sin editar el script generado ni desactivar sandbox.
-  **Checkpoint antes de compilar: build, firma y arranque físico corregidos todavía pendientes.**
+1. **Cierre antes de JavaScript:** `EXC_BREAKPOINT / SIGTRAP`, terminación `SIGNAL / Trace/BPT trap: 5`,
+   hilo principal en `___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke`.
+   El proyecto no tenía `UIApplicationSceneManifest` y AppDelegate arrancaba RN con el ciclo antiguo.
+   iOS 27 exige escenas al compilar con su SDK; Expo 57.0.27 instalado ya incluye el soporte necesario.
+2. **Fallo de build separado:** Expo compiló a las 22:09; Xcode falló a las 22:13 en
+   **Bundle React Native code and images**, `react-native-xcode.sh:27`, escritura `KoraDev.app/ip.txt:
+   Operation not permitted`. **Copy generated compatibility header** de expo-dev-launcher terminó
+   correctamente y la cabecera generada existía; no se parchearon launcher ni Pods.
+3. Las reconstrucciones posteriores demostraron más rechazos del sandbox de scripts: archivo temporal
+   `resources-to-copy-KoraDev.txt` y rsync sobre archivos dentro de los bundles de CocoaPods. Declarar el
+   temporal y añadir `/` final a los outputs no resolvió el acceso interior: Xcode normaliza esas rutas y
+   concede permisos literales. Esos cambios de outputs CocoaPods fueron restaurados.
 
-Referencias primarias: [requisito UIKit de Apple](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle),
-[transformación oficial Expo SDK 57](https://github.com/expo/expo/blob/sdk-57/packages/expo-build-properties/src/iosSceneSupport.ts),
-[sandbox de scripts Xcode](https://developer.apple.com/documentation/Xcode/build-settings-reference).
+Se correlacionó el último crash de las 22:46:14 con el UUID **del binario antiguo**, distinto del corregido;
+no pertenece al arranque nuevo. No hay nuevos informes KoraDev tras instalar y probar la corrección.
 
-## Antecedente del relevo cloud (superado el acceso al Mac)
+## Corrección final
 
-Oliver reporta que `npx expo run:ios --device` compiló e instaló, pero la app se cierra inmediatamente y Metro
-no recibe solicitudes. También reporta Xcode 27, target `expo-dev-launcher`, fase
-`Copy generated compatibility header`, mensaje final `Command PhaseScriptExecution failed`.
-Faltan el comando/error interno de esa fase y el informe de cierre del teléfono. Ese resumen de Xcode no
-identifica la causa; Metro vacío no basta para localizar el fallo. No se sabe aún si el binario instalado
-corresponde a ese intento de build, ni si ambos problemas están relacionados.
+`node tools/ios-personal/repair-native-startup.mjs` repara el proyecto existente sin prebuild ni reinstalar
+Pods. Valida el marcador y Bundle ID antes de escribir y respalda los originales privadamente:
 
-El falso rechazo del Bundle ID está corregido: el verificador parsea el proyecto con la dependencia `xcode`
-existente y comprueba todas las configuraciones del target principal. Acepta comillas opcionales, rechaza ID
-incorrecto/ausente incluso si otro target coincide. Pruebas Linux 11/11, `--native`, proyecto existente copiado
-a temporal con IDs sin comillas y tipos/lint aprobados. No se cambió el código que ejecuta la app.
+- Manifest de una escena con `EXExpoAppSceneDelegate`; AppDelegate adopta
+  `ExpoReactNativeFactoryProvider`, conserva factory/links y deja a Expo crear la ventana e iniciar RN.
+- Salida Metro `ip.txt` declarada; **solo KoraDev/Debug** sobrescribe
+  `ENABLE_USER_SCRIPT_SANDBOXING=NO` por incompatibilidad comprobada de los scripts de CocoaPods.
+  Se conservan el valor global del proyecto, Release y el proyecto Pods. No afecta al sandbox de iOS/macOS.
+- Plugin/generador/verificador de `tools/ios-personal/` incorporan la corrección para evitar regresiones.
+  Sin nuevas dependencias ni cambios de lockfile, SDK, arquitectura, Bundle ID, Team, entitlements o Node local.
 
-Se revisó `expo-dev-launcher` instalado, versión 57.0.20. Su podspec declara rutas de compatibilidad Swift,
-pero no contiene la fase con ese nombre. No hay Pods/proyecto de Pods ni logs del Mac en la nube que permitan
-inspeccionar el script generado. No se ha demostrado un fallo de sandbox, cabecera, firma ni dependencia.
-No se han aplicado parches al launcher, Podfile o configuración de compilación.
+Referencias primarias: [migración Expo SDK 57](https://github.com/expo/fyi/blob/main/ios-scene-lifecycle.md),
+[transformación oficial Expo](https://github.com/expo/expo/blob/sdk-57/packages/expo-build-properties/src/iosSceneSupport.ts),
+[limitación del sandbox de scripts Apple](https://github.com/swiftlang/swift-build/blob/main/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift).
 
-La sesión que preparó este relevo ejecuta Linux en `/workspace/marketplace`, sin `~/marketplace`, Xcode/xcrun,
-terminal Mac adjunta o destino de transferencia disponible. La autorización está concedida; el acceso a esa
-máquina requiere abrir/continuar la tarea en Codex **local**, con el proyecto existente `~/marketplace`.
-Un permiso de macOS no conecta este contenedor al Mac.
+## Resultados ejecutados en el Mac y iPhone
+
+Entorno: macOS 27.0.1; Xcode 27.0 (27A266a), SDK iOS 27.0; Node 22.23.3, pnpm 10.28.0,
+CocoaPods 1.17.0; iPhone físico iOS 27.0.1 conectado por cable y con modo desarrollador.
+
+| Comprobación | Resultado |
+|---|---|
+| Guardas/verificador y regresiones de arranque | **19/19**, `--native` aprobado |
+| Tipos/lint del monorepo | Aprobados |
+| Núcleo compartido | **50/50** |
+| Workspace KoraDev Debug, destino físico | **BUILD SUCCEEDED**; Swift/Pods/link/firma completados |
+| Xcode Run en el iPhone | Instala encima conservando datos; ejecuta bajo LLDB |
+| Firma de la app compilada | `codesign --verify --deep --strict` aprobado; perfil existente de desarrollo, sin APNs/Associated Domains |
+| Metro | Servidor existente reutilizado; Xcode registra GET del bundle iOS Hermes y ejecución de `main` |
+| Pantalla física | Inicio con catálogo Demo e imágenes; Cuenta observada, sin cierre |
+| Reapertura normal fuera de Xcode | Aprobada: Inicio visible, sesión existente y contador de carrito conservados; proceso continúa vivo |
+| Registros de cierre finales | Último informe sigue siendo el del binario antiguo; ninguno nuevo después de la instalación corregida |
+
+Capturas privadas: `.local/ios-diagnosis/iphone-home-dark.png` y `iphone-reopened.png`.
+No convertir esto en validación integral: **no** se ejecutaron checkout/pagos, fotos, Keychain/login completo,
+claro/oscuro integral, VoiceOver, Release ni simulador. Oliver decidió posponer esas pruebas y el resto de iOS.
+El aviso heredado «Tasa del día no disponible» se observó; no se modificó su lógica ni el backend.
+
+## Para que Oliver pruebe ahora
+
+Abrir **Kora (Dev)** en el iPhone. Dejar Metro activo en el Mac y ambos en la misma red; si aparece el
+launcher, seleccionar el servidor Kora (Dev). La versión instalada es Debug y necesita Metro.
+No hace falta regenerar ni compilar otra vez para probar las pantallas actuales.
+El perfil gratuito existente vence el **2026-10-17 21:49 Caracas**; no se renovó ni eliminó ningún certificado.
+
+Si Metro se cerró:
+
+```bash
+cd ~/marketplace/.local/ios-personal
+npx expo start --dev-client --lan
+```
+
+Para retomar algún día: sincronizar sin borrar `.local/ios-personal`, leer esta evidencia y la guía
+`IOS_PERSONAL_TEAM.md`. Pruebas físicas ampliadas solo cuando Oliver las solicite. No avanzar por iniciativa propia.
 
 ## Protocolo del agente local
 
@@ -111,14 +136,3 @@ Estos comandos de Xcode/CocoaPods son instrucciones para el Mac; no fueron ejecu
 Abrir **el workspace existente**, no el `.xcodeproj` aislado, para incluir los Pods. Conservar firma/Apple ID
 y datos de la aplicación. Firma Personal Team caduca a los 7 días; no asumir que esa es la causa sin registro.
 Sin EAS Update/build, APK nuevo, App Store/TestFlight/ad hoc, gastos ni Frente B.
-
-Checkpoint 2026-10-10 22:44 Caracas: segunda build revela que Xcode 27 permite escritura literal de
-outputs `.bundle` y rechaza sus archivos interiores (rsync utimensat/unlinkat). Se marcan esos outputs
-como directorios con `/` final; pruebas 19/19 y verificador aprobados. Tercera build/prueba física pendientes.
-
-Checkpoint 2026-10-10 22:48 Caracas: el slash final tampoco cambia el permiso literal de Xcode.
-La fuente Apple swift-build documenta que los scripts con contenidos/temporales no conocidos no pueden
-adoptar ese sandbox. Se conserva el ajuste global del proyecto y Release; solo el **target KoraDev Debug**
-sobrescribe `ENABLE_USER_SCRIPT_SANDBOXING=NO`. Outputs CocoaPods restaurados. No se toca el sandbox de
-iOS ni macOS, firma/certificados ni scripts de dependencias. Cuarta build/prueba física pendientes.
-Fuente: https://github.com/swiftlang/swift-build/blob/main/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift

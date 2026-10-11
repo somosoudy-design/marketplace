@@ -16,6 +16,26 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 04:00Z (2026-10-11 00:00 Caracas, UTC−4) · Codex (Mac local de Oliver) · Oliver
+- Continuidad: sincronizado `f5efec4`; proyecto `.local/ios-personal` existente, firma y configuración privada
+  preservados. Consultados directamente logs Xcode/Expo e informes KoraDev del iPhone.
+- Causas: UIKit rechaza ciclo antiguo sin escenas en iOS 27; build Xcode falla por escrituras no permitidas
+  del sandbox en scripts RN/CocoaPods. `Copy generated compatibility header` de expo-dev-launcher pasó.
+- Corrección: escena Expo SDK 57, provider en AppDelegate sin doble arranque, helper reparador con respaldo;
+  compatibilidad de scripts solo target KoraDev Debug. Proyecto global/Release/Pods intactos. Las propuestas
+  de outputs CocoaPods que no resolvieron el problema fueron restauradas. Sin dependencias nuevas/prebuild/borrados.
+- Checkpoints subidos: `cff0d52`, `12686cb`, `0d30497`, `db33ab9`. Cierre final probado en este commit;
+  Git HTTPS no tenía credencial, push completado con la autenticación SSH existente, sin modificar el remoto.
+- Pruebas Mac: 19/19, `--native`, tipos/lint, core 50/50, build workspace Debug aprobado y firma verificada.
+  Xcode Run instala/ejecuta en el iPhone; Metro entrega Hermes, Inicio/Cuenta observados, reapertura normal
+  fuera del depurador aprobada con sesión existente y contador de carrito. Sin nuevos informes del binario nuevo.
+- Límites: no validación integral de login/Keychain/fotos/checkout/temas/VoiceOver, Release ni simulador.
+  Oliver cambió el alcance: solo abrir para probar, no continuar iOS todavía. iOS ampliado pospuesto.
+- Servicios: ninguna publicación, cambio remoto, pago ni operación financiera. Android/APK 5/producción intactos.
+- Siguiente: Oliver prueba Kora (Dev) con Metro activo; retomar iOS solo a petición. Evidencia/guía en
+  `docs/IOS_DIAGNOSTICO.md`; archivos privados en `.local/ios-diagnosis/`. Sin WIP funcional activo.
+- Último commit: consultar `git log -1 origin/claude/marketplace-v1` (cierre de este relevo).
+
 ### 2026-10-11 02:29Z (2026-10-10 22:29 Caracas, UTC−4) · Codex (entorno cloud Linux) · Oliver
 - Pedido: diagnosticar cierre inmediato de la instalación Personal Team y fallo Xcode 27
   `expo-dev-launcher / Copy generated compatibility header`; corregir también Bundle ID sin comillas.
