@@ -16,6 +16,13 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 17:15Z · Codex cloud · Oliver · checkpoint Mi tienda operativa
+- Nuevo alcance: Oliver probó VEN-01A y autoriza perfil, productos y acciones de pedidos, por bloques y en ese orden. No repetir lectura/carrito/franja.
+- Base `887197b` limpia y sincronizada; AGENTS/estado/pendientes/arquitectura/dirección leídos. Un solo agente.
+- Perfil en implementación local; tipos/lint aprobados. Contratos revisados del panel/RLS: campos permitidos, estado/slug/kind/rating protegidos, bucket stores 5 MB/JPG/PNG/WebP con solo INSERT. Pruebas de persistencia, galería, error/reintento, permisos y aislamiento preparadas; todavía sin resultado.
+- Servicios: ninguno. Este checkpoint solo conserva alcance/documentación antes del build. No EAS, APK, remoto, finanzas o iOS. Cambios API posteriores con `[skip ci]` para evitar panel deploy.
+- Siguiente: validar/cerrar bloque 1; después catálogo, después acciones de pedidos. BCV crítico separado.
+
 ### 2026-10-11 16:52Z (12:52 Caracas) · Codex (cloud Linux) · Oliver · cierre publicación VEN-01A APK 5
 - Autorización: Oliver «Sí, publica». EAS preview run 38156171005 **Success**, fuente `2d00f96`,
   guard runtime exacto APK 5 aprobado antes de publicar. Publicación Android 2026-10-11 16:38 UTC.

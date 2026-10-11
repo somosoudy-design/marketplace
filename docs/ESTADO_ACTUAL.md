@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 12:52 (Caracas, UTC−4), por Codex cloud (VEN-01A publicado en preview y comprobado en APK 5; sin WIP activo).
+**Última actualización:** 2026-10-11 13:15 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa autorizada; bloque 1 en validación local).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + multirrol `5f90e27`, publicado fuente `2d00f96`, prueba nativa `098f430`; cierre documental posterior |
-| Plan vigente | VEN-01A terminado/publicado: Mi tienda, resumen y consulta de productos/pedidos/configuración. Android visitante aprobado; revisión física con roles pendiente. VEN-01B/C fuera de alcance, iOS pospuesto |
-| Objetivo actual | Bloque cerrado: preview run 38156171005 y Android run 38156560856 Success; runtime APK 5/OTA nueva comprobados. Esperar revisión de Oliver con tienda real; sin APK nuevo o cambios financieros/backend/panel/iOS |
+| Plan vigente | Oliver comprobó VEN-01A en Android y solicita ampliación operativa: 1 edición de tienda, 2 productos, 3 pedidos. Cerrar cada bloque con pruebas locales, commit y push. iOS pospuesto |
+| Objetivo actual | Bloque 1: perfil editable y galería, permisos/persistencia/errores/aislamiento contra backend local. No EAS Update, APK nuevo, servicios remotos, finanzas, checkout o iOS |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -112,6 +112,10 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
+**Nuevo alcance autorizado: Mi tienda operativa.** Base sincronizada `887197b`. Bloque 1 en implementación/validación local; código todavía sin publicar. Tipos/lint aprobados. Se reutilizan campos y RLS de perfil del panel, bucket `stores` (INSERT, sin overwrite/delete), picker ya presente en APK 5. Antes del build se conserva este checkpoint de alcance; cierre del bloque solo después de pruebas reales. Bloques 2/3 pendientes, en ese orden. BCV mantiene prioridad crítica separada. **No publicar EAS ni desplegar backend/panel**; commits API con `[skip ci]` evitan el deploy automático.
+
+### Antecedente VEN-01A cerrado
+
 **VEN-01A terminado, sin WIP funcional activo.** Base `da4dd54`, alcance `c2a9910`, implementación `cc6db73`,
 separación de pedidos compradores por cuenta `5f90e27`. Informe de consultas, pruebas y límites: `docs/VEN-01A.md`.
 Cuenta usa `api.account.roles/stores` (filas reales), conserva compra/administración y abre `/my-store`.
@@ -147,7 +151,7 @@ OTA `01a12bd4-1483-7096-b0c2-de39d35f4c15`, preview/runtime APK 5, publicada 202
 Las **14 capturas nativas del recorrido se revisaron**; código móvil/API idéntico al publicado.
 [Evidencia inmutable](https://github.com/somosoudy-design/marketplace/tree/61ebb1d0e2e03d9b18beb991b59351eadbaf9985/ultima).
 Sin cuentas o escrituras remotas; no sustituye los 22 casos locales con vendedor/admin. Sin iOS/Xcode, checkout, pagos,
-dependencias, servicios backend/panel o APK nuevo. No repetir comprador/franja ni empezar VEN-01B/C.
+dependencias, servicios backend/panel o APK nuevo. No repetir comprador/franja; la ampliación operativa está autorizada en el nuevo bloque superior.
 
 ### Antecedentes cerrados — 4.3 y sesión comprador
 
@@ -310,20 +314,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**VEN-01A publicado y comprobado, sin WIP activo.** No repetir publicación, implementación ni pruebas
-de franja/carrito/checkout sin un fallo nuevo. Revisión física de Oliver con tienda asignada: Cuenta →
-Mi tienda, productos/pedidos/configuración, cambio entre tiendas, vuelta a comprar; vendedor/admin/multirrol,
-cambio de cuenta, modo claro/oscuro, TalkBack/fluidez/navegador. No usar clientes para simular permisos.
-
-Para confirmar recepción: en Cuenta, al pie, actualización **`01a12bd4`**; en `kora://diagnostico`,
-OTA completa `01a12bd4-1483-7096-b0c2-de39d35f4c15`, publicada 2026-10-11 16:38 UTC, preview/runtime
-APK 5. Abrir con conexión, cerrar/abrir o pulsar «Reiniciar» si aparece el aviso. No reinstalar ni borrar datos.
-Mi tienda requiere pertenencia real; admin sin tienda conserva Administración. No hubo cambios de roles remotos.
-
-Si aparece un fallo nuevo, reproducirlo con los archivos de `docs/VEN-01A.md`:
-`pnpm --filter @kora/app-e2e build:web` y `seller-app.spec.ts` con el runner app. Las suites actuales ya están
-aprobadas; no repetir auditorías generales ni borrar/resetear datos locales. Siguiente desarrollo previsto,
-solo con nuevo alcance de Oliver: VEN-01B (editor/productos/fotografías/existencias). Sin iOS ni Frente B.
+Terminar bloque 1: ejecutar `seller-store-edit.spec.ts` y regresiones `seller-app.spec.ts` sobre export web con stack local; permisos `seller-store-write.test.ts` en copia nueva sin reset. Revisar capturas de formularios/errores/página pública en ambos temas. Cerrar con documentación, commit y push antes de enlazar gestión de productos. Después: bloque 2 y bloque 3 según contratos existentes; no tocar tasas BCV, iOS ni solicitudes de publicación. Android físico no conectado; la OTA instalada sigue siendo VEN-01A `01a12bd4`.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

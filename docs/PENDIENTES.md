@@ -32,15 +32,15 @@ Sin cuentas o escrituras remotas. No se afirma recepción en el teléfono físic
 Mi tienda y sus secciones de consulta funcionan con roles/pertenencias/RLS reales, conservando compras
 propias del usuario incluso con permisos administrativos. Fuentes `cc6db73`/`5f90e27`; UI 22/22,
 permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y revisión de 18 capturas. Detalle: `docs/VEN-01A.md`.
-VEN-01B/C siguen en backlog, sin autorización para implementarlas. Los vendedores administrarán su tienda sin salir
+Oliver probó la base de lectura en Android y autorizó Mi tienda operativa; orden obligatorio: perfil, catálogo y pedidos. Publicación pausada. Los vendedores administrarán su tienda sin salir
 de HAYAZGO; el panel web seguirá disponible para funciones avanzadas. Reutilizar roles/permisos y operaciones
 existentes del panel/backend; no duplicar reglas comerciales ni crear permisos decididos por el cliente.
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Pendiente de Oliver. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización `01a12bd4` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
-| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Prioridad alta, después de revisión de VEN-01A y nuevo alcance de Oliver |
-| VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | Después de VEN-01B; la consulta de pedidos/configuración ya existe en VEN-01A, no duplicarla |
+| VEN-01A-R | Revisión física de Mi tienda en APK 5: tienda asignada, vendedor/admin/multirrol, cambio de cuenta, TalkBack/fluidez/navegador | Oliver comprobó VEN-01A: funciona como lectura, solicita operaciones. TalkBack/fluidez detallados pendientes. Preview/guard y Android visitante 2/2 aprobados. Confirmar actualización `01a12bd4` al pie de Cuenta; no repetir publicación, franja/carrito o generar APK |
+| VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Autorizada; después de cerrar edición de tienda con pruebas/commit/push |
+| VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | Autorizada: configuración editable primero; acciones de pedidos después del catálogo. Reusar consulta existente |
 
 ## iOS gratuita — pospuesta por Oliver
 
