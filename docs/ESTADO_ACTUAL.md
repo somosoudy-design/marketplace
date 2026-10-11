@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 12:06 (Caracas, UTC−4), por Codex cloud (VEN-01A implementado y probado; cierre visual/documentación pendiente, sin publicación).
+**Última actualización:** 2026-10-11 12:16 (Caracas, UTC−4), por Codex cloud (VEN-01A: corregido alcance comprador para cuentas con varios roles; repetir UI y cerrar, sin publicación).
 
 ## Dónde está el trabajo
 
@@ -105,7 +105,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**VEN-01A implementado; cierre de revisión visual/documentación en curso.** Base `da4dd54`, checkpoint `c2a9910`.
+**VEN-01A implementado; cierre de revisión visual/documentación en curso.** Base `da4dd54`, alcance `c2a9910`, implementación `cc6db73`.
 Cuenta usa `api.account.roles/stores` (filas reales), conserva compra/administración y abre `/my-store`.
 Selector multitienda; resumen `seller_dashboard`, productos RLS paginados de 30 en 30, pedidos con
 `seller_fulfillments`/etiquetas de pasos del backend y configuración solo consulta. Panel avanzado existente.
@@ -113,7 +113,13 @@ Lecturas con sesión/anon; ninguna escritura nueva, permiso simulado, RPC o migr
 persistidos en disco; claves por usuario/tienda y limpieza al salir/cambiar cuenta.
 Pruebas aprobadas: UI **22/22**, claro/oscuro (1,6 min, 320 px en recorrido principal), servidor **6/6**
 en copia local nueva sin borrar datos, núcleo **50/50**, tipos/lint y exportación web. Contraste: 22 pares
-AA, mínimo 4,78:1. Capturas `.local/ven01a/screens/`; falta terminar revisión completa y exportación Android final.
+AA, mínimo 4,78:1. Capturas `.local/ven01a/screens/`; exportación Android JS/Hermes aprobada para `cc6db73`.
+La revisión visual detectó que «Mis pedidos» de administradores incluía pedidos ajenos: su RLS permite
+consultarlos y la consulta compradora no filtraba `buyer_id`. Cuatro regresiones reproducidas antes del arreglo.
+Corregido únicamente el alcance de lectura de `useOrders`: filtro por comprador y clave de caché por usuario,
+sin alterar RLS, herramientas administrativas, checkout o finanzas. API conserva la lectura amplia cuando no
+se solicita filtro. Tipos/lint aprobados; repetir los 22 casos UI, incluidos pedidos propios del administrador,
+y actualizar el bundle Android antes de cerrar. No restaurar caché antigua sin usuario en esta vista.
 Prueba de abrir panel intercepta solo el destino externo: verifica URL/ventana/sesión, no reconstruye el panel.
 Primeros fallos de prueba documentados en historial; corregidos sin desactivar casos.
 Commits de API llevan `[skip ci]`: `panel-deploy.yml` despliega automáticamente por `packages/api/**`;
@@ -279,8 +285,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Agente: cerrar revisión visual de `.local/ven01a/screens/`, exportación Android (solo JS/Hermes) y documentación.
-UI/servidor/núcleo ya aprobados; no repetir suites generales. No solicitar actualizaciones
+Agente: reconstruir web y repetir `seller-app.spec.ts` con `playwright-app.config.ts` tras el filtro comprador;
+cerrar revisión visual de `.local/ven01a/screens/`, exportación Android (solo JS/Hermes) y documentación.
+Servidor/núcleo ya aprobados; no repetir suites generales. No solicitar actualizaciones
 o workflows de APK. Revisión de Oliver del paquete anterior continúa independientemente:
 
 Revisión física de Oliver, **sin otro APK ni otra publicación**: abrir HAYAZGO con conexión, dejar descargar

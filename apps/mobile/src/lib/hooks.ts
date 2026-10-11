@@ -160,7 +160,7 @@ export const useAddresses = () => {
 };
 export const useOrders = () => {
   const { user } = useAuth();
-  return useQuery({ queryKey: qk.orders, queryFn: api.orders.list, enabled: !!user });
+  return useQuery({ queryKey: [...qk.orders, user?.id], queryFn: () => api.orders.list(user!.id), enabled: !!user });
 };
 export const useOrder = (id: string) => useQuery({ queryKey: qk.order(id), queryFn: () => api.orders.detail(id), refetchInterval: 30_000 });
 export const useFulfillmentSteps = () => useQuery({ queryKey: qk.steps, queryFn: api.orders.steps, staleTime: 30 * 60_000 });

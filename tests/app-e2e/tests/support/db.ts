@@ -72,7 +72,7 @@ export async function newBuyer(label: string) {
 }
 
 /** Places an order (one dog toy from Patitas & Co.) for the buyer through the same function as checkout. */
-async function placeOrder(client: pg.Client, as: As, userId: string) {
+export async function placeOrder(client: pg.Client, as: As, userId: string) {
   const variant = (await client.query(`select v.id from public.product_variants v join public.products p on p.id = v.product_id where p.slug = 'juguete-cuerda-perros' limit 1`)).rows[0].id;
   await as(userId, `select public.cart_set_quantity($1, 1)`, [variant]);
   const { r } = await as<{ r: { order_id: string; number: string } }>(

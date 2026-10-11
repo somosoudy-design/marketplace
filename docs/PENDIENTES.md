@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 12:06 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 12:16 (Caracas, UTC−4).
 
 ## Sesión corta — prioridad vigente
 
@@ -31,7 +31,7 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A | Acceso «Mi tienda», roles reales, resumen y consulta de productos/pedidos/configuración, navegación | Implementado: UI 22/22, servidor 6/6, núcleo 50/50, tipos/lint; cerrar revisión visual/exportación Android final y documentación. Sin EAS Update |
+| VEN-01A | Acceso «Mi tienda», roles reales, resumen y consulta de productos/pedidos/configuración, navegación | Implementado; revisión visual detectó pedidos ajenos en vista compradora admin. Filtro por comprador corregido, tipos/lint aprobados; repetir UI 22 casos, actualizar bundle JS Android y cerrar documentos. Servidor 6/6, núcleo 50/50. Sin EAS Update |
 | VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Después de VEN-01A |
 | VEN-01C | Pedidos recibidos, configuración de tienda y acciones comerciales básicas | Después de VEN-01B |
 

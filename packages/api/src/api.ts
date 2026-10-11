@@ -228,10 +228,13 @@ export function createApi(client: KoraClient) {
   };
 
   const orders = {
-    list: () =>
-      run<(Order & { order_items: { title: string; image_path: string | null; quantity: number }[] })[]>(
-        from('orders').select('*, order_items(title, image_path, quantity)').order('placed_at', { ascending: false }),
-      ),
+    /** Buyer views must also filter by owner: an administrator's RLS permits broader reads. */
+    list: (buyerId?: string) => {
+      const query = from('orders').select('*, order_items(title, image_path, quantity)').order('placed_at', { ascending: false });
+      return run<(Order & { order_items: { title: string; image_path: string | null; quantity: number }[] })[]>(
+        buyerId ? query.eq('buyer_id', buyerId) : query,
+      );
+    },
     detail: (id: string) =>
       run<OrderDetail | null>(
         from('orders')

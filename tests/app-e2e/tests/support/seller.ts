@@ -1,14 +1,16 @@
 // Additive fixtures on the LOCAL development stack. No resets, payments or remote credentials.
 import pg from 'pg';
-import { asOn, databaseUrl, newBuyer } from './db';
+import { asOn, databaseUrl, newBuyer, placeOrder } from './db';
 
-export async function adminFixture(label: string) {
+export async function adminFixture(label: string, opts: { purchase?: boolean } = {}) {
   const user = await newBuyer(label);
   const c = new pg.Client({ connectionString: databaseUrl() });
   await c.connect();
-  try { await c.query(`insert into public.user_roles (user_id, role) values ($1, 'admin')`, [user.id]); }
+  try {
+    await c.query(`insert into public.user_roles (user_id, role) values ($1, 'admin')`, [user.id]);
+    return { ...user, order: opts.purchase ? await placeOrder(c, asOn(c), user.id) : undefined };
+  }
   finally { await c.end(); }
-  return user;
 }
 
 export async function sellerFixture(label: string, opts: { admin?: boolean; empty?: boolean; multi?: boolean } = {}) {

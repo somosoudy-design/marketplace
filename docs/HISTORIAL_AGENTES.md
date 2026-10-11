@@ -16,6 +16,18 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 16:16Z (12:16 Caracas) · Codex (cloud Linux) · Oliver · checkpoint alcance comprador multirrol
+- Revisión visual de VEN-01A detectó que un administrador recién creado veía pedidos de otros compradores.
+  Cuatro casos fallaron antes del arreglo en ambos temas; RLS permite esas lecturas a administradores.
+- Corrección mínima: `api.orders.list(buyerId?)` filtra cuando la vista compradora proporciona su usuario;
+  `useOrders` usa ese filtro y una clave por cuenta para evitar reutilizar caché amplia anterior. Las lecturas
+  administrativas sin filtro conservan sus permisos. Sin cambios a checkout, cálculos, pagos o RLS.
+- Pruebas ampliadas: cuenta admin con una compra real de prueba y cuenta con varios roles sin compras;
+  ambas deben excluir compras ajenas. Tipos/lint aprobados. Repetir UI 22 casos y exportar web/Android JS.
+- Servicios: ninguno remoto; fixtures aditivos locales, sin pagos ni borrados. Commit `[skip ci]` impide
+  despliegue automático del panel; no publicar OTA ni APK. Siguiente: validar y cerrar el relevo VEN-01A.
+- Último commit: este checkpoint; consultar `git log -1 origin/claude/marketplace-v1`.
+
 ### 2026-10-11 16:06Z (12:06 Caracas) · Codex (cloud Linux) · Oliver · checkpoint implementación VEN-01A
 - Implementado: Cuenta con roles/pertenencia reales (`api.account.roles/stores`), Mi tienda nativa,
   selección entre tiendas, resumen, catálogo paginado, pedidos recibidos/cerrados y configuración solo consulta.

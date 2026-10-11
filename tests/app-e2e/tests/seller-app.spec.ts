@@ -58,16 +58,26 @@ for (const colorScheme of ['light', 'dark'] as const) {
     });
 
     test('admin keeps administration without an assigned seller store', async ({ page }) => {
-      await signIn(page, await adminFixture(`ven-admin-${colorScheme}`));
+      const admin = await adminFixture(`ven-admin-${colorScheme}`, { purchase: true });
+      const orders = page.waitForResponse((r) => r.url().includes('/rest/v1/orders?') && r.ok());
+      await signIn(page, admin);
+      const purchases = await (await orders).json();
+      expect(purchases.map((o: { id: string }) => o.id)).toEqual([admin.order!.orderId]);
+      await expect(page.getByTestId('account-orders')).toContainText('1 en curso');
       await expect(page.getByTestId('account-admin')).toBeVisible();
       await expect(page.getByTestId('account-my-store')).toHaveCount(0);
       await expect(page.getByTestId('account-orders')).toBeVisible();
       await page.screenshot({ path: `${shots}/${colorScheme}-account-admin.png` });
+      await page.getByTestId('account-orders').click();
+      await expect(page.getByTestId(`order-${admin.order!.number}`)).toBeVisible();
+      await expect(page.locator('[data-testid^="order-"]:visible')).toHaveCount(1);
     });
 
     test('multiple roles keep buying, seller and administration in one session', async ({ page }) => {
       const mixed = await sellerFixture(`ven-mixed-${colorScheme}`, { admin: true, empty: true });
+      const orders = page.waitForResponse((r) => r.url().includes('/rest/v1/orders?') && r.ok());
       await signIn(page, mixed);
+      expect(await (await orders).json()).toEqual([]);
       await expect(page.getByTestId('account-admin')).toBeVisible();
       await expect(page.getByTestId('account-orders')).toBeVisible();
       await openStore(page);
