@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 10:41 (Caracas, UTC−4), por Codex cloud (Oliver autoriza actualización APK 5; publicación preview en curso).
+**Última actualización:** 2026-10-11 10:46 (Caracas, UTC−4), por Codex cloud (preview publicado compatible APK 5; validación nativa en curso).
 
 ## Dónde está el trabajo
 
@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. Corrección JS 4.3 `adf3c78`, reproducción `2323eb2`; recorrido ampliado en este cierre. Comprador `e9b56a0`, VEN-01 `70443c0`. iOS cerrado `9d22155`; Frente A V2 `cf7a1b9`, fuente OTA `b60b2cc` |
 | Plan vigente | Sesión corta cerrada: dos fallos comprador corregidos, VEN-01 en backlog y 4.3 reproducida/corregida en JS. Validación del código nuevo en Android pendiente; iOS pospuesto. Sin Frente B |
-| Objetivo actual | Publicación Android preview autorizada para APK 5; guard del runtime obligatorio. Después validar franja/Favoritos/Inicio en el emulador, claro/oscuro. Sin APK nuevo ni canal production |
+| Objetivo actual | Preview publicado: run 38148288379 Success, fuente 41d415f, guard APK 5 aprobado. Validación franja/Favoritos/Inicio revisión 34 en emulador, claro/oscuro. Sin APK nuevo ni canal production |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -105,13 +105,20 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**4.3 — actualización para APK 5 autorizada, en curso (10:41 Caracas).** Oliver respondió explícitamente
+**4.3 — preview publicado; validación nativa en curso (10:46 Caracas).**
+[EAS run 38148288379](https://github.com/somosoudy-design/marketplace/actions/runs/38148288379) **Success**,
+fuente `41d415f`. Guard del runtime APK 5 aprobado antes de publicar; publicación Android/preview terminó
+14:44:36Z y reporte Success. Sin nuevo APK. Solicitud de emulador revisión 34 selecciona solo flujo 04
+ampliado, claro/oscuro. Confirmar diagnóstico de OTA nueva y 14 capturas antes de dar por cerrado el fallo.
+Lectura directa del manifiesto `u.expo.dev` bloqueada por proxy 403; no se usa como verificación.
+
+Oliver respondió explícitamente
 «Autorizar actualización para APK 5» a la aclaración que indicaba EAS Update `preview` y llegada a su Android.
 Esto sustituye la prohibición anterior de publicar **para esta actualización**; no autoriza APK nuevo,
 `production`, iOS, Frente B ni cambios financieros/panel/servicios. Rama `ca0923d` sincronizada.
-Solicitada publicación con el workflow existente y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
+Publicación con workflow existente y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
 Paquete incluye corrección 4.3 `adf3c78` y errores comprador `e9b56a0`, ya probados. Guard debe aprobar
-antes de publicar. Esperar Success antes de solicitar emulador/flujo 04, para no probar otra vez la OTA vieja.
+antes de publicar, ya aprobado. Emulador solicitado después de Success para comprobar la OTA nueva.
 
 **Continuación 4.3 (10:38 Caracas): preparación terminada; ejecución nativa bloqueada.** Rama `adf3c78`
 sincronizada y documentos revisados; geometría repetida **9/9**, 289 ms. Sin ADB/emulador Android o terminal
@@ -281,14 +288,14 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Primero confirmar Success de la actualización autorizada del workflow `.github/workflows/eas-update-preview.yml`:
-runtime obligatorio
-`eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, solo Android/preview, fuente con `adf3c78` y `e9b56a0`.
-El guard de fingerprint debe aprobar **antes** de publicar; no cambiar configuración nativa, runtime o
-workflows para eludirlo. Después ejecutar únicamente el flujo 04 ampliado en ambos temas sobre APK 5,
-verificar el commit/run de las capturas y el diagnóstico de la OTA cargada; revisar visualmente las siete
-capturas por tema. Autorización explícita recibida: no volver a pedirla para este paquete. No publicar en
-`production` ni generar un APK.
+Primero obtener resultado de revisión 34 del emulador, solicitada después de EAS run 38148288379 Success.
+`git fetch origin ci/capturas`; comprobar `ultima/LEEME.md` contra el commit de esta solicitud y no mezclar
+las imágenes con las de revisión 33/OTA vieja. Revisar resumen de Maestro y diagnóstico: runtime
+`eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, actualización nueva publicada 2026-10-11 ~14:44Z.
+Comparar las siete capturas por tema, en especial título/flecha/contenido en Favoritos e Inicio. Si aparece
+un fallo, investigar el concreto; no dar por arreglado solo porque pasa Maestro. Cerrar con evidencias y
+documentación/commit/push. Publicación ya autorizada: no volver a pedir permiso para este paquete;
+sin canal production o APK nuevo.
 
 Alternativa sin publicación: validar **el código corregido de 4.3** en un entorno Android local ya disponible.
 Usar `tests/apk-flows/04-franja-sin-conexion.yaml`: Cuenta → Favoritos, conexión/modo avión/Atrás/reentrada/

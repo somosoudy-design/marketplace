@@ -1,4 +1,4 @@
-# Revisión 33: pendiente 4.3; modo avión con enabled/disabled de Maestro 2.11, APK 5 existente.
+# Revisión 34: validar corrección 4.3 y Inicio tras EAS preview Success 38148288379 / fuente 41d415f.
 # Solo visitantes: lectura pública del catálogo y carrito del dispositivo; sin registro, pedidos, pagos ni push.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
 flows: 04-franja-sin-conexion

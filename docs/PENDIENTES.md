@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 10:41 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 10:46 (Caracas, UTC−4).
 
 ## Sesión corta — prioridad vigente
 
@@ -19,8 +19,9 @@ iOS **pospuesto por el propietario**; la app ya abre en iPhone (cierre local `9d
 extra en claro/oscuro. Corrección JS Android guardada y probada (geometría 9/9, comprador web 6/6,
 tipos/lint y exportaciones aprobados). Falta ejecutar esa corrección en Android; no se publicó.
 Recorrido 04 ampliado con Inicio: 39 pasos, 14 capturas entre ambos temas; YAML aprobado, ejecución nativa
-pendiente. Oliver autorizó explícitamente EAS Update `preview` compatible con APK 5; solicitud de publicación
-en curso con guard del runtime. Después se ejecuta el flujo ampliado. Sin otra publicación/APK autorizado.
+pendiente. Oliver autorizó explícitamente EAS Update `preview` compatible con APK 5: run 38148288379
+Success, guard aprobado, fuente `41d415f`. Revisión 34 del emulador solicitada tras publicar; confirmar la
+OTA cargada y revisar capturas. Sin canal production/APK nuevo.
 
 ### VEN-01 — Gestión de vendedores dentro de la app
 
@@ -102,7 +103,7 @@ Todo preparado en código y documentado en `docs/SERVICIOS_EXTERNOS.md`; nada si
 |---|---|---|
 | 4.1 | CI en GitHub Actions con el stack local (hoy las suites corren solo en la máquina de quien trabaja) | El stack sin Docker ya funciona en Linux; falta el workflow |
 | 4.2 | Verificación automática de pagos USDT en cadena (TRC20) | Sin custodiar fondos; solo leer la transacción y comparar monto y destino |
-| 4.3 | Franja sin conexión / inset superior de native-stack | En curso: Oliver autoriza actualización APK 5 por preview. Corrección JS `adf3c78`, comprador `e9b56a0`; geometría 9/9 y web 6/6 aprobados. Esperar publicación compatible y después flujo 04 ampliado (14 capturas claro/oscuro). Run 38113135559 antiguo solo reproduce el fallo; aún sin validación nativa del cambio. Sin APK nuevo/canal production |
+| 4.3 | Franja sin conexión / inset superior de native-stack | En curso: preview publicado, run 38148288379 Success/fuente 41d415f, runtime APK 5 aprobado. Corrección `adf3c78`, comprador `e9b56a0`. Revisión 34 del emulador/flujo 04 solicitada; verificar OTA nueva y 14 capturas claro/oscuro. Todavía sin resultado nativo de la corrección. Sin APK nuevo/canal production |
 | 4.5 | Insignias «Tienda verificada» y «Tienda asociada» | El diseño está hecho; falta un dato que solo ponga un administrador, mostrarlo en la app y otorgarlo desde el panel. Detalle en `docs/INSIGNIAS_TIENDAS.md` |
 | 4.6 | Foto de perfil: al eliminar una cuenta, borrar también su archivo del bucket `avatars` | `process_account_deletion` ya deja `avatar_path` vacío, pero el archivo queda en la carpeta privada del usuario (nadie más puede verlo). Hacerlo desde una función con la API de Storage |
 | 4.7 | Texto del permiso de fotos en iOS (`app.config.ts`, `expo-image-picker`) | La variante iOS Personal Team ya incluye perfil; la configuración compartida permanece intacta para conservar APK 5. Cambiarla solo con el próximo build autorizado, no por OTA |

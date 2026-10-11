@@ -16,6 +16,16 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 14:46Z (10:46 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint después de preview
+- Publicación autorizada: EAS run 38148288379 Success, fuente `41d415f`. Guard APK 5 aprobado 14:43:35Z;
+  Android/preview publicado 14:44:36Z, reporte Success. Sin build nuevo, canal production o servicios alterados.
+- Prueba solicitada tras Success: revisión 34, APK 5 existente, únicamente flujo 04 ampliado en claro/oscuro.
+  Esperar resumen/capturas del commit correcto; diagnóstico debe mostrar OTA nueva ~14:44Z y runtime APK 5.
+- Lectura directa de manifiesto EAS bloqueada por proxy 403; no contada como evidencia. Se verifica recepción
+  desde diagnóstico del emulador, sin afirmar todavía instalación/recepción en Android físico de Oliver.
+- Pendiente: 14 capturas, resultado funcional y evaluación visual real de franja/encabezado/contenido/Inicio.
+- Último commit: este checkpoint WIP de prueba nativa tras publicación; cerrar después del resultado.
+
 ### 2026-10-11 14:41Z (10:41 Caracas, UTC−4) · Codex (cloud Linux) · Oliver · checkpoint antes de EAS Update
 - Autorización: respuesta explícita «Autorizar actualización para APK 5»; pregunta especificaba preview y
   entrega a su Android. Autoriza publicar este paquete pese a la prohibición de la sesión corta anterior.
