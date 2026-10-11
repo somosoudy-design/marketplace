@@ -6,7 +6,7 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 12:35 (Caracas, UTC−4).
+**Última revisión:** 2026-10-11 12:41 (Caracas, UTC−4).
 
 ## Comprador — bloque cerrado, revisión de Oliver en curso
 
@@ -25,7 +25,8 @@ sin reinstalar, borrar datos ni repetir implementación. Evidencias antes/despu�
 ### VEN-01 — Gestión de vendedores dentro de la app
 
 **VEN-01A terminada y validada localmente; Oliver confirmó y autorizó «Sí, publica».**
-Publicación EAS preview en curso con guard runtime APK 5; todavía sin resultado confirmado.
+EAS preview run 38156171005 **Success**, fuente `2d00f96`, guard runtime APK 5 aprobado.
+Comprobación nativa visitante en curso, revisión 35; sin cuentas o escrituras remotas.
 Mi tienda y sus secciones de consulta funcionan con roles/pertenencias/RLS reales, conservando compras
 propias del usuario incluso con permisos administrativos. Fuentes `cc6db73`/`5f90e27`; UI 22/22,
 permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y revisión de 18 capturas. Detalle: `docs/VEN-01A.md`.
@@ -35,7 +36,7 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 
 | Fase | Alcance previsto | Estado |
 |---|---|---|
-| VEN-01A-R | Publicación controlada y comprobación de Mi tienda en APK 5 (Atrás físico, TalkBack, fluidez, navegador, roles y cambio de cuenta) | En curso: autorización de Oliver recibida. Solicitud preview con guard runtime APK 5; registrar resultado y límites nativos. No generar APK |
+| VEN-01A-R | Comprobación de Mi tienda en APK 5 (Atrás físico, TalkBack, fluidez, navegador, roles y cambio de cuenta) | Preview publicado/guard aprobado. En curso revisión 35 visitante en emulador, ambos temas; vendedor/admin/multirrol y teléfono real pendientes. No generar APK |
 | VEN-01B | Crear, editar y gestionar productos, fotografías, precios y existencias | Prioridad alta, después de revisión de VEN-01A y nuevo alcance de Oliver |
 | VEN-01C | Acciones sobre pedidos recibidos, edición de configuración y acciones comerciales básicas | Después de VEN-01B; la consulta de pedidos/configuración ya existe en VEN-01A, no duplicarla |
 

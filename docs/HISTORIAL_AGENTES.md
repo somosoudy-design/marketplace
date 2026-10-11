@@ -16,6 +16,18 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 16:41Z (12:41 Caracas) · Codex (cloud Linux) · Oliver · checkpoint tras publicar VEN-01A
+- EAS preview run 38156171005 **Success**, fuente `2d00f96`, publicación finalizada 16:38 UTC.
+  Pasos Proyecto/Firebase/Runtime/Publicar/Resultado success; guard exacto APK 5 aprobado antes del envío.
+  No APK nuevo, cambios financieros, backend, panel, iOS o publicación production.
+- Siguiente comprobación nativa breve: revisión 35, nuevo `05-mi-tienda-acceso.yaml`, claro/oscuro en
+  APK 5 existente. Visitante: cuatro rutas nuevas protegidas, Cuenta/flecha/Atrás físico/login y diagnóstico
+  OTA. No registro/cuentas/pedidos/pagos o escrituras remotas; no repetir franja/carrito anteriores.
+- Código móvil/API idéntico al publicado; nuevo cambio solo de prueba, solicitud del emulador y continuidad.
+  Pruebas vendedor/admin/multirrol siguen siendo las locales (22/22); no afirmar verificación nativa completa.
+- A medias: esperar run/capturas, comprobar qué OTA ejecuta y cerrar documentos. Teléfono físico de Oliver
+  no conectado a esta sesión; no afirmar recepción allí. Último commit: este checkpoint de revisión 35.
+
 ### 2026-10-11 16:35Z (12:35 Caracas) · Codex (cloud Linux) · Oliver · checkpoint antes de publicar VEN-01A
 - Autorización nueva: Oliver respondió «Sí, publica» tras aclarar que preview actualiza su Android.
   Levantada la pausa de publicación; fases B/C, panel/backend, iOS, finanzas y APK nuevo fuera de alcance.

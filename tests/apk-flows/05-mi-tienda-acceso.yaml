@@ -1,0 +1,88 @@
+# VEN-01A, APK 5 existente, visitante: verifica las rutas nuevas y su guarda nativa.
+# Solo lecturas; no crea cuentas, tiendas, productos, pedidos, pagos o datos remotos.
+appId: com.example.kora.preview
+name: Mi tienda requiere sesión y conserva Cuenta
+---
+- launchApp
+- runFlow:
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- tapOn:
+    id: buyer-tab-account
+- assertVisible:
+    id: account-sign-in
+- assertNotVisible:
+    id: account-my-store
+- takeScreenshot: ven01a-01-cuenta-visitante
+
+- openLink: kora://my-store
+- extendedWaitUntil:
+    visible: Entra a tu cuenta
+    timeout: 15000
+- assertVisible: Mi tienda
+- assertNotVisible:
+    id: seller-store-name
+- takeScreenshot: ven01a-02-mi-tienda-protegida
+- tapOn:
+    id: seller-account-back
+- extendedWaitUntil:
+    visible:
+      id: account-sign-in
+    timeout: 15000
+
+# Atrás físico también vuelve a Cuenta desde la nueva pantalla.
+- openLink: kora://my-store
+- extendedWaitUntil:
+    visible: Entra a tu cuenta
+    timeout: 15000
+- back
+- extendedWaitUntil:
+    visible:
+      id: account-sign-in
+    timeout: 15000
+
+- openLink: kora://my-store/products
+- extendedWaitUntil:
+    visible: Entra a tu cuenta
+    timeout: 15000
+- assertVisible: Mis productos
+- takeScreenshot: ven01a-03-productos-protegidos
+- openLink: kora://my-store/orders
+- extendedWaitUntil:
+    visible: Pedidos de mi tienda
+    timeout: 15000
+- assertVisible: Entra a tu cuenta
+- takeScreenshot: ven01a-04-pedidos-protegidos
+- openLink: kora://my-store/settings
+- extendedWaitUntil:
+    visible: Configuración de tienda
+    timeout: 15000
+- assertVisible: Entra a tu cuenta
+- takeScreenshot: ven01a-05-configuracion-protegida
+- tapOn: Iniciar sesión
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 15000
+- takeScreenshot: ven01a-06-iniciar-sesion
+- back
+- extendedWaitUntil:
+    visible: Entra a tu cuenta
+    timeout: 15000
+
+# Confirma que el emulador ejecuta una OTA de preview, no solo el código incluido en el APK.
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertVisible: actualización.*
+- takeScreenshot: ven01a-07-diagnostico

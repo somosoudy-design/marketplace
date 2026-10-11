@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 12:35 (Caracas, UTC−4), por Codex cloud (Oliver autorizó publicar VEN-01A; solicitud preview con guard APK 5 en curso).
+**Última actualización:** 2026-10-11 12:41 (Caracas, UTC−4), por Codex cloud (VEN-01A preview publicado; comprobación nativa visitante en curso).
 
 ## Dónde está el trabajo
 
@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + pedidos compradores multirrol `5f90e27`, cierre documental posterior. Último paquete APK 5 publicado: fuente `41d415f`, anterior a VEN-01A |
 | Plan vigente | VEN-01A terminado y validado localmente: Cuenta + Mi tienda, resumen y consulta de productos/pedidos/configuración. Validación Android pendiente; VEN-01B/C fuera de alcance, iOS pospuesto |
-| Objetivo actual | Publicar VEN-01A por EAS Update preview, autorizado por Oliver «Sí, publica». Guard runtime exacto APK 5 obligatorio. Sin APK nuevo o cambios financieros/backend/panel/iOS |
+| Objetivo actual | VEN-01A preview publicado, run 38156171005 Success/fuente 2d00f96, guard exacto APK 5 aprobado. Comprobar rutas nuevas y OTA en el APK existente; sin APK nuevo o cambios financieros/backend/panel/iOS |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -135,7 +135,11 @@ Sin Android/emulador disponible: Atrás físico, TalkBack, fluidez y apertura na
 **Publicación autorizada posteriormente:** Oliver confirmó y pidió «Sí, publica» el 2026-10-11.
 Solicitud `.github/eas-update-request` actualizada únicamente con el mensaje de VEN-01A; runtime APK 5
 conservado. El workflow verifica el proyecto, carga Firebase preview y compara la huella antes de publicar.
-Esperar resultado: aún no se afirma envío/recepción de este paquete. Sin iOS/Xcode, checkout, pagos,
+[EAS preview 38156171005](https://github.com/somosoudy-design/marketplace/actions/runs/38156171005)
+**Success**, fuente `2d00f96`; guard runtime y publicación Android terminados en verde, 16:38 UTC.
+Comprobación nativa visitante: revisión 35, `05-mi-tienda-acceso.yaml`, ambos temas. Verifica las cuatro
+rutas nuevas protegidas, regreso a Cuenta/flecha/Atrás físico, acceso a login y diagnóstico de OTA.
+Sin cuentas o escrituras remotas; no sustituye los 22 casos locales con vendedor/admin. Sin iOS/Xcode, checkout, pagos,
 dependencias, servicios backend/panel o APK nuevo. No repetir comprador/franja ni empezar VEN-01B/C.
 
 ### Antecedentes cerrados — 4.3 y sesión comprador
@@ -299,10 +303,10 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**Publicación VEN-01A en curso, autorizada por Oliver «Sí, publica».** Seguir el run de
-`eas-update-preview.yml` generado por este checkpoint; comprobar guard runtime exacto APK 5 y resultado
-EAS antes de afirmar publicado. VEN-01A ya está probado localmente; no reconstruir Mi tienda ni repetir
-carrito/checkout/franja sin un fallo nuevo. No disparar workflows del panel, production o APK.
+**VEN-01A preview Success, fuente `2d00f96`/run 38156171005; guard APK 5 aprobado.** Seguir el run
+`apk-emulator.yml` de la revisión 35 (este checkpoint): comprobar ejecución de `05-mi-tienda-acceso`
+en claro/oscuro, diagnóstico de la OTA nueva y capturas; registrar límites y cerrar. No repetir
+carrito/checkout/franja ni disparar workflows del panel, production o APK nuevo.
 
 Tras preview Success con runtime APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`: validar comprador,
 vendedor, admin/multirrol, cambio de tienda, cierre de sesión y Atrás físico en claro/oscuro. Registrar TalkBack,
