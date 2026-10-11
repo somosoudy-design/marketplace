@@ -16,6 +16,11 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 17:27Z · Codex cloud · Oliver · checkpoint previo a migración local de catálogo
+- Bloque 1 completo y push `928494d`. Bloque 2: prueba roja real `seller-moderation-before.log` confirma que corregir rechazo y precio publica automáticamente; exige mantener revisión administrativa.
+- SQL preparado, sin aplicar: `20261011172600_seller_product_editor.sql`, historial existente preserva revisión; RPC SECURITY INVOKER agrupa writes del editor web con RLS/triggers existentes, ids estables para reintentos, costos mediante set_product_costs sin cambiar fórmulas. No delete, aprobación o cambio de tienda.
+- Siguiente: aplicar solo en copia/local, comprobar atomicidad/aislamiento/moderación/costos antes de enlazar editor. Ningún cambio remoto o publicación. Código incompleto aún sin navegación; tipos/lint del bloque 1 aprobados.
+
 ### 2026-10-11 17:25Z · Codex cloud · Oliver · cierre bloque 1 perfil operativo
 - Hecho: perfil editable en pantalla existente, logo/portada con picker del APK 5, validación/dirty/back, bloqueo de duplicados, reintento sin perder formulario o rutas ya subidas; cache pública actualizada. Datos guardados en stores con sesión y RLS, sin migración.
 - Pruebas: UI 26/26 (22 regresiones + 4 operaciones), ambos temas/320 px; permisos 6/6 en copia nueva, tipos/lint/export web aprobados; capturas perfil/error/página pública revisadas. Upload y contenido público comprobados contra gateway local; permisos Storage SQL contra políticas reales. Teléfono/galería nativa no conectados.
