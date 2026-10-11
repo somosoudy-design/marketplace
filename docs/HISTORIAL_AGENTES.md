@@ -4,6 +4,12 @@ Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada tur
 arriba de la bitácora, con este formato:
 
 ```
+### 2026-10-11 18:57Z · Codex cloud · Oliver · checkpoint paquete SQL de activación
+- EAS preview 38165223060 Success/fuente 2a38dfb; publicado 18:48:30Z, guard APK 5 aprobado. Android revisión 36/run 38165564922 en ejecución, fuente 3ea956e.
+- Preparado paquete exclusivo de 20261011172600/20261011174200, identidad Marketplace/Vault, transacción/advisory lock, historia conflictiva aborta, registradas se omiten, grants finales verificados. No usar build.py antiguo ni db push general.
+- Checkpoint antes de prueba en copia local nueva conservada; tests de aplicación, idempotencia y 6 abortos preparados, todavía sin resultado. No SQL remoto, no credencial Supabase disponible.
+- Configuración cloud: borrador aditivo guardado para api.github.com/api.supabase.com/proyecto Marketplace y SUPABASE_ACCESS_TOKEN por entrada segura; requiere publicar configuración, no cambia permisos activos. Ningún secreto en chat/repositorio.
+
 ### AAAA-MM-DD HH:MMZ · <agente> (<dónde trabajó: sesión en la nube, computadora de Kevin, …>) · <persona que lo dirigió>
 - Hecho: lo terminado y probado, con los commits.
 - A medias: lo que quedó con `WIP:` y qué falta.

@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 14:46 (Caracas, UTC−4), por Codex cloud (Oliver autoriza publicación; preview solicitado, resultado pendiente).
+**Última actualización:** 2026-10-11 14:57 (Caracas, UTC−4), por Codex cloud (preview publicado; Android revisión 36 y paquete SQL limitado en validación).
 
 ## Dónde está el trabajo
 
@@ -118,7 +118,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 ## Trabajo en curso
 
 **Publicación autorizada completada; validación Android en curso.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes». Solicitud EAS preview/Android para APK 5, misma huella requerida, fuente móvil 5a3b884/cierre be661bf; Workflow preview 38165223060/fuente 2a38dfb **Success**: guard APK 5 y Publicar/Resultado success, publicación terminada 18:48:30Z. Emulador revisión 36 solicitado para comprobar recepción; teléfono físico no conectado. Sin APK nuevo o cambio de canal.
-El cloud no tiene credencial/conector Supabase y api.github.com/proyecto Supabase responden Tunnel 403 de red; Git fetch/push sí funciona. Usar workflow existente y lectura pública de Actions en github.com, sin extraer credenciales. Migraciones 20261011172600/20261011174200 registradas solo locales, estado remoto todavía sin verificar. Perfil funciona con contrato actual; catálogo/acciones protegidos por RPC de soporte y conservan consulta/panel si faltan. Preparar aplicación exacta y pruebas locales mientras se publica; no atribuir habilitación remota a una OTA.
+El cloud no tiene credencial/conector Supabase y api.github.com/proyecto Supabase responden Tunnel 403 de red; Git fetch/push sí funciona. Usar workflow existente y lectura pública de Actions en github.com, sin extraer credenciales. Migraciones 20261011172600/20261011174200 registradas solo locales, estado remoto todavía sin verificar. Perfil funciona con contrato actual; catálogo/acciones protegidos por RPC de soporte y conservan consulta/panel si faltan. Preparado tools/supabase-remote/aplicar-mi-tienda-operativa.sql: solo dos migraciones, transacción, identidad Marketplace desde Vault, historial sin reescrituras, reejecución segura y grants. Builder limitado independiente del antiguo build.py. Checkpoint previo a ejecución local en copia nueva; test-mi-tienda.py verifica aplicación, idempotencia y abortos sin borrar/reset. No desplegar SQL sin acceso/autorización correspondiente; no atribuir habilitación remota a una OTA.
 
 **Mi tienda operativa — tres bloques terminados localmente, sin WIP funcional pendiente.** Base `887197b`.
 
