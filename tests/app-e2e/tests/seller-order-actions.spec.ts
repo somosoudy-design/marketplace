@@ -1,0 +1,46 @@
+import { expect,test,type Page } from '@playwright/test';
+import pg from 'pg';
+import { mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { asOn,databaseUrl } from './support/db';
+import { sellerFixture } from './support/seller';
+const shots=resolve(import.meta.dirname,'../../../.local/seller-ops/screens');mkdirSync(shots,{recursive:true});
+async function db<T>(fn:(c:pg.Client)=>Promise<T>){const c=new pg.Client({connectionString:databaseUrl()});await c.connect();try{return await fn(c);}finally{await c.end();}}
+async function enter(page:Page,seller:Awaited<ReturnType<typeof sellerFixture>>){await page.goto('/sign-in');await page.getByTestId('sign-in-email').fill(seller.email);await page.getByTestId('sign-in-password').fill(seller.password);await page.getByTestId('sign-in-submit').click();await expect(page).not.toHaveURL(/sign-in/);await page.goto('/my-store/orders');await page.getByTestId(`seller-open-delivery-${seller.fulfillmentId}`).click();await expect(page.getByTestId('seller-next-action')).toBeVisible();}
+async function step(page:Page,code:string){await page.getByTestId('delivery-step').click();await page.getByTestId(`delivery-step-${code}`).click();}
+async function confirmed(page:Page,status:string){await expect(page.getByText(new RegExp(`Estado confirmado: ${status}`))).toBeVisible();await expect(page.getByTestId('delivery-confirm')).toHaveCount(0);}
+for(const colorScheme of ['light','dark'] as const)test.describe(`Seller delivery actions (${colorScheme})`,()=>{
+ test.use({colorScheme,viewport:{width:320,height:780}});
+ test('unpaid and platform-managed steps show a real next instruction without seller actions; isolation and back',async({page})=>{
+  const unpaid=await sellerFixture(`ops-unpaid-${colorScheme}`);await enter(page,unpaid);await expect(page.getByTestId('seller-next-action')).toContainText('No prepares ni despaches');await expect(page.getByTestId('delivery-review')).toHaveCount(0);await page.screenshot({path:`${shots}/${colorScheme}-delivery-unpaid.png`});
+  const other=await sellerFixture(`ops-foreign-${colorScheme}`);await page.goto(`/my-store/order?id=${other.fulfillmentId}`);await expect(page.getByText('No encontramos esta entrega',{exact:true})).toBeVisible();await expect(page.getByTestId('delivery-review')).toHaveCount(0);
+  await page.getByRole('link',{name:/back$/}).click();await expect(page).not.toHaveURL(/\/my-store\/order\?/);
+  await page.route('**/rest/v1/rpc/seller_orders_ready',(route)=>route.fulfill({status:404,contentType:'application/json',body:'{"code":"PGRST202","message":"Function not found"}'}));await page.goto('/my-store/order');await expect(page.getByText(/Las acciones móviles aún no están habilitadas/)).toBeVisible();await expect(page.getByTestId('delivery-review')).toHaveCount(0);await expect(page.getByTestId('seller-panel')).toBeVisible();await page.goto('/my-store/orders');await expect(page.getByTestId(`seller-open-delivery-${unpaid.fulfillmentId}`)).toHaveCount(0);await page.unroute('**/rest/v1/rpc/seller_orders_ready');
+  const platform=await sellerFixture(`ops-platform-${colorScheme}`,{paid:true,origin:'import'});
+  await page.goto('/account');await page.getByRole('button',{name:'Cerrar sesión',exact:true}).click();await expect(page.getByTestId('account-sign-in')).toBeVisible();
+  await enter(page,platform);await expect(page.getByTestId('seller-next-action')).toContainText('lo gestiona la plataforma');await expect(page.getByTestId('delivery-review')).toHaveCount(0);
+ });
+ test('prepare, dispatch and deliver with explicit confirmation, guide, persisted history and return',async({page})=>{
+  const seller=await sellerFixture(`ops-paid-${colorScheme}`,{paid:true,home:true});await enter(page,seller);await step(page,'preparing');await page.getByTestId('delivery-note').fill('Paquete preparado en prueba local');
+  await page.getByRole('link',{name:/back$/}).click();await expect(page.getByTestId('seller-unsaved')).toBeVisible();await page.getByRole('button',{name:'Seguir editando',exact:true}).click();await expect(page.getByTestId('delivery-note')).toHaveValue('Paquete preparado en prueba local');
+  await page.getByTestId('delivery-review').click();await expect(page.getByTestId('delivery-confirm')).toBeVisible();await page.getByRole('button',{name:'Volver',exact:true}).click();
+  expect((await db(async(c)=>(await c.query('select status from public.fulfillments where id=$1',[seller.fulfillmentId])).rows))[0].status).toBe('received');
+  await page.getByTestId('delivery-review').click();await page.getByTestId('delivery-confirm-confirm').click({trial:true});await page.screenshot({path:`${shots}/${colorScheme}-delivery-confirm.png`});await page.getByTestId('delivery-confirm-confirm').click();await confirmed(page,'Preparando');
+  await expect(page.getByText(/Paquete preparado en prueba local/)).toBeVisible();await step(page,'dispatched');await page.getByTestId('delivery-review').click();await expect(page.getByText('Agrega el número de guía para despachar.')).toBeVisible();
+  await page.getByTestId('delivery-carrier').fill('MRW');await page.getByTestId('delivery-tracking').fill('GUIA-LOCAL-01');await page.getByTestId('delivery-review').click();await page.getByTestId('delivery-confirm-confirm').click();await confirmed(page,'Despachado');
+  const row=await db(async(c)=>(await c.query('select status,carrier_name,tracking_number from public.fulfillments where id=$1',[seller.fulfillmentId])).rows[0]);expect(row).toMatchObject({status:'dispatched',carrier_name:'MRW',tracking_number:'GUIA-LOCAL-01'});
+  await step(page,'delivered');await page.getByTestId('delivery-review').click();await page.getByTestId('delivery-confirm-confirm').click();await confirmed(page,'Entregado');await expect(page.getByTestId('delivery-review')).toHaveCount(0);await expect(page.getByTestId('seller-next-action')).toContainText('está cerrada');
+  await page.screenshot({path:`${shots}/${colorScheme}-delivery-history.png`});await page.getByRole('link',{name:/back$/}).click();await expect(page).toHaveURL(/\/my-store\/orders$/);await page.getByTestId('seller-orders-done').click();await expect(page.getByTestId(`seller-open-delivery-${seller.fulfillmentId}`)).toBeVisible();
+ });
+ test('lost transition response retries without advancing twice; stale confirmation cannot go backwards',async({page})=>{
+  const seller=await sellerFixture(`ops-retry-${colorScheme}`,{paid:true});await enter(page,seller);await step(page,'preparing');
+  let transitions=0;await page.route('**/rest/v1/rpc/advance_fulfillment',async(route)=>{transitions++;const response=await route.fetch();expect(response.ok()).toBe(true);return route.fulfill({status:503,contentType:'application/json',body:'{"message":"Respuesta perdida"}'});});
+  await page.getByTestId('delivery-review').click();await page.getByTestId('delivery-confirm-confirm').click();await expect(page.getByTestId('delivery-confirm').getByText('Algo salió mal. Intenta de nuevo.')).toBeVisible();await page.screenshot({path:`${shots}/${colorScheme}-delivery-retry.png`});await page.getByTestId('delivery-confirm-confirm').click();await confirmed(page,'Preparando');expect(transitions).toBe(1);
+  const events=await db(async(c)=>(await c.query("select count(*)::int n from public.fulfillment_events where fulfillment_id=$1 and step_code='preparing'",[seller.fulfillmentId])).rows[0].n);expect(events).toBe(1);await page.unroute('**/rest/v1/rpc/advance_fulfillment');
+  await step(page,'in_transit');await page.getByTestId('delivery-review').click();await db((c)=>asOn(c)(seller.id,"select public.advance_fulfillment($1,'delivered')",[seller.fulfillmentId]));await page.getByTestId('delivery-confirm-confirm').click();await expect(page.getByTestId('delivery-confirm').getByText('Esta acción ya no está permitida. Revisa el pago y el estado actual.')).toBeVisible();await page.getByRole('button',{name:'Volver',exact:true}).click();await expect(page.getByTestId('seller-next-action')).toContainText('está cerrada');
+ });
+ test('detail connection error retries without writes and returns to the order list',async({page})=>{
+  const seller=await sellerFixture(`ops-error-${colorScheme}`);await page.route('**/rest/v1/rpc/seller_fulfillment_detail',(route)=>route.abort('internetdisconnected'));await enterUntilList(page,seller);await page.getByTestId(`seller-open-delivery-${seller.fulfillmentId}`).click();await expect(page.getByText('No pudimos cargar esto',{exact:true})).toBeVisible();await expect(page.getByTestId('delivery-review')).toHaveCount(0);await page.unroute('**/rest/v1/rpc/seller_fulfillment_detail');await page.getByRole('button',{name:'Reintentar',exact:true}).click();await expect(page.getByTestId('seller-next-action')).toBeVisible();await page.getByRole('link',{name:/back$/}).click();await expect(page).toHaveURL(/\/my-store\/orders$/);
+ });
+});
+async function enterUntilList(page:Page,seller:Awaited<ReturnType<typeof sellerFixture>>){await page.goto('/sign-in');await page.getByTestId('sign-in-email').fill(seller.email);await page.getByTestId('sign-in-password').fill(seller.password);await page.getByTestId('sign-in-submit').click();await expect(page).not.toHaveURL(/sign-in/);await page.goto('/my-store/orders');await expect(page.getByTestId(`seller-open-delivery-${seller.fulfillmentId}`)).toBeVisible();}

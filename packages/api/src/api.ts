@@ -340,6 +340,11 @@ export function createApi(client: KoraClient) {
   };
 
   const seller = {
+    ordersReady: async () => {
+      try { return await run<boolean>(rpc('seller_orders_ready')); }
+      catch (e) { if (e instanceof ApiError && e.code === 'PGRST202') return false; throw e; }
+    },
+    fulfillment: (storeId: string, fulfillmentId: string) => run<SellerFulfillment | null>(rpc('seller_fulfillment_detail', { p_store_id: storeId, p_fulfillment_id: fulfillmentId })),
     editorReady: async () => {
       try { return await run<boolean>(rpc('seller_editor_ready')); }
       catch (e) { if (e instanceof ApiError && e.code === 'PGRST202') return false; throw e; }

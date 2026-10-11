@@ -26,7 +26,7 @@ function Products() {
   const rows = q.data?.pages.flat() ?? [];
   return <SellerScroll refresh={() => q.refetch()} refreshing={q.isRefetching}>
     <Text variant="title">{store!.name}</Text><Text color="textSecondary">Gestiona el catálogo de tu tienda y consulta sus estados de publicación.</Text>
-    {editor.data ? <Button testID="seller-add-product" title="Agregar producto" icon="plus" full onPress={() => router.push('/my-store/product')} /> : editor.isError ? <ErrorState error={editor.error} onRetry={() => editor.refetch()} /> : editor.data === false ? <Text color="textSecondary">La edición móvil necesita una actualización del backend. Puedes usar el panel mientras tanto.</Text> : null}
+    {editor.data ? <Button testID="seller-add-product" title="Agregar producto" icon="plus" full onPress={() => router.push('/my-store/product')} /> : editor.isError ? <ErrorState error={editor.error} onRetry={() => editor.refetch()} /> : editor.data === false ? <Text color="textSecondary">La edición móvil aún no está habilitada. Puedes usar el panel web.</Text> : null}
     {q.isPending ? <SellerLoading /> : q.isError && !q.data ? <ErrorState error={q.error} onRetry={() => q.refetch()} /> : <>
       {rows.length === 0 ? <EmptyState icon="package" title="Aún no tienes productos" body="Agrega tu primer producto con sus fotos, precio e inventario. Si la edición móvil no está habilitada, usa el panel web." /> : rows.map((p) => {
         const image = [...p.product_images].sort((a, b) => a.sort - b.sort)[0];

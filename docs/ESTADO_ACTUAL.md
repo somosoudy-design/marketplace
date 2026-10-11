@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 13:40 (Caracas, UTC−4), por Codex cloud (Mi tienda operativa autorizada; bloques 1/2 completos localmente; pedidos siguiente).
+**Última actualización:** 2026-10-11 13:58 (Caracas, UTC−4), por Codex cloud (checkpoint de acciones de pedidos; validación final pendiente).
 
 ## Dónde está el trabajo
 
@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | `git log -1 origin/claude/marketplace-v1`. VEN-01A `cc6db73` + multirrol `5f90e27`, publicado fuente `2d00f96`, prueba nativa `098f430`; cierre documental posterior |
 | Plan vigente | Oliver comprobó VEN-01A en Android y solicita ampliación operativa: 1 edición de tienda, 2 productos, 3 pedidos. Cerrar cada bloque con pruebas locales, commit y push. iOS pospuesto |
-| Objetivo actual | Bloque 1: perfil editable y galería, permisos/persistencia/errores/aislamiento contra backend local. No EAS Update, APK nuevo, servicios remotos, finanzas, checkout o iOS |
+| Objetivo actual | Cerrar pruebas/exportaciones/documentación de los tres bloques operativos. No EAS Update, APK nuevo, servicios remotos, finanzas, checkout o iOS |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -114,7 +114,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 **Mi tienda operativa — bloque 1 terminado.** Base `887197b`, checkpoint `66465ff`. Perfil real editable, logo/portada desde galería, validación, reintento/dirty/back y conservación al desconectar. Se guardan nombre/frase/descripción/contacto/envíos/políticas/acento/rutas de imágenes en `stores`; página pública/cache actualizadas. RLS/estado/slug/kind/demo/ratings preservados, sin migración. API usa filas devueltas, no éxito sin persistencia. Tipos/lint/web aprobados; UI **26/26** en 1,8 min, ambos temas/320 px, incluye las 22 regresiones VEN-01A. Permisos **6/6**, copia `kora_seller_ops_171524`. Capturas perfil/tienda pública/error revisadas. Detalle en `docs/MI_TIENDA_OPERATIVA.md`.
 
-Bloque 1 cerrado/push `928494d`. **Bloque 2 completo localmente:** crear/editar productos, variantes manuales/precios/inventario/SKU/disponibilidad/fotos/moderación y costos automáticos por RPC existente. UI 30/30 (22 regresiones + 8 catálogo), 4 perfil previas, DB 20/20, core 50/50, tipos/lint/web. Migración `20261011172600_seller_product_editor.sql` local solamente: guardado transaccional INVOKER con RLS e ids estables, protección de revisión administrativa ante edición de variantes (fallo rojo reproducido). Servidor sin migración conserva consulta/panel y no ofrece acciones móviles. Informe/capturas/límites: `docs/MI_TIENDA_OPERATIVA.md`. Bloque 2 cerrado/push `9648e35`. Bloque 3 iniciado: migración de lectura `20261011174200_seller_fulfillment_detail.sql` preparada, todavía sin aplicar; misma consulta del panel limitada a una entrega, sin límite de 200 o antigüedad. Acciones seguirán usando advance_fulfillment sin modificarlo. Siguiente: aplicar SQL solo local/copia y probar detalle/acciones/pago/pertenencia. La publicación completa requiere primero autorización/aplicación/verificación de migración remota; no está autorizado aquí. No EAS/APK/servicios o datos remotos, finanzas, checkout/iOS. Módulos ya presentes en APK 5; ejecución nativa/galería física pendiente de publicación autorizada. `[skip ci]` evita despliegue automático del panel por API. BCV crítico separado.
+Bloque 1 cerrado/push `928494d`. **Bloque 2 completo localmente:** crear/editar productos, variantes manuales/precios/inventario/SKU/disponibilidad/fotos/moderación y costos automáticos por RPC existente. UI 30/30 (22 regresiones + 8 catálogo), 4 perfil previas, DB 20/20, core 50/50, tipos/lint/web. Migración `20261011172600_seller_product_editor.sql` local solamente: guardado transaccional INVOKER con RLS e ids estables, protección de revisión administrativa ante edición de variantes (fallo rojo reproducido). Servidor sin migración conserva consulta/panel y no ofrece acciones móviles. Informe/capturas/límites: `docs/MI_TIENDA_OPERATIVA.md`. Bloque 2 cerrado/push `9648e35`. Bloque 3 funcional local: detalle por tienda/entrega, pasos del backend, bloqueo por pago, preparación/guía/transportista/historial/confirmación y reintento sin duplicar. advance_fulfillment permanece intacto. SQL 20261011174200 aplicado solo local/copia. DB combinado 31/31, UI pedidos 8/8 en ambos temas; regresión conjunta en cierre. Checkpoint antes de exportación final: repetir tipos/lint/web y UI perfil/catálogo/pedidos por ajuste de textos, disponibilidad En camino desde el mapa compartido y captura de confirmación estable; después Android JS (no APK). La publicación completa requiere primero autorización/aplicación/verificación de migración remota; no está autorizado aquí. No EAS/APK/servicios o datos remotos, finanzas, checkout/iOS. Módulos ya presentes en APK 5; ejecución nativa/galería física pendiente de publicación autorizada. `[skip ci]` evita despliegue automático del panel por API. BCV crítico separado.
 
 ### Antecedente VEN-01A cerrado
 
@@ -316,7 +316,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Bloque 3: ampliar `my-store/orders.tsx` con detalle y acciones sobre `advance_fulfillment`; confirmar estados reales/seller_can_set/pago/guía y eventos. Detalle aislado de 200 filas, preparar RPC de lectura local si hace falta. Probar permisos entre tiendas, acciones pagadas/bloqueadas, errores/reintento/concurrencia, historial/back y ambos temas antes de commit/push. No EAS/servicios remotos, APK nuevo, iOS, checkout o BCV. Bloques 1/2 cerrados: no reconstruirlos.
+Terminar tipos/lint/export web y suite focalizada de Mi tienda (perfil/catálogo/pedidos) tras textos y disponibilidad compartida; exportar Android JS/Hermes, revisar capturas claro/oscuro y cerrar docs/commit/push. DB 31/31 y pedidos UI 8/8 aprobados. No aplicar SQL remoto ni publicar: 20261011172600 y 20261011174200 siguen solo locales.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 

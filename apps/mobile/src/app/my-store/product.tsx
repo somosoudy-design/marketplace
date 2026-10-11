@@ -29,14 +29,14 @@ function LoadProduct() {
   const q = useQuery({ queryKey: ['seller-product', user!.id, store!.id, id], queryFn: async () => ({ product: await api.seller.product(store!.id, id!), pricing: await api.seller.productPricing(id!) }), enabled: !!id && ready.data === true });
   if (ready.isPending || (id && ready.data && q.isPending)) return <SellerLoading />;
   if (ready.isError || (id && q.isError)) return <ErrorState error={ready.error ?? q.error} onRetry={() => { ready.refetch(); q.refetch(); }} />;
-  if (!ready.data) return <SellerScroll><Banner tone="warning" body="La gestión de productos necesita una actualización del backend. El catálogo de consulta y el panel siguen disponibles." /><AdvancedPanel path="/vendedor/productos" /></SellerScroll>;
+  if (!ready.data) return <SellerScroll><Banner tone="warning" body="La edición móvil aún no está habilitada. Puedes consultar el catálogo o usar el panel web." /><AdvancedPanel path="/vendedor/productos" /></SellerScroll>;
   return <Editor key={id ?? 'new'} product={q.data?.product ?? null} pricing={q.data?.pricing ?? null} />;
 }
 type VariantDraft = { id: string; title: string; sku: string; price: string; stock: string; active: boolean; cost: string };
 type ImageDraft = { id: string; path?: string; picked?: PickedImage };
 const decimal = (s: string) => s.trim().replace(',', '.');
 const amount = /^\d{1,7}([.,]\d{1,2})?$/;
-const choices: Availability[] = ['available', 'on_order', 'reservable', 'sold_out', 'unavailable'];
+const choices = Object.keys(AVAILABILITY) as Availability[];
 function Editor({ product: p, pricing }: { product: SellerEditableProduct | null; pricing: ProductPricing | null }) {
   const { store } = useSeller(); const { user } = useAuth(); const s = store!; const qc = useQueryClient(); const categories = useCategories();
   const [id] = useState(() => p?.id ?? Crypto.randomUUID());
@@ -82,7 +82,7 @@ function Editor({ product: p, pricing }: { product: SellerEditableProduct | null
   const categoryItems = (categories.data ?? []).filter((c)=>c.active).map((c)=>({ value:c.id,label:c.name+(c.requires_review||c.risk_level!=='low'?' · revisión':'') }));
   return <><UnsavedChanges dirty={dirty} busy={busy} /><SellerScroll>
     <Text variant="title">{p ? 'Editar producto' : 'Agregar producto'}</Text>
-    {saved === '1' && !dirty ? <Banner tone="success" body="Producto guardado. Su estado de publicación lo decide el backend." /> : null}
+    {saved === '1' && !dirty ? <Banner tone="success" body="Producto guardado. Consulta su estado de publicación." /> : null}
     {p ? <Badge label={MODERATION_LABEL[p.moderation_status] ?? p.moderation_status} tone={p.moderation_status==='published'?'success':'warning'} /> : null}
     {p?.moderation_note ? <Banner tone={p.moderation_status==='rejected'||p.moderation_status==='suspended'?'warning':'info'} body={`${p.moderation_note}${p.moderation_status==='rejected'?' Corrige y guarda para volver a revisión.':p.moderation_status==='suspended'?' La administración debe levantar la suspensión.':''}`} /> : null}
     {s.status!=='active' ? <Banner tone="warning" body="Tu tienda debe estar activa antes de publicar productos." /> : null}
@@ -93,13 +93,13 @@ function Editor({ product: p, pricing }: { product: SellerEditableProduct | null
       <TextField testID="product-edit-highlights" label="Características destacadas" helper="Una por línea, máximo seis." value={f.highlights} multiline editable={!busy} onChangeText={(v)=>set('highlights',v)} />
       {categories.isError ? <ErrorState error={categories.error} onRetry={()=>categories.refetch()} /> : <SellerChoice label="Categoría" testID="product-category" value={f.category_id} items={categoryItems} disabled={busy||categories.isPending} onChange={(v)=>set('category_id',v)} />}
       <SellerChoice label="Disponibilidad" testID="product-availability" value={f.availability} items={choices.map((a)=>({value:a,label:AVAILABILITY[a].label}))} disabled={busy} onChange={(v)=>set('availability',v)} />
-      <Text variant="caption" color="textSecondary">No disponible pausa la venta. Agotado se ajusta al inventario. La moderación se decide en el servidor.</Text>
+      <Text variant="caption" color="textSecondary">No disponible pausa la venta. Agotado se ajusta al inventario. HAYAZGO revisa la publicación cuando corresponde.</Text>
     </Card>
-    <Card style={{ gap:16 }}><Text variant="subtitle">Precio e inventario</Text><Text variant="bodySmall" color="textSecondary">{auto ? 'Este precio sigue al costo. Actualiza costos abajo; HAYAZGO calcula el resultado con la regla vigente.' : 'Precio principal en USD. El servidor determina el precio del producto desde sus variantes activas y calcula el cobro al comprar.'}</Text>
+    <Card style={{ gap:16 }}><Text variant="subtitle">Precio e inventario</Text><Text variant="bodySmall" color="textSecondary">{auto ? 'Este precio sigue al costo. Actualiza costos abajo; HAYAZGO calcula el resultado con la regla vigente.' : 'El precio del producto corresponde a la variante activa más económica. El cobro se calcula al comprar.'}</Text>
       {variants.map((v,i)=><View key={v.id} style={{ gap:12 }}><Text variant="label">Variante {i+1}</Text>
         <TextField testID={`variant-title-${i}`} label={`Nombre de variante ${i+1}`} value={v.title} editable={!busy} onChangeText={(value)=>variant(i,{ title:value })} />
         <TextField testID={`variant-price-${i}`} label={`Precio USD de variante ${i+1}`} value={v.price} keyboardType="decimal-pad" editable={!busy&&!auto} onChangeText={(value)=>variant(i,{ price:value })} />
-        <TextField testID={`variant-stock-${i}`} label={`Inventario de variante ${i+1}`} helper="Vacío: sin control de cantidades. El estado final lo decide el backend." value={v.stock} keyboardType="number-pad" editable={!busy} onChangeText={(value)=>variant(i,{ stock:value })} />
+        <TextField testID={`variant-stock-${i}`} label={`Inventario de variante ${i+1}`} helper="Vacío: sin control de cantidades. La disponibilidad se ajusta al inventario." value={v.stock} keyboardType="number-pad" editable={!busy} onChangeText={(value)=>variant(i,{ stock:value })} />
         <TextField label={`SKU de variante ${i+1}`} value={v.sku} editable={!busy} onChangeText={(value)=>variant(i,{ sku:value })} />
         {auto ? <TextField testID={`variant-cost-${i}`} label={`Costo USD de variante ${i+1}`} value={v.cost} keyboardType="decimal-pad" editable={!busy} onChangeText={(value)=>variant(i,{ cost:value })} /> : null}
         <Button testID={`variant-active-${i}`} title={v.active?'Pausar variante':'Activar variante'} variant="secondary" disabled={busy} onPress={()=>variant(i,{ active:!v.active })} />
@@ -109,7 +109,7 @@ function Editor({ product: p, pricing }: { product: SellerEditableProduct | null
       <TextField label="Máximo por pedido" value={f.max} keyboardType="number-pad" editable={!busy} onChangeText={(v)=>set('max',v)} />
       <TextField label="Precio anterior en USD" helper="Solo si realmente se vendió a ese precio." value={f.compare} keyboardType="decimal-pad" editable={!busy} onChangeText={(v)=>set('compare',v)} />
     </Card>
-    {auto ? <Card style={{ gap:16 }}><Text variant="subtitle">Costos y precio automático</Text>{(['freight','logistics','margin'] as const).map((k)=><TextField key={k} label={k==='freight'?'Flete por unidad (USD)':k==='logistics'?'Gastos por unidad (USD)':'Margen (%)'} helper="Vacío: usar regla general." value={costs[k]} keyboardType="decimal-pad" editable={!busy} onChangeText={(v)=>setCosts((old)=>({...old,[k]:v}))} />)}<Text color="textSecondary" variant="bodySmall">{pricing?.snapshot && new Date(pricing.snapshot.valid_until)>new Date()?'El precio guardado lo calcula el motor existente.':'Sin brecha vigente: el motor conserva el precio existente; no se estima una tasa.'} Cambiar el modo de precio o ampliar variantes automáticas sigue disponible en el panel.</Text></Card> : null}
+    {auto ? <Card style={{ gap:16 }}><Text variant="subtitle">Costos y precio automático</Text>{(['freight','logistics','margin'] as const).map((k)=><TextField key={k} label={k==='freight'?'Flete por unidad (USD)':k==='logistics'?'Gastos por unidad (USD)':'Margen (%)'} helper="Vacío: usar regla general." value={costs[k]} keyboardType="decimal-pad" editable={!busy} onChangeText={(v)=>setCosts((old)=>({...old,[k]:v}))} />)}<Text color="textSecondary" variant="bodySmall">{pricing?.snapshot && new Date(pricing.snapshot.valid_until)>new Date()?'HAYAZGO calcula el precio con la regla vigente.':'Sin brecha vigente: se conserva el precio actual.'} Cambiar el modo de precio o ampliar variantes automáticas sigue disponible en el panel.</Text></Card> : null}
     <Card style={{ gap:12 }}><Text variant="subtitle">Fotografías ({images.length}/10)</Text><Text variant="bodySmall" color="textSecondary">Usa imágenes propias o autorizadas. La primera es la portada.</Text>
       {images.map((img,i)=><View key={img.id} style={{ gap:8 }}><Image source={{uri:img.picked?.uri??catalogImage(img.path??null)??undefined}} accessibilityLabel={`Foto ${i+1} del producto`} style={{ width:'100%',height:180,borderRadius:12 }} contentFit="cover" />
         {i>0 ? <Button title={`Hacer portada la foto ${i+1}`} variant="secondary" disabled={busy} onPress={()=>setImages((old)=>[old[i]!,...old.filter((_,index)=>index!==i)])} /> : null}
@@ -120,7 +120,7 @@ function Editor({ product: p, pricing }: { product: SellerEditableProduct | null
     {p?.moderation_events.length ? <Card style={{ gap:10 }}><Text variant="subtitle">Historial de revisión</Text>{[...p.moderation_events].sort((a,b)=>b.id-a.id).slice(0,6).map((e)=><Text variant="bodySmall" key={e.id}>{new Date(e.created_at).toLocaleDateString('es-VE')} · {MODERATION_LABEL[e.to_status]}{e.automatic?' · automático':''}{e.note&&!e.note.startsWith('auto:')?` · ${e.note}`:''}</Text>)}</Card> : null}
     {dirty ? <Text color="textSecondary">Cambios sin guardar</Text> : null}{error ? <Banner tone="danger" body={error} /> : null}
     <Button testID="product-edit-save" title={error?'Reintentar guardado':p?'Guardar producto':'Crear producto'} loading={busy} disabled={!!p&&!dirty} full onPress={save} />
-    <Text variant="caption" color="textMuted">No hay borradores guardados en este backend. Guarda solo cuando la información esté lista.</Text>
+    <Text variant="caption" color="textMuted">Los borradores aún no están disponibles. Guarda cuando la información esté lista.</Text>
     <AdvancedPanel path={p?`/vendedor/productos/editar?id=${p.id}`:'/vendedor/productos'} />
   </SellerScroll></>;
 }

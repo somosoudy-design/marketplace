@@ -361,11 +361,12 @@ export type SellerProduct = Pick<Tables['products']['Row'], 'id' | 'store_id' | 
 };
 
 /** Delivery scoped to one store by seller_fulfillments; never the other stores' order totals. */
-export type SellerFulfillment = Pick<Fulfillment, 'id' | 'store_id' | 'flow' | 'status' | 'order_id' | 'seq' | 'shipping_method_name' | 'tracking_number' | 'carrier_name'> & {
+export type SellerFulfillment = Pick<Fulfillment, 'id' | 'store_id' | 'flow' | 'status' | 'order_id' | 'seq' | 'shipping_method_name' | 'tracking_number' | 'carrier_name' | 'shipping_kind' | 'ship_to'> & {
   order_number: string;
   placed_at: string;
   order_status: OrderStatus;
   payment_level: 'none' | 'down_payment' | 'full';
+  fulfillment_events: Pick<FulfillmentEvent, 'id' | 'step_code' | 'note' | 'source' | 'visible_to_buyer' | 'created_at'>[];
   items: Pick<OrderItem, 'id' | 'title' | 'variant_title' | 'quantity' | 'refunded_qty' | 'image_path'>[];
 };
 

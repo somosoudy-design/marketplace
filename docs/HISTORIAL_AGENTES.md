@@ -16,6 +16,11 @@ arriba de la bitácora, con este formato:
 
 ## Relevos
 
+### 2026-10-11 17:58Z · Codex cloud · Oliver · checkpoint previo a exportaciones finales Mi tienda
+- Perfil/catálogo cerrados con push 928494d/9648e35. Pedidos operativos local: detalle por tienda, flags/pago reales, preparar/despachar/entregar con confirmación, guía, notas/historial y reintento de respuesta perdida sin duplicar. advance_fulfillment sin modificar.
+- SQL de detalle aplicado solo local y copia conservada. DB conjunto 31/31; UI pedidos 8/8, claro/oscuro/320 px. Regresión conjunta en ejecución; tipos/lint y export web anteriores aprobados.
+- Pendiente: exportaciones finales y UI focalizada tras textos claros, disponibilidad En camino con mapa existente y captura estable de confirmación. Luego revisión visual, cierre documental/commit/push. Ninguna publicación, dato/servicio remoto, APK/iOS, checkout, pago o BCV modificado.
+
 ### 2026-10-11 17:42Z · Codex cloud · Oliver · checkpoint previo a SQL local detalle de entrega
 - Bloques 1/2 cerrados y push `928494d`/`9648e35`. Preparado `20261011174200_seller_fulfillment_detail.sql`: mismo modelo de lectura que seller_fulfillments, filtrado por tienda/id, sin paginación/antigüedad para abrir cualquier entrega listada y volver después de cerrarla.
 - Permisos: require_store_member del servidor, anon no ejecuta; retorna solo líneas/destino/historial de esa entrega. No cambia advance_fulfillment, verificación de pagos, saldos, estados o finanzas.

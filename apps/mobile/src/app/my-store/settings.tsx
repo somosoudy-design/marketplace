@@ -78,7 +78,7 @@ function Settings() {
     <Text variant="bodySmall" color="textSecondary">Estado: {STORE_STATUS_LABEL[s.status]}. La dirección y la aprobación las administra HAYAZGO.</Text>
     {dirty ? <Text testID="store-dirty" color="textSecondary">Cambios sin guardar</Text> : null}
     {error ? <Banner tone="danger" body={error} /> : null}
-    {saved ? <Banner tone="success" body="Perfil guardado. Los cambios ya están en tu página pública." /> : null}
+    {saved ? <Banner tone="success" body="Perfil guardado. Los datos de tu tienda quedaron actualizados." /> : null}
     <Button testID="store-save" title={error ? 'Reintentar guardado' : 'Guardar cambios'} full loading={busy} disabled={!dirty || !!nameError || !!emailError} onPress={save} />
     <AdvancedPanel path="/vendedor/tienda" />
   </SellerScroll></>;

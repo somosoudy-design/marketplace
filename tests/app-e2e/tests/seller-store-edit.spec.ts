@@ -24,7 +24,7 @@ for (const colorScheme of ['light', 'dark'] as const) test.describe(`Store editi
       await (await chooser).setFiles({ name: 'foto.png', mimeType: 'image/png', buffer: png });
     }
     await page.getByRole('button', { name: 'Ciruela', exact: true }).click(); await page.getByTestId('store-save').click();
-    await expect(page.getByText('Perfil guardado. Los cambios ya están en tu página pública.')).toBeVisible(); await expect(page.getByTestId('store-dirty')).toHaveCount(0);
+    await expect(page.getByText('Perfil guardado. Los datos de tu tienda quedaron actualizados.')).toBeVisible(); await expect(page.getByTestId('store-dirty')).toHaveCount(0);
     const c = new pg.Client({ connectionString: databaseUrl() }); await c.connect();
     const { rows: [row] } = await c.query('select * from public.stores where id = $1', [seller.storeId]); await c.end();
     expect(row).toMatchObject({ name: 'Atelier de prueba', tagline: 'Hecho con cuidado', description: 'Descripción actualizada desde el móvil', contact_email: 'atelier@example.com', shipping_info: 'Despacho de lunes a viernes', accent: 'plum', status: 'active', is_demo: true, policies: { returns: 'Cambios dentro de siete días', warranty: 'Garantía local de prueba' } });
@@ -49,7 +49,7 @@ for (const colorScheme of ['light', 'dark'] as const) test.describe(`Store editi
     });
     await page.getByTestId('store-save').click(); await expect(page.getByText('Algo salió mal. Intenta de nuevo.')).toBeVisible(); await expect(page.getByTestId('store-name')).toHaveValue('Perfil recuperado');
     await page.screenshot({ path: `${shots}/${colorScheme}-store-retry.png`, fullPage: true });
-    await page.getByTestId('store-save').click(); await expect(page.getByText('Perfil guardado. Los cambios ya están en tu página pública.')).toBeVisible(); expect(attempts).toBe(2);
+    await page.getByTestId('store-save').click(); await expect(page.getByText('Perfil guardado. Los datos de tu tienda quedaron actualizados.')).toBeVisible(); expect(attempts).toBe(2);
     await page.getByTestId('store-name').fill('Sin guardar'); await page.getByRole('link', { name: /back$/ }).click(); await page.getByTestId('seller-unsaved-confirm').click(); await expect(page).not.toHaveURL(/settings$/);
     await page.goto('/my-store/settings'); await expect(page.getByTestId('store-name')).toHaveValue('Perfil recuperado');
   });

@@ -35,7 +35,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.goto('/account');
       await expect(page.getByTestId('account-sign-in')).toBeVisible();
       await expect(page.getByTestId('account-my-store')).toHaveCount(0);
-      for (const path of ['/my-store', '/my-store/products', '/my-store/orders', '/my-store/settings']) {
+      for (const path of ['/my-store', '/my-store/products', '/my-store/orders', '/my-store/settings', '/my-store/product', '/my-store/order']) {
         await page.goto(path);
         await expect(page.getByText('Entra a tu cuenta', { exact: true })).toBeVisible();
       }

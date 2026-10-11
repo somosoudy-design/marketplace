@@ -16,7 +16,7 @@ const EXPOSED = {
     'mark_notifications_read', 'register_push_token', 'request_account_deletion', 'recently_viewed', 'clear_my_activity',
     'submit_review',
   ],
-  seller: ['seller_save_product', 'seller_editor_ready', 'seller_dashboard', 'seller_balance', 'advance_fulfillment', 'seller_fulfillments', 'seller_sales', 'reply_review', 'product_pricing', 'set_product_costs'],
+  seller: ['seller_fulfillment_detail', 'seller_orders_ready', 'seller_save_product', 'seller_editor_ready', 'seller_dashboard', 'seller_balance', 'advance_fulfillment', 'seller_fulfillments', 'seller_sales', 'reply_review', 'product_pricing', 'set_product_costs'],
   admin: [
     'admin_dashboard', 'assign_to_batch', 'update_cargo_batch', 'moderate_product', 'review_payment', 'refund_item',
     'record_refund_payout', 'create_payout', 'cancel_payout', 'mark_payout_paid', 'post_adjustment', 'resolve_claim',
