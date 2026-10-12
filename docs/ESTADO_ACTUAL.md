@@ -118,6 +118,18 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
+**2026-10-12 · Revisión global UX con Product Design, autorizada por Oliver.** Base edae062 limpia y
+sincronizada. Alcance: capturas nuevas de recorridos compradores y Mi tienda existentes, mejoras globales
+basadas en evidencia y tokens Electric Violet; claro/oscuro/pantalla pequeña/accesibilidad. Publicar por
+EAS preview compatible APK 5 al terminar, autorización explícita en el pedido. Sin APK nuevo, iOS, panel,
+reglas financieras, datos/servicios backend remotos o nuevas funciones comerciales. No repetir implementación
+operativa ni desplegar sus migraciones como parte de una revisión visual. Un solo agente.
+Checkpoint previo a export/capturas. Preflight Product Design: sin contexto guardado; grounding en
+DIRECCION_PRODUCTO/DISENO y app real del repositorio. Capturas Chromium local; hallazgos todavía pendientes.
+Próxima acción de este bloque: capturar/inspeccionar ambos temas, priorizar mejoras comprobables, aplicar y
+probar sobre componentes/pantallas existentes, después publicación y Android visitante. Informe vivo:
+REVISION_GLOBAL_UX.md. Los resultados de Mi tienda inferiores se conservan como antecedente.
+
 **Publicación autorizada y validación visitante Android terminadas.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes».
 EAS preview [38165223060](https://github.com/somosoudy-design/marketplace/actions/runs/38165223060), fuente `2a38dfb`, **Success**, guard exacto APK 5 aprobado; publicación 18:48:30Z.
 Android revisión 36 [38165564922](https://github.com/somosoudy-design/marketplace/actions/runs/38165564922), fuente `3ea956e`, **Success**: visitante **2/2** claro/oscuro sin reintentos, seis rutas protegidas, Cuenta/login/flecha/Atrás, inicio/reapertura.

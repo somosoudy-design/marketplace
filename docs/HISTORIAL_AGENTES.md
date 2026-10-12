@@ -4,6 +4,11 @@ Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada tur
 arriba de la bitácora, con este formato:
 
 ```
+### 2026-10-12 · Codex cloud · Oliver · checkpoint revisión global Product Design
+- Oliver solicita revisión general de UX/diseño con Product Design y publicación al terminar. Base edae062, rama compartida sincronizada, continuidad/arquitectura/dirección/diseño leídos; un agente.
+- Auditoría de screenshots primero con index/audit/user-context/framework del plugin. Preflight sin contexto guardado; fuentes del repositorio/identidad existente. Capturas nuevas en local, sin usar imágenes anteriores como evidencia.
+- Alcance visual/móvil: compradores y Mi tienda existentes, sin nuevas reglas/features/backend/panel/iOS/APK. EAS preview APK 5 autorizada al cerrar pruebas. Checkpoint antes de export/capturas; ningún hallazgo o cambio funcional afirmado todavía.
+
 ### 2026-10-11 18:59Z (14:59 Caracas) · Codex cloud · Oliver · publicación operativa y pendientes preparados
 - Oliver autorizó «Publícala primero ... mientras reviso continúa si tienes pendientes». EAS preview 38165223060/fuente 2a38dfb Success, guard exacto APK 5 aprobado, publicación 18:48:30Z. Fuente móvil/API sigue 5a3b884, sin APK ni dependencias/config nativa nuevas.
 - Android revisión 36/run 38165564922/fuente 3ea956e Success: visitante 2/2 claro/oscuro sin reintentos; seis rutas protegidas, Cuenta/login/flecha/Atrás e inicio/reapertura. Diagnóstico en ambos temas confirma OTA 01a12c4b-86a2-7565-9f95-ae8e8a6f7711/18:48 UTC/preview/runtime APK 5/backend Marketplace/sesión cifrada. No recepción física afirmada.
