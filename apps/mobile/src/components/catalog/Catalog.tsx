@@ -1,6 +1,6 @@
 import type { Availability, SearchSort } from '@kora/api';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
 import Animated, { type useAnimatedScrollHandler } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
@@ -83,6 +83,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
   const [f, setF] = useState<CatalogFilters>({ ...emptyFilters, ...initial });
   const [sheet, setSheet] = useState<null | 'sort' | 'price'>(null);
   const input = useRef<TextInput>(null);
+  const [searchFocused, setSearchFocused] = useState(false);
   const categories = useCategories();
   const query = useDebounced(f.query, 280);
 
@@ -119,19 +120,21 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
     <View style={{ gap: 12, paddingBottom: 14 }}>
       {header}
       {showSearch ? (
-        <View style={{ marginHorizontal: 16, minHeight: 52, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 4, gap: 10 }}>
+        <View style={{ marginHorizontal: 16, minHeight: 52, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: searchFocused ? 2 : 1, borderColor: searchFocused ? t.colors.brand : t.colors.border, flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 4, gap: 10 }}>
           <Icon name="search" size={20} color={t.colors.textMuted} />
           <TextInput
             ref={input}
             testID="catalog-search"
             value={f.query}
             onChangeText={(q) => setF((x) => ({ ...x, query: q }))}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setSearchFocused(false)}
             placeholder={searchPlaceholder}
             placeholderTextColor={t.colors.textMuted}
             returnKeyType="search"
             autoCorrect={false}
             accessibilityLabel="Buscar"
-            style={[t.typography.body, { flex: 1, minWidth: 0, color: t.colors.text, paddingVertical: 14 }]}
+            style={[t.typography.body, { flex: 1, minWidth: 0, color: t.colors.text, paddingVertical: 14 }, Platform.OS === 'web' ? { outlineStyle: 'none' } : null]}
           />
           {f.query ? (
             <Pressable accessibilityRole="button" accessibilityLabel="Borrar búsqueda" hitSlop={10} onPress={() => setF((x) => ({ ...x, query: '' }))} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>

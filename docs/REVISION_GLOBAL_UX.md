@@ -60,3 +60,10 @@ aserción/fixture corregidos sin ocultarlos: el cache restaura resultados sin nu
 puede omitir atributo type (su propiedad sigue text) y Escape requiere modal activo tras transición;
 colección de prueba cambiada al slug real. Se verifican datos/DOM y dialog activo, sin sleeps arbitrarios.
 Pendiente: regresión de pantallas que reutilizan controles, capturas después/contraste y publicación.
+
+Regresión completa inicial: 111 aprobadas, 1 omisión conocida (registro sin confirmación), 2 fallos de fixture
+administrador antes de UI por sold_out en juguete-cuerda-perros. Solo la variante demo local agotada recibió
+20 unidades aditivas, sin reset/borrados/datos remotos; se repetirán esos casos. Se afina foco violeta exterior
+en buscador/campos (evita rectángulo negro interior de captura 22), y prueba de texto grande 1.6x del botón.
+Tipos/lint finales aprobados; checkpoint antes de export final. Flujo Android visitante 06-global-ux.yaml y
+scanner axe preparado; dependencia axe instalada únicamente en /tmp, ningún package/lock/config nativo cambió.

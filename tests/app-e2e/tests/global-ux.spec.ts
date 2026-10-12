@@ -161,6 +161,10 @@ for (const colorScheme of ['light', 'dark'] as const) {
       const box = (await text.boundingBox())!;
       expect(box.x + box.width).toBeLessThanOrEqual(320);
       expect(await text.evaluate((el) => getComputedStyle(el).textOverflow)).not.toBe('ellipsis');
+      // Browser stress test at the app's supported 1.6x text scale; actual Android font scaling stays native QA.
+      await text.evaluate((el) => { (el as HTMLElement).style.fontSize = '21px'; (el as HTMLElement).style.lineHeight = '26px'; });
+      expect((await action.boundingBox())!.height).toBeGreaterThan(44);
+      expect((await text.boundingBox())!.x + (await text.boundingBox())!.width).toBeLessThanOrEqual(320);
     });
   });
 }

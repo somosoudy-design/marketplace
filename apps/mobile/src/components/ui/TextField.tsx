@@ -1,5 +1,5 @@
 import { forwardRef, useId, useState } from 'react';
-import { TextInput, View, type TextInputProps } from 'react-native';
+import { Platform, TextInput, View, type TextInputProps } from 'react-native';
 import { useTheme } from '@/theme';
 import { IconButton } from './IconButton';
 import { Text } from './Text';
@@ -20,7 +20,7 @@ export const TextField = forwardRef<TextInput, Props>(function TextField({ label
   return (
     <View style={{ gap: 6 }}>
       <Text variant="label" color="textSecondary">{label}</Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: focused || error ? 1.5 : 1, borderColor, borderRadius: radii.md, backgroundColor: colors.surface, minHeight: 50 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: focused || error ? 2 : 1, borderColor, borderRadius: radii.md, backgroundColor: colors.surface, minHeight: 50 }}>
         <TextInput
           {...rest}
           ref={ref}
@@ -33,7 +33,7 @@ export const TextField = forwardRef<TextInput, Props>(function TextField({ label
           onFocus={(e) => { setFocused(true); rest.onFocus?.(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur?.(e); }}
           secureTextEntry={secureToggle ? hidden : secureTextEntry}
-          style={[typography.body, { flex: 1, color: colors.text, paddingHorizontal: 14, paddingVertical: 12 }, style]}
+          style={[typography.body, { flex: 1, color: colors.text, paddingHorizontal: 14, paddingVertical: 12 }, Platform.OS === 'web' ? { outlineStyle: 'none' } : null, style]}
         />
         {secureToggle ? (
           <IconButton icon={hidden ? 'eye' : 'eye-off'} label={hidden ? 'Mostrar contraseña' : 'Ocultar contraseña'} onPress={() => setHidden((h) => !h)} color={colors.textMuted} style={{ marginRight: 4 }} />

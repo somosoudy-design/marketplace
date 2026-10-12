@@ -1,0 +1,93 @@
+# Global UX on the existing APK 5 + OTA, visitor only. Public reads and device cart, no signup/payment/order.
+appId: com.example.kora.preview
+name: UX global — recuperar búsqueda, opciones y controles
+---
+- launchApp
+- openLink: kora://explore
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 60000
+- tapOn:
+    id: chip-category-belleza
+- extendedWaitUntil:
+    visible:
+      id: catalog-reset-filters
+    timeout: 15000
+- takeScreenshot: global-01-categoria
+- tapOn:
+    id: catalog-search
+- inputText: zzzz-no-existe
+- hideKeyboard
+- extendedWaitUntil:
+    visible: No encontramos productos
+    timeout: 20000
+- assertVisible: Restablecer búsqueda
+- takeScreenshot: global-02-recuperar-busqueda
+- tapOn: Restablecer búsqueda
+- extendedWaitUntil:
+    notVisible: No encontramos productos
+    timeout: 15000
+- assertNotVisible:
+    id: catalog-reset-filters
+- tapOn:
+    id: chip-sort
+- extendedWaitUntil:
+    visible:
+      id: catalog-options-close
+    timeout: 15000
+- takeScreenshot: global-03-opciones
+- tapOn: Menor precio
+- assertNotVisible: Ordenar por
+- tapOn:
+    id: chip-sort
+- extendedWaitUntil:
+    visible:
+      id: catalog-options-close
+    timeout: 15000
+- back
+- assertNotVisible: Ordenar por
+- tapOn:
+    id: chip-sort
+- extendedWaitUntil:
+    visible:
+      id: catalog-options-close
+    timeout: 15000
+- tapOn:
+    id: catalog-options-close
+- assertNotVisible: Ordenar por
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-cta
+    timeout: 20000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 15000
+- takeScreenshot: global-04-carrito
+- openLink: kora://sign-in
+- extendedWaitUntil:
+    visible:
+      id: sign-in-password
+    timeout: 15000
+- tapOn:
+    id: sign-in-password
+- inputText: PruebaVisual
+- hideKeyboard
+- tapOn: Mostrar contraseña
+- assertVisible: Ocultar contraseña
+- takeScreenshot: global-05-acceso
+- tapOn: Ocultar contraseña
+- back
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertVisible: actualización.*
+- takeScreenshot: global-06-diagnostico

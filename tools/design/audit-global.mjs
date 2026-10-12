@@ -50,7 +50,7 @@ try {
   await capture('23-search-sort');
 
   await open('/p/ugreen-cable-usb-c-100w', () => page.getByTestId('product-title'));
-  await page.getByRole('button', { name: 'Aumentar cantidad', exact: true }).scrollIntoViewIfNeeded();
+  await page.getByRole('button', { name: 'Aumentar cantidad', exact: true }).evaluate((el) => el.scrollIntoView({ block: 'center' }));
   await capture('24-product-quantity', { quantityTarget: await size(page.getByRole('button', { name: 'Aumentar cantidad', exact: true })) });
 
   await open('/sign-in', () => page.getByTestId('sign-in-submit'));
