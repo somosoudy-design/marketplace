@@ -60,6 +60,6 @@ Comando focal: `pnpm --filter @kora/app-e2e exec playwright test --config <confi
 
 ## Publicación y recepción
 
-**Pendiente al cerrar la implementación:** commit/push de fuente, `.github/eas-update-request` con runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, guard de CI con Firebase original antes de EAS Update Androidpreview, resultado real EAS y emulador flows 08/09 en claro/oscuro. Sin APK nuevo, production o cambios nativos.
+**Fuente validada:** `6df3c7d`, commit/push confirmados. **Publicación solicitada:** `.github/eas-update-request` con runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, guard de CI con Firebase original antes de EAS Update Androidpreview, resultado real EAS y emulador flows 08/09 en claro/oscuro. Sin APK nuevo, production o cambios nativos.
 
 La recepción se comprobará por identificador/fecha/canal/runtime y capturas nativas de apertura, destinos, regreso y fuente OS 1,6. No se afirmará recepción Samsung sin comprobación de Oliver. Después se informará inmediatamente y se seguirá con tres alternativas A/B/C de diseño, sin otra publicación.
