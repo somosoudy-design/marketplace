@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
+import { useReducedMotion } from 'react-native-reanimated';
 import { catalogImage } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 
@@ -16,6 +17,7 @@ interface Props {
 /** Every product photo sits on its category tone at 4:5, so mixed sources still look like one catalog. */
 export function ProductImage({ path, tone, alt, radius, aspect, style, priority = 'normal' }: Props) {
   const t = useTheme();
+  const reduced = useReducedMotion();
   const bg = t.tone(tone);
   const uri = catalogImage(path);
   return (
@@ -25,7 +27,7 @@ export function ProductImage({ path, tone, alt, radius, aspect, style, priority 
           source={{ uri }}
           style={{ width: '100%', height: '100%' }}
           contentFit="cover"
-          transition={180}
+          transition={reduced ? 0 : 180}
           priority={priority}
           recyclingKey={uri}
           accessibilityLabel={alt ?? ''}

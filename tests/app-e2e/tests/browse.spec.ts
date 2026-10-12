@@ -37,8 +37,13 @@ test('search and filters survive opening a product and coming back', async ({ pa
   await search.fill('ugreen');
   const count = page.getByTestId('catalog-count');
   await expect(count).toContainText('producto');
-  await page.getByTestId('chip-availability-available').click();
-  await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'true');
+  await page.getByTestId('catalog-filter').click();
+      await page.getByTestId('chip-availability-available').click();
+      await page.getByTestId('catalog-apply-filters').click();
+  await expect(page.getByTestId('catalog-filter')).toHaveAccessibleName('Filtrar, 1 activos');
+  // Placeholder results stay visible while the query debounce/filter request completes.
+  await page.waitForLoadState('networkidle');
+  await expect(count).toHaveAttribute('aria-busy', 'false');
   const cards = page.locator('[data-testid^="product-card-ugreen"]');
   await expect(cards.first()).toBeVisible();
   const n = await cards.count();
@@ -63,7 +68,7 @@ test('search and filters survive opening a product and coming back', async ({ pa
   await page.getByTestId('product-back').click();
   await expect(page).toHaveURL(/\/explore/);
   await expect(page.getByTestId('catalog-search')).toHaveValue('ugreen');
-  await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('catalog-filter')).toHaveAccessibleName('Filtrar, 1 activos');
   await expect(page.getByTestId(`product-card-${slug}`)).toBeVisible();
   const after = await page.getByTestId('explore-list').evaluate((el) => el.scrollTop);
   expect(Math.abs(after - before)).toBeLessThan(40);

@@ -163,3 +163,9 @@ cierre visible, pie/cuerpo adaptable/movimiento reducido. Cuenta separa compras/
 filas con iconos en superficie suave y avisos debajo del título a 320 px. Galería teclado/contador válidos en
 web, sin cambiar gestos nativos. Fotos/tarjetas/nombre una línea y decisiones comerciales conservados.
 Informe/capturas/verificación y límites: REVISION_GLOBAL_UX.md.
+
+## Entrega01 — Buscar y tarjetas,2026-10-12
+
+Buscar prioriza el catálogo: buscador rectangular48px, categorías de texto/indicador violeta con táctil44, Filtrar/Ordenar agrupados y conteo. Búsqueda/herramientas fijas; categoría seleccionada en conteo al desplazar, resto se desplaza. Precio/disponibilidad en hoja común con borrador/aplicar/cancelar/restablecer, sin eliminar filtros o contexto.
+
+Tarjeta comercial: fotografía4:5 intacta, superficie única con radio10/borde semántico sutil; corazón19 en superficie28 sin sombra, táctil44 separado del enlace. Nombre una línea13/18 semibold, precio16/20 extrabold tabular; tracking−0,1/−0,3 tokens. No estados reales simulados: demo identificada, oferta/escasez solo producto real, estados no normales discretos sobre foto. Skeleton igual altura; mini tarjeta/radios coherentes; movimiento reducido también en fade. No tokens globales/panel/identidad nativa cambiados. Decisiones/capturas comparables/mediciones: REDISENO_ENTREGA_01.md.

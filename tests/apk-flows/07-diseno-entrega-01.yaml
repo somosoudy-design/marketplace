@@ -1,0 +1,91 @@
+# APK 5 + latest preview OTA. Public catalogue reads, visitor only, no remote writes.
+appId: com.example.kora.preview
+name: Entrega 01 — Buscar, filtros, tarjetas y regreso
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: buyer-tab-explore
+    timeout: 60000
+- tapOn:
+    id: buyer-tab-explore
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 30000
+- assertVisible:
+    id: catalog-filter
+- assertVisible:
+    id: chip-sort
+- takeScreenshot: entrega01-01-buscar
+- tapOn:
+    id: catalog-filter
+- extendedWaitUntil:
+    visible:
+      id: catalog-filters-close
+    timeout: 10000
+- tapOn:
+    id: chip-availability-available
+- tapOn: 15 a 50 USD
+- takeScreenshot: entrega01-02-filtros
+- tapOn:
+    id: catalog-apply-filters
+- assertNotVisible: Filtrar productos
+- assertVisible:
+    id: catalog-reset-filters
+- takeScreenshot: entrega01-03-activos
+- tapOn:
+    id: chip-sort
+- tapOn: Menor precio
+- assertVisible: Menor precio.*
+- tapOn:
+    id: chip-sort
+- extendedWaitUntil:
+    visible:
+      id: catalog-options-close
+    timeout: 10000
+- back
+- assertNotVisible: Ordenar por
+- tapOn:
+    id: catalog-reset-filters
+- tapOn:
+    id: catalog-search
+- inputText: ugreen
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-cable-usb-c-100w
+    timeout: 30000
+- tapOn:
+    id: product-card-ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- back
+- assertVisible:
+    id: catalog-search
+- assertVisible: ugreen
+- takeScreenshot: entrega01-04-regreso
+- tapOn:
+    id: catalog-search
+- eraseText: 20
+- inputText: zzzz-no-existe
+- hideKeyboard
+- extendedWaitUntil:
+    visible: No encontramos productos
+    timeout: 20000
+- takeScreenshot: entrega01-05-vacio
+- tapOn: Restablecer búsqueda
+- extendedWaitUntil:
+    notVisible: No encontramos productos
+    timeout: 15000
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertVisible: actualización.*
+- takeScreenshot: entrega01-06-diagnostico

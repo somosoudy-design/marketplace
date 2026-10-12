@@ -3,8 +3,14 @@
 HAYAZGO conserva Electric Violet y sus funciones. Se mejoran recuperación de búsqueda, controles táctiles,
 formularios, hojas de opciones, legibilidad y separación de compras/negocio/ayuda en Cuenta.
 Oliver autorizó publicar para revisar en su APK 5 al terminar. Base edae062; fuente funcional c17f22f.
-**Estado: publicada en preview compatible APK 5; Android visitante en validación.**
+**Estado: publicada en preview compatible APK 5; Android37 4/6; evaluación visual física del propietario insuficiente.**
 [EAS 38291282048](https://github.com/somosoudy-design/marketplace/actions/runs/38291282048), fuente68a0881, **Success**, guard exacto APK 5 aprobado, publicación 2026-10-12 18:31 UTC.
+
+## Evaluación posterior del propietario
+
+Oliver confirmó recepción y revisión física en Samsung S24: el resultado visual no fue satisfactorio. Las pruebas técnicas anteriores no validan composición/jerarquía comercial. Nueva tarea exclusiva: Buscar/tarjetas, documentada en REDISENO_ENTREGA_01.md; no otra auditoría global ni Entrega 02.
+
+Android revisión37/run38292016113: 4/6 recorridos pasaron. 06-global-ux no entra en Buscar mediante `kora://explore`, queda en Inicio; las capturas confirman el fallo de entrada del flujo antes de examinar filtros. No presentar 6/6 ni teléfono conectado al agente. Entrega 01 utiliza la pestaña real.
 
 ## Auditoría y cambios por paso
 

@@ -17,11 +17,13 @@ for (const colorScheme of ['light', 'dark'] as const) {
 
       await page.getByRole('tab', { name: 'Buscar', exact: true }).click();
       await expect(page).toHaveURL(/\/explore$/);
-      await expect(page.getByRole('heading', { name: 'Buscar', exact: true })).toBeVisible();
+      await expect(page.getByTestId('active-tab-label')).toHaveText('Buscar');
       await expect(page.getByTestId('catalog-search')).toBeVisible();
       await expect(page.getByTestId('chip-category-tecnologia')).toBeVisible();
       await expect(page.getByTestId('chip-sort')).toBeVisible();
+      await page.getByTestId('catalog-filter').click();
       await expect(page.getByTestId('chip-availability-available')).toBeVisible();
+      await page.getByTestId('catalog-filters-close').click();
 
       await page.getByRole('tab', { name: 'Cuenta', exact: true }).click();
       await expect(page.getByTestId('account-sign-in')).toBeVisible();
@@ -37,7 +39,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
       const search = page.getByTestId('catalog-search');
       await expect(search).toBeFocused();
       await search.fill('ugreen');
+      await page.getByTestId('catalog-filter').click();
       await page.getByTestId('chip-availability-available').click();
+      await page.getByTestId('catalog-apply-filters').click();
       const products = page.getByTestId('explore-list').locator('[data-testid^="product-card-ugreen"]');
       await expect(products.first()).toBeVisible();
 
@@ -45,13 +49,13 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page).toHaveURL(/\/cart$/);
       await page.getByRole('tab', { name: 'Buscar', exact: true }).click();
       await expect(search).toHaveValue('ugreen');
-      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByTestId('catalog-filter')).toHaveAccessibleName('Filtrar, 1 activos');
       await products.first().click();
       await expect(page.getByTestId('product-title')).toBeVisible();
       await expect(page.getByRole('tab', { name: 'Buscar', exact: true })).toBeHidden();
       await page.getByTestId('product-back').click();
       await expect(search).toHaveValue('ugreen');
-      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByTestId('catalog-filter')).toHaveAccessibleName('Filtrar, 1 activos');
       await expect(page.getByRole('tab', { name: 'Buscar', exact: true })).toHaveAttribute('aria-selected', 'true');
     });
 

@@ -4,6 +4,8 @@ import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../tests/app-e2e/package.json', import.meta.url));
 const { chromium, expect } = require('@playwright/test');
 const out = process.argv[2];
+const base = process.env.DELIVERY_CAPTURE_URL ?? 'http://127.0.0.1:8089';
+const states = process.argv[3] === 'scroll-only' ? ['scroll'] : ['catalog', 'category', 'sort', 'empty', 'scroll'];
 if (!out) throw new Error('Provide an evidence directory');
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch(process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {});
@@ -11,11 +13,12 @@ const evidence = [];
 try {
   for (const width of [412, 320]) for (const colorScheme of ['light', 'dark']) {
     const context = await browser.newContext({ viewport: { width, height: width === 412 ? 892 : 780 }, locale: 'es-VE', colorScheme });
-    for (const state of ['catalog', 'category', 'sort', 'empty', 'scroll']) {
+    for (const state of states) {
       const page = await context.newPage();
-      await page.goto('http://127.0.0.1:8089/explore');
+      await page.goto(`${base}/explore`);
       await expect(page.locator('[data-testid^="product-card-"]').first()).toBeVisible();
       await page.evaluate(() => document.fonts.ready);
+      await page.waitForLoadState('networkidle');
       await page.locator('body').ariaSnapshot();
       if (state === 'category') {
         await page.getByTestId('chip-category-belleza').click();
@@ -29,7 +32,9 @@ try {
         await expect(page.getByText('No encontramos productos', { exact: true })).toBeVisible();
         await page.getByTestId('catalog-search').blur();
       } else if (state === 'scroll') {
-        await page.getByTestId('explore-list').evaluate((el) => el.scrollTo({ top: 600 }));
+        await page.getByTestId('explore-list').hover();
+        await page.mouse.wheel(0, 600);
+        await expect.poll(() => page.getByTestId('explore-list').evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
       }
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(350); // font/image fade and native-equivalent sheet settling

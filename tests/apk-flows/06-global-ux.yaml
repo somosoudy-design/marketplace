@@ -3,7 +3,8 @@ appId: com.example.kora.preview
 name: UX global — recuperar búsqueda, opciones y controles
 ---
 - launchApp
-- openLink: kora://explore
+- tapOn:
+    id: buyer-tab-explore
 - extendedWaitUntil:
     visible:
       id: catalog-search

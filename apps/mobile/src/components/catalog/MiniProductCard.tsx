@@ -14,7 +14,7 @@ import { ProductFavorite } from './ProductFavorite';
 export const MiniProductCard = memo(function MiniProductCard({ product: p, width, slot }: { product: Card; width: number; slot?: string }) {
   const t = useTheme();
   return (
-    <View style={{ width, flexDirection: 'row', alignItems: 'center', padding: 6, gap: 2, borderRadius: t.radii.lg, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
+    <View style={{ width, flexDirection: 'row', alignItems: 'center', padding: 6, gap: 2, borderRadius: 10, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
       <ScalePressable
         testID={`mini-card-${p.slug}`}
         scaleTo={0.97}
@@ -26,7 +26,7 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
         }}
         style={{ flex: 1, flexDirection: 'row', gap: 10, alignItems: 'center', minWidth: 0 }}
       >
-        <ProductImage path={p.image_path} tone={p.tone} style={{ width: 52 }} aspect={1} radius={t.radii.md} />
+        <ProductImage path={p.image_path} tone={p.tone} style={{ width: 52 }} aspect={1} radius={6} />
         <View style={{ flex: 1, gap: 2 }}>
           <Text variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.title}</Text>
           <Text variant="caption" color="textSecondary" tabular>{p.is_demo ? 'Demo · ' : ''}{formatUSD(p.price_usd)}</Text>

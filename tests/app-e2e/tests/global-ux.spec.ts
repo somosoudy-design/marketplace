@@ -39,12 +39,14 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('catalog-search')).toHaveValue('ugreen');
       await expect(page.getByTestId('chip-category-tecnologia')).toHaveAttribute('aria-pressed', 'false');
       await page.getByTestId('chip-category-belleza').click();
+      await page.getByTestId('catalog-filter').click();
       await page.getByTestId('chip-availability-available').click();
+      await page.getByTestId('catalog-apply-filters').click();
       await page.getByTestId('catalog-search').fill('zzzz-no-existe');
       await page.getByRole('button', { name: 'Restablecer búsqueda', exact: true }).click();
       await expect(page.getByTestId('catalog-search')).toHaveValue('');
       await expect(page.getByTestId('chip-category-belleza')).toHaveAttribute('aria-pressed', 'false');
-      await expect(page.getByTestId('chip-availability-available')).toHaveAttribute('aria-pressed', 'false');
+      await expect(page.getByTestId('catalog-filter')).toHaveAccessibleName('Filtrar');
       await expect(page.locator('[data-testid^="product-card-"]').first()).toBeVisible();
       await expect(page.getByTestId('catalog-reset-filters')).toHaveCount(0);
     });
@@ -112,7 +114,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await touchTarget(sheet.getByRole('button', { name: 'Cerrar opciones', exact: true }));
       await sheet.getByRole('radio', { name: 'Menor precio', exact: true }).click();
       await expect(sheet).toHaveCount(0);
-      await expect(page.getByTestId('chip-sort')).toHaveText(/Menor precio/);
+      await expect(page.getByTestId('chip-sort')).toHaveAccessibleName('Ordenar: Menor precio');
+      await expect(page.getByText('Menor precio', { exact: true })).toBeVisible();
       await page.getByTestId('chip-sort').click();
       await expect(page.getByRole('dialog')).toBeVisible(); // Modal is active after its opening transition.
       await page.keyboard.press('Escape');
@@ -120,7 +123,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByTestId('chip-sort').click();
       await sheet.getByRole('button', { name: 'Cerrar opciones', exact: true }).click();
       await expect(sheet).toHaveCount(0);
-      await expect(page.getByTestId('chip-sort')).toHaveText(/Menor precio/);
+      await expect(page.getByTestId('chip-sort')).toHaveAccessibleName('Ordenar: Menor precio');
+      await expect(page.getByText('Menor precio', { exact: true })).toBeVisible();
     });
 
     test('field errors are associated and cleared on edit; loading retains the action label', async ({ page }) => {
