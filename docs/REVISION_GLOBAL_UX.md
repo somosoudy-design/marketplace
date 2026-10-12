@@ -78,3 +78,9 @@ Captura después 18-light mostró navbar recortada: rechazada; captura fresca de
 12..400 dentro de viewport412 y cuatro iconos visibles. Reponer capturas afectadas con estado estable;
 no ocultar un recorte como diseño aprobado. Primer probe falló por stack finalizado; resuelto con stack/
 server/driver en la misma ejecución cloud. Ningún problema de app atribuido al proceso de prueba.
+
+Última revisión visual: contador de avisos a la derecha quebraba «Notificaciones» a 320 px; se coloca
+bajo el título dentro de la misma fila y se corrige singular «1 nueva». Dos casos nuevos usan avisos reales
+de pedido demo local, sin mock de permisos. Outline width 0 dejó Chrome con outline auto y rectángulo negro;
+se usa override CSS none exclusivamente web (patrón existente CodeInput), con borde exterior violeta visible.
+No prop/style CSS no admitido alcanza Android. Revalidar controles/filas tras estos ajustes de evidencia.

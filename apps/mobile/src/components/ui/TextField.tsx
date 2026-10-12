@@ -33,7 +33,7 @@ export const TextField = forwardRef<TextInput, Props>(function TextField({ label
           onFocus={(e) => { setFocused(true); rest.onFocus?.(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur?.(e); }}
           secureTextEntry={secureToggle ? hidden : secureTextEntry}
-          style={[typography.body, { flex: 1, color: colors.text, paddingHorizontal: 14, paddingVertical: 12 }, Platform.OS === 'web' ? { outlineWidth: 0 } : null, style]}
+          style={[typography.body, { flex: 1, color: colors.text, paddingHorizontal: 14, paddingVertical: 12 }, Platform.OS === 'web' ? ({ outlineStyle: 'none' } as object) : null, style]}
         />
         {secureToggle ? (
           <IconButton icon={hidden ? 'eye' : 'eye-off'} label={hidden ? 'Mostrar contraseña' : 'Ocultar contraseña'} onPress={() => setHidden((h) => !h)} color={colors.textMuted} style={{ marginRight: 4 }} />

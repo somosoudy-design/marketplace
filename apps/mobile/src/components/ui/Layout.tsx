@@ -40,8 +40,8 @@ export function ListRow({ icon, title, subtitle, value, onPress, danger, testID 
       <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
         <Text variant="subtitle" color={danger ? 'danger' : 'text'}>{title}</Text>
         {subtitle ? <Text variant="bodySmall" color="textMuted">{subtitle}</Text> : null}
+        {value ? <Text variant="bodySmall" color="textSecondary">{value}</Text> : null}
       </View>
-      {value ? <Text variant="bodySmall" color="textSecondary" style={{ maxWidth: '30%', flexShrink: 1, textAlign: 'right' }}>{value}</Text> : null}
       {onPress ? <Icon name="chevron-right" size={18} color={colors.textMuted} /> : null}
     </ScalePressable>
   );

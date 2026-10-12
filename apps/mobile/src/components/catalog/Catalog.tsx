@@ -134,7 +134,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
             returnKeyType="search"
             autoCorrect={false}
             accessibilityLabel="Buscar"
-            style={[t.typography.body, { flex: 1, minWidth: 0, color: t.colors.text, paddingVertical: 14 }, Platform.OS === 'web' ? { outlineWidth: 0 } : null]}
+            style={[t.typography.body, { flex: 1, minWidth: 0, color: t.colors.text, paddingVertical: 14 }, Platform.OS === 'web' ? ({ outlineStyle: 'none' } as object) : null]}
           />
           {f.query ? (
             <Pressable accessibilityRole="button" accessibilityLabel="Borrar búsqueda" hitSlop={10} onPress={() => setF((x) => ({ ...x, query: '' }))} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>

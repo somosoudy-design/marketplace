@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { newBuyer } from './support/db';
+import { newBuyer, unpaidOrderFor } from './support/db';
 import { sellerFixture } from './support/seller';
 
 async function signIn(page: Page, user: { email: string; password: string }) {
@@ -20,9 +20,19 @@ for (const colorScheme of ['light', 'dark'] as const) {
   test.describe(`global UX ${colorScheme}`, () => {
     test.use({ colorScheme, viewport: { width: 320, height: 780 } });
 
+    test('real unread notices retain a complete title at 320px', async ({ page }) => {
+      await signIn(page, await unpaidOrderFor(`global-notices-${colorScheme}`));
+      await page.goto('/account');
+      const notices = page.getByRole('button', { name: /^Notificaciones/ });
+      await expect(notices).toContainText(/\d+ nuevas?/);
+      expect((await notices.getByText('Notificaciones', { exact: true }).boundingBox())!.height).toBeLessThanOrEqual(20);
+    });
+
     test('category reset preserves the query; empty recovery resets editable filters', async ({ page }) => {
       await page.goto('/explore');
       await page.getByTestId('catalog-search').fill('ugreen');
+      await expect.poll(() => page.getByTestId('catalog-search').evaluate((el) => getComputedStyle(el).outlineStyle)).toBe('none');
+      await expect.poll(() => page.getByTestId('catalog-search').locator('..').evaluate((el) => parseFloat(getComputedStyle(el).borderWidth))).toBeGreaterThanOrEqual(2);
       await page.getByTestId('chip-category-tecnologia').click();
       await expect(page.getByTestId('catalog-reset-filters')).toBeVisible();
       await page.getByTestId('catalog-reset-filters').click();
@@ -151,6 +161,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('account-purchases-heading')).toHaveText('Tus compras');
       await expect(page.getByTestId('account-business-heading')).toHaveCount(0);
       await expect(page.getByTestId('account-orders')).toBeVisible();
+      const notices = page.getByRole('button', { name: /^Notificaciones/ });
+      await expect(notices.getByText('Notificaciones', { exact: true })).toBeVisible();
+      expect((await notices.getByText('Notificaciones', { exact: true }).boundingBox())!.height).toBeLessThanOrEqual(20);
       await page.getByRole('button', { name: 'Cerrar sesión', exact: true }).click();
       const seller = await sellerFixture(`global-seller-${colorScheme}`, { empty: true, admin: true });
       await signIn(page, seller);

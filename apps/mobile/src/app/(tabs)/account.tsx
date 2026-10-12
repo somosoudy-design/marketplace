@@ -72,7 +72,7 @@ export default function AccountScreen() {
             <Divider inset={68} />
             <ListRow icon="map-pin" title="Direcciones" subtitle="Dónde recibes tus compras" onPress={() => router.push('/addresses')} />
             <Divider inset={68} />
-            <ListRow icon="bell" title="Notificaciones" value={unread ? `${unread} nuevas` : undefined} onPress={() => router.push('/notifications')} />
+            <ListRow icon="bell" title="Notificaciones" value={unread ? (unread === 1 ? '1 nueva' : `${unread} nuevas`) : undefined} onPress={() => router.push('/notifications')} />
           </Card>
           {hasStores || isAdmin ? (
             <View style={{ gap: 12 }}>
