@@ -60,6 +60,8 @@ Comando focal: `pnpm --filter @kora/app-e2e exec playwright test --config <confi
 
 ## Publicación y recepción
 
-**Fuente validada:** `6df3c7d`, commit/push confirmados. **Publicación solicitada:** `.github/eas-update-request` con runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, guard de CI con Firebase original antes de EAS Update Androidpreview, resultado real EAS y emulador flows 08/09 en claro/oscuro. Sin APK nuevo, production o cambios nativos.
+**Fuente validada:** `6df3c7d`. Solicitud EAS `df823ef`, [run 38308796610](https://github.com/somosoudy-design/marketplace/actions/runs/38308796610) **Success**. Guard exactoAPK5 aprobado2026-10-12 21:09:52UTC, publicaciónAndroidpreview/resultado completados21:10:42UTC. NingúnAPK/production/configuraciónnativa.
 
-La recepción se comprobará por identificador/fecha/canal/runtime y capturas nativas de apertura, destinos, regreso y fuente OS 1,6. No se afirmará recepción Samsung sin comprobación de Oliver. Después se informará inmediatamente y se seguirá con tres alternativas A/B/C de diseño, sin otra publicación.
+**Recepción Android en curso:** solicitud `9a80d01`, [run 38309209301](https://github.com/somosoudy-design/marketplace/actions/runs/38309209301), revisión39, flujos08+09claro/oscuro. IdentificadorOTA pendiente de lectura en diagnóstico. No afirmar todavía pruebas nativas pasadas ni recepción enSamsung.
+
+Al confirmar recepción se informará inmediatamente y se seguirá con tres alternativas A/B/C de diseño, sin otra publicación.

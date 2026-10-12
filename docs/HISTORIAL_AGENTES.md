@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-12 21:19Z · Codex cloud · Oliver · InicioV2 publicado; Android39 en curso
+
+- Oliver aprobó arquitectura y autorizó1A+2A→validar→previewAPK5→continuar3propuestas sinimplementar. Fuente6df3c7d; checkpointWIP1f50f60 conpatchinactivo retirado trasvalidación. Auditor APROBADO2rondas, UX/ecommerce aprobados. Reflow ymedición corregidos.
+- UI27/27 +focal2/2sesiónperfil demorado, tipos/lint global, web/HermesAndroid5,9MB, capturasantes/después320/412/scroll/textoCSSambostemas. Primercomparativo76/68pxantes, dos tarjetas completas. Seguimiento prueba solicitudescliente, nopersiste telemetría; Authsolo demoexistente local sinmigraciones/reset.
+- EASdf823ef/run38308796610 Success; guardexactoAPK5 aprobado21:09:52UTC ypublicación21:10:42UTC. SoloAndroidpreview. Emulador39 solicitud9a80d01/run38309209301, flujos08+09ambostemas/fuenteOS1,6 en curso; no recepción/pruebasnativas afirmadas aún.
+- Próximo: leer diagnósticoID/fecha/runtime/capturas yverificarresultadoAndroid, informarOliver inmediatamente, continuar3alternativas ProductDesign yrevisiónmultiagente. Sin másEAS ni código de alternativas; BCV/vendedor/iOS/SQL separados.
+
 ### 2026-10-12 20:27Z · Codex cloud · Oliver · Etapa0 arquitectura V2 terminada
 
 - `docs/ARQUITECTURA_EXPERIENCIA_V2.md`: diagnóstico, reglas, experiencias A–E, cuatro pestañas conservadas, decisiones Inicio/Buscar/productos/compra, componentes, plan por incrementos y aceptación. Portada finita con colección de un destino; contratos pedido/cotización/reporte/verificación intactos.

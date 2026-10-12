@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente móvil Entrega01 `d945797`; publicación `ce9b960`, validación Android `8fe9731`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` |
 | Plan vigente | Arquitectura V2 aprobada: implementar1A+2A, validar/publicar previewAPK5 y después comparar3alternativas de Inicio sinimplementarlas |
-| Objetivo actual | Primera implementación1A+2A validada; publicación/recepción preview autorizadas pendientes. Después tres propuestas editoriales |
+| Objetivo actual | Primera implementación1A+2A validada; EASpreview publicado/guardexactoAPK5 aprobado; recepciónAndroid39 en curso. Después tres propuestas editoriales |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -25,7 +25,9 @@ Oliver aprobó Etapa0 y autorizó primera implementación+previewAPK5 trasvalida
 
 Auditor APROBADO tras2rondas, ecommerce/UX APROBADO. Reflowtexto yseguimiento corregidos. UI27/27 +focal sesiónperfil demorado2/2, tipos/lint global, web yAndroidHermes5,9MB aprobados. Capturas reales320/412/scroll/textoCSS ambos temas en `docs/capturas/inicio-v2`; informe `docs/IMPLEMENTACION_INICIO_V2.md`. No afirmar fontScaleAndroiddesdeCSS; flows08+09preparados,09OS1,6. APIlocalreadonly/rollback, Authdemoexistente sinmigraciones/reset; sin persistenciatelemetría verificada.
 
-**Próxima acción exacta:** solicitarúnica EASpreview autorizada cambiando `.github/eas-update-request`; comprobar guardAPK5exacto ySuccess/grupo/fecha. Despuéssolicitar emulador08+09ambostemas, verificarrecepción/capturas/fuenteOS1,6; informarOliver inmediatamente. Continuar3alternativas ProductDesign/ideate, revisiónmultiagente ydocumentación, SINimplementarlas/republicar. No iOS/APK/production/backend/finanzas/vendedor. 2B/feedinferior yBCV son independientes.
+**Publicación:** EASdf823ef/run38308796610 Success, guardexactoAPK5 aprobado21:09:52UTC, publicado21:10:42UTC. Fuente6df3c7d. Android39 solicitado9a80d01/run38309209301,08+09ambostemas, en curso.
+
+**Próxima acción exacta:** verificarID/fecha/runtime/resultado/capturasAndroid39 yfuenteOS1,6; informarOliver inmediatamente. Continuar3alternativas ProductDesign/ideate, revisiónmultiagente ydocumentación, SINimplementarlas/republicar. No iOS/APK/production/backend/finanzas/vendedor. 2B/feedinferior yBCV son independientes.
 
 ## Hitos de la Directriz maestra 02
 
