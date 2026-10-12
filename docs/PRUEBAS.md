@@ -1,5 +1,36 @@
 # Resultados de pruebas
 
+## UX global Product Design — 2026-10-12
+
+Base edae062, fuente c17f22f, cierre c1939ba; publicación autorizada solicitada por 68a0881.
+Informe/8 pasos/galería antes-después: REVISION_GLOBAL_UX.md. Solo stack/cuentas/datos demo locales;
+no nuevas reglas financieras, APIs, permisos, backend remoto/panel/config nativa/APK/iOS.
+
+| Comprobación | Resultado |
+|---|---|
+| Suite app completa inicial | 111 aprobadas + 2 fallos de fixture stock demo local agotado + 1 omisión preexistente signup sin confirmación, 8,4 min |
+| Admin retest tras fixture aditiva local | 2/2, 4,8 s; ninguna eliminación/reset/semilla remota |
+| Galería/divisores y roles/tiendas afectados | 40/40, 2,4 min |
+| Último pase sobre c17f22f | 34/34, 1,8 min: 15 global UX + 6 errores comprador + 13 Frente A V2 |
+| Consolidado de casos únicos | 115 aprobados + 1 omisión conocida; no afirmar un único pase 116/116 |
+| Núcleo | 50/50, sin modificación de reglas compartidas |
+| Tipos/lint/web/Android JS-Hermes | Aprobados, Android HBC 5,9 MB; no APK nuevo |
+| axe A/AA (16 vistas a 320 px) | 0 infracciones detectadas tras resolver galería/contador; 4 comprobaciones de contraste sobre fotos incompletas, no certificación nativa |
+| Contraste tokens usados | 22/22 ≥4,5:1, mínimo 4,78 |
+| Visual | 58 antes + 58 después, ambos temas; Cuenta recapturada al rechazar recorte aislado de navbar, cuatro iconos/DOM dentro de 412 px |
+
+Casos globales: reset de categoría conserva query, vacío restablece contexto de tienda/colección/categoría
+bloqueada; targets44 y carrito sin desbordar; mostrar/ocultar contraseña; opciones/Escape/cierre/movimiento
+reducido; mensajes asociados/error se limpia al editar; botón mantiene etiqueta al cargar; roles reales
+comprador/vendedor/admin/multirrol y CTA largo/1,6x navegador; galería enfocada/flecha/contador; avisos
+reales sin quebrar título Notificaciones. Sin mock de permisos ni datos/promociones ficticios en la app.
+
+Logs .local/logs/global-ux-*, evidencia DOM .local/global-ux/{before,after}, resultados contrast.json/
+accessibility.json; JPEG demo aceptados versionados en docs/capturas/global-ux. Primeros fallos de asserts,
+tipo CSS y fixture documentados/corregidos, sin tests desactivados. No repetir suites generales tras pases
+verificados si no hay cambios/fallos nuevos. EAS/Android visitante pendientes de resultado; no recepción
+física afirmada. TalkBack/fuente/teclado/galería/fluidez nativa con sesión requieren Oliver.
+
 ## Mi tienda operativa — 2026-10-11 (local + OTA APK 5)
 
 Informe, comandos y límites: MI_TIENDA_OPERATIVA.md. Fuente funcional 5a3b884, publicación 2a38dfb.
