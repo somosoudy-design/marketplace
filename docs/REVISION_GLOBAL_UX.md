@@ -51,3 +51,12 @@ Cuenta separa Tus compras/Tu negocio/Cuenta y ayuda con roles backend existentes
 violeta suave. Precio/cantidad en carrito admite reflujo a 320 px. Ninguna regla/cálculo/API/permiso cambió.
 Tipos/lint aprobados. global-ux.spec.ts prepara 13 casos (claro/oscuro/contextos/errores/targets/carga/roles/foco/
 movimiento reducido). Pruebas/capturas después/publicación todavía pendientes.
+
+Validación focalizada: **13/13** (44,4 s), núcleo **50/50**, tipos/lint aprobados. Se probó reset por
+categoría y estados vacíos, contexto real de categoría/colección esenciales-tech/tienda, targets/revelar
+contraseña/reflujo carrito, opciones/cierre/Escape, errores asociados/limpios al editar/carga con texto,
+comprador/seller-admin sin conceder roles y foco/movimiento reducido. Primer pase: 7/13; seis fallos de
+aserción/fixture corregidos sin ocultarlos: el cache restaura resultados sin nueva petición, input visible
+puede omitir atributo type (su propiedad sigue text) y Escape requiere modal activo tras transición;
+colección de prueba cambiada al slug real. Se verifican datos/DOM y dialog activo, sin sleeps arbitrarios.
+Pendiente: regresión de pantallas que reutilizan controles, capturas después/contraste y publicación.

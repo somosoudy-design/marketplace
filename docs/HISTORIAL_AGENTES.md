@@ -4,6 +4,11 @@ Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada tur
 arriba de la bitácora, con este formato:
 
 ```
+### 2026-10-12 · Codex cloud · Oliver · cierre módulo de controles y recuperación UX
+- Auditoría antes preservada 5a616df; implementación 61bb206: controles/touch 44 px, CTA adaptable/visible durante carga, foco web, campos semánticos, Sheet compartida/cierre/movimiento reducido, recuperación de catálogo conservando contexto, grupos Cuenta/filas y reflujo precio-cantidad. Sin APIs/backend/finanzas/config nativa.
+- 13/13 focalizadas claro/oscuro/320 px, núcleo 50/50, tipos/lint aprobados. Primer pase 7/13; corregidas aserciones de cache, propiedad HTML type y activación de modal, colección real; no se desactivaron pruebas o alteró lógica por los asserts.
+- Siguiente: regresión app, capturas después/contraste; publicación preview APK 5 autorizada solo tras cierre. Ningún EAS/APK nuevo todavía.
+
 ### 2026-10-12 · Codex cloud · Oliver · checkpoint revisión global Product Design
 - Oliver solicita revisión general de UX/diseño con Product Design y publicación al terminar. Base edae062, rama compartida sincronizada, continuidad/arquitectura/dirección/diseño leídos; un agente.
 - Auditoría de screenshots primero con index/audit/user-context/framework del plugin. Preflight sin contexto guardado; fuentes del repositorio/identidad existente. Capturas nuevas en local, sin usar imágenes anteriores como evidencia.

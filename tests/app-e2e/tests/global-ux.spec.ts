@@ -44,15 +44,23 @@ for (const colorScheme of ['light', 'dark'] as const) {
       page.on('request', (request) => { if (request.url().includes('/rpc/search_products')) last = request.postDataJSON(); });
       for (const [route, key, value] of [
         ['/catalog?category=tecnologia', 'p_category', 'tecnologia'],
-        ['/catalog?collection=esenciales-para-cargar', 'p_collection', 'esenciales-para-cargar'],
+        ['/catalog?collection=esenciales-tech', 'p_collection', 'esenciales-tech'],
         ['/tienda/kora', 'p_store', 'kora'],
       ]) {
         await page.goto(route!);
+        const first = page.locator('[data-testid^="product-card-"]:visible').first();
+        await expect(first).toBeVisible();
+        const productId = (await first.getAttribute('data-testid'))!;
+        await expect.poll(() => last[key!]).toBe(value);
         await page.getByTestId('catalog-search').fill('zzzz-no-existe');
-        await page.getByRole('button', { name: 'Restablecer búsqueda', exact: true }).click();
-        await expect.poll(() => last.p_query).toBe(null);
+        const recover = page.getByRole('button', { name: 'Restablecer búsqueda', exact: true });
+        await expect(recover).toBeVisible();
         expect(last[key!]).toBe(value);
+        await recover.click();
         await expect(page.getByTestId('catalog-search')).toHaveValue('');
+        // Restoring cached results need not make another network request. Verify the actual screen context.
+        await expect(page.getByTestId(productId)).toBeVisible();
+        await expect(recover).toHaveCount(0);
       }
     });
 
@@ -62,7 +70,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await touchTarget(reveal);
       await page.getByTestId('sign-in-password').fill('test-password');
       await reveal.click();
-      await expect(page.getByTestId('sign-in-password')).toHaveAttribute('type', 'text');
+      await expect.poll(() => page.getByTestId('sign-in-password').evaluate((el) => (el as HTMLInputElement).type)).toBe('text');
       await page.getByRole('button', { name: 'Ocultar contraseña', exact: true }).click();
       await expect(page.getByTestId('sign-in-password')).toHaveAttribute('type', 'password');
       await page.goto('/explore');
@@ -90,6 +98,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(sheet).toHaveCount(0);
       await expect(page.getByTestId('chip-sort')).toHaveText(/Menor precio/);
       await page.getByTestId('chip-sort').click();
+      await expect(page.getByRole('dialog')).toBeVisible(); // Modal is active after its opening transition.
       await page.keyboard.press('Escape');
       await expect(sheet).toHaveCount(0);
       await page.getByTestId('chip-sort').click();
