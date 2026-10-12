@@ -3,7 +3,8 @@
 HAYAZGO conserva Electric Violet y sus funciones. Se mejoran recuperación de búsqueda, controles táctiles,
 formularios, hojas de opciones, legibilidad y separación de compras/negocio/ayuda en Cuenta.
 Oliver autorizó publicar para revisar en su APK 5 al terminar. Base edae062; fuente funcional c17f22f.
-**Estado: implementación/pruebas cerradas; publicación preview y Android pendientes de resultado.**
+**Estado: publicada en preview compatible APK 5; Android visitante en validación.**
+[EAS 38291282048](https://github.com/somosoudy-design/marketplace/actions/runs/38291282048), fuente68a0881, **Success**, guard exacto APK 5 aprobado, publicación 2026-10-12 18:31 UTC.
 
 ## Auditoría y cambios por paso
 
@@ -126,7 +127,8 @@ Autorización explícita de Oliver: publicar al terminar para revisar. Destino A
 runtime eb5ed1179b9c76c9c3cf27333aa48306728eb4ba; workflow debe pasar guard antes de publicar.
 No generar APK. Validar visitante en Android: frente-a-v2/01-visitante, 06-global-ux, 05-mi-tienda-acceso,
 ambos temas, sin registro/pedidos/pagos/favoritos remotos o escrituras de vendedor.
-Resultado EAS/Android todavía pendiente; no afirmar recepción física o publicación hasta comprobarlos.
+EAS preview 38291282048 **Success**, guard runtime aprobado; publicación completada 18:31:34Z.
+Android revisión37 solicitada (3 flujos/2 temas), resultado pendiente; no afirmar recepción física.
 
 Límites: TalkBack/fuentes/teclado/galería/rendimiento con sesión en Android físico requieren Oliver;
 pruebas locales no certifican funcionamiento nativo completo. Mi tienda mantiene pendientes dos migraciones

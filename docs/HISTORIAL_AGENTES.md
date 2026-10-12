@@ -4,6 +4,12 @@ Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada tur
 arriba de la bitácora, con este formato:
 
 ```
+### 2026-10-12 18:33Z · Codex cloud · Oliver · publicación UX global APK 5 y checkpoint Android
+- Publicación autorizada después de validación: fuente68a0881, run38291282048 Success. Firebase/env preview y guard exacto runtime APK 5 success; publicar/resultado success 18:31:34Z. Sin APK nuevo/cambio de canal.
+- Revisión37 preparada: frente-a-v2/01-visitante, 06-global-ux, 05-mi-tienda-acceso; ambos temas, cliente visitante/public reads/carrito dispositivo. Sin signup/pedido/pago/favorito o escrituras de vendedor remotas.
+- Fuente móvil/API idéntica a c17f22f; fuente de galería/controles/tipos/lint/Hermes aprobada. Publicación es el único servicio remoto modificado; no Supabase/Firebase/panel/iOS/finanzas/BCV.
+- Siguiente: comprobar workflow Android, recepción OTA/runtime/fecha y capturas en ci/capturas SHA/FETCH_HEAD verificado; actualizar cierre/documentos/push. No recepción en teléfono de Oliver afirmada.
+
 ### 2026-10-12 · Codex cloud · Oliver · cierre UX global previo a publicación autorizada
 - Product Design audit aplicado primero: 58 capturas nuevas antes, 58 después revisadas, fuentes reales locales/320 px/ambos temas. 8 pasos y comparativas JPEG demo en REVISION_GLOBAL_UX.md.
 - Fuente c17f22f: recuperación de búsqueda/contexto, controles 44 px/CTA adaptable y etiqueta en carga, foco/error/helper, Sheet común/cierre/movimiento reducido, galería teclado/contador web, grupos Cuenta/filas/avisos legibles. Funciones/datos/identidad existentes conservados.
