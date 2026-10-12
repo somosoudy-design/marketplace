@@ -14,4 +14,28 @@ Capturas antes/después locales ignoradas en .local/global-ux; no se usan captur
 Los criterios son claridad de la siguiente acción, jerarquía, consistencia, estados, confianza,
 etiquetas/objetivos táctiles/foco/contraste/reflujo/movimiento reducido.
 
-Pendiente: capturas/inspección, hallazgos por paso, implementación, pruebas, publicación/Android y límites.
+## Auditoría inicial — capturas nuevas aceptadas
+
+58 capturas (29 por tema): tools/design/screens.mjs, Pixel 7; audit-global.mjs, 320×780 px.
+Archivos .local/global-ux/before/{light,dark}/01..29, inspeccionados en este turno; evidencia DOM/geometría
+21..29 en evidence.json. Solo cuentas demo locales; las fotos/demo siguen rotuladas, no se confirmaron
+pedidos desde las capturas. No equivale a TalkBack, teclado o permisos de galería en Android físico.
+
+| Paso | Pantallas/evidencia | Salud inicial y mejora priorizada |
+|---|---|---|
+| 1 Inicio/descubrimiento | 01–03 | Buena: jerarquía/productos/buscador/navbar coherentes. Ver todo pequeño; mejorar objetivo táctil compartido sin reconstruir feed |
+| 2 Buscar/comparar | 04,21–23 | Fricción confirmada: Belleza seleccionada, cero accesos Limpiar filtros; búsqueda sin resultados sin acción de recuperación. Chips 34 px. Corregir reset respetando filtros bloqueados, CTA vacío y accesibilidad |
+| 3 Ficha/tienda | 05–07,24 | Buena fotografía/precio/CTA; cantidad 36×36 px. Mantener nombre una línea en tarjetas y precios actuales, ampliar controles y evitar colisión de precio/cantidad a 320 px |
+| 4 Carrito/checkout | 08,12–13 | Totales/entregas claros y estados anteriores intactos. Ampliar controles/calls to action compartidos, sin cambiar procedimientos o cálculos |
+| 5 Acceso/recuperación | 10–11,25 | Formulario claro; mostrar contraseña 48×20 px y sin foco visible en inspección. Mejorar objetivos/foco/relación de mensajes; mantener autenticación |
+| 6 Cuenta/preferencias | 09,18,26,29 | Compras/privacidad/negocio mezclados sin títulos de grupo; botón largo de privacidad 36 px. Separar compras/negocio/ayuda y adaptar botones a texto/anchos |
+| 7 Posventa/direcciones | 14–20 | Pedidos/favoritos/avisos/direcciones disponibles, demo rotulado; aplicar coherencia compartida de filas/hojas sin nueva lógica |
+| 8 Mi tienda | 27–28 | Datos reales locales/moderación y navegación correctos. Beneficiar de controles/filas/hojas compartidos, no reconstruir VEN-01 ni activar SQL remoto |
+
+Prioridades verificables: reset/recuperación de catálogo; controles mínimo 44 px y CTA sin truncar;
+hojas con cierre visible junto al título, movimiento reducido y contenido adaptable; agrupación Cuenta
+compras/negocio/ayuda y filas coherentes. Electric Violet, tokens, marca, tabs y datos permanecen como base.
+Contraste/teclado/semántica se medirán en implementación; capturas solas no certifican accesibilidad.
+
+Pendiente: implementación, pruebas, comparativas y publicación autorizada preview/Android APK 5.
+
