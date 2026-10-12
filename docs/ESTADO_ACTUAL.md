@@ -15,7 +15,7 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente operativa `5a3b884`; publicación `2a38dfb`, Android `3ea956e`, SQL preparado `59f2974`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a12c4b` |
 | Plan vigente | Entrega 01: Buscar + tarjetas compartidas. Product Design real, comparación visual; preview APK 5 autorizada solo tras validación. No Entrega 02 |
-| Objetivo actual | Implementación Entrega01 terminada y pruebas focalizadas29/29. Últimas capturas/export Android en cierre; preview APK5 autorizada después. Cabecera270→164 px,2→4 tarjetas completas; no Entrega02 |
+| Objetivo actual | Implementación Entrega01 terminada y pruebas focalizadas29/29. Capturas/axe/Hermes finales aprobados; preview APK5 autorizada en preparación. Cabecera270→164 px,2→4 tarjetas completas; no Entrega02 |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -120,7 +120,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 **Entrega 01 — implementación y checkpoint, 2026-10-12.** Buscar compacto: buscador/herramientas fijos, categoría en conteo mantiene contexto al desplazar; categorías subrayadas sin cápsulas, Filtrar/Ordenar agrupados; hoja precio/disponibilidad con borrador, aplicar/cancelar/reset y contratos existentes. Tarjetas compartidas radio10/foto4:5/precio16/nombre1línea; corazón19/superficie28/táctil44 sin sombra/círculo oscuro; estados no normales visibles y demo honesto. Mini/skeleton/fade reducido coherentes.
 
-**29/29 pruebas focalizadas sobre fuente actual**, claro/oscuro/320, teclado/reduced motion, borradores/RPC/contextos/regreso/scroll/favoritos reales locales, estados controlados y skeleton sin salto. Tipos/lint mobile aprobados. Capturas antes16 +4scroll recapturadas desde snapshot baeb39d tras rechazo de4 tomas; exportaciones después/Hermes finales y axe en cierre. Pruebas anteriores fallaron por teclado, selector amplio, race de debounce y reinicios paralelos del stack local; corregidos/concentrados en un único proceso, no reset ni datos remotos. No EAS Entrega01 todavía. Siguiente: verificar evidencia final, commit cierre y publicar preview compatible APK5; emulador07 claro/oscuro, comprobar ID/fecha/runtime y capturas reales. No Entrega02.
+**29/29 pruebas focalizadas sobre fuente actual**, claro/oscuro/320, teclado/reduced motion, borradores/RPC/contextos/regreso/scroll/favoritos reales locales, estados controlados y skeleton sin salto. Tipos/lint mobile aprobados. Capturas antes16 +4scroll recapturadas desde snapshot baeb39d tras rechazo de4 tomas; 20 capturas después/10 extras, Hermes final y axe0 infracciones/0 incompletas en8 vistas aprobados. Pruebas anteriores fallaron por teclado, selector amplio, race de debounce y reinicios paralelos del stack local; corregidos/concentrados en un único proceso, no reset ni datos remotos. No EAS Entrega01 todavía. Siguiente: publicar preview compatible APK5; emulador07 claro/oscuro, comprobar ID/fecha/runtime y capturas reales. No Entrega02.
 
 **Cierre técnico del antecedente global:** EAS 38291282048 Success, APK 5 preview. Android revisión37/run38292016113: 4/6 recorridos pasaron; 06-global-ux falla en ambos temas porque el enlace `kora://explore` deja Inicio (captura real), antes de probar los filtros. No afirmar 6/6. La nueva prueba entrará por la pestaña real Buscar. Recepción física confirmada por Oliver; evaluación visual negativa origina esta entrega.
 
@@ -373,7 +373,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Cerrar Entrega 01 (Buscar/tarjetas): pruebas focalizadas y capturas actuales después; primera tarjeta270→164 px,2→4 completas. Helpers tools/design/{capture,verify}-delivery-01.mjs. Antes-scroll se recaptura desde snapshot baeb39d tras rechazar4 tomas no desplazadas. Sin nueva publicación todavía. Ver REDISENO_ENTREGA_01.md para fuente/comandos/evidencia. Publicación preview APK5 autorizada solo si validación satisfactoria; Android07 claro/oscuro, recepción/runtime/fecha reales. No Entrega 02 hasta revisión Oliver; BCV y SQL Mi tienda son prioridades separadas.
+Publicar Entrega01 local/visual validada, fuente d945797, pruebas29/29 y axe0/8vistas; primera tarjeta270→164 px,2→4 completas. Helpers tools/design/{capture,verify}-delivery-01.mjs. Antes-scroll se recaptura desde snapshot baeb39d tras rechazar4 tomas no desplazadas. Sin nueva publicación todavía. Ver REDISENO_ENTREGA_01.md para fuente/comandos/evidencia. Publicación preview APK5 autorizada solo si validación satisfactoria; Android07 claro/oscuro, recepción/runtime/fecha reales. No Entrega 02 hasta revisión Oliver; BCV y SQL Mi tienda son prioridades separadas.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
