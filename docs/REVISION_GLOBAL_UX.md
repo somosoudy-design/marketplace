@@ -65,5 +65,5 @@ Regresión completa inicial: 111 aprobadas, 1 omisión conocida (registro sin co
 administrador antes de UI por sold_out en juguete-cuerda-perros. Solo la variante demo local agotada recibió
 20 unidades aditivas, sin reset/borrados/datos remotos; se repetirán esos casos. Se afina foco violeta exterior
 en buscador/campos (evita rectángulo negro interior de captura 22), y prueba de texto grande 1.6x del botón.
-Tipos/lint finales aprobados; checkpoint antes de export final. Flujo Android visitante 06-global-ux.yaml y
+Lint final aprobado; el último typecheck rechazó outlineStyle none de CSS en TextStyle nativo. Se corrige a outlineWidth 0 (borde exterior violeta conserva foco) y se revalida antes de export. El checkpoint 113d192 registró por error tipos aprobados; esta entrada lo corrige. Flujo Android visitante 06-global-ux.yaml y
 scanner axe preparado; dependencia axe instalada únicamente en /tmp, ningún package/lock/config nativo cambió.
