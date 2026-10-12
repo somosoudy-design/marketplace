@@ -1,5 +1,5 @@
-# Revisión38 · Entrega01 Buscar/tarjetas. EAS38297286778 Success/fuentece9b960, guard APK5 aprobado.
-# Solo catálogo público/visitante; favoritos abre login sin enviar datos. No cuentas/pedidos/pagos/vendedor.
+# Revisión39 · InicioV2 fuente6df3c7d. EAS38308796610 Success/fuentedf823ef; runtimeAPK5exacto aprobado21:09:52UTC.
+# Flujos públicos/visitante; fuenteOS1,6 en emulador aislado. No registros/pedidos/pagosremotos.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
-flows: 07-diseno-entrega-01
+flows: 08-inicio-v2 09-inicio-v2-texto
 themes: light dark
