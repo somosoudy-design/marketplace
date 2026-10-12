@@ -1,4 +1,4 @@
 # Capturas del emulador
 
-Ejecución 38292016113 del commit baeb39d5ede6d1f483d80d3c94205ae5e93cdad2 (2026-10-12T18:49Z).
+Ejecución 38297634332 del commit 8fe9731f1b5d821c24b51276e9e8de355a4d225d (2026-10-12T19:32Z).
 Solicitud: APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
