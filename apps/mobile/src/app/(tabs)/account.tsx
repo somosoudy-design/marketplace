@@ -67,11 +67,11 @@ export default function AccountScreen() {
           <Text variant="overline" color="textSecondary" testID="account-purchases-heading">Tus compras</Text>
           <Card padded={false}>
             <ListRow testID="account-orders" icon="receipt" title="Mis pedidos" subtitle={open ? `${open} en curso` : 'Historial y seguimiento'} onPress={() => router.push('/orders')} />
-            <Divider inset={52} />
+            <Divider inset={68} />
             <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle={fav.ids.size ? (fav.ids.size === 1 ? '1 producto guardado' : `${fav.ids.size} productos guardados`) : 'Lo que guardas con el corazón'} onPress={() => router.push('/favorites')} />
-            <Divider inset={52} />
+            <Divider inset={68} />
             <ListRow icon="map-pin" title="Direcciones" subtitle="Dónde recibes tus compras" onPress={() => router.push('/addresses')} />
-            <Divider inset={52} />
+            <Divider inset={68} />
             <ListRow icon="bell" title="Notificaciones" value={unread ? `${unread} nuevas` : undefined} onPress={() => router.push('/notifications')} />
           </Card>
           {hasStores || isAdmin ? (
@@ -81,7 +81,7 @@ export default function AccountScreen() {
               {hasStores ? (
                 <ListRow testID="account-my-store" icon="store" title="Mi tienda" subtitle="Tu negocio dentro de HAYAZGO" onPress={() => router.push('/my-store')} />
               ) : null}
-              {hasStores && isAdmin ? <Divider inset={52} /> : null}
+              {hasStores && isAdmin ? <Divider inset={68} /> : null}
               {isAdmin ? <ListRow testID="account-admin" icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
             </Card>
             </View>

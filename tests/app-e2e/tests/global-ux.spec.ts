@@ -76,6 +76,12 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.goto('/explore');
       await touchTarget(page.getByTestId('chip-sort'));
       await page.goto('/p/ugreen-cable-usb-c-100w');
+      const gallery = page.getByRole('region', { name: 'Fotos del producto', exact: true });
+      await expect(gallery).toHaveAttribute('tabindex', '0');
+      await gallery.focus();
+      await page.keyboard.press('ArrowRight');
+      await expect.poll(() => gallery.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+      await expect(page.getByRole('status', { name: /Foto \d de 2/ })).toBeVisible();
       await touchTarget(page.getByRole('button', { name: 'Aumentar cantidad', exact: true }));
       await touchTarget(page.getByRole('button', { name: 'Disminuir cantidad', exact: true }));
       await page.getByTestId('product-cta').click();

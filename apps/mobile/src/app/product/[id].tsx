@@ -168,6 +168,8 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           {/* gallery */}
           <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
             <FlatList
+              testID="product-gallery"
+              {...(Platform.OS === 'web' ? { role: 'region' as const, 'aria-label': 'Fotos del producto', tabIndex: 0 as const } : {})}
               horizontal
               pagingEnabled
               data={images}
@@ -179,7 +181,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               )}
             />
             {images.length > 1 ? (
-              <View accessibilityLabel={`Foto ${page + 1} de ${images.length}`} style={{ position: 'absolute', bottom: 14, alignSelf: 'center', flexDirection: 'row', gap: 6 }}>
+              <View testID="product-gallery-page" accessible accessibilityLabel={`Foto ${page + 1} de ${images.length}`} {...(Platform.OS === 'web' ? { role: 'status' as const } : {})} style={{ position: 'absolute', bottom: 14, alignSelf: 'center', flexDirection: 'row', gap: 6 }}>
                 {images.map((_, i) => <View key={i} style={{ width: i === page ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: i === page ? t.colors.text : t.colors.borderStrong }} />)}
               </View>
             ) : null}

@@ -67,3 +67,14 @@ administrador antes de UI por sold_out en juguete-cuerda-perros. Solo la variant
 en buscador/campos (evita rectángulo negro interior de captura 22), y prueba de texto grande 1.6x del botón.
 Lint final aprobado; el último typecheck rechazó outlineStyle none de CSS en TextStyle nativo. Se corrige a outlineWidth 0 (borde exterior violeta conserva foco) y se revalida antes de export. El checkpoint 113d192 registró por error tipos aprobados; esta entrada lo corrige. Flujo Android visitante 06-global-ux.yaml y
 scanner axe preparado; dependencia axe instalada únicamente en /tmp, ningún package/lock/config nativo cambió.
+
+Corrección 44aaf82: tipos aprobados; 13/13 finales (42,3 s) y dos administradores 2/2 (4,8 s) después
+de preparación de fixture. Regresión consolidada 113 aprobadas + 1 omisión conocida, no un único pase
+114/114. 58 capturas después generadas. Scan axe (16 vistas) encontró dos defectos previos de galería,
+ambos temas: aria-label en indicador sin rol y scroll horizontal sin foco de teclado. Se añade región
+focusable/contador status SOLO WEB y etiqueta accesible nativa, sin cambiar gestos/fotos o módulos.
+Test nuevo verifica flecha derecha/foco y contador; revalidar axe. Divisores de filas se alinean a 68 px.
+Captura después 18-light mostró navbar recortada: rechazada; captura fresca de Cuenta confirmó DOM/barra
+12..400 dentro de viewport412 y cuatro iconos visibles. Reponer capturas afectadas con estado estable;
+no ocultar un recorte como diseño aprobado. Primer probe falló por stack finalizado; resuelto con stack/
+server/driver en la misma ejecución cloud. Ningún problema de app atribuido al proceso de prueba.

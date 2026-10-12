@@ -135,7 +135,7 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
 
             <View style={{ borderRadius: t.radii.lg, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, overflow: 'hidden' }}>
               {s.shipping_info ? <ListRow icon="truck" title="Envíos" subtitle={s.shipping_info} /> : null}
-              {s.shipping_info && policies.length ? <Divider inset={52} /> : null}
+              {s.shipping_info && policies.length ? <Divider inset={68} /> : null}
               {policies.length ? <ListRow testID="store-policies" icon="shield-check" title="Políticas de la tienda" subtitle={policies.map(([k]) => POLICY_LABEL[k] ?? k).join(', ')} onPress={() => setInfo(true)} /> : null}
             </View>
 

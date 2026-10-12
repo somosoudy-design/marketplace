@@ -53,8 +53,8 @@ function Dashboard() {
       </Card>
     </>}
     <Card padded={false}>
-      <ListRow testID="seller-products-link" icon="package" title="Mis productos" subtitle="Consulta tu catálogo y sus estados" onPress={() => router.push('/my-store/products')} /><Divider inset={52} />
-      <ListRow testID="seller-orders-link" icon="receipt" title="Pedidos" subtitle="Entregas recibidas y seguimiento" onPress={() => router.push('/my-store/orders')} /><Divider inset={52} />
+      <ListRow testID="seller-products-link" icon="package" title="Mis productos" subtitle="Consulta tu catálogo y sus estados" onPress={() => router.push('/my-store/products')} /><Divider inset={68} />
+      <ListRow testID="seller-orders-link" icon="receipt" title="Pedidos" subtitle="Entregas recibidas y seguimiento" onPress={() => router.push('/my-store/orders')} /><Divider inset={68} />
       <ListRow testID="seller-settings-link" icon="settings" title="Configuración de tienda" subtitle="Datos y políticas de tu negocio" onPress={() => router.push('/my-store/settings')} />
     </Card>
     <AdvancedPanel />
