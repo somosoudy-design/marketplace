@@ -19,11 +19,11 @@
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — checkpoint arquitectura V2
+## Trabajo en curso — arquitectura V2
 
-Etapa 0 autorizada por Oliver; documento inicial **WIP**. Capturas locales web de visitante, claro/oscuro, sin escrituras de negocio. Checkout/pago autenticados no capturados: representar por código con límite explícito. Referencias públicas Amazon/Mercado Libre/SHEIN/Apple/Baymard bloqueadas por Tunnel403; no inventar investigación externa. Product Design consultado realmente. Subagentes UX, ecommerce y auditor trabajan solo lectura; raíz integra.
+Etapa 0 autorizada por Oliver; Documento rector, tablero y siete esquemas (28 renders) guardados; revisión independiente final en curso. Capturas locales web de visitante, claro/oscuro, sin escrituras de negocio. Checkout/pago autenticados no capturados: representar por código con límite explícito. Referencias públicas Amazon/Mercado Libre/SHEIN/Apple/Baymard bloqueadas por Tunnel403; no inventar investigación externa. Product Design consultado realmente. Subagentes UX, ecommerce y auditor trabajan solo lectura; raíz integra.
 
-**Próxima acción exacta:** completar siete propuestas y comparaciones en `docs/diseno-v2/`; revisar con `/root/commerce_v2` y `/root/reviewer_v2`, corregir y segunda revisión (máximo dos rondas), actualizar continuidad y cerrar commit/push. No tocar app, Supabase, pagos, iOS o workflows. No EAS ni APK. Después, detenerse para aprobación de Oliver.
+**Próxima acción exacta:** cerrar segunda revisión de `docs/ARQUITECTURA_EXPERIENCIA_V2.md` y `docs/diseno-v2/`; comprobar barra de Resultados en PNG finales, integrar veredicto real de `/root/reviewer_v2`, actualizar continuidad y cerrar commit/push. No tocar app, Supabase, pagos, iOS o workflows. No EAS ni APK. Después, detenerse para aprobación de Oliver.
 
 ## Hitos de la Directriz maestra 02
 
@@ -122,7 +122,7 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 4 | Preguntas y respuestas | Evaluado, sin implementar en la app: responder exige una pantalla nueva de vendedor, y Oliver pidió no agregar funciones al panel ni botones que no funcionen. Diseño listo y la decisión que falta en `docs/PREGUNTAS_Y_RESPUESTAS.md` |
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
-## Trabajo en curso
+## Antecedentes de implementación (cerrados)
 
 **Entrega 01 — terminada, publicada y verificada en emulador, 2026-10-12.** Buscar compacto: buscador/herramientas fijos, categoría en conteo mantiene contexto al desplazar; categorías subrayadas sin cápsulas, Filtrar/Ordenar agrupados; hoja precio/disponibilidad con borrador, aplicar/cancelar/reset y contratos existentes. Tarjetas compartidas radio10/foto4:5/precio16/nombre1línea; corazón19/superficie28/táctil44 sin sombra/círculo oscuro; estados no normales visibles y demo honesto. Mini/skeleton/fade reducido coherentes.
 
@@ -379,9 +379,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**Esperar revisión de Oliver de Entrega01 en Samsung S24.** Actualización01a13193 de2026-10-12 19:24UTC; fuente d945797, EAS38297286778 Success, Android38/38297634332 **2/2** ambos temas sin reintentos. Confirmar en Cuenta/Diagnóstico después de cerrar completamente y reabrir la app si todavía ve versión anterior. Capturas comparables/método/decisiones/mediciones: REDISENO_ENTREGA_01.md; fuentes/helpers tools/design/{capture,verify}-delivery-01.mjs.
+**Etapa 0 de arquitectura V2:** completar control de calidad final y entregar a Oliver `docs/ARQUITECTURA_EXPERIENCIA_V2.md`, tablero `docs/diseno-v2/propuestas.html` y `EVIDENCIA_Y_REVISION.md`. Luego esperar aprobación explícita de arquitectura. No continuar la implementación de Entrega02/Inicio automáticamente.
 
-No repetir Buscar/tarjetas, EAS o la auditoría global por defecto. **No iniciar Entrega02/Inicio hasta revisión/nuevas instrucciones**: jerarquía editorial, secciones/carruseles y ritmo usando tarjetas nuevas. Revisión física TalkBack/fuentes/fluidez pendiente; CI no sustituye Samsung. BCV crítica y SQL Mi tienda siguen como prioridades separadas; no activar migraciones por esta entrega.
+Tras aprobación, primer incremento recomendado: base mínima + portada editorial/primera comparación (1A + 2A), usando funciones existentes. Publicación individual requiere autorización aparte. OTA vigente `01a13193` del 2026-10-12 19:24 UTC, Android38 2/2, se conserva. BCV crítica y activación SQL Mi tienda siguen separadas; iOS pospuesto.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -541,8 +541,8 @@ Resumen; procedimientos en `docs/ENTORNO.md`.
 ```bash
 git fetch origin && git checkout claude/marketplace-v1 && git pull --ff-only
 git log --oneline -10
-pnpm install
-pnpm stack:start && pnpm db:reset      # backend local con datos demo
-pnpm test:ui                           # comprueba que la app sigue verde
-# luego la «Próxima acción» de arriba o la primera tarea de docs/PENDIENTES.md
+# Leer AGENTS.md, estado/pendientes y ARQUITECTURA_EXPERIENCIA_V2.md.
+# No ejecutar db:reset, compra/pago o publicación para revisar documentación.
 ```
+
+Primero comprobar que Oliver aprobó la arquitectura y concretó el incremento autorizado. Sin aprobación, limitarse a aclarar/corregir la propuesta; no tocar app, servicios o backend. Para implementación autorizada, seguir `docs/ENTORNO.md` y las pruebas focales de la etapa, preservando datos existentes.

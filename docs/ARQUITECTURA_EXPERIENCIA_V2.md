@@ -13,14 +13,14 @@ El problema principal es la ausencia de una jerarquía común entre descubrimien
 | Categoría, contador, pestaña y resumen pueden repetir el mismo contexto | Se ocupan franjas persistentes sin aportar decisiones nuevas | Una sola identificación del contexto; controles según exploración o consulta |
 | Una fotografía muy alta domina la primera vista de la ficha | Precio y variantes aparecen; vendedor y condiciones quedan lejos de la decisión | Galería contenida en el presupuesto de la primera vista, información comercial agrupada |
 | Encargo promete universalmente 50 % de anticipo; los planes dependen del carrito completo | Expectativa comercial que puede incumplirse al combinar tiendas/modalidades | No prometer planes antes de la elegibilidad del servidor |
-| Pago usa «Confirma tu pago» para enviar un reporte | Puede confundirse un comprobante con una confirmación financiera | Separar elección, cotización, reporte y verificación |
+| Pago tiene encabezado «Confirma tu pago», aunque el CTA ya aclara «enviar para verificar» | El encabezado contradice la semántica correcta del CTA y de su aviso | Separar elección, cotización, reporte y verificación |
 | Componentes editoriales, resultados y operaciones comparten demasiado lenguaje de tarjetas | No se distingue explorar de resolver una tarea | Anatomía comercial común, variantes de densidad y función |
 
 **Base real:** código móvil de `d945797`, continuidad en `8096e3f`, capturas web actuales de visitante a 412 × 892, claro/oscuro, y evaluación física de Oliver relatada en sus instrucciones. La publicación previa y sus pruebas son antecedentes, no prueba de la calidad de esta propuesta.
 
 **Límites:** sin teléfono/emulador Android local. Checkout y pago autenticados no se recorrieron: las capturas muestran sus barreras de acceso; sus composiciones actuales se analizan por código. No se crearon usuarios, pedidos, cotizaciones ni pagos. Servicios locales de lectura con transacciones revertidas; carrito de visitante en perfil temporal. Esquemas propuestos no equivalen a pantallas implementadas ni a pruebas de persistencia.
 
-Las figuras y el registro de fuentes se incorporan en este mismo bloque antes de la revisión final. Este primer checkpoint permanece **WIP** hasta disponer de las siete propuestas renderizadas y del veredicto independiente.
+Las siete propuestas, las capturas y las fuentes están en el [tablero comparativo](diseno-v2/propuestas.html) y en [Evidencia y revisión](diseno-v2/EVIDENCIA_Y_REVISION.md). El documento permanece en revisión hasta cerrar la segunda ronda independiente. Ninguna figura modifica la app.
 
 ## 2. Principios y reglas del sistema
 
@@ -77,7 +77,7 @@ No se retira el feed: su exploración continua vive en Buscar; Inicio conserva u
 
 ## 5. Nueva portada: decisión recomendada
 
-**Una apertura editorial de ancho útil completo, sin carrusel automático.** Elegir la primera colección `feature` válida en el orden del backend. Mostrar un producto real, fotografía íntegra, nombre y precio demo rotulado cuando corresponda. El módulo lleva a la **colección identificada**: un solo destino comercial, CTA «Ver colección». El precio ilustra ese producto, no el precio de toda la colección. El detalle de producto se abre desde sus tarjetas en la colección; no colocar dos enlaces ambiguos dentro de un mismo hero.
+**Una apertura editorial de ancho útil completo, sin carrusel automático.** Elegir la primera colección `feature` válida en el orden del backend. Mostrar un producto existente en la colección, fotografía íntegra, nombre y precio demo rotulado cuando corresponda. El módulo lleva a la **colección identificada**: un solo destino comercial, CTA «Ver colección». El precio ilustra ese producto, no el precio de toda la colección. El detalle de producto se abre desde sus tarjetas en la colección; no colocar dos enlaces ambiguos dentro de un mismo hero.
 
 Los demás destacados no desaparecen: pasan al bloque de colecciones con nombre y destino real. Se elimina la necesidad de puntos de paginación en esta apertura. Si una futura campaña exige paginar, se revisará como variante con indicador integrado y navegación manual; no se activa por defecto.
 
@@ -125,38 +125,38 @@ Una anatomía comercial, **cinco variantes funcionales**, no una tarjeta univers
 | Editorial | Fotografía y producto real dentro de una colección identificada; CTA de colección inequívoco; demo explícito |
 | Resultados / recomendaciones | Foto 4:5 conservada, nombre una línea, precio principal, favoritos 18–20 visual / 44 táctil; oferta y disponibilidad excepcional sin ruido redundante |
 | Retoma | Miniatura y nombre/precio compactos; agotado, encargo o indisponible visible; favorito solo si aporta una acción sin competir |
-| Carrito | Miniatura, variante, cantidad editable, disponibilidad, importe del servidor y recuperación del error; agrupación operativa |
+| Carrito | Miniatura, variante, cantidad editable, disponibilidad, importe del servidor en cuenta, precio referencial local como visitante, y recuperación del error; agrupación operativa |
 | Revisión / entrega | Producto y cantidad en la entrega correcta; variante legible; sin controles de exploración o favoritos |
 
 No reconstruir por estética la tarjeta de `d945797`: radio 10, superficie integrada, corazón discreto y objetivo 44 ya son una base coherente. El siguiente cambio responde al **contexto y datos**, no a aumentar sombras o radios.
 
 Fotografías de catálogo heterogéneas: `contain` para conservar el SKU; fondo neutro coherente con cada tema. Recorte editorial solo si la imagen aprobada permite reconocer el producto. No generar ni retocar fotografías para simular evidencia. Descuento únicamente con precio anterior válido. Demo no equivale a oferta; no inventar ventas, urgencia, estrellas o verificación del vendedor.
 
-**Ficha:** galería accesible, con ampliación y fotos existentes, contenida aproximadamente en 40–45 % de la altura útil inicial en pantalla estándar; proporción real sin deformar, más altura cuando sea necesario. Debajo, un bloque decisorio: nombre, precio de variante seleccionada, disponibilidad excepcional, variantes, vendedor y entrega disponible. Descripción, características, opiniones reales y relacionados siguen a continuación. CTA fijo de Añadir / Comprar según estado existente, sin cubrir contenido ni teclado.
+**Ficha:** galería accesible, con paginación y fotos existentes, contenida aproximadamente en 40–45 % de la altura útil inicial en pantalla estándar; proporción real sin deformar, más altura cuando sea necesario. Ampliación/zoom no existe hoy: queda fuera del primer incremento, no se promete como capacidad conservada. Debajo, un bloque decisorio: nombre, precio de variante seleccionada, disponibilidad excepcional, variantes, vendedor y entrega disponible. Descripción, características, opiniones reales y relacionados siguen a continuación. Conservar Compartir y Favoritos en la cabecera; selector Cantidad junto a variantes. CTA fijo: Disponible → Comprar; Por encargo → Encargar; En camino/Reservable → Reservar; Agotado → Avisarme o cancelar alerta según estado existente. Añadir sigue donde la disponibilidad lo permite. Ninguna acción se pierde; no cubrir contenido ni teclado.
 
 No afirmar «Desde» sin un mínimo comprable verificable. No prometer cuota o anticipo desde la modalidad del SKU: la elegibilidad se confirma con el carrito completo. Reservar y Encargar usan las reglas existentes; no introducen apartados gratuitos ni garantías nuevas.
 
 ## 8. Recorrido de compra: decisiones y compromisos
 
-**Carrito:** producto, variante, cantidad, disponibilidad e importe forman una fila operativa. Grupos de entrega por **tienda + modalidad + disponible/en camino**, según servidor. Una tienda puede originar varias entregas. Mostrar los problemas junto al producto y una acción concreta; subtotal no se presenta como total final. Visitante conserva carrito temporal y se identifica antes de la compra; no se inventa checkout anónimo.
+**Carrito:** producto, variante, cantidad, disponibilidad e importe forman una fila operativa. Grupos de entrega por **tienda + modalidad + disponible/en camino**, según servidor. Una tienda puede originar varias entregas. Mostrar los problemas junto al producto y una acción concreta; subtotal no se presenta como total final. Visitante conserva su carrito local existente, con precios referenciales guardados en el dispositivo y revalidación al iniciar sesión; se identifica antes de la compra; no se inventa checkout anónimo.
 
 **Checkout:** mantener una ruta, con cuatro secciones progresivas: dirección → entregas → plan elegible → revisión. Una sección activa, anteriores resumidas/editables. No agregar pasos o formularios obligatorios. Cambiar dirección invalida la selección de envío y obliga a revisar el nuevo preview; confirmar queda deshabilitado mientras cambia. El calendario real siempre es accesible. Mostrar costo y plazo por entrega, total y obligaciones del servidor, y qué ocurre al confirmar.
 
-**Confirmar pedido crea el pedido.** `place_order` descuenta inventario, vacía el carrito y crea obligaciones/entregas. El CTA no se sustituye por un ambiguo «Continuar» o «Pagar». La pantalla posterior permite reanudar el pago del mismo pedido. Atrás no revierte el pedido ni recrea el carrito automáticamente.
+**Confirmar pedido crea el pedido.** `place_order` descuenta inventario, vacía el carrito y crea obligaciones/entregas. El CTA no se sustituye por un ambiguo «Continuar» o «Pagar». La pantalla posterior permite ver el pedido y reanudar el pago del mismo `orderId`, dentro de la vigencia que indique el servidor; no promete reservarlo indefinidamente. La salida visible «Ver pedido» evita depender exclusivamente de Atrás. Atrás no revierte el pedido ni recrea el carrito automáticamente.
 
-**Pago:** método → cotización exacta y vigente → instrucciones y reporte → verificación. Antes de cotizar, valores indicativos rotulados como aproximados. Después, monto, moneda, comisión, vigencia y destinatario de la cotización del servidor. «Reportar pago» envía el comprobante; no marca el pedido pagado. La verificación depende de revisión autorizada o evento firmado. El regreso del proveedor tampoco equivale a pago recibido.
+**Pago:** método → cotización exacta y vigente → instrucciones y reporte → verificación. Antes de cotizar, valores indicativos rotulados como aproximados. Después, monto, moneda, comisión, vigencia y destinatario de la cotización del servidor. Cuando hay conversión, mostrar fecha/hora de la tasa aplicada (`rate_observed_at`), distinta de emisión (`issued_at`) y vencimiento de la cotización (`expires_at`); emitir una cotización nueva no rejuvenece su tasa. El encabezado pasa a «Reportar pago» en coherencia con el CTA actual que ya dice enviar para verificar. «Reportar pago» envía el reporte con referencia y/o comprobante según los requisitos reales del método; efectivo no exige ambos y no hay captura obligatoria universal. No marca el pedido pagado. Mientras existe un reporte en `pending_verification` o un intento en `processing`, se bloquea una nueva cotización o reporte y se ofrece retomar el intento/pedido existente. Un rechazo muestra motivo y deuda real, con recuperación permitida. Solo se ofrecen métodos habilitados y elegibles; proveedores preparados siguen inactivos. La verificación depende de revisión autorizada o evento firmado. El regreso del proveedor tampoco equivale a pago recibido.
 
 Cuotas dependen de todo el carrito. No prometer «50 % y el resto cuando llegue» si el calendario usa fechas desde la creación del pedido. Mostrar el calendario confirmado. Los saldos USD y sus conversiones posteriores siguen el contrato real: no congelar VES en carrito, ni reutilizar silenciosamente una tasa vencida.
 
 **Seguimiento:** próxima acción primero —pagar, esperar verificación, seguir entrega, resolver incidencia—; cronología e historial financiero accesibles mediante expansión. Reclamos y soporte mantienen sus rutas y permisos. La interfaz no garantiza reembolso automático.
 
-**Tasas:** la corrección BCV sigue como prioridad crítica independiente. La nueva interfaz no expone nombres de proveedores/adaptadores. «Tasa oficial BCV» requiere procedencia oficial verificable; si no está confirmada, describir honestamente la conversión o bloquear el método según política existente. Etapa 0 no cambia fuente, cálculo ni disponibilidad.
+**Tasas:** la corrección BCV sigue como prioridad crítica independiente. La nueva interfaz no expone nombres técnicos de adaptadores; conserva fecha/hora de la tasa aplicada (`rate_observed_at`) y procedencia verificable mediante lenguaje comprensible, sin convertir un identificador interno en una certificación oficial. «Tasa oficial BCV» requiere procedencia oficial verificable; si no está confirmada, describir honestamente la conversión o bloquear el método según política existente. Etapa 0 no cambia fuente, cálculo ni disponibilidad.
 
 ## 9. Sistema visual y patrones compartidos
 
 | Regla | Decisión y razón |
 |---|---|
-| Tipografía | Plus Jakarta Sans existente; nombre comercial compacto, precio claramente superior al nombre en cuadrícula, títulos de sección sin sobreencabezado repetido. No aplicar tracking negativo a texto pequeño; probar cifras, acentos y truncamiento reales |
+| Tipografía | Plus Jakarta Sans existente; nombre comercial compacto, precio claramente superior al nombre en cuadrícula, títulos de sección sin sobreencabezado repetido. Regla futura: no aplicar tracking negativo a texto pequeño; no obliga a retocar la tarjeta reciente ni los tokens globales en el primer bloque. Probar cifras, acentos y truncamiento reales |
 | Espaciado | Base existente de 4 px; margen exterior 16 en móvil estándar, separación de cuadrícula 12; distancia corta dentro de una decisión, 24 entre tareas distintas. A 320 px y fuente grande refluye antes de reducir objetivo táctil |
 | Superficies | Fondo de página, delimitación operativa y selección semántica; no envolver cada encabezado y fila en una tarjeta. Acento editorial violeta y selección suave conservan identidad |
 | Radios | 10 en producto, menor en miniatura, mayor en hoja; forma según función. Cápsulas reservadas para estado breve/selección que lo necesite, no para todos los controles |
@@ -184,7 +184,7 @@ No se pudo verificar la interfaz actual de Amazon, Mercado Libre o SHEIN ni leer
 | Catálogo comparativo denso, común en grandes marketplaces | Permite comparar más productos; puede reducir legibilidad y objetivos táctiles | Dos columnas con jerarquía comercial, excepción por reflow; no miniaturización indiscriminada |
 | Progresión, claridad y retorno, principios de interacción Apple | Explica decisiones y conserva control; esconder demasiado puede aumentar pasos | Resúmenes editables y hojas secundarias; conservar acciones críticas visibles y movimiento reducido |
 
-Venezuela exige dirección estatal/municipal y teléfono según formulario existente, no imponer código postal extranjero; encargo y reserva no son disponibilidad inmediata; múltiples vendedores no son una única entrega; monedas no son totales intercambiables; reporte manual no es verificación. Estas condiciones gobiernan la adopción de patrones.
+Conservar el formulario venezolano existente: estado, ciudad y teléfono obligatorios; municipio, referencia y cédula/RIF adicionales opcionales. No imponer un código postal extranjero; encargo y reserva no son disponibilidad inmediata; múltiples vendedores no son una única entrega; monedas no son totales intercambiables; reporte manual no es verificación. Estas condiciones gobiernan la adopción de patrones.
 
 ## 11. Plan progresivo y aceptación por entrega
 
@@ -200,7 +200,7 @@ Cada incremento es un bloque manejable con checkpoint cada 20–30 minutos, prue
 | 3A — catálogo | Estados general/consulta/categoría/tienda/colección, filtros y orden | Sin repetición del mismo contexto; todas las opciones; cargar/errores/vacío; Back conserva alcance y scroll; contador honesto |
 | 3B — ficha | Galería y bloque decisorio; variantes y condiciones | Precio de variante real, disponibilidad y vendedor claros; Add/Buy sin duplicados; sin promesas universales de planes |
 | 4A — carrito/checkout | Filas y revisión progresiva; contratos actuales intactos | Grupos exactos del servidor, calendario accesible, error recuperable; cambios de dirección/preview bloquean confirmación; idempotencia vigente |
-| 4B — pago/seguimiento inmediato | Elección/cotización/reporte/verificación y regreso | Monto aproximado vs exacto inequívocos; no pago automático; cita vigente; mismo pedido al retomar; tasas dependen del trabajo BCV separado |
+| 4B — pago/seguimiento inmediato | Elección/cotización/reporte/verificación y regreso | Monto aproximado vs exacto inequívocos; total/pagas hoy/saldo/calendario y recargo reales; reporte condicionado al método; no pago automático ni duplicado durante processing/verificación; cotización vigente; mismo pedido al retomar; tasas dependen del trabajo BCV separado |
 | 5A — Cuenta/resolver | Pedidos, siguiente acción, favoritos, reclamos e historial | Ninguna capacidad oculta irrecuperablemente; multirrol, sesión cerrada, error y rutas protegidas |
 | 5B — vendedor | Priorizar trabajo pendiente en pantallas operativas existentes | Capabilities/RLS reales, aislamiento y cambios pendientes; sin duplicar panel ni asumir migraciones remotas activadas |
 | 6 — integración | Continuidad, transiciones, movimiento reducido y consistencia | Recorrido completo sin perder contexto; mismas reglas en A–E; Android real/emulador y revisión física del propietario separadas |
@@ -227,10 +227,32 @@ Los recursos compartidos `critical-overrides` y `communication-protocol` no fuer
 
 Equipo real, lectura independiente: Director UX/UI (`/root/ux_director_v2`), especialista ecommerce (`/root/commerce_v2`) y auditor (`/root/reviewer_v2`). Únicamente el Director de Producto (`/root`) modifica y hace commits. La revisión interna no sustituye a Oliver.
 
-**Revisión pendiente en este checkpoint.** Se registrarán hallazgos, decisiones rechazadas, correcciones, segunda ronda y veredicto real tras revisar el documento y las figuras. No se presenta un aprobado ficticio.
+**Primera ronda: CAMBIOS OBLIGATORIOS.** El auditor revisó 28 propuestas y encontró pérdidas de navegación/capacidades, contraste insuficiente y datos de revisión parcialmente ocultos. Las correcciones y los hallazgos de cada especialista constan en [control de calidad](diseno-v2/EVIDENCIA_Y_REVISION.md). Segunda ronda pendiente en este checkpoint; no se presenta un aprobado ficticio.
 
 ## 14. Aprobación requerida y próxima intervención
 
 Oliver debe revisar la portada finita con un solo destino editorial, la navegación conservada, los estados contextuales de catálogo, el presupuesto de ficha y la separación entre pedido/cotización/reporte. Tras aprobar, comenzar **1A + 2A como primer incremento limitado de Inicio**, implementando solo componentes imprescindibles; no comenzar simultáneamente checkout o vendedor.
 
 Al finalizar Etapa 0 se detiene el trabajo. No modificar código móvil, backend o workflows ni publicar EAS hasta la revisión y nueva autorización correspondiente.
+
+## 15. Siete propuestas visuales y comparación
+
+El tablero reúne originales actuales, esquema propuesto y notas por pantalla. [Claro](diseno-v2/propuestas.html?theme=light) · [Oscuro](diseno-v2/propuestas.html?theme=dark) · [320 px](diseno-v2/propuestas.html?theme=light&frame=320). Abrir el HTML local o consultar los PNG enlazados; no es un sitio publicado.
+
+| Pantalla | Evidencia actual | Esquema propuesto, sin implementar |
+|---|---|---|
+| Inicio | [Web visitante](diseno-v2/actual/light/01-inicio.png) | [Portada editorial](diseno-v2/propuestas/light/412/01.png) |
+| Buscar | [Exploración general](diseno-v2/actual/light/02-buscar.png) | [Exploración contextual](diseno-v2/propuestas/light/412/02.png) |
+| Resultados | [Consulta estabilizada](diseno-v2/actual/light/03-resultados.png) | [Consulta sin fila redundante](diseno-v2/propuestas/light/412/03.png) |
+| Ficha | [Producto demo](diseno-v2/actual/light/04-ficha.png) | [Bloque decisorio](diseno-v2/propuestas/light/412/04.png) |
+| Carrito | [Visitante, precio referencial](diseno-v2/actual/light/05-carrito.png) | [Mismo estado operativo](diseno-v2/propuestas/light/412/05.png) |
+| Checkout | [Barrera de acceso](diseno-v2/actual/light/06-checkout-protegido.png); composición actual por código en tablero | [Revisión progresiva por contrato](diseno-v2/propuestas/light/412/06.png) |
+| Pago | [Permiso denegado](diseno-v2/actual/light/07-pago-protegido.png); composición actual por código en tablero | [Cotización/reporte por contrato](diseno-v2/propuestas/light/412/07.png) |
+
+![Propuesta documental de Inicio, sin implementar](diseno-v2/propuestas/light/412/01.png)
+
+**Geometría de esquemas:** el primer producto de comparación aparece a 435 px en Inicio, 187 en exploración general y 143 en consulta, incluyendo la franja documental superior; al descontar esa anotación de 22 px son aproximadamente 413/165/121 px. En los tres estados hay respectivamente 2/4/4 tarjetas completas a 412 × 892. No son mediciones de Android ni una promesa de conversión. [Datos completos de 28 renders](diseno-v2/mediciones-esquemas.json).
+
+En capturas actuales, Inicio empieza sus tarjetas aproximadamente a 505 px y consulta a 164 px (lectura visual de originales, no medición DOM nueva). La propuesta prioriza alrededor de 90 px antes la comparación de Inicio y elimina una fila de 44 px durante consulta. **Exploración general mantiene prácticamente el mismo presupuesto**: su mejora no se exagera; la decisión estructural es variar controles por contexto. A 320 px y fuente ampliada el presupuesto puede crecer y se evalúa legibilidad primero.
+
+Los costes están explicitados en [decisiones y costes aceptados](diseno-v2/EVIDENCIA_Y_REVISION.md): toque adicional para catálogo continuo, menor inmersión fotográfica, categorías secundarias durante consulta y expansión para revisar detalle de checkout. Oliver puede rechazar esos costes al revisar la arquitectura.

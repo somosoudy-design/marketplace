@@ -3,6 +3,12 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-12 20:24Z · Codex cloud · Oliver · checkpoint de arquitectura V2
+
+- Solo Etapa0: documento rector y tablero documental de siete pantallas, 14 originales web visitante +28 esquemas claro/oscuro/320/412. Product Design audit/framework/context/research realmente consultado; fuentes externas Tunnel403 declaradas.
+- Equipo real UX/ecommerce/auditor de lectura; único responsable raíz. Ronda1 CAMBIOS OBLIGATORIOS: navegación/capacidades/contraste/saldo/diagnóstico y tradeoffs; corregidos. Segunda ronda/veredicto final en curso; no aprobado ficticio.
+- No app/SQL/finanzas/iOS/panel/workflows/EAS/APK. Próximo: cerrar revisión final, integrar límites/veredicto, entregar arquitectura y detenerse para aprobación del propietario. OTA anterior intacta.
+
 ### 2026-10-12 19:37Z · Codex cloud · Oliver · Entrega01 cerrada/publicada/Android comprobado
 - Fuente d945797; evidencia282087c; EASce9b960/run38297286778 Success,guard APK5 exacto/publicado19:24:48UTC. Android38 fuente8fe9731/run38297634332 Success,07 **2/2**,ambos temas sin reintentos.
 - OTA `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` de2026-10-12 19:24UTC recibida en ambos temas,preview/runtime APK5/backend Marketplace responde/sesión cifrada.14 capturas nativas revisadas,4 tarjetas completas iniciales; evidencia `f7a1750e3bdf78f707734781503d86b96d698ebc` en ci/capturas. No teléfono físico conectado.

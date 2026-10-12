@@ -8,6 +8,12 @@
 
 **Última revisión:** 2026-10-12.
 
+## UX-ARQ-V2 — arquitectura maestra, Etapa 0 (revisión final)
+
+Nueva misión de Oliver tras evaluación física insuficiente: dirección integral antes de código. Documento `ARQUITECTURA_EXPERIENCIA_V2.md`, siete esquemas y evidencia en `diseno-v2/`. Product Design realmente consultado; tres especialistas reales de lectura, solo raíz integra/commitea. Ronda1 independiente CAMBIOS OBLIGATORIOS corregidos; segunda ronda en curso. Referencias externas bloqueadas; checkout/pago actuales solo por código, sin pruebas autenticadas.
+
+No iniciar implementación o EAS Update hasta revisión/aprobación de Oliver. Primera intervención propuesta 1A + 2A: base mínima y apertura editorial de Inicio. No repetir pulido global ni Entrega01. BCV crítica y SQL vendedor permanecen separados. El plan progresivo sustituye las instrucciones anteriores de Entrega02; la OTA anterior sigue vigente.
+
 ## UX-ENTREGA-01 — Buscar y tarjetas (publicada/verificada; revisión de Oliver)
 
 Rediseño significativo autorizado por Oliver tras revisión física del pulido global. Alcance exclusivo Buscar, tarjetas compartidas y adaptaciones imprescindibles. Fuente d945797,29/29 foco, tipos/lint/web/Hermes, axe0/8vistas y50 PNG antes/después/estados aprobados. Cabecera270→164, completas2→4. EAS38297286778 Success publicado19:24UTC; guard APK5 aprobado. Android38/run38297634332 **2/2** claro/oscuro sin reintentos;14 capturas revisadas/OTA `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` recibida. Pendiente exclusivamente revisión física Oliver: diseño comercial, fuentes/TalkBack/fluidez; no repetir auditoría o publicación. No Entrega02/Inicio hasta revisión/nuevas instrucciones de Oliver. Detalle: docs/REDISENO_ENTREGA_01.md.
