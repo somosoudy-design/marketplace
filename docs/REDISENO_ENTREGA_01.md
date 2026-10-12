@@ -1,6 +1,6 @@
 # HAYAZGO — Rediseño de producto, Entrega 01
 
-**Estado:** validación local y visual completada; publicación preview autorizada en preparación. Fuente móvil d945797, base baeb39d. Alcance exclusivo Buscar/tarjetas compartidas y adaptaciones indispensables de mini/skeleton/colecciones. Entrega 02 no iniciada.
+**Estado:** validación local y visual completada; solicitud de publicación preview Android autorizada y preparada; resultado EAS/Android pendiente. Fuente móvil d945797, base baeb39d. Alcance exclusivo Buscar/tarjetas compartidas y adaptaciones indispensables de mini/skeleton/colecciones. Entrega 02 no iniciada.
 
 ## Product Design aplicado
 
