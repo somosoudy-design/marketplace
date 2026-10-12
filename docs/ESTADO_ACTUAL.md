@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-12, por Codex cloud (UX global Product Design validada; publicación APK 5 autorizada en preparación).
+**Última actualización:** 2026-10-12, por Codex cloud (Entrega 01: rediseño acotado de Buscar y tarjetas, capturas antes realizadas).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente operativa `5a3b884`; publicación `2a38dfb`, Android `3ea956e`, SQL preparado `59f2974`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a12c4b` |
-| Plan vigente | Revisión general UX/diseño con Product Design y publicación para APK 5, autorizada por Oliver. Mantener funciones/Electric Violet. iOS pospuesto |
-| Objetivo actual | UX global terminada localmente, fuente c17f22f; publicar preview compatible APK 5 y validar Android visitante. Dos migraciones Mi tienda remotas siguen sin verificar; no se activan por revisar diseño |
+| Plan vigente | Entrega 01: Buscar + tarjetas compartidas. Product Design real, comparación visual; preview APK 5 autorizada solo tras validación. No Entrega 02 |
+| Objetivo actual | Rediseñar composición de Buscar y tarjetas desde baeb39d sin backend/finanzas/checkout/vendedor/iOS. Capturas actuales y geometría: .local/delivery-01/before; primera tarjeta y=270 px, 2 completas |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -117,6 +117,11 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 | 5 | Pulido visual y validación en Android; informe de 7 puntos a Oliver | Hecho en parte: el cambio de bolívares a divisas pesa menos (píldora «con Zelle/USDT», línea de bolívares discreta, «Cómo calculamos los montos» y «Ver cálculo» al pagar, tiempo del monto con unidades), publicado con el hito 3. Emulador (revisión 15): recorrido con cuenta, ficha, Favoritos y flecha de Favoritos bien. Informe enviado a Oliver |
 
 ## Trabajo en curso
+
+**Entrega 01 — en curso, 2026-10-12.** Oliver revisó físicamente el pulido anterior en Samsung S24 y lo considera visualmente insuficiente. No repetir auditoría global. Solo Buscar/tarjetas/adaptaciones imprescindibles. Product Design index/audit/framework consultados; 20 capturas actuales antes (412×892, 320×780; claro/oscuro; catálogo/categoría/orden/vacío/scroll). Cabecera hasta primera tarjeta: 270 px, 2 completas + 2 parciales. Próximo: implementar buscador compacto, categorías discretas, Filtrar/Ordenar y tarjeta sobria; medir mismas vistas, pruebas focalizadas, preview/Android si satisfactorias. No publicación de Entrega 01 todavía.
+
+**Cierre técnico del antecedente global:** EAS 38291282048 Success, APK 5 preview. Android revisión37/run38292016113: 4/6 recorridos pasaron; 06-global-ux falla en ambos temas porque el enlace `kora://explore` deja Inicio (captura real), antes de probar los filtros. No afirmar 6/6. La nueva prueba entrará por la pestaña real Buscar. Recepción física confirmada por Oliver; evaluación visual negativa origina esta entrega.
+
 
 **2026-10-12 · UX global Product Design terminada localmente; publicación autorizada en preparación.**
 Base edae062; fuente c17f22f. Recuperación de catálogo/contextos, targets 44 px, CTA adaptable/con texto

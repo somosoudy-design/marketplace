@@ -3,6 +3,12 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-12 19:02Z · Codex cloud · Oliver · checkpoint Entrega 01
+- Rama sincronizada sin cambios perdidos; AGENTS/ESTADO/PENDIENTES/DISENO/REVISION_GLOBAL_UX leídos. Un solo agente. Product Design audit/framework aplicados a Buscar/tarjetas, sin auditoría general.
+- 20 capturas actuales antes, mismas vistas/anchos/temas. Primera tarjeta y=270; 2 completas por viewport. No cambios funcionales todavía; helper acotado reutilizable.
+- Antecedente Android37 4/6, fallo de entrada por deep link documentado, no regresión nativa afirmada ni resultado verde inventado. Oliver confirma revisión física y visual insatisfactorio.
+- Siguiente: implementar nueva composición y tarjetas; pruebas/comparación/publicación preview únicamente si satisfactorias. No backend/checkout/finanzas/vendedor/iOS/APK.
+
 ```
 ### 2026-10-12 18:33Z · Codex cloud · Oliver · publicación UX global APK 5 y checkpoint Android
 - Publicación autorizada después de validación: fuente68a0881, run38291282048 Success. Firebase/env preview y guard exacto runtime APK 5 success; publicar/resultado success 18:31:34Z. Sin APK nuevo/cambio de canal.

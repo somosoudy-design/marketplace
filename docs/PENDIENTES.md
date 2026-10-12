@@ -8,14 +8,11 @@
 
 **Última revisión:** 2026-10-12.
 
-## UX-GLOBAL — revisión Product Design
+## UX-ENTREGA-01 — Buscar y tarjetas (en curso, prioridad actual)
 
-Implementación/pruebas locales cerradas, fuente c17f22f; publicación preview APK 5 autorizada por Oliver
-al terminar, en preparación. 115 casos consolidados + 1 omisión conocida; últimos 40/40 y 34/34,
-núcleo 50/50, tipos/lint/web/Hermes, axe 0 en 16 vistas, contraste 22/22. Capturas/8 pasos:
-REVISION_GLOBAL_UX.md. Sin reconstrucción, nuevas funciones, finanzas/backend/panel/iOS/APK.
-Pendiente: EAS guard/Success, Android visitante claro/oscuro/recepción, después revisión física Oliver
-(TalkBack/fuentes/teclado/galería/fluidez). No repetir implementación ni activar migraciones por diseño.
+Rediseño significativo autorizado por Oliver tras revisión física del pulido global. Alcance exclusivo Buscar, tarjetas compartidas y adaptaciones imprescindibles. Capturar antes/después equivalentes, medir altura de cabecera/productos visibles, pruebas focalizadas claro/oscuro/320 px, publicación preview compatible APK 5 si aprobadas y comprobación Android. No Entrega 02 hasta revisión física. Detalle: docs/REDISENO_ENTREGA_01.md.
+
+Antecedente UX global publicado (EAS38291282048 Success); Android37 4/6: enlace `kora://explore` del flujo nuevo queda en Inicio y no llega al buscador. No repetir auditoría general. Oliver confirmó recepción y considera insuficiente el diseño.
 
 ## Comprador — bloque cerrado, revisión de Oliver en curso
 
