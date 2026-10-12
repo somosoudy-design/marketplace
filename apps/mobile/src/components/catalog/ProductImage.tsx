@@ -12,10 +12,11 @@ interface Props {
   aspect?: number;
   style?: StyleProp<ViewStyle>;
   priority?: 'low' | 'normal' | 'high';
+  fit?: 'cover' | 'contain';
 }
 
 /** Every product photo sits on its category tone at 4:5, so mixed sources still look like one catalog. */
-export function ProductImage({ path, tone, alt, radius, aspect, style, priority = 'normal' }: Props) {
+export function ProductImage({ path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover' }: Props) {
   const t = useTheme();
   const reduced = useReducedMotion();
   const bg = t.tone(tone);
@@ -26,7 +27,7 @@ export function ProductImage({ path, tone, alt, radius, aspect, style, priority 
         <Image
           source={{ uri }}
           style={{ width: '100%', height: '100%' }}
-          contentFit="cover"
+          contentFit={fit}
           transition={reduced ? 0 : 180}
           priority={priority}
           recyclingKey={uri}

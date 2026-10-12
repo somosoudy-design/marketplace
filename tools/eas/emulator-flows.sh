@@ -60,6 +60,10 @@ for theme in ${themes:-system}; do
   if [ "$theme" = dark ]; then adb shell cmd uimode night yes >/dev/null; fi
   adb shell am force-stop "$PKG"
 for flow in "${flows[@]}"; do
+  font_scale=$(sed -n 's/^# font-scale: //p' "$flow" | head -1)
+  case "${font_scale:-1.0}" in 1.0|1.3|1.6) ;; *) echo "Escala de fuente de prueba inválida: $font_scale" >&2; exit 1 ;; esac
+  adb shell settings put system font_scale "${font_scale:-1.0}" >/dev/null
+  adb shell am force-stop "$PKG"
   name=$(basename "$flow" .yaml)
   name="$theme-$name"
   # flows that create a tester account need the test project with "Confirm email" off (see the workflow)
@@ -89,6 +93,7 @@ for flow in "${flows[@]}"; do
   fi
 done
 done
+adb shell settings put system font_scale 1.0 >/dev/null
 echo '```' >>"$report"
 
 # Maestro keeps a screenshot and the hierarchy of the failing step under ~/.maestro/tests

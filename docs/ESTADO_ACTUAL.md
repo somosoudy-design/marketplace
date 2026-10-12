@@ -14,20 +14,18 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente móvil Entrega01 `d945797`; publicación `ce9b960`, validación Android `8fe9731`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` |
-| Plan vigente | Arquitectura de experiencia V2 — Etapa 0. Documento rector + siete esquemas; revisión multiagente y aprobación Oliver. Sin implementación ni publicación |
-| Objetivo actual | Etapa0 entregada: arquitectura maestra, siete comparaciones, evidencia y control de calidad. Esperar aprobación Oliver; no implementar ni publicar |
+| Plan vigente | Arquitectura V2 aprobada: implementar1A+2A, validar/publicar previewAPK5 y después comparar3alternativas de Inicio sinimplementarlas |
+| Objetivo actual | Primera implementación1A+2A validada; publicación/recepción preview autorizadas pendientes. Después tres propuestas editoriales |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
 ## Trabajo en curso — Inicio V2 1A + 2A
 
-Oliver aprobó Etapa0 y autorizó implementar 1A+2A, publicar Androidpreview compatibleAPK5 tras validación y seguir con tres alternativas editoriales A/B/C (diseño solo). Único escritor raíz; UX/ecommerce/auditor reales de lectura. Implementación en curso: apertura de colección única, categorías compactas, cuadrícula4recomendaciones pororden sinSKUhero, Retoma después, demáscolecciones conservadas. Scope2B/feedinferior pendiente.
+Oliver aprobó Etapa0 y autorizó primera implementación+previewAPK5 trasvalidar; después3alternativas A/B/C solo diseño. **Implementación y revisión terminadas:** apertura editorial única, categoríascompactas, primera cuadrícula4pororden real sinSKUhero, Retoma después, resto de funciones/colecciones conservadas. Fuente integrada en próximo commit; patch WIP documental retirado tras validación.
 
-Checkpoint sin activar código incompleto: patch reproducible en `docs/checkpoints/inicio-v2-en-revision.patch`, fuente móvil de rama publicada sigue d945797. En workspace local los cambios están aplicados y se están comprobando. **No aplicar patch sobre esos mismos cambios.** Después de validar se integrará código y se retirará patch.
+Auditor APROBADO tras2rondas, ecommerce/UX APROBADO. Reflowtexto yseguimiento corregidos. UI27/27 +focal sesiónperfil demorado2/2, tipos/lint global, web yAndroidHermes5,9MB aprobados. Capturas reales320/412/scroll/textoCSS ambos temas en `docs/capturas/inicio-v2`; informe `docs/IMPLEMENTACION_INICIO_V2.md`. No afirmar fontScaleAndroiddesdeCSS; flows08+09preparados,09OS1,6. APIlocalreadonly/rollback, Authdemoexistente sinmigraciones/reset; sin persistenciatelemetría verificada.
 
-27/27 UI visitante/regresión pasadas, tipos/lint yweb aprobados; R1 pidió reflowtexto ampliado y corrección seguimiento. Reflow corregido, capturas comparables320/412ambos temas guardadas en `docs/capturas/inicio-v2`. Pruebas nuevas con sesión local real yperfil demorado:2fallos de tracking pendientes de diagnóstico. No autoriza publicar con esos fallos. Sinmigración/reset/escriturasremotas; Authsolo sirve cuenta demoexistente local, API en rollback.
-
-**Próxima acción exacta:** corregir/validar home-v2.spec.ts perfil demorado yfilas; segunda revisión de código+capturas, pruebas focales, integrar fuente+commit/push, publicar mediante `.github/eas-update-request` con guard exactoAPK5, confirmarEAS/recepciónemulador08+09. Informar Oliver inmediatamente ycontinuar3alternativas ProductDesign, sinimplementarlas/nueva publicación.
+**Próxima acción exacta:** solicitarúnica EASpreview autorizada cambiando `.github/eas-update-request`; comprobar guardAPK5exacto ySuccess/grupo/fecha. Despuéssolicitar emulador08+09ambostemas, verificarrecepción/capturas/fuenteOS1,6; informarOliver inmediatamente. Continuar3alternativas ProductDesign/ideate, revisiónmultiagente ydocumentación, SINimplementarlas/republicar. No iOS/APK/production/backend/finanzas/vendedor. 2B/feedinferior yBCV son independientes.
 
 ## Hitos de la Directriz maestra 02
 

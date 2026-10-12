@@ -1,6 +1,6 @@
 import type { CollectionBlock, ProductCard as Card } from '@kora/api';
 import { router } from 'expo-router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View, useWindowDimensions, type ViewToken } from 'react-native';
 import Animated, { Extrapolation, interpolate, useAnimatedReaction, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { CategoryTiles } from '@/components/catalog/CategoryTiles';
 import { MiniProductCard } from '@/components/catalog/MiniProductCard';
 import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
-import { ProductImage } from '@/components/catalog/ProductImage';
+import { EditorialOpening } from '@/components/catalog/EditorialOpening';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { useScrollY } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -19,7 +19,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { SectionHeader } from '@/components/ui/Layout';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { ProductCardSkeleton, Skeleton } from '@/components/ui/Skeleton';
-import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
@@ -58,7 +58,7 @@ export default function HomeScreen() {
     const first = data.recommended;
     const rest = (more.data?.pages.flat() ?? []).filter((p) => !first.some((f) => f.id === p.id) && p.availability !== 'unavailable');
     // a marketplace that has published nothing yet says so instead of showing empty shelves
-    if (!first.length && !rest.length && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
+    if (!first.length && !rest.length && !data.collections.some((c) => c.products.length) && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
     if (rest.length) {
       out.push({ kind: 'title', key: 'popular', overline: 'Más del catálogo', title: 'Sigue descubriendo' });
       push('home_popular', rest);
@@ -71,7 +71,8 @@ export default function HomeScreen() {
   // impressions: shelves count when their section enters the viewport, the feed per visible row
   const tracking = useViewportTracking();
   const scroll = useScrollY(tracking.onWindow);
-  const enabled = !!user;
+  const profile = useProfile();
+  const enabled = !!user && profile.isSuccess && profile.data?.personalization_enabled === true;
   const enabledRef = useRef(enabled);
   useEffect(() => {
     enabledRef.current = enabled;
@@ -133,32 +134,39 @@ export default function HomeScreen() {
 function Header({ home }: { home: ReturnType<typeof useHome> }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
+  const { width, fontScale } = useWindowDimensions();
   const { user } = useAuth();
   const profile = useProfile();
   const unread = useUnreadCount();
   const cartCount = useCartCount();
   const data = home.data;
   const contentWidth = Math.min(width, MAX_CONTENT);
+  const comparisonGrid = useGridColumns();
+  const comparisonColumns = fontScale > 1.3 && contentWidth < 600 ? 1 : comparisonGrid.columns;
+  const comparisonWidth = Math.floor((contentWidth - 32 - comparisonGrid.gap * (comparisonColumns - 1)) / comparisonColumns);
   const firstName = profile.data?.full_name?.trim().split(/\s+/)[0];
   const collections = (data?.collections ?? []).filter((c) => c.products.length);
   // "feature" collections lead as the hero; the rest are shelves further down
-  const hero = collections.filter((c) => c.layout === 'feature');
-  const shelves = collections.filter((c) => c.layout !== 'feature');
+  const hero = collections.find((c) => c.layout === 'feature' && c.products.some((p) => p.image_path && p.availability !== 'unavailable'));
+  const heroProduct = hero?.products.find((p) => p.image_path && p.availability !== 'unavailable');
+  const shelves = collections.filter((c) => c.id !== hero?.id);
   const head = shelves.slice(0, 2);
   const tail = shelves.slice(2);
-  const personalized = !!data?.personalized;
+  const personalized = !!user && profile.data?.personalization_enabled === true && !!data?.personalized;
+  const comparison = (data?.recommended ?? []).filter((p) => p.id !== heroProduct?.id).slice(0, 4);
+  const remainingPicks = (data?.recommended ?? []).filter((p) => !comparison.some((shown) => shown.id === p.id) && p.id !== heroProduct?.id);
   const picksSlot = personalized ? 'home_for_you' : 'home_featured';
+  const picksTrackingSlot = user && profile.isSuccess && profile.data?.personalization_enabled === true ? picksSlot : undefined;
 
   return (
     <View>
       <View style={{ height: insets.top + 6 }} />
 
       {/* Identity and real status; saved products live in Account and on each product. */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 14, minHeight: 48 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 10, minHeight: 44 }}>
         <View style={{ flex: 1 }}>
           <Wordmark />
-          <Text variant="caption" color="textMuted" numberOfLines={1}>{firstName ? `Hola, ${firstName}` : brand.tagline}</Text>
+          {firstName ? <Text variant="caption" color="textMuted" numberOfLines={1}>Hola, {firstName}</Text> : null}
         </View>
         <View>
           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} tone="surface" size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
@@ -174,21 +182,38 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 
-      <View style={{ marginTop: 16 }}>
+      <View style={{ marginHorizontal: 16 }}><StaleNotice q={home} /></View>
+
+      <View style={{ marginTop: 8 }}>
         {data ? (
-          <CategoryTiles categories={data.categories} />
+          <CategoryTiles categories={data.categories} compact />
         ) : (
-          <View style={{ flexDirection: 'row', gap: 16, paddingHorizontal: 16 }}>
-            {[0, 1, 2, 3, 4].map((i) => <Skeleton key={i} width={56} height={56} radius={28} />)}
+          <View style={{ flexDirection: 'row', gap: 16, paddingHorizontal: 16, minHeight: 44, alignItems: 'center' }}>
+            {[0, 1, 2, 3].map((i) => <Skeleton key={i} width={64} height={28} radius={6} />)}
           </View>
         )}
       </View>
 
-      {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, marginTop: 22 }}><Skeleton height={172} radius={t.radii.xl} /></View> : null}
-      {hero.length ? <HeroCollections blocks={hero} width={contentWidth} /> : null}
+      {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, marginTop: 10 }}><Skeleton height={200} radius={14} /></View> : null}
+      {hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
+
+      {comparison.length ? <View style={{ marginTop: 18 }}><SectionHeader title={personalized ? 'Elegidos para ti' : 'Para empezar'} /></View> : null}
+      {Array.from({ length: Math.ceil(comparison.length / comparisonColumns) }, (_, i) => {
+        const row = comparison.slice(i * comparisonColumns, (i + 1) * comparisonColumns);
+        return (
+          <Fragment key={`${picksSlot}-${i}`}>
+            {i ? <View style={{ height: 12 }} /> : null}
+            <TrackedSection slot={picksSlot} ids={row.map((p) => p.id)} visible={row.length} testID={i === 0 ? 'home-recommended' : `home-recommended-row-${i + 1}`}>
+              <View style={{ flexDirection: 'row', gap: comparisonGrid.gap, paddingHorizontal: 16 }}>
+                {row.map((p) => <ProductCard key={p.id} product={p} width={comparisonWidth} slot={picksTrackingSlot} priority="high" />)}
+              </View>
+            </TrackedSection>
+          </Fragment>
+        );
+      })}
 
       {data?.recently_viewed.length ? (
-        <TrackedSection slot="home_recent" ids={data.recently_viewed.map((p) => p.id)} visible={2} testID="home-recent">
+        <TrackedSection slot="home_recent" ids={data.recently_viewed.slice(0, 10).map((p) => p.id)} visible={2} testID="home-recent">
           <View style={{ marginTop: 24 }}>
             <SectionHeader title="Retoma donde quedaste" />
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
@@ -198,16 +223,11 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
         </TrackedSection>
       ) : null}
 
-      {data?.recommended.length ? (
-        <TrackedSection slot={picksSlot} ids={data.recommended.map((p) => p.id)} visible={2} testID="home-recommended">
+      {remainingPicks.length ? (
+        <TrackedSection slot={picksSlot} ids={remainingPicks.map((p) => p.id)} visible={2} testID="home-more-recommended">
           <View style={{ marginTop: 24 }}>
-            <SectionHeader
-              overline={personalized ? 'Según lo que te gusta' : 'Para empezar'}
-              title={personalized ? 'Elegidos para ti' : 'Recomendados'}
-              action="Ver todo"
-              onAction={() => router.navigate('/explore')}
-            />
-            <ProductRail products={data.recommended} slot={picksSlot} />
+            <SectionHeader title="Más para descubrir" action="Explorar catálogo" onAction={() => router.navigate('/explore')} />
+            <ProductRail products={remainingPicks} slot={picksTrackingSlot} />
           </View>
         </TrackedSection>
       ) : null}
@@ -216,7 +236,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
 
       {data?.stores.length ? (
         <View style={{ marginTop: 24 }} testID="home-stores">
-          <SectionHeader overline="Conoce quién vende" title="Tiendas destacadas" action="Ver todas" onAction={() => router.navigate('/explore')} />
+          <SectionHeader overline="Conoce quién vende" title="Tiendas destacadas"  />
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
             {data.stores.map((s) => <StoreChip key={s.id} store={s} width={Math.min(236, contentWidth * 0.62)} />)}
           </ScrollView>
@@ -247,12 +267,12 @@ function SearchEntry() {
         testID="home-search"
         scaleTo={0.99}
         accessibilityRole="button"
-        accessibilityLabel="Buscar productos, marcas o tiendas"
+        accessibilityLabel="Buscar productos o marcas"
         onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
-        style={{ flex: 1, height: 48, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
+        style={{ flex: 1, height: 48, borderRadius: t.radii.sm, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
       >
         <Icon name="search" size={20} color={t.colors.textSecondary} />
-        <Text color="textMuted" numberOfLines={1} style={{ flex: 1 }}>Buscar productos, marcas o tiendas</Text>
+        <Text color="textMuted" numberOfLines={1} style={{ flex: 1 }}>Buscar productos o marcas</Text>
       </ScalePressable>
     </View>
   );
@@ -293,7 +313,7 @@ function StickySearch({ y }: { y: SharedValue<number> }) {
             testID="home-search-sticky"
             scaleTo={0.99}
             accessibilityRole="button"
-            accessibilityLabel="Buscar productos, marcas o tiendas"
+            accessibilityLabel="Buscar productos o marcas"
             focusable={visible}
             tabIndex={visible ? 0 : -1}
             onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
@@ -338,85 +358,6 @@ function Collection({ block }: { block: CollectionBlock }) {
         <SectionHeader overline={block.subtitle ?? undefined} title={block.title} action="Ver todo" onAction={() => openCollection(block)} />
         <ProductRail products={block.products} slot={slot} />
       </View>
-    </TrackedSection>
-  );
-}
-
-/**
- * The featured collections as a swipeable hero. Each slide shows the collection's own products on its tone, so the
- * top of the store is merchandise, not a promotional poster.
- */
-function HeroCollections({ blocks, width }: { blocks: CollectionBlock[]; width: number }) {
-  const [index, setIndex] = useState(0);
-  const slide = width - 44;
-  const gap = 10;
-  return (
-    <View style={{ marginTop: 20 }} testID="home-hero">
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={slide + gap}
-        decelerationRate="fast"
-        disableIntervalMomentum
-        contentContainerStyle={{ paddingHorizontal: 16, gap }}
-        scrollEventThrottle={32}
-        onScroll={(e) => {
-          const i = Math.max(0, Math.min(blocks.length - 1, Math.round(e.nativeEvent.contentOffset.x / (slide + gap))));
-          if (i !== index) setIndex(i);
-        }}
-      >
-        {blocks.map((b) => <HeroSlide key={b.id} block={b} width={slide} />)}
-      </ScrollView>
-      {blocks.length > 1 ? (
-        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 5, marginTop: 10 }} accessible={false}>
-          {blocks.map((b, i) => <PageDot key={b.id} active={i === index} />)}
-        </View>
-      ) : null}
-    </View>
-  );
-}
-
-function PageDot({ active }: { active: boolean }) {
-  const t = useTheme();
-  return <View style={{ width: active ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: active ? t.colors.brand : t.colors.borderStrong }} />;
-}
-
-function HeroSlide({ block, width }: { block: CollectionBlock; width: number }) {
-  const t = useTheme();
-  const tone = t.tone(block.tone);
-  const slot = `collection:${block.slug}`;
-  const [a, b] = block.products;
-  const { fontScale } = useWindowDimensions();
-  const height = Math.round(Math.min(184, Math.max(172, width * 0.48)) * Math.max(1, fontScale));
-  const art = Math.min(width * 0.38, 160);
-  return (
-    <TrackedSection slot={slot} ids={block.products.map((p) => p.id)} visible={2} testID={`collection-${block.slug}`}>
-      <ScalePressable
-        testID={`collection-${block.slug}-all`}
-        scaleTo={0.985}
-        accessibilityRole="link"
-        accessibilityLabel={`Colección ${block.title}${block.products.every((p) => p.is_demo) ? ', demostración' : ''}`}
-        onPress={() => openCollection(block)}
-        style={{ width, height, borderRadius: t.radii.xl, backgroundColor: t.scheme === 'dark' ? tone.dark : tone.bgDeep, overflow: 'hidden', flexDirection: 'row' }}
-      >
-        <View style={{ flex: 1, padding: 16, paddingRight: 6, justifyContent: 'space-between' }}>
-          <View style={{ gap: 6 }}>
-            <Text variant="overline" color="brand">{block.products.every((p) => p.is_demo) ? 'COLECCIÓN DEMO' : 'COLECCIÓN'}</Text>
-            <Text variant="title" numberOfLines={2}>{block.title}</Text>
-            {block.subtitle ? <Text variant="caption" color="textSecondary" numberOfLines={2}>{block.subtitle}</Text> : null}
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start', height: 32 }}>
-            <Text variant="label" color="brand">Ver colección</Text>
-            <Icon name="arrow-right" size={15} color={t.colors.brand} />
-          </View>
-        </View>
-        <View style={{ width: art }}>
-          {b ? <ProductImage path={b.image_path} tone={b.tone} radius={t.radii.md} style={{ position: 'absolute', width: art * 0.52, right: 12, top: 14 }} /> : null}
-          {a ? (
-            <ProductImage path={a.image_path} tone={a.tone} alt={a.title} radius={t.radii.lg} style={{ position: 'absolute', width: art * 0.64, left: 0, bottom: 12, borderWidth: 3, borderColor: t.colors.surface }} />
-          ) : null}
-        </View>
-      </ScalePressable>
     </TrackedSection>
   );
 }

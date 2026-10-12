@@ -131,7 +131,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
     test('search stays reachable during Home scroll and hidden search controls stay out of the reader tree', async ({ page }) => {
       await page.goto('/');
       await expect(page.getByTestId('home-recommended').locator('[data-testid^="product-surface-"]').first()).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true })).toHaveCount(1);
+      await expect(page.getByRole('button', { name: 'Buscar productos o marcas', exact: true })).toHaveCount(1);
       const sticky = page.getByTestId('home-search-sticky');
       await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'true');
       const scroll = page.getByTestId('home-scroll');
@@ -140,7 +140,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.mouse.wheel(0, 650);
       await expect.poll(() => scroll.evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
       await expect(sticky).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true }).and(sticky)).toHaveCount(1);
+      await expect(page.getByRole('button', { name: 'Buscar productos o marcas', exact: true }).and(sticky)).toHaveCount(1);
       await expect(sticky).toHaveAttribute('tabindex', '0');
       await sticky.click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();
