@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-11 14:59 (Caracas, UTC−4), por Codex cloud (preview publicado y recibido en APK 5; activación SQL preparada/probada localmente).
+**Última actualización:** 2026-10-12, por Codex cloud (UX global Product Design validada; publicación APK 5 autorizada en preparación).
 
 ## Dónde está el trabajo
 
@@ -14,8 +14,8 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente operativa `5a3b884`; publicación `2a38dfb`, Android `3ea956e`, SQL preparado `59f2974`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a12c4b` |
-| Plan vigente | Oliver comprobó VEN-01A en Android y solicita ampliación operativa: 1 edición de tienda, 2 productos, 3 pedidos. Cerrar cada bloque con pruebas locales, commit y push. iOS pospuesto |
-| Objetivo actual | Mi tienda publicada en preview con autorización de Oliver y APK 5 validado visitante. Activación de dos migraciones remotas sin verificar; paquete SQL probado localmente, acceso Supabase ausente |
+| Plan vigente | Revisión general UX/diseño con Product Design y publicación para APK 5, autorizada por Oliver. Mantener funciones/Electric Violet. iOS pospuesto |
+| Objetivo actual | UX global terminada localmente, fuente c17f22f; publicar preview compatible APK 5 y validar Android visitante. Dos migraciones Mi tienda remotas siguen sin verificar; no se activan por revisar diseño |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
@@ -118,17 +118,16 @@ ni borrar datos demo, ni hacer la interfaz más compacta.
 
 ## Trabajo en curso
 
-**2026-10-12 · Revisión global UX con Product Design, autorizada por Oliver.** Base edae062 limpia y
-sincronizada. Alcance: capturas nuevas de recorridos compradores y Mi tienda existentes, mejoras globales
-basadas en evidencia y tokens Electric Violet; claro/oscuro/pantalla pequeña/accesibilidad. Publicar por
-EAS preview compatible APK 5 al terminar, autorización explícita en el pedido. Sin APK nuevo, iOS, panel,
-reglas financieras, datos/servicios backend remotos o nuevas funciones comerciales. No repetir implementación
-operativa ni desplegar sus migraciones como parte de una revisión visual. Un solo agente.
-Checkpoint previo a export/capturas. Preflight Product Design: sin contexto guardado; grounding en
-DIRECCION_PRODUCTO/DISENO y app real del repositorio. 58 capturas nuevas inspeccionadas: filtros/categoría sin reset, vacío sin CTA, controles 20/34/36 px y grupos Cuenta poco claros. Informe REVISION_GLOBAL_UX.md; Mejoras implementadas en componentes existentes: objetivos 44 px, CTA adaptable/loading con texto, foco web, hints/error, Sheet común/cierre visible/movimiento reducido, reset de categoría/recuperación/contexto conservado, Cuenta agrupada y filas. Tipos/lint aprobados; 13/13 focalizadas y núcleo 50/50. Regresión 111 aprobadas + 1 omisión conocida + 2 fallos previos a UI por stock demo local agotado; repuesto aditivamente solo ese fixture. Afinado borde de foco violeta en buscador/campos y estrés 1.6x. Lint aprobado; tipo CSS outlineStyle none no válido en TextStyle detectado en último pase y corregido a outlineWidth 0; revalidar tipos antes de export. Checkpoint antes de reexport/pruebas específicas/capturas/axe. Foco tipado corregido en 44aaf82, tipos y 13/13 finales + 2/2 admin aprobados; saldo local de fixture repuesto. 58 capturas después generadas. Axe encontró dos defectos de galería en ambos temas: rol del contador y foco teclado, corregidos (props ARIA solo web); tipos aprobados. Afinada alineación de divisores con iconos nuevos. 40/40 última regresión focalizada y axe 0 infracciones en 16 vistas; 22 contrastes AA (min 4.78). Último visual ajusta contador debajo de Notificaciones (evita quebrar título a 320 px) y foco CSS web explícito, con dos pruebas nuevas de avisos reales. Revalidar y recapturar afectados antes de publicar. Android visitante 06-global-ux preparado, sin ejecutar/publicar.
-Próxima acción de este bloque: capturar/inspeccionar ambos temas, priorizar mejoras comprobables, aplicar y
-probar sobre componentes/pantallas existentes, después publicación y Android visitante. Informe vivo:
-REVISION_GLOBAL_UX.md. Los resultados de Mi tienda inferiores se conservan como antecedente.
+**2026-10-12 · UX global Product Design terminada localmente; publicación autorizada en preparación.**
+Base edae062; fuente c17f22f. Recuperación de catálogo/contextos, targets 44 px, CTA adaptable/con texto
+al cargar, foco/campos/errores, hojas/galería accesibles, grupos Cuenta/filas y reflujo de precio-cantidad.
+Regresión consolidada 115 aprobadas + 1 omisión conocida; últimos pases 40/40 y 34/34 sobre afectados,
+núcleo 50/50, tipos/lint/web/Android Hermes aprobados. axe 0 infracciones en 16 vistas, contraste 22/22
+mínimo 4.78; 58 capturas antes + 58 después revisadas, imágenes/8 pasos en REVISION_GLOBAL_UX.md.
+Solo datos demo locales, stock agotado de fixture repuesto 20 unidades sin reset; sin cambio de cálculos.
+Checkpoint antes de publicación preview APK 5, misma huella. No APK/iOS/panel/backend remoto/finanzas.
+Siguiente: cambiar solicitud EAS, comprobar guard/Success y flujo Android visitante 06-global-ux con
+regresión Frente A y guardas Mi tienda, ambos temas; actualizar resultado. No afirmar recepción física.
 
 **Publicación autorizada y validación visitante Android terminadas.** Oliver pidió «Publícala primero para revisar en mi teléfono y mientras reviso continúa si tienes pendientes».
 EAS preview [38165223060](https://github.com/somosoudy-design/marketplace/actions/runs/38165223060), fuente `2a38dfb`, **Success**, guard exacto APK 5 aprobado; publicación 18:48:30Z.
@@ -368,13 +367,11 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Oliver revisa OTA `01a12c4b` en su APK 5. No republicar por defecto ni repetir implementación/pruebas ya aprobadas.
-Retomar activación solo con acceso/autorización SQL en Marketplace: leer historia y comprobar identidad/prerequisitos,
-aplicar exclusivamente tools/supabase-remote/aplicar-mi-tienda-operativa.sql, verificar las dos versiones/soporte y
-permisos/persistencia con cuentas/datos autorizados. Alternativa SQL Editor: pasos exactos en MI_TIENDA_OPERATIVA.md.
-No seed, db push general o build.py antiguo. Si el backend ya tiene las dos versiones, no reescribirlas.
-Cuando Oliver informe resultados físicos, corregir únicamente problemas reproducibles de este bloque.
-BCV sigue crítico separado; iOS y funciones nuevas esperan instrucciones. Sin WIP funcional pendiente.
+Publicar UX global autorizada en preview APK 5, fuente c17f22f: guard exacto/runtime antes de EAS.
+Comprobar Success, solicitar Android con frente-a-v2/01-visitante + 06-global-ux + 05-mi-tienda-acceso,
+claro/oscuro, sin cuentas/pedidos/pagos remotos; verificar recepción OTA/visual y cerrar documentos/push.
+Después Oliver revisa físicamente; no iniciar otras funciones o republicar por defecto.
+Activación SQL de Mi tienda y BCV siguen como prioridades separadas con sus bloqueos/documentos.
 
 
 ## Pendiente de Oliver (solo él puede hacerlo)

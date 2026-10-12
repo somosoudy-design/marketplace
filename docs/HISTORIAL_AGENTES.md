@@ -4,6 +4,14 @@ Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada tur
 arriba de la bitácora, con este formato:
 
 ```
+### 2026-10-12 · Codex cloud · Oliver · cierre UX global previo a publicación autorizada
+- Product Design audit aplicado primero: 58 capturas nuevas antes, 58 después revisadas, fuentes reales locales/320 px/ambos temas. 8 pasos y comparativas JPEG demo en REVISION_GLOBAL_UX.md.
+- Fuente c17f22f: recuperación de búsqueda/contexto, controles 44 px/CTA adaptable y etiqueta en carga, foco/error/helper, Sheet común/cierre/movimiento reducido, galería teclado/contador web, grupos Cuenta/filas/avisos legibles. Funciones/datos/identidad existentes conservados.
+- Consolidado único: 115 aprobadas + 1 omisión preexistente; últimos 40/40 + 34/34, núcleo 50/50, tipos/lint/web/Hermes. axe 0 infracciones/16 vistas, contraste 22/22 min4.78, sin certificación completa (4 contrastes sobre fotos incompletos). Tabla/galería con límites.
+- Dos fallos admin eran stock demo agotado antes de UI: repuesto aditivamente solo local y retest2/2. Tipo CSS none falló en checkpoint113d192 (documento corregido), revalidado; CSS final override solo web/patrón CodeInput. Recorte aislado navbar de captura rechazado/recapturado y geometría confirmada. No se ocultaron fallos ni quitaron pruebas.
+- Ninguna API/finanzas/permiso/servicio o dato backend remoto/panel/Firebase/iOS/APK/dependencia nativa modificado. Solo axe temporal para auditoría. BCV y activación SQL Mi tienda separados.
+- Siguiente: publicar EAS preview autorizada, guard exacto APK 5, Android visitante3 flujos/2 temas, evidencia OTA/visual y cierre documental. Sin publicación afirmada todavía.
+
 ### 2026-10-12 · Codex cloud · Oliver · cierre módulo de controles y recuperación UX
 - Auditoría antes preservada 5a616df; implementación 61bb206: controles/touch 44 px, CTA adaptable/visible durante carga, foco web, campos semánticos, Sheet compartida/cierre/movimiento reducido, recuperación de catálogo conservando contexto, grupos Cuenta/filas y reflujo precio-cantidad. Sin APIs/backend/finanzas/config nativa.
 - 13/13 focalizadas claro/oscuro/320 px, núcleo 50/50, tipos/lint aprobados. Primer pase 7/13; corregidas aserciones de cache, propiedad HTML type y activación de modal, colección real; no se desactivaron pruebas o alteró lógica por los asserts.

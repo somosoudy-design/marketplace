@@ -6,7 +6,16 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-11 14:59 (Caracas, UTC−4).
+**Última revisión:** 2026-10-12.
+
+## UX-GLOBAL — revisión Product Design
+
+Implementación/pruebas locales cerradas, fuente c17f22f; publicación preview APK 5 autorizada por Oliver
+al terminar, en preparación. 115 casos consolidados + 1 omisión conocida; últimos 40/40 y 34/34,
+núcleo 50/50, tipos/lint/web/Hermes, axe 0 en 16 vistas, contraste 22/22. Capturas/8 pasos:
+REVISION_GLOBAL_UX.md. Sin reconstrucción, nuevas funciones, finanzas/backend/panel/iOS/APK.
+Pendiente: EAS guard/Success, Android visitante claro/oscuro/recepción, después revisión física Oliver
+(TalkBack/fuentes/teclado/galería/fluidez). No repetir implementación ni activar migraciones por diseño.
 
 ## Comprador — bloque cerrado, revisión de Oliver en curso
 

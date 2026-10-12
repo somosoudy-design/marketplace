@@ -154,3 +154,12 @@ tarjetas de salud (tasa, avisos al teléfono) dicen qué está mal y qué revisa
 
 Etiquetas reales en controles, `aria-describedby` para ayudas y errores, foco visible, objetivos táctiles
 ≥ 44, contraste AA en texto, roles y descripciones en elementos presionables, textos en español.
+
+## Refinamiento global Product Design — 2026-10-12
+
+Sin cambiar tokens/identidad nativa: controles compartidos mínimo44 px, botones sin elipsis/con etiqueta
+durante carga y texto grande; campo/buscador foco exterior violeta, helper/error asociado; hoja común con
+cierre visible, pie/cuerpo adaptable/movimiento reducido. Cuenta separa compras/negocio/ayuda según roles;
+filas con iconos en superficie suave y avisos debajo del título a 320 px. Galería teclado/contador válidos en
+web, sin cambiar gestos nativos. Fotos/tarjetas/nombre una línea y decisiones comerciales conservados.
+Informe/capturas/verificación y límites: REVISION_GLOBAL_UX.md.
