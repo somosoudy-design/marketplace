@@ -80,6 +80,17 @@ name: Entrega 01 — Buscar, filtros, tarjetas y regreso
 - extendedWaitUntil:
     notVisible: No encontramos productos
     timeout: 15000
+- tapOn:
+    id: card-favorite-.*
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: sign-in-submit
+    timeout: 15000
+- back
+- assertVisible:
+    id: catalog-search
+- takeScreenshot: entrega01-06-favorito-visitante
 - openLink: kora://diagnostico
 - extendedWaitUntil:
     visible:
@@ -88,4 +99,4 @@ name: Entrega 01 — Buscar, filtros, tarjetas y regreso
 - assertVisible: preview
 - assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
 - assertVisible: actualización.*
-- takeScreenshot: entrega01-06-diagnostico
+- takeScreenshot: entrega01-07-diagnostico

@@ -10,7 +10,7 @@
 
 ## UX-ENTREGA-01 — Buscar y tarjetas (implementada; publicación/Android en curso)
 
-Rediseño significativo autorizado por Oliver tras revisión física del pulido global. Alcance exclusivo Buscar, tarjetas compartidas y adaptaciones imprescindibles. Fuente d945797,29/29 foco, tipos/lint/web/Hermes, axe0/8vistas y50 PNG antes/después/estados aprobados. Cabecera270→164, completas2→4. Publicación preview APK5 autorizada solicitada tras validación; pendiente guard/Success y comprobación Android07 claro/oscuro. No Entrega 02 hasta revisión física. Detalle: docs/REDISENO_ENTREGA_01.md.
+Rediseño significativo autorizado por Oliver tras revisión física del pulido global. Alcance exclusivo Buscar, tarjetas compartidas y adaptaciones imprescindibles. Fuente d945797,29/29 foco, tipos/lint/web/Hermes, axe0/8vistas y50 PNG antes/después/estados aprobados. Cabecera270→164, completas2→4. EAS38297286778 Success publicado19:24UTC; guard APK5 aprobado. Pendiente Android38/07 claro/oscuro, recepción/capturas y revisión física Oliver. No Entrega 02 hasta revisión física. Detalle: docs/REDISENO_ENTREGA_01.md.
 
 Antecedente UX global publicado (EAS38291282048 Success); Android37 4/6: enlace `kora://explore` del flujo nuevo queda en Inicio y no llega al buscador. No repetir auditoría general. Oliver confirmó recepción y considera insuficiente el diseño.
 

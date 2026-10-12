@@ -1,6 +1,6 @@
 # HAYAZGO — Rediseño de producto, Entrega 01
 
-**Estado:** validación local y visual completada; solicitud de publicación preview Android autorizada y preparada; resultado EAS/Android pendiente. Fuente móvil d945797, base baeb39d. Alcance exclusivo Buscar/tarjetas compartidas y adaptaciones indispensables de mini/skeleton/colecciones. Entrega 02 no iniciada.
+**Estado:** validación local y visual completada; publicada Android preview compatible APK5; comprobación Android38 en curso. Fuente móvil d945797, base baeb39d. Alcance exclusivo Buscar/tarjetas compartidas y adaptaciones indispensables de mini/skeleton/colecciones. Entrega 02 no iniciada.
 
 ## Product Design aplicado
 
@@ -94,6 +94,6 @@ Reproducción en cloud (servicios y runner/captura en una misma sesión): source
 
 ## Publicación y continuidad
 
-Preview Android autorizado por Oliver para esta entrega, después de validación. Runtime esperado APK5: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba. Guard exacto EAS antes de publicar; no APK nuevo/cambio de canal. Actualizar aquí run/resultado y prueba nativa07 clara/oscura con ID/fecha/capturas tras publicación.
+Preview Android autorizado por Oliver para esta entrega, después de validación. Runtime esperado APK5: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba. Guard exacto EAS antes de publicar; no APK nuevo/cambio de canal. [EAS38297286778](https://github.com/somosoudy-design/marketplace/actions/runs/38297286778) **Success**, fuentece9b960; guard runtime aprobado19:23:57Z, publicación/resultado19:24:48Z. Android38 solicitado:07-diseno-entrega-01, claro/oscuro, catálogo/filtros/orden/ficha/regreso/vacío/favorito visitante/diagnóstico; sin escrituras remotas. Pendiente recepción ID/fecha/runtime y capturas; no teléfono físico conectado.
 
 Siguiente: Oliver revisa esta versión en Samsung S24. Entrega02/Inicio solamente después de su revisión y nuevas instrucciones: jerarquía editorial, categorías/carruseles/ritmo del scroll con las tarjetas nuevas, sin reconstruir funciones. No iniciar ahora. BCV/SQL Mi tienda separados.
