@@ -2,7 +2,7 @@
 
 ## Entrega01 — Buscar/tarjetas,2026-10-12
 
-Fuente d945797:29/29 focalizadas en1,3min, ambos temas/320px; contratos de filtros/borrador/cancelación/RPC/contextos/scroll/regreso/favoritos persistentes, estados comerciales controlados/carga/teclado/Space/Escape/reduced motion. Tipos/lint mobile y web/Hermes finales aprobados. axe0 infracciones/0 incompletas en8 vistas.50 PNG originales inspeccionados a320/412/768px; cabecera270→164, completas2→4. Cuatro scroll-before rechazadas y recapturadas desde snapshot baeb39d; sin capturas retocadas. Informe/archivos: REDISENO_ENTREGA_01.md. Publicación/Android aún en preparación; navegador/Hermes no se presenta como físico Android. Sin cambios backend/finanzas/SQL.
+Fuente d945797:29/29 focalizadas en1,3min, ambos temas/320px; contratos de filtros/borrador/cancelación/RPC/contextos/scroll/regreso/favoritos persistentes, estados comerciales controlados/carga/teclado/Space/Escape/reduced motion. Tipos/lint mobile y web/Hermes finales aprobados. axe0 infracciones/0 incompletas en8 vistas.50 PNG originales inspeccionados a320/412/768px; cabecera270→164, completas2→4. Cuatro scroll-before rechazadas y recapturadas desde snapshot baeb39d; sin capturas retocadas. Informe/archivos: REDISENO_ENTREGA_01.md. EAS38297286778 Success/guard APK5, Android38/run38297634332 **2/2** ambos temas/sin reintentos,14 capturas nativas revisadas y recepción OTA `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` de19:24UTC comprobada en emulador. Navegador/Hermes/CI no se presenta como Samsung físico. Sin cambios backend/finanzas/SQL.
 
 
 ## UX global Product Design — 2026-10-12

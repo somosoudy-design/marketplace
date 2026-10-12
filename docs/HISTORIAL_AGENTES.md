@@ -3,6 +3,12 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-12 19:37Z · Codex cloud · Oliver · Entrega01 cerrada/publicada/Android comprobado
+- Fuente d945797; evidencia282087c; EASce9b960/run38297286778 Success,guard APK5 exacto/publicado19:24:48UTC. Android38 fuente8fe9731/run38297634332 Success,07 **2/2**,ambos temas sin reintentos.
+- OTA `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` de2026-10-12 19:24UTC recibida en ambos temas,preview/runtime APK5/backend Marketplace responde/sesión cifrada.14 capturas nativas revisadas,4 tarjetas completas iniciales; evidencia `f7a1750e3bdf78f707734781503d86b96d698ebc` en ci/capturas. No teléfono físico conectado.
+-29/29 locales finales,tipos/lint/web/Hermes,axe0/8vistas y50 PNG originales antes/después/extras a320/412/768. Cabecera270→164px,completas2→4 web; Product Design audit/framework y decisiones/documentación en REDISENO_ENTREGA_01.md.
+- Sin backend/SQL/finanzas/checkout/panel/vendedor/iOS/nuevas dependencias/APK; solo OTApreview autorizada. Próximo: revisión de Oliver en S24; no Entrega02/Inicio ni republicar/auditar por defecto. BCV crítica y SQL Mi tienda separados.
+
 ### 2026-10-12 19:26Z · Codex cloud · Oliver · Entrega01 publicada/checkpoint Android
 - EAS38297286778 Success; fuentece9b960, móvil d945797. Guard APK5 exacto aprobado19:23:57Z; publicación/resultado19:24:48Z. Solo Androidpreview.
 - Android38 solicitado:07-diseno-entrega-01, ambos temas; entrada por pestaña real, filtros/orden/regreso/vacío/favorito visitante/diagnóstico. No escrituras remotas, APK nuevo, producción, backend/SQL/finanzas/panel/vendedor/iOS.

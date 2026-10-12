@@ -1,6 +1,6 @@
 # HAYAZGO — Rediseño de producto, Entrega 01
 
-**Estado:** validación local y visual completada; publicada Android preview compatible APK5; comprobación Android38 en curso. Fuente móvil d945797, base baeb39d. Alcance exclusivo Buscar/tarjetas compartidas y adaptaciones indispensables de mini/skeleton/colecciones. Entrega 02 no iniciada.
+**Estado:** validación local y visual completada; publicada Android preview compatible APK5; Android38 aprobado 2/2 y recepción de OTA comprobada. Pendiente revisión física de Oliver. Fuente móvil d945797, base baeb39d. Alcance exclusivo Buscar/tarjetas compartidas y adaptaciones indispensables de mini/skeleton/colecciones. Entrega 02 no iniciada.
 
 ## Product Design aplicado
 
@@ -15,15 +15,15 @@ Paquete skill://Plugin_fa77aec24fc08191bc6e57f377126d76. Referencias generales c
 
 ## Antes: riesgos de composición
 
-1. Título grande + buscador + categorías en cápsulas + segunda barra de cápsulas + conteo relegaban productos a y270px. Categorías y herramientas competían visualmente.
-2. Corazón22px/círculo44px/sombra, oscuro en dark, competía con fotografía; radio18 excesivo para superficie comercial compacta.
+1. Título grande + buscador + categorías en cápsulas + segunda barra de cápsulas + conteo relegaban productos a y=270 px. Categorías y herramientas competían visualmente.
+2. Corazón de 22 px, círculo de 44 px y sombra, oscuro en dark, competía con fotografía; radio de 18 px excesivo para superficie comercial compacta.
 3. Al desplazar se perdía acceso a búsqueda/filtros; carga tenía skeleton de altura distinta.
 
 ## Después: decisiones concretas
 
-1. **Buscar:** sin título grande. Buscador rectangular48px, conteo/Filtrar/Ordenar agrupados y categorías de texto44px con subrayado violeta. Búsqueda/herramientas quedan fijas; categorías/resumen se desplazan. Categoría en conteo mantiene contexto. La selección de orden se anuncia y se identifica en el resumen.
+1. **Buscar:** sin título grande. Buscador rectangular de 48 px, conteo/Filtrar/Ordenar agrupados y categorías de texto de 44 px con subrayado violeta. Búsqueda/herramientas quedan fijas; categorías/resumen se desplazan. Categoría en conteo mantiene contexto. La selección de orden se anuncia y se identifica en el resumen.
 2. **Filtros:** precio/disponibilidad en Sheet común. Borrador sin consultar hasta Aplicar; cerrar/Escape/Atrás descartan; Restablecer conserva contexto protegido. Las cinco opciones de orden, cinco rangos, cuatro disponibilidades, búsquedas/categorías/tienda/colección/paginación permanecen. Una sola consulta conjunta al aplicar. No cálculos o contratos nuevos.
-3. **Tarjeta:** fotografía4:5 intacta, superficie única/radio10/borde semántico sutil, sin sombras; corazón19px/superficie28px sin círculo oscuro, objetivo44×44 separado del enlace. Nombre13/18 semibold/tracking−0,1/una línea; precio16/20 extrabold/tabular/tracking−0,3. Una familia Plus Jakarta Sans.
+3. **Tarjeta:** fotografía 4:5 intacta, superficie única/radio de 10 px/borde semántico sutil, sin sombras; corazón de 19 px/superficie de 28 px sin círculo oscuro, objetivo de 44 × 44 px separado del enlace. Nombre13/18 semibold/tracking−0,1/una línea; precio16/20 extrabold/tabular/tracking−0,3. Una familia Plus Jakarta Sans.
 4. **Estados:** oferta/escasez reales preservadas, Demo nunca las simula; agotado/encargo/en camino/reservable discretos sobre foto. Skeleton con altura idéntica; mini tarjeta conserva lenguaje. Favorito optimista/háptica/escala existente, selección clara; hojas/press/fade respetan movimiento reducido. Marco del buscador conserva dimensiones al enfocar.
 5. **Técnica:** Catalog/Sheet/Price/tokens existentes, FlatList/caché/virtualización conservadas; landmark web nombrado para lectura, activación Space de opciones corregida solo web. Sin nuevos módulos/dependencias/configuración nativa/backend.
 
@@ -83,17 +83,24 @@ Cuatro primeras tomas de scroll no se habían desplazado: rechazadas. Se recaptu
 
 ## Funcionamiento y límites
 
--29/29 Playwright focalizadas sobre fuente final,1,3min: claro/oscuro/320px, borrador/aplicar/cancelar/rangos y parámetros RPC reales, búsqueda/categorías/contextos protegidos, scroll/regreso, favoritos reales persistentes/acción independiente en Inicio/Buscar/colecciones/Favoritos, teclado/Space/Escape/movimiento reducido, normal/oferta/agotado/encargo/demo y carga sin salto.
--Tipos/lint mobile, exportación web y Android JS/Hermes aprobados; HBC5,9MB. Esto último no es un APK o ejecución nativa.
--axe:0 infracciones y0 verificaciones incompletas en8 vistas específicas (filtros/activos/variantes/carga, ambos temas). No certificación completa WCAG ni prueba TalkBack.
--50 PNG revisados,320/412/768px. Sin overflow observado; misma geometría inicial/4 tarjetas completas. Scroll conserva buscador/herramientas/contexto. No benchmark formal de rendimiento ni dispositivo físico conectado.
+- 29/29 Playwright focalizadas sobre fuente final,1,3min: claro/oscuro/320px, borrador/aplicar/cancelar/rangos y parámetros RPC reales, búsqueda/categorías/contextos protegidos, scroll/regreso, favoritos reales persistentes/acción independiente en Inicio/Buscar/colecciones/Favoritos, teclado/Space/Escape/movimiento reducido, normal/oferta/agotado/encargo/demo y carga sin salto.
+- Tipos/lint mobile, exportación web y Android JS/Hermes aprobados; HBC de 5,9 MB. Esto último no es un APK o ejecución nativa.
+- axe:0 infracciones y0 verificaciones incompletas en 8 vistas específicas (filtros/activos/variantes/carga, ambos temas). No certificación completa WCAG ni prueba TalkBack.
+- 50 PNG revisados,320/412/768px. Sin overflow observado; misma geometría inicial/4 tarjetas completas. Scroll conserva buscador/herramientas/contexto. Sin benchmark formal de rendimiento ni dispositivo físico conectado.
 
 Incidencias resueltas: Space de radio no activaba en web; testID skeleton coincidía con selector de enlaces; tests contaban resultados placeholder antes de debounce; arranque paralelo de servicios locales dejó backend inaccesible e interrumpió un pase. Último pase usa único proceso dueño del stack, sin reset/borrado; ningún test desactivado.
 
-Reproducción en cloud (servicios y runner/captura en una misma sesión): source /workspace/.onboarding/env.sh; pnpm stack:start; pnpm --filter @kora/app-e2e build:web; Playwright con playwright-app.config.ts y filtro de Entrega01/Buscar/favoritos/contextos; servir serve.mjs8089 y ejecutar tools/design/{capture,verify}-delivery-01.mjs. Reutilizar axe temporal; no instalar dependencias de app.
+Reproducción en cloud (servicios y runner/captura en una misma sesión): source /workspace/.onboarding/env.sh; pnpm stack:start; pnpm --filter @kora/app-e2e build:web; Playwright con playwright-app.config.ts y filtro de Entrega01/Buscar/favoritos/contextos; servir serve.mjs en 8089 y ejecutar tools/design/{capture,verify}-delivery-01.mjs. Reutilizar axe temporal; no instalar dependencias de app.
 
 ## Publicación y continuidad
 
-Preview Android autorizado por Oliver para esta entrega, después de validación. Runtime esperado APK5: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba. Guard exacto EAS antes de publicar; no APK nuevo/cambio de canal. [EAS38297286778](https://github.com/somosoudy-design/marketplace/actions/runs/38297286778) **Success**, fuentece9b960; guard runtime aprobado19:23:57Z, publicación/resultado19:24:48Z. Android38 solicitado:07-diseno-entrega-01, claro/oscuro, catálogo/filtros/orden/ficha/regreso/vacío/favorito visitante/diagnóstico; sin escrituras remotas. Pendiente recepción ID/fecha/runtime y capturas; no teléfono físico conectado.
+Preview Android autorizado por Oliver para esta entrega, después de validación. Runtime esperado APK5: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba. Guard exacto EAS antes de publicar; no APK nuevo/cambio de canal. [EAS38297286778](https://github.com/somosoudy-design/marketplace/actions/runs/38297286778) **Success**, fuentece9b960; guard runtime aprobado19:23:57Z, publicación/resultado19:24:48Z. Android38 solicitado:07-diseno-entrega-01, claro/oscuro, catálogo/filtros/orden/ficha/regreso/vacío/favorito visitante/diagnóstico; sin escrituras remotas. [Android38297634332](https://github.com/somosoudy-design/marketplace/actions/runs/38297634332) **Success**, revisión38/fuente8fe9731: **2/2**, claro/oscuro, sin reintentos. 14 capturas nativas revisadas; primera vista muestra cuatro tarjetas completas. Diagnóstico en ambos temas: OTA `01a13193-1f3f-7f61-8fc6-90f2fa12e20d`,2026-10-12 19:24UTC,preview/runtime exacto APK5,backend Marketplace responde y sesión cifrada. Recepción confirmada en emulador Android15; no teléfono físico conectado.
+
+[Evidencia nativa inmutable](https://github.com/somosoudy-design/marketplace/tree/f7a1750e3bdf78f707734781503d86b96d698ebc/ultima). Los14 JPG de native/ son los generados/reducidos por el workflow; copiados sin retoques. Las50 PNG comparables web siguen originales.
+
+| APK5 nativo después | Claro | Oscuro |
+|---|---|---|
+|Buscar|![Claro](capturas/entrega-01/native/light-01-buscar.jpg)|![Oscuro](capturas/entrega-01/native/dark-01-buscar.jpg)|
+|Diagnóstico/recepción|![Claro](capturas/entrega-01/native/light-07-diagnostico.jpg)|![Oscuro](capturas/entrega-01/native/dark-07-diagnostico.jpg)|
 
 Siguiente: Oliver revisa esta versión en Samsung S24. Entrega02/Inicio solamente después de su revisión y nuevas instrucciones: jerarquía editorial, categorías/carruseles/ritmo del scroll con las tarjetas nuevas, sin reconstruir funciones. No iniciar ahora. BCV/SQL Mi tienda separados.
