@@ -1,0 +1,727 @@
+diff --git a/apps/mobile/src/app/(tabs)/index.tsx b/apps/mobile/src/app/(tabs)/index.tsx
+index d40c1bd..5af0279 100644
+--- a/apps/mobile/src/app/(tabs)/index.tsx
++++ b/apps/mobile/src/app/(tabs)/index.tsx
+@@ -1,6 +1,6 @@
+ import type { CollectionBlock, ProductCard as Card } from '@kora/api';
+ import { router } from 'expo-router';
+-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
++import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { RefreshControl, ScrollView, StyleSheet, View, useWindowDimensions, type ViewToken } from 'react-native';
+ import Animated, { Extrapolation, interpolate, useAnimatedReaction, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
+ import { scheduleOnRN } from 'react-native-worklets';
+@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
+ import { CategoryTiles } from '@/components/catalog/CategoryTiles';
+ import { MiniProductCard } from '@/components/catalog/MiniProductCard';
+ import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
+-import { ProductImage } from '@/components/catalog/ProductImage';
++import { EditorialOpening } from '@/components/catalog/EditorialOpening';
+ import { StoreChip } from '@/components/catalog/StoreCard';
+ import { useScrollY } from '@/components/ui/Bars';
+ import { Button } from '@/components/ui/Button';
+@@ -19,7 +19,7 @@ import { IconButton } from '@/components/ui/IconButton';
+ import { SectionHeader } from '@/components/ui/Layout';
+ import { ScalePressable } from '@/components/ui/Pressable';
+ import { ProductCardSkeleton, Skeleton } from '@/components/ui/Skeleton';
+-import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
++import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
+ import { Text } from '@/components/ui/Text';
+ import { useAuth } from '@/lib/auth';
+ import { brand } from '@/lib/brand';
+@@ -58,7 +58,7 @@ export default function HomeScreen() {
+     const first = data.recommended;
+     const rest = (more.data?.pages.flat() ?? []).filter((p) => !first.some((f) => f.id === p.id) && p.availability !== 'unavailable');
+     // a marketplace that has published nothing yet says so instead of showing empty shelves
+-    if (!first.length && !rest.length && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
++    if (!first.length && !rest.length && !data.collections.some((c) => c.products.length) && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
+     if (rest.length) {
+       out.push({ kind: 'title', key: 'popular', overline: 'Más del catálogo', title: 'Sigue descubriendo' });
+       push('home_popular', rest);
+@@ -71,7 +71,8 @@ export default function HomeScreen() {
+   // impressions: shelves count when their section enters the viewport, the feed per visible row
+   const tracking = useViewportTracking();
+   const scroll = useScrollY(tracking.onWindow);
+-  const enabled = !!user;
++  const profile = useProfile();
++  const enabled = !!user && profile.isSuccess && profile.data?.personalization_enabled === true;
+   const enabledRef = useRef(enabled);
+   useEffect(() => {
+     enabledRef.current = enabled;
+@@ -133,32 +134,39 @@ export default function HomeScreen() {
+ function Header({ home }: { home: ReturnType<typeof useHome> }) {
+   const t = useTheme();
+   const insets = useSafeAreaInsets();
+-  const { width } = useWindowDimensions();
++  const { width, fontScale } = useWindowDimensions();
+   const { user } = useAuth();
+   const profile = useProfile();
+   const unread = useUnreadCount();
+   const cartCount = useCartCount();
+   const data = home.data;
+   const contentWidth = Math.min(width, MAX_CONTENT);
++  const comparisonGrid = useGridColumns();
++  const comparisonColumns = fontScale > 1.3 && contentWidth < 600 ? 1 : comparisonGrid.columns;
++  const comparisonWidth = Math.floor((contentWidth - 32 - comparisonGrid.gap * (comparisonColumns - 1)) / comparisonColumns);
+   const firstName = profile.data?.full_name?.trim().split(/\s+/)[0];
+   const collections = (data?.collections ?? []).filter((c) => c.products.length);
+   // "feature" collections lead as the hero; the rest are shelves further down
+-  const hero = collections.filter((c) => c.layout === 'feature');
+-  const shelves = collections.filter((c) => c.layout !== 'feature');
++  const hero = collections.find((c) => c.layout === 'feature' && c.products.some((p) => p.image_path && p.availability !== 'unavailable'));
++  const heroProduct = hero?.products.find((p) => p.image_path && p.availability !== 'unavailable');
++  const shelves = collections.filter((c) => c.id !== hero?.id);
+   const head = shelves.slice(0, 2);
+   const tail = shelves.slice(2);
+-  const personalized = !!data?.personalized;
++  const personalized = !!user && profile.data?.personalization_enabled === true && !!data?.personalized;
++  const comparison = (data?.recommended ?? []).filter((p) => p.id !== heroProduct?.id).slice(0, 4);
++  const remainingPicks = (data?.recommended ?? []).filter((p) => !comparison.some((shown) => shown.id === p.id) && p.id !== heroProduct?.id);
+   const picksSlot = personalized ? 'home_for_you' : 'home_featured';
++  const picksTrackingSlot = user && profile.isSuccess && profile.data?.personalization_enabled === true ? picksSlot : undefined;
+ 
+   return (
+     <View>
+       <View style={{ height: insets.top + 6 }} />
+ 
+       {/* Identity and real status; saved products live in Account and on each product. */}
+-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 14, minHeight: 48 }}>
++      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 10, minHeight: 44 }}>
+         <View style={{ flex: 1 }}>
+           <Wordmark />
+-          <Text variant="caption" color="textMuted" numberOfLines={1}>{firstName ? `Hola, ${firstName}` : brand.tagline}</Text>
++          {firstName ? <Text variant="caption" color="textMuted" numberOfLines={1}>Hola, {firstName}</Text> : null}
+         </View>
+         <View>
+           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} tone="surface" size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
+@@ -174,21 +182,38 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
+ 
+       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
+ 
+-      <View style={{ marginTop: 16 }}>
++      <View style={{ marginHorizontal: 16 }}><StaleNotice q={home} /></View>
++
++      <View style={{ marginTop: 8 }}>
+         {data ? (
+-          <CategoryTiles categories={data.categories} />
++          <CategoryTiles categories={data.categories} compact />
+         ) : (
+-          <View style={{ flexDirection: 'row', gap: 16, paddingHorizontal: 16 }}>
+-            {[0, 1, 2, 3, 4].map((i) => <Skeleton key={i} width={56} height={56} radius={28} />)}
++          <View style={{ flexDirection: 'row', gap: 16, paddingHorizontal: 16, minHeight: 44, alignItems: 'center' }}>
++            {[0, 1, 2, 3].map((i) => <Skeleton key={i} width={64} height={28} radius={6} />)}
+           </View>
+         )}
+       </View>
+ 
+-      {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, marginTop: 22 }}><Skeleton height={172} radius={t.radii.xl} /></View> : null}
+-      {hero.length ? <HeroCollections blocks={hero} width={contentWidth} /> : null}
++      {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, marginTop: 10 }}><Skeleton height={200} radius={14} /></View> : null}
++      {hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
++
++      {comparison.length ? <View style={{ marginTop: 18 }}><SectionHeader title={personalized ? 'Elegidos para ti' : 'Para empezar'} /></View> : null}
++      {Array.from({ length: Math.ceil(comparison.length / comparisonColumns) }, (_, i) => {
++        const row = comparison.slice(i * comparisonColumns, (i + 1) * comparisonColumns);
++        return (
++          <Fragment key={`${picksSlot}-${i}`}>
++            {i ? <View style={{ height: 12 }} /> : null}
++          <TrackedSection slot={picksSlot} ids={row.map((p) => p.id)} visible={row.length} testID={i === 0 ? 'home-recommended' : `home-recommended-row-${i + 1}`}>
++            <View style={{ flexDirection: 'row', gap: comparisonGrid.gap, paddingHorizontal: 16 }}>
++                {row.map((p) => <ProductCard key={p.id} product={p} width={comparisonWidth} slot={picksTrackingSlot} priority="high" />)}
++            </View>
++          </TrackedSection>
++          </Fragment>
++        );
++      })}
+ 
+       {data?.recently_viewed.length ? (
+-        <TrackedSection slot="home_recent" ids={data.recently_viewed.map((p) => p.id)} visible={2} testID="home-recent">
++        <TrackedSection slot="home_recent" ids={data.recently_viewed.slice(0, 10).map((p) => p.id)} visible={2} testID="home-recent">
+           <View style={{ marginTop: 24 }}>
+             <SectionHeader title="Retoma donde quedaste" />
+             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
+@@ -198,16 +223,11 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
+         </TrackedSection>
+       ) : null}
+ 
+-      {data?.recommended.length ? (
+-        <TrackedSection slot={picksSlot} ids={data.recommended.map((p) => p.id)} visible={2} testID="home-recommended">
++      {remainingPicks.length ? (
++        <TrackedSection slot={picksSlot} ids={remainingPicks.map((p) => p.id)} visible={2} testID="home-more-recommended">
+           <View style={{ marginTop: 24 }}>
+-            <SectionHeader
+-              overline={personalized ? 'Según lo que te gusta' : 'Para empezar'}
+-              title={personalized ? 'Elegidos para ti' : 'Recomendados'}
+-              action="Ver todo"
+-              onAction={() => router.navigate('/explore')}
+-            />
+-            <ProductRail products={data.recommended} slot={picksSlot} />
++            <SectionHeader title="Más para descubrir" action="Explorar catálogo" onAction={() => router.navigate('/explore')} />
++            <ProductRail products={remainingPicks} slot={picksTrackingSlot} />
+           </View>
+         </TrackedSection>
+       ) : null}
+@@ -216,7 +236,7 @@ function Header({ home }: { home: ReturnType<typeof useHome> }) {
+ 
+       {data?.stores.length ? (
+         <View style={{ marginTop: 24 }} testID="home-stores">
+-          <SectionHeader overline="Conoce quién vende" title="Tiendas destacadas" action="Ver todas" onAction={() => router.navigate('/explore')} />
++          <SectionHeader overline="Conoce quién vende" title="Tiendas destacadas"  />
+           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
+             {data.stores.map((s) => <StoreChip key={s.id} store={s} width={Math.min(236, contentWidth * 0.62)} />)}
+           </ScrollView>
+@@ -247,12 +267,12 @@ function SearchEntry() {
+         testID="home-search"
+         scaleTo={0.99}
+         accessibilityRole="button"
+-        accessibilityLabel="Buscar productos, marcas o tiendas"
++        accessibilityLabel="Buscar productos o marcas"
+         onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
+-        style={{ flex: 1, height: 48, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
++        style={{ flex: 1, height: 48, borderRadius: t.radii.sm, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14 }}
+       >
+         <Icon name="search" size={20} color={t.colors.textSecondary} />
+-        <Text color="textMuted" numberOfLines={1} style={{ flex: 1 }}>Buscar productos, marcas o tiendas</Text>
++        <Text color="textMuted" numberOfLines={1} style={{ flex: 1 }}>Buscar productos o marcas</Text>
+       </ScalePressable>
+     </View>
+   );
+@@ -293,7 +313,7 @@ function StickySearch({ y }: { y: SharedValue<number> }) {
+             testID="home-search-sticky"
+             scaleTo={0.99}
+             accessibilityRole="button"
+-            accessibilityLabel="Buscar productos, marcas o tiendas"
++            accessibilityLabel="Buscar productos o marcas"
+             focusable={visible}
+             tabIndex={visible ? 0 : -1}
+             onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
+@@ -342,85 +362,6 @@ function Collection({ block }: { block: CollectionBlock }) {
+   );
+ }
+ 
+-/**
+- * The featured collections as a swipeable hero. Each slide shows the collection's own products on its tone, so the
+- * top of the store is merchandise, not a promotional poster.
+- */
+-function HeroCollections({ blocks, width }: { blocks: CollectionBlock[]; width: number }) {
+-  const [index, setIndex] = useState(0);
+-  const slide = width - 44;
+-  const gap = 10;
+-  return (
+-    <View style={{ marginTop: 20 }} testID="home-hero">
+-      <ScrollView
+-        horizontal
+-        showsHorizontalScrollIndicator={false}
+-        snapToInterval={slide + gap}
+-        decelerationRate="fast"
+-        disableIntervalMomentum
+-        contentContainerStyle={{ paddingHorizontal: 16, gap }}
+-        scrollEventThrottle={32}
+-        onScroll={(e) => {
+-          const i = Math.max(0, Math.min(blocks.length - 1, Math.round(e.nativeEvent.contentOffset.x / (slide + gap))));
+-          if (i !== index) setIndex(i);
+-        }}
+-      >
+-        {blocks.map((b) => <HeroSlide key={b.id} block={b} width={slide} />)}
+-      </ScrollView>
+-      {blocks.length > 1 ? (
+-        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 5, marginTop: 10 }} accessible={false}>
+-          {blocks.map((b, i) => <PageDot key={b.id} active={i === index} />)}
+-        </View>
+-      ) : null}
+-    </View>
+-  );
+-}
+-
+-function PageDot({ active }: { active: boolean }) {
+-  const t = useTheme();
+-  return <View style={{ width: active ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: active ? t.colors.brand : t.colors.borderStrong }} />;
+-}
+-
+-function HeroSlide({ block, width }: { block: CollectionBlock; width: number }) {
+-  const t = useTheme();
+-  const tone = t.tone(block.tone);
+-  const slot = `collection:${block.slug}`;
+-  const [a, b] = block.products;
+-  const { fontScale } = useWindowDimensions();
+-  const height = Math.round(Math.min(184, Math.max(172, width * 0.48)) * Math.max(1, fontScale));
+-  const art = Math.min(width * 0.38, 160);
+-  return (
+-    <TrackedSection slot={slot} ids={block.products.map((p) => p.id)} visible={2} testID={`collection-${block.slug}`}>
+-      <ScalePressable
+-        testID={`collection-${block.slug}-all`}
+-        scaleTo={0.985}
+-        accessibilityRole="link"
+-        accessibilityLabel={`Colección ${block.title}${block.products.every((p) => p.is_demo) ? ', demostración' : ''}`}
+-        onPress={() => openCollection(block)}
+-        style={{ width, height, borderRadius: t.radii.xl, backgroundColor: t.scheme === 'dark' ? tone.dark : tone.bgDeep, overflow: 'hidden', flexDirection: 'row' }}
+-      >
+-        <View style={{ flex: 1, padding: 16, paddingRight: 6, justifyContent: 'space-between' }}>
+-          <View style={{ gap: 6 }}>
+-            <Text variant="overline" color="brand">{block.products.every((p) => p.is_demo) ? 'COLECCIÓN DEMO' : 'COLECCIÓN'}</Text>
+-            <Text variant="title" numberOfLines={2}>{block.title}</Text>
+-            {block.subtitle ? <Text variant="caption" color="textSecondary" numberOfLines={2}>{block.subtitle}</Text> : null}
+-          </View>
+-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start', height: 32 }}>
+-            <Text variant="label" color="brand">Ver colección</Text>
+-            <Icon name="arrow-right" size={15} color={t.colors.brand} />
+-          </View>
+-        </View>
+-        <View style={{ width: art }}>
+-          {b ? <ProductImage path={b.image_path} tone={b.tone} radius={t.radii.md} style={{ position: 'absolute', width: art * 0.52, right: 12, top: 14 }} /> : null}
+-          {a ? (
+-            <ProductImage path={a.image_path} tone={a.tone} alt={a.title} radius={t.radii.lg} style={{ position: 'absolute', width: art * 0.64, left: 0, bottom: 12, borderWidth: 3, borderColor: t.colors.surface }} />
+-          ) : null}
+-        </View>
+-      </ScalePressable>
+-    </TrackedSection>
+-  );
+-}
+-
+ /** Nothing is published yet (a new marketplace, or every product paused): honest, calm, and one useful next step. */
+ function CatalogOpening({ signedIn }: { signedIn: boolean }) {
+   return (
+diff --git a/apps/mobile/src/components/catalog/CategoryTiles.tsx b/apps/mobile/src/components/catalog/CategoryTiles.tsx
+index b9f00d4..58ad153 100644
+--- a/apps/mobile/src/components/catalog/CategoryTiles.tsx
++++ b/apps/mobile/src/components/catalog/CategoryTiles.tsx
+@@ -2,6 +2,7 @@ import type { CategorySummary } from '@kora/api';
+ import { Image } from 'expo-image';
+ import { router } from 'expo-router';
+ import { ScrollView, View } from 'react-native';
++import { useReducedMotion } from 'react-native-reanimated';
+ import { Icon } from '@/components/ui/Icon';
+ import { ScalePressable } from '@/components/ui/Pressable';
+ import { Text } from '@/components/ui/Text';
+@@ -11,10 +12,11 @@ import { useTheme } from '@/theme';
+ const SIZE = 58;
+ 
+ /** Compact category shelf: each category shows its most popular product on its tone, not an icon. */
+-export function CategoryTiles({ categories }: { categories: CategorySummary[] }) {
++export function CategoryTiles({ categories, compact = false }: { categories: CategorySummary[]; compact?: boolean }) {
+   const t = useTheme();
++  const reduced = useReducedMotion();
+   return (
+-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 10, gap: 0 }}>
++    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: compact ? 16 : 10, gap: compact ? 16 : 0 }}>
+       {categories.map((c) => {
+         const tone = t.tone(c.tone);
+         const uri = catalogImage(c.image_path);
+@@ -25,11 +27,11 @@ export function CategoryTiles({ categories }: { categories: CategorySummary[] })
+             accessibilityRole="link"
+             accessibilityLabel={c.name}
+             onPress={() => router.push({ pathname: '/catalog', params: { category: c.slug, title: c.name } })}
+-            style={{ width: SIZE + 22, alignItems: 'center', gap: 6 }}
++            style={compact ? { minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 7, paddingVertical: 6 } : { width: SIZE + 22, alignItems: 'center', gap: 6 }}
+           >
+-            <View style={{ width: SIZE, height: SIZE, borderRadius: SIZE / 2, backgroundColor: tone.bg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
++            <View style={{ width: compact ? 28 : SIZE, height: compact ? 28 : SIZE, borderRadius: compact ? 6 : SIZE / 2, backgroundColor: tone.bg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
+               {uri ? (
+-                <Image source={{ uri }} accessibilityLabel="" style={{ width: SIZE * 1.18, height: SIZE * 1.18 * 1.25, marginTop: SIZE * 0.08 }} contentFit="cover" transition={150} cachePolicy="memory-disk" accessible={false} />
++                <Image source={{ uri }} accessibilityLabel="" style={compact ? { width: 28, height: 28 } : { width: SIZE * 1.18, height: SIZE * 1.18 * 1.25, marginTop: SIZE * 0.08 }} contentFit={compact ? 'contain' : 'cover'} transition={reduced ? 0 : 150} cachePolicy="memory-disk" accessible={false} />
+               ) : (
+                 <Icon name={c.icon ?? 'tag'} size={26} color={t.scheme === 'dark' ? t.colors.text : tone.dark} />
+               )}
+diff --git a/apps/mobile/src/components/catalog/EditorialOpening.tsx b/apps/mobile/src/components/catalog/EditorialOpening.tsx
+new file mode 100644
+index 0000000..e4d4e3b
+--- /dev/null
++++ b/apps/mobile/src/components/catalog/EditorialOpening.tsx
+@@ -0,0 +1,48 @@
++import type { CollectionBlock, ProductCard } from '@kora/api';
++import { formatUSD, presentAvailability } from '@kora/core';
++import { palette } from '@kora/design-tokens';
++import { View } from 'react-native';
++import { Badge } from '@/components/ui/Badge';
++import { Icon } from '@/components/ui/Icon';
++import { ScalePressable } from '@/components/ui/Pressable';
++import { Text } from '@/components/ui/Text';
++import { TrackedSection } from '@/lib/impressions';
++import { ProductImage } from './ProductImage';
++
++/** One collection destination, illustrated by one of its actual products. Text grows with accessibility settings. */
++export function EditorialOpening({ block, product, width, onOpen }: {
++  block: CollectionBlock; product: ProductCard; width: number; onOpen: () => void;
++}) {
++  const availability = presentAvailability(product.availability);
++  const photoWidth = Math.min(120, Math.round((width - 64) * 0.34));
++  return (
++    <TrackedSection slot={`collection:${block.slug}`} ids={[product.id]} visible={1} testID="home-hero">
++      <ScalePressable
++        testID={`collection-${block.slug}-all`}
++        accessibilityRole="link"
++        accessibilityLabel={`Colección ${block.title}. Producto mostrado: ${product.title}, ${formatUSD(product.price_usd)}, ${availability.label}${product.is_demo ? ', demostración' : ''}. Ver colección`}
++        onPress={onOpen}
++        scaleTo={0.99}
++        style={{ marginHorizontal: 16, marginTop: 10, borderRadius: 14, minHeight: 180, backgroundColor: palette.violet[900], padding: 16, gap: 10 }}
++      >
++        <View style={{ gap: 7 }}>
++          <Text variant="overline" style={{ color: palette.violet[200] }}>Colección</Text>
++          <Text variant="displayM" style={{ color: palette.ink[0], lineHeight: 24 }}>{block.title}</Text>
++          </View>
++        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
++          <View style={{ flex: 1, gap: 3 }}>
++            <Text variant="caption" style={{ color: palette.violet[200] }}>Producto mostrado{product.is_demo ? ' · Demo' : ''}</Text>
++            <Text variant="caption" style={{ color: palette.ink[0] }}>{product.title.replace(/\s+W\b/g, '\u00a0W')}</Text>
++            <Text testID="home-editorial-price" variant="price" tabular style={{ color: palette.ink[0] }}>{formatUSD(product.price_usd)}</Text>
++            {product.availability !== 'available' ? <Badge label={availability.label} tone={availability.purchasable ? 'brand' : 'muted'} /> : null}
++          <View style={{ flexDirection: 'row', alignItems: 'center', minHeight: 44, gap: 7 }}>
++            <Text variant="label" style={{ color: palette.ink[0] }}>Ver colección</Text>
++            <Icon name="arrow-right" size={16} color={palette.ink[0]} />
++          </View>
++          </View>
++        <ProductImage aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={8} priority="high" style={{ width: photoWidth }} />
++        </View>
++      </ScalePressable>
++    </TrackedSection>
++  );
++}
+diff --git a/apps/mobile/src/components/catalog/ProductImage.tsx b/apps/mobile/src/components/catalog/ProductImage.tsx
+index 5f3df8c..bd2faa0 100644
+--- a/apps/mobile/src/components/catalog/ProductImage.tsx
++++ b/apps/mobile/src/components/catalog/ProductImage.tsx
+@@ -12,10 +12,11 @@ interface Props {
+   aspect?: number;
+   style?: StyleProp<ViewStyle>;
+   priority?: 'low' | 'normal' | 'high';
++  fit?: 'cover' | 'contain';
+ }
+ 
+ /** Every product photo sits on its category tone at 4:5, so mixed sources still look like one catalog. */
+-export function ProductImage({ path, tone, alt, radius, aspect, style, priority = 'normal' }: Props) {
++export function ProductImage({ path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover' }: Props) {
+   const t = useTheme();
+   const reduced = useReducedMotion();
+   const bg = t.tone(tone);
+@@ -26,7 +27,7 @@ export function ProductImage({ path, tone, alt, radius, aspect, style, priority
+         <Image
+           source={{ uri }}
+           style={{ width: '100%', height: '100%' }}
+-          contentFit="cover"
++          contentFit={fit}
+           transition={reduced ? 0 : 180}
+           priority={priority}
+           recyclingKey={uri}
+diff --git a/tests/apk-flows/08-inicio-v2.yaml b/tests/apk-flows/08-inicio-v2.yaml
+new file mode 100644
+index 0000000..f2ecd58
+--- /dev/null
++++ b/tests/apk-flows/08-inicio-v2.yaml
+@@ -0,0 +1,72 @@
++# APK 5 + preview. Public reads and visitor navigation only; no remote account, order or payment.
++appId: com.example.kora.preview
++name: Inicio V2 — apertura, comparación y destinos
++---
++- launchApp
++- extendedWaitUntil:
++    visible:
++      id: home-hero
++    timeout: 60000
++- assertVisible:
++    id: home-search
++- assertVisible:
++    id: home-recommended
++- takeScreenshot: inicio-v2-01-portada
++- tapOn:
++    id: collection-.*-all
++- extendedWaitUntil:
++    visible:
++      id: catalog-search
++    timeout: 20000
++- takeScreenshot: inicio-v2-02-coleccion
++- back
++- tapOn:
++    id: category-tecnologia
++- extendedWaitUntil:
++    visible:
++      id: catalog-search
++    timeout: 20000
++- takeScreenshot: inicio-v2-03-categoria
++- back
++- tapOn:
++    id: product-card-.*
++    index: 0
++- extendedWaitUntil:
++    visible:
++      id: product-title
++    timeout: 20000
++- takeScreenshot: inicio-v2-04-ficha
++- back
++- takeScreenshot: inicio-v2-05-regreso
++- tapOn:
++    id: card-favorite-.*
++    index: 0
++- extendedWaitUntil:
++    visible:
++      id: sign-in-submit
++    timeout: 15000
++- back
++- tapOn:
++    id: home-cart
++- assertVisible:
++    id: buyer-tab-cart
++- tapOn:
++    id: buyer-tab-index
++- tapOn:
++    id: home-search
++- extendedWaitUntil:
++    visible:
++      id: catalog-search
++    timeout: 20000
++- hideKeyboard
++- takeScreenshot: inicio-v2-06-buscar
++- tapOn:
++    id: buyer-tab-index
++- openLink: kora://diagnostico
++- extendedWaitUntil:
++    visible:
++      id: diag-Código
++    timeout: 20000
++- assertVisible: preview
++- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
++- takeScreenshot: inicio-v2-07-diagnostico
+diff --git a/tests/apk-flows/09-inicio-v2-texto.yaml b/tests/apk-flows/09-inicio-v2-texto.yaml
+new file mode 100644
+index 0000000..761cac0
+--- /dev/null
++++ b/tests/apk-flows/09-inicio-v2-texto.yaml
+@@ -0,0 +1,28 @@
++# font-scale: 1.6
++# The isolated emulator changes OS text size; this does not change the APK or the user's phone settings.
++appId: com.example.kora.preview
++name: Inicio V2 — fuente Android ampliada
++---
++- launchApp
++- extendedWaitUntil:
++    visible:
++      id: home-hero
++    timeout: 60000
++- takeScreenshot: inicio-v2-texto-01-portada
++- tapOn:
++    id: collection-.*-all
++- extendedWaitUntil:
++    visible:
++      id: catalog-search
++    timeout: 20000
++- back
++- swipe:
++    start: 50%, 75%
++    end: 50%, 30%
++- takeScreenshot: inicio-v2-texto-02-comparacion
++- openLink: kora://diagnostico
++- extendedWaitUntil:
++    visible:
++      id: diag-Código
++    timeout: 20000
++- takeScreenshot: inicio-v2-texto-03-diagnostico
+diff --git a/tests/app-e2e/tests/front-a-v2.spec.ts b/tests/app-e2e/tests/front-a-v2.spec.ts
+index 8d29759..5f9592a 100644
+--- a/tests/app-e2e/tests/front-a-v2.spec.ts
++++ b/tests/app-e2e/tests/front-a-v2.spec.ts
+@@ -131,7 +131,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
+     test('search stays reachable during Home scroll and hidden search controls stay out of the reader tree', async ({ page }) => {
+       await page.goto('/');
+       await expect(page.getByTestId('home-recommended').locator('[data-testid^="product-surface-"]').first()).toBeVisible();
+-      await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true })).toHaveCount(1);
++      await expect(page.getByRole('button', { name: 'Buscar productos o marcas', exact: true })).toHaveCount(1);
+       const sticky = page.getByTestId('home-search-sticky');
+       await expect(sticky.locator('..').locator('..')).toHaveAttribute('aria-hidden', 'true');
+       const scroll = page.getByTestId('home-scroll');
+@@ -140,7 +140,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
+       await page.mouse.wheel(0, 650);
+       await expect.poll(() => scroll.evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
+       await expect(sticky).toBeVisible();
+-      await expect(page.getByRole('button', { name: 'Buscar productos, marcas o tiendas', exact: true }).and(sticky)).toHaveCount(1);
++      await expect(page.getByRole('button', { name: 'Buscar productos o marcas', exact: true }).and(sticky)).toHaveCount(1);
+       await expect(sticky).toHaveAttribute('tabindex', '0');
+       await sticky.click();
+       await expect(page.getByTestId('catalog-search')).toBeFocused();
+diff --git a/tests/app-e2e/tests/home-v2.spec.ts b/tests/app-e2e/tests/home-v2.spec.ts
+new file mode 100644
+index 0000000..1561b27
+--- /dev/null
++++ b/tests/app-e2e/tests/home-v2.spec.ts
+@@ -0,0 +1,161 @@
++import type { HomeFeed } from '@kora/api';
++import { expect, test, type Page } from '@playwright/test';
++
++const cards = (page: Page) => page.locator('[data-testid^="home-recommended"] [data-testid^="product-card-"]');
++
++for (const colorScheme of ['light', 'dark'] as const) {
++  test.describe(`Home V2 (${colorScheme})`, () => {
++    test.use({ colorScheme, viewport: { width: 412, height: 892 } });
++
++    test('one honest editorial destination, four distinct recommendations and every collection remains reachable', async ({ page }) => {
++      let feed: HomeFeed;
++      await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
++        const response = await route.fetch(); feed = await response.json(); await route.fulfill({ response });
++      });
++      await page.goto('/');
++      await expect(cards(page)).toHaveCount(4);
++      const hero = page.getByTestId('home-hero');
++      await expect(hero.getByRole('link')).toHaveCount(1);
++      await expect(hero).toContainText('Producto mostrado · Demo');
++      await expect(hero.getByRole('link').getByRole('button')).toHaveCount(0);
++      const featured = feed!.collections.find((c) => c.layout === 'feature')!;
++      const shown = featured.products[0]!;
++      await expect(hero.getByRole('link')).toHaveAccessibleName(new RegExp(shown.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
++      const identifiers = await cards(page).evaluateAll((nodes) => nodes.map((n) => n.getAttribute('data-testid')));
++      expect(new Set(identifiers).size).toBe(4);
++      expect(identifiers).not.toContain(`product-card-${shown.slug}`);
++      for (const collection of feed!.collections.filter((c) => c.products.length && c.id !== featured.id)) {
++        await expect(page.getByTestId(`collection-${collection.slug}`)).toHaveCount(1);
++      }
++      await hero.getByRole('link').click();
++      await expect(page).toHaveURL(new RegExp(`collection=${featured.slug}`));
++      await expect(page.getByTestId('catalog-filter')).toBeVisible();
++      await page.goBack();
++      await expect(page.getByTestId('home-hero')).toBeVisible();
++      await expect(page.getByRole('tab', { name: 'Inicio', exact: true })).toHaveAttribute('aria-selected', 'true');
++    });
++
++    test('categories, focused search, product return and visitor favorite remain independent', async ({ page }) => {
++      await page.goto('/');
++      const category = page.getByTestId('category-tecnologia');
++      const box = await category.boundingBox(); expect(box!.height).toBeGreaterThanOrEqual(44);
++      await category.click(); await expect(page).toHaveURL(/category=tecnologia/);
++      await page.goBack();
++      const first = cards(page).first();
++      const slug = (await first.getAttribute('data-testid'))!.replace('product-card-', '');
++      await first.click(); await expect(page.getByTestId('product-title')).toBeVisible();
++      await page.getByTestId('product-back').click(); await expect(cards(page).first()).toBeVisible();
++      await page.getByTestId('home-recommended').getByTestId(`card-favorite-${slug}`).click();
++      await expect(page.getByTestId('sign-in-submit')).toBeVisible(); await page.goBack();
++      await page.getByTestId('home-search').click(); await expect(page.getByTestId('catalog-search')).toBeFocused();
++    });
++
++    test('320px keeps editorial text, price, categories and a complete comparison row visible', async ({ page }) => {
++      await page.setViewportSize({ width: 320, height: 892 }); await page.goto('/');
++      await expect(cards(page)).toHaveCount(4);
++      await expect(page.getByTestId('home-editorial-price')).toBeVisible();
++      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
++      const row = page.getByTestId('home-recommended'); const box = await row.boundingBox();
++      expect(box!.y + box!.height).toBeLessThan(815);
++      await expect(page.getByRole('tab')).toHaveCount(4);
++    });
++
++    test('fallback has no empty editorial space or invented products when collections are absent', async ({ page }) => {
++      await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
++        const response = await route.fetch(); const feed = await response.json(); await route.fulfill({ json: { ...feed, collections: [] } });
++      });
++      await page.goto('/'); await expect(cards(page)).toHaveCount(4);
++      await expect(page.getByTestId('home-hero')).toHaveCount(0);
++      await expect(page.getByTestId('home-catalog-empty')).toHaveCount(0);
++      await expect(page.getByTestId('home-recent')).toHaveCount(0);
++    });
++
++    test('few recommendations keep real order, a backend personalization flag cannot personalize a visitor', async ({ page }) => {
++      let slugs: string[] = [];
++      await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
++        const response = await route.fetch(); const feed = await response.json();
++        slugs = feed.recommended.slice(0, 2).map((p: { slug: string }) => p.slug);
++        await route.fulfill({ json: { ...feed, collections: [], recommended: feed.recommended.slice(0, 2), personalized: true } });
++      });
++      await page.goto('/'); await expect(cards(page)).toHaveCount(2);
++      expect(await cards(page).evaluateAll((nodes) => nodes.map((n) => n.getAttribute('data-testid')!.replace('product-card-', '')))).toEqual(slugs);
++      await expect(page.getByRole('heading', { name: 'Para empezar', exact: true })).toBeVisible();
++      await expect(page.getByText('Elegidos para ti', { exact: true })).toHaveCount(0);
++    });
++
++    test('empty recommendations do not mislabel collections as an empty marketplace', async ({ page }) => {
++      await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
++        const response = await route.fetch(); const feed = await response.json(); await route.fulfill({ json: { ...feed, recommended: [] } });
++      });
++      await page.route('**/rest/v1/rpc/search_products*', (route) => route.fulfill({ json: [] }));
++      await page.goto('/'); await expect(page.getByTestId('home-hero')).toBeVisible();
++      await expect(page.getByTestId('home-catalog-empty')).toHaveCount(0);
++    });
++
++    test('editorial exceptional availability is explicit and has only a collection action', async ({ page }) => {
++      await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
++        const response = await route.fetch(); const feed = await response.json();
++        const first = feed.collections.find((c: { layout: string }) => c.layout === 'feature'); first.products[0] = { ...first.products[0], availability: 'sold_out' };
++        await route.fulfill({ json: feed });
++      });
++      await page.goto('/'); await expect(page.getByTestId('home-hero')).toContainText('Agotado');
++      await expect(page.getByTestId('home-hero').getByRole('link')).toHaveCount(1);
++    });
++
++    test('larger web text grows the editorial block without clipping or losing its action', async ({ page }) => {
++      await page.setViewportSize({ width: 320, height: 892 }); await page.goto('/');
++      await expect(cards(page)).toHaveCount(4);
++      await page.evaluate(() => {
++        const nodes = [...document.querySelectorAll<HTMLElement>('[dir="auto"]')];
++        const metrics = nodes.map((n) => ({ n, size: parseFloat(getComputedStyle(n).fontSize), line: parseFloat(getComputedStyle(n).lineHeight) }));
++        for (const { n, size, line } of metrics) { n.style.fontSize = `${size * 1.6}px`; if (line) n.style.lineHeight = `${line * 1.6}px`; }
++      });
++      const hero = page.getByTestId('home-hero'); await hero.getByRole('link').scrollIntoViewIfNeeded();
++      await expect(hero.getByText('Ver colección', { exact: true })).toBeVisible();
++      const limits = await hero.evaluate((root) => [...root.querySelectorAll<HTMLElement>('[dir="auto"]')].map((el) => ({ scroll: el.scrollHeight, height: el.clientHeight })));
++      expect(limits.every((l) => l.scroll <= l.height + 1)).toBe(true);
++      await page.screenshot({ path: `../../docs/capturas/inicio-v2/after/${colorScheme}-320-texto-ampliado.png` });
++    });
++
++    test('real local session waits for profile and measures rows, not their heading, in the correct slot', async ({ page }) => {
++      const events: { p_slot: string; p_kind: string; p_product_ids: string[] }[] = [];
++      let release!: () => void;
++      const gate = new Promise<void>((resolve) => { release = resolve; });
++      await page.route('**/rest/v1/profiles?*', async (route) => {
++        const response = await route.fetch();
++        const rows = await response.json();
++        expect(rows[0].personalization_enabled).toBe(true);
++        await gate; await route.fulfill({ response });
++      });
++      await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
++        const response = await route.fetch(); const feed = await response.json();
++        await route.fulfill({ json: { ...feed, personalized: true } });
++      });
++      await page.route('**/rest/v1/rpc/track_recommendation*', async (route) => {
++        events.push(route.request().postDataJSON()); await route.continue();
++      });
++      await page.setViewportSize({ width: 412, height: 420 });
++      await page.goto('/sign-in');
++      await page.getByTestId('sign-in-email').fill('comprador@example.com');
++      await page.getByTestId('sign-in-password').fill('Demo-1234');
++      await page.getByTestId('sign-in-submit').click();
++      await expect(page).not.toHaveURL(/sign-in/);
++      await page.goto('/'); await expect(cards(page)).toHaveCount(4);
++      const row = page.getByTestId('home-recommended');
++      const list = page.getByTestId('home-scroll');
++      const position = await row.boundingBox(); const viewport = await list.boundingBox();
++      await list.evaluate((el, offset) => el.scrollTo({ top: offset }), position!.y - (viewport!.y + viewport!.height) - 2);
++      await page.waitForTimeout(1400); expect(events.filter((e) => e.p_slot.startsWith('home_'))).toHaveLength(0);
++      release();
++      await expect(page.getByRole('heading', { name: 'Elegidos para ti', exact: true })).toBeVisible();
++      await page.waitForTimeout(1400); expect(events.filter((e) => e.p_slot.startsWith('home_'))).toHaveLength(0);
++      await list.evaluate((el) => el.scrollTo({ top: el.scrollTop + 60 }));
++      console.log('Tracking geometry', await row.boundingBox(), await list.boundingBox(), await list.evaluate(el => el.scrollTop), events.map(e => ({slot:e.p_slot,kind:e.p_kind,count:e.p_product_ids.length}))); 
++      await expect.poll(() => events.filter((e) => e.p_kind === 'impression' && e.p_slot === 'home_for_you').flatMap((e) => e.p_product_ids).length).toBe(2);
++      const first = cards(page).first(); await first.click();
++      await expect(page.getByTestId('product-title')).toBeVisible();
++      expect(events.some((e) => e.p_kind === 'click' && e.p_slot === 'home_for_you')).toBe(true);
++      expect(events.some((e) => e.p_slot === 'home_featured')).toBe(false);
++    });
++  });
++}
+diff --git a/tools/eas/emulator-flows.sh b/tools/eas/emulator-flows.sh
+index c6a39f3..09905e7 100755
+--- a/tools/eas/emulator-flows.sh
++++ b/tools/eas/emulator-flows.sh
+@@ -60,6 +60,10 @@ for theme in ${themes:-system}; do
+   if [ "$theme" = dark ]; then adb shell cmd uimode night yes >/dev/null; fi
+   adb shell am force-stop "$PKG"
+ for flow in "${flows[@]}"; do
++  font_scale=$(sed -n 's/^# font-scale: //p' "$flow" | head -1)
++  case "${font_scale:-1.0}" in 1.0|1.3|1.6) ;; *) echo "Escala de fuente de prueba inválida: $font_scale" >&2; exit 1 ;; esac
++  adb shell settings put system font_scale "${font_scale:-1.0}" >/dev/null
++  adb shell am force-stop "$PKG"
+   name=$(basename "$flow" .yaml)
+   name="$theme-$name"
+   # flows that create a tester account need the test project with "Confirm email" off (see the workflow)
+@@ -89,6 +93,7 @@ for flow in "${flows[@]}"; do
+   fi
+ done
+ done
++adb shell settings put system font_scale 1.0 >/dev/null
+ echo '```' >>"$report"
+ 
+ # Maestro keeps a screenshot and the hierarchy of the failing step under ~/.maestro/tests

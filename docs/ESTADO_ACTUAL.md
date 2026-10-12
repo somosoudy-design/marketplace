@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-12, Codex cloud: Etapa 0 de arquitectura V2 terminada y APROBADA internamente tras dos rondas; solo documentación, esperando revisión/aprobación de Oliver.
+**Última actualización:** 2026-10-12: Oliver aprobó arquitectura; InicioV2 1A+2A en implementación/revisión, publicación preview autorizada tras pruebas; luego tres propuestas editoriales.
 
 ## Dónde está el trabajo
 
@@ -19,11 +19,15 @@
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — arquitectura V2
+## Trabajo en curso — Inicio V2 1A + 2A
 
-Etapa 0 autorizada por Oliver; **Terminada; sin implementación activa.** Documento rector, tablero y siete esquemas (28 renders) guardados. Auditor independiente APROBADO tras dos rondas, ecommerce APROBADO y UX acepta dirección; no desacuerdos importantes. Checkpoints 03873cc/8b90c17; cierre exacto en `git log -1`. Capturas locales web de visitante, claro/oscuro, sin escrituras de negocio. Checkout/pago autenticados no capturados: representar por código con límite explícito. Referencias públicas Amazon/Mercado Libre/SHEIN/Apple/Baymard bloqueadas por Tunnel403; no inventar investigación externa. Product Design consultado realmente. Subagentes UX, ecommerce y auditor trabajan solo lectura; raíz integra.
+Oliver aprobó Etapa0 y autorizó implementar 1A+2A, publicar Androidpreview compatibleAPK5 tras validación y seguir con tres alternativas editoriales A/B/C (diseño solo). Único escritor raíz; UX/ecommerce/auditor reales de lectura. Implementación en curso: apertura de colección única, categorías compactas, cuadrícula4recomendaciones pororden sinSKUhero, Retoma después, demáscolecciones conservadas. Scope2B/feedinferior pendiente.
 
-**Próxima acción exacta:** Oliver revisa `docs/ARQUITECTURA_EXPERIENCIA_V2.md` y `docs/diseno-v2/propuestas.html` (siete comparaciones), junto con `EVIDENCIA_Y_REVISION.md`. Esperar aprobación explícita antes de 1A + 2A: base imprescindible y apertura editorial de Inicio. No tocar app, Supabase, pagos, iOS o workflows. No EAS ni APK. Después, detenerse para aprobación de Oliver.
+Checkpoint sin activar código incompleto: patch reproducible en `docs/checkpoints/inicio-v2-en-revision.patch`, fuente móvil de rama publicada sigue d945797. En workspace local los cambios están aplicados y se están comprobando. **No aplicar patch sobre esos mismos cambios.** Después de validar se integrará código y se retirará patch.
+
+27/27 UI visitante/regresión pasadas, tipos/lint yweb aprobados; R1 pidió reflowtexto ampliado y corrección seguimiento. Reflow corregido, capturas comparables320/412ambos temas guardadas en `docs/capturas/inicio-v2`. Pruebas nuevas con sesión local real yperfil demorado:2fallos de tracking pendientes de diagnóstico. No autoriza publicar con esos fallos. Sinmigración/reset/escriturasremotas; Authsolo sirve cuenta demoexistente local, API en rollback.
+
+**Próxima acción exacta:** corregir/validar home-v2.spec.ts perfil demorado yfilas; segunda revisión de código+capturas, pruebas focales, integrar fuente+commit/push, publicar mediante `.github/eas-update-request` con guard exactoAPK5, confirmarEAS/recepciónemulador08+09. Informar Oliver inmediatamente ycontinuar3alternativas ProductDesign, sinimplementarlas/nueva publicación.
 
 ## Hitos de la Directriz maestra 02
 
