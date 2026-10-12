@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-12, Codex cloud: Entrega 01 publicada y verificada en APK 5/Android 15, ambos temas; esperando revisión de Oliver.
+**Última actualización:** 2026-10-12, Codex cloud: Etapa 0 de arquitectura V2 en curso, solo documentación; equipo real de lectura y revisión, un único responsable de escritura.
 
 ## Dónde está el trabajo
 
@@ -14,10 +14,16 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente móvil Entrega01 `d945797`; publicación `ce9b960`, validación Android `8fe9731`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` |
-| Plan vigente | Entrega 01: Buscar + tarjetas compartidas. Product Design real, comparación visual; preview APK 5 autorizada solo tras validación. No Entrega 02 |
-| Objetivo actual | Entrega01 terminada: Buscar/tarjetas,29/29 local y Android2/2; EASpreview publicado. Oliver revisa en Samsung S24 antes de Entrega02. No iniciar otra funcionalidad |
+| Plan vigente | Arquitectura de experiencia V2 — Etapa 0. Documento rector + siete esquemas; revisión multiagente y aprobación Oliver. Sin implementación ni publicación |
+| Objetivo actual | Crear y revisar docs/ARQUITECTURA_EXPERIENCIA_V2.md. Buscar/tarjetas de Entrega01 se conservan; el propietario solicita dirección integral antes de más código |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
+
+## Trabajo en curso — checkpoint arquitectura V2
+
+Etapa 0 autorizada por Oliver; documento inicial **WIP**. Capturas locales web de visitante, claro/oscuro, sin escrituras de negocio. Checkout/pago autenticados no capturados: representar por código con límite explícito. Referencias públicas Amazon/Mercado Libre/SHEIN/Apple/Baymard bloqueadas por Tunnel403; no inventar investigación externa. Product Design consultado realmente. Subagentes UX, ecommerce y auditor trabajan solo lectura; raíz integra.
+
+**Próxima acción exacta:** completar siete propuestas y comparaciones en `docs/diseno-v2/`; revisar con `/root/commerce_v2` y `/root/reviewer_v2`, corregir y segunda revisión (máximo dos rondas), actualizar continuidad y cerrar commit/push. No tocar app, Supabase, pagos, iOS o workflows. No EAS ni APK. Después, detenerse para aprobación de Oliver.
 
 ## Hitos de la Directriz maestra 02
 
