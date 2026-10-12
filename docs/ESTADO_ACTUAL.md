@@ -125,7 +125,7 @@ Regresión consolidada 115 aprobadas + 1 omisión conocida; últimos pases 40/40
 núcleo 50/50, tipos/lint/web/Android Hermes aprobados. axe 0 infracciones en 16 vistas, contraste 22/22
 mínimo 4.78; 58 capturas antes + 58 después revisadas, imágenes/8 pasos en REVISION_GLOBAL_UX.md.
 Solo datos demo locales, stock agotado de fixture repuesto 20 unidades sin reset; sin cambio de cálculos.
-Checkpoint antes de publicación preview APK 5, misma huella. No APK/iOS/panel/backend remoto/finanzas.
+Solicitud EAS preview APK 5 preparada con autorización explícita; misma huella, resultado pendiente. No APK/iOS/panel/backend remoto/finanzas.
 Siguiente: cambiar solicitud EAS, comprobar guard/Success y flujo Android visitante 06-global-ux con
 regresión Frente A y guardas Mi tienda, ambos temas; actualizar resultado. No afirmar recepción física.
 
