@@ -64,6 +64,7 @@ export default function AccountScreen() {
               <Text variant="bodySmall" color="textMuted">{user.email}</Text>
             </View>
           </View>
+          <Text variant="overline" color="textSecondary" testID="account-purchases-heading">Tus compras</Text>
           <Card padded={false}>
             <ListRow testID="account-orders" icon="receipt" title="Mis pedidos" subtitle={open ? `${open} en curso` : 'Historial y seguimiento'} onPress={() => router.push('/orders')} />
             <Divider inset={52} />
@@ -72,10 +73,10 @@ export default function AccountScreen() {
             <ListRow icon="map-pin" title="Direcciones" subtitle="Dónde recibes tus compras" onPress={() => router.push('/addresses')} />
             <Divider inset={52} />
             <ListRow icon="bell" title="Notificaciones" value={unread ? `${unread} nuevas` : undefined} onPress={() => router.push('/notifications')} />
-            <Divider inset={52} />
-            <ListRow icon="settings" title="Preferencias y privacidad" subtitle="Tema, recomendaciones, eliminar cuenta" onPress={() => router.push('/settings')} />
           </Card>
           {hasStores || isAdmin ? (
+            <View style={{ gap: 12 }}>
+            <Text variant="overline" color="textSecondary" testID="account-business-heading">Tu negocio</Text>
             <Card padded={false}>
               {hasStores ? (
                 <ListRow testID="account-my-store" icon="store" title="Mi tienda" subtitle="Tu negocio dentro de HAYAZGO" onPress={() => router.push('/my-store')} />
@@ -83,11 +84,14 @@ export default function AccountScreen() {
               {hasStores && isAdmin ? <Divider inset={52} /> : null}
               {isAdmin ? <ListRow testID="account-admin" icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
             </Card>
+            </View>
           ) : null}
           {access.isError ? <Card style={{ gap: 10 }}><Text variant="bodySmall" color="textSecondary">No pudimos comprobar tus accesos de tienda y administración.</Text><Button title="Reintentar accesos" variant="secondary" full onPress={() => access.refetch()} /></Card> : !online && !access.data ? <Text variant="bodySmall" color="textSecondary">Tus accesos de tienda se consultan cuando vuelva la conexión.</Text> : null}
         </>
       )}
+      {user ? <Text variant="overline" color="textSecondary">Cuenta y ayuda</Text> : null}
       <Card padded={false}>
+        {user ? <><ListRow icon="settings" title="Preferencias y privacidad" subtitle="Tema, recomendaciones, eliminar cuenta" onPress={() => router.push('/settings')} /><Divider inset={68} /></> : null}
         <ListRow
           icon="circle-question-mark"
           title="Ayuda"

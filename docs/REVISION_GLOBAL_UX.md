@@ -39,3 +39,15 @@ Contraste/teclado/semántica se medirán en implementación; capturas solas no c
 
 Pendiente: implementación, pruebas, comparativas y publicación autorizada preview/Android APK 5.
 
+
+## Implementación en validación
+
+Componentes Button/Chip/IconButton/Stepper con mínimo 44 px, botones adaptables con texto visible durante
+carga, foco web :focus-visible en ScalePressable; TextField asocia helper/error y ampliar revelar contraseña.
+Sheet compartida con cierre visible, contenido/CTA adaptables y movimiento reducido; ordenar/precio reutilizan
+la misma hoja. Catálogo permite limpiar categoría editable conservando consulta; el vacío restablece búsqueda
+sin salir de tienda/colección/categoría bloqueada; aviso de datos guardados si falla actualización.
+Cuenta separa Tus compras/Tu negocio/Cuenta y ayuda con roles backend existentes; filas con iconos en superficie
+violeta suave. Precio/cantidad en carrito admite reflujo a 320 px. Ninguna regla/cálculo/API/permiso cambió.
+Tipos/lint aprobados. global-ux.spec.ts prepara 13 casos (claro/oscuro/contextos/errores/targets/carga/roles/foco/
+movimiento reducido). Pruebas/capturas después/publicación todavía pendientes.

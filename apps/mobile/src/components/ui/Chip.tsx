@@ -6,7 +6,7 @@ import { ScalePressable } from './Pressable';
 import { Text } from './Text';
 
 export function Chip({ label, selected, onPress, icon, count, testID }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string }) {
-  const { colors, radii } = useTheme();
+  const { colors, radii, layout } = useTheme();
   return (
     <ScalePressable
       testID={testID}
@@ -21,7 +21,9 @@ export function Chip({ label, selected, onPress, icon, count, testID }: { label:
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
-        height: 34,
+        minHeight: layout.minTouch,
+        minWidth: layout.minTouch,
+        paddingVertical: 10,
         paddingHorizontal: 13,
         borderRadius: radii.pill,
         backgroundColor: selected ? colors.brand : colors.surface,

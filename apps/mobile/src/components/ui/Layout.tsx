@@ -13,7 +13,7 @@ export function SectionHeader({ overline, title, action, onAction }: { overline?
         <Text variant="displayM" accessibilityRole="header">{title}</Text>
       </View>
       {action ? (
-        <ScalePressable accessibilityRole="link" onPress={onAction} hitSlop={10} style={{ flexDirection: 'row', alignItems: 'center', gap: 2, paddingBottom: 2 }}>
+        <ScalePressable accessibilityRole="link" accessibilityLabel={`${action}: ${title}`} onPress={onAction} hitSlop={10} style={{ flexDirection: 'row', alignItems: 'center', gap: 2, minHeight: 44, paddingBottom: 2 }}>
           <Text variant="label" color="brand">{action}</Text>
           <Icon name="chevron-right" size={16} color={colors.brand} />
         </ScalePressable>
@@ -36,19 +36,19 @@ export function ListRow({ icon, title, subtitle, value, onPress, danger, testID 
   const { colors } = useTheme();
   return (
     <ScalePressable testID={testID} scaleTo={0.99} accessibilityRole={onPress ? 'button' : undefined} onPress={onPress} disabled={!onPress} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 14, paddingHorizontal: 16, minHeight: 56 }}>
-      {icon ? <Icon name={icon} size={22} color={danger ? colors.danger : colors.textSecondary} /> : null}
-      <View style={{ flex: 1, gap: 2 }}>
+      {icon ? <View style={{ width: 38, height: 38, borderRadius: 12, backgroundColor: danger ? colors.dangerSoft : colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}><Icon name={icon} size={21} color={danger ? colors.danger : colors.brand} /></View> : null}
+      <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
         <Text variant="subtitle" color={danger ? 'danger' : 'text'}>{title}</Text>
         {subtitle ? <Text variant="bodySmall" color="textMuted">{subtitle}</Text> : null}
       </View>
-      {value ? <Text variant="bodySmall" color="textSecondary">{value}</Text> : null}
+      {value ? <Text variant="bodySmall" color="textSecondary" style={{ maxWidth: '30%', flexShrink: 1, textAlign: 'right' }}>{value}</Text> : null}
       {onPress ? <Icon name="chevron-right" size={18} color={colors.textMuted} /> : null}
     </ScalePressable>
   );
 }
 
 export function Stepper({ value, min = 1, max, onChange, disabled }: { value: number; min?: number; max: number; onChange: (v: number) => void; disabled?: boolean }) {
-  const { colors, radii } = useTheme();
+  const { colors, radii, layout } = useTheme();
   const btn = (icon: 'minus' | 'plus', next: number, label: string, enabled: boolean) => (
     <ScalePressable
       accessibilityRole="button"
@@ -57,7 +57,7 @@ export function Stepper({ value, min = 1, max, onChange, disabled }: { value: nu
       disabled={!enabled}
       onPress={() => onChange(next)}
       hitSlop={6}
-      style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center', opacity: enabled ? 1 : 0.35 }}
+      style={{ width: layout.minTouch, height: layout.minTouch, alignItems: 'center', justifyContent: 'center', opacity: enabled ? 1 : 0.35 }}
     >
       <Icon name={icon} size={18} color={colors.text} strokeWidth={2} />
     </ScalePressable>

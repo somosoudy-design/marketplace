@@ -1,13 +1,14 @@
 import type { Availability, SearchSort } from '@kora/api';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, TextInput, View } from 'react-native';
 import Animated, { type useAnimatedScrollHandler } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
 import { ProductCardSkeleton } from '@/components/ui/Skeleton';
-import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
+import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
+import { Sheet } from '@/components/ui/Sheet';
 import { Text } from '@/components/ui/Text';
 import { useCategories, useSearch } from '@/lib/hooks';
 import { useTheme } from '@/theme';
@@ -97,7 +98,19 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
   const items = useMemo(() => search.data?.pages.flat() ?? [], [search.data]);
   const topCategories = (categories.data ?? []).filter((c) => !c.parent_id && (!categorySlugs || categorySlugs.includes(c.slug)));
   const priceLabel = PRICES.find((p) => p.min === f.minPrice && p.max === f.maxPrice)?.label ?? 'Precio';
-  const activeCount = f.availability.length + (f.minPrice != null || f.maxPrice != null ? 1 : 0) + (f.sort !== 'relevance' ? 1 : 0);
+  const activeCount = f.availability.length + (f.minPrice != null || f.maxPrice != null ? 1 : 0) + (f.sort !== 'relevance' ? 1 : 0)
+    + (f.category && !locked.includes('category') && !f.collection ? 1 : 0);
+  const canReset = activeCount > 0 || (!!f.query.trim() && !locked.includes('query'));
+  // Keep the store/collection and any locked screen context. Reset only filters the buyer can change.
+  const resetFilters = (clearQuery = false) => setF((x) => ({
+    ...x,
+    query: clearQuery && !locked.includes('query') ? '' : x.query,
+    category: locked.includes('category') || x.collection ? x.category : null,
+    availability: locked.includes('availability') ? x.availability : [],
+    sort: locked.includes('sort') ? x.sort : 'relevance',
+    minPrice: locked.includes('minPrice') ? x.minPrice : null,
+    maxPrice: locked.includes('maxPrice') ? x.maxPrice : null,
+  }));
 
   const toggleAvailability = (a: Availability) =>
     setF((x) => ({ ...x, availability: x.availability.includes(a) ? x.availability.filter((v) => v !== a) : [...x.availability, a] }));
@@ -106,7 +119,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
     <View style={{ gap: 12, paddingBottom: 14 }}>
       {header}
       {showSearch ? (
-        <View style={{ marginHorizontal: 16, height: 50, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, gap: 10 }}>
+        <View style={{ marginHorizontal: 16, minHeight: 52, borderRadius: t.radii.pill, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 4, gap: 10 }}>
           <Icon name="search" size={20} color={t.colors.textMuted} />
           <TextInput
             ref={input}
@@ -118,10 +131,10 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
             returnKeyType="search"
             autoCorrect={false}
             accessibilityLabel="Buscar"
-            style={[t.typography.body, { flex: 1, color: t.colors.text, height: '100%' }]}
+            style={[t.typography.body, { flex: 1, minWidth: 0, color: t.colors.text, paddingVertical: 14 }]}
           />
           {f.query ? (
-            <Pressable accessibilityRole="button" accessibilityLabel="Borrar búsqueda" hitSlop={10} onPress={() => setF((x) => ({ ...x, query: '' }))}>
+            <Pressable accessibilityRole="button" accessibilityLabel="Borrar búsqueda" hitSlop={10} onPress={() => setF((x) => ({ ...x, query: '' }))} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
               <Icon name="x" size={18} color={t.colors.textMuted} />
             </Pressable>
           ) : null}
@@ -143,15 +156,16 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
         ))}
       </ScrollView>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16 }}>
-        <Text variant="caption" color="textMuted" testID="catalog-count">
+        <Text variant="caption" color="textMuted" testID="catalog-count" accessibilityLiveRegion="polite" aria-busy={search.isFetching}>
           {search.isLoading ? 'Buscando…' : items.length === 0 ? 'Sin resultados' : `${items.length}${search.hasNextPage ? '+' : ''} productos`}
         </Text>
         {activeCount ? (
-          <Pressable accessibilityRole="button" onPress={() => setF((x) => ({ ...x, availability: [], sort: 'relevance', minPrice: null, maxPrice: null }))} hitSlop={8}>
+          <Pressable testID="catalog-reset-filters" accessibilityRole="button" onPress={() => resetFilters()} hitSlop={8} style={{ minHeight: 44, justifyContent: 'center' }}>
             <Text variant="label" color="brand">Limpiar filtros</Text>
           </Pressable>
         ) : null}
       </View>
+      <View style={{ marginHorizontal: 16 }}><StaleNotice q={search} /></View>
     </View>
   );
 
@@ -185,7 +199,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
           ) : search.isError ? (
             <ErrorState error={search.error} onRetry={() => search.refetch()} />
           ) : (
-            <EmptyState icon="search" title="No encontramos productos" body="Prueba con otra palabra o quita algún filtro." />
+            <EmptyState icon="search" title="No encontramos productos" body={canReset ? 'Prueba con otra palabra o vuelve a ver los productos de esta sección.' : 'Todavía no hay productos para mostrar en esta sección.'} action={canReset ? 'Restablecer búsqueda' : undefined} onAction={() => resetFilters(true)} />
           )
         }
         ListFooterComponent={search.isFetchingNextPage ? <ActivityIndicator style={{ marginTop: 24 }} color={t.colors.brand} /> : null}
@@ -211,34 +225,25 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
   );
 }
 
-/** Native page sheet on iOS, bottom sheet elsewhere. */
+/** The shared sheet keeps sorting/price consistent with reviews, profile and confirmations. */
 export function OptionsSheet({ visible, title, options, onSelect, onClose }: { visible: boolean; title: string; options: { key: string; label: string; selected?: boolean }[]; onSelect: (key: string) => void; onClose: () => void }) {
   const t = useTheme();
-  const insets = useSafeAreaInsets();
   return (
-    <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose} statusBarTranslucent>
-      <Pressable accessibilityRole="button" accessibilityLabel="Cerrar" onPress={onClose} style={{ flex: 1, backgroundColor: t.colors.overlay }} />
-      <View style={{ backgroundColor: t.colors.surface, borderTopLeftRadius: t.radii.xl, borderTopRightRadius: t.radii.xl, paddingBottom: insets.bottom + 16, paddingTop: 10, width: '100%', maxWidth: 640, alignSelf: 'center' }}>
-        <View style={{ alignSelf: 'center', width: 40, height: 5, borderRadius: 3, backgroundColor: t.colors.borderStrong, marginBottom: 12 }} />
-        <Text variant="title" style={{ paddingHorizontal: 20, marginBottom: 8 }}>{title}</Text>
-        <ScrollView style={{ maxHeight: 440 }}>
+    <Sheet visible={visible} title={title} onClose={onClose} testID="catalog-options" footer={<Button title="Cerrar" variant="secondary" onPress={onClose} full />}>
+      <View accessibilityRole="radiogroup" accessibilityLabel={title} style={{ gap: 4 }}>
         {options.map((o) => (
           <Pressable
             key={o.key}
             accessibilityRole="radio"
             aria-checked={!!o.selected}
             onPress={() => onSelect(o.key)}
-            style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 52, backgroundColor: pressed ? t.colors.surfaceSunken : 'transparent' })}
+            style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 14, minHeight: 52, borderRadius: t.radii.md, backgroundColor: pressed ? t.colors.surfaceSunken : o.selected ? t.colors.brandSoft : 'transparent' })}
           >
-            <Text variant="subtitle" style={{ flex: 1 }}>{o.label}</Text>
+            <Text variant="subtitle" color={o.selected ? 'brand' : 'text'} style={{ flex: 1 }}>{o.label}</Text>
             {o.selected ? <Icon name="check" size={20} color={t.colors.brand} strokeWidth={2.2} /> : null}
           </Pressable>
         ))}
-        </ScrollView>
-        <View style={{ paddingHorizontal: 20, marginTop: 8 }}>
-          <Button title="Cerrar" variant="secondary" onPress={onClose} full />
-        </View>
       </View>
-    </Modal>
+    </Sheet>
   );
 }

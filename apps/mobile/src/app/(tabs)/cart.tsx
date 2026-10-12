@@ -125,9 +125,9 @@ function LineRow({ line: l, onQty, disabled }: { line: CartLine; onQty: (variant
         {l.variant_title ? <Text variant="caption" color="textMuted">{l.variant_title}</Text> : null}
         {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
         {l.issue ? <Text variant="caption" color="danger">{ISSUE_TEXT[l.issue] ?? 'Revisa este producto.'}</Text> : null}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
           <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} disabled={disabled} onChange={(q) => onQty(l.variant_id, q)} />
-          <Text variant="price" tabular>{formatUSD(l.line_total_usd)}</Text>
+          <Text variant="price" tabular style={{ marginLeft: 'auto' }}>{formatUSD(l.line_total_usd)}</Text>
         </View>
       </View>
     </View>

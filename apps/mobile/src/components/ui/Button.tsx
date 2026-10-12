@@ -24,7 +24,7 @@ interface Props {
 }
 
 export function Button({ title, onPress, variant = 'primary', size = 'md', icon, loading, disabled, full, style, accessibilityHint, accessibilityLabel, testID }: Props) {
-  const { colors, radii } = useTheme();
+  const { colors, radii, layout } = useTheme();
   const palette: Record<Variant, { bg: string; fg: string; border?: string }> = {
     primary: { bg: colors.brand, fg: colors.onBrand },
     accent: { bg: colors.accent, fg: colors.onAccent },
@@ -33,7 +33,7 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
     danger: { bg: colors.dangerSoft, fg: colors.danger },
   };
   const p = palette[variant];
-  const height = size === 'lg' ? 52 : size === 'sm' ? 36 : 44;
+  const minHeight = size === 'lg' ? 52 : layout.minTouch;
   const inactive = disabled || loading;
   return (
     <ScalePressable
@@ -51,33 +51,31 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
       style={[
         styles.base,
         {
-          height,
+          minHeight,
+          minWidth: layout.minTouch,
           backgroundColor: p.bg,
           borderRadius: size === 'sm' ? radii.sm : radii.md,
           borderWidth: p.border ? StyleSheet.hairlineWidth * 2 : 0,
           borderColor: p.border,
           paddingHorizontal: size === 'sm' ? 14 : 20,
+          paddingVertical: size === 'lg' ? 14 : 12,
           opacity: disabled && !loading ? 0.45 : 1,
           alignSelf: full ? 'stretch' : 'auto',
         },
         style,
       ]}
     >
-      {loading ? (
-        <ActivityIndicator color={p.fg} />
-      ) : (
-        <View style={styles.row}>
-          {icon ? <Icon name={icon} size={size === 'sm' ? 16 : 18} color={p.fg} strokeWidth={2} /> : null}
-          <Text variant={size === 'sm' ? 'label' : 'button'} style={{ color: p.fg }} numberOfLines={1}>
-            {title}
-          </Text>
-        </View>
-      )}
+      <View style={styles.row}>
+        {loading ? <ActivityIndicator color={p.fg} /> : icon ? <Icon name={icon} size={size === 'sm' ? 16 : 18} color={p.fg} strokeWidth={2} /> : null}
+        <Text variant={size === 'sm' ? 'label' : 'button'} style={{ color: p.fg, flexShrink: 1, textAlign: 'center' }}>
+          {title}
+        </Text>
+      </View>
     </ScalePressable>
   );
 }
 
 const styles = StyleSheet.create({
   base: { alignItems: 'center', justifyContent: 'center' },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', maxWidth: '100%', gap: 8 },
 });

@@ -1,7 +1,7 @@
-import { forwardRef, useState } from 'react';
-import { Pressable, TextInput, View, type TextInputProps } from 'react-native';
+import { forwardRef, useId, useState } from 'react';
+import { TextInput, View, type TextInputProps } from 'react-native';
 import { useTheme } from '@/theme';
-import { Icon } from './Icon';
+import { IconButton } from './IconButton';
 import { Text } from './Text';
 
 interface Props extends TextInputProps {
@@ -15,6 +15,7 @@ export const TextField = forwardRef<TextInput, Props>(function TextField({ label
   const { colors, radii, typography } = useTheme();
   const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(true);
+  const messageId = `${useId()}-message`;
   const borderColor = error ? colors.danger : focused ? colors.brand : colors.border;
   return (
     <View style={{ gap: 6 }}>
@@ -25,6 +26,8 @@ export const TextField = forwardRef<TextInput, Props>(function TextField({ label
           ref={ref}
           accessibilityLabel={label}
           accessibilityHint={error ?? helper}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error || helper ? messageId : undefined}
           placeholderTextColor={colors.textMuted}
           selectionColor={colors.brand}
           onFocus={(e) => { setFocused(true); rest.onFocus?.(e); }}
@@ -33,12 +36,10 @@ export const TextField = forwardRef<TextInput, Props>(function TextField({ label
           style={[typography.body, { flex: 1, color: colors.text, paddingHorizontal: 14, paddingVertical: 12 }, style]}
         />
         {secureToggle ? (
-          <Pressable accessibilityRole="button" accessibilityLabel={hidden ? 'Mostrar contraseña' : 'Ocultar contraseña'} onPress={() => setHidden((h) => !h)} hitSlop={10} style={{ paddingHorizontal: 14 }}>
-            <Icon name={hidden ? 'eye' : 'eye-off'} size={20} color={colors.textMuted} />
-          </Pressable>
+          <IconButton icon={hidden ? 'eye' : 'eye-off'} label={hidden ? 'Mostrar contraseña' : 'Ocultar contraseña'} onPress={() => setHidden((h) => !h)} color={colors.textMuted} style={{ marginRight: 4 }} />
         ) : null}
       </View>
-      {error ? <Text variant="caption" color="danger" accessibilityLiveRegion="polite">{error}</Text> : helper ? <Text variant="caption" color="textMuted">{helper}</Text> : null}
+      {error ? <Text nativeID={messageId} variant="caption" color="danger" accessibilityLiveRegion="polite">{error}</Text> : helper ? <Text nativeID={messageId} variant="caption" color="textMuted">{helper}</Text> : null}
     </View>
   );
 });
