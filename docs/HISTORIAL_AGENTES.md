@@ -3,6 +3,14 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-12 20:27Z · Codex cloud · Oliver · Etapa0 arquitectura V2 terminada
+
+- `docs/ARQUITECTURA_EXPERIENCIA_V2.md`: diagnóstico, reglas, experiencias A–E, cuatro pestañas conservadas, decisiones Inicio/Buscar/productos/compra, componentes, plan por incrementos y aceptación. Portada finita con colección de un destino; contratos pedido/cotización/reporte/verificación intactos.
+- `docs/diseno-v2/`: tablero comparativo autónomo, siete propuestas × claro/oscuro ×320/412 (28 PNG), 14 originales actuales web visitante, ledger/costes/Product Design y control de calidad. Checkout/pago actuales por código; barreras autenticadas nombradas. Referencias externas Tunnel403, heurísticas identificadas; nada presentado como prueba física Android.
+- Equipo real de lectura: UX acepta, ecommerce APROBADO, auditor independiente **APROBADO** después de dos rondas. R1 corrigió navegación/capacidades/contraste/saldo/precisión/tradeoffs; R2 cerró fecha de tasa distinta de emisión y navegación de Resultados. Sin desacuerdos importantes; aprobación del propietario pendiente.
+- Validación documental:28 renders sin errores JS/imágenes rotas/overflow horizontal, revisión visual en dos temas/anchos y enlaces locales comprobados. Solo documentación; sin suites de compra/reset ni operaciones de datos. No app, backend/SQL/precios/pagos/permisos/panel/iOS/workflows/EAS/APK. OTA previa intacta.
+- Checkpoints `03873cc` y `8b90c17`; commit final en git log. Próximo exacto: Oliver revisa y aprueba/corrige arquitectura; solo entonces incremento mínimo1A+2A Inicio. Publicación necesita autorización individual. BCV crítica y activación SQL vendedor permanecen separadas.
+
 ### 2026-10-12 20:24Z · Codex cloud · Oliver · checkpoint de arquitectura V2
 
 - Solo Etapa0: documento rector y tablero documental de siete pantallas, 14 originales web visitante +28 esquemas claro/oscuro/320/412. Product Design audit/framework/context/research realmente consultado; fuentes externas Tunnel403 declaradas.

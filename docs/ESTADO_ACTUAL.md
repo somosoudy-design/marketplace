@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-12, Codex cloud: Etapa 0 de arquitectura V2 en curso, solo documentación; equipo real de lectura y revisión, un único responsable de escritura.
+**Última actualización:** 2026-10-12, Codex cloud: Etapa 0 de arquitectura V2 terminada y APROBADA internamente tras dos rondas; solo documentación, esperando revisión/aprobación de Oliver.
 
 ## Dónde está el trabajo
 
@@ -15,15 +15,15 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente móvil Entrega01 `d945797`; publicación `ce9b960`, validación Android `8fe9731`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` |
 | Plan vigente | Arquitectura de experiencia V2 — Etapa 0. Documento rector + siete esquemas; revisión multiagente y aprobación Oliver. Sin implementación ni publicación |
-| Objetivo actual | Crear y revisar docs/ARQUITECTURA_EXPERIENCIA_V2.md. Buscar/tarjetas de Entrega01 se conservan; el propietario solicita dirección integral antes de más código |
+| Objetivo actual | Etapa0 entregada: arquitectura maestra, siete comparaciones, evidencia y control de calidad. Esperar aprobación Oliver; no implementar ni publicar |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
 ## Trabajo en curso — arquitectura V2
 
-Etapa 0 autorizada por Oliver; Documento rector, tablero y siete esquemas (28 renders) guardados; revisión independiente final en curso. Capturas locales web de visitante, claro/oscuro, sin escrituras de negocio. Checkout/pago autenticados no capturados: representar por código con límite explícito. Referencias públicas Amazon/Mercado Libre/SHEIN/Apple/Baymard bloqueadas por Tunnel403; no inventar investigación externa. Product Design consultado realmente. Subagentes UX, ecommerce y auditor trabajan solo lectura; raíz integra.
+Etapa 0 autorizada por Oliver; **Terminada; sin implementación activa.** Documento rector, tablero y siete esquemas (28 renders) guardados. Auditor independiente APROBADO tras dos rondas, ecommerce APROBADO y UX acepta dirección; no desacuerdos importantes. Checkpoints 03873cc/8b90c17; cierre exacto en `git log -1`. Capturas locales web de visitante, claro/oscuro, sin escrituras de negocio. Checkout/pago autenticados no capturados: representar por código con límite explícito. Referencias públicas Amazon/Mercado Libre/SHEIN/Apple/Baymard bloqueadas por Tunnel403; no inventar investigación externa. Product Design consultado realmente. Subagentes UX, ecommerce y auditor trabajan solo lectura; raíz integra.
 
-**Próxima acción exacta:** cerrar segunda revisión de `docs/ARQUITECTURA_EXPERIENCIA_V2.md` y `docs/diseno-v2/`; comprobar barra de Resultados en PNG finales, integrar veredicto real de `/root/reviewer_v2`, actualizar continuidad y cerrar commit/push. No tocar app, Supabase, pagos, iOS o workflows. No EAS ni APK. Después, detenerse para aprobación de Oliver.
+**Próxima acción exacta:** Oliver revisa `docs/ARQUITECTURA_EXPERIENCIA_V2.md` y `docs/diseno-v2/propuestas.html` (siete comparaciones), junto con `EVIDENCIA_Y_REVISION.md`. Esperar aprobación explícita antes de 1A + 2A: base imprescindible y apertura editorial de Inicio. No tocar app, Supabase, pagos, iOS o workflows. No EAS ni APK. Después, detenerse para aprobación de Oliver.
 
 ## Hitos de la Directriz maestra 02
 
@@ -379,7 +379,7 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**Etapa 0 de arquitectura V2:** completar control de calidad final y entregar a Oliver `docs/ARQUITECTURA_EXPERIENCIA_V2.md`, tablero `docs/diseno-v2/propuestas.html` y `EVIDENCIA_Y_REVISION.md`. Luego esperar aprobación explícita de arquitectura. No continuar la implementación de Entrega02/Inicio automáticamente.
+**Etapa 0 de arquitectura V2 terminada:** revisar con Oliver `docs/ARQUITECTURA_EXPERIENCIA_V2.md`, tablero `docs/diseno-v2/propuestas.html` y `EVIDENCIA_Y_REVISION.md`. Luego esperar aprobación explícita de arquitectura. No continuar la implementación de Entrega02/Inicio automáticamente.
 
 Tras aprobación, primer incremento recomendado: base mínima + portada editorial/primera comparación (1A + 2A), usando funciones existentes. Publicación individual requiere autorización aparte. OTA vigente `01a13193` del 2026-10-12 19:24 UTC, Android38 2/2, se conserva. BCV crítica y activación SQL Mi tienda siguen separadas; iOS pospuesto.
 

@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 01 Inicio | [Captura](actual/light/01-inicio.png): válida | [Esquema](propuestas/light/412/01.png) | Portada acumulativa → apertura editorial finita y primera comparación |
 | 02 Buscar | [Captura](actual/light/02-buscar.png): válida | [Esquema](propuestas/light/412/02.png) | Base compacta vigente → jerarquía de exploración; conservar capacidades |
-| 03 Resultados | [Captura estabilizada](actual/light/03-resultados.png): válida, 11 cargados | [Esquema](propuestas/light/412/03.png) | Consulta conserva categorías completas → controles contextuales y catálogo antes |
+| 03 Resultados | [Captura estabilizada](actual/light/03-resultados.png): válida, 11 cargados | [Esquema](propuestas/light/412/03.png) | Categorías persistentes confirmadas por código → controles contextuales y catálogo antes |
 | 04 Ficha | [Captura](actual/light/04-ficha.png): válida | [Esquema](propuestas/light/412/04.png) | Galería dominante → precio/variante/cantidad/vendedor/entrega próximos |
 | 05 Carrito visitante | [Captura](actual/light/05-carrito.png): válida | [Esquema](propuestas/light/412/05.png) | Fila operativa y subtotal referencial; conservar pestañas e inicio de sesión |
 | 06 Checkout | [Acceso protegido](actual/light/06-checkout-protegido.png): no es compra autenticada | [Esquema por contrato](propuestas/light/412/06.png) | Secciones apiladas por código → revisión progresiva con Total/Hoy/Saldo |
@@ -96,7 +96,15 @@ Los seis accesos devolvieron **Tunnel 403** el 2026-10-12. No se descargaron int
 | Promesas universales / campos obligatorios nuevos | Contradicen contratos: anticipo, comprobante, municipio | Elegibilidad del carrito, requisitos por método y obligatoriedad actual |
 | Propuesta como prueba final | Esquema no valida persistencia, accesibilidad ni Android | Etiquetas explícitas, límites y aceptación posterior por etapa |
 
-**Segunda ronda y veredicto final: pendientes en este checkpoint.** No hay aprobación ficticia. Las discrepancias importantes después de dos rondas se elevarán a Oliver; no habrá una tercera ronda indefinida.
+### Segunda ronda y veredicto final
+
+**Independent Design Reviewer: APROBADO — Etapa 0 documental, tras dos rondas reales.** Inspeccionó los 28 renders finales, las 14 capturas actuales y los contratos relevantes. Verificó navegación, capacidades de ficha, iconos oscuros, revisión completa a 320 px, precisión del diagnóstico y costes/ledger. No quedan objeciones importantes.
+
+**Ecommerce Product Specialist: APROBADO documental/comercial**, con la última precisión `rate_observed_at` incorporada también en los PNG regenerados. Sin discrepancias comerciales pendientes. **UX/UI Design Director: ACEPTA la dirección para revisión de Oliver**, sin objeciones importantes. En su segunda revisión comprobó nuevamente las pestañas de Resultados en ambos temas y anchos. Había pedido resolver la visibilidad de pestañas de Resultados en la entrega renderizada y tratar las categorías de Inicio como enlaces: ambas precisiones integradas.
+
+El auditor recomendó atribuir la persistencia de categorías de Resultados al código, para no inferir todos los controles desde una captura. Así se rotula. El Director verificó además la consulta estable, 11 cargados y la barra de pestañas de la figura final. Las categorías de Inicio no tienen «Todo» activo: son entradas al catálogo, sin aparentar filtrar la portada.
+
+**Desacuerdos importantes pendientes: ninguno.** Se respetó el máximo de dos rondas; las correcciones de precisión finales no añadieron alcance ni una nueva revisión indefinida. Los costes de producto quedan expresamente a decisión de Oliver. El veredicto no acredita interacción funcional, accesibilidad nativa o Android, y no sustituye aprobación del propietario.
 
 ## Validación documental ejecutada
 

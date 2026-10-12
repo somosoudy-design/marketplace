@@ -20,7 +20,7 @@ El problema principal es la ausencia de una jerarquía común entre descubrimien
 
 **Límites:** sin teléfono/emulador Android local. Checkout y pago autenticados no se recorrieron: las capturas muestran sus barreras de acceso; sus composiciones actuales se analizan por código. No se crearon usuarios, pedidos, cotizaciones ni pagos. Servicios locales de lectura con transacciones revertidas; carrito de visitante en perfil temporal. Esquemas propuestos no equivalen a pantallas implementadas ni a pruebas de persistencia.
 
-Las siete propuestas, las capturas y las fuentes están en el [tablero comparativo](diseno-v2/propuestas.html) y en [Evidencia y revisión](diseno-v2/EVIDENCIA_Y_REVISION.md). El documento permanece en revisión hasta cerrar la segunda ronda independiente. Ninguna figura modifica la app.
+Las siete propuestas, las capturas y las fuentes están en el [tablero comparativo](diseno-v2/propuestas.html) y en [Evidencia y revisión](diseno-v2/EVIDENCIA_Y_REVISION.md). La segunda ronda independiente concluyó **APROBADO para Etapa 0 documental**; falta la aprobación de Oliver. Ninguna figura modifica la app.
 
 ## 2. Principios y reglas del sistema
 
@@ -227,7 +227,7 @@ Los recursos compartidos `critical-overrides` y `communication-protocol` no fuer
 
 Equipo real, lectura independiente: Director UX/UI (`/root/ux_director_v2`), especialista ecommerce (`/root/commerce_v2`) y auditor (`/root/reviewer_v2`). Únicamente el Director de Producto (`/root`) modifica y hace commits. La revisión interna no sustituye a Oliver.
 
-**Primera ronda: CAMBIOS OBLIGATORIOS.** El auditor revisó 28 propuestas y encontró pérdidas de navegación/capacidades, contraste insuficiente y datos de revisión parcialmente ocultos. Las correcciones y los hallazgos de cada especialista constan en [control de calidad](diseno-v2/EVIDENCIA_Y_REVISION.md). Segunda ronda pendiente en este checkpoint; no se presenta un aprobado ficticio.
+**Primera ronda: CAMBIOS OBLIGATORIOS.** El auditor revisó 28 propuestas y encontró pérdidas de navegación/capacidades, contraste insuficiente y datos de revisión parcialmente ocultos. Las correcciones y los hallazgos de cada especialista constan en [control de calidad](diseno-v2/EVIDENCIA_Y_REVISION.md). **Segunda ronda: APROBADO**, con las correcciones materiales verificadas. Sin objeciones importantes pendientes; la aprobación interna no autoriza implementación ni publicación.
 
 ## 14. Aprobación requerida y próxima intervención
 

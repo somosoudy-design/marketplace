@@ -8,9 +8,9 @@
 
 **Última revisión:** 2026-10-12.
 
-## UX-ARQ-V2 — arquitectura maestra, Etapa 0 (revisión final)
+## UX-ARQ-V2 — arquitectura maestra, Etapa 0 (terminada; aprobación Oliver pendiente)
 
-Nueva misión de Oliver tras evaluación física insuficiente: dirección integral antes de código. Documento `ARQUITECTURA_EXPERIENCIA_V2.md`, siete esquemas y evidencia en `diseno-v2/`. Product Design realmente consultado; tres especialistas reales de lectura, solo raíz integra/commitea. Ronda1 independiente CAMBIOS OBLIGATORIOS corregidos; segunda ronda en curso. Referencias externas bloqueadas; checkout/pago actuales solo por código, sin pruebas autenticadas.
+Nueva misión de Oliver tras evaluación física insuficiente: dirección integral antes de código. Documento `ARQUITECTURA_EXPERIENCIA_V2.md`, siete esquemas y evidencia en `diseno-v2/`. Product Design realmente consultado; tres especialistas reales de lectura, solo raíz integra/commitea. Ronda1 independiente CAMBIOS OBLIGATORIOS corregidos; ronda2 APROBADO, ecommerce APROBADO y UX acepta, sin desacuerdos importantes. 28 esquemas renderizados y 14 originales actuales; fuentes/costes/límites documentados. Referencias externas bloqueadas; checkout/pago actuales solo por código, sin pruebas autenticadas.
 
 No iniciar implementación o EAS Update hasta revisión/aprobación de Oliver. Primera intervención propuesta 1A + 2A: base mínima y apertura editorial de Inicio. No repetir pulido global ni Entrega01. BCV crítica y SQL vendedor permanecen separados. El plan progresivo sustituye las instrucciones anteriores de Entrega02; la OTA anterior sigue vigente.
 
