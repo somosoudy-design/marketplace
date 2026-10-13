@@ -32,7 +32,7 @@ export default function CartScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
-  const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice /></View>;
+  const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice explain /></View>;
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       {user ? <AccountCart header={header} /> : <GuestCartView header={header} />}

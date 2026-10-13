@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 import { selectUpdate, validateAndroidRequest, validateCataloguePromotion, validateRequest, validateRun } from './promote-update.mjs';
 
 const request = {
@@ -14,6 +15,13 @@ test('rejects immutable exhibition bundles before any production promotion', () 
   assert.throws(() => validateCataloguePromotion({ scope: 'private-preview', products: [{}] }), /Private exhibition/);
   assert.throws(() => validateCataloguePromotion({ scope: 'private-preview', products: [] }), /Private exhibition/);
   assert.throws(() => validateCataloguePromotion({ scope: 'unknown', products: [{}] }), /Private exhibition/);
+});
+
+test('missing manifest cannot bypass the private resource or registry check', () => {
+  assert.throws(() => validateCataloguePromotion(null, { files: ['apps/mobile/assets/catalog-exhibition/photo.jpg'] }), /resource files/);
+  assert.throws(() => validateCataloguePromotion(null, { registry: 'export const exhibitionPhotos = [require("photo.jpg")];' }), /empty exhibition registry/);
+  const empty = readFileSync(new URL('../../apps/mobile/src/lib/catalog-exhibition-assets.ts', import.meta.url), 'utf8');
+  validateCataloguePromotion(null, { registry: empty, files: [] });
 });
 
 test('rejects native-runtime changes and unintended channels before release', () => {

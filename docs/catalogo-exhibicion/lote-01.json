@@ -12,10 +12,10 @@
       "originalPath": "demo/sheglam-labial-liquido-mate-1.webp",
       "variantNames": [
         "Rosa nude",
-        "Rojo clásico",
-        "Terracota"
+        "Terracota",
+        "Rojo clásico"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
@@ -25,7 +25,15 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.sheglam.com/"
+      "referenceSite": "https://www.sheglam.com/",
+      "originalGalleryPaths": [
+        "demo/sheglam-labial-liquido-mate-1.webp",
+        "demo/sheglam-labial-liquido-mate-2.webp",
+        "demo/sheglam-labial-liquido-mate-v0.webp",
+        "demo/sheglam-labial-liquido-mate-v2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
@@ -33,10 +41,10 @@
       "title": "UGREEN Nexode cargador GaN 65 W",
       "originalPath": "demo/ugreen-nexode-65w-1.webp",
       "variantNames": [
-        "Negro",
-        "Blanco"
+        "Blanco",
+        "Negro"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
@@ -46,7 +54,14 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.ugreen.com/"
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-nexode-65w-1.webp",
+        "demo/ugreen-nexode-65w-2.webp",
+        "demo/ugreen-nexode-65w-v1.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "01a43334-e485-41cc-a12a-c049e933665d",
@@ -56,7 +71,7 @@
       "variantNames": [
         "Gris"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
@@ -66,7 +81,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.ugreen.com/"
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-power-bank-20000-1.webp",
+        "demo/ugreen-power-bank-20000-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
@@ -74,10 +95,10 @@
       "title": "UGREEN cable USB-C a USB-C",
       "originalPath": "demo/ugreen-cable-usb-c-100w-1.webp",
       "variantNames": [
-        "2 m",
-        "1 m"
+        "1 m",
+        "2 m"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
@@ -87,7 +108,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.ugreen.com/"
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-cable-usb-c-100w-1.webp",
+        "demo/ugreen-cable-usb-c-100w-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "96f52279-bb49-4d5c-a47d-495611d67191",
@@ -95,10 +122,10 @@
       "title": "SHEGLAM brillo labial",
       "originalPath": "demo/sheglam-brillo-labial-1.webp",
       "variantNames": [
-        "Baya",
-        "Rosado"
+        "Rosado",
+        "Baya"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
@@ -108,7 +135,14 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.sheglam.com/"
+      "referenceSite": "https://www.sheglam.com/",
+      "originalGalleryPaths": [
+        "demo/sheglam-brillo-labial-1.webp",
+        "demo/sheglam-brillo-labial-2.webp",
+        "demo/sheglam-brillo-labial-v1.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "910cdfb7-9a3e-48e5-bd40-99269aea332a",
@@ -118,7 +152,7 @@
       "variantNames": [
         "Gris espacial"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
@@ -128,7 +162,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.ugreen.com/"
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-revodok-hub-6-en-1-1.webp",
+        "demo/ugreen-revodok-hub-6-en-1-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "1cb658e6-5f4a-4d13-83e4-97a5af667920",
@@ -138,7 +178,7 @@
       "variantNames": [
         "Coral"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
@@ -148,7 +188,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.sheglam.com/"
+      "referenceSite": "https://www.sheglam.com/",
+      "originalGalleryPaths": [
+        "demo/sheglam-rubor-liquido-1.webp",
+        "demo/sheglam-rubor-liquido-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
@@ -159,7 +205,7 @@
         "Salvia",
         "Arena"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
@@ -169,7 +215,14 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": null
+      "referenceSite": null,
+      "originalGalleryPaths": [
+        "demo/audifonos-anc-over-ear-1.webp",
+        "demo/audifonos-anc-over-ear-2.webp",
+        "demo/audifonos-anc-over-ear-v1.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "f1752791-3273-4001-beb6-000b7aace947",
@@ -179,7 +232,7 @@
       "variantNames": [
         "Blanco"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
@@ -189,7 +242,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": null
+      "referenceSite": null,
+      "originalGalleryPaths": [
+        "demo/audifonos-in-ear-estuche-1.webp",
+        "demo/audifonos-in-ear-estuche-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "c3a54b68-0659-421d-baf9-86d3fa3caeca",
@@ -197,10 +256,10 @@
       "title": "Vela aromática en vaso de vidrio",
       "originalPath": "demo/vela-aromatica-vaso-1.webp",
       "variantNames": [
-        "Cedro",
-        "Vainilla"
+        "Vainilla",
+        "Cedro"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
@@ -210,7 +269,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": null
+      "referenceSite": null,
+      "originalGalleryPaths": [
+        "demo/vela-aromatica-vaso-1.webp",
+        "demo/vela-aromatica-vaso-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "6209f8ff-aeab-40e3-9168-9528a30ca55d",
@@ -220,7 +285,7 @@
       "variantNames": [
         "Blanco"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
@@ -230,7 +295,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.ugreen.com/"
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-nexode-30w-1.webp",
+        "demo/ugreen-nexode-30w-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "3e280c0e-dd8b-404a-927e-39c0fd9e4a9e",
@@ -239,10 +310,10 @@
       "originalPath": "demo/guantes-nitrilo-x100-1.webp",
       "variantNames": [
         "S",
-        "L",
-        "M"
+        "M",
+        "L"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
@@ -252,7 +323,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": null
+      "referenceSite": null,
+      "originalGalleryPaths": [
+        "demo/guantes-nitrilo-x100-1.webp",
+        "demo/guantes-nitrilo-x100-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "1b895714-8723-4330-8472-75ade944652a",
@@ -264,7 +341,7 @@
         "M",
         "L"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
@@ -274,7 +351,13 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": null
+      "referenceSite": null,
+      "originalGalleryPaths": [
+        "demo/cama-ovalada-mascotas-1.webp",
+        "demo/cama-ovalada-mascotas-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "04e929cf-0be8-45db-a957-aa418599b572",
@@ -286,7 +369,7 @@
         "Medio",
         "Profundo"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
@@ -296,7 +379,16 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": "https://www.sheglam.com/"
+      "referenceSite": "https://www.sheglam.com/",
+      "originalGalleryPaths": [
+        "demo/sheglam-base-fluida-1.webp",
+        "demo/sheglam-base-fluida-2.webp",
+        "demo/sheglam-base-fluida-v0.webp",
+        "demo/sheglam-base-fluida-v1.webp",
+        "demo/sheglam-base-fluida-v2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     },
     {
       "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
@@ -304,10 +396,10 @@
       "title": "Parlante portátil resistente al agua",
       "originalPath": "demo/parlante-portatil-1.webp",
       "variantNames": [
-        "Coral",
-        "Turquesa"
+        "Turquesa",
+        "Coral"
       ],
-      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
       "modelStatus": "unconfirmed",
       "modelEvidence": null,
       "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
@@ -317,7 +409,14 @@
         "evidence": null,
         "reviewedBy": null
       },
-      "referenceSite": null
+      "referenceSite": null,
+      "originalGalleryPaths": [
+        "demo/parlante-portatil-1.webp",
+        "demo/parlante-portatil-2.webp",
+        "demo/parlante-portatil-v1.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published"
     }
   ]
 }

@@ -21,11 +21,11 @@
 
 ## Trabajo en curso — catálogo de exhibición, lote 01
 
-**Checkpoint de preparación:** 15 productos identificados con UUID remotos originales por lectura pública sin admin; registro de recursos vacío y capa privada cerrada por defecto. Modelo y foto se deben verificar, nunca inferir por parecido. Policy4/4, selección/promoción8/8, tipos/lint móvil aprobados. Referencias/paquetes privados sin licencia no se versionan ni exportan.
+**Checkpoint de preparación:** 15 productos identificados con UUID remotos originales por lectura pública sin admin; registro de recursos vacío y capa privada cerrada por defecto. Modelo y foto se deben verificar, nunca inferir por parecido. Policy4/4, selección/promoción9/9, tipos/lint global aprobados. Habitual Inicio/ficha23/23 y presentación8/8; privada8/8 inicial, repitiendo evidencia estabilizada. Web/HermesAndroid5,9MB exportados;41recursosdependencias/0fotosexhibición. Referencias/paquetes privados sin licencia no se versionan ni exportan.
 
 **Bloqueo concreto:** fabricantes/CDN/Wikimedia devuelven CONNECT403. Borrador de dominios guardado para aplicar desde Configuración del entorno, sin cambiar la red actual. 0 fotografías obtenidas/0 licencias/0 modelos confirmados: lote fotográfico NO terminado. Informe `docs/CATALOGO_EXHIBICION.md`, selección `docs/catalogo-exhibicion/lote-01.json`. Solo raíz escribe; catálogo y auditor investigan/revisan.
 
-**Próxima acción:** terminar exportación y pruebas focalizadas de la infraestructura sin fotos; después aplicar el acceso de red, verificar modelos/tonos y derechos y preparar el lote autorizado. No modificar `.github/eas-update-request`, no OTA/APK/iOS/backend/finanzas.
+**Próxima acción:** cerrar capturas estabilizadas y dictamen independiente de infraestructura; después aplicar el acceso de red, verificar modelos/tonos y derechos y preparar el lote autorizado. No modificar `.github/eas-update-request`, no OTA/APK/iOS/backend/finanzas.
 
 ## Última entrega cerrada — C publicada; revisión física del propietario
 

@@ -797,3 +797,8 @@ Todas las entradas son de Claude en la sesión de la nube del proyecto «TIENDA 
 ## 2026-10-13 — Codex: checkpoint CAT-EXH-01, preparación segura
 
 Solicitud nueva: fotos auténticas privadas para InicioC y primeros Buscar, sin administración Supabase ni publicación inmediata. Lectura pública43 y selección15 UUID remotos; dos roles reales de lectura, catálogo/artdirección y auditor independiente, raíz único escritor. Capa ID+ruta con fallback normal y opt-in privado cerrado, Demo visual separado de is_demo y guardas comerciales. Registro vacío: 0 fotos/licencias/modelos confirmados. Fuentes oficiales/CDN/Wikimedia CONNECT403; dominios guardados en borrador del entorno para aplicar, no OTA. Policy4/4 + Node8/8 y tipos/lint móvil; baseline web8+8 guardado/una captura inspeccionada. Próximo paso exportación/recorridos focalizados y revisión del código, después resolver acceso/modelos/derechos. No backendremoto, pagos, BCV, APK o iOS; no se afirma lote terminado.
+
+
+### Segundo checkpoint CAT-EXH-01 — guard y evidencia
+
+Después de9ccc6e3: auditor confirma15/15 IDs/rutas y obliga a cruzar árbol/registro inmutables aunque falte manifiesto. Corregido y9/9Node; aviso ficha/cart también visible. Lectura pública de15fichas valida variantes/galerías/is_demo; sin modificaciones remotas. Globaltipo/lint, habitual23+8 y privada8 inicial pasan. Capturas de búsqueda/fade iniciales rechazadas por prematuras; repetición focalizada estabilizada, no presentarlas como lotefotográfico. AndroidHermes5,9MB/41recursos/0exhibición, sin EASniAPK. Lote siguebloqueado0fotos/licencias/modelos.

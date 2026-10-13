@@ -53,7 +53,12 @@ export function validateAndroidRequest(text) {
   assert(lines.includes('themes: light dark'), 'Android validation must cover both themes');
 }
 
-export function validateCataloguePromotion(manifest) {
+export function validateCataloguePromotion(manifest, { registry = null, files = [] } = {}) {
+  assert.equal(files.length, 0, 'Exhibition resource files cannot be republished to production, even without a manifest');
+  if (registry != null) {
+    assert(/export const exhibitionPhotos: readonly ExhibitionPhoto\[\] = \[\];\s*$/.test(registry) && !/require\s*\(/.test(registry),
+      'Production promotion requires the empty exhibition registry, even without a manifest');
+  }
   assert(!manifest || (manifest.scope !== 'private-preview' && Array.isArray(manifest.products) && manifest.products.length === 0),
     'Private exhibition resources cannot be republished to production');
 }
@@ -89,7 +94,13 @@ async function main() {
   const request = validateRequest(JSON.parse(readFileSync(resolve(repo, '.github/eas-production-update-request'), 'utf8')));
   const catalogueManifest = 'apps/mobile/assets/catalog-exhibition/manifest.json';
   const entry = command('git', ['ls-tree', '--name-only', request.sourceCommit, '--', catalogueManifest]).trim();
-  validateCataloguePromotion(entry ? JSON.parse(command('git', ['show', `${request.sourceCommit}:${catalogueManifest}`])) : null);
+  const assetFiles = command('git', ['ls-tree', '-r', '--name-only', request.sourceCommit, '--', 'apps/mobile/assets/catalog-exhibition']).trim().split('\n').filter(Boolean);
+  const registryPath = 'apps/mobile/src/lib/catalog-exhibition-assets.ts';
+  const registryEntry = command('git', ['ls-tree', '--name-only', request.sourceCommit, '--', registryPath]).trim();
+  validateCataloguePromotion(entry ? JSON.parse(command('git', ['show', `${request.sourceCommit}:${catalogueManifest}`])) : null, {
+    files: assetFiles,
+    registry: registryEntry ? command('git', ['show', `${request.sourceCommit}:${registryPath}`]) : null,
+  });
   validateRun(await runInfo(request.previewRun), 'eas-update-preview.yml', request.sourceCommit);
   validateRun(await runInfo(request.androidRun), 'apk-emulator.yml', request.androidCommit);
   validateAndroidRequest(command('git', ['show', request.androidCommit + ':.github/apk-emulator-request']));

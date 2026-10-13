@@ -192,7 +192,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
             <View style={{ gap: 12 }}>
-              <ExhibitionNotice />
+              <ExhibitionNotice explain />
               <View style={{ gap: 4 }}>
                 {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
                 <Text variant="displayM" testID="product-title">{p.title}</Text>
