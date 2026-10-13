@@ -77,6 +77,8 @@ No se retira el feed: su exploración continua vive en Buscar; Inicio conserva u
 
 ## 5. Nueva portada: decisión recomendada
 
+**Decisión posterior del propietario, 2026-10-13:** C es la referencia vigente. Integrar marca/búsqueda/editorial en una superficie continua, categorías como puente **después** de editorial, luego cuatro productos contiguos. No aplicar la alternativa B de filas separadas. Refinamiento/revisión y medidas en `C_EDITORIAL_REFINADA.md`; autorizado reemplazo mediante preview APK 5 después de validación. La secuencia original siguiente es antecedente donde difiere de esta decisión.
+
 **Una apertura editorial de ancho útil completo, sin carrusel automático.** Elegir la primera colección `feature` válida en el orden del backend. Mostrar un producto existente en la colección, fotografía íntegra, nombre y precio demo rotulado cuando corresponda. El módulo lleva a la **colección identificada**: un solo destino comercial, CTA «Ver colección». El precio ilustra ese producto, no el precio de toda la colección. El detalle de producto se abre desde sus tarjetas en la colección; no colocar dos enlaces ambiguos dentro de un mismo hero.
 
 Los demás destacados no desaparecen: pasan al bloque de colecciones con nombre y destino real. Se elimina la necesidad de puntos de paginación en esta apertura. Si una futura campaña exige paginar, se revisará como variante con indicador integrado y navegación manual; no se activa por defecto.

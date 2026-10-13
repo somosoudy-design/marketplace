@@ -16,7 +16,7 @@ Nueva misión de Oliver tras evaluación física insuficiente: dirección integr
 
 **C elegida por Oliver:** alternativas A/B/C terminadas como antecedente (`ALTERNATIVAS_EDITORIALES_INICIO_V2.md`); nueva misión C continua marca/búsqueda/editorial, menor altura, categorías puente y cuatro recomendaciones después. No implementar B. Resolver objeción de altura con medidas/capturas reales y auditor focal, claro/oscuro320/412/fuente ampliada.
 
-**En curso y autorizado:** implementar C corregida y reemplazar la portada publicada mediante **una** OTA Android preview/APK 5 tras pruebas/aprobación del auditor y runtime exacto; confirmar ID/recepción. La nueva autorización del propietario sustituye la prohibición anterior de publicar en esta tarea. Sin APK/configuración nativa/backend/finanzas/vendedor/iOS. BCV y SQL vendedor siguen separados.
+**C implementada/validada; publicación autorizada pendiente:** banda316/319, fotos421/424, dos completas, UI31/31 finales, auditor/UX/ecommerce APROBADO ronda1, tipos/lint y web/AndroidHermes5,9MB aprobados. Reemplazar mediante **una** OTA Android preview/APK5 con guard del runtime exacto y comprobar ID/recepción/OS1,6. Informe C_EDITORIAL_REFINADA.md. La nueva autorización del propietario sustituye la prohibición anterior de publicar en esta tarea. Sin APK/configuración nativa/backend/finanzas/vendedor/iOS. BCV y SQL vendedor siguen separados.
 
 ## UX-ENTREGA-01 — Buscar y tarjetas (publicada/verificada; revisión de Oliver)
 

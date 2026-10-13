@@ -62,6 +62,23 @@ name: Inicio V2 — apertura, comparación y destinos
 - takeScreenshot: inicio-v2-06-buscar
 - tapOn:
     id: buyer-tab-index
+- swipe:
+    start: 50%, 75%
+    end: 50%, 25%
+- extendedWaitUntil:
+    visible:
+      id: home-search-sticky
+    timeout: 15000
+- takeScreenshot: inicio-v2-08-buscador-persistente
+- tapOn:
+    id: home-search-sticky
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- hideKeyboard
+- tapOn:
+    id: buyer-tab-index
 - openLink: kora://diagnostico
 - extendedWaitUntil:
     visible:

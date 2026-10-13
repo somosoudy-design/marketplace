@@ -46,17 +46,26 @@ No se modifican Supabase/SQL/servicios, datos remotos, checkout, finanzas, BCV, 
 
 `index`, `audit`, framework, `ideate` y preflight realmente consultados. Brief ya resuelto por elección C; una edición ImageGen con captura real/C y assets Demo adjuntos. Prompt en [archivo](diseno-v2/c-refinada/prompt.txt); resultado es referencia de composición, no fotografía ni evidencia nativa. Aplicados jerarquía, continuidad, claridad comercial, reflow y límites de evidencia. No se hizo otra auditoría general ni se copió cada píxel de la imagen.
 
-Raíz es único escritor; UX/UI, ecommerce y auditor son lectores reales. **Revisión focal en curso:** se envían código, medidas y capturas de ambos temas/anchos/estrés. Criterios: banda normal 310–335 en 412 (hasta355 en320 si reflow), primeras fotos ≤450/470, dos completas normales, ninguna información/ruta perdida, crecimiento legible y métricas correctas. No aprobar por tests solamente. Máximo dos rondas para esta nueva entrega.
+Raíz es único escritor; UX/UI, ecommerce y auditor son lectores reales. **Revisión focal cerrada en ronda 1: APROBADO**, sin cambios obligatorios, por auditor independiente, UX/UI y ecommerce. Los lectores inspeccionaron fuente, medidas y capturas de ambos temas/anchos/estrés. Criterios: banda normal 310–335 en 412 (hasta355 en320 si reflow), primeras fotos ≤450/470, dos completas normales, ninguna información/ruta perdida, crecimiento legible y métricas correctas. No aprobar por tests solamente. No fue necesaria una segunda ronda al no haber objeciones significativas. La aprobación todavía distingue web/código de la comprobación nativa posterior.
+
+| Especialista | Veredicto y hallazgos |
+|---|---|
+| Auditor independiente | APROBADO:16 capturas,316/319 y421/424 cumplen presupuesto; C continua, cuatro después, tracking correcto. OS1,6/statusbar/recepción aún por comprobar |
+| UX/UI | APROBADO visual web: escala menor conserva C, foto íntegra más pequeña es coste; no más densidad inventada ni nueva pulida |
+| Ecommerce | APROBADO comercial: colección/SKU/precio/Demo claros, orden/fallback/rutas y medición conservados |
+| Director de Producto | Integró elección C; rechazó tomar ImageGen como medida de app, captura con fade y APIStatusBar incompatible con web; correcciones verificadas. Sin desacuerdos importantes |
 
 ## Pruebas y límites del checkpoint
 
-- **31/31 focales** en claro/oscuro; pase final en curso tras variante de encabezados. Catálogo/contexto/favorito/atrás/carrito, fallback/pocos datos/agotado, búsqueda y continuidad C, tracking con sesión local/perfil demorado.
-- Tipos/lint global aprobados antes de la última variante; tipos/lint móvil aprobados después. Exportación web aprobada; Android/Hermes pendiente en este checkpoint.
+- **31/31 focales finales** en claro/oscuro, sin omisiones ni reintentos, tras la variante de encabezados (1,9 min). Catálogo/contexto/favorito/atrás/carrito, fallback/pocos datos/agotado, búsqueda y continuidad C, tracking con sesión local/perfil demorado.
+- Tipos/lint global aprobados antes de la última variante; tipos/lint móvil aprobados después. Exportación web y **Android/Hermes 5,9 MB aprobadas**, sin dependencia nueva.
 - Ocho estados web y ocho scroll, sin errores JS/overflow horizontal/recortes de editorial y búsqueda. Una captura tomada durante fade de imágenes fue rechazada y recapturada tras estabilizar, sin retoque.
 - Primer intento de captura falló por `StatusBar.pushStackEntry` ausente en web; guard de plataforma corregido y pase repetido. Primer typecheck señaló una referencia `t` retirada por error; restaurada. No se eliminaron aserciones ni pruebas.
 - Backend API local actual en lectura/rollback; Auth de cuenta Demo existente sin bootstrap/reset/migración. Tracking valida solicitudes, no persistencia de telemetría. Sin compras/pagos remotos.
+- Cinco pares sólidos de texto verificados, contraste mínimo **6,88:1**; [resultados](diseno-v2/c-refinada/contraste.json). No equivale a certificación WCAG/TalkBack ni contraste sobre fotos.
+- Flujo Android08 conserva recorridos y añade buscador persistente→Buscar→Inicio; flujo09 existente comprueba fuente OS1,6. Se ejecutarán sobre la OTA real, no sobre el export local.
 
-**Pendiente:** dictamen focal, exportación Android, publicación con guard exacto, ID y recepción Android/OS1,6. La OTA previa sigue vigente. No afirmar recepción en Samsung ni pruebas nativas de esta versión antes de comprobarlas.
+**Pendiente:** publicación con guard exacto, ID y recepción Android/OS1,6. La OTA previa sigue vigente. No afirmar recepción en Samsung ni pruebas nativas de esta versión antes de comprobarlas.
 
 ## Lenguaje que puede extenderse
 

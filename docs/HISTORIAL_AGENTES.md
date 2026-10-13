@@ -3,6 +3,12 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-13 03:34Z · Codex cloud · Oliver · C aprobada, cierre antes de publicación
+
+- C elegida implementada en Inicio: continuidad fullwidth, categorías puente, cuatro después; medidas316/319 y421/424, dos completas. Auditor/UX/ecommerce APROBADO ronda1 sobre código/capturas reales; sin objeciones importantes ni segunda ronda innecesaria. No reconvertida a B.
+- UI31/31 finales (1,9min), tipos/lint global + móvil final, web/AndroidHermes5,9MB aprobados. EstrésCSS/scroll8+8, contraste5pares min6,88:1; no OS/TalkBack inferidos. Fonteamp nativa tiene reflow de caption/comparación1col; statusbar por focoJS restaura al salir.
+- WIP ef44048 queda cerrado; fuente funcional sin pendientes de código. Android08 añade búsqueda persistente; 09 conservaOS1,6. Autorización nueva permite una OTApreview/APK5; no publicada aún. Próximo: solicitar publicación/guard exacto, luego Android40 08+09ambostemas, ID/fecha/runtime/capturas/recorridos y cierrecontinuidad.
+
 ### 2026-10-13 03:26Z · Codex cloud · Oliver · checkpoint C funcional en revisión
 
 - Marca/búsqueda/editorial continuas, categorías puente y cuatro productos posteriores. Banda web316/319 y fotos421/424, dos completas; esquema C original395,58 a412. Datos/assets reales Demo, rutas/métricas/roles intactos. StatusBar por foco soloJS nativo con guard web; stackAction opcional soloInicio para texto grande.

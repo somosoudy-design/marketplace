@@ -22,6 +22,12 @@ cambia los tres.
 Las capturas de referencia que compartió el dueño (cuatro apps de compras) guían la personalidad y la calidad
 de la experiencia, no se copian. Están en los archivos del proyecto, fuera del repositorio.
 
+## Dirección C elegida para Inicio V2 (2026-10-13)
+
+Oliver eligió **Electric Violet Editorial** por continuidad entre marca, búsqueda y apertura comercial. En Inicio se autoriza una banda editorial profunda continua, de ancho completo, con título/leyenda/imagen/CTA integrados; categorías como puente y cuatro productos contiguos después. Sin contenedor exterior flotante ni sombra; no reconvertirla a productos primero (B).
+
+Es una excepción editorial acotada al uso general de violeta: catálogo/fotografías siguen en superficies tranquilas. Normal web316/319px de banda, no altura rígida. Con fuente grande reflow libre; no recortar precio o título. Buscar, fichas y carrito heredan alineación, agrupación, tipografía y señales comerciales, **no un encabezado violeta gigante**. Tokens y componentes existentes conservados. Informe/evidencia: `C_EDITORIAL_REFINADA.md`.
+
 ## Tokens
 
 | Grupo | Contenido |
