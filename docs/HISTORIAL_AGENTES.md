@@ -3,7 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
-### 2026-10-13 03:35Z · Codex cloud · Oliver · solicitud EAS C autorizada
+### 2026-10-13 03:37Z · Codex cloud · Oliver · C publicada; solicitud Android40
+
+- EAS38342356897 Success/fuentead41160, guard exactoAPK5/preview/Resultado aprobados. Publicada2026-10-13 03:36UTC; fuente C1a37860/códigoef44048, validaciones cerradas. No otroAPK/canalproduction/nativeconfig/backend/iOS/finanzas/vendedor.
+- Solicitud Android40:08+09ambostemas, búsqueda persistente/regreso/statusbar y fuenteOS1,6. Recepción/ID no afirmados todavía.
+- Próximo: verificar run/capturas/diagnóstico y actualizar ID/fecha/runtime/OS1,6; terminar galería e informe/continuidad.
+
+### 2026-10-13 03:34Z · Codex cloud · Oliver · solicitud EAS C autorizada
 
 - C cerrada1a37860 (código ef44048), auditor/UX/ecommerce aprobados, UI31/31 finales y tipos/lint/web/Hermes. Solicitud Android preview actualizada, runtime esperado exactoAPK5 conservado.
 - Guard se ejecuta antes de publicar; aún no afirmar resultado EAS, nuevo ID o recepción. Sin APK, production, configuración nativa, backend/finanzas/vendedor/iOS.

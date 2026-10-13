@@ -72,3 +72,7 @@ Raíz es único escritor; UX/UI, ecommerce y auditor son lectores reales. **Revi
 Continuidad significa alinear contenido y agrupar lo que se decide conjuntamente, sin construir una pila de cajas. Electric Violet identifica acciones/contexto editorial; catálogo y fotos conservan superficies tranquilas. Un solo precio principal, estados reales y jerarquías consistentes acompañan el recorrido.
 
 Buscar puede heredar agrupación/contexto y tipografía, sin esta banda editorial; ficha puede integrar foto/decisión; carrito puede usar filas y subtotal/acción conectados. **No imponer un header violeta grande** a esas tareas. Son directrices posteriores, no cambios de esta entrega; tampoco autorizan tocar cálculos o vendedor.
+
+## Publicación real, recepción pendiente
+
+Fuente cerrada `1a37860` (código `ef44048`), solicitud `ad41160`. [EAS 38342356897](https://github.com/somosoudy-design/marketplace/actions/runs/38342356897) **Success**; guard del runtime APK5 exacto y publicar preview/Resultado success, publicación **2026-10-13 03:36 UTC**. No APK ni production. Android40 solicitado08+09ambostemas yOS1,6; ID/fecha/runtime y recepción todavía por comprobar.
