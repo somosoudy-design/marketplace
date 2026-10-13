@@ -14,9 +14,9 @@ Nueva misión de Oliver tras evaluación física insuficiente: dirección integr
 
 **1A+2A implementado y publicado:** fuente `6df3c7d`, auditor APROBADO tras dos rondas, UI 27+2 y tipos/lint/web/Hermes aprobados. EAS `df823ef` / `38308796610` Success, solo Android preview; Android 39 / `38309209301` **4/4**, ambos temas y fuente OS 1,6, sin reintentos. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` de 2026-10-12 21:10 UTC, runtime exacto de APK 5. Revisión física de Oliver pendiente.
 
-**Alternativas terminadas, revisión de Oliver pendiente:** A/B/C con Product Design ideate y equipo real, dos rondas; A/B aprobados como conceptos, B recomendada, C **CAMBIOS OBLIGATORIOS por altura**. `ALTERNATIVAS_EDITORIALES_INICIO_V2.md`, tres PNG completos + galería, prompts/procedencia/originales. Solo diseño, ninguna nueva implementación/OTA.
+**C elegida por Oliver:** alternativas A/B/C terminadas como antecedente (`ALTERNATIVAS_EDITORIALES_INICIO_V2.md`); nueva misión C continua marca/búsqueda/editorial, menor altura, categorías puente y cuatro recomendaciones después. No implementar B. Resolver objeción de altura con medidas/capturas reales y auditor focal, claro/oscuro320/412/fuente ampliada.
 
-**Próximo incremento propuesto:** B dos productos → colección → otros dos; mismos cuatro SKU/orden/tracking. Requiere elección y aceptación de Oliver de ese cambio de secuencia. C no se acepta como portada predeterminada sin nueva composición revisada. Después 2B de descubrimiento finito, según autorización. No repetir pulido global, Entrega01 o 1A+2A ni publicar por defecto: única autorización de esta sesión ya consumida. BCV crítica y SQL vendedor siguen separados.
+**En curso y autorizado:** implementar C corregida y reemplazar la portada publicada mediante **una** OTA Android preview/APK 5 tras pruebas/aprobación del auditor y runtime exacto; confirmar ID/recepción. La nueva autorización del propietario sustituye la prohibición anterior de publicar en esta tarea. Sin APK/configuración nativa/backend/finanzas/vendedor/iOS. BCV y SQL vendedor siguen separados.
 
 ## UX-ENTREGA-01 — Buscar y tarjetas (publicada/verificada; revisión de Oliver)
 

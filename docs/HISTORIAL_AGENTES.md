@@ -3,6 +3,12 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-13 03:00Z · Codex cloud · Oliver · C elegida; nuevo bloque autorizado
+
+- Oliver eligió C por continuidad estructural; B queda como antecedente. Mantener marca→búsqueda→editorial en una superficie, categorías puente y cuatro productos posteriores. Resolver altura/reflow con medidas reales, claro/oscuro320/412/fuente ampliada y auditor focal.
+- Aclaración posterior explícita autoriza reemplazar y publicar en su Android tras corregir/validar: una EAS preview compatible APK 5, según su canal actual. No cambiar native/config, APK, iOS, backend, finanzas o vendedor; no interpretar «producción» como cambiar canal.
+- Único escritor raíz; UX/ecommerce/auditor reales solo lectura. Product Design audit/ideate y preflight leídos/ejecutados; entorno existente reutilizado. Próximo: esquemas/capturas y código C, pruebas focales, revisión, commit/push, guard EAS y recepción Android. OTA previa todavía vigente.
+
 ### 2026-10-13 01:19Z · Codex cloud · Oliver · tres alternativas editoriales y revisión cerradas
 
 - Entrega posterior a la publicación autorizada de Inicio V2: `ALTERNATIVAS_EDITORIALES_INICIO_V2.md`, galería publicada+A/B/C y tres PNG finales 853×1844. Product Design ideate real, tres llamadas iniciales independientes y ediciones de las mismas direcciones. Referencias Demo existentes, prompts/hashes/originales guardados. Conceptos generados, no capturas ni fotografías de producción.

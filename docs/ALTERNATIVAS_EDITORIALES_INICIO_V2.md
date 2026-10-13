@@ -1,6 +1,6 @@
 # Inicio V2 — tres direcciones editoriales para la siguiente entrega
 
-2026-10-13. **Diseño y comparación; ninguna de estas alternativas está implementada o publicada.** Oliver autorizó primero 1A+2A y después esta exploración. La portada publicada permanece intacta. [Arquitectura maestra](ARQUITECTURA_EXPERIENCIA_V2.md) · [Implementación y recepción Android reales](IMPLEMENTACION_INICIO_V2.md).
+2026-10-13. **Antecedente de exploración:** Oliver posteriormente eligió C por continuidad estructural y autorizó corregirla e implementarla/publicarla tras validación. La recomendación B de este informe es histórica; no sustituye su elección. El refinamiento C se documentará por separado. **Ninguna de las tres imágenes originales se usa como asset de producción.** Oliver autorizó primero 1A+2A y después esta exploración. La portada publicada permanece intacta. [Arquitectura maestra](ARQUITECTURA_EXPERIENCIA_V2.md) · [Implementación y recepción Android reales](IMPLEMENTACION_INICIO_V2.md).
 
 ## Qué ya llegó a Android
 
