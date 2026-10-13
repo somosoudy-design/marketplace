@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-13: Oliver eligió C — Electric Violet Editorial y autoriza reemplazar/publicar en su Android cuando la corrección supere revisión y pruebas. Refinamiento C en curso; conservar continuidad y resolver altura. OTA vigente todavía intacta.
+**Última actualización:** 2026-10-13: C elegida por Oliver refinada, implementada, publicada y recibida en Android40 (4/4). Auditor final APROBADO web y nativo. Espera revisión física/ nuevas instrucciones del propietario.
 
 ## Dónde está el trabajo
 
@@ -13,27 +13,23 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Fuente Inicio V2 `6df3c7d`; publicación `df823ef`; validación Android `9a80d01`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` |
-| Plan vigente | C elegida por Oliver. Refinar continuidad/altura, validar e implementar; publicación preview APK 5 autorizada tras superar revisión |
-| Objetivo actual | C corregida en claro/oscuro, 320/412 y texto ampliado; capturas comparables y auditor; después publicar una OTA compatible |
+| Último commit confirmado | C cerrada `1a37860` (código `ef44048`); EAS `ad41160` /38342356897; Android `637d60e` /38342591484. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13354-e5fd-70f0-90bc-feec7f425a03` |
+| Plan vigente | C — Electric Violet Editorial es la dirección elegida; apertura publicada y validada. Próximo incremento requiere instrucciones/revisión de Oliver |
+| Objetivo actual | Oliver revisa C en su Samsung. No otra OTA, nueva implementación ni pulido global automático |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — C elegida y publicación autorizada
+## Trabajo en curso — C publicada; revisión física del propietario
 
-**Primer incremento 1A+2A cerrado:** apertura editorial única, categorías compactas, primera comparación de cuatro productos en orden del backend excluyendo solo el SKU ilustrado, Retoma después y funciones/colecciones restantes conservadas. Fuente `6df3c7d`; WIP inactivo retirado al integrar. Auditor, UX y ecommerce aprobaron tras dos rondas; reflow y seguimiento corregidos. UI 27/27 + focal de sesión/perfil demorado 2/2; tipos/lint, web y Android/Hermes 5,9 MB aprobados. Tracking probado mediante solicitudes, no persistencia de telemetría. Sin migraciones/reset ni operaciones remotas.
+**C cerrada:** Oliver eligió continuidad marca→búsqueda→editorial y después autorizó sustituir/publicar su portada. Una banda fullwidth sin tarjeta exterior integra la apertura; categorías puente y cuatro recomendaciones contiguas después. B queda histórica. Leyenda/Demo/SKU/precio/CTA y assets del catálogo reales conservados; no ImageGen en producción. Tipos/lint, UI31/31 finales y web/AndroidHermes5,9MB aprobados; código `ef44048`, cierre `1a37860`. WIP ef44048 supersedido por cierre; no código incompleto activo.
 
-**Publicación y recepción reales:** EAS `df823ef` / run `38308796610` **Success**, guard del runtime exacto de APK 5 aprobado y publicación preview el 2026-10-12 21:10 UTC. Android `9a80d01` / run `38309209301`, revisión 39: **4/4**, claro/oscuro, flujos 08+09, sin reintentos. Diagnóstico identifica OTA **`01a131f4-143f-7afa-a03e-9ac8ffc20573`**, canal preview y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Con fuente OS 1,6: título y pestaña Inicio íntegros, comparación en una columna. Oliver informado inmediatamente. Capturas web antes/después y nativas en `docs/capturas/inicio-v2`; informe `docs/IMPLEMENTACION_INICIO_V2.md`. Samsung físico/TalkBack/fluidez pendientes del propietario.
+**Medidas y calidad:** banda normal web316/319px a412/320, primeras fotos421/424, dos completas. C original raster395,58px a412, diferencia79,58 (~20%); frente a app publicada anterior el catálogo adelanta solo8px, mejora principal estructural. CSS1,6 crece sin recortes pero no es OS. Cinco contrastes sólidos ≥6,88:1. Informe `docs/C_EDITORIAL_REFINADA.md`, comparación `docs/diseno-v2/c-refinada/comparacion.html`. Product Design audit/ideate/framework real; fuente seleccionada C y referencias existentes. Auditor/UX/ecommerce APROBADO ronda1 web/código y ronda2 nativa; sin objeciones C. Único escritor raíz.
 
-**Exploración de diseño cerrada:** `docs/ALTERNATIVAS_EDITORIALES_INICIO_V2.md` y comparación `docs/diseno-v2/alternativas/comparacion.html`, tres PNG finales completos. Product Design `ideate` aplicado mediante tres llamadas iniciales independientes y correcciones de esas mismas direcciones; referencias Demo existentes adjuntas, prompts/hashes/originales conservados. Imágenes generadas, no capturas ni assets de producción. No afirman pruebas de reflow/oscuro/lectores o conversión.
+**Publicación y recepción exactas:** EAS `ad41160` / run `38342356897` **Success**, guardAPK5 exacto aprobado03:35:15UTC; Android preview publicado2026-10-13 **03:36 UTC**. Android40 source `637d60e` / run `38342591484` **Success,4/4 sin reintentos**. Diagnóstico: **`01a13354-e5fd-70f0-90bc-feec7f425a03`**, preview, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend Marketplace responde/sesión cifrada. Veintidós JPEG originales/hashes en `docs/capturas/c-editorial/android`; fuente inmutable `ci/capturas` SHA `9e99b968620a7ece34131e4f6a9bc978e63c0c39`.
 
-**Equipo real, dos rondas:** UX/ecommerce recomiendan B; auditor A/B APROBADO como conceptos, **C CAMBIOS OBLIGATORIOS por altura persistente (~396 px)**. Se corrigieron navegación A, moneda/leyenda B/C, título C y rutas documentales falsas (usar `/catalog` con parámetros existentes). Salida C de proporción incorrecta rechazada y regenerada sin deformar; tres finales 853×1844. C se eleva a Oliver sin tercera ronda ni aprobación global inventada. Único escritor raíz; UX estuvo limitado antes de la pausa y retomó realmente. Galería documental verificada en Chromium a 320/412/1024/1440, enlaces/hashes válidos; no repetir suites de app por este bloque documental.
+**OS1,6 real:** leyenda y SKU fullwidth, precio/CTA completos, una columna e Inicio sin abreviar. Buscador persistente funcional; colección/categoría/ficha/regreso/favorito visitante/carrito/Buscar comprobados. Reloj claro sobre violeta y restaurado oscuro al salir a colección clara; no afirmar contraste perfecto de todas las fichas. Samsung físico/TalkBack/fluidez pendientes del propietario; no compras/pagos remotos ni telemetría persistida verificados.
 
-**Decisión vigente del propietario:** C, por continuidad de marca/búsqueda/editorial y sensación de tienda integrada. La recomendación B anterior queda como antecedente, no dirección a implementar. Conservar editorial antes de categorías y cuatro recomendaciones contiguas después. Reducir altura mediante agrupación y reflow, sin borrar información comercial ni reducir áreas táctiles. Nueva revisión focalizada del auditor (dos rondas máximo).
-
-**Checkpoint C 03:26 UTC:** integrada continuidad fullwidth; banda web316/319, primeras fotos421/424 y dos completas. UI31/31 finales tras stackAction, tipos/lint global y móvil final, web aprobados. Ocho estados+scroll, CSS1,6 sin recortes (no OS). Auditor/UX/ecommerce APROBADO ronda1 tras fuente/capturas, sin objeciones significativas. Exportación Android/Hermes5,9MB aprobada; C lista; solicitud EAS autorizada desde cierre1a37860. EAS38342356897 Success, guard exactoAPK5 aprobado, publicado2026-10-13 03:36UTC. Android40 solicitado08+09ambostemas; recepción/ID aún pendientes. Informe `docs/C_EDITORIAL_REFINADA.md`. Primeros fallos propios de StatusBar web/una referencia t corregidos; sin pruebas suprimidas. No publicada todavía.
-
-**Próxima acción exacta:** C implementada y aprobada en revisión focal ronda1, UI31/31 finales y web/AndroidHermes exportados. Cerrar commit/push, solicitar EAS preview autorizado y verificar guard runtime antes de publicación, después Android08+09 ambos temas/OS1,6, ID/fecha/recorridos/statusbar/recepción. Oliver primero pidió propuesta sin OTA, pero aclaró «Sí reemplaza la versión publicada»: autoriza implementar y una publicación Android **preview** para APK 5 después de aprobación/validación. Confirmar runtime exacto, resultado EAS e ID/recepción emulador; no canal production ni APK nuevo. No iOS/backend/finanzas/vendedor.
+**Próxima acción exacta:** Oliver revisa su Samsung y da nuevas instrucciones. No repetir implementación, pruebas generales o publicación. Si autoriza continuar, siguiente incremento de Inicio2B (descubrimiento finito/colecciones/Retoma/tiendas) conserva C; extensión a Buscar/ficha/carrito es posterior y no impone header violeta gigante. Observación ficha oscura/reloj blanco sobre foto clara documentada para su etapa, no modificar ahora. Sin iOS/APK/production/backend/finanzas/vendedor; BCV/SQL vendedor separados. No otra EAS automática.
 
 ## Hitos de la Directriz maestra 02
 
@@ -389,9 +385,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Refinar C elegida por Oliver, sin convertirla en B. Continuidad marca→búsqueda→editorial; categorías puente; cuatro productos después. Medir/revisar alto, jerarquía, contraste y reflow. Integrar solo Inicio, validar y publicar **una** EAS Android preview compatible APK 5 si supera el auditor. Autorización nueva explícita «Sí reemplaza la versión publicada, para yo poder ver en producción» significa su Android instalado, según aclaración previa: canal preview.
+Oliver revisa **C publicada** en su Samsung. Ver informe/galería `C_EDITORIAL_REFINADA.md` y `diseno-v2/c-refinada/comparacion.html`. Actualización `01a13354-e5fd-70f0-90bc-feec7f425a03`, 2026-10-13 03:36 UTC, Android40 **4/4**, auditor final APROBADO. No repetir o republicar.
 
-Hasta esa publicación, OTA vigente `01a131f4-143f-7afa-a03e-9ac8ffc20573`, 2026-10-12 21:10 UTC. BCV y SQL vendedor independientes; iOS pospuesto.
+Tras nuevas instrucciones, concretar siguiente incremento:2B de Inicio o lenguaje compartido para Buscar/ficha, manteniendo continuidad C y reglas comerciales. No forzar la banda editorial en todos los recorridos ni iniciar otro frente. BCV y SQL vendedor independientes; iOS pospuesto.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -555,4 +551,4 @@ git log --oneline -10
 # No ejecutar db:reset, compra/pago o publicación para revisar documentación.
 ```
 
-La arquitectura y el incremento 1A+2A ya fueron aprobados, implementados y publicados. Oliver ya eligió C y autorizó reemplazar/publicar su portada tras corregirla y validarla. Retomar ese bloque focal, verificar checkpoint/revisión antes de publicar y preservar datos existentes. No implementar B ni solicitar reaprobar decisiones ya autorizadas. Para futuros incrementos autorizados, usar `docs/ENTORNO.md` y pruebas focales, preservando datos existentes.
+La arquitectura y el incremento 1A+2A ya fueron aprobados, implementados y publicados. C ya fue elegida, corregida, implementada y publicada con recepción/emulador comprobados. No retomar WIP histórico ni volver a publicar. Esperar revisión física/nuevas instrucciones de Oliver; consultar C_EDITORIAL_REFINADA y documentos actuales. No implementar B. Preservar datos y permisos. Para futuros incrementos autorizados, usar `docs/ENTORNO.md` y pruebas focales, preservando datos existentes.

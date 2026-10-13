@@ -14,9 +14,11 @@ Nueva misión de Oliver tras evaluación física insuficiente: dirección integr
 
 **1A+2A implementado y publicado:** fuente `6df3c7d`, auditor APROBADO tras dos rondas, UI 27+2 y tipos/lint/web/Hermes aprobados. EAS `df823ef` / `38308796610` Success, solo Android preview; Android 39 / `38309209301` **4/4**, ambos temas y fuente OS 1,6, sin reintentos. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` de 2026-10-12 21:10 UTC, runtime exacto de APK 5. Revisión física de Oliver pendiente.
 
-**C elegida por Oliver:** alternativas A/B/C terminadas como antecedente (`ALTERNATIVAS_EDITORIALES_INICIO_V2.md`); nueva misión C continua marca/búsqueda/editorial, menor altura, categorías puente y cuatro recomendaciones después. No implementar B. Resolver objeción de altura con medidas/capturas reales y auditor focal, claro/oscuro320/412/fuente ampliada.
+**C elegida, implementada y publicada:** continuidad marca/búsqueda/editorial, categorías puente y cuatro posteriores. Banda316/319, fotos421/424, dos completas; UI31/31, tipos/lint/web/AndroidHermes aprobados; auditor/UX/ecommerce APROBADO ronda1 web y ronda2 nativa. EAS38342356897 Success/ad41160, fuente1a37860; Android40/38342591484 **4/4sinreintentos**, OS1,6 real ystatusbar/regreso/búsqueda persistente. OTAactual `01a13354-e5fd-70f0-90bc-feec7f425a03`, 2026-10-13 03:36UTC. Informe C_EDITORIAL_REFINADA.md; galería y22JPEG originales. No WIP activo ni otra publicación pendiente.
 
-**C implementada/validada; publicación autorizada pendiente:** banda316/319, fotos421/424, dos completas, UI31/31 finales, auditor/UX/ecommerce APROBADO ronda1, tipos/lint y web/AndroidHermes5,9MB aprobados. Reemplazar mediante **una** OTA Android preview/APK5 con guard del runtime exacto y comprobar ID/recepción/OS1,6. Informe C_EDITORIAL_REFINADA.md. La nueva autorización del propietario sustituye la prohibición anterior de publicar en esta tarea. Sin APK/configuración nativa/backend/finanzas/vendedor/iOS. BCV y SQL vendedor siguen separados.
+**Pendiente de Oliver:** revisar físicamente C en Samsung. Próximo incremento2B/otros recorridos requiere instrucciones/alcance, conservando C; no reconstruir/republicar por defecto. No implementar B. No usar header violeta gigante en Buscar/ficha/carrito.
+
+**Observación para etapa de ficha:** en oscuro, captura nativa04 muestra reloj blanco sobre foto clara; fuera de C, sin corrección actual. Revisar con fuente y captura cuando se autorice ficha, sin alterar finanzas. BCV crítica y SQL vendedor separados; iOS pospuesto.
 
 ## UX-ENTREGA-01 — Buscar y tarjetas (publicada/verificada; revisión de Oliver)
 

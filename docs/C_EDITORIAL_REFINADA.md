@@ -10,6 +10,8 @@ Se compacta mediante agrupación, ancho del título, escala comercial y eliminac
 
 ## Antes y después: medidas verificables
 
+**[Comparación visual completa y matriz](diseno-v2/c-refinada/comparacion.html).**
+
 | Evidencia | Banda hasta fin de editorial | Primera fotografía de comparación | Completas |
 |---|---:|---:|---:|
 | C elegida, esquema generado 853×1844 presentado a 412 | **395,58 px** | ≈503 px, lectura visual | 2 |
@@ -46,14 +48,15 @@ No se modifican Supabase/SQL/servicios, datos remotos, checkout, finanzas, BCV, 
 
 `index`, `audit`, framework, `ideate` y preflight realmente consultados. Brief ya resuelto por elección C; una edición ImageGen con captura real/C y assets Demo adjuntos. Prompt en [archivo](diseno-v2/c-refinada/prompt.txt); resultado es referencia de composición, no fotografía ni evidencia nativa. Aplicados jerarquía, continuidad, claridad comercial, reflow y límites de evidencia. No se hizo otra auditoría general ni se copió cada píxel de la imagen.
 
-Raíz es único escritor; UX/UI, ecommerce y auditor son lectores reales. **Revisión focal cerrada en ronda 1: APROBADO**, sin cambios obligatorios, por auditor independiente, UX/UI y ecommerce. Los lectores inspeccionaron fuente, medidas y capturas de ambos temas/anchos/estrés. Criterios: banda normal 310–335 en 412 (hasta355 en320 si reflow), primeras fotos ≤450/470, dos completas normales, ninguna información/ruta perdida, crecimiento legible y métricas correctas. No aprobar por tests solamente. No fue necesaria una segunda ronda al no haber objeciones significativas. La aprobación todavía distingue web/código de la comprobación nativa posterior.
+Raíz es único escritor; UX/UI, ecommerce y auditor son lectores reales. **Revisión focal cerrada en ronda 1: APROBADO**, sin cambios obligatorios, por auditor independiente, UX/UI y ecommerce. Los lectores inspeccionaron fuente, medidas y capturas de ambos temas/anchos/estrés. Criterios: banda normal 310–335 en 412 (hasta355 en320 si reflow), primeras fotos ≤450/470, dos completas normales, ninguna información/ruta perdida, crecimiento legible y métricas correctas. No aprobar por tests solamente. No fue necesaria una segunda iteración web al no haber objeciones significativas; la ronda2 añadió evidencia nativa real. La aprobación de ronda1 distingue web/código de la comprobación nativa. La **ronda2 final también es APROBADO**, tras22JPEG Android y su procedencia, sin nuevas modificaciones ni otra publicación.
 
 | Especialista | Veredicto y hallazgos |
 |---|---|
 | Auditor independiente | APROBADO:16 capturas,316/319 y421/424 cumplen presupuesto; C continua, cuatro después, tracking correcto. OS1,6/statusbar/recepción aún por comprobar |
 | UX/UI | APROBADO visual web: escala menor conserva C, foto íntegra más pequeña es coste; no más densidad inventada ni nueva pulida |
 | Ecommerce | APROBADO comercial: colección/SKU/precio/Demo claros, orden/fallback/rutas y medición conservados |
-| Director de Producto | Integró elección C; rechazó tomar ImageGen como medida de app, captura con fade y APIStatusBar incompatible con web; correcciones verificadas. Sin desacuerdos importantes |
+| Director de Producto | Integró elección C; rechazó tomar ImageGen como medida de app, captura con fade y APIStatusBar incompatible con web; correcciones verificadas. Revisó señalamiento de Demo ausente con originales: lector corrigió la lectura, sin defecto inventado ni cambio extra. Sin desacuerdos importantes |
+| Ronda2 nativa | Auditor, UX y ecommerce **APROBADO** tras22JPEG originales/OS1,6/destinos/diagnósticos; hashes22/22 coinciden con fuente. No otra iteración/publicación |
 
 ## Pruebas y límites del checkpoint
 
@@ -65,7 +68,7 @@ Raíz es único escritor; UX/UI, ecommerce y auditor son lectores reales. **Revi
 - Cinco pares sólidos de texto verificados, contraste mínimo **6,88:1**; [resultados](diseno-v2/c-refinada/contraste.json). No equivale a certificación WCAG/TalkBack ni contraste sobre fotos.
 - Flujo Android08 conserva recorridos y añade buscador persistente→Buscar→Inicio; flujo09 existente comprueba fuente OS1,6. Se ejecutarán sobre la OTA real, no sobre el export local.
 
-**Pendiente:** publicación con guard exacto, ID y recepción Android/OS1,6. La OTA previa sigue vigente. No afirmar recepción en Samsung ni pruebas nativas de esta versión antes de comprobarlas.
+**C publicada y recepción nativa comprobada:** ver cierre siguiente. Revisión física en Samsung y TalkBack siguen pendientes del propietario. No hay pendiente de código o nueva publicación en esta entrega.
 
 ## Lenguaje que puede extenderse
 
@@ -73,6 +76,16 @@ Continuidad significa alinear contenido y agrupar lo que se decide conjuntamente
 
 Buscar puede heredar agrupación/contexto y tipografía, sin esta banda editorial; ficha puede integrar foto/decisión; carrito puede usar filas y subtotal/acción conectados. **No imponer un header violeta grande** a esas tareas. Son directrices posteriores, no cambios de esta entrega; tampoco autorizan tocar cálculos o vendedor.
 
-## Publicación real, recepción pendiente
+## Publicación y recepción reales
 
-Fuente cerrada `1a37860` (código `ef44048`), solicitud `ad41160`. [EAS 38342356897](https://github.com/somosoudy-design/marketplace/actions/runs/38342356897) **Success**; guard del runtime APK5 exacto y publicar preview/Resultado success, publicación **2026-10-13 03:36 UTC**. No APK ni production. Android40 solicitado08+09ambostemas yOS1,6; ID/fecha/runtime y recepción todavía por comprobar.
+Fuente cerrada `1a37860` (código `ef44048`), solicitud `ad41160`. [EAS 38342356897](https://github.com/somosoudy-design/marketplace/actions/runs/38342356897) **Success**. Guard del runtime exacto de APK5 aprobado03:35:15UTC; publicar preview y Resultado completados03:36:04UTC, el 2026-10-13. Sin APK nuevo, production ni configuración nativa.
+
+[Android40 / 38342591484](https://github.com/somosoudy-design/marketplace/actions/runs/38342591484) **Success**, source `637d60e`,08+09en claro/oscuro: **4/4, sin reintentos**. Diagnóstico leído en ambos temas: **`01a13354-e5fd-70f0-90bc-feec7f425a03`**, publicada **2026-10-13 03:36 UTC**, preview, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend Marketplace responde y sesión cifrada. Se registra el ID individual Android real, no un grupo EAS desconocido.
+
+**Fuente OS1,6 comprobada:** caption/ SKU disponen del ancho completo, precio/CTA íntegros, comparación de una columna y pestaña Inicio completa. No se confunde con CSS1,6. Buscador persistente abre Buscar y permite regresar. Reloj/iconos claros en Inicio violeta, oscuros al salir a colección clara y restaurados al regresar. [Veintidós JPEG originales y procedencia](capturas/c-editorial/android/README.md); fuente `ci/capturas` SHA `9e99b968620a7ece34131e4f6a9bc978e63c0c39`.
+
+La galería documental se verificó en24 combinaciones (temas/anchos/estrés a320/412/1440), sin imágenes rotas, errores JS o overflow del documento. [Validación](diseno-v2/c-refinada/validacion-galeria.json). Esto es una comprobación del reporte, separada de31 pruebas de app y4 recorridos nativos.
+
+Oliver fue informado de publicación y de recepción con el ID. **Samsung físico no conectado:** su recepción/revisión visual y TalkBack/fluidez quedan para él. Esta entrega termina la apertura C, no toda la arquitectura V2: descubrimiento finito2B y extensión a Buscar/ficha/carrito requieren próximos incrementos autorizados. No otra OTA automática ni pulido global.
+
+**Observación fuera de C:** la ficha oscura conserva reloj blanco sobre la foto clara (captura04). Es conducta anterior, no se modificó ficha; no afirmar contraste perfecto en todo el recorrido. Registrar para su futura etapa UX, sin reabrir/publicar C ni alterar checkout.

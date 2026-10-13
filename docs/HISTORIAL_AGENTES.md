@@ -3,6 +3,14 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-13 03:54Z · Codex cloud · Oliver · C elegida publicada y entrega cerrada
+
+- Oliver eligió C por continuidad y luego autorizó reemplazo en su Android. C integrada fullwidth, categorías puente, cuatro productos después; sin reconvertir B ni usar imágenes generadas como catálogo. Banda web316/319, primeras fotos421/424, dos completas. C original395,58px a412: reducción79,58(~20%); frente app previa solo8px antes, mejora estructural honesta. Reporte/galería en C_EDITORIAL_REFINADA/diseno-v2/c-refinada.
+- Auditor, UX/ecommerce APROBADO ronda1 código/16web y ronda2 22JPEG nativos, sin objeciones C. UI31/31 finales, tipos/lint global+móvilfinal, web/HermesAndroid5,9MB, contraste5pares≥6,88. CSS1,6 no OS; nativo OS1,6 demuestra caption/SKU fullwidth, precio/CTA completos, comparación1col e Inicio íntegro. Statusbar/restauración y buscador persistente comprobados. Señalamiento inicial de Demo ausente fue lectura errónea, corregida con originales; no defecto inventado ni otra modificación/OTA.
+- Fuente cerrada1a37860/códigoef44048, WIP supersedido. EASad41160/run38342356897 Success: guard exactoAPK5 y publicado2026-10-13 03:36UTC. Android40 source637d60e/run38342591484 **4/4sinreintentos**. OTA **01a13354-e5fd-70f0-90bc-feec7f425a03**, preview/eb5runtime/fecha/backend/sesión cifrada confirmados en4diagnósticos. Fuente nativa ci/capturas9e99b968620a7ece34131e4f6a9bc978e63c0c39; hashes22/22 exactos. Sin APK nuevo, production/nativeconfig/backend/finanzas/vendedor/iOS/dependencias o pagos remotos.
+- Oliver informado inmediatamente de publicación y recepción. No Samsung/TalkBack/FPS físicos comprobados. Ficha oscura conserva reloj blanco sobre foto clara, observación fuera de C para su futura etapa; no afirmación de contraste perfecto global.
+- Siguiente exacto: Oliver revisa su S24 y da instrucciones. Luego concretar2B/extensionlenguaje según autorización; no repetir C, B o auditoría general, ni otra publicación automática. Continuidad actualizada y rama compartida sincronizada al cerrar.
+
 ### 2026-10-13 03:37Z · Codex cloud · Oliver · C publicada; solicitud Android40
 
 - EAS38342356897 Success/fuentead41160, guard exactoAPK5/preview/Resultado aprobados. Publicada2026-10-13 03:36UTC; fuente C1a37860/códigoef44048, validaciones cerradas. No otroAPK/canalproduction/nativeconfig/backend/iOS/finanzas/vendedor.
