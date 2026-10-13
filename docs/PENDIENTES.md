@@ -6,13 +6,15 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-12.
+**Última revisión:** 2026-10-13.
 
 ## UX-ARQ-V2 — arquitectura aprobada; implementación progresiva
 
 Nueva misión de Oliver tras evaluación física insuficiente: dirección integral antes de código. Documento `ARQUITECTURA_EXPERIENCIA_V2.md`, siete esquemas y evidencia en `diseno-v2/`. Product Design realmente consultado; tres especialistas reales de lectura, solo raíz integra/commitea. Ronda1 independiente CAMBIOS OBLIGATORIOS corregidos; ronda2 APROBADO, ecommerce APROBADO y UX acepta, sin desacuerdos importantes. 28 esquemas renderizados y 14 originales actuales; fuentes/costes/límites documentados. Referencias externas bloqueadas; checkout/pago actuales solo por código, sin pruebas autenticadas.
 
-Oliver aprobó Etapa0 y autorizó1A+2A con una publicaciónAndroidpreview tras validar. Implementación6df3c7d, auditor APROBADO2rondas, UI27+2 ytipos/lint/web/Hermes aprobados. Publicación/recepciónemulador08+09en curso. Después tresalternativas editoriales A/B/C solo diseño; no reemplazar automáticamente versiónpublicada ni publicar otra. No repetir pulido global ni Entrega01. BCV crítica y SQL vendedor permanecen separados. El plan progresivo sustituye las instrucciones anteriores de Entrega02; la OTA anterior sigue vigente hasta confirmar nuevoEAS.
+**1A+2A implementado y publicado:** fuente `6df3c7d`, auditor APROBADO tras dos rondas, UI 27+2 y tipos/lint/web/Hermes aprobados. EAS `df823ef` / `38308796610` Success, solo Android preview; Android 39 / `38309209301` **4/4**, ambos temas y fuente OS 1,6, sin reintentos. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` de 2026-10-12 21:10 UTC, runtime exacto de APK 5. Revisión física de Oliver pendiente.
+
+**En curso:** tres alternativas editoriales A/B/C de pantalla completa con Product Design `ideate` y revisión multiagente; solo diseño, comparación y documentación. No sustituir automáticamente la portada publicada ni publicar otra OTA. Siguiente implementación y 2B requieren concretar elección/alcance con Oliver. No repetir pulido global, Entrega01 o 1A+2A. BCV crítica y SQL vendedor permanecen separados. El plan progresivo sustituye la antigua espera de Entrega02.
 
 ## UX-ENTREGA-01 — Buscar y tarjetas (publicada/verificada; revisión de Oliver)
 

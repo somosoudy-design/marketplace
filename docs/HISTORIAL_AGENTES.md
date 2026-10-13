@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-13 01:00Z · Codex cloud · Oliver · recepción Inicio V2 y continuación editorial
+
+- Rama sincronizada sin cambios perdidos. Primera implementación fuente `6df3c7d`, EAS `df823ef` / run `38308796610` Success, preview compatible con APK 5. Recepción real: Android 39 / run `38309209301` **4/4**, claro/oscuro, sin reintentos; fuente OS 1,6 y navegación afectada comprobadas.
+- Diagnóstico leído: OTA `01a131f4-143f-7afa-a03e-9ac8ffc20573`, 2026-10-12 21:10 UTC, preview, runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, sesión cifrada/backend responde. Oliver informado inmediatamente; no comprobación física Samsung. Veinte JPEG originales conservados desde `ci/capturas` SHA `dd534fe0a09b5dc89864e0e2fdf4c2dba85d3ce5`, sin retoques.
+- Continúa tarea autorizada de tres alternativas A/B/C con Product Design ideate, imágenes Demo existentes y revisión real de especialistas de lectura. UX encontró límite de uso antes de la pausa; turno restablecido al retomar. No hay aprobación de conceptos ficticia ni nueva implementación/publicación.
+- Próximo: generar tres imágenes independientes, revisar pantallas completas, recomendar dirección y documentar el siguiente incremento para aprobación. Sin otra EAS, APK, iOS, backend, finanzas o vendedor.
+
 ### 2026-10-12 21:19Z · Codex cloud · Oliver · InicioV2 publicado; Android39 en curso
 
 - Oliver aprobó arquitectura y autorizó1A+2A→validar→previewAPK5→continuar3propuestas sinimplementar. Fuente6df3c7d; checkpointWIP1f50f60 conpatchinactivo retirado trasvalidación. Auditor APROBADO2rondas, UX/ecommerce aprobados. Reflow ymedición corregidos.

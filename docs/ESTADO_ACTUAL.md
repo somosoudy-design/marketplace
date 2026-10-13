@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-12: Oliver aprobó arquitectura; InicioV2 1A+2A en implementación/revisión, publicación preview autorizada tras pruebas; luego tres propuestas editoriales.
+**Última actualización:** 2026-10-13: Inicio V2 1A+2A publicado y recibido en Android (4/4); continúa el diseño de tres alternativas editoriales, sin otra publicación.
 
 ## Dónde está el trabajo
 
@@ -13,21 +13,21 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Fuente móvil Entrega01 `d945797`; publicación `ce9b960`, validación Android `8fe9731`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13193-1f3f-7f61-8fc6-90f2fa12e20d` |
-| Plan vigente | Arquitectura V2 aprobada: implementar1A+2A, validar/publicar previewAPK5 y después comparar3alternativas de Inicio sinimplementarlas |
-| Objetivo actual | Primera implementación1A+2A validada; EASpreview publicado/guardexactoAPK5 aprobado; recepciónAndroid39 en curso. Después tres propuestas editoriales |
+| Último commit confirmado | Fuente Inicio V2 `6df3c7d`; publicación `df823ef`; validación Android `9a80d01`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` |
+| Plan vigente | Arquitectura V2 aprobada; 1A+2A publicado. Comparar tres alternativas de Inicio sin implementarlas |
+| Objetivo actual | Tres propuestas editoriales completas A/B/C, revisión multiagente y siguiente incremento para aprobación |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — Inicio V2 1A + 2A
+## Trabajo en curso — alternativas editoriales de Inicio V2
 
-Oliver aprobó Etapa0 y autorizó primera implementación+previewAPK5 trasvalidar; después3alternativas A/B/C solo diseño. **Implementación y revisión terminadas:** apertura editorial única, categoríascompactas, primera cuadrícula4pororden real sinSKUhero, Retoma después, resto de funciones/colecciones conservadas. Fuente integrada en próximo commit; patch WIP documental retirado tras validación.
+**Primer incremento 1A+2A cerrado:** apertura editorial única, categorías compactas, primera comparación de cuatro productos en orden del backend excluyendo solo el SKU ilustrado, Retoma después y funciones/colecciones restantes conservadas. Fuente `6df3c7d`; WIP inactivo retirado al integrar. Auditor, UX y ecommerce aprobaron tras dos rondas; reflow y seguimiento corregidos. UI 27/27 + focal de sesión/perfil demorado 2/2; tipos/lint, web y Android/Hermes 5,9 MB aprobados. Tracking probado mediante solicitudes, no persistencia de telemetría. Sin migraciones/reset ni operaciones remotas.
 
-Auditor APROBADO tras2rondas, ecommerce/UX APROBADO. Reflowtexto yseguimiento corregidos. UI27/27 +focal sesiónperfil demorado2/2, tipos/lint global, web yAndroidHermes5,9MB aprobados. Capturas reales320/412/scroll/textoCSS ambos temas en `docs/capturas/inicio-v2`; informe `docs/IMPLEMENTACION_INICIO_V2.md`. No afirmar fontScaleAndroiddesdeCSS; flows08+09preparados,09OS1,6. APIlocalreadonly/rollback, Authdemoexistente sinmigraciones/reset; sin persistenciatelemetría verificada.
+**Publicación y recepción reales:** EAS `df823ef` / run `38308796610` **Success**, guard del runtime exacto de APK 5 aprobado y publicación preview el 2026-10-12 21:10 UTC. Android `9a80d01` / run `38309209301`, revisión 39: **4/4**, claro/oscuro, flujos 08+09, sin reintentos. Diagnóstico identifica OTA **`01a131f4-143f-7afa-a03e-9ac8ffc20573`**, canal preview y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Con fuente OS 1,6: título y pestaña Inicio íntegros, comparación en una columna. Oliver informado inmediatamente. Capturas web antes/después y nativas en `docs/capturas/inicio-v2`; informe `docs/IMPLEMENTACION_INICIO_V2.md`. Samsung físico/TalkBack/fluidez pendientes del propietario.
 
-**Publicación:** EASdf823ef/run38308796610 Success, guardexactoAPK5 aprobado21:09:52UTC, publicado21:10:42UTC. Fuente6df3c7d. Android39 solicitado9a80d01/run38309209301,08+09ambostemas, en curso.
+**Ahora solo diseño:** Product Design `ideate`, tres imágenes independientes de pantalla completa: A editorial inmersiva, B marketplace modular, C identidad distintiva Electric Violet. Usar imágenes Demo existentes y precios/destinos actuales, no inventar fotografía comercial ni campañas. Subagentes de lectura, solo raíz escribe. El turno UX encontró un límite de uso antes de la pausa; restablecido y operativo al retomar el 13 de octubre. Las propuestas todavía no están aprobadas ni implementadas.
 
-**Próxima acción exacta:** verificarID/fecha/runtime/resultado/capturasAndroid39 yfuenteOS1,6; informarOliver inmediatamente. Continuar3alternativas ProductDesign/ideate, revisiónmultiagente ydocumentación, SINimplementarlas/republicar. No iOS/APK/production/backend/finanzas/vendedor. 2B/feedinferior yBCV son independientes.
+**Próxima acción exacta:** completar tres imágenes, inspeccionar sus diferencias y desviaciones; revisión real UX/ecommerce/auditor (máximo dos rondas), documentar recomendación y limitaciones. No reemplazar automáticamente la portada publicada ni emitir otra OTA. Sin iOS/APK/production/backend/finanzas/vendedor; 2B y BCV son trabajos separados.
 
 ## Hitos de la Directriz maestra 02
 
@@ -383,9 +383,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-**Etapa 0 de arquitectura V2 terminada:** revisar con Oliver `docs/ARQUITECTURA_EXPERIENCIA_V2.md`, tablero `docs/diseno-v2/propuestas.html` y `EVIDENCIA_Y_REVISION.md`. Luego esperar aprobación explícita de arquitectura. No continuar la implementación de Entrega02/Inicio automáticamente.
+Completar y revisar tres alternativas de Inicio A/B/C mediante Product Design, comparar con la versión publicada y documentar la siguiente intervención para aprobación de Oliver. La arquitectura y 1A+2A ya fueron autorizados; no volver a solicitar esa aprobación ni repetir su implementación/pruebas/publicación. La OTA vigente es `01a131f4` del 2026-10-12 21:10 UTC, recibida Android 39 **4/4**.
 
-Tras aprobación, primer incremento recomendado: base mínima + portada editorial/primera comparación (1A + 2A), usando funciones existentes. Publicación individual requiere autorización aparte. OTA vigente `01a13193` del 2026-10-12 19:24 UTC, Android38 2/2, se conserva. BCV crítica y activación SQL Mi tienda siguen separadas; iOS pospuesto.
+Las alternativas son propuestas, no una autorización para sustituir la portada. Después de entregarlas, esperar la elección/revisión del propietario antes de implementar el siguiente incremento. No hay autorización para otra EAS Update en esta ejecución. BCV crítica y activación SQL Mi tienda siguen separadas; iOS pospuesto.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -549,4 +549,4 @@ git log --oneline -10
 # No ejecutar db:reset, compra/pago o publicación para revisar documentación.
 ```
 
-Primero comprobar que Oliver aprobó la arquitectura y concretó el incremento autorizado. Sin aprobación, limitarse a aclarar/corregir la propuesta; no tocar app, servicios o backend. Para implementación autorizada, seguir `docs/ENTORNO.md` y las pruebas focales de la etapa, preservando datos existentes.
+La arquitectura y el incremento 1A+2A ya fueron aprobados, implementados y publicados. Retomar únicamente las alternativas editoriales documentales pendientes; después esperar la elección del propietario. No tocar código, servicios o backend ni publicar otra OTA para revisar conceptos. Para futuros incrementos autorizados, usar `docs/ENTORNO.md` y pruebas focales, preservando datos existentes.

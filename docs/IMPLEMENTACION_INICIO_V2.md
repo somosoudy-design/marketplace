@@ -60,8 +60,10 @@ Comando focal: `pnpm --filter @kora/app-e2e exec playwright test --config <confi
 
 ## Publicación y recepción
 
-**Fuente validada:** `6df3c7d`. Solicitud EAS `df823ef`, [run 38308796610](https://github.com/somosoudy-design/marketplace/actions/runs/38308796610) **Success**. Guard exactoAPK5 aprobado2026-10-12 21:09:52UTC, publicaciónAndroidpreview/resultado completados21:10:42UTC. NingúnAPK/production/configuraciónnativa.
+**Fuente validada:** `6df3c7d`. Solicitud EAS `df823ef`, [run 38308796610](https://github.com/somosoudy-design/marketplace/actions/runs/38308796610) **Success**. Guard del runtime exacto de APK 5 aprobado el 2026-10-12 a las 21:09:52 UTC; publicación Android preview completada a las 21:10:42 UTC. Sin nuevo APK, canal production ni configuración nativa modificada.
 
-**Recepción Android en curso:** solicitud `9a80d01`, [run 38309209301](https://github.com/somosoudy-design/marketplace/actions/runs/38309209301), revisión39, flujos08+09claro/oscuro. IdentificadorOTA pendiente de lectura en diagnóstico. No afirmar todavía pruebas nativas pasadas ni recepción enSamsung.
+**Recepción Android comprobada:** solicitud `9a80d01`, [run 38309209301](https://github.com/somosoudy-design/marketplace/actions/runs/38309209301) **Success**, revisión 39. Flujos 08 y 09 en claro/oscuro: **4/4, sin reintentos**. Android 15/API 35, APK 5, canal `preview`, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Diagnóstico nativo de ambos temas identifica la actualización **`01a131f4-143f-7afa-a03e-9ac8ffc20573`**, publicada el **2026-10-12 21:10 UTC**; sesión cifrada y backend Marketplace responde. No se obtuvo el UUID del grupo EAS: el ID documentado es el de la actualización Android realmente recibida.
 
-Al confirmar recepción se informará inmediatamente y se seguirá con tres alternativas A/B/C de diseño, sin otra publicación.
+El flujo 08 comprobó colección, categoría, ficha, regreso, favoritos de visitante, carrito y Buscar. El 09 aplicó **fuente OS 1,6** al emulador aislado y la restauró: título íntegro, pestaña Inicio legible y primera comparación en una columna. [Capturas nativas originales del workflow](capturas/inicio-v2/android/README.md). No confundirlas con la simulación CSS ni con una prueba física en Samsung.
+
+Oliver fue informado inmediatamente de la publicación y recepción. Continúa únicamente el diseño de tres alternativas A/B/C, sin sustituir esta portada ni publicar otra actualización. La revisión física, TalkBack y fluidez en su Samsung siguen pendientes del propietario.
