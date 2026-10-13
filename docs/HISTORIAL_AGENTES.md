@@ -3,6 +3,14 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-13 01:19Z · Codex cloud · Oliver · tres alternativas editoriales y revisión cerradas
+
+- Entrega posterior a la publicación autorizada de Inicio V2: `ALTERNATIVAS_EDITORIALES_INICIO_V2.md`, galería publicada+A/B/C y tres PNG finales 853×1844. Product Design ideate real, tres llamadas iniciales independientes y ediciones de las mismas direcciones. Referencias Demo existentes, prompts/hashes/originales guardados. Conceptos generados, no capturas ni fotografías de producción.
+- Equipo real de lectura, único escritor raíz. R1 auditor CAMBIOS A/C; R2 A/B APROBADO como conceptos y B recomendada; C conserva CAMBIOS por altura (~396 frente objetivo310–335), elevada a Oliver sin tercera ronda. UX/ecommerce coinciden con B. Navegación A, moneda/leyendas B/C y título C corregidos; salida C de proporción incorrecta rechazada. Ruta documental inventada detectada por revisión y corregida al destino existente `/catalog` con parámetros reales.
+- B recomendada: primera fila2 → colección → segunda fila2, conserva4SKU/orden y medición por fila. Ventaja comparar antes; coste separación de selección. Oliver debe aceptar esa secuencia antes de implementación. A alternativa inmersiva válida con coste; C no recomendada hoy. Ninguna aprobación interna sustituye al propietario.
+- Galería documental: Chromium320/412/1024/1440, imágenes/enlaces/hashes válidos y sin overflow del documento; `file://` inicialmente bloqueado, HTTP local aprobado. No pruebas nativas/accesibilidad/conversión de conceptos afirmadas. App y workflows idénticos a versión publicada; no otra EAS/APK/backend/finanzas/vendedor/iOS.
+- OTA vigente `01a131f4-143f-7afa-a03e-9ac8ffc20573` de2026-10-12 21:10UTC; Android39 4/4. Evidencia nativa a63c2f6. Siguiente exacto: Oliver revisa Android y elige/corrige A/B/C; solo después incremento focal autorizado y eventual publicación individual nueva. No repetir la primera entrega.
+
 ### 2026-10-13 01:00Z · Codex cloud · Oliver · recepción Inicio V2 y continuación editorial
 
 - Rama sincronizada sin cambios perdidos. Primera implementación fuente `6df3c7d`, EAS `df823ef` / run `38308796610` Success, preview compatible con APK 5. Recepción real: Android 39 / run `38309209301` **4/4**, claro/oscuro, sin reintentos; fuente OS 1,6 y navegación afectada comprobadas.

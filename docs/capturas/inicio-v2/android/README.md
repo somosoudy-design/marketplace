@@ -18,4 +18,6 @@ Capturas JPEG originales producidas por Maestro y el workflow existente, copiada
 | Fuente OS 1,6, comparación | [JPEG](light-inicio-v2-texto-02-comparacion.jpg) | [JPEG](dark-inicio-v2-texto-02-comparacion.jpg) |
 | Diagnóstico normal | [JPEG](light-inicio-v2-07-diagnostico.jpg) | [JPEG](dark-inicio-v2-07-diagnostico.jpg) |
 
+Las veinte vistas fueron inspeccionadas entre raíz y especialista comercial; la revisión visual no sustituye recorridos interactivos adicionales.
+
 Recepción verificada en **emulador**, no en el Samsung S24 de Oliver. Ninguna compra, pago o escritura de vendedor remota. No certifica TalkBack, rendimiento físico ni toda la aplicación.

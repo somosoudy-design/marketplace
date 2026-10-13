@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-13: Inicio V2 1A+2A publicado y recibido en Android (4/4); continúa el diseño de tres alternativas editoriales, sin otra publicación.
+**Última actualización:** 2026-10-13: Inicio V2 1A+2A publicado y recibido en Android (4/4); tres alternativas editoriales entregadas y revisadas. B recomendada, C mantiene objeción de altura; espera revisión/elección de Oliver. Sin otra publicación.
 
 ## Dónde está el trabajo
 
@@ -14,20 +14,24 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Fuente Inicio V2 `6df3c7d`; publicación `df823ef`; validación Android `9a80d01`. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` |
-| Plan vigente | Arquitectura V2 aprobada; 1A+2A publicado. Comparar tres alternativas de Inicio sin implementarlas |
-| Objetivo actual | Tres propuestas editoriales completas A/B/C, revisión multiagente y siguiente incremento para aprobación |
+| Plan vigente | Arquitectura V2 aprobada; 1A+2A publicado. Tres alternativas documentadas; elegir siguiente incremento con Oliver |
+| Objetivo actual | Revisión del propietario: versión publicada y A/B/C; B recomendada. No implementar ni publicar otra OTA todavía |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — alternativas editoriales de Inicio V2
+## Trabajo en curso — revisión del propietario de Inicio V2
 
 **Primer incremento 1A+2A cerrado:** apertura editorial única, categorías compactas, primera comparación de cuatro productos en orden del backend excluyendo solo el SKU ilustrado, Retoma después y funciones/colecciones restantes conservadas. Fuente `6df3c7d`; WIP inactivo retirado al integrar. Auditor, UX y ecommerce aprobaron tras dos rondas; reflow y seguimiento corregidos. UI 27/27 + focal de sesión/perfil demorado 2/2; tipos/lint, web y Android/Hermes 5,9 MB aprobados. Tracking probado mediante solicitudes, no persistencia de telemetría. Sin migraciones/reset ni operaciones remotas.
 
 **Publicación y recepción reales:** EAS `df823ef` / run `38308796610` **Success**, guard del runtime exacto de APK 5 aprobado y publicación preview el 2026-10-12 21:10 UTC. Android `9a80d01` / run `38309209301`, revisión 39: **4/4**, claro/oscuro, flujos 08+09, sin reintentos. Diagnóstico identifica OTA **`01a131f4-143f-7afa-a03e-9ac8ffc20573`**, canal preview y runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Con fuente OS 1,6: título y pestaña Inicio íntegros, comparación en una columna. Oliver informado inmediatamente. Capturas web antes/después y nativas en `docs/capturas/inicio-v2`; informe `docs/IMPLEMENTACION_INICIO_V2.md`. Samsung físico/TalkBack/fluidez pendientes del propietario.
 
-**Ahora solo diseño:** Product Design `ideate`, tres imágenes independientes de pantalla completa: A editorial inmersiva, B marketplace modular, C identidad distintiva Electric Violet. Usar imágenes Demo existentes y precios/destinos actuales, no inventar fotografía comercial ni campañas. Subagentes de lectura, solo raíz escribe. El turno UX encontró un límite de uso antes de la pausa; restablecido y operativo al retomar el 13 de octubre. Las propuestas todavía no están aprobadas ni implementadas.
+**Exploración de diseño cerrada:** `docs/ALTERNATIVAS_EDITORIALES_INICIO_V2.md` y comparación `docs/diseno-v2/alternativas/comparacion.html`, tres PNG finales completos. Product Design `ideate` aplicado mediante tres llamadas iniciales independientes y correcciones de esas mismas direcciones; referencias Demo existentes adjuntas, prompts/hashes/originales conservados. Imágenes generadas, no capturas ni assets de producción. No afirman pruebas de reflow/oscuro/lectores o conversión.
 
-**Próxima acción exacta:** completar tres imágenes, inspeccionar sus diferencias y desviaciones; revisión real UX/ecommerce/auditor (máximo dos rondas), documentar recomendación y limitaciones. No reemplazar automáticamente la portada publicada ni emitir otra OTA. Sin iOS/APK/production/backend/finanzas/vendedor; 2B y BCV son trabajos separados.
+**Equipo real, dos rondas:** UX/ecommerce recomiendan B; auditor A/B APROBADO como conceptos, **C CAMBIOS OBLIGATORIOS por altura persistente (~396 px)**. Se corrigieron navegación A, moneda/leyenda B/C, título C y rutas documentales falsas (usar `/catalog` con parámetros existentes). Salida C de proporción incorrecta rechazada y regenerada sin deformar; tres finales 853×1844. C se eleva a Oliver sin tercera ronda ni aprobación global inventada. Único escritor raíz; UX estuvo limitado antes de la pausa y retomó realmente. Galería documental verificada en Chromium a 320/412/1024/1440, enlaces/hashes válidos; no repetir suites de app por este bloque documental.
+
+**Recomendación concreta:** B — primera fila de dos productos → colección → segunda fila de dos, conserva los cuatro SKU/orden y tracking por fila. Coste: separación de comparación; ventaja: primera decisión antes y otra ruta real visible. Es una variación de la arquitectura vigente, pendiente de Oliver, no una implementación automática.
+
+**Próxima acción exacta:** Oliver revisa la portada recibida y las tres alternativas; elige/corrige dirección y acepta su secuencia. Solo después implementar el siguiente incremento focal sobre Inicio/EditorialOpening, preservando rutas/datos/componentes y métricas. No volver a implementar/publicar 1A+2A ni ejecutar otra EAS por defecto. La autorización de esta sesión ya se consumió con una única OTA preview. Sin iOS/APK/production/backend/finanzas/vendedor; 2B y BCV son trabajos separados.
 
 ## Hitos de la Directriz maestra 02
 
@@ -383,9 +387,9 @@ repositorio a privado (lo hace Oliver).
 
 ## Próxima acción
 
-Completar y revisar tres alternativas de Inicio A/B/C mediante Product Design, comparar con la versión publicada y documentar la siguiente intervención para aprobación de Oliver. La arquitectura y 1A+2A ya fueron autorizados; no volver a solicitar esa aprobación ni repetir su implementación/pruebas/publicación. La OTA vigente es `01a131f4` del 2026-10-12 21:10 UTC, recibida Android 39 **4/4**.
+**Esperar revisión/elección de Oliver**, con `docs/ALTERNATIVAS_EDITORIALES_INICIO_V2.md` y la galería de publicada + A/B/C. B recomendada; C conserva cambios obligatorios y no debe implementarse como está. El siguiente incremento propuesto de B es dos productos → colección → otros dos, con los mismos cuatro SKU y medición por fila. No iniciar código hasta concretar su aprobación.
 
-Las alternativas son propuestas, no una autorización para sustituir la portada. Después de entregarlas, esperar la elección/revisión del propietario antes de implementar el siguiente incremento. No hay autorización para otra EAS Update en esta ejecución. BCV crítica y activación SQL Mi tienda siguen separadas; iOS pospuesto.
+La arquitectura y 1A+2A ya fueron autorizados y publicados; no pedir reaprobarlos ni repetir pruebas/publicación. OTA vigente `01a131f4-143f-7afa-a03e-9ac8ffc20573`, 2026-10-12 21:10 UTC, Android 39 **4/4**. No hay autorización para otra EAS Update. BCV crítica y activación SQL Mi tienda siguen separadas; iOS pospuesto.
 
 ## Pendiente de Oliver (solo él puede hacerlo)
 
@@ -549,4 +553,4 @@ git log --oneline -10
 # No ejecutar db:reset, compra/pago o publicación para revisar documentación.
 ```
 
-La arquitectura y el incremento 1A+2A ya fueron aprobados, implementados y publicados. Retomar únicamente las alternativas editoriales documentales pendientes; después esperar la elección del propietario. No tocar código, servicios o backend ni publicar otra OTA para revisar conceptos. Para futuros incrementos autorizados, usar `docs/ENTORNO.md` y pruebas focales, preservando datos existentes.
+La arquitectura y el incremento 1A+2A ya fueron aprobados, implementados y publicados. Las tres alternativas editoriales ya están documentadas y revisadas: esperar la elección del propietario; aclarar el contrato del siguiente incremento antes de tocar código. No tocar código, servicios o backend ni publicar otra OTA para revisar conceptos. Para futuros incrementos autorizados, usar `docs/ENTORNO.md` y pruebas focales, preservando datos existentes.

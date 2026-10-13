@@ -14,7 +14,9 @@ Nueva misión de Oliver tras evaluación física insuficiente: dirección integr
 
 **1A+2A implementado y publicado:** fuente `6df3c7d`, auditor APROBADO tras dos rondas, UI 27+2 y tipos/lint/web/Hermes aprobados. EAS `df823ef` / `38308796610` Success, solo Android preview; Android 39 / `38309209301` **4/4**, ambos temas y fuente OS 1,6, sin reintentos. OTA actual `01a131f4-143f-7afa-a03e-9ac8ffc20573` de 2026-10-12 21:10 UTC, runtime exacto de APK 5. Revisión física de Oliver pendiente.
 
-**En curso:** tres alternativas editoriales A/B/C de pantalla completa con Product Design `ideate` y revisión multiagente; solo diseño, comparación y documentación. No sustituir automáticamente la portada publicada ni publicar otra OTA. Siguiente implementación y 2B requieren concretar elección/alcance con Oliver. No repetir pulido global, Entrega01 o 1A+2A. BCV crítica y SQL vendedor permanecen separados. El plan progresivo sustituye la antigua espera de Entrega02.
+**Alternativas terminadas, revisión de Oliver pendiente:** A/B/C con Product Design ideate y equipo real, dos rondas; A/B aprobados como conceptos, B recomendada, C **CAMBIOS OBLIGATORIOS por altura**. `ALTERNATIVAS_EDITORIALES_INICIO_V2.md`, tres PNG completos + galería, prompts/procedencia/originales. Solo diseño, ninguna nueva implementación/OTA.
+
+**Próximo incremento propuesto:** B dos productos → colección → otros dos; mismos cuatro SKU/orden/tracking. Requiere elección y aceptación de Oliver de ese cambio de secuencia. C no se acepta como portada predeterminada sin nueva composición revisada. Después 2B de descubrimiento finito, según autorización. No repetir pulido global, Entrega01 o 1A+2A ni publicar por defecto: única autorización de esta sesión ya consumida. BCV crítica y SQL vendedor siguen separados.
 
 ## UX-ENTREGA-01 — Buscar y tarjetas (publicada/verificada; revisión de Oliver)
 

@@ -66,4 +66,4 @@ Comando focal: `pnpm --filter @kora/app-e2e exec playwright test --config <confi
 
 El flujo 08 comprobó colección, categoría, ficha, regreso, favoritos de visitante, carrito y Buscar. El 09 aplicó **fuente OS 1,6** al emulador aislado y la restauró: título íntegro, pestaña Inicio legible y primera comparación en una columna. [Capturas nativas originales del workflow](capturas/inicio-v2/android/README.md). No confundirlas con la simulación CSS ni con una prueba física en Samsung.
 
-Oliver fue informado inmediatamente de la publicación y recepción. Continúa únicamente el diseño de tres alternativas A/B/C, sin sustituir esta portada ni publicar otra actualización. La revisión física, TalkBack y fluidez en su Samsung siguen pendientes del propietario.
+Oliver fue informado inmediatamente de la publicación y recepción. Las [tres alternativas A/B/C](ALTERNATIVAS_EDITORIALES_INICIO_V2.md) ya están documentadas y revisadas, sin sustituir esta portada ni publicar otra actualización. B recomendada; C mantiene cambios obligatorios por altura. La revisión física, TalkBack y fluidez en su Samsung siguen pendientes del propietario.

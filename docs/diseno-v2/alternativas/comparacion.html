@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inicio V2 — publicada y tres alternativas</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:24px;background:#f8f7fc;color:#1c1928;font:16px/1.5 system-ui,sans-serif}main{max-width:1800px;margin:auto}h1{font-size:28px;line-height:1.2;margin:0 0 12px}p{max-width:85ch}a{color:#6037cb;text-underline-offset:3px}a:focus-visible{outline:3px solid #6d42e8;outline-offset:4px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;align-items:start}figure{margin:0}h2{font-size:19px;line-height:1.3}img{display:block;width:100%;height:auto}figcaption{padding:12px 0}.label{color:#5f566f;font-weight:600}table{border-collapse:collapse;max-width:1050px;width:100%}th,td{text-align:left;padding:12px;border-bottom:1px solid #ddd7ed}.scroll{overflow:auto}@media(max-width:1200px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){body{padding:16px}.grid{grid-template-columns:1fr}}
+</style>
+<main>
+<h1>Inicio V2: comparación de arquitectura editorial</h1>
+<p>La primera imagen es una captura web real de la versión publicada. A/B/C son <strong>conceptos generados, no implementados</strong>. Se muestran completos, sin retocar, a igual ancho; las imágenes del catálogo son ilustraciones Demo. No atribuirles pruebas Android o resultados de conversión.</p>
+<p><a href="../../ALTERNATIVAS_EDITORIALES_INICIO_V2.md">Decisiones, limitaciones y revisión del equipo</a> · <a href="../../capturas/inicio-v2/android/README.md">Recepción Android real</a></p>
+<div class="grid">
+<figure><h2>Publicada · 1A+2A</h2><a href="../../capturas/inicio-v2/after/light-412-inicio.png"><img src="../../capturas/inicio-v2/after/light-412-inicio.png" alt="Portada publicada: búsqueda, categorías, colección compacta y comparación" width="412" height="892"></a><figcaption>Captura real web 412×892. Primera tarjeta y=429; dos completas. OTA Android 01a131f4.</figcaption></figure>
+<figure><h2>A · Editorial inmersiva</h2><a href="a-editorial-inmersiva.png"><img src="a-editorial-inmersiva.png" alt="Concepto A: fotografía Demo amplia de cargador y dos productos después" width="853" height="1844"></a><figcaption>Concepto generado, no implementado; ilustraciones Demo reinterpretadas. Prioriza imagen. Coste: comparación más tarde. Barra vigente restaurada tras revisión.</figcaption></figure>
+<figure><h2>B · Marketplace modular</h2><a href="b-marketplace-modular.png"><img src="b-marketplace-modular.png" alt="Concepto B: comparación primero y colección con su producto después" width="853" height="1844"></a><figcaption>Concepto generado, no implementado; ilustraciones Demo reinterpretadas. Prioriza decidir. La colección se conserva como siguiente ruta editorial. Candidato recomendado: conservar segunda fila tras colección, sin perder cuatro SKU.</figcaption></figure>
+<figure><h2>C · Electric Violet editorial</h2><a href="c-electric-violet-editorial.png"><img src="c-electric-violet-editorial.png" alt="Concepto C: marca búsqueda y editorial sobre una superficie violeta continua" width="853" height="1844"></a><figcaption>Concepto generado, no implementado; ilustraciones Demo reinterpretadas. Prioriza identidad. Leyenda comercial corregida; coste pendiente: apertura superior todavía alta.</figcaption></figure>
+</div>
+<h2>Comparación del primer viewport</h2>
+<p>En A/B/C la altura se estima visualmente, normalizando por el ancho 412. No son medidas DOM ni presupuestos implementados. Las tres salidas finales 853×1844 conservan aproximadamente la proporción pedida; no se ha deformado para fingir píxeles exactos.</p>
+<div class="scroll"><table><thead><tr><th>Dirección</th><th>Primera fotografía de comparación</th><th>Tarjetas completas</th><th>Decisión principal</th></tr></thead><tbody><tr><td>Publicada</td><td>429 px, DOM real</td><td>2</td><td>Colección → comparar</td></tr><tr><td>A</td><td>≈552 px, imagen</td><td>2</td><td>Imagen editorial → comparar</td></tr><tr><td>B</td><td>≈252 px, imagen</td><td>2</td><td>Primera fila → colección → segunda fila</td></tr><tr><td>C</td><td>≈503 px, imagen</td><td>2</td><td>Marca/editorial → categorías → comparar</td></tr></tbody></table></div>
+<p class="label">Auditor final: A y B aprobados como conceptos; C mantiene cambios obligatorios por altura y no está recomendada. Ningún concepto autoriza otra publicación. Oliver debe revisar y elegir antes del siguiente incremento.</p>
+</main>
+</html>
