@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-13 03:26Z · Codex cloud · Oliver · checkpoint C funcional en revisión
+
+- Marca/búsqueda/editorial continuas, categorías puente y cuatro productos posteriores. Banda web316/319 y fotos421/424, dos completas; esquema C original395,58 a412. Datos/assets reales Demo, rutas/métricas/roles intactos. StatusBar por foco soloJS nativo con guard web; stackAction opcional soloInicio para texto grande.
+- UI31/31, tipos/lint global y web aprobados; último pase tras adaptación de encabezados en curso. Capturas ocho estados+scroll/JSON; CSS1,6 no OS. Error inicial APIStatusBar web y referencia t corregidos, sin eliminar tests; fade de imagen rechazado/recapturado.
+- UX/ecommerce/auditor reales revisan fuente/capturas, único escritor raíz. Informe C_EDITORIAL_REFINADA.md. Sin publicación/OS nativo afirmados aún; autorización vigente permite una OTApreview/APK5 tras auditor+verificaciones.
+- Siguiente: cerrar dictamen y pase final, exportAndroid, commit/push, guard exacto EAS y recepción Android08+09 ambos temas. No iOS/APK/backend/finanzas/vendedor/production.
+
 ### 2026-10-13 03:00Z · Codex cloud · Oliver · C elegida; nuevo bloque autorizado
 
 - Oliver eligió C por continuidad estructural; B queda como antecedente. Mantener marca→búsqueda→editorial en una superficie, categorías puente y cuatro productos posteriores. Resolver altura/reflow con medidas reales, claro/oscuro320/412/fuente ampliada y auditor focal.

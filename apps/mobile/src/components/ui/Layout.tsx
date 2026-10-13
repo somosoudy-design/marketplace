@@ -4,11 +4,11 @@ import { Icon } from './Icon';
 import { ScalePressable } from './Pressable';
 import { Text } from './Text';
 
-export function SectionHeader({ overline, title, action, onAction }: { overline?: string; title: string; action?: string; onAction?: () => void }) {
+export function SectionHeader({ overline, title, action, onAction, stackAction = false }: { overline?: string; title: string; action?: string; onAction?: () => void; stackAction?: boolean }) {
   const { colors } = useTheme();
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingHorizontal: 16, marginBottom: 12, gap: 12 }}>
-      <View style={{ flex: 1, gap: 2 }}>
+    <View style={{ flexDirection: stackAction ? 'column' : 'row', alignItems: stackAction ? 'flex-start' : 'flex-end', justifyContent: 'space-between', paddingHorizontal: 16, marginBottom: 12, gap: stackAction ? 0 : 12 }}>
+      <View style={{ flex: stackAction ? undefined : 1, width: stackAction ? '100%' : undefined, gap: 2 }}>
         {overline ? <Text variant="caption" color="textMuted">{overline}</Text> : null}
         <Text variant="displayM" accessibilityRole="header">{title}</Text>
       </View>

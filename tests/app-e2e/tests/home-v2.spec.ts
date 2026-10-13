@@ -102,7 +102,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('home-hero').getByRole('link')).toHaveCount(1);
     });
 
-    test('larger web text grows the editorial block without clipping or losing its action', async ({ page }) => {
+    test('larger web text grows the editorial block without clipping or losing its action', async ({ page }, testInfo) => {
       await page.setViewportSize({ width: 320, height: 892 }); await page.goto('/');
       await expect(cards(page)).toHaveCount(4);
       await page.evaluate(() => {
@@ -114,7 +114,34 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(hero.getByText('Ver colección', { exact: true })).toBeVisible();
       const limits = await hero.evaluate((root) => [...root.querySelectorAll<HTMLElement>('[dir="auto"]')].map((el) => ({ scroll: el.scrollHeight, height: el.clientHeight })));
       expect(limits.every((l) => l.scroll <= l.height + 1)).toBe(true);
-      await page.screenshot({ path: `../../docs/capturas/inicio-v2/after/${colorScheme}-320-texto-ampliado.png` });
+      await page.screenshot({ path: testInfo.outputPath(`${colorScheme}-320-texto-ampliado.png`) });
+    });
+
+    test('C keeps masthead and editorial continuous, categories bridge to four products and search stays reachable', async ({ page }) => {
+      for (const width of [320, 412]) {
+        await page.setViewportSize({ width, height: 892 }); await page.goto('/');
+        await expect(cards(page)).toHaveCount(4);
+        const masthead = page.getByTestId('home-masthead');
+        const hero = page.getByTestId('home-hero');
+        const editorial = hero.getByRole('link');
+        const top = await masthead.boundingBox(); const band = await hero.boundingBox();
+        expect(band!.x).toBe(0); expect(band!.width).toBe(width);
+        expect(Math.abs(band!.y - top!.y - top!.height)).toBeLessThan(1);
+        const colors = await Promise.all([masthead, editorial].map((n) => n.evaluate((el) => getComputedStyle(el).backgroundColor)));
+        expect(colors[0]).toBe(colors[1]);
+        await expect(editorial).toHaveCSS('border-top-left-radius', '0px');
+        expect(band!.y + band!.height).toBeLessThanOrEqual(width === 320 ? 355 : 335);
+        const bridge = await page.getByTestId('home-category-bridge').boundingBox();
+        expect(bridge!.y).toBeGreaterThanOrEqual(band!.y + band!.height);
+        const row = await page.getByTestId('home-recommended').boundingBox();
+        expect(row!.y).toBeGreaterThanOrEqual(bridge!.y + bridge!.height);
+        expect(row!.y).toBeLessThanOrEqual(width === 320 ? 470 : 450);
+        expect(row!.y + row!.height).toBeLessThan(815);
+        await page.getByTestId('home-scroll').hover(); await page.mouse.wheel(0, 700);
+        await expect(page.getByTestId('home-search-sticky')).toHaveAttribute('tabindex', '0');
+        await page.getByTestId('home-search-sticky').click();
+        await expect(page.getByTestId('catalog-search')).toBeFocused();
+      }
     });
 
     test('real local session waits for profile and measures rows, not their heading, in the correct slot', async ({ page }) => {

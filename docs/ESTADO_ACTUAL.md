@@ -31,6 +31,8 @@
 
 **Decisión vigente del propietario:** C, por continuidad de marca/búsqueda/editorial y sensación de tienda integrada. La recomendación B anterior queda como antecedente, no dirección a implementar. Conservar editorial antes de categorías y cuatro recomendaciones contiguas después. Reducir altura mediante agrupación y reflow, sin borrar información comercial ni reducir áreas táctiles. Nueva revisión focalizada del auditor (dos rondas máximo).
 
+**Checkpoint C 03:26 UTC:** integrada continuidad fullwidth; banda web316/319, primeras fotos421/424 y dos completas. UI31/31, tipos/lint global y web aprobados; pase final tras stackAction en curso. Ocho estados+scroll, CSS1,6 sin recortes (no OS). Auditor/UX/ecommerce revisando fuente y capturas. Informe `docs/C_EDITORIAL_REFINADA.md`. Primeros fallos propios de StatusBar web/una referencia t corregidos; sin pruebas suprimidas. No publicada todavía.
+
 **Próxima acción exacta:** guardar refinamiento y medidas reales comparables; integrar C usando componentes/rutas/datos existentes; capturas claro/oscuro320/412/texto ampliado, pruebas focales y auditor. Oliver primero pidió propuesta sin OTA, pero aclaró «Sí reemplaza la versión publicada»: autoriza implementar y una publicación Android **preview** para APK 5 después de aprobación/validación. Confirmar runtime exacto, resultado EAS e ID/recepción emulador; no canal production ni APK nuevo. No iOS/backend/finanzas/vendedor.
 
 ## Hitos de la Directriz maestra 02

@@ -1,0 +1,20 @@
+{
+  "elegida": {
+    "file": "docs/diseno-v2/alternativas/c-electric-violet-editorial.png",
+    "pixelWidth": 853,
+    "pixelHeight": 1844,
+    "upperBoundaryPixel": 819,
+    "upperAt412Px": 395.58,
+    "method": "Primer borde exterior izquierdo sostenido oscuro→claro, sin modificar la imagen",
+    "limit": "Geometría raster de esquema generado; no reflow ni dimensiones Android"
+  },
+  "ideacion_corregida": {
+    "file": "docs/diseno-v2/c-refinada/concepto-corregido.png",
+    "pixelWidth": 853,
+    "pixelHeight": 1844,
+    "upperBoundaryPixel": 753,
+    "upperAt412Px": 363.7,
+    "method": "Primer borde exterior izquierdo sostenido oscuro→claro, sin modificar la imagen",
+    "limit": "Geometría raster de esquema generado; no reflow ni dimensiones Android"
+  }
+}
