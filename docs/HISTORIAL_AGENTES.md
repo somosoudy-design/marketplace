@@ -792,3 +792,8 @@ Todas las entradas son de Claude en la sesión de la nube del proyecto «TIENDA 
   Identidad Electric Violet (Plus Jakarta Sans, violeta #6D42E8, tinta #1C1928, coral #FF746B) e Inicio de
   tienda (buscador, categorías, colecciones, recomendados, tiendas destacadas, populares; sin bloques de tasa
   ni de confianza). Lo nativo violeta queda para el próximo APK.
+
+
+## 2026-10-13 — Codex: checkpoint CAT-EXH-01, preparación segura
+
+Solicitud nueva: fotos auténticas privadas para InicioC y primeros Buscar, sin administración Supabase ni publicación inmediata. Lectura pública43 y selección15 UUID remotos; dos roles reales de lectura, catálogo/artdirección y auditor independiente, raíz único escritor. Capa ID+ruta con fallback normal y opt-in privado cerrado, Demo visual separado de is_demo y guardas comerciales. Registro vacío: 0 fotos/licencias/modelos confirmados. Fuentes oficiales/CDN/Wikimedia CONNECT403; dominios guardados en borrador del entorno para aplicar, no OTA. Policy4/4 + Node8/8 y tipos/lint móvil; baseline web8+8 guardado/una captura inspeccionada. Próximo paso exportación/recorridos focalizados y revisión del código, después resolver acceso/modelos/derechos. No backendremoto, pagos, BCV, APK o iOS; no se afirma lote terminado.

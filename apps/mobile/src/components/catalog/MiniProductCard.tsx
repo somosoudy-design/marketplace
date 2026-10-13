@@ -8,6 +8,7 @@ import { Text } from '@/components/ui/Text';
 import { recordClick } from '@/lib/impressions';
 import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { ProductFavorite } from './ProductFavorite';
 
 /** Compact horizontal card for "keep browsing" shelves: thumbnail, title and price on one surface. */
@@ -26,10 +27,10 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
         }}
         style={{ flex: 1, flexDirection: 'row', gap: 10, alignItems: 'center', minWidth: 0 }}
       >
-        <ProductImage path={p.image_path} tone={p.tone} style={{ width: 52 }} aspect={1} radius={6} />
+        <ProductImage productId={p.id} path={p.image_path} tone={p.tone} style={{ width: 52 }} aspect={1} radius={6} />
         <View style={{ flex: 1, gap: 2 }}>
           <Text variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.title}</Text>
-          <Text variant="caption" color="textSecondary" tabular>{p.is_demo ? 'Demo · ' : ''}{formatUSD(p.price_usd)}</Text>
+          <Text variant="caption" color="textSecondary" tabular>{p.is_demo && !isPrivateCatalogPresentation ? 'Demo · ' : ''}{formatUSD(p.price_usd)}</Text>
         </View>
       </ScalePressable>
       <ProductFavorite id={p.id} slug={p.slug} />

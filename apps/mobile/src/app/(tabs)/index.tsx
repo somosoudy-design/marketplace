@@ -11,6 +11,7 @@ import { CategoryTiles } from '@/components/catalog/CategoryTiles';
 import { MiniProductCard } from '@/components/catalog/MiniProductCard';
 import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
 import { EditorialOpening } from '@/components/catalog/EditorialOpening';
+import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { useScrollY } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -24,6 +25,7 @@ import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } 
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
 import { ImpressionScope, recordImpressions, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { qk } from '@/lib/query';
@@ -173,7 +175,7 @@ function Header({ home, onSearchBottom }: { home: ReturnType<typeof useHome>; on
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 8, minHeight: 44 }}>
         <View style={{ flex: 1 }}>
           <Wordmark inverse />
-          {firstName ? <Text variant="caption" style={{ color: palette.violet[200] }} numberOfLines={1}>Hola, {firstName}</Text> : null}
+          {isPrivateCatalogPresentation ? <ExhibitionNotice style={{ color: palette.violet[200] }} /> : firstName ? <Text variant="caption" style={{ color: palette.violet[200] }} numberOfLines={1}>Hola, {firstName}</Text> : null}
         </View>
         <View>
           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} color={palette.ink[0]} size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />

@@ -8,6 +8,12 @@
 
 **Última revisión:** 2026-10-13.
 
+## CAT-EXH-01 — catálogo privado realista (en preparación / fotos bloqueadas)
+
+Selección15 con UUID remotos actuales, capa por ID/ruta desactivada por defecto y validación de procedencia preparadas; ninguna fotografía integrada. Red oficial/CDN/Wikimedia CONNECT403; borrador de dominios guardado requiere aplicarse en Configuración del entorno. Identificación exacta de modelos/tonos y derechos aún no confirmados. `CATALOGO_EXHIBICION.md` y `catalogo-exhibicion/lote-01.json`.
+
+Próximo bloque: terminar pruebas focalizadas de infraestructura; después obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. No confundir lectura anon con acceso administrativo ni volver a tocar Supabase.
+
 ## UX-ARQ-V2 — arquitectura aprobada; implementación progresiva
 
 Nueva misión de Oliver tras evaluación física insuficiente: dirección integral antes de código. Documento `ARQUITECTURA_EXPERIENCIA_V2.md`, siete esquemas y evidencia en `diseno-v2/`. Product Design realmente consultado; tres especialistas reales de lectura, solo raíz integra/commitea. Ronda1 independiente CAMBIOS OBLIGATORIOS corregidos; ronda2 APROBADO, ecommerce APROBADO y UX acepta, sin desacuerdos importantes. 28 esquemas renderizados y 14 originales actuales; fuentes/costes/límites documentados. Referencias externas bloqueadas; checkout/pago actuales solo por código, sin pruebas autenticadas.

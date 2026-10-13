@@ -14,6 +14,7 @@ import { useCategories, useSearch } from '@/lib/hooks';
 import { haptics } from '@/lib/haptics';
 import { useTheme } from '@/theme';
 import { MAX_CONTENT, ProductCard, useGridColumns } from './ProductGrid';
+import { ExhibitionNotice } from './ExhibitionNotice';
 
 export interface CatalogFilters {
   query: string;
@@ -135,6 +136,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
 
   const controls = (
     <View testID="catalog-controls" style={{ backgroundColor: t.colors.background, paddingHorizontal: 16, paddingBottom: 4, gap: 4 }}>
+      <ExhibitionNotice />
       {showSearch ? (
         <View style={{ minHeight: 48, borderRadius: 10, backgroundColor: t.colors.surface, borderWidth: 2, borderColor: searchFocused ? t.colors.brand : t.colors.border, flexDirection: 'row', alignItems: 'center', paddingLeft: 12, paddingRight: 2, gap: 8 }}>
           <Icon name="search" size={20} color={t.colors.textMuted} />

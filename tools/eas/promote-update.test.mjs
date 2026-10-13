@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { selectUpdate, validateAndroidRequest, validateRequest, validateRun } from './promote-update.mjs';
+import { selectUpdate, validateAndroidRequest, validateCataloguePromotion, validateRequest, validateRun } from './promote-update.mjs';
 
 const request = {
   destinationChannel: 'production', sourceBranch: 'preview',
@@ -8,6 +8,13 @@ const request = {
   sourceCommit: 'a'.repeat(40), androidCommit: 'b'.repeat(40),
   previewRun: 100, androidRun: 101, message: 'Front A V2',
 };
+
+test('rejects immutable exhibition bundles before any production promotion', () => {
+  validateCataloguePromotion(null);
+  assert.throws(() => validateCataloguePromotion({ scope: 'private-preview', products: [{}] }), /Private exhibition/);
+  assert.throws(() => validateCataloguePromotion({ scope: 'private-preview', products: [] }), /Private exhibition/);
+  assert.throws(() => validateCataloguePromotion({ scope: 'unknown', products: [{}] }), /Private exhibition/);
+});
 
 test('rejects native-runtime changes and unintended channels before release', () => {
   assert.equal(validateRequest(request), request);

@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "scope": "private-preview",
+  "backendOrigin": "https://mimnotafmfasvwrclxan.supabase.co",
+  "readAt": "2026-10-13",
+  "bindingSource": "RPC público search_products, con anon existente; solo lectura, sin acceso administrativo",
+  "products": [
+    {
+      "productId": "5abf4366-e062-41e5-966e-1c7908ca2a7a",
+      "slug": "sheglam-labial-liquido-mate",
+      "title": "SHEGLAM labial líquido mate",
+      "originalPath": "demo/sheglam-labial-liquido-mate-1.webp",
+      "variantNames": [
+        "Rosa nude",
+        "Rojo clásico",
+        "Terracota"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.sheglam.com/"
+    },
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "slug": "ugreen-nexode-65w",
+      "title": "UGREEN Nexode cargador GaN 65 W",
+      "originalPath": "demo/ugreen-nexode-65w-1.webp",
+      "variantNames": [
+        "Negro",
+        "Blanco"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.ugreen.com/"
+    },
+    {
+      "productId": "01a43334-e485-41cc-a12a-c049e933665d",
+      "slug": "ugreen-power-bank-20000",
+      "title": "UGREEN Nexode power bank 20.000 mAh",
+      "originalPath": "demo/ugreen-power-bank-20000-1.webp",
+      "variantNames": [
+        "Gris"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.ugreen.com/"
+    },
+    {
+      "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
+      "slug": "ugreen-cable-usb-c-100w",
+      "title": "UGREEN cable USB-C a USB-C",
+      "originalPath": "demo/ugreen-cable-usb-c-100w-1.webp",
+      "variantNames": [
+        "2 m",
+        "1 m"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.ugreen.com/"
+    },
+    {
+      "productId": "96f52279-bb49-4d5c-a47d-495611d67191",
+      "slug": "sheglam-brillo-labial",
+      "title": "SHEGLAM brillo labial",
+      "originalPath": "demo/sheglam-brillo-labial-1.webp",
+      "variantNames": [
+        "Baya",
+        "Rosado"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.sheglam.com/"
+    },
+    {
+      "productId": "910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "slug": "ugreen-revodok-hub-6-en-1",
+      "title": "UGREEN Revodok hub USB-C 6 en 1",
+      "originalPath": "demo/ugreen-revodok-hub-6-en-1-1.webp",
+      "variantNames": [
+        "Gris espacial"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.ugreen.com/"
+    },
+    {
+      "productId": "1cb658e6-5f4a-4d13-83e4-97a5af667920",
+      "slug": "sheglam-rubor-liquido",
+      "title": "SHEGLAM rubor líquido",
+      "originalPath": "demo/sheglam-rubor-liquido-1.webp",
+      "variantNames": [
+        "Coral"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.sheglam.com/"
+    },
+    {
+      "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
+      "slug": "audifonos-anc-over-ear",
+      "title": "Audífonos inalámbricos con cancelación de ruido",
+      "originalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "variantNames": [
+        "Salvia",
+        "Arena"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": null
+    },
+    {
+      "productId": "f1752791-3273-4001-beb6-000b7aace947",
+      "slug": "audifonos-in-ear-estuche",
+      "title": "Audífonos in-ear con estuche de carga",
+      "originalPath": "demo/audifonos-in-ear-estuche-1.webp",
+      "variantNames": [
+        "Blanco"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": null
+    },
+    {
+      "productId": "c3a54b68-0659-421d-baf9-86d3fa3caeca",
+      "slug": "vela-aromatica-vaso",
+      "title": "Vela aromática en vaso de vidrio",
+      "originalPath": "demo/vela-aromatica-vaso-1.webp",
+      "variantNames": [
+        "Cedro",
+        "Vainilla"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": null
+    },
+    {
+      "productId": "6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "slug": "ugreen-nexode-30w",
+      "title": "UGREEN Nexode cargador GaN 30 W",
+      "originalPath": "demo/ugreen-nexode-30w-1.webp",
+      "variantNames": [
+        "Blanco"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.ugreen.com/"
+    },
+    {
+      "productId": "3e280c0e-dd8b-404a-927e-39c0fd9e4a9e",
+      "slug": "guantes-nitrilo-x100",
+      "title": "Guantes de nitrilo sin polvo · caja x100",
+      "originalPath": "demo/guantes-nitrilo-x100-1.webp",
+      "variantNames": [
+        "S",
+        "L",
+        "M"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": null
+    },
+    {
+      "productId": "1b895714-8723-4330-8472-75ade944652a",
+      "slug": "cama-ovalada-mascotas",
+      "title": "Cama ovalada para mascotas",
+      "originalPath": "demo/cama-ovalada-mascotas-1.webp",
+      "variantNames": [
+        "S",
+        "M",
+        "L"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": null
+    },
+    {
+      "productId": "04e929cf-0be8-45db-a957-aa418599b572",
+      "slug": "sheglam-base-fluida",
+      "title": "SHEGLAM base de maquillaje fluida",
+      "originalPath": "demo/sheglam-base-fluida-1.webp",
+      "variantNames": [
+        "Claro",
+        "Medio",
+        "Profundo"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Línea comercial y nombres oficiales de los tonos.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": "https://www.sheglam.com/"
+    },
+    {
+      "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
+      "slug": "parlante-portatil",
+      "title": "Parlante portátil resistente al agua",
+      "originalPath": "demo/parlante-portatil-1.webp",
+      "variantNames": [
+        "Coral",
+        "Turquesa"
+      ],
+      "variantSource": "catálogo de referencia local; verificar IDs y tonos de la ficha remota antes de asignar fotografías",
+      "modelStatus": "unconfirmed",
+      "modelEvidence": null,
+      "missingModelInformation": "Fabricante, modelo y variante: la ficha actual es genérica.",
+      "photo": null,
+      "rights": {
+        "status": "unconfirmed",
+        "evidence": null,
+        "reviewedBy": null
+      },
+      "referenceSite": null
+    }
+  ]
+}

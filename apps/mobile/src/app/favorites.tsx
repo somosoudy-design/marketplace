@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { FlatList, View } from 'react-native';
 import { MAX_CONTENT, ProductCard, useGridColumns } from '@/components/catalog/ProductGrid';
+import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { ProductCardSkeleton } from '@/components/ui/Skeleton';
 import { EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
@@ -43,7 +44,7 @@ export default function FavoritesScreen() {
       contentContainerStyle={{ paddingBottom: 40, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}
       columnWrapperStyle={grid.columns > 1 ? { gap: grid.gap, paddingHorizontal: 16 } : undefined}
       ItemSeparatorComponent={() => <View style={{ height: 22 }} />}
-      ListHeaderComponent={header}
+      ListHeaderComponent={<View><View style={{ paddingHorizontal: 16 }}><ExhibitionNotice /></View>{header}</View>}
       renderItem={({ item }) => <ProductCard product={item} width={grid.cardWidth} />}
       ListEmptyComponent={
         products.isLoading ? (

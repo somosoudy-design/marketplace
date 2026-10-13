@@ -53,6 +53,11 @@ export function validateAndroidRequest(text) {
   assert(lines.includes('themes: light dark'), 'Android validation must cover both themes');
 }
 
+export function validateCataloguePromotion(manifest) {
+  assert(!manifest || (manifest.scope !== 'private-preview' && Array.isArray(manifest.products) && manifest.products.length === 0),
+    'Private exhibition resources cannot be republished to production');
+}
+
 function command(binary, args, cwd = repo) {
   const result = spawnSync(binary, args, {
     cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'],
@@ -82,6 +87,9 @@ async function runInfo(id) {
 
 async function main() {
   const request = validateRequest(JSON.parse(readFileSync(resolve(repo, '.github/eas-production-update-request'), 'utf8')));
+  const catalogueManifest = 'apps/mobile/assets/catalog-exhibition/manifest.json';
+  const entry = command('git', ['ls-tree', '--name-only', request.sourceCommit, '--', catalogueManifest]).trim();
+  validateCataloguePromotion(entry ? JSON.parse(command('git', ['show', `${request.sourceCommit}:${catalogueManifest}`])) : null);
   validateRun(await runInfo(request.previewRun), 'eas-update-preview.yml', request.sourceCommit);
   validateRun(await runInfo(request.androidRun), 'apk-emulator.yml', request.androidCommit);
   validateAndroidRequest(command('git', ['show', request.androidCommit + ':.github/apk-emulator-request']));

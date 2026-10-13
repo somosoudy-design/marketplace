@@ -7,6 +7,7 @@ import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Text } from '@/components/ui/Text';
 import { TrackedSection } from '@/lib/impressions';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { ProductImage } from './ProductImage';
 
 /** Continuous editorial surface below the masthead; one collection destination, never a product purchase. */
@@ -19,7 +20,7 @@ export function EditorialOpening({ block, product, width, onOpen }: {
   const photoWidth = Math.min(124, Math.round((width - 32) * 0.32));
   const caption = (
     <View style={{ gap: 3 }}>
-      <Text variant="caption" style={{ color: palette.violet[200] }}>Producto mostrado{product.is_demo ? ' · Demo' : ''}</Text>
+      <Text variant="caption" style={{ color: palette.violet[200] }}>Producto mostrado{product.is_demo && !isPrivateCatalogPresentation ? ' · Demo' : ''}</Text>
       <Text testID="home-editorial-name" variant="bodySmall" style={{ color: palette.ink[0] }}>{product.title.replace(/\s+W\b/g, '\u00a0W')}</Text>
     </View>
   );
@@ -48,7 +49,7 @@ export function EditorialOpening({ block, product, width, onOpen }: {
               <Icon name="arrow-right" size={16} color={palette.ink[0]} />
             </View>
           </View>
-          <ProductImage aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={8} priority="high" style={{ width: photoWidth }} />
+          <ProductImage productId={product.id} aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={8} priority="high" style={{ width: photoWidth }} />
         </View>
       </ScalePressable>
     </TrackedSection>

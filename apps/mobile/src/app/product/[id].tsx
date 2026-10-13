@@ -7,6 +7,7 @@ import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
 import { ProductImage } from '@/components/catalog/ProductImage';
+import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -25,6 +26,7 @@ import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { brand } from '@/lib/brand';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
@@ -177,7 +179,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               showsHorizontalScrollIndicator={false}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
+                <ProductImage productId={p.id} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
               )}
             />
             {images.length > 1 ? (
@@ -190,6 +192,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
             <View style={{ gap: 12 }}>
+              <ExhibitionNotice />
               <View style={{ gap: 4 }}>
                 {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
                 <Text variant="displayM" testID="product-title">{p.title}</Text>
@@ -208,7 +211,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
                   {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
                 </View>
               ) : null}
-              {p.is_demo ? (
+              {p.is_demo && !isPrivateCatalogPresentation ? (
                 <View testID="product-demo" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 6, borderRadius: t.radii.sm, backgroundColor: t.colors.warningSoft }}>
                   <Icon name="info" size={14} color={t.colors.warning} />
                   <Text variant="caption" color="textSecondary" style={{ flexShrink: 1 }}>Producto de demostración: foto y precio de ejemplo, no es una oferta real.</Text>
@@ -316,7 +319,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>
               <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
                 <View style={{ width: 36, height: 45, borderRadius: 8, overflow: 'hidden' }}>
-                  <ProductImage path={p.image_path} tone={p.tone} radius={8} />
+                  <ProductImage productId={p.id} path={p.image_path} tone={p.tone} radius={8} />
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text variant="label" color="success">Agregado al carrito</Text>

@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
+import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { MAX_CONTENT, ProductRail } from '@/components/catalog/ProductGrid';
 import { Badge } from '@/components/ui/Badge';
 import { BottomBar, ChangingText } from '@/components/ui/Bars';
@@ -31,7 +32,7 @@ export default function CartScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
-  const header = <Text variant="displayL" style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}>Carrito</Text>;
+  const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice /></View>;
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       {user ? <AccountCart header={header} /> : <GuestCartView header={header} />}
@@ -118,7 +119,7 @@ function LineRow({ line: l, onQty, disabled }: { line: CartLine; onQty: (variant
   return (
     <View style={{ flexDirection: 'row', gap: 12, padding: 14 }} testID={`cart-line-${l.variant_id}`}>
       <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id } })}>
-        <ProductImage path={l.image_path} style={{ width: 76 }} radius={t.radii.md} />
+        <ProductImage productId={l.product_id} path={l.image_path} style={{ width: 76 }} radius={t.radii.md} />
       </ScalePressable>
       <View style={{ flex: 1, gap: 4 }}>
         <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>

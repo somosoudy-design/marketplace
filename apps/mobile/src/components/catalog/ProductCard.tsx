@@ -8,6 +8,7 @@ import { Price } from '@/components/ui/Price';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Text } from '@/components/ui/Text';
 import { recordClick } from '@/lib/impressions';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
 import { ProductFavorite } from './ProductFavorite';
@@ -38,10 +39,10 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         }}
       >
         <View>
-          <ProductImage path={p.image_path} tone={p.tone} priority={priority} radius={0} />
+          <ProductImage productId={p.id} path={p.image_path} tone={p.tone} priority={priority} radius={0} />
           {/* Demo prices and stock never masquerade as a real promotion or scarcity claim. */}
           <View style={{ position: 'absolute', left: 8, top: 8, gap: 4, maxWidth: width - 58 }}>
-            {p.is_demo ? <Badge onPhoto label="Demo" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : <>
+            {p.is_demo ? (!isPrivateCatalogPresentation ? <Badge onPhoto label="Demo" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null) : <>
               {discount && p.availability === 'available' ? <Badge onPhoto label={`−${discount} %`} tone="danger" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null}
               {hint ? <Badge onPhoto label={hint} tone="warning" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null}
             </>}

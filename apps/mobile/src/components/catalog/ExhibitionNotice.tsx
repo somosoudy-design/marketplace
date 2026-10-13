@@ -1,0 +1,13 @@
+import type { StyleProp, TextStyle } from 'react-native';
+import { Text } from '@/components/ui/Text';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+
+/** One quiet environment identifier per screen, including deep links. */
+export function ExhibitionNotice({ style }: { style?: StyleProp<TextStyle> }) {
+  if (!isPrivateCatalogPresentation) return null;
+  return (
+    <Text testID="catalog-exhibition-notice" variant="caption" color="textSecondary"
+      accessibilityLabel="Entorno de pruebas. Los productos de demostración y sus precios son ejemplos, no ofertas reales."
+      style={style}>Entorno de pruebas</Text>
+  );
+}

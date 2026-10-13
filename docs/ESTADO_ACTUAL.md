@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-13: C elegida por Oliver refinada, implementada, publicada y recibida en Android40 (4/4). Auditor final APROBADO web y nativo. Espera revisión física/ nuevas instrucciones del propietario.
+**Última actualización:** 2026-10-13: catálogo privado lote01 en preparación, 15 IDs remotos leídos, capa visual desactivada por defecto. Fotos/modelos/licencias bloqueados por red y correspondencia no confirmada. Ninguna nueva OTA.
 
 ## Dónde está el trabajo
 
@@ -15,11 +15,19 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | C cerrada `1a37860` (código `ef44048`); EAS `ad41160` /38342356897; Android `637d60e` /38342591484. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13354-e5fd-70f0-90bc-feec7f425a03` |
 | Plan vigente | C — Electric Violet Editorial es la dirección elegida; apertura publicada y validada. Próximo incremento requiere instrucciones/revisión de Oliver |
-| Objetivo actual | Oliver revisa C en su Samsung. No otra OTA, nueva implementación ni pulido global automático |
+| Objetivo actual | Catálogo realista de exhibición, lote 12–15. Sin cambios remotos; no publicar hasta derechos y autorización específica |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — C publicada; revisión física del propietario
+## Trabajo en curso — catálogo de exhibición, lote 01
+
+**Checkpoint de preparación:** 15 productos identificados con UUID remotos originales por lectura pública sin admin; registro de recursos vacío y capa privada cerrada por defecto. Modelo y foto se deben verificar, nunca inferir por parecido. Policy4/4, selección/promoción8/8, tipos/lint móvil aprobados. Referencias/paquetes privados sin licencia no se versionan ni exportan.
+
+**Bloqueo concreto:** fabricantes/CDN/Wikimedia devuelven CONNECT403. Borrador de dominios guardado para aplicar desde Configuración del entorno, sin cambiar la red actual. 0 fotografías obtenidas/0 licencias/0 modelos confirmados: lote fotográfico NO terminado. Informe `docs/CATALOGO_EXHIBICION.md`, selección `docs/catalogo-exhibicion/lote-01.json`. Solo raíz escribe; catálogo y auditor investigan/revisan.
+
+**Próxima acción:** terminar exportación y pruebas focalizadas de la infraestructura sin fotos; después aplicar el acceso de red, verificar modelos/tonos y derechos y preparar el lote autorizado. No modificar `.github/eas-update-request`, no OTA/APK/iOS/backend/finanzas.
+
+## Última entrega cerrada — C publicada; revisión física del propietario
 
 **C cerrada:** Oliver eligió continuidad marca→búsqueda→editorial y después autorizó sustituir/publicar su portada. Una banda fullwidth sin tarjeta exterior integra la apertura; categorías puente y cuatro recomendaciones contiguas después. B queda histórica. Leyenda/Demo/SKU/precio/CTA y assets del catálogo reales conservados; no ImageGen en producción. Tipos/lint, UI31/31 finales y web/AndroidHermes5,9MB aprobados; código `ef44048`, cierre `1a37860`. WIP ef44048 supersedido por cierre; no código incompleto activo.
 
