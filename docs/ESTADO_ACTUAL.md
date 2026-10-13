@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-13: catálogo privado lote01 en preparación, 15 IDs remotos leídos, capa visual desactivada por defecto. Fotos/modelos/licencias bloqueados por red y correspondencia no confirmada. Ninguna nueva OTA.
+**Última actualización:** 2026-10-13: preparación CAT-EXH-01 cerrada y revisada, 15 IDs/fichas remotos leídos, capa desactivada por defecto. Lote fotográfico bloqueado: 0 originales/modelos/licencias confirmados. Ninguna nueva OTA.
 
 ## Dónde está el trabajo
 
@@ -13,19 +13,21 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | C cerrada `1a37860` (código `ef44048`); EAS `ad41160` /38342356897; Android `637d60e` /38342591484. Cierre: `git log -1 origin/claude/marketplace-v1`. OTA actual `01a13354-e5fd-70f0-90bc-feec7f425a03` |
-| Plan vigente | C — Electric Violet Editorial es la dirección elegida; apertura publicada y validada. Próximo incremento requiere instrucciones/revisión de Oliver |
+| Último commit confirmado | Catálogo: checkpoints `9ccc6e3` y `4225185`, sin OTA. Confirmar cierre con `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
+| Plan vigente | C — Electric Violet Editorial publicada; preparar catálogo fotográfico privado para evaluarla. Resto de rediseño fuera de este bloque |
 | Objetivo actual | Catálogo realista de exhibición, lote 12–15. Sin cambios remotos; no publicar hasta derechos y autorización específica |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — catálogo de exhibición, lote 01
+## Trabajo en curso — lote fotográfico bloqueado; preparación cerrada
 
-**Checkpoint de preparación:** 15 productos identificados con UUID remotos originales por lectura pública sin admin; registro de recursos vacío y capa privada cerrada por defecto. Modelo y foto se deben verificar, nunca inferir por parecido. Policy4/4, selección/promoción9/9, tipos/lint global aprobados. Habitual Inicio/ficha23/23 y presentación8/8; privada8/8 inicial, repitiendo evidencia estabilizada. Web/HermesAndroid5,9MB exportados;41recursosdependencias/0fotosexhibición. Referencias/paquetes privados sin licencia no se versionan ni exportan.
+**Preparación cerrada (checkpoints `9ccc6e3`, `4225185`; cierre en `git log -1`):** 15 productos y fichas identificados por lecturas públicas sin admin. UUID/ruta originales, variantes y galerías verificadas; modelos oficiales no identificados todavía. Capa privada por ID/ruta y fallback normal, desactivada por defecto; registro vacío. `is_demo`, precios, disponibilidad, moderación y guardas comerciales intactos. Guard de promoción cruza árbol/registro/manifiesto del commit inmutable antes de APIs.
 
-**Bloqueo concreto:** fabricantes/CDN/Wikimedia devuelven CONNECT403. Borrador de dominios guardado para aplicar desde Configuración del entorno, sin cambiar la red actual. 0 fotografías obtenidas/0 licencias/0 modelos confirmados: lote fotográfico NO terminado. Informe `docs/CATALOGO_EXHIBICION.md`, selección `docs/catalogo-exhibicion/lote-01.json`. Solo raíz escribe; catálogo y auditor investigan/revisan.
+**Validación:** política4/4, selección/promoción9/9, tipos/lint global aprobados. UI existente Inicio/ficha23/23 + presentación final habitual8/8/privada8/8 =39 focalizadas, sin reintentos. Capturas prematuras rechazadas por auditor y recapturadas con query/fuentes/imágenes estabilizadas; 14 privadas finales revisadas, 12 comparables PNG originales versionadas. Auditor **APROBADO infraestructura**, no lote. Web habitual restaurada; Hermes Android5,9MB con perfil preview/backend Marketplace, 41 recursos de dependencias y0fotosexhibición. Native/runtimeexacto no verificado; no OTA ni APK.
 
-**Próxima acción:** cerrar capturas estabilizadas y dictamen independiente de infraestructura; después aplicar el acceso de red, verificar modelos/tonos y derechos y preparar el lote autorizado. No modificar `.github/eas-update-request`, no OTA/APK/iOS/backend/finanzas.
+**Bloqueo concreto:** fabricantes/CDN/Wikimedia CONNECT403. Borrador de dominios guardado, requiere aplicarse en Configuración del entorno; no modifica la red actual ni publica la app. **0 fotografías obtenidas/0 licencias/0 modelos confirmados: la entrega fotográfica NO está terminada.** Informe `docs/CATALOGO_EXHIBICION.md`, selección `docs/catalogo-exhibicion/lote-01.json`, evidencia/inventario en el mismo directorio. Solo raíz escribió; catálogo/artdirección y auditor trabajaron de lectura. WIP anteriores cierran únicamente preparación; no revertir ni repetir C.
+
+**Próxima acción exacta:** aplicar borrador de red, comprobar `curl -I https://www.ugreen.com/`, consultar referencias exactas y derechos. Completar evidencia de modelo/variante/original/licencia en `docs/catalogo-exhibicion/lote-01.json`; `node tools/catalog-exhibition/prepare.mjs` debe pasar de0/15 a12–15 aprobados antes de `--write`. Después revisar galería/categorías/variantes, fotos reales en cada contexto, capturas, fallback/caché y guard del runtimeAPK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. No modificar `.github/eas-update-request` ni publicar hasta derechos confirmados y autorización específica nueva de Oliver. No backend, pagos, BCV, iOS, APK o administración.
 
 ## Última entrega cerrada — C publicada; revisión física del propietario
 

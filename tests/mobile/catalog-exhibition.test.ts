@@ -37,10 +37,8 @@ describe('photographs never cross product or gallery identities', () => {
     { productId: 'existing-id-a', originalPath: 'demo/charger-1.webp', source: 1, sha256: 'a', width: 900, height: 900 },
     { productId: 'existing-id-b', originalPath: 'demo/lipstick-1.webp', source: 2, sha256: 'b', width: 900, height: 900 },
   ];
-  it('gives the same asset to every appearance of one exact product/photo', () => {
-    for (const context of ['editorial', 'results', 'recommendations', 'favorites', 'cart', 'detail']) {
-      expect(exhibitionPhoto(true, photos, 'existing-id-a', 'demo/charger-1.webp'), context).toBe(photos[0]);
-    }
+  it('returns an approved handle only for its exact product and original photo', () => {
+    expect(exhibitionPhoto(true, photos, 'existing-id-a', 'demo/charger-1.webp')).toBe(photos[0]);
   });
   it('keeps normal storage loading for production, unknown products and changed gallery paths', () => {
     for (const [enabled, id, path] of [

@@ -802,3 +802,12 @@ Solicitud nueva: fotos auténticas privadas para InicioC y primeros Buscar, sin 
 ### Segundo checkpoint CAT-EXH-01 — guard y evidencia
 
 Después de9ccc6e3: auditor confirma15/15 IDs/rutas y obliga a cruzar árbol/registro inmutables aunque falte manifiesto. Corregido y9/9Node; aviso ficha/cart también visible. Lectura pública de15fichas valida variantes/galerías/is_demo; sin modificaciones remotas. Globaltipo/lint, habitual23+8 y privada8 inicial pasan. Capturas de búsqueda/fade iniciales rechazadas por prematuras; repetición focalizada estabilizada, no presentarlas como lotefotográfico. AndroidHermes5,9MB/41recursos/0exhibición, sin EASniAPK. Lote siguebloqueado0fotos/licencias/modelos.
+
+
+### Cierre de preparación CAT-EXH-01 — 2026-10-13
+
+Infraestructura cerrada y desactivada por defecto; WIP9ccc6e3/4225185 supersedidos solo para preparación. Auditor APROBADO ronda2 tras corregir guard sin manifiesto, explicación visible y capturas prematuras. 15/15 IDs y fichas remotas verificadas por lectura pública; 0 fotos originales/modelos oficiales/licencias. 4/4policy +9/9Node, tipos/lint global; UI23 existentes +8habitual +8privado finales=39, sin reintentos. Los dos errores iniciales del test nuevo fueron selectores ambiguos, corregidos; capturas finales esperan RPC/búsqueda, fuentes e imágenes.
+
+14 PNG privados revisados por auditor; raíz inspeccionó12 PNG comparables copiados sin edición y con hashes. No son antes/después fotográfico ni prueba Android. Export web normal restaurado; AndroidHermes5,9MB con vars públicas preview/Marketplace, 41 recursos de dependencias/0exhibición; sin nativo o runtimeexacto confirmado. No EAS, APK, iOS, backend remoto, finanzas ni panel.
+
+Lote fotográfico BLOQUEADO y NO APROBADO: red oficial/CDN/Wikimedia403, identidades oficiales y permisos pendientes. Dominios necesarios guardados en borrador del entorno (no OTA); propietario debe aplicarlo para consultar fuentes. Próxima acción exacta en CATALOGO_EXHIBICION.md/ESTADO_ACTUAL.md: validar acceso, referencias y derechos, preparar12–15 y revisar imágenes reales/contextos. No publicar hasta autorización específica nueva.

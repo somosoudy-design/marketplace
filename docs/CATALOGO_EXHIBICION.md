@@ -52,11 +52,31 @@ Product Design usado realmente: `index`, `user-context`/preflight (sin memoria g
 
 Antes: 8 capturas de Inicio (claro/oscuro, 320/412, normal/estrés CSS1,6) y 8 de scroll, guardadas en `.local/catalog-exhibition/before/`; la captura normal412 clara fue inspeccionada y muestra ilustraciones y Demo. El estrés CSS no prueba fuente del sistema Android. **No existe todavía una comparación antes/después con fotografías auténticas**, ni prueba Android de este lote. No atribuir al lote las capturas nativas de C anteriores.
 
-Pruebas: política4/4; selección/procedencia/promoción9/9; tipos/lint global aprobados. Configuración habitual: Inicio/ficha23/23 y presentación8/8. Primera pasada privada8/8, evidencia repetida porque la captura de búsqueda todavía no esperaba la respuesta de UGREEN y la ficha estaba en transición. Auditor exigió estabilizar ambas; nueva pasada de capturas en curso. Web habitual/privado y AndroidHermes5,9MB exportados, 41 recursos Android de dependencias y 0 fotografías de exhibición. No ejecución/OTA nueva en Android, ni runtimeexacto nuevo confirmado.
+Pruebas finales: política **4/4**, selección/procedencia/promoción **9/9**, tipos/lint global aprobados. UI: Inicio/ficha existentes **23/23**, presentación habitual **8/8** y privada **8/8**, ambas con capturas finales estabilizadas: **39 casos focalizados**, sin reintentos. La primera ejecución del test nuevo falló en dos selectores ambiguos por pantallas retenidas; se corrigió el alcance del selector. El auditor rechazó evidencia prematura de búsqueda y transición; se corrigió la espera de respuesta UGREEN, ausencia SHEGLAM, fuentes y carga de imágenes visibles.
+
+Web habitual y privada exportadas. Se restauró `apps/mobile/dist` a modo habitual al terminar. Android Hermes **5,9 MB** exportado con las variables públicas del perfil `preview` existente y backend Marketplace remoto; se comprobó que el bundle contiene ese backend y no el URL local. **41 recursos de dependencias; 0 fotografías de exhibición**. Inventario/hash en [verificacion-android.json](catalogo-exhibicion/verificacion-android.json). No se modificaron configuración nativa, dependencias, backend, `.github` ni solicitudes de publicación. El export no acredita ejecución Android ni compatibilidad exacta del runtime: esa comprobación queda obligatoria antes de la OTA futura.
+
+
+## Revisión independiente y comparaciones
+
+**APROBADO: infraestructura vacía y restringida, ronda 2. Lote fotográfico BLOQUEADO y NO APROBADO.** El auditor comprobó 15/15 UUID/slug/rutas y 15/15 galerías/variantes frente a las lecturas públicas, registro vacío, preparador 0/15, árbol de recursos e inventario Android. Inspeccionó las 14 capturas privadas finales: Inicio, Buscar, resultados UGREEN (11), ficha, carrito y Favoritos, claro/oscuro y 320. No quedan objeciones importantes para cerrar la preparación.
+
+Cambios exigidos tras revisión: el guard también comprueba árbol y registro aunque falte el manifiesto; texto visible de precios de ejemplo en ficha/carrito; capturas estabilizadas. Se descartaron las capturas prematuras. No hay desacuerdos pendientes de esta preparación. No se validaron renderizado, fallback ni caché de fotos reales con un registro vacío; categorías y variantes requieren correspondencia explícita cuando exista material aprobado.
+
+Comparaciones verificables de la **capa técnica**, conservando ilustraciones originales (no lote fotográfico): [12 PNG sin edición y procedencia](catalogo-exhibicion/capturas-preparacion/README.md). El agente principal inspeccionó las 12 imágenes copiadas; sus hashes coinciden con los originales de las ejecuciones finales.
+
+| Estado | Habitual | Privado |
+|---|---|---|
+| Inicio 412, claro | [Captura](catalogo-exhibicion/capturas-preparacion/habitual-claro-01-home.png) | [Captura](catalogo-exhibicion/capturas-preparacion/privada-claro-01-home.png) |
+| Inicio 412, oscuro | [Captura](catalogo-exhibicion/capturas-preparacion/habitual-oscuro-01-home.png) | [Captura](catalogo-exhibicion/capturas-preparacion/privada-oscuro-01-home.png) |
+| Buscar 320, claro | [Captura](catalogo-exhibicion/capturas-preparacion/habitual-claro-06-search-320.png) | [Captura](catalogo-exhibicion/capturas-preparacion/privada-claro-06-search-320.png) |
+| Buscar 320, oscuro | [Captura](catalogo-exhibicion/capturas-preparacion/habitual-oscuro-06-search-320.png) | [Captura](catalogo-exhibicion/capturas-preparacion/privada-oscuro-06-search-320.png) |
+| Ficha 412, oscuro | [Captura](catalogo-exhibicion/capturas-preparacion/habitual-oscuro-03-product.png) | [Captura](catalogo-exhibicion/capturas-preparacion/privada-oscuro-03-product.png) |
+| Carrito 412, claro | [Captura](catalogo-exhibicion/capturas-preparacion/habitual-claro-04-cart.png) | [Captura](catalogo-exhibicion/capturas-preparacion/privada-claro-04-cart.png) |
 
 ## Próxima acción exacta
 
-1. Aplicar los dominios guardados en Configuración del entorno y volver a probar una página oficial; no pedir acceso administrativo a Supabase.
+1. Aplicar los dominios guardados en Configuración del entorno y volver a probar una página oficial; no pedir acceso administrativo a Supabase. `curl -I https://www.ugreen.com/` debe dejar de fallar con CONNECT403. Aplicar ese borrador no publica HAYAZGO.
 2. Consultar referencias exactas y archivos oficiales o fotografías autorizadas; completar modelo/variante y evidencia de derechos en `lote-01.json`. Si la ficha no identifica un modelo, solicitar la referencia al propietario; no sustituir por uno parecido.
 3. Revisar originales con el agente de catálogo y auditor. Preparar 12–15 aprobados, cubrir galería/categorías y capturar los mismos recorridos claros/oscuros a 320/412.
 4. Verificar tipos/lint, recorridos focalizados, inventario de assets, runtime exacto APK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` y auditoría independiente. **Publicar Android preview solamente después de derechos confirmados y una autorización específica nueva de Oliver.**

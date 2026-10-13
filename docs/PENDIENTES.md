@@ -8,11 +8,11 @@
 
 **Última revisión:** 2026-10-13.
 
-## CAT-EXH-01 — catálogo privado realista (en preparación / fotos bloqueadas)
+## CAT-EXH-01 — catálogo privado realista (preparación cerrada / fotos bloqueadas)
 
 Selección15 con UUID remotos actuales, capa por ID/ruta desactivada por defecto y validación de procedencia preparadas; ninguna fotografía integrada. Red oficial/CDN/Wikimedia CONNECT403; borrador de dominios guardado requiere aplicarse en Configuración del entorno. Identificación exacta de modelos/tonos y derechos aún no confirmados. `CATALOGO_EXHIBICION.md` y `catalogo-exhibicion/lote-01.json`.
 
-Próximo bloque: terminar pruebas focalizadas de infraestructura; después obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. No confundir lectura anon con acceso administrativo ni volver a tocar Supabase.
+Infraestructura revisada APROBADO: política4/4, guard/selección9/9, global tipos/lint, UI39 focalizadas, web/Hermespreview; 12 capturas comparables solo con ilustraciones. Lote fotográfico NO APROBADO. Próximo bloque: aplicar dominios del borrador, obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías/variantes y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. No confundir lectura anon con acceso administrativo ni volver a tocar Supabase.
 
 ## UX-ARQ-V2 — arquitectura aprobada; implementación progresiva
 
