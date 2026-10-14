@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: CAT-EXH-01 retomado para cinco UGREEN; investigación detenida por falta de correspondencia SKU y permiso de distribución. 0 fotografías integradas, sin nueva OTA. Referencias oficiales y paquete mínimo desde PC documentados; Supabase ya conectado, diagnóstico terminado.
+**Última actualización:** 2026-10-14: operación desbloqueo, Mi tienda como primer incremento. Paquete exacto comprobado y aprobado por auditor independiente; prerrequisitos e identidad Vault del proyecto correcto verificados en READ ONLY. Se solicita autorización expresa de esas dos migraciones; todavía no ejecutadas.
 
 ## Dónde está el trabajo
 
@@ -14,12 +14,26 @@
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Diagnóstico `6671820`; parada de lote cinco en `git log -1 origin/claude/marketplace-v1`. Infraestructura `40d37ea`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
-| Plan vigente | Primera entrega CAT-EXH-01: cinco fotografías auténticas con permiso; reutilizar la capa existente. BCV y vendedor quedan separados. C sigue publicada |
-| Objetivo actual | Recibir cinco originales utilizables y sus referencias/permisos desde la PC de Oliver; retomar integración directa, sin otra preparación de infraestructura |
+| Plan vigente | Entregas cortas: activar Mi tienda → corregir BCV local/deploy autorizado → catálogo cinco/local si falta permiso → cerrar pendientes operativos. C permanece |
+| Objetivo actual | Autorizar y ejecutar exclusivamente 20261011172600 y 20261011174200 en Marketplace; comprobar RPC, permisos y operaciones sin otra implementación |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## CAT-EXH-01 — lote de cinco detenido; originales desde PC pendientes
+## Trabajo en curso — activación Mi tienda, confirmación concreta solicitada
+
+Nueva instrucción del propietario: no limitar el trabajo al catálogo ni repetir diagnóstico; pedir autorización específica antes de estas dos migraciones, y ejecutarlas en cuanto se autoricen. Raíz ejecutor/único escritor; release_auditor independiente de lectura. Builder --check aprobado; paquete **SHA256 7bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd**, sin cambios respecto a las fuentes. Auditor APROBADO, sin cambios obligatorios.
+
+Preflight acotado real: Management confirma Marketplace/mimnotafmfasvwrclxan; ambas versiones todavía ausentes, funciones/tablas requeridas presentes, una identidad Vault. La comparación de identidad se hizo dentro de READ ONLY con rol postgres y devolvió **true**, sin extraer el valor: el lector administrativo read_only:true no permite la vista descifrada. No se ejecutó SQL de migración, mutaciones comerciales ni otra inspección general.
+
+Paquete `tools/supabase-remote/aplicar-mi-tienda-operativa.sql`: exactamente dos migraciones, transacción/lock, guard de proyecto, conflictos abortan y registradas se omiten, grants finales y schema reload. Incluye reemplazo esperado de `enforce_product_moderation()` además de cuatro RPC; preserva revisión/rechazo manual y RLS. Sin DROP/TRUNCATE/DELETE, seed ni modificación de fórmulas o procedimientos financieros. Sus pruebas previas8/8 y24/24 son históricas; en este incremento se ejecutaron congruencia/guardas/preflight y revisión, sin afirmar nueva corrida funcional.
+
+**Próxima acción exacta:** recibir respuesta explícita a la ejecución de ambas migraciones. Al autorizar, enviar el archivo exacto por Management API al único proyecto, comprobar historia/RPC/grants y verificación controlada de propietario/vendedor ajeno/producto/pedidos. Nada de db push general ni OTA: JS operativo ya publicado. No pedir autorización otra vez para el mismo despliegue aprobado. En pruebas locales fijar localhost y retirar PGHOSTADDR/servicios heredados; el auditor detectó ese límite no bloqueante del runner actual.
+
+Inventario ejecutivo por continuidad: funcionando/publicado C y navegación comprador; desarrollado sin activar los dos contratos vendedor; sin verificar autenticado nativo y persistencia remota controlada; parcial BCV directo/TLS y fotografías/integraciones pendientes de credenciales; no desarrollado borradores persistentes. No una nueva auditoría general.
+
+**Catálogo, instrucción actual:** Codex retoma búsqueda y evaluación; no devolver al propietario la búsqueda como único siguiente paso. Referencias sin derechos pueden evaluarse **solo localmente**, nunca Git público/OTA. Reutilizar infraestructura para cinco; no dejar detenido el resto del proyecto por fotografías. Las peticiones PC de la sección histórica siguiente no son la instrucción vigente. BCV financiero remoto y OTA mantienen autorizaciones específicas.
+
+## Histórico CAT-EXH-01 — parada bajo instrucción anterior
 
 Oliver autorizó una primera entrega **de cinco** fotografías, empezando UGREEN, y publicación Android preview condicional a derechos/pruebas/runtime APK5. Investigación acotada realizada con dos agentes reales de lectura, raíz único escritor. Supabase no se volvió a diagnosticar. Siete fichas oficiales/JSON comprobados HTTP200 para cinco productos, pero **0/5 correspondencias catálogo–SKU y 0/5 licencias OTA/repo aprobadas**. Los términos US §5.2 permiten uso personal/no transferible y prohíben redistribución; no se descargó/integró material sin autorización. Auditor independiente verificó fuente y emitió **RECHAZADO/BLOQUEADO para el lote**, sin objeciones a parar.
 

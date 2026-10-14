@@ -16,6 +16,12 @@ Los 5 buckets y RLS están presentes. La política llamada catalog sí cubre **c
 
 Informe `DIAGNOSTICO_SUPABASE_2026-10-14.md`. Revisar/autorización del paquete exacto ya probado antes de ejecutarlo; **no se aplicó ninguna migración ni se publicaron cambios móviles en este diagnóstico**. BCV directo falla TLS UnknownIssuer y conserva prioridad crítica.
 
+## Confirmación previa a ejecutar — operación desbloqueo, 14 de octubre
+
+Paquete existente sin cambios, builder --check y auditor independiente APROBADOS. SHA256 **7bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd**. Preflight READ ONLY confirma proyecto/identidad Vault, funciones y tablas previas y ambas migraciones ausentes. El permiso solicitado cubre solo20261011172600/20261011174200, incluidas definición de cuatro RPC y sustitución prevista del trigger function enforce_product_moderation, transacción/grants/historia/reload. Sin borrados, seed, datos comerciales modificados en despliegue o nuevas reglas financieras.
+
+Autorización expresamente requerida por el propietario en la instrucción de operación desbloqueo; no se ejecutó todavía. Una vez recibida, ejecutar y comprobar backend real/permisos/persistencia controlada, sin repetir planificación ni publicar OTA innecesaria. Las pruebas locales anteriores8/8+24/24 siguen como evidencia histórica del paquete idéntico, no una nueva corrida de este turno.
+
 ## Bloque 1 — perfil
 
 Pantalla existente `/my-store/settings`: nombre comercial, frase corta, descripción, correo de contacto,

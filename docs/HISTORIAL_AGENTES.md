@@ -846,3 +846,12 @@ Base6671820 sincronizada, diagnóstico Supabase cerrado sin repetirlo. Oliver pi
 Se entregan referencias exactas y paquete mínimo desde PC en catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md y JSON. No se descargaron/importaron fotos oficiales, reconstruyó infraestructura o ejecutaron suites visuales sin material. No nueva captura/comparación Inicio/Buscar/ficha, OTA o recepción Android. C anterior conservada. Sin backend/datos/migraciones/finanzas/panel/iOS/APK/dependencias. Product Design index/audit consultados; no fingir auditoría visual.
 
 Próximo: recibir cinco originales propios/autorizados con referencia SKU y permiso private-preview/OTA/repositorio/capturas; revisar y completar manifiesto. Adaptar exclusivamente mínimo12–15→5 cuando exista material, reutilizar assets/registro/policy/guard; pruebas/capturas/runtime y publicación preview ya autorizada si cumple, con verificación Android. No otra sesión de infraestructura, nueva solicitud de autorización OTA o diagnóstico general.
+
+
+## 2026-10-14 — Codex: operación desbloqueo, comprobación final de Mi tienda
+
+Baseff532a1 sincronizada. Instrucción nueva requiere autorización específica de dos migraciones antes de ejecutarlas, después resultados operativos y resto de frentes; catálogo ya no debe paralizar proyecto ni delegarse al propietario. Solo raíz ejecutor/escritor y release_auditor independiente. Inventario breve por continuidad, sin repetir diagnóstico14oct.
+
+Paquete exacto builder--check aprobado, SHA2567bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd. Auditor APROBADO sin cambiosSQL. Confirmación incluye sustitución de enforce_product_moderation y cuatroRPC, no solo funciones nuevas. Preflight remoto acotado READONLY: proyecto correcto, dosversionesausentes, prerequisitos y Vaultpresentes; igualdad de identidadtrue sin exponervalor. APIlectorreadonly no permitedescifrado; APIadmin conBEGINREADONLY para compararbooleano solamente, sin escrituras.
+
+No migraciones/OTAs/datoscomerciales aún. Siguienteacción: respuesta explícita de Oliver a ejecutar esas dosversiones; proceder una única vez, verificar historia/RPC/grants/permisos/operacionescontroladas y cerrar entrega funcional. No volverapedir autorización del mismo despliegue ni preparar nuevasfunciones. Runnerlocal debe aislarPGHOSTADDR heredado (observaciónauditor no bloqueante); pruebas previas8/8+24/24 no se repitieron en este turno.

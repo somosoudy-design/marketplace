@@ -8,21 +8,27 @@
 
 **Última revisión:** 2026-10-14.
 
+## Prioridad inmediata — VEN-OPS-R: activar las dos migraciones existentes
+
+Operación desbloqueo autorizada para preparación/pruebas/commits; ejecución SQL exige confirmación específica de Oliver. Paquete y auditor APROBADOS, SHA2567bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd; identidad Vault y prerrequisitos vigentes en READ ONLY. Esperar solo la autorización de20261011172600/20261011174200, ejecutarlas exactamente y verificar RPC/permisos/operaciones; no repetir preparación, nuevo diagnóstico o publicación móvil. Cambio de moderación incluido explícitamente en el alcance.
+
+Orden vigente: **Mi tienda → BCV → catálogo (con evaluación local si falta permiso) → otros pendientes esenciales**. Investigación fotográfica vuelve a Codex, no se limita a pedir archivos al propietario. Sin imágenes no autorizadas en repo público/OTA. No nuevo APK, production o iOS; despliegues financieros y OTA con autorización específica.
+
 ## Supabase — diagnóstico cerrado; activaciones pendientes
 
 **SUPA-DIAG-01 completado:** token seguro vinculado, Marketplace correcto ACTIVE_HEALTHY, lectura administrativa READ ONLY comprobada. Informe/JSON: `DIAGNOSTICO_SUPABASE_2026-10-14.md`. No repetir autenticación o inventario general, no pedir token en chat. 26 migraciones remotas, 7 cron activos y 5 buckets; catálogo 44/43 demo. Sin migraciones, cambios remotos, compras/pagos, uploads, APK o OTA.
 
-Orden vigente: **BCV/VES → vendedor → fotografías → compra integral**.
+Orden del diagnóstico histórico: BCV/VES → vendedor → fotografías → compra integral; supersedido por la prioridad inmediata de Mi tienda indicada arriba.
 
 1. **BCV-TLS-01 — crítica, lista para investigación/corrección local:** logs reales muestran UnknownIssuer, ninguna observación BCV directa; respaldo DolarAPI 877,90. Analizar cadena y confianza Edge conservando validación TLS. Casos de vigencia/Fecha Valor futura y snapshot separados; 0 tasas futuras almacenadas. Preparar solución antes de autorizar despliegue; no tasas manuales ni alterar cálculos como atajo.
 2. **VEN-OPS-R — activación remota pendiente de revisión/autorización:** faltan exactamente las migraciones 20261011172600 y 20261011174200 y sus cuatro RPC. Paquete existente probado; no repetir editor/VEN-01A/publicación. Políticas Storage actuales sí permiten catalog/stores por miembro/carpeta; no inventar otra migración por el nombre de la política. Aplicar solo el paquete concreto cuando se autorice, luego validar permisos/persistencia con cuentas permitidas.
 3. **Fotografías y compra integral:** originales/derechos del lote aún pendientes; UGREEN accesible. Métodos manuales habilitados, PayPal/Binance Pay desactivados. Pruebas remotas que creen órdenes/pagos/uploads requieren autorización posterior. La solicitud de publicar en la app no produjo cambios nuevos en este diagnóstico; preview es el canal de APK5.
 
-## CAT-EXH-01 — primera entrega cinco UGREEN (bloqueada por material)
+## CAT-EXH-01 — cinco UGREEN; continuar evaluación local/investigación a cargo de Codex
 
 Oliver redujo el primer incremento a **cinco productos**, autorizó Android preview si derechos/pruebas/runtime APK5 están confirmados y ordenó detenerse si no hay fotografías utilizables. Investigación acotada concluida: siete referencias oficiales candidatas HTTP200, **0/5 SKU correspondientes aprobados y 0/5 permisos**. Términos US/globales no conceden redistribución de packshots. Auditor independiente RECHAZADO/BLOQUEADO para lote; 0 fotografías integradas, sin nueva OTA.
 
-Entrega requerida desde PC: **cinco originales propios/autorizados con modelo/SKU, variante y permiso de inclusión en exhibición privada/OTA/repo/capturas**. Tabla de enlaces oficiales y UUID/rutas: `catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md`; datos comprobados `referencias-ugreen-cinco.json`. Los SKU candidatos no están asignados al catálogo.
+Nueva instrucción: **Codex consigue material y resuelve modelos en la exhibición; referencias sin permiso de redistribución solo para evaluación local**. La petición anterior de cinco originales desde PC queda como alternativa, no requisito para continuar otros bloques. Tabla de enlaces oficiales y UUID/rutas: `catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md`; datos comprobados `referencias-ugreen-cinco.json`. Los SKU candidatos no están asignados al catálogo.
 
 La capa existente permanece preparada y desactivada. Al recibir material, completar las cinco entradas del manifiesto, adaptar únicamente umbral12–15→5, integrar assets reales y comparar InicioC/Buscar/ficha en claro/oscuro; validar runtime exacto y recepción Android. No repetir diagnóstico Supabase, auditoría global o infraestructura. No pedir de nuevo permiso OTA si se cumplen las condiciones dadas. Galerías/variantes no cubiertas se revisarán como límites, sin exigir once fotos antes de empezar. Los otros diez productos del lote original quedan posteriores.
 
