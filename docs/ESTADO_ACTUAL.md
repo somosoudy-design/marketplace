@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: Mi tienda ACTIVADA en Marketplace con autorización expresa de Oliver. Dos migraciones aplicadas (28 totales), cuatro RPC operativos, 12/12 pruebas SQL remotas reversibles y auditor APROBADO. Sin cambios en datos comerciales originales ni OTA. Continúa BCV: corrección y pruebas locales; despliegue financiero requiere autorización concreta.
+**Última actualización:** 2026-10-14: Mi tienda ACTIVADA y verificada, commit `2ae43dd`. Además cinco referencias oficiales UGREEN visibles en evaluación WEB local privada (44 capturas, auditor APROBADO), sin licencia/correspondencia comercial para distribuir. Sin nueva OTA. BCV pendiente: acceso de red al sitio aún bloqueado, borrador del entorno guardado para aplicar; no se corrigió ni desplegó TLS/fechas.
 
 ## Dónde está el trabajo
 
@@ -13,7 +13,7 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Confirmación `f4184c6`; cierre de activación actual en `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
+| Último commit confirmado | Activación Mi tienda `2ae43dd`; cierre local del catálogo actual en `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
 | Plan vigente | Entregas cortas: activar Mi tienda → corregir BCV local/deploy autorizado → catálogo cinco/local si falta permiso → cerrar pendientes operativos. C permanece |
 | Objetivo actual | Mi tienda activada y verificada en backend; preparar corrección TLS/fechas BCV localmente sin desplegar cambios financieros todavía |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
@@ -29,7 +29,9 @@ Cuatro RPC existentes en servidor, editor INVOKER/detalle DEFINER, anon sin EXEC
 
 **Android:** no OTA necesaria. Pantallas publicadas consultan readiness con staleTime0/refetchOnMount always; Oliver debe volver a entrar Cuenta→Mi tienda. Backend verificado; sesión/formularios/guardado confirmado en Samsung físico aún por comprobar. No atribuir estas pruebas SQL a Android nativo.
 
-**Próxima acción exacta:** preparar localmente corrección BCV TLS UnknownIssuer y separación publicación/observación/Fecha Valor, pruebas de vigencia hoy/futuro/fines de semana/Caracas. Antes del despliegue financiero presentar cambio exacto y pedir autorización específica; no modificar remoto por el permiso de Mi tienda. Después evaluación fotográfica local con las fuentes disponibles: no devolver búsqueda al propietario ni bloquear el resto por permisos; nada sin licencia en Git/OTA. iOS pospuesto, sin APK nuevo o cambios de InicioC.
+**Próxima acción exacta:** aplicar el borrador guardado de configuración del entorno Codex que añade `bcv.org.ve`, `www.bcv.org.ve`, `crt.sh` conservando lo existente. Requiere revisión/publicación en la configuración del entorno; no es una publicación de la app ni cambio Supabase. El acceso cloud recibió CONNECT403 antes de TLS: distinto del UnknownIssuer observado en Edge. Tras disponer del sitio, verificar cadena/CA real sin desactivar validación, preparar corrección TLS y separación publicación/observación/Fecha Valor, probar vigencia/futuro/fines de semana/Caracas. Presentar diff exacto antes del despliegue financiero y pedir autorización específica; no heredar permiso de Mi tienda. PostgreSQL local existente arrancado sin reset/seed/migraciones para pruebas posteriores. No se ha modificado código financiero ni afirmado solución TLS.
+
+**Catálogo: resultado local adicional cerrado.** Cinco PNG oficiales candidatos obtenidos por Codex, integrados temporalmente mediante registro existente; dos exports WEB solo loopback y44 capturas comparables InicioC/Buscar/resultados/cinco fichas claro/oscuro412/320, regreso conservaUGREEN. Auditor independiente APROBADO para evaluación local tras recapturar320 esperando resultados reales. Recursos principales coherentes entre tarjetas/ficha; resto de galerías originales. Datos/variantes/modelos no se retocaron para aparentar correspondencia (65W/30W gris vs Blanco, cable pack2, power100W/hub206 candidatos). Directorio ignorado `.local/catalog-exhibition/evaluacion-cinco-20261014/`, comparación autocontenida `comparacion.html`; procedencia y límites en `CATALOGO_EXHIBICION.md` y JSON sin imágenes. Registro compartido restaurado vacío; cero imágenes en Git/OTA. Permiso de redistribución y correspondencia comercial aún pendientes; no prueba Android ni cinco fotografías de cámara verificadas. No devolver búsqueda al propietario. iOS pospuesto, sin APK o cambios de InicioC.
 
 ## Histórico CAT-EXH-01 — parada bajo instrucción anterior
 

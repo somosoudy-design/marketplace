@@ -1,8 +1,28 @@
 # Catálogo de exhibición — lote 01
 
-**Estado vigente: primera entrega de cinco UGREEN BLOQUEADA por material/SKU/derechos.** Infraestructura preparada anteriormente; seleccionados 15 productos para el plan amplio; **0 fotografías auténticas obtenidas, 0 correspondencias modelo/variante verificadas y 0 permisos de redistribución confirmados**. No publicar ni presentar las ilustraciones actuales como fotografías.
+**Estado vigente (14oct, 16:15 Caracas): cinco referencias oficiales UGREEN integradas y comprobadas exclusivamente en una exportación WEB local privada.** No son cinco fotografías autorizadas para distribuir: origen fotográfico no documentado, correspondencia comercial pendiente y cero permisos de redistribución. Registro de la aplicación compartida restaurado vacío; cero recursos oficiales en Git público o EAS Update.
 
-## Última ejecución — cinco UGREEN, investigación detenida
+## Entrega local efectiva — cinco referencias, sin nueva OTA
+
+La instrucción nueva permite referencias sin licencia solo para evaluación local y encarga la investigación a Codex. Supera la parada anterior y la petición de archivos desde PC: no pedirlos como requisito para continuar. Agente `catalog_art` investigó e inspeccionó originales; raíz descargó cinco PNG oficiales, reutilizó temporalmente el registro UUID/ruta existente, exportó antes/después y lo restauró byte por byte. No se reconstruyó la capa ni alteró el preparador de lotes autorizados.
+
+| Referencia local | Identidad elegida para evaluar | Límite frente a los datos originales |
+|---|---|---|
+| Cargador65W | UGREEN10334, gris/negro, 2C+1A | No corresponde al color Blanco seleccionado en la ficha demo |
+| Power bank20.000mAh | UGREEN25188,100W | El catálogo no fija potencia/modelo; composición incluye cable |
+| Cable100W | UGREEN70427P/10232, paquete de2 | El catálogo no declara dos unidades ni permite acreditar longitud por la foto |
+| Hub6en1 | Revodok206/15852 | Modelo y puertos del catálogo aún por validar |
+| Cargador30W | UGREEN90878, gris/negro | No corresponde al Blanco original; enchufe no completamente visible |
+
+**Resultado visual real:** InicioC conserva su estructura y muestra cargador65W/power bank/referencias en sus secciones; Buscar mantiene11 resultados UGREEN y solo las cinco portadas asignadas cambian. Las cinco fichas muestran el mismo recurso principal que sus tarjetas. Claro/oscuro y anchos412/320 comprobados, sin desbordamiento horizontal; regreso ficha→Buscar conserva consulta. 44 capturas originales antes/después. Aviso `Entorno de pruebas` y precios de ejemplo permanecen; badges Demo repetitivos ocultos por el modo existente. Otras ilustraciones aún llevan texto integrado en el archivo y las galerías secundarias permanecen originales. No se alteraron títulos, variantes, stock, precios, `is_demo`, moderación ni datos remotos para hacer coincidir fotografías.
+
+**Evidencia local privada:** `.local/catalog-exhibition/evaluacion-cinco-20261014/`: cinco PNG, manifiesto, exports web antes/después, capturas, scripts y `comparacion.html` autocontenido con32 capturas originales. El HTML advierte diferencias de modelo/color/paquete. Solo metadatos/procedencia sin píxeles se versionan en [evaluacion-local-cinco-2026-10-14.json](catalogo-exhibicion/evaluacion-local-cinco-2026-10-14.json). No subir imágenes, capturas, HTML con imágenes o exports a Git/Hosting/OTA sin permiso.
+
+**Verificación y auditor:** navegaciones públicas reales del backend de pruebas, sin sesiones ni compras. Playwright instala antes de navegar una lista permitida de RPC estables/GET públicos; bloquea `track_event`, auth, mutadores y otros destinos. `payment_methods` también quedó bloqueado por no estar en la lista: no es una prueba de pagos. Auditor `release_auditor` APROBADO exclusivamente para evaluación local tras corregir captura320 prematura (esperar respuesta UGREEN, no una tarjeta también presente en catálogo general). Revisión visual independiente de originales, comparaciones y recapturas. No valida correspondencia comercial, derechos, Android, TalkBack, carrito, favoritos autenticados o checkout. Dos exports completos, recursos cargados y registry restaurado SHA256 `5dc6425665220d8589a14502171227cea4100497054a33292453552aa13ac5f8`; assets/exports ignorados por Git.
+
+**Siguiente incremento:** resolver permiso de redistribución y correspondencias de las cinco referencias antes de integrarlas en el registro compartido. No ampliar artificialmente originales600px ni presentar packshots como fotografía de cámara confirmada. El límite antiguo768px/512KiB del preparador y lote12–15 se revisa puntualmente solo al preparar material autorizado para cinco. No afirmar actualización Android recibida: no hubo nueva OTA.
+
+## Ejecución anterior — cinco UGREEN, parada histórica superada por evaluación local
 
 Oliver autorizó integración de cinco fotografías y OTA Android preview si derechos/pruebas/runtime APK5 están confirmados; pidió parar y entregar referencias de PC si no hay material utilizable. Se cumplió la parada: **0/5 fotografías integradas**. Referencias oficiales exactas de candidatos/SKU y paquete mínimo: [CINCO_FOTOS_DESDE_PC.md](catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md); [evidencia](catalogo-exhibicion/referencias-ugreen-cinco.json).
 
