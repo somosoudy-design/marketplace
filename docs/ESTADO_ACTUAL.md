@@ -4,7 +4,18 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: Mi tienda ACTIVADA y verificada, commit `2ae43dd`. Además cinco referencias oficiales UGREEN visibles en evaluación WEB local privada (44 capturas, auditor APROBADO), sin licencia/correspondencia comercial para distribuir. Sin nueva OTA. BCV pendiente: acceso de red al sitio aún bloqueado, borrador del entorno guardado para aplicar; no se corrigió ni desplegó TLS/fechas.
+**Última actualización anterior:** 2026-10-14: Mi tienda ACTIVADA y verificada, commit `2ae43dd`. Además cinco referencias oficiales UGREEN visibles en evaluación WEB local privada (44 capturas, auditor APROBADO), sin licencia/correspondencia comercial para distribuir. Sin nueva OTA. BCV pendiente: acceso de red al sitio aún bloqueado, borrador del entorno guardado para aplicar; no se corrigió ni desplegó TLS/fechas.
+
+## BCV/VES — corrección local en verificación (2026-10-14)
+
+Misión vigente: únicamente recuperar pagos VES. Mi tienda permanece activada; no volver a tocarla.
+Reproducción local con comprador/obligaciones/cotización reales: tasa guardada del 9oct falla por `rate_unavailable` el 10/11/12oct (feriado). El defecto está en `current_rate`: max_age2000 mide horas corridas en vez de vigencia bancaria. También usa tasas futuras, mientras ingest_rate rechaza publicarlas antes de Fecha Valor.
+
+Implementado `20261014202228_bcv_effective_dates.sql`: calendario bancario2026 verificado, selección efectiva en Caracas, almacenamiento de próxima Fecha Valor sin uso anticipado, snapshot futuro excluido; importes/márgenes/redondeo intactos. Parsing sin fechas inventadas. BCV directo conserva TLS seguro y su error; respaldo DolarAPI permanece. No acceso cloud a www.bcv.org.ve/bcv.org.ve/ve.dolarapi.com, no reintentos ni CA improvisada.
+
+Verificado: BCV comprador16/16, core52/52, funciones17/17 (incluye UnknownIssuer→respaldo→ambos métodos por REST), E2E12/12, typecheck/lint. DB113/114: único fallo de búsqueda `lampara-mesa-lino` también reproducido con las tres funciones financieras ORIGINALES en clon local `kora_bcv_baseline` (12/13). Sin regresión de pagos/precios/RLS.
+
+Pendiente antes de cerrar: ampliar límites/snapshot, preparar paquete exacto revisable y ensayar aplicación/reintento/guards en un clon LOCAL. Luego commit/push y presentar autorización de despliegue de UNA migración + rates-sync/panel-api. Ningún despliegue remoto, APK u OTA autorizado o ejecutado. Lectura remota específica solo de últimas3 observaciones USD/VES; no diagnóstico global.
 
 ## Dónde está el trabajo
 

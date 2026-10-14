@@ -31,6 +31,21 @@ function assertPlausible(source: string, rate: number, min: number, max: number)
   if (!Number.isFinite(rate) || rate < min || rate > max) throw new RateParseError(source, `implausible rate ${rate}`);
 }
 
+/** A provider date is required: fetching an undated value must never make it fresh. */
+function providerTimestamp(source: string, input: unknown): string {
+  if (typeof input !== 'string') throw new RateParseError(source, 'provider date missing');
+  const m = input.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,3})?(Z|[+-]\d{2}:\d{2})$/);
+  if (!m) throw new RateParseError(source, 'invalid provider date');
+  const [, year, month, day, hour, minute, second] = m;
+  const days = new Date(Date.UTC(Number(year), Number(month), 0)).getUTCDate();
+  const parsed = new Date(input);
+  if (Number(month) < 1 || Number(month) > 12 || Number(day) < 1 || Number(day) > days
+    || Number(hour) > 23 || Number(minute) > 59 || Number(second) > 59 || !Number.isFinite(parsed.getTime())) {
+    throw new RateParseError(source, 'invalid provider date');
+  }
+  return parsed.toISOString();
+}
+
 // ---------- BCV (official publication on bcv.org.ve; no documented API) ----------
 // The homepage renders: <div id="dolar"> ... <strong> 36,12345678 </strong> ... and a
 // "Fecha Valor" <span ... content="2024-05-02T00:00:00-04:00">. If the markup changes the adapter
@@ -41,7 +56,8 @@ export function parseBcvHtml(html: string): RateObservation {
   const rate = parseLocaleNumber(block[1]!);
   assertPlausible('bcv_official', rate, 1, 1_000_000);
   const date = html.match(/Fecha\s+Valor[\s\S]{0,400}?content=["']([^"']+)["']/i);
-  const observedAt = date ? new Date(date[1]!).toISOString() : new Date().toISOString();
+  // Fecha Valor may be the NEXT banking day. Store it unchanged; the database decides when it applies.
+  const observedAt = providerTimestamp('bcv_official', date?.[1]);
   return { source: 'bcv_official', pair: 'USD/VES', rate, observedAt, raw: { value: block[1], valueDate: date?.[1] ?? null } };
 }
 
@@ -51,7 +67,7 @@ export function parseDolarApi(json: unknown): RateObservation {
   const rate = Number(j?.promedio ?? j?.venta);
   assertPlausible('dolarapi_oficial', rate, 1, 1_000_000);
   if (j.fuente && j.fuente !== 'oficial') throw new RateParseError('dolarapi_oficial', `unexpected source ${j.fuente}`);
-  return { source: 'dolarapi_oficial', pair: 'USD/VES', rate, observedAt: new Date(j.fechaActualizacion ?? Date.now()).toISOString(), raw: j };
+  return { source: 'dolarapi_oficial', pair: 'USD/VES', rate, observedAt: providerTimestamp('dolarapi_oficial', j.fechaActualizacion), raw: j };
 }
 
 // ---------- Binance P2P (market reference only, never "official") ----------

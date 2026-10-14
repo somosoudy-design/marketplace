@@ -260,6 +260,47 @@ Deno.test('rates-sync: a parsed value is stored through ingest_rate', async () =
   await service('/rest/v1/exchange_rates?source_code=eq.kraken_usdt', { method: 'DELETE' });
 });
 
+Deno.test('rates-sync: BCV UnknownIssuer keeps TLS failure explicit; DolarAPI fallback enables both VES quotes', async () => {
+  const [original] = await service<Record<string, unknown>[]>('/rest/v1/rate_policies?pair=eq.USD%2FVES');
+  const localDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Caracas', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  const [day] = await service<{ day: string }[]>(`/rest/v1/bcv_banking_calendar?day=lte.${localDate}&is_business_day=eq.true&order=day.desc&limit=1&select=day`);
+  assert(day, 'verified banking calendar required');
+  const effective = `${day.day}T00:00:00-04:00`;
+  const before = await service<{ id: number }[]>('/rest/v1/exchange_rates?source_code=eq.dolarapi_oficial&select=id');
+  const calls: string[] = [];
+  const providers: typeof fetch = (input) => {
+    const url = String(input);
+    calls.push(url);
+    assert(url.startsWith('https://'), 'provider connections must remain HTTPS');
+    if (url === 'https://www.bcv.org.ve/') return Promise.reject(new Error('invalid peer certificate: UnknownIssuer'));
+    if (url === 'https://ve.dolarapi.com/v1/dolares/oficial') {
+      // Reproducible provider fixture. Real recorded value, date adapted to the local test calendar.
+      return Promise.resolve(new Response(JSON.stringify({ fuente: 'oficial', promedio: 877.9023, fechaActualizacion: effective, test: true })));
+    }
+    return Promise.reject(new Error('other providers offline in this test'));
+  };
+  try {
+    await service('/rest/v1/rate_policies?pair=eq.USD%2FVES', { method:'PATCH', body:JSON.stringify({ primary_source:'bcv_official', fallback_sources:['dolarapi_oficial'], manual_rate:null, max_age_minutes:2000 }) });
+    const result = await (await call(ratesSync({ env:envWith({}), fetch:providers }), {}, { authorization:`Bearer ${SERVICE}` })).json();
+    assert(result.results.find((r: { source: string; error: string }) => r.source === 'bcv_official').error.includes('UnknownIssuer'));
+    eq(result.results.find((r: { source: string }) => r.source === 'dolarapi_oficial').ok, true);
+    eq(calls.filter((u) => u === 'https://www.bcv.org.ve/').length, 1, 'one BCV attempt, no insecure retry');
+    const status = await rpc<{ available:boolean; source:string; is_fallback:boolean; rate:number }>('rate_status', { p_pair:'USD/VES' });
+    eq([status.available, status.source, status.is_fallback, status.rate], [true, 'dolarapi_oficial', true, 877.9]);
+    for (const method of ['pago_movil', 'transferencia_ves']) {
+      const { quote } = await orderAndQuote(method);
+      eq(quote.currency, 'VES');
+      const [stored] = await service<{ rate_source:string; rate_applied:number; status:string }[]>(`/rest/v1/payment_quotes?id=eq.${quote.id}&select=rate_source,rate_applied,status`);
+      eq([stored.rate_source, Number(stored.rate_applied), stored.status], ['dolarapi_oficial', 877.9, 'open']);
+    }
+  } finally {
+    const { pair: _pair, updated_at: _updated, ...policy } = original;
+    await service('/rest/v1/rate_policies?pair=eq.USD%2FVES', { method:'PATCH', body:JSON.stringify(policy) });
+    const after = await service<{ id:number }[]>('/rest/v1/exchange_rates?source_code=eq.dolarapi_oficial&select=id');
+    for (const row of after) if (!before.some((b) => b.id === row.id)) await service(`/rest/v1/exchange_rates?id=eq.${row.id}`, { method:'DELETE' });
+  }
+});
+
 Deno.test('push-dispatch: sends once, drops dead devices, never runs for others', async () => {
   const h = pushDispatch;
   eq((await call(h({ env: envWith({}), fetch: noNetwork }), {}, { authorization: `Bearer ${ANON}` })).status, 401);

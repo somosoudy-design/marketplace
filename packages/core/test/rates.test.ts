@@ -23,6 +23,16 @@ describe('rate adapters', () => {
   it('BCV: fails loudly when markup changes', () => {
     expect(() => parseBcvHtml('<html>maintenance</html>')).toThrow(/USD block not found/);
   });
+  it('BCV: retains future Fecha Valor without changing it to fetch time', () => {
+    expect(parseBcvHtml(BCV_FIXTURE.replace('2026-10-09', '2026-10-13')).observedAt).toBe('2026-10-13T04:00:00.000Z');
+  });
+  it('official adapters refuse missing, ambiguous or impossible dates instead of inventing freshness', () => {
+    expect(() => parseBcvHtml(BCV_FIXTURE.replace(/content="[^"]+"/, ''))).toThrow(/provider date missing/);
+    for (const date of [undefined, 'invalid', '2026-10-14', '2026-02-30T00:00:00-04:00', '2026-10-14T25:00:00Z']) {
+      expect(() => parseDolarApi({ fuente: 'oficial', promedio: 877.9023, fechaActualizacion: date })).toThrow(/provider date/);
+      if (date) expect(() => parseBcvHtml(BCV_FIXTURE.replace('2026-10-09T00:00:00-04:00', date))).toThrow(/provider date/);
+    }
+  });
   it('DolarApi oficial', () => {
     const r = parseDolarApi({ fuente: 'oficial', nombre: 'Oficial', compra: null, venta: null, promedio: 36.53, fechaActualizacion: '2026-10-09T13:00:00.000Z' });
     expect(r.rate).toBe(36.53);
