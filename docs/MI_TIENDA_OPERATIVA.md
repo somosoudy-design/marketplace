@@ -2,17 +2,19 @@
 
 Oliver probó VEN-01A en Android y solicitó administración móvil real. Base `887197b`;
 orden autorizado: perfil, catálogo, acciones de pedidos. Conservar la lectura/navegación ya publicada.
-**Estado vigente (18:59 UTC):** Oliver autorizó publicar primero; EAS preview/guard APK 5 aprobados,
+**Estado histórico (11 de octubre, 18:59 UTC):** Oliver autorizó publicar primero; EAS preview/guard APK 5 aprobados,
 OTA `01a12c4b` recibida en emulador. Dos migraciones nuevas probadas solo localmente, estado remoto sin
 verificar por falta de acceso. Perfil usa contrato existente; catálogo/acciones mantienen consulta/panel si
 falta soporte del servidor. Ningún APK nuevo ni cambio de servicio/dato backend remoto, iOS o checkout.
 La corrección de tasas BCV conserva su prioridad crítica separada.
 
-## Actualización de diagnóstico — 14 de octubre de 2026
+## Diagnóstico remoto confirmado — 14 de octubre de 2026
 
-Solo lectura, sin nueva implementación/OTA o SQL remoto. Legacy seller_dashboard deniega anon401/42501; seller_editor_ready,seller_orders_ready y seller_fulfillment_detail devuelven404/PGRST202. Confirma indisponibilidad en API, **no ausencia definitiva de versiones**: historia y pg_proc pendientes de acceso administrativo seguro. Management API401sin token personal vinculado; red pública/Storage funcionan, por lo que el antiguo CONNECT403 del proyecto ya no explica el bloqueo actual.
+Acceso administrativo recuperado mediante token personal seguro; Marketplace ACTIVE_HEALTHY, 26 migraciones. **No están aplicadas 20261011172600_seller_product_editor ni 20261011174200_seller_fulfillment_detail.** Los cuatro RPC nuevos tampoco existen en pg_proc. El 404/PGRST202 ya está confirmado como falta de activación, no solo caché. Los RPC anteriores y sus grants permanecen; no reconstruir los editores ni publicar para intentar aplicar SQL.
 
-Informe `DIAGNOSTICO_SUPABASE_2026-10-14.md`. No ejecutar el paquete preparado ni republicar como remedio en esta fase; completar primero lectura protegida, luego revisar acciones con Oliver.
+Los 5 buckets y RLS están presentes. La política llamada catalog sí cubre **catalog y stores**, con pertenencia/carpeta o admin; 21 hashes de políticas coinciden con local. No falta por ese motivo una política de logos/portadas. No se hicieron uploads ni operaciones autenticadas remotas; persistencia/aislamiento de vendedores todavía requieren validación posterior.
+
+Informe `DIAGNOSTICO_SUPABASE_2026-10-14.md`. Revisar/autorización del paquete exacto ya probado antes de ejecutarlo; **no se aplicó ninguna migración ni se publicaron cambios móviles en este diagnóstico**. BCV directo falla TLS UnknownIssuer y conserva prioridad crítica.
 
 ## Bloque 1 — perfil
 
@@ -219,11 +221,7 @@ no republicar ni cambiar permisos del cliente como remedio.
 
 ### Activación pendiente del servidor — paquete preparado
 
-No hubo SQL remoto. Las llamadas desde este cloud al proyecto y api.github.com fallan por Tunnel 403,
-no por un fallo demostrado del servidor. No hay conector/credencial Supabase. Borrador de configuración
-cloud aditiva guardado para api.github.com/api.supabase.com/Marketplace y entrada segura
-`SUPABASE_ACCESS_TOKEN` limitada a api.supabase.com; necesita publicación/configuración del entorno,
-no está activo. No pedir tokens/contraseñas por chat ni extraer credenciales del proxy.
+**Actualización 14oct:** las restricciones anteriores de red/credencial están resueltas. El diagnóstico remoto de solo lectura confirmó las dos migraciones ausentes; no hubo SQL de activación. Token personal seguro ya vinculado, sin solicitar contraseñas ni claves por chat. El paquete debe revisarse y autorizarse antes de ejecutar.
 
 Se preparó `tools/supabase-remote/aplicar-mi-tienda-operativa.sql` con builder específico
 `build-mi-tienda.py`: **exactamente** `20261011172600_seller_product_editor.sql` y

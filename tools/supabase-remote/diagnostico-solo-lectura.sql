@@ -50,10 +50,10 @@ select id, source_code, pair, rate, observed_at, fetched_at,
 select id, source_code, pair, rate, observed_at, fetched_at
   from public.exchange_rates where observed_at > now() order by observed_at, id limit 30;
 
-select public.rate_status('USD/VES') as usd_ves,
-       public.rate_status('USDT/VES') as usdt_ves,
-       public.rate_status('USD/USDT') as usd_usdt,
-       public.pricing_today() as pricing_today;
+-- Check rate_status / pricing_today through the existing anon REST client separately.
+-- Management API read_only uses supabase_read_only_user, which can deny execution of
+-- those security-definer functions even when anon is correctly authorized. Never change
+-- grants or switch to service_role to work around that diagnostic restriction.
 -- A future valid_until is an expiration boundary, not evidence of a future BCV rate.
 select id, taken_at, valid_until, taken_at > now() as future_snapshot,
        bcv_rate, bcv_source, usdt_ves_rate, usdt_source, usd_usdt_rate, gap_pct

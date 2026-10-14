@@ -26,7 +26,9 @@ Lectura pública del catálogo remoto de pruebas el 2026-10-13 mediante RPC `sea
 
 ## Actualización — 14 de octubre de 2026
 
-Diagnóstico backend independiente de solo lectura: Supabasepúblico y dos recursosStorage responden; catálogo público44/43demo. GET UGREEN200, por lo que ese bloqueoCONNECT403 ya no permanece confirmado. Los errores de red descritos abajo son históricos del13oct; no repetirlos como estado actual. Contenidos,modelos y derechos siguen sin verificar; registrofotográfico vacío. Autenticación administrativa Supabase pendiente no impide investigar fotografías públicas/autorizadas. No se activó la capa ni subió material. Ver `DIAGNOSTICO_SUPABASE_2026-10-14.md`.
+**Diagnóstico protegido completado:** Supabase administrativo conectado de forma segura, 5 buckets y RLS/políticas presentes; la política de miembros cubre catalog y stores. 44 productos totales, 43 demo, 1 no demo; 104 filas de imágenes, 100 rutas demo y 4 otras. No se certifican autenticidad/licencias por su ruta ni se cambia su clasificación. El lote privado de 15 productos continúa con 0 recursos autorizados; no se descargaron ni subieron fotografías durante este diagnóstico. No repetir la preparación técnica ni tratar el acceso Supabase como bloqueo vigente.
+
+Diagnóstico backend independiente de solo lectura: Supabasepúblico y dos recursosStorage responden; catálogo público44/43demo. GET UGREEN200, por lo que ese bloqueoCONNECT403 ya no permanece confirmado. Los errores de red descritos abajo son históricos del13oct; no repetirlos como estado actual. Contenidos,modelos y derechos siguen sin verificar; registrofotográfico vacío. Autenticación administrativa Supabase recuperada; la investigación de fotografías públicas/autorizadas tampoco depende de acceso administrativo. No se activó la capa ni subió material. Ver `DIAGNOSTICO_SUPABASE_2026-10-14.md`.
 
 ## Investigación real y límites
 

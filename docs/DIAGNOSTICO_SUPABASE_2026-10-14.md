@@ -1,89 +1,121 @@
-# Supabase Marketplace — diagnóstico de solo lectura
+# Supabase Marketplace — conexión recuperada y diagnóstico de solo lectura
 
-**14 de octubre de 2026, consultas públicas a las 14:09–14:17, hora de Venezuela (UTC−4).**
-Rama `claude/marketplace-v1`, base `40d37ea`. Proyecto objetivo exclusivo: **Marketplace / `mimnotafmfasvwrclxan`**. No se hizo ninguna solicitud al proyecto prohibido. Evidencia pública sanitizada: [JSON](DIAGNOSTICO_SUPABASE_2026-10-14.json).
+**14 de octubre de 2026, hora de Venezuela (UTC−4).** La conexión administrativa está recuperada: Management API confirma **Marketplace / `mimnotafmfasvwrclxan` / ACTIVE_HEALTHY**. Consultas protegidas desde las 14:44; última consulta pública a las 14:48. Rama `claude/marketplace-v1`, base del módulo `3305278`. [Evidencia sanitizada](DIAGNOSTICO_SUPABASE_2026-10-14.json).
 
-## Conexión comprobada y límite actual
+El token personal quedó vinculado por el gestor seguro del entorno. Se usa en memoria, exclusivamente hacia `api.supabase.com`; no se imprimió, versionó ni incorporó a la app. El ejecutor sigue siendo Linux en la nube, sin acceso a la PC física. CLI 2.120.0 disponible; no fue necesario instalar dependencias, enlazar la CLI ni obtener la clave `service_role` o contraseña de la base. No hay conector Supabase callable en esta sesión.
 
-El ejecutor disponible es **Linux en la nube**, no la PC física del propietario. La CLI **2.120.0** ya instalada funciona mediante `pnpm exec supabase`; no se instalaron ni actualizaron dependencias. No hay conector Supabase accesible en las herramientas de esta sesión ni proyecto CLI enlazado.
+La respuesta 401 y el requisito sin vincular del primer informe son **históricos y resueltos**. La sesión de lectura administrativa devuelve `supabase_read_only_user` y `transaction_read_only:on`. Cada consulta usa `read_only:true`, BEGIN TRANSACTION READ ONLY, timeout local y ROLLBACK. Ninguna solicitud se dirigió al proyecto prohibido.
 
-Se reutilizó la clave pública anon del perfil preview existente, comprobando URL y claims `ref`/`role` sin mostrar el token. Las consultas de catálogo, tasas y Auth llegan al proyecto correcto. **Esto no es acceso administrativo.** Management API `GET /v1/projects/mimnotafmfasvwrclxan` devuelve **401**; `SUPABASE_ACCESS_TOKEN` está ausente en el proceso y su requisito del entorno tiene `has_saved_binding:false`. El transporte hacia Management API funciona: el bloqueo actual es autenticación, no el antiguo CONNECT403. El nombre visible Marketplace no se pudo reconfirmar por Management API.
+## Resumen del estado real
 
-Acción necesaria del propietario desde su PC:
-
-1. En su cuenta de [Supabase → Access Tokens](https://supabase.com/dashboard/account/tokens), obtener un token personal temporal autorizado para consultar Marketplace. Si la cuenta ofrece restricción de alcance, usar el mínimo necesario.
-2. En **Codex → Configuración del entorno → Secretos**, vincularlo al requisito ya declarado **`SUPABASE_ACCESS_TOKEN`**, limitado a `api.supabase.com`. Guardar/aplicar la configuración. **No pegarlo en chat, Git, variables `EXPO_PUBLIC_*` ni sustituirlo por la clave `service_role` del proyecto.** No hace falta contraseña de la base para este método.
-3. Reanudar las consultas protegidas: verificar primero ID/nombre mediante el GET del proyecto exacto y después consultar metadatos/SQL en transacciones READ ONLY. No listar ni conectar otros proyectos.
-
-No se guardó otro requisito duplicado ni se cambiaron scripts o secretos del entorno. Estar conectado al dashboard en la PC no transfiere esa sesión al ejecutor cloud. Al cerrar se volvió a confirmar que el requisito sigue sin vincular y que la variable no está disponible: **diagnóstico público terminado; conexión administrativa y diagnóstico protegido pendientes**.
-
-## ✅ Servicios que responden
-
-| Área | Evidencia remota | Qué acredita |
+| Estado | Área | Resultado comprobado |
 |---|---|---|
-| Auth | GET health: HTTP 200 | Servicio accesible; no se inició sesión ni creó usuarios |
-| Catálogo público | RPC search_products: HTTP 200 | **44 productos visibles**, 43 demo y 1 no demo; 44 publicados en el resultado público |
-| Estados de catálogo | 29 disponibles, 3 en camino, 9 por encargo, 2 reservables, 1 agotado | Datos originales, sin alterarlos; no inventario completo de publicaciones privadas |
-| Fotografías públicas | Imagen demo del bucket catalog y logo stores: HTTP 200, WebP | Lectura de dos recursos existentes; no permiso para subir/editar |
-| Funciones Edge | GET rates-sync/push-dispatch/panel-api: HTTP 405 | Rutas desplegadas/respondiendo; no se ejecutaron operaciones POST, sincronización ni envíos |
-| Vendedor existente | GET seller_dashboard: HTTP 401 / 42501 | RPC presente y ejecución anónima correctamente denegada; no prueba con vendedor autenticado |
-| Métodos VES | Pago Móvil y transferencia habilitados,manuales | Configuración pública; no pago/cotización/conciliación probados |
+| ✅ | Conexión y Auth | Proyecto correcto ACTIVE_HEALTHY; Management API y Auth responden |
+| ✅ | Migraciones | **26 aplicadas**, de foundation a avatars; repositorio/local tienen 28 |
+| ✅ | Automatización | **7 trabajos activos**; todos tienen ejecuciones succeeded durante las últimas 24 horas |
+| ✅ | Fuentes de respaldo/mercado | DolarAPI, Binance P2P y Kraken responden en los resultados del cron |
+| ✅ | Storage | 5 buckets; imágenes públicas accesibles y políticas de subida por tienda presentes |
+| ✅ | Base de vendedor | seller_dashboard, seller_fulfillments, seller_sales y advance_fulfillment presentes, con restricciones de ejecución |
+| ⚠️ | BCV directo | **0 observaciones almacenadas**; las 12 respuestas de sincronización examinadas fallan por certificado TLS |
+| ⚠️ | Compras y subida autenticada | Configuración comprobada; no se crearon órdenes, cotizaciones, pagos ni archivos para probar operaciones remotas |
+| ❌ | Editor y detalle operativo de vendedor | Dos migraciones ausentes del historial y cuatro RPC nuevos ausentes de pg_proc |
+| ❌ | PayPal / Binance Pay | Deshabilitados, pending_credentials; no confundir preparación con integración activada |
+| ❌ | Lote fotográfico de exhibición | Infraestructura y 15 IDs preparados; 0 originales/modelos/licencias aprobados en ese lote |
 
-Las cifras del catálogo son **visibles por anon**, no el total de tablas privadas. El producto no demo ya existía en el backend: confirmar con el propietario su clasificación antes de evaluar ventas públicas; no se cambió ninguna marca.
+ACTIVE_HEALTHY describe el estado del proyecto, no certifica que todas sus operaciones comerciales funcionen. Una ejecución cron succeeded tampoco certifica éxito de cada proveedor.
 
-## ⚠️ Tasas BCV y pagos en bolívares
+## 1. Migraciones y funciones desplegadas
 
-Estado que **elige el backend** a las 14:09. No presentar estas observaciones como verificación independiente de la publicación oficial BCV.
+Historial remoto: **26 versiones**, incluyendo `20261009233831_pricing_engine`, `20261010003308_divisas_methods_pending` y `20261010151906_avatars`. No falta ninguna de las primeras 26 versiones del repositorio. Las únicas diferencias de historia frente a las 28 locales son:
 
-| Par | Tasa aplicada / base | Fuente elegida | Observación, Venezuela | Estado |
-|---|---|---|---|---|
-| USD/VES |877,90 /877,9023 |dolarapi_oficial |14 oct,00:00 |available:true; **fallback:true**,manual:false |
-| USDT/VES |1.012,43 /1.012,4285 |binance_p2p |14 oct,14:00 |available:true;fallback:false;manual:false |
-| USD/USDT |1,001 /1,001021 |kraken_usdt |14 oct,14:00 |available:true;fallback:false;manual:false |
-
-`bcv_official` está registrado/habilitado con adaptador bcv_html, pero la selección USD/VES actual utiliza **el agregador de respaldo**. Su causa no está comprobada: pueden faltar datos válidos, fallar la consulta/parsing, o intervenir la política; hacen falta filas y logs protegidos. La clasificación `kind=official` de DolarAPI en la configuración no acredita haber verificado BCV directamente.
-
-`pricing_today` devuelve snapshot **3**, tomado el 14 de octubre a las 01:40 y válido hasta el 15 de octubre a las 07:40 (Venezuela): USD/VES 877,90 desde `dolarapi_oficial`, USDT/VES 1.010,53 desde `binance_p2p`, USD/USDT 1,0011 y brecha 15,1076 %. Es un snapshot todavía vigente según la respuesta. **valid_until futuro es expiración; no demuestra que haya una tasa BCV futura registrada.** Tampoco se contrastó su vigencia con la política privada vigente.
-
-Tasas futuras/histórico/último fetched_at/políticas/errores por fuente: **sin verificar**, requieren lectura administrativa. Observaciones recientes de Binance/Kraken sugieren ingestión reciente, pero no demuestran que pg_cron ni todas las fuentes funcionen. Un cron “succeeded” puede significar únicamente que encoló HTTP; incluso una respuesta Edge200 puede incluir fuentes fallidas.
-
-Riesgos encontrados **en el código del repositorio**, pendientes de contrastar con el despliegue: BCV usa Fecha Valor como observed_at (`parseBcvHtml`); ingest_rate rechaza observaciones más de10min futuras; current_rate no limita la selección por una fecha de vigencia superior; pricing_snapshot_current filtra expiración pero no taken_at futuro. Esto exige separar fecha de publicación/obtención de fecha de vigencia y probar el cambio de día venezolano. **No es diagnóstico definitivo de la causa remota ni autorización para cambiar esos procedimientos.** No se modificaron tasas/cálculos.
-
-## ❌ Nuevos RPC vendedores no disponibles en la API actual
-
-| Migración esperada | RPC comprobado | Resultado |
+| Migración | Historial remoto | Funciones correspondientes |
 |---|---|---|
-|20261011172600_seller_product_editor |seller_editor_ready() |404/PGRST202 |
-|20261011174200_seller_fulfillment_detail |seller_orders_ready() |404/PGRST202 |
-|20261011174200_seller_fulfillment_detail |seller_fulfillment_detail(uuid,uuid),GET |404/PGRST202 |
+| `20261011172600_seller_product_editor` | **No aplicada** | `seller_save_product`, `seller_editor_ready`: ausentes |
+| `20261011174200_seller_fulfillment_detail` | **No aplicada** | `seller_fulfillment_detail`, `seller_orders_ready`: ausentes |
 
-El control seller_dashboard devuelve permiso denegado en lugar de función ausente. Esto apoya la indisponibilidad de los RPC nuevos; **no certifica que falten sus versiones en schema_migrations**: es necesario consultar historial y pg_proc, pues también existe la posibilidad de caché/despliegue inconsistente. No se llamó seller_save_product, advance_fulfillment, set_product_costs ni ningún RPC mutador.
+Las respuestas REST 404/PGRST202 quedan corroboradas por la historia y pg_proc: **el bloqueo no es solamente caché PostgREST**. No se ejecutó ningún paquete, migración ni reload schema.
 
-La app ya conserva lectura/panel cuando los checks devuelven PGRST202; **no repetir VEN-01A, editor, flujos o publicación móvil**. El paquete exacto de activación ya está preparado/probado en `tools/supabase-remote/aplicar-mi-tienda-operativa.sql`, pero **NO se ejecutó**.
+Se revisaron existencia, firmas, SECURITY DEFINER, volatilidad y grants de las funciones relevantes. Los cuatro RPC de consulta/acción de vendedor ya existentes solo conceden EXECUTE a authenticated/service_role; anon queda denegado. `require_store_member` permanece como helper interno. Los 14 hashes de funciones que coinciden con el stack local incluyen los procedimientos financieros y de autorización examinados. `enforce_product_moderation` difiere, coherente con la redefinición incluida en la migración de editor todavía local; no se interpreta automáticamente como un fallo remoto.
 
-## Datos protegidos aún sin verificar
+### Funciones Edge
 
-| Comprobación pedida | Estado real |
-|---|---|
-| Historial de migraciones |No leído remoto. Repositorio/local tienen28; el dato23 del9oct es histórico, no estado actual confirmado |
-| Versiones/código/permisos Edge |Solo presencia HTTP; versiones,JWT y configuración no leídos por Management API |
-| pg_cron/trabajos/errores |No leídos remoto; no confirmar “6 activos” por documentación antigua |
-| Vigentes/futuras/todas las fuentes |RPC público actual comprobado; filas históricas/futuras y políticas privadas pendientes |
-| Storage/RLS/grants/aislamiento |Dos archivos públicos200. Listado de buckets con anon200[] **no significa que no haya buckets**; permisos de escritura no verificados |
-| Roles vendedores/admin |No simulados, no sesión ajena ni privilegios concedidos |
-| Compras completas |No ejecutadas en remoto; no pedidos, pagos ni notificaciones reales |
+| Función | Estado / versión | verify_jwt |
+|---|---|---|
+| rates-sync | ACTIVE / 1 | false |
+| push-dispatch | ACTIVE / 1 | false |
+| panel-api | ACTIVE / 1 | true |
+| assets-mirror | ACTIVE / 1 | false |
 
-## Plan de activación para revisar, sin ejecutarlo
+`assets-mirror` también está desplegada: el inventario anterior de tres funciones era incompleto. Los jobs de rates/push emplean el mecanismo existente de token de trabajo; nombres `kora_project_url` y `kora_job_token` presentes en Vault, sin extraer sus valores. Se comprobó metadata de despliegue y resultados ya guardados, no se invocaron POST de sincronización, envío, panel o mirror ni se extrajeron secretos Edge.
 
-0. **Completar autenticación segura y el diagnóstico protegido.** Confirmar proyecto por Management API; consultar historia/funciones/políticas/cron/Storage en READ ONLY. Este paso ya está autorizado como lectura; los cambios posteriores requieren decisión del propietario.
-1. **BCV y pagos VES:** determinar por qué no se selecciona BCV directo; verificar última consulta/ingestión, reglas de freshness, Fecha Valor futura y zonaAmerica/Caracas. Comparar snapshot/tasa de cotización y bloquear datos vencidos según las reglas actuales. Preparar corrección mínima y casos de hoy/mañana/cambio de día/source caída **localmente**, sin desplegar, cambiar cifras ni ejecutar pagos.
-2. **Vendedor:** verificar ambas versiones y cuatro RPC/grants. Si faltan, presentar el paquete existente de solo esas dos migraciones para autorización independiente; si están, investigar diferencias/cache y presentar la corrección concreta. **No db push general, rerun de todas las migraciones, permisos cliente o nueva OTA como atajo.** No ejecutar siquiera reload schema en esta fase.
-3. **Catálogo fotográfico:** UGREEN200 ahora confirma que el bloqueo anterior de red cambió. Supabase público/Storage ya responden. Los15 IDs/capa privada están preparados; siguen faltando modelos/tonos exactos, originales y derechos. No necesita admin para comenzar investigación; uploads/migración de medios a Storage requieren autorización futura. No cambiar los44 productos ni activar exhibición ahora.
-4. **Compra integral:** reutilizar suites locales ya existentes tras BCV/vendedor; después definir cuenta/datos/métodos de prueba y revisión Android. Pruebas remotas que creen órdenes o pagos requieren autorización explícita posterior; no ejecutarlas como parte de este diagnóstico.
+## 2. BCV, tasas vigentes y futuras
 
-## Consultas preparadas y verificación
+Respuesta pública a las **14:48 de Venezuela**, con últimas observaciones de mercado de las 14:30:
 
-- [Diagnóstico SQL base](../tools/supabase-remote/diagnostico-solo-lectura.sql): historia, RPC/privilegios/hash sin cuerpos, tasas/futuros, snapshots, catálogo agregado, buckets/RLS y disponibilidad de dominios opcionales. **BEGIN TRANSACTION READ ONLY + timeout local + ROLLBACK**. Verificar ID en dashboard/Management API antes de usarlo.
-- [Cron/HTTP/Vault metadata](../tools/supabase-remote/diagnostico-cron-solo-lectura.sql): ejecutar cada transacción solo si existe la relación. No imprime comandos cron, mensajes/brutosHTTP, headers, datos de clientes ni secretos descifrados.
-- SQL base ejecutado **solo contra PostgreSQL 17 local**, con `transaction_read_only:on`, sin escrituras, seed ni migraciones. Sus 23 sentencias pasaron la revisión estructural; las 13 del opcional también. Cron/net están ausentes localmente: **no se ejecutó esa parte ni se afirma su validación en esos dominios**. No se repitieron UI/core/panel ni pruebas financieras de módulos ya cerrados.
-- No hubo cambios a aplicación, backend remoto, precios, tasas, configuración nativa, panel, APK o EAS. No se imprimieron/guardaron credenciales. Se conserva la autenticación pública original y no se extrajeron claves del proxy.
+| Par | Tasa aplicada / base | Fuente elegida | Estado |
+|---|---|---|---|
+| USD/VES | **877,90 / 877,9023** | dolarapi_oficial | Disponible, respaldo, no manual; observación 14 oct 00:00 |
+| USDT/VES | 1.012,00 / 1.012,00 | binance_p2p | Disponible, referencia de mercado, no manual |
+| USD/USDT | 1,0011 / 1,001101 | kraken_usdt | Disponible, referencia de mercado, no manual |
+
+Políticas vigentes: USD/VES usa BCV como primaria y DolarAPI como respaldo, antigüedad máxima 2.000 minutos; USDT/VES 120 minutos y USD/USDT 180 minutos. Margen 0 en los tres pares; ninguna tasa manual activa. No se modificó la política ni ninguna cifra.
+
+### Causa remota comprobada: TLS
+
+Las 12 respuestas de `rates-sync` conservadas entre **09:00 y 14:30** muestran HTTP 200 del endpoint, pero **bcv_official: ok=false**. En las tres últimas se extrajo únicamente el fragmento seguro:
+
+`invalid peer certificate: UnknownIssuer`
+
+DolarAPI, Binance y Kraken tienen ok=true en esas mismas respuestas. Por tanto, el cron se ejecuta y llega a Edge; **la consulta HTTPS al BCV falla por confianza del certificado antes del parsing/ingestión**. No se comprobó todavía si la cadena remitida está incompleta o si falta el emisor en el almacén de confianza del ejecutor Edge. No es evidencia de certificado caducado ni justifica desactivar la validación TLS.
+
+La tabla conserva 497 observaciones: 247 de Kraken, 247 de Binance y 3 de DolarAPI; **0 de BCV y 0 observaciones futuras** en todas las fuentes. El fetched_at de la fila DolarAPI actual es 00:30, pero los logs prueban nuevas consultas exitosas a las 14:30: `ingest_rate` devuelve la observación ya existente al repetirse source/pair/observed_at. No deducir ausencia de sincronización del fetched_at de una fila deduplicada.
+
+### Snapshot y fecha de vigencia
+
+Tres snapshots registrados, ninguno tomado en el futuro. El activo es **3**, tomado **14 oct 01:40**, válido hasta **15 oct 07:40**: USD/VES 877,90 desde DolarAPI, USDT/VES 1.010,53, USD/USDT 1,0011 y brecha 15,1076 %. Configuración `pricing.gap`: refresco 24 horas, validez 30 horas. Snapshot y tasa de mercado actual tienen horas distintas; no es por sí solo un error de cálculo.
+
+`valid_until` futuro expresa expiración, **no una tasa BCV futura**. Los hashes confirman que el SQL financiero remoto examinado coincide con el local: ingest_rate rechaza observed_at superior a now + 10 minutos; current_rate no limita por observed_at <= now; pricing_snapshot_current comprueba expiración pero no taken_at <= now. El adaptador del repositorio utiliza Fecha Valor como observedAt. Estos riesgos de vigencia requieren casos de hoy/mañana/cambio de día en el trabajo BCV separado; **no explican el fallo TLS actual ni se corrigieron en este diagnóstico**.
+
+## 3. Automatización
+
+Siete jobs activos: expirar órdenes cada 10 minutos, rates cada 30, push cada minuto, popularidad al minuto 17, snapshot al minuto 40, limpieza diaria y recordatorio diario. La evidencia incluye expresiones cron y resumen completo por job/estado en las últimas 24 horas: **sin estados fallidos en ese intervalo**. La consulta agregada evita que los 100 registros más recientes de push oculten trabajos menos frecuentes.
+
+El job rates registra 48 ejecuciones succeeded en 24 horas. Esto prueba encolado/ejecución SQL; el éxito por fuente se contrastó con `net._http_response`. HTTP 200 con BCV fallido es precisamente el motivo de no declarar saludable toda la sincronización.
+
+## 4. Permisos y fotografías
+
+| Bucket | Acceso | Límite | Objetos registrados |
+|---|---|---|---|
+| catalog | Público | 5 MiB, JPG/PNG/WebP | 104 |
+| stores | Público | 5 MiB, JPG/PNG/WebP | 10 |
+| avatars | Privado | 3 MiB, JPG/PNG/WebP | 1 |
+| payment-proofs | Privado | 5 MiB, imágenes/PDF | 2 |
+| claims | Privado | 5 MiB, imágenes/PDF | 0 |
+
+RLS activo en storage.objects y tablas stores/store_members/products/product_images/product_variants. **Las 21 políticas examinadas tienen los mismos hashes que el stack local.** La política llamada “catalog: store members upload to their store folder” incluye **catalog y stores**, exige tienda/carpeta propia o administración. El nombre no significa que falte subida de logos/portadas. La sospecha inicial se descartó tras comprobar el alcance real.
+
+El grant genérico INSERT de Storage a anon **no omite RLS**: las políticas de subida exigen authenticated. No se cambiaron roles/grants, se simuló sesión de vendedor ni se probaron uploads remotos. Lectura de una imagen pública y un logo comprobada; aislamiento autenticado y persistencia real de subidas quedan para una validación posterior autorizada.
+
+## 5. Catálogo y métodos de pago
+
+**44 productos en la tabla y en el catálogo público, 43 demo y 1 no demo, todos publicados**. Estados: 29 disponibles, 3 en camino, 9 por encargo, 2 reservables y 1 agotado. El producto no demo ya existía; no se cambió su clasificación.
+
+104 filas de product_images: 100 usan rutas de demo y 4 otras rutas. Esa diferencia de ruta **no certifica autenticidad ni derechos**. El lote privado de 15 productos mantiene 0 fotografías autorizadas integradas; no confundir sus recursos vacíos con todos los objetos remotos. UGREEN responde HTTP 200 desde este entorno; otros fabricantes/CDN siguen sin nueva comprobación. La investigación fotográfica puede continuar sin más credenciales Supabase, respetando modelos/variantes/licencias.
+
+Pago Móvil, transferencia VES, Zelle, USDT TRC-20 y efectivo USD están habilitados como métodos **manuales**. PayPal y Binance Pay están deshabilitados, `pending_credentials`. No se crearon cotizaciones/pedidos, verificaron pagos ni consultaron instrucciones bancarias privadas. “live” en la configuración no certifica una compra probada ni verificación automática.
+
+## Plan de activación para revisar
+
+1. **BCV/VES — prioridad crítica:** analizar la cadena TLS remitida y la confianza del runtime Edge, reproducir localmente y preparar una corrección mínima conservando validación TLS. Separar publicación/obtención/Fecha Valor y probar hoy, mañana, Caracas, fuente caída y datos vencidos. Revisar snapshot/quote con los procedimientos existentes. No introducir una tasa manual ni cambiar cálculos para ocultar el fallo. Despliegue posterior solo con autorización.
+2. **Vendedor:** presentar para aprobación el paquete exacto ya preparado y ensayado [aplicar-mi-tienda-operativa.sql](../tools/supabase-remote/aplicar-mi-tienda-operativa.sql), exclusivamente las dos migraciones ausentes. Antes de aplicarlo, revisar transacción/guards/historia y el cambio de moderación; después comprobar RPC/grants y probar propietario, otro vendedor y admin con cuentas permitidas. **No db push general, seed remoto ni nueva implementación de los editores.** El perfil y las políticas actuales no necesitan una migración de Storage inventada.
+3. **Catálogo fotográfico:** obtener 12–15 originales autorizados y correspondencias exactas; completar el manifiesto y revisar todas las apariciones. El acceso público/Storage funciona. Migrar medios a Storage, activar la capa o distribuir imágenes requiere la decisión posterior correspondiente; no alterar productos ni flags demo como atajo.
+4. **Compra integral:** reutilizar las suites locales tras la corrección BCV/activación vendedor. Definir cuentas/datos de prueba y autorización para crear operaciones remotas antes de probar persistencia; no pagos reales ni confirmación automática. Luego comprobar el recorrido Android y guardas comerciales.
+
+## Verificaciones y publicación
+
+- Consultas protegidas reales mediante Management API, rol de lectura y transacciones READ ONLY. [SQL base](../tools/supabase-remote/diagnostico-solo-lectura.sql) y [cron/HTTP/Vault metadata](../tools/supabase-remote/diagnostico-cron-solo-lectura.sql), sin cuerpos de funciones, comandos cron, headers o secretos descifrados.
+- Una consulta inicial de RPC en SQL devolvió 42501 para pricing_today: **restricción del rol supabase_read_only_user**, mientras el RPC anon devuelve 200. Se retiró esa invocación del script administrativo; no se modificaron permisos ni se cambió a service_role. Prueba pública aparte y consulta de snapshots resuelven el diagnóstico.
+- Versión inicial del SQL base validada en PostgreSQL 17 local a las 14:22. Tras ajustar el script, una repetición local no pudo ejecutarse porque el servidor local estaba detenido; no se reinició/resetó el stack. Los archivos finales completos (base: 22 sentencias; cron: 15) se verificaron contra este proyecto en READ ONLY. No se repitieron suites generales de interfaz ni se presenta lectura como prueba de compra o upload.
+- **No migraciones, escrituras de negocio, sync manual, uploads, pagos, APK ni EAS.** La autorización posterior de Oliver para revisar avances en la app no añade un cambio móvil a este bloque de diagnóstico: no hay una mejora visual nueva para publicar. APK 5 utiliza Android preview; production no le entrega OTA. Publicar JS no activa las dos migraciones faltantes. Se mantiene la actualización `01a13354-e5fd-70f0-90bc-feec7f425a03`.
+
+**Siguiente tarea exacta recomendada:** diagnosticar y preparar localmente la corrección TLS/vigencia BCV con esta evidencia, y presentar el cambio concreto antes de desplegar. La conexión segura ya está recuperada; no volver a pedir el token ni repetir este inventario general.

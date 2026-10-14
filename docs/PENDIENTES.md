@@ -8,19 +8,21 @@
 
 **Última revisión:** 2026-10-14.
 
-## SUPA-DIAG-01 — público documentado; diagnóstico protegido bloqueado
+## Supabase — diagnóstico cerrado; activaciones pendientes
 
-API pública y dos imágenes de Storage comprobadas en el proyecto correcto. Management API devuelve 401 sin `SUPABASE_ACCESS_TOKEN` vinculado; confirmado de nuevo al cerrar. CLI 2.120.0 disponible, ningún conector en esta sesión. Completar secreto solo en Configuración del entorno, nunca chat, app, Git o `service_role`. Informe y consultas: `DIAGNOSTICO_SUPABASE_2026-10-14.md`; no desplegar ni ejecutar cambios antes de revisar resultados. Checkpoint `c6964ef`; módulo público cerrado, acceso administrativo pendiente.
+**SUPA-DIAG-01 completado:** token seguro vinculado, Marketplace correcto ACTIVE_HEALTHY, lectura administrativa READ ONLY comprobada. Informe/JSON: `DIAGNOSTICO_SUPABASE_2026-10-14.md`. No repetir autenticación o inventario general, no pedir token en chat. 26 migraciones remotas, 7 cron activos y 5 buckets; catálogo 44/43 demo. Sin migraciones, cambios remotos, compras/pagos, uploads, APK o OTA.
 
-Orden vigente: **BCV/VES → vendedor → fotografías → compra integral**. USD/VES877,90 usa agregador de respaldo; tasas futuras/errores/políticas/cron/versiones/permisos protegidos no verificados. RPC nuevos vendedores404PGRST202, historia migraciones pendiente. No concluir “mig ausente” sin SQL. No repetir editor/VEN-01A/publicación. El paquete exacto ya preparado se revisará solo si se confirma que falta.
+Orden vigente: **BCV/VES → vendedor → fotografías → compra integral**.
 
-Próximo paso: GET proyecto exacto con autenticación segura; leer historia/RPC/cron/rates-futures/buckets en READONLY. Ninguna migración,sync manual,precio,pago,upload,APK o OTA autorizados en esta ejecución.
+1. **BCV-TLS-01 — crítica, lista para investigación/corrección local:** logs reales muestran UnknownIssuer, ninguna observación BCV directa; respaldo DolarAPI 877,90. Analizar cadena y confianza Edge conservando validación TLS. Casos de vigencia/Fecha Valor futura y snapshot separados; 0 tasas futuras almacenadas. Preparar solución antes de autorizar despliegue; no tasas manuales ni alterar cálculos como atajo.
+2. **VEN-OPS-R — activación remota pendiente de revisión/autorización:** faltan exactamente las migraciones 20261011172600 y 20261011174200 y sus cuatro RPC. Paquete existente probado; no repetir editor/VEN-01A/publicación. Políticas Storage actuales sí permiten catalog/stores por miembro/carpeta; no inventar otra migración por el nombre de la política. Aplicar solo el paquete concreto cuando se autorice, luego validar permisos/persistencia con cuentas permitidas.
+3. **Fotografías y compra integral:** originales/derechos del lote aún pendientes; UGREEN accesible. Métodos manuales habilitados, PayPal/Binance Pay desactivados. Pruebas remotas que creen órdenes/pagos/uploads requieren autorización posterior. La solicitud de publicar en la app no produjo cambios nuevos en este diagnóstico; preview es el canal de APK5.
 
 ## CAT-EXH-01 — catálogo privado realista (preparación cerrada / fotos bloqueadas)
 
 Selección15 con UUID remotos actuales, capa por ID/ruta desactivada por defecto y validación de procedencia preparadas; ninguna fotografía integrada. **Actualización14oct:** GET UGREEN200, por tanto ese acceso ya no está bloqueado como antes. No se comprobaron todavía contenidos/modelos/licencias ni todos los otros dominios; Supabase público responde. Identificación exacta de modelos/tonos y derechos aún no confirmados. `CATALOGO_EXHIBICION.md` y `catalogo-exhibicion/lote-01.json`.
 
-Infraestructura revisada APROBADO: política4/4, guard/selección9/9, global tipos/lint, UI39 focalizadas, web/Hermespreview; 12 capturas comparables solo con ilustraciones. Lote fotográfico NO APROBADO. Próximo bloque fotográfico después de revisión del diagnóstico: consultar fuentes disponibles y obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías/variantes y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. No confundir lectura anon con acceso administrativo ni volver a tocar Supabase.
+Infraestructura revisada APROBADO: política4/4, guard/selección9/9, global tipos/lint, UI39 focalizadas, web/Hermespreview; 12 capturas comparables solo con ilustraciones. Lote fotográfico NO APROBADO. Próximo bloque fotográfico después de revisión del diagnóstico: consultar fuentes disponibles y obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías/variantes y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. El acceso administrativo está recuperado; mantener separado este lote de cualquier escritura remota o activación.
 
 ## UX-ARQ-V2 — arquitectura aprobada; implementación progresiva
 
@@ -64,7 +66,7 @@ Sin cuentas o escrituras remotas. No se afirma recepción en el teléfono físic
 Mi tienda y sus secciones de consulta funcionan con roles/pertenencias/RLS reales, conservando compras
 propias del usuario incluso con permisos administrativos. Fuentes `cc6db73`/`5f90e27`; UI 22/22,
 permisos 6/6, núcleo 50/50, tipos/lint, web/Android JS y revisión de 18 capturas. Detalle: `docs/VEN-01A.md`.
-Oliver probó la base de lectura en Android y autorizó Mi tienda operativa; orden obligatorio: perfil, catálogo y pedidos. Posteriormente autorizó publicación: OTA operativa `01a12c4b`, preview 38165223060 Success, Android revisión 36 visitante 2/2. Backend nuevo sin verificar remotamente. Los vendedores administrarán su tienda sin salir
+Oliver probó la base de lectura en Android y autorizó Mi tienda operativa; orden obligatorio: perfil, catálogo y pedidos. Posteriormente autorizó publicación: OTA operativa `01a12c4b`, preview 38165223060 Success, Android revisión 36 visitante 2/2. Actualización 14oct: el diagnóstico confirmó que faltan las dos migraciones de catálogo/pedidos. Los vendedores administrarán su tienda sin salir
 de HAYAZGO; el panel web seguirá disponible para funciones avanzadas. Reutilizar roles/permisos y operaciones
 existentes del panel/backend; no duplicar reglas comerciales ni crear permisos decididos por el cliente.
 
@@ -80,13 +82,7 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 Código de los tres bloques cerrado y subido, fuente 5a3b884; cierre documental en git log. Informe:
 MI_TIENDA_OPERATIVA.md. No repetir implementación ni considerar la exportación una prueba en el teléfono.
 
-1. **Activación remota sin verificar:** acceso Supabase ausente. Paquete exacto preparado en
-   tools/supabase-remote/aplicar-mi-tienda-operativa.sql y probado **8/8** más **24/24** permisos/persistencia
-   sobre copia local nueva conservada. Solo 20261011172600/20261011174200; identidad Marketplace/Vault,
-   transacción, historia conflictiva aborta, registradas se omiten. Revisar/autorización SQL y verificar
-   historia/soporte/permisos con cuentas permitidas; sin seed/db push general/build.py antiguo.
-   Configuración cloud aditiva guardada pendiente de publicar/valor seguro SUPABASE_ACCESS_TOKEN;
-   alternativa operador SQL Editor documentada. No pedir claves por chat.
+1. **Activación remota pendiente de autorización:** acceso seguro recuperado el 14oct; confirmado que faltan 20261011172600/20261011174200 y sus cuatro RPC. Paquete exacto preparado en tools/supabase-remote/aplicar-mi-tienda-operativa.sql y probado **8/8**, más **24/24** permisos/persistencia en copia local conservada. Identidad Marketplace/Vault, transacción, historia conflictiva aborta, registradas se omiten. Revisar y autorizar antes de aplicar; después validar con cuentas permitidas. Sin seed, db push general ni build.py antiguo. No repetir autenticación ni pedir claves por chat.
 2. **Publicación cumplida:** preview 38165223060/2a38dfb, guard APK 5, OTA `01a12c4b` de 18:48 UTC.
    Android 15 revisión 36/run 38165564922 visitante 2/2 claro/oscuro, seis rutas protegidas, Atrás/inicio/
    recepción comprobados; 18 capturas revisadas. Sin APK nuevo, cuentas o escrituras remotas.

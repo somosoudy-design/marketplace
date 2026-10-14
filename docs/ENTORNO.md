@@ -21,13 +21,15 @@ estado y se comprueba por separado:
 Consultas de solo lectura útiles en el proyecto de pruebas (conector `execute_sql` o SQL Editor):
 
 ```sql
-select count(*) from supabase_migrations.schema_migrations;               -- 23 al 2026-10-09
-select jobname, schedule, active from cron.job order by 1;               -- 6 trabajos
+select count(*) from supabase_migrations.schema_migrations;               -- 26 comprobadas al 2026-10-14
+select jobname, schedule, active from cron.job order by 1;               -- 7 activos comprobados al 2026-10-14
 select source_code, pair, rate, fetched_at from exchange_rates order by fetched_at desc limit 3;
 select count(*) filter (where is_demo) demo, count(*) total from products;
 ```
 
 ### Diagnóstico remoto sin cambios (14 de octubre de 2026)
+
+**Acceso recuperado:** token personal seguro vinculado; Management API verifica Marketplace ACTIVE_HEALTHY. CLI sin enlazar a propósito: el diagnóstico funciona por API, sin contraseña DB/service_role. Consultas POST `/v1/projects/mimnotafmfasvwrclxan/database/query` con `read_only:true` y SQL BEGIN READ ONLY/ROLLBACK; rol efectivo `supabase_read_only_user`. Ese rol puede denegar RPC SECURITY DEFINER que sí funcionan por la anon REST normal; consultar metadata/tablas y comprobar los RPC públicos aparte, sin ampliar grants.
 
 Para esta fase no usar `db push`,seed,paquetes de activación,sync o funciones mutadoras. CLI disponible en cloud con `source /workspace/.onboarding/env.sh` y `pnpm exec supabase --version`; no asumir conexión a la PC física. El acceso anon de la app permite lecturas públicas; no da acceso a cron,migraciones,políticas ni logs completos.
 

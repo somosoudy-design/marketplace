@@ -1,6 +1,6 @@
 {
   "projectRef": "mimnotafmfasvwrclxan",
-  "observedAtUtc": "2026-10-14T18:09:23.056029+00:00",
+  "observedAtUtc": "2026-10-14T18:48:44.499700+00:00",
   "observedAtCaracas": "2026-10-14T14:09:23.056029-04:00",
   "scope": "solo lectura; público confirmado; administrativo sin token",
   "publicChecks": [
@@ -14,13 +14,13 @@
     {
       "check": "auth_health",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:43 GMT",
       "healthy": true
     },
     {
       "check": "rate_usd_ves",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:43 GMT",
       "data": {
         "base": 877.9023,
         "pair": "USD/VES",
@@ -35,37 +35,37 @@
     {
       "check": "rate_usdt_ves",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:44 GMT",
       "data": {
-        "base": 1012.4285,
+        "base": 1012.0,
         "pair": "USDT/VES",
-        "rate": 1012.43,
+        "rate": 1012.0,
         "source": "binance_p2p",
         "available": true,
         "is_manual": false,
         "is_fallback": false,
-        "observed_at": "2026-10-14T18:00:00.981+00:00"
+        "observed_at": "2026-10-14T18:30:02.911+00:00"
       }
     },
     {
       "check": "rate_usd_usdt",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:44 GMT",
       "data": {
-        "base": 1.001021,
+        "base": 1.001101,
         "pair": "USD/USDT",
-        "rate": 1.001,
+        "rate": 1.0011,
         "source": "kraken_usdt",
         "available": true,
         "is_manual": false,
         "is_fallback": false,
-        "observed_at": "2026-10-14T18:00:00.839+00:00"
+        "observed_at": "2026-10-14T18:30:02.767+00:00"
       }
     },
     {
       "check": "pricing_today",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:44 GMT",
       "data": {
         "methods": [
           {
@@ -98,7 +98,7 @@
     {
       "check": "catalog",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:44 GMT",
       "total": 44,
       "demo": 43,
       "published": 44,
@@ -113,7 +113,7 @@
     {
       "check": "rate_sources",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:44 GMT",
       "data": [
         {
           "code": "bcv_official",
@@ -160,7 +160,7 @@
     {
       "check": "payment_methods",
       "httpStatus": 200,
-      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "serverDate": "Wed, 14 Oct 2026 18:48:44 GMT",
       "data": [
         {
           "code": "pago_movil",
@@ -276,14 +276,2071 @@
     }
   ],
   "secondaryObservedAtCaracas": "2026-10-14T14:17:03.675999-04:00",
-  "managementAccess": [
+  "remoteWrites": false,
+  "remoteMigrationsExecuted": false,
+  "easPublished": false,
+  "initialManagementAccess": [
     {
       "service": "Management API proyecto exacto",
       "status": 401,
       "token_present": false
     }
   ],
-  "remoteWrites": false,
-  "remoteMigrationsExecuted": false,
-  "easPublished": false
+  "managementAccess": {
+    "connected": true,
+    "authenticatedVia": "SUPABASE_ACCESS_TOKEN secure environment binding",
+    "project": {
+      "id": "mimnotafmfasvwrclxan",
+      "name": "Marketplace",
+      "status": "ACTIVE_HEALTHY",
+      "region": "us-east-1",
+      "created_at": "2026-10-09T09:49:32.014339Z"
+    },
+    "transactionReadOnly": true,
+    "sqlReader": "supabase_read_only_user",
+    "observedAtCaracas": "2026-10-14T14:49:36.202029-04:00"
+  },
+  "managementChecks": {
+    "connection": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "observed_at_utc": "2026-10-14 18:44:49.816379+00",
+          "observed_at_caracas": "2026-10-14 14:44:49.816379",
+          "transaction_read_only": "on",
+          "server_version": "17.11"
+        }
+      ]
+    },
+    "migrations": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "version": "20261009000100",
+          "name": "foundation"
+        },
+        {
+          "version": "20261009000200",
+          "name": "catalog"
+        },
+        {
+          "version": "20261009000300",
+          "name": "logistics_config"
+        },
+        {
+          "version": "20261009000400",
+          "name": "orders"
+        },
+        {
+          "version": "20261009000500",
+          "name": "finance"
+        },
+        {
+          "version": "20261009000600",
+          "name": "notifications_claims"
+        },
+        {
+          "version": "20261009000700",
+          "name": "checkout"
+        },
+        {
+          "version": "20261009000800",
+          "name": "payments"
+        },
+        {
+          "version": "20261009000900",
+          "name": "discovery"
+        },
+        {
+          "version": "20261009001000",
+          "name": "default_config"
+        },
+        {
+          "version": "20261009001100",
+          "name": "function_privileges"
+        },
+        {
+          "version": "20261009001200",
+          "name": "admin_tools"
+        },
+        {
+          "version": "20261009001300",
+          "name": "catalog_authoring"
+        },
+        {
+          "version": "20261009001400",
+          "name": "config_guards"
+        },
+        {
+          "version": "20261009001500",
+          "name": "seller_tools"
+        },
+        {
+          "version": "20261009001600",
+          "name": "server_functions"
+        },
+        {
+          "version": "20261009001700",
+          "name": "reviews_engagement"
+        },
+        {
+          "version": "20261009001800",
+          "name": "setting_validation"
+        },
+        {
+          "version": "20261009001900",
+          "name": "address_default"
+        },
+        {
+          "version": "20261009002000",
+          "name": "push_receipts"
+        },
+        {
+          "version": "20261009002100",
+          "name": "support_contact"
+        },
+        {
+          "version": "20261009153318",
+          "name": "api_hardening"
+        },
+        {
+          "version": "20261009154233",
+          "name": "job_token"
+        },
+        {
+          "version": "20261009233831",
+          "name": "pricing_engine"
+        },
+        {
+          "version": "20261010003308",
+          "name": "divisas_methods_pending"
+        },
+        {
+          "version": "20261010151906",
+          "name": "avatars"
+        }
+      ]
+    },
+    "seller_migrations": {
+      "httpStatus": 201,
+      "data": []
+    },
+    "functions": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "name": "advance_fulfillment",
+          "arguments": "p_fulfillment_id uuid, p_step text, p_note text, p_tracking text, p_carrier text",
+          "security_definer": true,
+          "volatility": "v",
+          "anon_execute": false,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "1f3c62f5e8ad0a88b233dd2d6b9f0136"
+        },
+        {
+          "name": "current_rate",
+          "arguments": "p_pair text",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": true,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "1b58a5d6a04120c1ab8cd55c51f1f1fb"
+        },
+        {
+          "name": "enforce_product_moderation",
+          "arguments": "",
+          "security_definer": true,
+          "volatility": "v",
+          "anon_execute": false,
+          "authenticated_execute": false,
+          "service_role_execute": true,
+          "definition_md5": "e223838cd79b689cb108c079d98345aa"
+        },
+        {
+          "name": "ensure_pricing_snapshot",
+          "arguments": "",
+          "security_definer": true,
+          "volatility": "v",
+          "anon_execute": false,
+          "authenticated_execute": false,
+          "service_role_execute": true,
+          "definition_md5": "d1e8e930c2fa735736cb5a0062a7c030"
+        },
+        {
+          "name": "ingest_rate",
+          "arguments": "p_source text, p_pair text, p_rate numeric, p_observed_at timestamp with time zone, p_raw jsonb, p_force boolean",
+          "security_definer": true,
+          "volatility": "v",
+          "anon_execute": false,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "c531294e1ccac0e88b93c3b1edbd11d4"
+        },
+        {
+          "name": "invoke_edge_function",
+          "arguments": "p_name text, p_body jsonb",
+          "security_definer": true,
+          "volatility": "v",
+          "anon_execute": false,
+          "authenticated_execute": false,
+          "service_role_execute": true,
+          "definition_md5": "cab8c45fddd120d2c9bf11b426ff52cc"
+        },
+        {
+          "name": "job_token_valid",
+          "arguments": "p_token text",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": false,
+          "authenticated_execute": false,
+          "service_role_execute": true,
+          "definition_md5": "1935f78b3f21d92f48e13261f483c78e"
+        },
+        {
+          "name": "pricing_snapshot_current",
+          "arguments": "",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": false,
+          "authenticated_execute": false,
+          "service_role_execute": true,
+          "definition_md5": "a86cb8033453805626ffc25c297a1238"
+        },
+        {
+          "name": "pricing_today",
+          "arguments": "",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": true,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "0f08da642c4eea4c369028dd30ecd813"
+        },
+        {
+          "name": "rate_status",
+          "arguments": "p_pair text",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": true,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "2326caa46f529bfb039664c58c76625d"
+        },
+        {
+          "name": "require_store_member",
+          "arguments": "p_store_id uuid",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": false,
+          "authenticated_execute": false,
+          "service_role_execute": true,
+          "definition_md5": "c13f687c1bbe81ee05e22b4a94e7fee0"
+        },
+        {
+          "name": "seller_dashboard",
+          "arguments": "p_store_id uuid",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": false,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "e3a4297c9f6b64b8d40ce1f0a33ddf76"
+        },
+        {
+          "name": "seller_fulfillments",
+          "arguments": "p_store_id uuid, p_scope text",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": false,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "2d1485c2e250e2b50fe95dbb0d851e6a"
+        },
+        {
+          "name": "seller_sales",
+          "arguments": "p_store_id uuid, p_days integer",
+          "security_definer": true,
+          "volatility": "s",
+          "anon_execute": false,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "f2a3bd3697ba361d7bc4ec8278f1db85"
+        },
+        {
+          "name": "set_product_costs",
+          "arguments": "p_product_id uuid, p_costs jsonb, p_variant_costs jsonb",
+          "security_definer": true,
+          "volatility": "v",
+          "anon_execute": false,
+          "authenticated_execute": true,
+          "service_role_execute": true,
+          "definition_md5": "2ddea454ad3bab88b7bd3d8639fae282"
+        }
+      ]
+    },
+    "rate_sources": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "code": "bcv_official",
+          "name": "BCV (publicación oficial)",
+          "pair": "USD/VES",
+          "kind": "official",
+          "adapter": "bcv_html",
+          "enabled": true
+        },
+        {
+          "code": "binance_p2p",
+          "name": "Binance P2P · referencia USDT/VES",
+          "pair": "USDT/VES",
+          "kind": "market_reference",
+          "adapter": "binance_p2p",
+          "enabled": true
+        },
+        {
+          "code": "dolarapi_oficial",
+          "name": "DolarApi · oficial (agregador)",
+          "pair": "USD/VES",
+          "kind": "official",
+          "adapter": "dolarapi",
+          "enabled": true
+        },
+        {
+          "code": "kraken_usdt",
+          "name": "Kraken · USDT/USD",
+          "pair": "USD/USDT",
+          "kind": "market_reference",
+          "adapter": "kraken_ticker",
+          "enabled": true
+        },
+        {
+          "code": "manual",
+          "name": "Tasa manual (administración)",
+          "pair": "*",
+          "kind": "manual",
+          "adapter": "manual",
+          "enabled": true
+        }
+      ]
+    },
+    "rate_policies": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "pair": "USD/USDT",
+          "primary_source": "kraken_usdt",
+          "fallback_sources": [],
+          "enabled": true,
+          "max_age_minutes": 180,
+          "margin_pct": "0.000",
+          "rounding_decimals": 4,
+          "manual_active": false,
+          "manual_valid_until": null
+        },
+        {
+          "pair": "USD/VES",
+          "primary_source": "bcv_official",
+          "fallback_sources": [
+            "dolarapi_oficial"
+          ],
+          "enabled": true,
+          "max_age_minutes": 2000,
+          "margin_pct": "0.000",
+          "rounding_decimals": 2,
+          "manual_active": false,
+          "manual_valid_until": null
+        },
+        {
+          "pair": "USDT/VES",
+          "primary_source": "binance_p2p",
+          "fallback_sources": [],
+          "enabled": true,
+          "max_age_minutes": 120,
+          "margin_pct": "0.000",
+          "rounding_decimals": 2,
+          "manual_active": false,
+          "manual_valid_until": null
+        }
+      ]
+    },
+    "rate_history_summary": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "records": 247,
+          "future_observations": 0,
+          "latest_observation": "2026-10-14 18:30:02.767+00",
+          "latest_fetch": "2026-10-14 18:30:02.878105+00"
+        },
+        {
+          "source_code": "dolarapi_oficial",
+          "pair": "USD/VES",
+          "records": 3,
+          "future_observations": 0,
+          "latest_observation": "2026-10-14 04:00:00+00",
+          "latest_fetch": "2026-10-14 04:30:01.741511+00"
+        },
+        {
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "records": 247,
+          "future_observations": 0,
+          "latest_observation": "2026-10-14 18:30:02.911+00",
+          "latest_fetch": "2026-10-14 18:30:03.049544+00"
+        }
+      ]
+    },
+    "recent_rates": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "id": 497,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1012.00000000",
+          "observed_at": "2026-10-14 18:30:02.911+00",
+          "fetched_at": "2026-10-14 18:30:03.049544+00",
+          "future_observation": false
+        },
+        {
+          "id": 496,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00110100",
+          "observed_at": "2026-10-14 18:30:02.767+00",
+          "fetched_at": "2026-10-14 18:30:02.878105+00",
+          "future_observation": false
+        },
+        {
+          "id": 495,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1012.42850000",
+          "observed_at": "2026-10-14 18:00:00.981+00",
+          "fetched_at": "2026-10-14 18:00:01.227252+00",
+          "future_observation": false
+        },
+        {
+          "id": 494,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00102100",
+          "observed_at": "2026-10-14 18:00:00.839+00",
+          "fetched_at": "2026-10-14 18:00:00.999425+00",
+          "future_observation": false
+        },
+        {
+          "id": 493,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1013.47500000",
+          "observed_at": "2026-10-14 17:30:02.297+00",
+          "fetched_at": "2026-10-14 17:30:02.382847+00",
+          "future_observation": false
+        },
+        {
+          "id": 492,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00098100",
+          "observed_at": "2026-10-14 17:30:02.039+00",
+          "fetched_at": "2026-10-14 17:30:02.134575+00",
+          "future_observation": false
+        },
+        {
+          "id": 491,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1012.70550000",
+          "observed_at": "2026-10-14 17:00:01.556+00",
+          "fetched_at": "2026-10-14 17:00:01.780293+00",
+          "future_observation": false
+        },
+        {
+          "id": 490,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00099100",
+          "observed_at": "2026-10-14 17:00:01.461+00",
+          "fetched_at": "2026-10-14 17:00:01.632349+00",
+          "future_observation": false
+        },
+        {
+          "id": 489,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1012.45000000",
+          "observed_at": "2026-10-14 16:30:00.685+00",
+          "fetched_at": "2026-10-14 16:30:00.777864+00",
+          "future_observation": false
+        },
+        {
+          "id": 488,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00097100",
+          "observed_at": "2026-10-14 16:30:00.515+00",
+          "fetched_at": "2026-10-14 16:30:00.606122+00",
+          "future_observation": false
+        },
+        {
+          "id": 487,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1011.19950000",
+          "observed_at": "2026-10-14 16:00:01.499+00",
+          "fetched_at": "2026-10-14 16:00:01.679224+00",
+          "future_observation": false
+        },
+        {
+          "id": 486,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00104100",
+          "observed_at": "2026-10-14 16:00:01.293+00",
+          "fetched_at": "2026-10-14 16:00:01.452818+00",
+          "future_observation": false
+        },
+        {
+          "id": 485,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1010.50400000",
+          "observed_at": "2026-10-14 15:30:00.803+00",
+          "fetched_at": "2026-10-14 15:30:00.909118+00",
+          "future_observation": false
+        },
+        {
+          "id": 484,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00118100",
+          "observed_at": "2026-10-14 15:30:00.651+00",
+          "fetched_at": "2026-10-14 15:30:00.800064+00",
+          "future_observation": false
+        },
+        {
+          "id": 483,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1009.99900000",
+          "observed_at": "2026-10-14 15:00:01.086+00",
+          "fetched_at": "2026-10-14 15:00:01.148799+00",
+          "future_observation": false
+        },
+        {
+          "id": 482,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00090100",
+          "observed_at": "2026-10-14 15:00:00.83+00",
+          "fetched_at": "2026-10-14 15:00:00.957531+00",
+          "future_observation": false
+        },
+        {
+          "id": 481,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1009.00000000",
+          "observed_at": "2026-10-14 14:30:00.711+00",
+          "fetched_at": "2026-10-14 14:30:00.795324+00",
+          "future_observation": false
+        },
+        {
+          "id": 480,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00108100",
+          "observed_at": "2026-10-14 14:30:00.591+00",
+          "fetched_at": "2026-10-14 14:30:00.738945+00",
+          "future_observation": false
+        },
+        {
+          "id": 479,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1008.00000000",
+          "observed_at": "2026-10-14 14:00:00.714+00",
+          "fetched_at": "2026-10-14 14:00:00.852396+00",
+          "future_observation": false
+        },
+        {
+          "id": 478,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00101100",
+          "observed_at": "2026-10-14 14:00:00.574+00",
+          "fetched_at": "2026-10-14 14:00:00.675156+00",
+          "future_observation": false
+        },
+        {
+          "id": 477,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1008.00350000",
+          "observed_at": "2026-10-14 13:30:00.703+00",
+          "fetched_at": "2026-10-14 13:30:00.790865+00",
+          "future_observation": false
+        },
+        {
+          "id": 476,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00105100",
+          "observed_at": "2026-10-14 13:30:00.568+00",
+          "fetched_at": "2026-10-14 13:30:00.690944+00",
+          "future_observation": false
+        },
+        {
+          "id": 475,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1008.00000000",
+          "observed_at": "2026-10-14 13:00:02.907+00",
+          "fetched_at": "2026-10-14 13:00:03.031733+00",
+          "future_observation": false
+        },
+        {
+          "id": 474,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00110100",
+          "observed_at": "2026-10-14 13:00:02.759+00",
+          "fetched_at": "2026-10-14 13:00:02.888455+00",
+          "future_observation": false
+        },
+        {
+          "id": 473,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1007.29750000",
+          "observed_at": "2026-10-14 12:30:00.833+00",
+          "fetched_at": "2026-10-14 12:30:00.906956+00",
+          "future_observation": false
+        },
+        {
+          "id": 472,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00099100",
+          "observed_at": "2026-10-14 12:30:00.641+00",
+          "fetched_at": "2026-10-14 12:30:00.746781+00",
+          "future_observation": false
+        },
+        {
+          "id": 471,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1008.00000000",
+          "observed_at": "2026-10-14 12:00:01.236+00",
+          "fetched_at": "2026-10-14 12:00:01.3369+00",
+          "future_observation": false
+        },
+        {
+          "id": 470,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00098100",
+          "observed_at": "2026-10-14 12:00:00.993+00",
+          "fetched_at": "2026-10-14 12:00:01.106816+00",
+          "future_observation": false
+        },
+        {
+          "id": 469,
+          "source_code": "binance_p2p",
+          "pair": "USDT/VES",
+          "rate": "1008.77500000",
+          "observed_at": "2026-10-14 11:30:02.327+00",
+          "fetched_at": "2026-10-14 11:30:02.42542+00",
+          "future_observation": false
+        },
+        {
+          "id": 468,
+          "source_code": "kraken_usdt",
+          "pair": "USD/USDT",
+          "rate": "1.00103100",
+          "observed_at": "2026-10-14 11:30:01.977+00",
+          "fetched_at": "2026-10-14 11:30:02.098002+00",
+          "future_observation": false
+        }
+      ]
+    },
+    "future_rates": {
+      "httpStatus": 201,
+      "data": []
+    },
+    "snapshots": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "id": 3,
+          "taken_at": "2026-10-14 05:40:00.032043+00",
+          "valid_until": "2026-10-15 11:40:00.032043+00",
+          "future_snapshot": false,
+          "bcv_rate": "877.90000000",
+          "bcv_source": "dolarapi_oficial",
+          "usdt_ves_rate": "1010.53000000",
+          "usdt_source": "binance_p2p",
+          "usd_usdt_rate": "1.00110000",
+          "gap_pct": "15.1076"
+        },
+        {
+          "id": 2,
+          "taken_at": "2026-10-13 04:40:00.053488+00",
+          "valid_until": "2026-10-14 10:40:00.053488+00",
+          "future_snapshot": false,
+          "bcv_rate": "876.80000000",
+          "bcv_source": "dolarapi_oficial",
+          "usdt_ves_rate": "1011.87000000",
+          "usdt_source": "binance_p2p",
+          "usd_usdt_rate": "1.00130000",
+          "gap_pct": "15.4049"
+        },
+        {
+          "id": 1,
+          "taken_at": "2026-10-09 23:40:00.052958+00",
+          "valid_until": "2026-10-11 05:40:00.052958+00",
+          "future_snapshot": false,
+          "bcv_rate": "875.65000000",
+          "bcv_source": "dolarapi_oficial",
+          "usdt_ves_rate": "1016.00000000",
+          "usdt_source": "binance_p2p",
+          "usd_usdt_rate": "1.00090000",
+          "gap_pct": "16.0281"
+        }
+      ]
+    },
+    "pricing_settings": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "key": "pricing.gap",
+          "policy": {
+            "max_gap_pct": 150,
+            "valid_hours": 30,
+            "refresh_hours": 24,
+            "divisas_prices": true
+          }
+        }
+      ]
+    },
+    "payment_methods": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "code": "pago_movil",
+          "currency": "VES",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "transferencia_ves",
+          "currency": "VES",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "zelle",
+          "currency": "USD",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "usdt_trc20",
+          "currency": "USDT",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "binance_pay",
+          "currency": "USDT",
+          "kind": "automated",
+          "enabled": false,
+          "integration_status": "pending_credentials"
+        },
+        {
+          "code": "paypal",
+          "currency": "USD",
+          "kind": "automated",
+          "enabled": false,
+          "integration_status": "pending_credentials"
+        },
+        {
+          "code": "efectivo_usd",
+          "currency": "USD",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        }
+      ]
+    },
+    "catalog_summary": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "total_products": 44,
+          "demo_products": 43,
+          "non_demo_products": 1
+        }
+      ]
+    },
+    "catalog_states": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "moderation_status": "published",
+          "availability": "available",
+          "is_demo": true,
+          "products": 29
+        },
+        {
+          "moderation_status": "published",
+          "availability": "on_order",
+          "is_demo": false,
+          "products": 1
+        },
+        {
+          "moderation_status": "published",
+          "availability": "on_order",
+          "is_demo": true,
+          "products": 8
+        },
+        {
+          "moderation_status": "published",
+          "availability": "in_transit",
+          "is_demo": true,
+          "products": 3
+        },
+        {
+          "moderation_status": "published",
+          "availability": "reservable",
+          "is_demo": true,
+          "products": 2
+        },
+        {
+          "moderation_status": "published",
+          "availability": "sold_out",
+          "is_demo": true,
+          "products": 1
+        }
+      ]
+    },
+    "buckets": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "id": "avatars",
+          "public": false,
+          "file_size_limit": 3145728,
+          "allowed_mime_types": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ]
+        },
+        {
+          "id": "catalog",
+          "public": true,
+          "file_size_limit": 5242880,
+          "allowed_mime_types": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ]
+        },
+        {
+          "id": "claims",
+          "public": false,
+          "file_size_limit": 5242880,
+          "allowed_mime_types": [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "application/pdf"
+          ]
+        },
+        {
+          "id": "payment-proofs",
+          "public": false,
+          "file_size_limit": 5242880,
+          "allowed_mime_types": [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "application/pdf"
+          ]
+        },
+        {
+          "id": "stores",
+          "public": true,
+          "file_size_limit": 5242880,
+          "allowed_mime_types": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ]
+        }
+      ]
+    },
+    "storage_object_counts": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "bucket_id": "avatars",
+          "objects": 1
+        },
+        {
+          "bucket_id": "catalog",
+          "objects": 104
+        },
+        {
+          "bucket_id": "payment-proofs",
+          "objects": 2
+        },
+        {
+          "bucket_id": "stores",
+          "objects": 10
+        }
+      ]
+    },
+    "photo_inventory": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "product_image_rows": 104,
+          "demo_path_rows": 100,
+          "non_demo_path_rows": 4
+        }
+      ]
+    },
+    "rls_and_grants": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "schema": "public",
+          "table_name": "product_images",
+          "rls_enabled": true,
+          "anon_insert": false,
+          "authenticated_insert": true,
+          "authenticated_update": true
+        },
+        {
+          "schema": "public",
+          "table_name": "product_variants",
+          "rls_enabled": true,
+          "anon_insert": false,
+          "authenticated_insert": true,
+          "authenticated_update": true
+        },
+        {
+          "schema": "public",
+          "table_name": "products",
+          "rls_enabled": true,
+          "anon_insert": false,
+          "authenticated_insert": true,
+          "authenticated_update": true
+        },
+        {
+          "schema": "public",
+          "table_name": "store_members",
+          "rls_enabled": true,
+          "anon_insert": false,
+          "authenticated_insert": true,
+          "authenticated_update": true
+        },
+        {
+          "schema": "public",
+          "table_name": "stores",
+          "rls_enabled": true,
+          "anon_insert": false,
+          "authenticated_insert": true,
+          "authenticated_update": true
+        },
+        {
+          "schema": "storage",
+          "table_name": "objects",
+          "rls_enabled": true,
+          "anon_insert": true,
+          "authenticated_insert": true,
+          "authenticated_update": true
+        }
+      ]
+    },
+    "policy_hashes": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "schemaname": "public",
+          "tablename": "product_images",
+          "policyname": "images_member_write",
+          "cmd": "ALL",
+          "roles": "{public}",
+          "predicate_md5": "992b744a23f080262800616e49abe8e6"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "product_images",
+          "policyname": "images_read",
+          "cmd": "SELECT",
+          "roles": "{public}",
+          "predicate_md5": "992eb953f19aea067a324ad9351d9cad"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "product_variants",
+          "policyname": "variants_member_write",
+          "cmd": "ALL",
+          "roles": "{public}",
+          "predicate_md5": "ddaf44fc7e98fd13c440eeac66cf981b"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "product_variants",
+          "policyname": "variants_read",
+          "cmd": "SELECT",
+          "roles": "{public}",
+          "predicate_md5": "04a3ea50038c4b7a7584cb4d14385d77"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "products",
+          "policyname": "products_member_insert",
+          "cmd": "INSERT",
+          "roles": "{public}",
+          "predicate_md5": "ebd791ff675dd4e6edd328aa2e76fcff"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "products",
+          "policyname": "products_member_update",
+          "cmd": "UPDATE",
+          "roles": "{public}",
+          "predicate_md5": "1a6df37bfd8277c8e62de6a1fea25ff8"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "products",
+          "policyname": "products_read",
+          "cmd": "SELECT",
+          "roles": "{public}",
+          "predicate_md5": "64ee352a8008b0c6f116447ade52906b"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "store_members",
+          "policyname": "store_members_admin",
+          "cmd": "ALL",
+          "roles": "{public}",
+          "predicate_md5": "7699366615445423e1ae7edd16a4437c"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "store_members",
+          "policyname": "store_members_read",
+          "cmd": "SELECT",
+          "roles": "{public}",
+          "predicate_md5": "692936e51b059f65b3f6b20469c9ccff"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "stores",
+          "policyname": "stores_admin_insert",
+          "cmd": "INSERT",
+          "roles": "{public}",
+          "predicate_md5": "8c142562a9d517d0d0e883ff218214d2"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "stores",
+          "policyname": "stores_member_update",
+          "cmd": "UPDATE",
+          "roles": "{public}",
+          "predicate_md5": "dcf5233e4f6dce7469b9586b145007aa"
+        },
+        {
+          "schemaname": "public",
+          "tablename": "stores",
+          "policyname": "stores_read",
+          "cmd": "SELECT",
+          "roles": "{public}",
+          "predicate_md5": "d06487b48d25e461e75d22a17eda808e"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "avatars: owner deletes",
+          "cmd": "DELETE",
+          "roles": "{authenticated}",
+          "predicate_md5": "743dad4a12c0516c4b9deaa7f6ddad91"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "avatars: owner reads",
+          "cmd": "SELECT",
+          "roles": "{authenticated}",
+          "predicate_md5": "743dad4a12c0516c4b9deaa7f6ddad91"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "avatars: owner uploads",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "predicate_md5": "1274f9b51b102c13a8e67f634d6a3ed5"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "catalog: public read",
+          "cmd": "SELECT",
+          "roles": "{public}",
+          "predicate_md5": "b6703e1b81f2039ec93161e832e8d943"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "catalog: store members upload to their store folder",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "predicate_md5": "6d9cfef521ddbe7439ac55e905cc2363"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "claims: owner or admin reads",
+          "cmd": "SELECT",
+          "roles": "{authenticated}",
+          "predicate_md5": "c612cd6ead550c861a45cc055f95d122"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "claims: owner uploads",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "predicate_md5": "9e48da141c6eb5f405a5480905a5fd30"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "proofs: owner or admin reads",
+          "cmd": "SELECT",
+          "roles": "{authenticated}",
+          "predicate_md5": "81d2babc3a817b6503ab8e32ff4200d2"
+        },
+        {
+          "schemaname": "storage",
+          "tablename": "objects",
+          "policyname": "proofs: owner uploads in own folder",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "predicate_md5": "49a06cbdae82e416972cae099c1b01f6"
+        }
+      ]
+    },
+    "storage_policy_scope": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "policyname": "avatars: owner uploads",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "mentions_stores": false,
+          "mentions_catalog": false,
+          "checks_store_membership": false,
+          "checks_admin": false,
+          "checks_folder": true,
+          "predicate_md5": "1274f9b51b102c13a8e67f634d6a3ed5"
+        },
+        {
+          "policyname": "catalog: store members upload to their store folder",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "mentions_stores": true,
+          "mentions_catalog": true,
+          "checks_store_membership": true,
+          "checks_admin": true,
+          "checks_folder": true,
+          "predicate_md5": "6d9cfef521ddbe7439ac55e905cc2363"
+        },
+        {
+          "policyname": "claims: owner uploads",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "mentions_stores": false,
+          "mentions_catalog": false,
+          "checks_store_membership": false,
+          "checks_admin": false,
+          "checks_folder": true,
+          "predicate_md5": "9e48da141c6eb5f405a5480905a5fd30"
+        },
+        {
+          "policyname": "proofs: owner uploads in own folder",
+          "cmd": "INSERT",
+          "roles": "{authenticated}",
+          "mentions_stores": false,
+          "mentions_catalog": false,
+          "checks_store_membership": false,
+          "checks_admin": false,
+          "checks_folder": true,
+          "predicate_md5": "49a06cbdae82e416972cae099c1b01f6"
+        }
+      ]
+    },
+    "extensions": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "extname": "supabase_vault",
+          "extversion": "0.3.1"
+        },
+        {
+          "extname": "pg_net",
+          "extversion": "0.20.4"
+        },
+        {
+          "extname": "pg_cron",
+          "extversion": "1.6.4"
+        }
+      ]
+    },
+    "optional_domains": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "cron_jobs_available": true,
+          "cron_history_available": true,
+          "http_response_history_available": true,
+          "vault_metadata_available": true
+        }
+      ]
+    },
+    "cron_jobs": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "jobid": 1,
+          "jobname": "kora-expire-unpaid-orders",
+          "schedule": "*/10 * * * *",
+          "active": true,
+          "command_md5": "91f6ee652926eddf6aab82a3f8fbfac3"
+        },
+        {
+          "jobid": 7,
+          "jobname": "kora-pricing-snapshot",
+          "schedule": "40 * * * *",
+          "active": true,
+          "command_md5": "9f0ed8ec4d31315f1fd693e694073cb4"
+        },
+        {
+          "jobid": 6,
+          "jobname": "kora-prune-activity",
+          "schedule": "30 4 * * *",
+          "active": true,
+          "command_md5": "0392e8e57593ed4c9121f521586ea30e"
+        },
+        {
+          "jobid": 4,
+          "jobname": "kora-push-dispatch",
+          "schedule": "* * * * *",
+          "active": true,
+          "command_md5": "83226c53e2a6ff2a8d138c834712e35e"
+        },
+        {
+          "jobid": 3,
+          "jobname": "kora-rates-sync",
+          "schedule": "*/30 * * * *",
+          "active": true,
+          "command_md5": "871e70afdd2baa7fea7a8b5cfe69caf0"
+        },
+        {
+          "jobid": 2,
+          "jobname": "kora-refresh-popularity",
+          "schedule": "17 * * * *",
+          "active": true,
+          "command_md5": "a0d8f4eea12cf96f00d5dd6c2716a566"
+        },
+        {
+          "jobid": 5,
+          "jobname": "kora-remind-installments",
+          "schedule": "0 13 * * *",
+          "active": true,
+          "command_md5": "ab36729f5aa5ede059be3d64b59df22b"
+        }
+      ]
+    },
+    "cron_summary": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "jobname": "kora-expire-unpaid-orders",
+          "schedule": "*/10 * * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 144,
+          "first_start": "2026-10-13 18:50:00.064128+00",
+          "latest_start": "2026-10-14 18:40:00.036605+00"
+        },
+        {
+          "jobname": "kora-pricing-snapshot",
+          "schedule": "40 * * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 24,
+          "first_start": "2026-10-13 19:40:00.050771+00",
+          "latest_start": "2026-10-14 18:40:00.040728+00"
+        },
+        {
+          "jobname": "kora-prune-activity",
+          "schedule": "30 4 * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 1,
+          "first_start": "2026-10-14 04:30:00.033172+00",
+          "latest_start": "2026-10-14 04:30:00.033172+00"
+        },
+        {
+          "jobname": "kora-push-dispatch",
+          "schedule": "* * * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 1440,
+          "first_start": "2026-10-13 18:47:00.014315+00",
+          "latest_start": "2026-10-14 18:46:00.014212+00"
+        },
+        {
+          "jobname": "kora-rates-sync",
+          "schedule": "*/30 * * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 48,
+          "first_start": "2026-10-13 19:00:00.032484+00",
+          "latest_start": "2026-10-14 18:30:00.041864+00"
+        },
+        {
+          "jobname": "kora-refresh-popularity",
+          "schedule": "17 * * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 24,
+          "first_start": "2026-10-13 19:17:00.025106+00",
+          "latest_start": "2026-10-14 18:17:00.034519+00"
+        },
+        {
+          "jobname": "kora-remind-installments",
+          "schedule": "0 13 * * *",
+          "active": true,
+          "status": "succeeded",
+          "runs": 1,
+          "first_start": "2026-10-14 13:00:00.044093+00",
+          "latest_start": "2026-10-14 13:00:00.044093+00"
+        }
+      ]
+    },
+    "rates_http_results": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "id": 7642,
+          "created": "2026-10-14 18:30:00.594344+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7642,
+          "created": "2026-10-14 18:30:00.594344+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T18:30:02.911Z",
+          "returned_rate": "1012",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7642,
+          "created": "2026-10-14 18:30:00.594344+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7642,
+          "created": "2026-10-14 18:30:00.594344+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T18:30:02.767Z",
+          "returned_rate": "1.001101",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7610,
+          "created": "2026-10-14 18:00:00.045466+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7610,
+          "created": "2026-10-14 18:00:00.045466+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T18:00:00.981Z",
+          "returned_rate": "1012.4285",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7610,
+          "created": "2026-10-14 18:00:00.045466+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7610,
+          "created": "2026-10-14 18:00:00.045466+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T18:00:00.839Z",
+          "returned_rate": "1.001021",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7580,
+          "created": "2026-10-14 17:30:00.66386+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7580,
+          "created": "2026-10-14 17:30:00.66386+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T17:30:02.297Z",
+          "returned_rate": "1013.475",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7580,
+          "created": "2026-10-14 17:30:00.66386+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7580,
+          "created": "2026-10-14 17:30:00.66386+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T17:30:02.039Z",
+          "returned_rate": "1.000981",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7549,
+          "created": "2026-10-14 17:00:00.79425+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7549,
+          "created": "2026-10-14 17:00:00.79425+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T17:00:01.556Z",
+          "returned_rate": "1012.7055",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7549,
+          "created": "2026-10-14 17:00:00.79425+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7549,
+          "created": "2026-10-14 17:00:00.79425+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T17:00:01.461Z",
+          "returned_rate": "1.000991",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7517,
+          "created": "2026-10-14 16:30:00.076534+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7517,
+          "created": "2026-10-14 16:30:00.076534+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T16:30:00.685Z",
+          "returned_rate": "1012.45",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7517,
+          "created": "2026-10-14 16:30:00.076534+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7517,
+          "created": "2026-10-14 16:30:00.076534+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T16:30:00.515Z",
+          "returned_rate": "1.000971",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7487,
+          "created": "2026-10-14 16:00:00.074198+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7487,
+          "created": "2026-10-14 16:00:00.074198+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T16:00:01.499Z",
+          "returned_rate": "1011.1995",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7487,
+          "created": "2026-10-14 16:00:00.074198+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7487,
+          "created": "2026-10-14 16:00:00.074198+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T16:00:01.293Z",
+          "returned_rate": "1.001041",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7455,
+          "created": "2026-10-14 15:30:00.051799+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7455,
+          "created": "2026-10-14 15:30:00.051799+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T15:30:00.803Z",
+          "returned_rate": "1010.504",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7455,
+          "created": "2026-10-14 15:30:00.051799+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7455,
+          "created": "2026-10-14 15:30:00.051799+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T15:30:00.651Z",
+          "returned_rate": "1.001181",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7424,
+          "created": "2026-10-14 15:00:00.124571+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7424,
+          "created": "2026-10-14 15:00:00.124571+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T15:00:01.086Z",
+          "returned_rate": "1009.999",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7424,
+          "created": "2026-10-14 15:00:00.124571+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7424,
+          "created": "2026-10-14 15:00:00.124571+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T15:00:00.830Z",
+          "returned_rate": "1.000901",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7393,
+          "created": "2026-10-14 14:30:00.064284+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7393,
+          "created": "2026-10-14 14:30:00.064284+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T14:30:00.711Z",
+          "returned_rate": "1009",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7393,
+          "created": "2026-10-14 14:30:00.064284+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7393,
+          "created": "2026-10-14 14:30:00.064284+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T14:30:00.591Z",
+          "returned_rate": "1.001081",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7362,
+          "created": "2026-10-14 14:00:00.069856+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7362,
+          "created": "2026-10-14 14:00:00.069856+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T14:00:00.714Z",
+          "returned_rate": "1008",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7362,
+          "created": "2026-10-14 14:00:00.069856+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7362,
+          "created": "2026-10-14 14:00:00.069856+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T14:00:00.574Z",
+          "returned_rate": "1.001011",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7331,
+          "created": "2026-10-14 13:30:00.066268+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7331,
+          "created": "2026-10-14 13:30:00.066268+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T13:30:00.703Z",
+          "returned_rate": "1008.0035",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7331,
+          "created": "2026-10-14 13:30:00.066268+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7331,
+          "created": "2026-10-14 13:30:00.066268+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T13:30:00.568Z",
+          "returned_rate": "1.001051",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7301,
+          "created": "2026-10-14 13:00:00.661564+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "observed_at": null,
+          "returned_rate": null,
+          "provider_http_error": null,
+          "error_category": "certificate"
+        },
+        {
+          "id": 7301,
+          "created": "2026-10-14 13:00:00.661564+00",
+          "status_code": 200,
+          "source": "binance_p2p",
+          "source_ok": true,
+          "observed_at": "2026-10-14T13:00:02.907Z",
+          "returned_rate": "1008",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7301,
+          "created": "2026-10-14 13:00:00.661564+00",
+          "status_code": 200,
+          "source": "dolarapi_oficial",
+          "source_ok": true,
+          "observed_at": "2026-10-14T04:00:00.000Z",
+          "returned_rate": "877.9023",
+          "provider_http_error": null,
+          "error_category": null
+        },
+        {
+          "id": 7301,
+          "created": "2026-10-14 13:00:00.661564+00",
+          "status_code": 200,
+          "source": "kraken_usdt",
+          "source_ok": true,
+          "observed_at": "2026-10-14T13:00:02.759Z",
+          "returned_rate": "1.001101",
+          "provider_http_error": null,
+          "error_category": null
+        }
+      ]
+    },
+    "bcv_tls_detail": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "id": 7642,
+          "created": "2026-10-14 18:30:00.594344+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "certificate_error": "invalid peer certificate: UnknownIssuer",
+          "certificate_reason": "UnknownIssuer"
+        },
+        {
+          "id": 7610,
+          "created": "2026-10-14 18:00:00.045466+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "certificate_error": "invalid peer certificate: UnknownIssuer",
+          "certificate_reason": "UnknownIssuer"
+        },
+        {
+          "id": 7580,
+          "created": "2026-10-14 17:30:00.66386+00",
+          "status_code": 200,
+          "source": "bcv_official",
+          "source_ok": false,
+          "certificate_error": "invalid peer certificate: UnknownIssuer",
+          "certificate_reason": "UnknownIssuer"
+        }
+      ]
+    },
+    "vault_presence": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "project_url_present": true,
+          "job_token_present": true
+        }
+      ]
+    },
+    "edge_functions": {
+      "httpStatus": 200,
+      "data": [
+        {
+          "slug": "rates-sync",
+          "name": "rates-sync",
+          "status": "ACTIVE",
+          "version": 1,
+          "verify_jwt": false,
+          "created_at": 1791560627992,
+          "updated_at": 1791560627992
+        },
+        {
+          "slug": "push-dispatch",
+          "name": "push-dispatch",
+          "status": "ACTIVE",
+          "version": 1,
+          "verify_jwt": false,
+          "created_at": 1791560689003,
+          "updated_at": 1791560689003
+        },
+        {
+          "slug": "panel-api",
+          "name": "panel-api",
+          "status": "ACTIVE",
+          "version": 1,
+          "verify_jwt": true,
+          "created_at": 1791587016219,
+          "updated_at": 1791587016219
+        },
+        {
+          "slug": "assets-mirror",
+          "name": "assets-mirror",
+          "status": "ACTIVE",
+          "version": 1,
+          "verify_jwt": false,
+          "created_at": 1791589745303,
+          "updated_at": 1791589745303
+        }
+      ]
+    },
+    "readonly_role": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "sql_reader": "supabase_read_only_user",
+          "transaction_read_only": "on"
+        }
+      ]
+    },
+    "financial_definition_flags": {
+      "httpStatus": 201,
+      "data": [
+        {
+          "proname": "current_rate",
+          "rejects_future_10min": false,
+          "has_observed_upper_bound": false,
+          "has_taken_upper_bound": false,
+          "checks_expiration": true,
+          "definition_md5": "1b58a5d6a04120c1ab8cd55c51f1f1fb"
+        },
+        {
+          "proname": "ensure_pricing_snapshot",
+          "rejects_future_10min": false,
+          "has_observed_upper_bound": false,
+          "has_taken_upper_bound": false,
+          "checks_expiration": false,
+          "definition_md5": "d1e8e930c2fa735736cb5a0062a7c030"
+        },
+        {
+          "proname": "ingest_rate",
+          "rejects_future_10min": true,
+          "has_observed_upper_bound": false,
+          "has_taken_upper_bound": false,
+          "checks_expiration": false,
+          "definition_md5": "c531294e1ccac0e88b93c3b1edbd11d4"
+        },
+        {
+          "proname": "pricing_snapshot_current",
+          "rejects_future_10min": false,
+          "has_observed_upper_bound": false,
+          "has_taken_upper_bound": false,
+          "checks_expiration": true,
+          "definition_md5": "a86cb8033453805626ffc25c297a1238"
+        }
+      ]
+    }
+  },
+  "localComparison": {
+    "matchingPolicyHashes": 21,
+    "totalPolicies": 21,
+    "matchingFunctions": [
+      "advance_fulfillment",
+      "current_rate",
+      "ensure_pricing_snapshot",
+      "ingest_rate",
+      "invoke_edge_function",
+      "job_token_valid",
+      "pricing_snapshot_current",
+      "pricing_today",
+      "rate_status",
+      "require_store_member",
+      "seller_dashboard",
+      "seller_fulfillments",
+      "seller_sales",
+      "set_product_costs"
+    ],
+    "differentFunctions": [
+      "enforce_product_moderation"
+    ],
+    "notARemoteTenantIsolationTest": true
+  },
+  "diagnosticLimitation": {
+    "code": "42501",
+    "function": "pricing_today",
+    "context": "Management read_only SQL reader denies execution; existing anon REST succeeds (200). No grants or roles modified."
+  },
+  "validation": {
+    "finalCoreSqlRemoteReadOnly": "passed, HTTP 201, 22 statements",
+    "finalCronSqlRemoteReadOnly": "passed, HTTP 201, 15 statements",
+    "initialCoreSqlLocal": "passed (2026-10-14 14:22 Caracas), 23 statements",
+    "finalLocalAttempt": "not executed: local PostgreSQL stopped after environment change; no stack reset/start or migration run"
+  }
 }
