@@ -875,3 +875,13 @@ Catálogo: instrucción permite referencias locales sin licencia, no detener otr
 Auditorrelease_auditor visualizó comparaciones, exigió recaptura320 por debounce prematuro; runner corregido y4recapturas UGREEN estables, veredictoAPROBADO SOLOevaluaciónlocal. Cinco referencias más reconocibles, misma composición. No corresponden comercialmente aún:65W/30WgrisvsBlanco,cablepack2,power100W/hub206candidatos. Origen cámara no documentado;0permisosredistribución,0píxelesGit,0OTA. Galerías secundarias/otras ilustraciones permanecen, avisoentornopruebasconservado; no inventar stocks/modelos/datos para encajar. .local/catalog-exhibition/evaluacion-cinco-20261014/comparacion.html autocontenido32capturas privadas; JSON de procedencia sin píxeles versionado. No Android/recepción nueva comprobados.
 
 Próximaacción: aplicar borrador de red en configuraciónCodex, comprobarcadenaTLSreal BCV y preparar correcciónlocalvigencia/fechas antes de autorizaciónespecíficadeployfinanciero. No volver a pedir permiso/aplicarMiTienda. ParaOTAfotográfica resolver licencia y correspondencias, no publicar los recursos locales ni devolver búsqueda al propietario. SinAPK/iOS/production/InicioCrefactor/dependencias.
+
+## 2026-10-14 — Codex: BCV/VES corregido, desplegado y confirmado por REST
+
+Misión exclusiva VES; Mi tienda intacta. Reproducción comprador conobservación9oct mostró caducidad falsa en10/11/12oct y rechazo de Fecha Valor futura. Migración20261014202228: vigencia/calendario bancario2026/Caracas, selección no futura, ingreso próximo día bancario, snapshot futuro excluido. Parsing exige fechas reales; TLS no se desactiva. Sin fórmulas/redondeos/tasas manuales o inventadas.
+
+20/20 BCV,46/46 críticos sobre paquete exacto,52/52 core,18/18 Edge,12/12 E2E,6/6 guardas y tipos/lint. Reversión ejecutada en clon local;21/21 pagos/precios. Único fallo de búsqueda preexistente comprobado y cerrado sin ampliar alcance.
+
+Oliver autorizó desplegar. Fuente2a7265e: SQL201 en Marketplace, rates-sync/panel-api ACTIVE/v2, JWT false/true original. ClienteAuth real+PostgREST confirma ambos métodosHTTP200,25USD→21.947,50Bs a877,90, DolarAPI respaldo identificado y fecha14oct vigente. Sin submit/review/cobros/pagos/ledger; datos demo temporales totalmente eliminados. EvidenciaBCV_VES_DESPLIEGUE_2026-10-14.json. CLI no acepta placeholder seguro y conector carecía de permiso; ManagementAPI con credencial vinculada funcionó sin revelar secretos. Respaldos Edge privados y SQL de reversión guardados.
+
+Sin APK/OTA, nuevas imágenes ni tienda. Pendiente solo prueba física comprador y calendario2027 verificado antes de terminar2026; TLSBCV directo conservaUnknownIssuer hasta poder verificar cadena. No repetir diagnóstico general/despliegue ni pedir autorización ya concedida.

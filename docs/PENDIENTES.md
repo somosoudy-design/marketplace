@@ -8,7 +8,7 @@
 
 **Última revisión:** 2026-10-14.
 
-## Mi tienda activada — verificación física; continúa BCV
+## Mi tienda activada — VES desplegado; verificación física pendiente
 
 **VEN-OPS-R activación completada:** Oliver autorizó; dos migraciones ejecutadas con paquete exacto, cuatro RPC y12/12 pruebas SQL remotas reversibles aprobados. Grants/RLS/aislamiento/edición/pedidos comprobados, auditor APROBADO. Evidencia `mi-tienda-activacion-2026-10-14.json`. Sin cambios en datos originales/finanzas o nueva OTA; no reconstruir ni reactivar. Pendiente solo verificación autenticada del formulario/guardado en Android de Oliver, distinta de los tests backend.
 
@@ -20,8 +20,8 @@ Orden vigente: **BCV corrección local → autorización/despliegue financiero c
 
 Orden del diagnóstico histórico: BCV/VES → vendedor → fotografías → compra integral; supersedido por la prioridad inmediata de Mi tienda indicada arriba.
 
-1. **BCV-TLS-01 — corrección VES local implementada, paquete de despliegue en preparación:** Vigencia bancaria corregida y16/16 casos comprador,52/52 core,17/17 funciones y12/12 E2E aprobados. Sin desplegar; ver nuevo bloque de ESTADO_ACTUAL. El TLS BCV directo conserva UnknownIssuer sin evadir validación; no depende del BCV directo para cotizar con el respaldo vigente. Histórico del diagnóstico: logs reales muestran UnknownIssuer, ninguna observación BCV directa; respaldo DolarAPI 877,90. Analizar cadena y confianza Edge conservando validación TLS. Casos de vigencia/Fecha Valor futura y snapshot separados; 0 tasas futuras almacenadas. Preparar solución antes de autorizar despliegue; no tasas manuales ni alterar cálculos como atajo.
-   **Acción concreta del entorno:** borrador de red Codex guardado añade `bcv.org.ve`, `www.bcv.org.ve`, `crt.sh` sin quitar reglas/secretos; requiere revisión/publicación de configuración por Oliver. CONNECT403 del cloud impide comprobar cadena, distinto de UnknownIssuer de Edge. PostgreSQL existente iniciado sin reset. No hay corrección financiera implementada/desplegada todavía.
+1. **BCV/VES — cerrado/desplegado14oct:** migración20261014202228 y rates-sync/panel-api v2. REST comprador real2/2: Pago Móvil/transferencia25USD→21.947,50Bs,877,90 de DolarAPI identificada, fecha14oct vigente; sin pagos y fixtures limpiadas.20/20 BCV y46/46 críticos, reversión21/21. No repetir despliegue, diagnóstico general o investigación de búsqueda. Informe/evidencia BCV_VES_CORRECCION.md y BCV_VES_DESPLIEGUE_2026-10-14.json.
+   **Seguimiento acotado:** TLS directoUnknownIssuer conserva verificación; prueba cloud requiere www.bcv.org.ve/bcv.org.ve. Respaldo ya funcional. Calendar2027 debe incorporarse verificado antes de finalizar2026; no inventar fechas. Prueba física del comprador pendiente sin APK/OTA.
 2. **VEN-OPS-R — actualización posterior:** ambas migraciones y RPC ya activos/verificados con autorización de Oliver. No repetir aplicación. Falta prueba física autenticada Android; las políticas Storage existentes siguen sin requerir otra migración.
 3. **Fotografías y compra integral:** originales/derechos del lote aún pendientes; UGREEN accesible. Métodos manuales habilitados, PayPal/Binance Pay desactivados. Pruebas remotas que creen órdenes/pagos/uploads requieren autorización posterior. La solicitud de publicar en la app no produjo cambios nuevos en este diagnóstico; preview es el canal de APK5.
 

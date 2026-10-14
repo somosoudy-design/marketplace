@@ -6,16 +6,19 @@
 
 **Última actualización anterior:** 2026-10-14: Mi tienda ACTIVADA y verificada, commit `2ae43dd`. Además cinco referencias oficiales UGREEN visibles en evaluación WEB local privada (44 capturas, auditor APROBADO), sin licencia/correspondencia comercial para distribuir. Sin nueva OTA. BCV pendiente: acceso de red al sitio aún bloqueado, borrador del entorno guardado para aplicar; no se corrigió ni desplegó TLS/fechas.
 
-## BCV/VES — corrección local en verificación (2026-10-14)
+## BCV/VES — DESPLEGADO Y VERIFICADO (2026-10-14,16:48 Venezuela)
 
-Misión vigente: únicamente recuperar pagos VES. Mi tienda permanece activada; no volver a tocarla.
-Reproducción local con comprador/obligaciones/cotización reales: tasa guardada del 9oct falla por `rate_unavailable` el 10/11/12oct (feriado). El defecto está en `current_rate`: max_age2000 mide horas corridas en vez de vigencia bancaria. También usa tasas futuras, mientras ingest_rate rechaza publicarlas antes de Fecha Valor.
+**Criterio de éxito cumplido en servidor:** `create_payment_quote` por PostgREST conJWT comprador devuelveHTTP200 para Pago Móvil y transferencia. Base25USD →21.947,50Bs; tasa877,90, fuente`dolarapi_oficial`, Fecha Valor14oct00:00Caracas, respaldo explícito/no manual. Evidencia `BCV_VES_DESPLIEGUE_2026-10-14.json`; informe `BCV_VES_CORRECCION.md`.
 
-Implementado `20261014202228_bcv_effective_dates.sql`: calendario bancario2026 verificado, selección efectiva en Caracas, almacenamiento de próxima Fecha Valor sin uso anticipado, snapshot futuro excluido; importes/márgenes/redondeo intactos. Parsing sin fechas inventadas. BCV directo conserva TLS seguro y su error; respaldo DolarAPI permanece. No acceso cloud a www.bcv.org.ve/bcv.org.ve/ve.dolarapi.com, no reintentos ni CA improvisada.
+Oliver autorizó explícitamente desplegar BCV/VES en Marketplace sin cobros. Fuente`2a7265e`; migración20261014202228 aplicadaHTTP201, `rates-sync`/`panel-api` ACTIVE/v2 conJWT false/true conservados. No otra migración, tienda, precios/redondeo/fórmulas/stock, APK u OTA. Mi tienda sigue activada; no volver a tocarla.
 
-Verificado: BCV comprador16/16, core52/52, funciones17/17 (incluye UnknownIssuer→respaldo→ambos métodos por REST), E2E12/12, typecheck/lint. DB113/114: único fallo de búsqueda `lampara-mesa-lino` también reproducido con las tres funciones financieras ORIGINALES en clon local `kora_bcv_baseline` (12/13). Sin regresión de pagos/precios/RLS.
+Causa corregida: `current_rate` vencía por horas corridas la Fecha Valor del viernes en fines de semana/feriados. Ahora usa calendario bancario2026 verificado y fecha efectiva Caracas; guarda próxima Fecha Valor sin usarla antes de vigencia, excluye snapshots futuros y rechaza fechas inventadas. TLS seguro conservado; BCV directo sigueUnknownIssuer, respaldo vigente funciona. Cloud necesita www.bcv.org.ve/bcv.org.ve yve.dolarapi.com para pruebas directas; no se reintentaron conexiones bloqueadas.
 
-Pendiente antes de cerrar: ampliar límites/snapshot, preparar paquete exacto revisable y ensayar aplicación/reintento/guards en un clon LOCAL. Luego commit/push y presentar autorización de despliegue de UNA migración + rates-sync/panel-api. Ningún despliegue remoto, APK u OTA autorizado o ejecutado. Lectura remota específica solo de últimas3 observaciones USD/VES; no diagnóstico global.
+Validación:20/20 BCV,46/46 pagos/precios/permisos/BCV sobre paquete exacto,52/52 core,18/18 funciones,12/12 E2E,6/6 guardas/reintento, typecheck/lint. Reversión SQL ejecutada en clon con21/21 pagos/precios aprobados; mantiene exclusión de futuro y no borra datos. Suite amplia113/114: único fallo de búsqueda también ocurre con funciones originales; investigación detenida, fuera de este bloque.
+
+Prueba remota real: comprador/pedido demo temporales y obligación25USD, sin productos ni fulfillment. Ambas cotizaciones200, estadoopen, importe correcto; saldo pagado0,0pagos/ledger. Todas las fixtures limpiadas y confirmado0usuarios/pedidos/cotizaciones/pagos. No se invocaron cobros ni revisión. No atribuir esta prueba a Android físico.
+
+**Próxima acción:** Oliver abre un pedido pendiente, vuelve a seleccionar Pago Móvil/transferencia y solicita monto nuevo. No requiere actualización móvil. No repetir despliegue/auditoría general ni investigación de búsqueda. Antes de terminar2026 cargar calendario bancario2027 verificado; fecha desconocida falla de forma segura. Otros pendientes solo dentro de sus autorizaciones/condiciones existentes; cinco fotografías siguen evaluación local sin permiso de distribución.
 
 ## Dónde está el trabajo
 
@@ -26,7 +29,7 @@ Pendiente antes de cerrar: ampliar límites/snapshot, preparar paquete exacto re
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Activación Mi tienda `2ae43dd`; cierre local del catálogo actual en `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
 | Plan vigente | Entregas cortas: activar Mi tienda → corregir BCV local/deploy autorizado → catálogo cinco/local si falta permiso → cerrar pendientes operativos. C permanece |
-| Objetivo actual | Mi tienda activada y verificada en backend; preparar corrección TLS/fechas BCV localmente sin desplegar cambios financieros todavía |
+| Objetivo actual | VES corregido/desplegado/verificado por REST real. Mi tienda activada intacta; prueba física del comprador pendiente |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 

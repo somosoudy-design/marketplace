@@ -41,6 +41,14 @@ La suite amplia inicial tuvo113/114: búsqueda `lampara-mesa-lino` falla tambié
 - `tools/supabase-remote/revertir-bcv-ves.sql`: revierte vigencia bancaria e ingreso anticipado manteniendo exclusión segura de tasas/snapshots futuros y parsing estricto. No borra observaciones, cotizaciones, pagos, calendario ni historial. Regresa al vencimiento anterior por horas, por lo que VES puede bloquearse de nuevo en feriados; no aplica tasas futuras como efecto de revertir.
 - Respaldos Edge anterioresv1 guardados privadamente en `.local/bcv/remote-*-before.bin` y metadata. No se versionan binarios del servidor ni credenciales.
 
-Verificación posterior autorizada: REST real del proyecto con fixtures de comprador/pedido rotuladas de prueba, cotizar ambos métodos, comprobar fuente/fecha/monto y saldos sin cobros. Las fixtures SQL remotas se revertirán; la respuesta REST probará la operación desplegada, y se limpiarán las cotizaciones de prueba con controles de conteo. No repetir auditoría general.
+## Resultado remoto — funciona en el servidor
 
-Estado remoto y evidencia final se completan al terminar el despliegue.
+Desplegado con autorización explícita, fuente `2a7265e`. SQLHTTP201; migración20261014202228 registrada. `rates-sync` y `panel-api` ACTIVE/v2; JWT conserva false/true respectivamente.
+
+**REST autenticado real,14oct16:48 Venezuela:** las dos llamadas a `create_payment_quote` devolvieron200, monedaVES, base25USD, comisión0USD, tasa aplicada877,90 y monto21.947,50Bs. Fuente`dolarapi_oficial`, observación14oct00:00Caracas, fallback identificado por`rate_status`, no manual ni futura. Se conservan los TTL:30minutos para Pago Móvil y60minutos para transferencia. Las expiraciones exactas están en la evidencia JSON.
+
+Las fixtures eran un comprador normal nuevo bajo`example.com`, perfil y pedido rotulados`is_demo=true`, una obligación de25USD, sin productos, fulfillment ni acceso a Mi tienda. Se crearon brevemente para validar PostgREST conJWT real y se eliminaron al terminar. Primer intento de limpieza rechazado por nombre de columna incorrecto; transacción no eliminó parcialmente datos. Se corrigió inmediatamente, se comprobó limpieza y se repitió exclusivamente la misma comprobación REST para guardar evidencia completa. Ambas verificaciones quedaron con0 usuarios/pedidos/cotizaciones/pagos de fixture.
+
+Aserciones del servidor: pedido`unpaid`, pagado0USD,0 pagos y0 movimientos de libro. Nunca se invocó`submit_payment`, revisión, proveedor de cobro o transferencia. No modificación de tiendas/productos/stock/configuración comercial, APK u OTA.
+
+[Evidencia sanitizada, respuestas REST y limpieza](BCV_VES_DESPLIEGUE_2026-10-14.json). El error de confianza BCV directo sigue pendiente de poder validar la cadena; el comprador ya cotiza con el respaldo vigente. No es una verificación física Android; para un pedido pendiente basta volver a elegir Pago Móvil/transferencia y obtener una cotización nueva.

@@ -109,7 +109,7 @@ select public.rate_status('USD/VES');
         return {str(p.relative_to(ROOT / 'supabase/functions')): digest(p) for p in sorted(seen)}
 
     manifest = {
-        'project_ref': 'mimnotafmfasvwrclxan', 'status': 'tested_locally_awaiting_backend_authorization',
+        'project_ref': 'mimnotafmfasvwrclxan', 'status': 'release_payload', 'deployment_evidence': 'docs/BCV_VES_DESPLIEGUE_2026-10-14.json',
         'migration': str(MIGRATION.relative_to(ROOT)), 'migration_sha256': digest(MIGRATION),
         'sql_bundle': str(OUT.relative_to(ROOT)), 'sql_bundle_sha256': hashlib.sha256(sql.encode()).hexdigest(),
         'preflight_financial_md5': BEFORE, 'postflight_financial_md5': AFTER,

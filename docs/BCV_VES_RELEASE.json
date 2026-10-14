@@ -1,6 +1,7 @@
 {
   "project_ref": "mimnotafmfasvwrclxan",
-  "status": "tested_locally_awaiting_backend_authorization",
+  "status": "release_payload",
+  "deployment_evidence": "docs/BCV_VES_DESPLIEGUE_2026-10-14.json",
   "migration": "supabase/migrations/20261014202228_bcv_effective_dates.sql",
   "migration_sha256": "809818451d97d92a3e4e18563ed3bd32aed2705bccdebbcafe07a06d70b959cf",
   "sql_bundle": "tools/supabase-remote/aplicar-bcv-ves.sql",
