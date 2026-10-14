@@ -1,0 +1,184 @@
+# APK5, preview exclusivamente. Visitante, lectura de catálogo, sin cuentas/pedidos/pagos.
+appId: com.example.kora.preview
+name: Cinco modelos de exhibición — fotos autorizadas
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-hero
+    timeout: 60000
+- assertVisible:
+    id: catalog-exhibition-notice
+- assertVisible:
+    id: exhibition-photo-e7a91cd8-d3a2-4436-986c-71d1d95da813
+- assertNotVisible: "^Demo$"
+- takeScreenshot: exhibicion-01-inicio
+- tapOn:
+    id: home-search
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: "Samsung"
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-nexode-65w
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-e7a91cd8-d3a2-4436-986c-71d1d95da813
+- takeScreenshot: exhibicion-02-buscar
+- tapOn:
+    id: product-card-ugreen-nexode-65w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-e7a91cd8-d3a2-4436-986c-71d1d95da813
+- assertVisible:
+    id: exhibition-photo-credit
+- assertVisible:
+    id: catalog-exhibition-notice
+- assertNotVisible: "^Demo$"
+- takeScreenshot: exhibicion-02-ficha
+- back
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: "Anker"
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-power-bank-20000
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-01a43334-e485-41cc-a12a-c049e933665d
+- takeScreenshot: exhibicion-03-buscar
+- tapOn:
+    id: product-card-ugreen-power-bank-20000
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-01a43334-e485-41cc-a12a-c049e933665d
+- assertVisible:
+    id: exhibition-photo-credit
+- assertVisible:
+    id: catalog-exhibition-notice
+- assertNotVisible: "^Demo$"
+- takeScreenshot: exhibicion-03-ficha
+- back
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: "UGREEN lector"
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-cable-usb-c-100w
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-22516bf2-7283-45c1-a3a5-2449797a25db
+- takeScreenshot: exhibicion-04-buscar
+- tapOn:
+    id: product-card-ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-22516bf2-7283-45c1-a3a5-2449797a25db
+- assertVisible:
+    id: exhibition-photo-credit
+- assertVisible:
+    id: catalog-exhibition-notice
+- assertNotVisible: "^Demo$"
+- takeScreenshot: exhibicion-04-ficha
+- back
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: "StarTech"
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-revodok-hub-6-en-1
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-910cdfb7-9a3e-48e5-bd40-99269aea332a
+- takeScreenshot: exhibicion-05-buscar
+- tapOn:
+    id: product-card-ugreen-revodok-hub-6-en-1
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-910cdfb7-9a3e-48e5-bd40-99269aea332a
+- assertVisible:
+    id: exhibition-photo-credit
+- assertVisible:
+    id: catalog-exhibition-notice
+- assertNotVisible: "^Demo$"
+- takeScreenshot: exhibicion-05-ficha
+- back
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: "UGREEN cargador de carro"
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-nexode-30w
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-6209f8ff-aeab-40e3-9168-9528a30ca55d
+- takeScreenshot: exhibicion-06-buscar
+- tapOn:
+    id: product-card-ugreen-nexode-30w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-6209f8ff-aeab-40e3-9168-9528a30ca55d
+- assertVisible:
+    id: exhibition-photo-credit
+- assertVisible:
+    id: catalog-exhibition-notice
+- assertNotVisible: "^Demo$"
+- takeScreenshot: exhibicion-06-ficha
+- back
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- takeScreenshot: exhibicion-07-recepcion

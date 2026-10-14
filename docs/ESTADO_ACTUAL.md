@@ -13,7 +13,7 @@ Se sustituyeron referencias UGREEN sin permiso por fotos reales Commons con lice
 
 Cinco UUIDdemo corregidos exclusivamente en títulos/marca/descripción/variantes, transacciónremota201. Precios/stock/actividad idénticos antes/después, is_demo true, sin tienda/finanzas/schema. Presentación privada prioriza fotos enC, filtra galerías ilustradas yocultaDemo repetido conaviso de pruebas. VariablesUPDATE_ONLY_ENV preparadas; solicitudOTA aún no modificada ni publicada.
 
-Próximaacción: exportWEB yAndroidHermes delperfil remoto, comprobar fotos enInicioC/Buscar/cincofichas claro/oscuro, tipos/lint. Después publicación autorizada solo Android preview/runtimeAPK5 yconfirmación nativa en emulador. No nueva auditoría general ni APK.
+Validación previa: WEB2/2 claro/oscuro, InicioC/Buscar/cincofichas con fotos reales/carga completa ycréditos; tipos/lint aprobados. AndroidHermes5,9MB exportado conlos6WebP yperfilMarketplace. SolicitudOTA Android preview preparada; workflow impide publicar si huella no coincideAPK5. Próximaacción: esperar Successpublicación, ejecutar flujo10-exhibicion-fotos enemulador ambos temas yconfirmarupdateId/fotografías reales. Sin APK o production.
 
 ## BCV/VES — DESPLEGADO Y VERIFICADO (2026-10-14,16:48 Venezuela)
 
