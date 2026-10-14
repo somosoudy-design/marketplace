@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: acceso administrativo Supabase recuperado y diagnóstico remoto READ ONLY completado. Marketplace ACTIVE_HEALTHY, 26 migraciones y 7 cron activos; BCV falla TLS UnknownIssuer, las dos migraciones de vendedor están ausentes. Sin activaciones, datos remotos modificados ni OTA.
+**Última actualización:** 2026-10-14: CAT-EXH-01 retomado para cinco UGREEN; investigación detenida por falta de correspondencia SKU y permiso de distribución. 0 fotografías integradas, sin nueva OTA. Referencias oficiales y paquete mínimo desde PC documentados; Supabase ya conectado, diagnóstico terminado.
 
 ## Dónde está el trabajo
 
@@ -13,11 +13,21 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Diagnóstico público `3305278`; cierre protegido en `git log -1 origin/claude/marketplace-v1`. Cierre de preparación del catálogo `40d37ea`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
-| Plan vigente | Diagnóstico Supabase de solo lectura: BCV/VES → vendedor → catálogo fotográfico → compra integral. C — Electric Violet Editorial sigue publicada; no implementar ni publicar cambios en esta ejecución |
-| Objetivo actual | Diagnóstico completado: revisar con Oliver el plan BCV/VES → activación de vendedor → fotografías → compra integral, sin ejecutar cambios remotos todavía |
+| Último commit confirmado | Diagnóstico `6671820`; parada de lote cinco en `git log -1 origin/claude/marketplace-v1`. Infraestructura `40d37ea`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
+| Plan vigente | Primera entrega CAT-EXH-01: cinco fotografías auténticas con permiso; reutilizar la capa existente. BCV y vendedor quedan separados. C sigue publicada |
+| Objetivo actual | Recibir cinco originales utilizables y sus referencias/permisos desde la PC de Oliver; retomar integración directa, sin otra preparación de infraestructura |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
+
+## CAT-EXH-01 — lote de cinco detenido; originales desde PC pendientes
+
+Oliver autorizó una primera entrega **de cinco** fotografías, empezando UGREEN, y publicación Android preview condicional a derechos/pruebas/runtime APK5. Investigación acotada realizada con dos agentes reales de lectura, raíz único escritor. Supabase no se volvió a diagnosticar. Siete fichas oficiales/JSON comprobados HTTP200 para cinco productos, pero **0/5 correspondencias catálogo–SKU y 0/5 licencias OTA/repo aprobadas**. Los términos US §5.2 permiten uso personal/no transferible y prohíben redistribución; no se descargó/integró material sin autorización. Auditor independiente verificó fuente y emitió **RECHAZADO/BLOQUEADO para el lote**, sin objeciones a parar.
+
+**Entrega concreta:** `docs/catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md`, tabla de cinco productos, candidatos/SKU, variantes por confirmar y UUID/ruta conservados; evidencia `referencias-ugreen-cinco.json`. Originales propios o autorizados + SKU/modelo/color/enchufe/largo/puertos permiten desbloquearlo. No asumir que 65W es10334, powerbank100W/130W, cablepack2, hub206/Pro106 o30WUKBlanco por título/parecido. Los candidatos no se escribieron como mappings del catálogo.
+
+**Resultado real:** 0 fotos integradas; registro vacío y capa desactivada, misma OTA C. Sin cambios de app/infraestructura, backend/datos/migraciones, finanzas o dependencias. Sin comparaciones nuevas Inicio/Buscar/ficha, exportación o recepción Android del lote; no reutilizar capturas anteriores como prueba. Product Design index/audit consultados, no auditoría visual ejecutada sin material utilizable.
+
+**Próxima acción exacta:** recibir cinco originales del paquete documentado y su permiso/SKU, revisar material y completar únicamente sus entradas en lote-01.json. Ajustar mínimo del preparador de12–15 a5 como adaptación puntual al alcance, sin reconstruirlo; generar assets/registro con la infraestructura existente. Comparar InicioC/Buscar/ficha claros/oscuros, mantener aviso Entorno de pruebas e is_demo/guardas. Verificar runtime APK5 y publicar **solo Android preview**, ya autorizado si cumple las condiciones; comprobar recepción real en emulador. No pedir nueva autorización OTA rutinaria para estas cinco ni publicar antes de material aprobado. Si continúan sin originales utilizables, esperar al propietario en vez de otra investigación general.
 
 ## Último bloque cerrado — Supabase conectado y diagnosticado, sin activación
 
@@ -43,7 +53,7 @@
 
 **Bloqueo actualizado el 14 de octubre:** UGREEN responde HTTP 200, a diferencia del CONNECT403 de la sesión anterior. No se volvieron a comprobar todos los otros fabricantes/CDN/Wikimedia; no asumir que siguen bloqueados ni que ya están accesibles. Siguen faltando modelos exactos, fotografías originales y permisos de distribución. **0 fotografías obtenidas/0 licencias/0 modelos confirmados: la entrega fotográfica NO está terminada.** Informe `docs/CATALOGO_EXHIBICION.md`, selección `docs/catalogo-exhibicion/lote-01.json`, evidencia/inventario en el mismo directorio. Solo raíz escribió; catálogo/artdirección y auditor trabajaron de lectura. WIP anteriores cierran únicamente preparación; no revertir ni repetir C.
 
-**Próxima acción fotográfica, después de revisar el diagnóstico actual:** aprovechar el acceso UGREEN comprobado, verificar las otras fuentes y consultar referencias exactas y derechos. Completar evidencia de modelo/variante/original/licencia en `docs/catalogo-exhibicion/lote-01.json`; `node tools/catalog-exhibition/prepare.mjs` debe pasar de0/15 a12–15 aprobados antes de `--write`. Después revisar galería/categorías/variantes, fotos reales en cada contexto, capturas, fallback/caché y guard del runtimeAPK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. No modificar `.github/eas-update-request` ni publicar hasta derechos confirmados y autorización específica nueva de Oliver. No backend, pagos, BCV, iOS, APK o administración.
+**Próxima acción fotográfica vigente:** la instrucción posterior de Oliver reduce el primer incremento a cinco. Seguir `docs/catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md` y el bloque superior; red UGREEN ya comprobada, no repetir diagnóstico o infraestructura. Autorización Android preview condicional recibida; originales/modelos/permisos todavía pendientes.
 
 ## Última entrega cerrada — C publicada; revisión física del propietario
 

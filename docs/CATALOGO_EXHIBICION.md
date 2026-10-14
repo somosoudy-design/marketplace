@@ -1,6 +1,14 @@
 # Catálogo de exhibición — lote 01
 
-**Estado: preparación técnica; entrega fotográfica BLOQUEADA.** Seleccionados 15 productos; **0 fotografías auténticas obtenidas, 0 correspondencias modelo/variante verificadas y 0 permisos de redistribución confirmados**. No publicar ni presentar las ilustraciones actuales como fotografías.
+**Estado vigente: primera entrega de cinco UGREEN BLOQUEADA por material/SKU/derechos.** Infraestructura preparada anteriormente; seleccionados 15 productos para el plan amplio; **0 fotografías auténticas obtenidas, 0 correspondencias modelo/variante verificadas y 0 permisos de redistribución confirmados**. No publicar ni presentar las ilustraciones actuales como fotografías.
+
+## Última ejecución — cinco UGREEN, investigación detenida
+
+Oliver autorizó integración de cinco fotografías y OTA Android preview si derechos/pruebas/runtime APK5 están confirmados; pidió parar y entregar referencias de PC si no hay material utilizable. Se cumplió la parada: **0/5 fotografías integradas**. Referencias oficiales exactas de candidatos/SKU y paquete mínimo: [CINCO_FOTOS_DESDE_PC.md](catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md); [evidencia](catalogo-exhibicion/referencias-ugreen-cinco.json).
+
+Dos agentes reales de lectura (catálogo/dirección de arte, auditor), raíz único escritor. HTTP200 en siete páginas/JSON de productos; términos global/US cotejados por raíz y auditor: no permiso de redistribución confirmado, modelos/variantes del catálogo insuficientes. Lote RECHAZADO/BLOQUEADO; ninguna imagen descargada, importada o publicada. No cambios de infraestructura ni backend/Supabase/finanzas. No hubo comparación visual nueva o recepción Android; la evidencia antigua de preparación/C permanece histórica.
+
+El primer incremento vigente es **cinco**, supersediendo el requisito de12–15 para comenzar. El preparador conserva hoy su umbral antiguo; adaptarlo puntualmente al integrar originales autorizados, sin reescribir la capa. La autorización OTA condicional de estas cinco ya está dada; no solicitarla otra vez por rutina. Registros y presentación siguen desactivados hasta material aprobado.
 
 ## Alcance y procedencia
 
@@ -82,7 +90,7 @@ Comparaciones verificables de la **capa técnica**, conservando ilustraciones or
 
 ## Próxima acción exacta
 
-1. Aplicar los dominios guardados en Configuración del entorno y volver a probar una página oficial; no pedir acceso administrativo a Supabase. `curl -I https://www.ugreen.com/` debe dejar de fallar con CONNECT403. Aplicar ese borrador no publica HAYAZGO.
-2. Consultar referencias exactas y archivos oficiales o fotografías autorizadas; completar modelo/variante y evidencia de derechos en `lote-01.json`. Si la ficha no identifica un modelo, solicitar la referencia al propietario; no sustituir por uno parecido.
-3. Revisar originales con el agente de catálogo y auditor. Preparar 12–15 aprobados, cubrir galería/categorías y capturar los mismos recorridos claros/oscuros a 320/412.
-4. Verificar tipos/lint, recorridos focalizados, inventario de assets, runtime exacto APK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` y auditoría independiente. **Publicar Android preview solamente después de derechos confirmados y una autorización específica nueva de Oliver.**
+1. Recibir desde PC las cinco fotografías y referencias/permisos detallados en [el paquete mínimo](catalogo-exhibicion/CINCO_FOTOS_DESDE_PC.md). No repetir pruebas de acceso Supabase o investigación general de fuentes; UGREEN ya accesible, bloqueo actual documental/material.
+2. Cotejar modelo/variante y derechos; completar cinco entradas del manifiesto existente y ajustar solo el mínimo del preparador a cinco. Mantener los otros diez productos pendientes, no simular sus fotos.
+3. Integrar archivos autorizados en el registro actual, comprobar mismos productos en Inicio C, Buscar y ficha, claro/oscuro y320/412; preservar entorno de pruebas y guardas. Señalar galerías/variantes aún sin cobertura.
+4. Si pruebas y runtime APK5 pasan, publicar exclusivamente Android preview con la autorización condicional ya recibida y verificar recepción en emulador. Sin production, APK nuevo, iOS, finanzas o cambios remotos comerciales.
