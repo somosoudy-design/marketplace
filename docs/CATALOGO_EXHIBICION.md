@@ -24,6 +24,10 @@ Lectura pública del catálogo remoto de pruebas el 2026-10-13 mediante RPC `sea
 | SHEGLAM base de maquillaje fluida | Línea comercial y nombres oficiales de los tonos. |
 | Parlante portátil resistente al agua | Fabricante, modelo y variante: la ficha actual es genérica. |
 
+## Actualización — 14 de octubre de 2026
+
+Diagnóstico backend independiente de solo lectura: Supabasepúblico y dos recursosStorage responden; catálogo público44/43demo. GET UGREEN200, por lo que ese bloqueoCONNECT403 ya no permanece confirmado. Los errores de red descritos abajo son históricos del13oct; no repetirlos como estado actual. Contenidos,modelos y derechos siguen sin verificar; registrofotográfico vacío. Autenticación administrativa Supabase pendiente no impide investigar fotografías públicas/autorizadas. No se activó la capa ni subió material. Ver `DIAGNOSTICO_SUPABASE_2026-10-14.md`.
+
 ## Investigación real y límites
 
 Catálogo/dirección de arte y auditor independiente trabajaron mediante lectura; solo el agente principal modifica y hace commits. Intentos documentados a UGREEN (`www.ugreen.com`, `us.ugreen.com` y sitemap), SHEGLAM (`www.sheglam.com` y sitemap), CDN Shopify y Wikimedia: **CONNECT Tunnel 403** de la política de red. No se accedió a páginas de producto, licencias ni originales: los enlaces raíz son sitios a consultar, no fuentes verificadas de una foto. Registro local ignorado: `.local/catalogo-referencias-agent/fuentes-iniciales.json`. No se deducen derechos ni prohibiciones del 403.

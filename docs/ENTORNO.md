@@ -27,6 +27,14 @@ select source_code, pair, rate, fetched_at from exchange_rates order by fetched_
 select count(*) filter (where is_demo) demo, count(*) total from products;
 ```
 
+### Diagnóstico remoto sin cambios (14 de octubre de 2026)
+
+Para esta fase no usar `db push`,seed,paquetes de activación,sync o funciones mutadoras. CLI disponible en cloud con `source /workspace/.onboarding/env.sh` y `pnpm exec supabase --version`; no asumir conexión a la PC física. El acceso anon de la app permite lecturas públicas; no da acceso a cron,migraciones,políticas ni logs completos.
+
+ManagementAPI se autentica con **token personal SUPABASE_ACCESS_TOKEN**, ingresado solo en **Configuración del entorno→Secretos**, destino `api.supabase.com`. Requisito ya declarado: no crear duplicado. No pedir valor por chat o meterlo en el cliente; no hace falta extraer service_role ni contraseña DB. Tras vincular, comprobar `GET /v1/projects/mimnotafmfasvwrclxan` y verificar ref/nombre antes de SQL; nunca listar/usar el proyecto prohibido.
+
+`tools/supabase-remote/diagnostico-solo-lectura.sql` y opcional `diagnostico-cron-solo-lectura.sql` contienen SELECT dentro de transaccionesREADONLY/ROLLBACK, sin secretos/cuerpos/configuración privada en resultados. Confirmar primero proyecto en dashboard/ManagementAPI; ejecutar las secciones opcionales solo si existen sus relaciones. No son migraciones. Informe `docs/DIAGNOSTICO_SUPABASE_2026-10-14.md`.
+
 ## 1. Requisitos
 
 - Node 22 (≥ 20) y pnpm 10 (`corepack enable`).

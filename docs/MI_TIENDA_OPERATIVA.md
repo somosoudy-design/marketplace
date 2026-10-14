@@ -8,6 +8,12 @@ verificar por falta de acceso. Perfil usa contrato existente; catálogo/acciones
 falta soporte del servidor. Ningún APK nuevo ni cambio de servicio/dato backend remoto, iOS o checkout.
 La corrección de tasas BCV conserva su prioridad crítica separada.
 
+## Actualización de diagnóstico — 14 de octubre de 2026
+
+Solo lectura, sin nueva implementación/OTA o SQL remoto. Legacy seller_dashboard deniega anon401/42501; seller_editor_ready,seller_orders_ready y seller_fulfillment_detail devuelven404/PGRST202. Confirma indisponibilidad en API, **no ausencia definitiva de versiones**: historia y pg_proc pendientes de acceso administrativo seguro. Management API401sin token personal vinculado; red pública/Storage funcionan, por lo que el antiguo CONNECT403 del proyecto ya no explica el bloqueo actual.
+
+Informe `DIAGNOSTICO_SUPABASE_2026-10-14.md`. No ejecutar el paquete preparado ni republicar como remedio en esta fase; completar primero lectura protegida, luego revisar acciones con Oliver.
+
 ## Bloque 1 — perfil
 
 Pantalla existente `/my-store/settings`: nombre comercial, frase corta, descripción, correo de contacto,

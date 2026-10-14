@@ -1,0 +1,289 @@
+{
+  "projectRef": "mimnotafmfasvwrclxan",
+  "observedAtUtc": "2026-10-14T18:09:23.056029+00:00",
+  "observedAtCaracas": "2026-10-14T14:09:23.056029-04:00",
+  "scope": "solo lectura; público confirmado; administrativo sin token",
+  "publicChecks": [
+    {
+      "check": "rest_schema",
+      "httpStatus": 401,
+      "code": null,
+      "message": "Invalid API key",
+      "hint": "Only the `service_role` API key can be used for this endpoint."
+    },
+    {
+      "check": "auth_health",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "healthy": true
+    },
+    {
+      "check": "rate_usd_ves",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "data": {
+        "base": 877.9023,
+        "pair": "USD/VES",
+        "rate": 877.9,
+        "source": "dolarapi_oficial",
+        "available": true,
+        "is_manual": false,
+        "is_fallback": true,
+        "observed_at": "2026-10-14T04:00:00+00:00"
+      }
+    },
+    {
+      "check": "rate_usdt_ves",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "data": {
+        "base": 1012.4285,
+        "pair": "USDT/VES",
+        "rate": 1012.43,
+        "source": "binance_p2p",
+        "available": true,
+        "is_manual": false,
+        "is_fallback": false,
+        "observed_at": "2026-10-14T18:00:00.981+00:00"
+      }
+    },
+    {
+      "check": "rate_usd_usdt",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "data": {
+        "base": 1.001021,
+        "pair": "USD/USDT",
+        "rate": 1.001,
+        "source": "kraken_usdt",
+        "available": true,
+        "is_manual": false,
+        "is_fallback": false,
+        "observed_at": "2026-10-14T18:00:00.839+00:00"
+      }
+    },
+    {
+      "check": "pricing_today",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "data": {
+        "methods": [
+          {
+            "code": "zelle",
+            "name": "Zelle",
+            "factor": 0.86779746,
+            "currency": "USD"
+          },
+          {
+            "code": "usdt_trc20",
+            "name": "USDT (TRC-20)",
+            "factor": 0.86875204,
+            "currency": "USDT"
+          }
+        ],
+        "snapshot": {
+          "id": 3,
+          "gap_pct": 15.1076,
+          "bcv_rate": 877.9,
+          "taken_at": "2026-10-14T05:40:00.032043+00:00",
+          "bcv_source": "dolarapi_oficial",
+          "usdt_source": "binance_p2p",
+          "valid_until": "2026-10-15T11:40:00.032043+00:00",
+          "usd_usdt_rate": 1.0011,
+          "usdt_ves_rate": 1010.53
+        },
+        "available": true
+      }
+    },
+    {
+      "check": "catalog",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "total": 44,
+      "demo": 43,
+      "published": 44,
+      "availabilityCounts": {
+        "available": 29,
+        "in_transit": 3,
+        "on_order": 9,
+        "reservable": 2,
+        "sold_out": 1
+      }
+    },
+    {
+      "check": "rate_sources",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "data": [
+        {
+          "code": "bcv_official",
+          "name": "BCV (publicación oficial)",
+          "pair": "USD/VES",
+          "kind": "official",
+          "adapter": "bcv_html",
+          "enabled": true
+        },
+        {
+          "code": "binance_p2p",
+          "name": "Binance P2P · referencia USDT/VES",
+          "pair": "USDT/VES",
+          "kind": "market_reference",
+          "adapter": "binance_p2p",
+          "enabled": true
+        },
+        {
+          "code": "dolarapi_oficial",
+          "name": "DolarApi · oficial (agregador)",
+          "pair": "USD/VES",
+          "kind": "official",
+          "adapter": "dolarapi",
+          "enabled": true
+        },
+        {
+          "code": "kraken_usdt",
+          "name": "Kraken · USDT/USD",
+          "pair": "USD/USDT",
+          "kind": "market_reference",
+          "adapter": "kraken_ticker",
+          "enabled": true
+        },
+        {
+          "code": "manual",
+          "name": "Tasa manual (administración)",
+          "pair": "*",
+          "kind": "manual",
+          "adapter": "manual",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "check": "payment_methods",
+      "httpStatus": 200,
+      "serverDate": "Wed, 14 Oct 2026 18:09:22 GMT",
+      "data": [
+        {
+          "code": "pago_movil",
+          "name": "Pago Móvil",
+          "currency": "VES",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "transferencia_ves",
+          "name": "Transferencia bancaria",
+          "currency": "VES",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "zelle",
+          "name": "Zelle",
+          "currency": "USD",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "usdt_trc20",
+          "name": "USDT (TRC-20)",
+          "currency": "USDT",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        },
+        {
+          "code": "efectivo_usd",
+          "name": "Efectivo en punto de retiro",
+          "currency": "USD",
+          "kind": "manual",
+          "enabled": true,
+          "integration_status": "live"
+        }
+      ]
+    },
+    {
+      "check": "seller_editor_ready",
+      "httpStatus": 404,
+      "code": "PGRST202",
+      "message": "Could not find the function public.seller_editor_ready without parameters in the schema cache",
+      "hint": null
+    },
+    {
+      "check": "seller_orders_ready",
+      "httpStatus": 404,
+      "code": "PGRST202",
+      "message": "Could not find the function public.seller_orders_ready without parameters in the schema cache",
+      "hint": null
+    }
+  ],
+  "secondaryChecks": [
+    {
+      "check": "seller_dashboard_control",
+      "httpStatus": 401,
+      "code": "42501",
+      "message": "permission denied for function seller_dashboard"
+    },
+    {
+      "check": "seller_fulfillment_detail",
+      "httpStatus": 404,
+      "code": "PGRST202",
+      "message": "Could not find the function public.seller_fulfillment_detail(p_fulfillment_id, p_store_id) in the schema cache"
+    },
+    {
+      "check": "catalog_photo",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "contentLength": "7908"
+    },
+    {
+      "check": "store_logo",
+      "httpStatus": 200,
+      "contentType": "image/webp",
+      "contentLength": "2950"
+    },
+    {
+      "check": "storage_metadata_access",
+      "httpStatus": 200,
+      "contentType": "application/json; charset=utf-8",
+      "contentLength": "2"
+    },
+    {
+      "check": "rates_sync_endpoint",
+      "httpStatus": 405,
+      "code": null,
+      "message": "Usa POST."
+    },
+    {
+      "check": "push_dispatch_endpoint",
+      "httpStatus": 405,
+      "code": null,
+      "message": "Usa POST."
+    },
+    {
+      "check": "panel_api_endpoint",
+      "httpStatus": 405,
+      "code": null,
+      "message": null
+    },
+    {
+      "check": "manufacturer_network",
+      "httpStatus": 200,
+      "contentType": "text/html; charset=utf-8",
+      "contentLength": null
+    }
+  ],
+  "secondaryObservedAtCaracas": "2026-10-14T14:17:03.675999-04:00",
+  "managementAccess": [
+    {
+      "service": "Management API proyecto exacto",
+      "status": 401,
+      "token_present": false
+    }
+  ],
+  "remoteWrites": false,
+  "remoteMigrationsExecuted": false,
+  "easPublished": false
+}

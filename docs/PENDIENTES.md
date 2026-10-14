@@ -6,13 +6,21 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-13.
+**Última revisión:** 2026-10-14.
+
+## SUPA-DIAG-01 — conexión y diagnóstico de solo lectura (parcial; auth protegida pendiente)
+
+Público/Storage correctos; ManagementAPI401sin SUPABASE_ACCESS_TOKEN vinculado. CLI2.120 disponible, ningún conector en esta sesión. Completar secreto solo en Configuración del entorno, nunca chat/client/Git/service_role. Informe y consultas: `DIAGNOSTICO_SUPABASE_2026-10-14.md`; no desplegar o ejecutar cambios antes de revisar resultados.
+
+Orden vigente: **BCV/VES → vendedor → fotografías → compra integral**. USD/VES877,90 usa agregador de respaldo; tasas futuras/errores/políticas/cron/versiones/permisos protegidos no verificados. RPC nuevos vendedores404PGRST202, historia migraciones pendiente. No concluir “mig ausente” sin SQL. No repetir editor/VEN-01A/publicación. El paquete exacto ya preparado se revisará solo si se confirma que falta.
+
+Próximo paso: GET proyecto exacto con autenticación segura; leer historia/RPC/cron/rates-futures/buckets en READONLY. Ninguna migración,sync manual,precio,pago,upload,APK o OTA autorizados en esta ejecución.
 
 ## CAT-EXH-01 — catálogo privado realista (preparación cerrada / fotos bloqueadas)
 
-Selección15 con UUID remotos actuales, capa por ID/ruta desactivada por defecto y validación de procedencia preparadas; ninguna fotografía integrada. Red oficial/CDN/Wikimedia CONNECT403; borrador de dominios guardado requiere aplicarse en Configuración del entorno. Identificación exacta de modelos/tonos y derechos aún no confirmados. `CATALOGO_EXHIBICION.md` y `catalogo-exhibicion/lote-01.json`.
+Selección15 con UUID remotos actuales, capa por ID/ruta desactivada por defecto y validación de procedencia preparadas; ninguna fotografía integrada. **Actualización14oct:** GET UGREEN200, por tanto ese acceso ya no está bloqueado como antes. No se comprobaron todavía contenidos/modelos/licencias ni todos los otros dominios; Supabase público responde. Identificación exacta de modelos/tonos y derechos aún no confirmados. `CATALOGO_EXHIBICION.md` y `catalogo-exhibicion/lote-01.json`.
 
-Infraestructura revisada APROBADO: política4/4, guard/selección9/9, global tipos/lint, UI39 focalizadas, web/Hermespreview; 12 capturas comparables solo con ilustraciones. Lote fotográfico NO APROBADO. Próximo bloque: aplicar dominios del borrador, obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías/variantes y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. No confundir lectura anon con acceso administrativo ni volver a tocar Supabase.
+Infraestructura revisada APROBADO: política4/4, guard/selección9/9, global tipos/lint, UI39 focalizadas, web/Hermespreview; 12 capturas comparables solo con ilustraciones. Lote fotográfico NO APROBADO. Próximo bloque fotográfico después de revisión del diagnóstico: consultar fuentes disponibles y obtener 12–15 originales autorizados, validar modelo/variante, completar manifiesto, revisar fotos coherentes en galería/categorías/variantes y capturas comparables. No publicar hasta derechos comprobados y nueva autorización específica. No confundir lectura anon con acceso administrativo ni volver a tocar Supabase.
 
 ## UX-ARQ-V2 — arquitectura aprobada; implementación progresiva
 

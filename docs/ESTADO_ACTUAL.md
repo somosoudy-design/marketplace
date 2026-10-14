@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-13: preparación CAT-EXH-01 cerrada y revisada, 15 IDs/fichas remotos leídos, capa desactivada por defecto. Lote fotográfico bloqueado: 0 originales/modelos/licencias confirmados. Ninguna nueva OTA.
+**Última actualización:** 2026-10-14: diagnóstico Supabase de solo lectura. Público conectado al ref correcto; administrativo pendiente de SUPABASE_ACCESS_TOKEN seguro. BCV usa respaldo DolarAPI, RPC nuevos vendedores indisponibles en caché, UGREEN responde200. Sin cambios remotos ni OTA.
 
 ## Dónde está el trabajo
 
@@ -15,11 +15,21 @@
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | Catálogo: checkpoints `9ccc6e3` y `4225185`, sin OTA. Confirmar cierre con `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
 | Plan vigente | C — Electric Violet Editorial publicada; preparar catálogo fotográfico privado para evaluarla. Resto de rediseño fuera de este bloque |
-| Objetivo actual | Catálogo realista de exhibición, lote 12–15. Sin cambios remotos; no publicar hasta derechos y autorización específica |
+| Objetivo actual | Recuperar acceso administrativo seguro y diagnosticar Supabase; solo lectura y plan de activación, sin ejecutar cambios |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — lote fotográfico bloqueado; preparación cerrada
+## Trabajo en curso — diagnóstico Supabase, acceso administrativo pendiente
+
+**14oct2026,14:09–14:17,Venezuela:** Auth/público/Storage responden.44 productos visibles,43demo/1noDemo. USD/VES877,90 desde dolarapi_oficial,fallback:true,observación14oct00:00; no verificar BCV directo por esta respuesta. Binance/Kraken recientes y pricing_today snapshot3 vigente. GET rates-sync/push-dispatch/panel-api405 confirma rutas, no ejecución/sincronización completa. Nuevos seller_editor_ready/seller_orders_ready y seller_fulfillment_detail404/PGRST202; legacy seller_dashboard401/42501 demuestra restricción anónima normal. Historia exacta de ambas migraciones no verificada.
+
+**Autenticación:** CLI2.120 instalada vía pnpm; este ejecutor es Linux cloud,no PC física. Management API al proyecto exacto401, SUPABASE_ACCESS_TOKENausente y requisito has_saved_binding:false. No conector Supabase accesible. No solicitar/copiar secretos en chat ni usar service_role; obtener token personal autorizado desde SupabaseCuentaAccessTokens y vincularlo solo en Configuración del entorno→Secretos→SUPABASE_ACCESS_TOKEN. No hay que modificar app/backend para autenticar.
+
+**Informe/plan:** `docs/DIAGNOSTICO_SUPABASE_2026-10-14.md`/JSON. Orden BCV/pagosVES→vendedor→catálogo→compras. Scripts nuevos diagnóstico SELECT/READONLY/ROLLBACK en tools/supabase-remote; base validada solo PG17local, opcional cron/net no ejecutado por ausencia local. No correr aplicar-mi-tienda,dbpush,migraciones,sync,reprecio,compras/pagos,uploads,APK,EAS en esta fase.
+
+**Próxima acción exacta:** vincular secreto seguro y reanudar GET api.supabase.com/v1/projects/mimnotafmfasvwrclxan; verificarID/nombre antes de consultar historial/pg_proc/cron/tasasfuturas/permisosStorage mediante SQLREADONLY. Si sigue401/403, diagnosticar autenticación/alcance; no ejecutar otros proyectos ni cambios como atajo. UGREEN200 ya comprobado: su bloqueo anterior CONNECT403 no permanece demostrado; modelos/fotos/derechos siguen pendientes.
+
+## Último bloque cerrado — preparación de catálogo; fotografías pendientes
 
 **Preparación cerrada (checkpoints `9ccc6e3`, `4225185`; cierre en `git log -1`):** 15 productos y fichas identificados por lecturas públicas sin admin. UUID/ruta originales, variantes y galerías verificadas; modelos oficiales no identificados todavía. Capa privada por ID/ruta y fallback normal, desactivada por defecto; registro vacío. `is_demo`, precios, disponibilidad, moderación y guardas comerciales intactos. Guard de promoción cruza árbol/registro/manifiesto del commit inmutable antes de APIs.
 

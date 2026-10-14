@@ -811,3 +811,12 @@ Infraestructura cerrada y desactivada por defecto; WIP9ccc6e3/4225185 supersedid
 14 PNG privados revisados por auditor; raíz inspeccionó12 PNG comparables copiados sin edición y con hashes. No son antes/después fotográfico ni prueba Android. Export web normal restaurado; AndroidHermes5,9MB con vars públicas preview/Marketplace, 41 recursos de dependencias/0exhibición; sin nativo o runtimeexacto confirmado. No EAS, APK, iOS, backend remoto, finanzas ni panel.
 
 Lote fotográfico BLOQUEADO y NO APROBADO: red oficial/CDN/Wikimedia403, identidades oficiales y permisos pendientes. Dominios necesarios guardados en borrador del entorno (no OTA); propietario debe aplicarlo para consultar fuentes. Próxima acción exacta en CATALOGO_EXHIBICION.md/ESTADO_ACTUAL.md: validar acceso, referencias y derechos, preparar12–15 y revisar imágenes reales/contextos. No publicar hasta autorización específica nueva.
+
+
+## 2026-10-14 — Codex: checkpoint diagnóstico Supabase, solo lectura
+
+Base40d37ea, rama sincronizada. Públicoanon validado porURL/ref/role de perfilpreview sin imprimirkey. ManagementAPI al proyecto exacto401, tokenpersonal ausente/no vinculado, no conector disponible. No otroproyecto. CLI2.120 existente vía pnpm, sin actualización/instalación.
+
+Observaciones14:09–14:17 Venezuela: Auth200,44publicadosvisibles/43demo,USD/VES877,90desdeDolarAPI,fallback:true; Binance/Kraken frescos,snapshot3vigente. Imagen/logostorage200. Edge GET405soloavailability. sellerDashboard40142501 protegeanon; sellerReady/detalle404PGRST202,historiapendiente. UGREEN200nuevo: bloqueofotored anterior no aplicar como hecho actual.
+
+Informe/JSON sanitizado y SQLdiagnóstico READONLY/ROLLBACK preparados; base ejecutada soloPG17local(transaction_read_only:on),opcionalcron/net sin ejecución al no existirlocal. Sinmigraciones ni datosremote/sync/upload/pagos/declavesprivadas,app,panel,APK,EAS. No repetirUIo móduloVendedor cerrado. Próximo: vincularSUPABASE_ACCESS_TOKENseguro, GETprojectexacto, completarhistorial/RPC/tasasfuturas/cron/Storage, revisar planBCV→vendedor→fotocat→compra.
