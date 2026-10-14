@@ -8,9 +8,9 @@
 
 **Última revisión:** 2026-10-14.
 
-## SUPA-DIAG-01 — conexión y diagnóstico de solo lectura (parcial; auth protegida pendiente)
+## SUPA-DIAG-01 — público documentado; diagnóstico protegido bloqueado
 
-Público/Storage correctos; ManagementAPI401sin SUPABASE_ACCESS_TOKEN vinculado. CLI2.120 disponible, ningún conector en esta sesión. Completar secreto solo en Configuración del entorno, nunca chat/client/Git/service_role. Informe y consultas: `DIAGNOSTICO_SUPABASE_2026-10-14.md`; no desplegar o ejecutar cambios antes de revisar resultados.
+API pública y dos imágenes de Storage comprobadas en el proyecto correcto. Management API devuelve 401 sin `SUPABASE_ACCESS_TOKEN` vinculado; confirmado de nuevo al cerrar. CLI 2.120.0 disponible, ningún conector en esta sesión. Completar secreto solo en Configuración del entorno, nunca chat, app, Git o `service_role`. Informe y consultas: `DIAGNOSTICO_SUPABASE_2026-10-14.md`; no desplegar ni ejecutar cambios antes de revisar resultados. Checkpoint `c6964ef`; módulo público cerrado, acceso administrativo pendiente.
 
 Orden vigente: **BCV/VES → vendedor → fotografías → compra integral**. USD/VES877,90 usa agregador de respaldo; tasas futuras/errores/políticas/cron/versiones/permisos protegidos no verificados. RPC nuevos vendedores404PGRST202, historia migraciones pendiente. No concluir “mig ausente” sin SQL. No repetir editor/VEN-01A/publicación. El paquete exacto ya preparado se revisará solo si se confirma que falta.
 

@@ -15,18 +15,18 @@ Acción necesaria del propietario desde su PC:
 2. En **Codex → Configuración del entorno → Secretos**, vincularlo al requisito ya declarado **`SUPABASE_ACCESS_TOKEN`**, limitado a `api.supabase.com`. Guardar/aplicar la configuración. **No pegarlo en chat, Git, variables `EXPO_PUBLIC_*` ni sustituirlo por la clave `service_role` del proyecto.** No hace falta contraseña de la base para este método.
 3. Reanudar las consultas protegidas: verificar primero ID/nombre mediante el GET del proyecto exacto y después consultar metadatos/SQL en transacciones READ ONLY. No listar ni conectar otros proyectos.
 
-No se guardó otro requisito duplicado ni se cambiaron scripts o secretos del entorno. Estar conectado al dashboard en la PC no transfiere esa sesión al ejecutor cloud.
+No se guardó otro requisito duplicado ni se cambiaron scripts o secretos del entorno. Estar conectado al dashboard en la PC no transfiere esa sesión al ejecutor cloud. Al cerrar se volvió a confirmar que el requisito sigue sin vincular y que la variable no está disponible: **diagnóstico público terminado; conexión administrativa y diagnóstico protegido pendientes**.
 
 ## ✅ Servicios que responden
 
 | Área | Evidencia remota | Qué acredita |
 |---|---|---|
-| Auth | GET health200 | Servicio accesible; no se inició sesión ni creó usuarios |
-| Catálogo público | RPC search_products200 | **44 productos visibles**,43 demo y1 no demo;44 publicados en el resultado público |
-| Estados de catálogo |29 disponibles,3 en camino,9 por encargo,2 reservables,1 agotado | Datos originales, sin alterarlos; no inventario completo de publicaciones privadas |
-| Fotografías públicas | Imagen demo del bucket catalog200,WebP; logo stores200,WebP | Lectura de dos recursos existentes; no permiso para subir/editar |
-| Funciones Edge | GET rates-sync/push-dispatch/panel-api devuelve405 | Rutas desplegadas/respondiendo; no se ejecutaron operaciones POST, sincronización ni envíos |
-| Vendedor existente | GET seller_dashboard401/42501 | RPC presente y ejecución anónima correctamente denegada; no prueba con vendedor autenticado |
+| Auth | GET health: HTTP 200 | Servicio accesible; no se inició sesión ni creó usuarios |
+| Catálogo público | RPC search_products: HTTP 200 | **44 productos visibles**, 43 demo y 1 no demo; 44 publicados en el resultado público |
+| Estados de catálogo | 29 disponibles, 3 en camino, 9 por encargo, 2 reservables, 1 agotado | Datos originales, sin alterarlos; no inventario completo de publicaciones privadas |
+| Fotografías públicas | Imagen demo del bucket catalog y logo stores: HTTP 200, WebP | Lectura de dos recursos existentes; no permiso para subir/editar |
+| Funciones Edge | GET rates-sync/push-dispatch/panel-api: HTTP 405 | Rutas desplegadas/respondiendo; no se ejecutaron operaciones POST, sincronización ni envíos |
+| Vendedor existente | GET seller_dashboard: HTTP 401 / 42501 | RPC presente y ejecución anónima correctamente denegada; no prueba con vendedor autenticado |
 | Métodos VES | Pago Móvil y transferencia habilitados,manuales | Configuración pública; no pago/cotización/conciliación probados |
 
 Las cifras del catálogo son **visibles por anon**, no el total de tablas privadas. El producto no demo ya existía en el backend: confirmar con el propietario su clasificación antes de evaluar ventas públicas; no se cambió ninguna marca.
@@ -43,7 +43,7 @@ Estado que **elige el backend** a las 14:09. No presentar estas observaciones co
 
 `bcv_official` está registrado/habilitado con adaptador bcv_html, pero la selección USD/VES actual utiliza **el agregador de respaldo**. Su causa no está comprobada: pueden faltar datos válidos, fallar la consulta/parsing, o intervenir la política; hacen falta filas y logs protegidos. La clasificación `kind=official` de DolarAPI en la configuración no acredita haber verificado BCV directamente.
 
-`pricing_today` devuelve snapshot **3**, tomado14 oct01:40, válido hasta15 oct07:40: BCV877,90 desde dolarapi_oficial,USDT/VES1.010,53 desde binance_p2p,USD/USDT1,0011 y brecha15,1076%. Es un snapshot todavía vigente según la respuesta. **valid_until futuro es expiración; no demuestra que haya una tasa BCV futura registrada.** Tampoco se contrastó su vigencia con la política privada vigente.
+`pricing_today` devuelve snapshot **3**, tomado el 14 de octubre a las 01:40 y válido hasta el 15 de octubre a las 07:40 (Venezuela): USD/VES 877,90 desde `dolarapi_oficial`, USDT/VES 1.010,53 desde `binance_p2p`, USD/USDT 1,0011 y brecha 15,1076 %. Es un snapshot todavía vigente según la respuesta. **valid_until futuro es expiración; no demuestra que haya una tasa BCV futura registrada.** Tampoco se contrastó su vigencia con la política privada vigente.
 
 Tasas futuras/histórico/último fetched_at/políticas/errores por fuente: **sin verificar**, requieren lectura administrativa. Observaciones recientes de Binance/Kraken sugieren ingestión reciente, pero no demuestran que pg_cron ni todas las fuentes funcionen. Un cron “succeeded” puede significar únicamente que encoló HTTP; incluso una respuesta Edge200 puede incluir fuentes fallidas.
 
@@ -85,5 +85,5 @@ La app ya conserva lectura/panel cuando los checks devuelven PGRST202; **no repe
 
 - [Diagnóstico SQL base](../tools/supabase-remote/diagnostico-solo-lectura.sql): historia, RPC/privilegios/hash sin cuerpos, tasas/futuros, snapshots, catálogo agregado, buckets/RLS y disponibilidad de dominios opcionales. **BEGIN TRANSACTION READ ONLY + timeout local + ROLLBACK**. Verificar ID en dashboard/Management API antes de usarlo.
 - [Cron/HTTP/Vault metadata](../tools/supabase-remote/diagnostico-cron-solo-lectura.sql): ejecutar cada transacción solo si existe la relación. No imprime comandos cron, mensajes/brutosHTTP, headers, datos de clientes ni secretos descifrados.
-- SQL base ejecutado **solo contra PostgreSQL17 local**, con transaction_read_only:on, sin escrituras, seed ni migraciones.23 sentencias verificadas; el opcional13 pasó revisión estructural, cron/net ausentes localmente: **no ejecutar/afirmar validación contra ellos**. No se repitieron UI/core/panel ni pruebas financieras de módulos ya cerrados.
+- SQL base ejecutado **solo contra PostgreSQL 17 local**, con `transaction_read_only:on`, sin escrituras, seed ni migraciones. Sus 23 sentencias pasaron la revisión estructural; las 13 del opcional también. Cron/net están ausentes localmente: **no se ejecutó esa parte ni se afirma su validación en esos dominios**. No se repitieron UI/core/panel ni pruebas financieras de módulos ya cerrados.
 - No hubo cambios a aplicación, backend remoto, precios, tasas, configuración nativa, panel, APK o EAS. No se imprimieron/guardaron credenciales. Se conserva la autenticación pública original y no se extrajeron claves del proxy.
