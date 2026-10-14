@@ -44,7 +44,7 @@ jobs:
       - name: Variables del perfil preview (las mismas del APK)
         working-directory: apps/mobile
         env:
-          UPDATE_ONLY_ENV: '{}'
+          UPDATE_ONLY_ENV: '{"EXPO_PUBLIC_CATALOG_PRESENTATION":"private-preview"}'
         run: node -e "const env = { ...JSON.parse(process.env.UPDATE_ONLY_ENV), ...require('./eas.json').build.preview.env }; for (const [k, v] of Object.entries(env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
 
       # google-services.json (GOOGLE_SERVICES_JSON, a file variable of the EAS "preview" environment) is part of the

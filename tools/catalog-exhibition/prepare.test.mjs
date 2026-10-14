@@ -26,5 +26,5 @@ test('unknown backends, duplicate IDs and oversized batches are rejected', () =>
   const duplicate = structuredClone(selection); duplicate.products[1].productId = duplicate.products[0].productId;
   assert.throws(() => inspectBatch(duplicate), /Duplicate/);
   assert.throws(() => inspectBatch({ ...selection, backendOrigin: 'https://production.example' }), /backend/);
-  assert.throws(() => inspectBatch({ ...selection, products: [...selection.products, selection.products[0]] }), /12–15/);
+  assert.throws(() => inspectBatch({ ...selection, products: [...selection.products, selection.products[0]] }), /5–15/);
 });

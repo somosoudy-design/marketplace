@@ -25,7 +25,7 @@ import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } 
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+import { isPrivateCatalogPresentation, prioritizeExhibitionProducts, productExhibitionPhoto } from '@/lib/catalog-exhibition';
 import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
 import { ImpressionScope, recordImpressions, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { qk } from '@/lib/query';
@@ -157,14 +157,16 @@ function Header({ home, onSearchBottom }: { home: ReturnType<typeof useHome>; on
   const firstName = profile.data?.full_name?.trim().split(/\s+/)[0];
   const collections = (data?.collections ?? []).filter((c) => c.products.length);
   // "feature" collections lead as the hero; the rest are shelves further down
-  const hero = collections.find((c) => c.layout === 'feature' && c.products.some((p) => p.image_path && p.availability !== 'unavailable'));
-  const heroProduct = hero?.products.find((p) => p.image_path && p.availability !== 'unavailable');
+  const exhibitionHero = isPrivateCatalogPresentation ? collections.find((c) => c.products.some((p) => productExhibitionPhoto(p.id, p.image_path))) : undefined;
+  const hero = exhibitionHero ?? collections.find((c) => c.layout === 'feature' && c.products.some((p) => p.image_path && p.availability !== 'unavailable'));
+  const heroProduct = prioritizeExhibitionProducts(hero?.products ?? []).find((p) => p.image_path && p.availability !== 'unavailable');
   const shelves = collections.filter((c) => c.id !== hero?.id);
   const head = shelves.slice(0, 2);
   const tail = shelves.slice(2);
   const personalized = !!user && profile.data?.personalization_enabled === true && !!data?.personalized;
-  const comparison = (data?.recommended ?? []).filter((p) => p.id !== heroProduct?.id).slice(0, 4);
-  const remainingPicks = (data?.recommended ?? []).filter((p) => !comparison.some((shown) => shown.id === p.id) && p.id !== heroProduct?.id);
+  const recommended = prioritizeExhibitionProducts(data?.recommended ?? []);
+  const comparison = recommended.filter((p) => p.id !== heroProduct?.id).slice(0, 4);
+  const remainingPicks = recommended.filter((p) => !comparison.some((shown) => shown.id === p.id) && p.id !== heroProduct?.id);
   const picksSlot = personalized ? 'home_for_you' : 'home_featured';
   const picksTrackingSlot = user && profile.isSuccess && profile.data?.personalization_enabled === true ? picksSlot : undefined;
 

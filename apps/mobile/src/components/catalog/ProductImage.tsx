@@ -29,7 +29,7 @@ export function ProductImage({ productId, path, tone, alt, radius, aspect, style
   const [failed, setFailed] = useState<string>();
   const localPhoto = exhibition && failed !== exhibitionKey ? exhibition : undefined;
   return (
-    <View style={[{ aspectRatio: aspect ?? t.imagery.productAspect, backgroundColor: bg.bg, borderRadius: radius ?? t.radii.lg, overflow: 'hidden' }, style]}>
+    <View testID={localPhoto ? `exhibition-photo-${productId}` : undefined} style={[{ aspectRatio: aspect ?? t.imagery.productAspect, backgroundColor: bg.bg, borderRadius: radius ?? t.radii.lg, overflow: 'hidden' }, style]}>
       {localPhoto || uri ? (
         <Image
           source={localPhoto?.source ?? { uri: uri! }}

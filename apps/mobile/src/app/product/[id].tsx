@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
+import { ExhibitionPhotoCredit } from '@/components/catalog/ExhibitionPhotoCredit';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -26,7 +27,7 @@ import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { brand } from '@/lib/brand';
-import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+import { isPrivateCatalogPresentation, productExhibitionGallery } from '@/lib/catalog-exhibition';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
@@ -102,7 +103,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const eta = p.lead_min_days != null && p.lead_max_days != null && availability.purchasable ? etaFromToday(p.lead_min_days, p.lead_max_days) : null;
   const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id) || p.is_favorite;
-  const images = p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }];
+  const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }]);
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
   const statusKey = variantSoldOut ? 'sold_out' : p.availability;
@@ -193,6 +194,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
             <View style={{ gap: 12 }}>
               <ExhibitionNotice explain />
+              <ExhibitionPhotoCredit productId={p.id} path={images[page]?.path} />
               <View style={{ gap: 4 }}>
                 {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
                 <Text variant="displayM" testID="product-title">{p.title}</Text>

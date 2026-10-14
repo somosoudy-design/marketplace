@@ -6,6 +6,15 @@
 
 **Última actualización anterior:** 2026-10-14: Mi tienda ACTIVADA y verificada, commit `2ae43dd`. Además cinco referencias oficiales UGREEN visibles en evaluación WEB local privada (44 capturas, auditor APROBADO), sin licencia/correspondencia comercial para distribuir. Sin nueva OTA. BCV pendiente: acceso de red al sitio aún bloqueado, borrador del entorno guardado para aplicar; no se corrigió ni desplegó TLS/fechas.
 
+## Entrega visual — cinco alternativas autorizadas integradas (en curso)
+
+2026-10-14: misión exclusiva fotografías/Android preview; BCV y Mi tienda cerrados, no tocar.
+Se sustituyeron referencias UGREEN sin permiso por fotos reales Commons con licenciaCCBY/CCBY-SA/CC0: SamsungEP-T4510 (2fotos), AnkerPowerCore10000, UGREENlectorSDdual, StarTechST7300U3M, UGREENcargador25845. SeisWebP locales ya integrados en apps/mobile/assets/catalog-exhibition y registroMetro, con créditos/attribution. Manifiesto lote-02-autorizado.json. Fotos originalUGREEN no importadas.
+
+Cinco UUIDdemo corregidos exclusivamente en títulos/marca/descripción/variantes, transacciónremota201. Precios/stock/actividad idénticos antes/después, is_demo true, sin tienda/finanzas/schema. Presentación privada prioriza fotos enC, filtra galerías ilustradas yocultaDemo repetido conaviso de pruebas. VariablesUPDATE_ONLY_ENV preparadas; solicitudOTA aún no modificada ni publicada.
+
+Próximaacción: exportWEB yAndroidHermes delperfil remoto, comprobar fotos enInicioC/Buscar/cincofichas claro/oscuro, tipos/lint. Después publicación autorizada solo Android preview/runtimeAPK5 yconfirmación nativa en emulador. No nueva auditoría general ni APK.
+
 ## BCV/VES — DESPLEGADO Y VERIFICADO (2026-10-14,16:48 Venezuela)
 
 **Criterio de éxito cumplido en servidor:** `create_payment_quote` por PostgREST conJWT comprador devuelveHTTP200 para Pago Móvil y transferencia. Base25USD →21.947,50Bs; tasa877,90, fuente`dolarapi_oficial`, Fecha Valor14oct00:00Caracas, respaldo explícito/no manual. Evidencia `BCV_VES_DESPLIEGUE_2026-10-14.json`; informe `BCV_VES_CORRECCION.md`.

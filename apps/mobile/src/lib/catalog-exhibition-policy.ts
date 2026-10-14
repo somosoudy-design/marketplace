@@ -30,6 +30,19 @@ export interface ExhibitionPhoto {
   sha256: string;
   width: number;
   height: number;
+  author?: string;
+  license?: string;
+  licenseUrl?: string;
+  originUrl?: string;
+}
+
+/** Keep the original order except the cleared photographs which lead the private showcase. */
+export function prioritizeExhibitionPhotos<T extends { id: string; image_path: string | null }>(
+  enabled: boolean, photos: readonly ExhibitionPhoto[], products: readonly T[],
+): T[] {
+  if (!enabled) return [...products];
+  const ready = (p: T) => !!exhibitionPhoto(true, photos, p.id, p.image_path);
+  return [...products.filter(ready), ...products.filter((p) => !ready(p))];
 }
 
 export function exhibitionPhoto(
