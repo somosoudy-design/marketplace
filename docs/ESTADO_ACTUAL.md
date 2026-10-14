@@ -4,16 +4,19 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización anterior:** 2026-10-14: Mi tienda ACTIVADA y verificada, commit `2ae43dd`. Además cinco referencias oficiales UGREEN visibles en evaluación WEB local privada (44 capturas, auditor APROBADO), sin licencia/correspondencia comercial para distribuir. Sin nueva OTA. BCV pendiente: acceso de red al sitio aún bloqueado, borrador del entorno guardado para aplicar; no se corrigió ni desplegó TLS/fechas.
+**Última actualización:** 2026-10-14: entrega visual publicada y recibida en APK5 Android preview; claro/oscuro aprobados. BCV/VES y Mi tienda cerrados, sin cambios en esta entrega.
 
-## Entrega visual — cinco alternativas autorizadas integradas (en curso)
+## Entrega visual — cinco modelos, seis fotografías autorizadas
 
-2026-10-14: misión exclusiva fotografías/Android preview; BCV y Mi tienda cerrados, no tocar.
-Se sustituyeron referencias UGREEN sin permiso por fotos reales Commons con licenciaCCBY/CCBY-SA/CC0: SamsungEP-T4510 (2fotos), AnkerPowerCore10000, UGREENlectorSDdual, StarTechST7300U3M, UGREENcargador25845. SeisWebP locales ya integrados en apps/mobile/assets/catalog-exhibition y registroMetro, con créditos/attribution. Manifiesto lote-02-autorizado.json. Fotos originalUGREEN no importadas.
+Se reemplazaron las referencias UGREEN sin permiso por fotografías reales de Wikimedia Commons con licencias CC BY, CC BY-SA o CC0: Samsung EP-T4510 (dos fotografías), Anker PowerCore 10.000, UGREEN lector SD USB-A/USB-C, StarTech ST7300U3M y UGREEN cargador de carro 25845. Archivos integrados en `apps/mobile/assets/catalog-exhibition`, registro Metro y créditos visibles en las fichas. Procedencia, licencia y hashes en `catalogo-exhibicion/lote-02-autorizado.json`. Ningún packshot oficial sin permiso fue distribuido.
 
-Cinco UUIDdemo corregidos exclusivamente en títulos/marca/descripción/variantes, transacciónremota201. Precios/stock/actividad idénticos antes/después, is_demo true, sin tienda/finanzas/schema. Presentación privada prioriza fotos enC, filtra galerías ilustradas yocultaDemo repetido conaviso de pruebas. VariablesUPDATE_ONLY_ENV preparadas; solicitudOTA aún no modificada ni publicada.
+Cinco UUID demo actualizados en títulos, marca, descripción y variantes para corresponder a las fotografías. Transacción remota guardada; precios, existencias y actividad idénticos antes/después, `is_demo=true`. Sin cambios en tienda, funciones financieras, esquema o dependencias. La presentación privada prioriza fotos en Inicio C, muestra únicamente fotos autorizadas en sus galerías y oculta badges Demo repetidos, conservando el aviso de pruebas. Otros productos fuera de estos cinco mantienen sus recursos anteriores.
 
-Validación previa: WEB2/2 claro/oscuro, InicioC/Buscar/cincofichas con fotos reales/carga completa ycréditos; tipos/lint aprobados. AndroidHermes5,9MB exportado conlos6WebP yperfilMarketplace. OTA Android preview38642215601 Success/fuente69f1c45; guardruntimeAPK5 aprobado. Próximaacción: emulador revisión41, flujo10-exhibicion-fotos ambos temas, confirmarupdateId yfotografías reales. Sin APK o production.
+Validación: preparador 3/3, recursos 4/4, typecheck/lint móvil y exportaciones web/Android Hermes aprobadas, seis WebP incluidos. Playwright 2/2 claro/oscuro para Inicio C, resultados reales de Buscar, cinco fichas y créditos. Publicación **Android preview** aprobada por EAS run38642215601, fuente `69f1c45`, grupo `72ffe95f-d27a-481a-889c-9de9a4c1305c`, 2026-10-14 21:43 UTC. Guard runtime APK5 exacto: `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Sin APK nuevo, production o iOS.
+
+**Recepción real confirmada:** revisión41/run38642731907 Success, 2/2 claro/oscuro sin reintentos. Diagnóstico al reabrir y capturas finales coinciden: OTA `01a13c5e-f303-7822-acda-7ce771cf4db2`, preview, runtime APK5 exacto, backend Marketplace responde. Revisión visual de 24 capturas nativas: Inicio C, Buscar para cada modelo, cinco fichas y recepción en ambos temas. Fotos, colores, créditos y aviso de pruebas visibles; sin badges Demo repetitivos. Evidencia `catalogo-exhibicion/entrega-android-2026-10-14.json`, origen inmutable ci/capturas `8497754a36dc72b85bef86adeb915ba564f91a63`; cuatro capturas representativas versionadas.
+
+**Trabajo en curso:** ninguno en esta entrega. **Próxima acción:** Oliver abre APK5 conectado, espera la descarga y vuelve a cerrar/abrir para recibir las fotografías en Samsung. Recepción física aún no observada; no repetir publicación/auditoría general ni modificar BCV o Mi tienda.
 
 ## BCV/VES — DESPLEGADO Y VERIFICADO (2026-10-14,16:48 Venezuela)
 
@@ -36,9 +39,9 @@ Prueba remota real: comprador/pedido demo temporales y obligación25USD, sin pro
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Activación Mi tienda `2ae43dd`; cierre local del catálogo actual en `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
-| Plan vigente | Entregas cortas: activar Mi tienda → corregir BCV local/deploy autorizado → catálogo cinco/local si falta permiso → cerrar pendientes operativos. C permanece |
-| Objetivo actual | VES corregido/desplegado/verificado por REST real. Mi tienda activada intacta; prueba física del comprador pendiente |
+| Último commit confirmado | OTA visual fuente `69f1c45`; comprobación Android `8fd3d38`. OTA recibida `01a13c5e-f303-7822-acda-7ce771cf4db2`, grupo preview `72ffe95f-d27a-481a-889c-9de9a4c1305c` |
+| Plan vigente | Entrega visual cerrada; revisión de Oliver en Samsung. C conserva su diseño |
+| Objetivo actual | Abrir APK5 y ver las seis fotografías autorizadas; confirmar recepción en emulador |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 

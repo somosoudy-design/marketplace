@@ -1,6 +1,10 @@
-# Catálogo de exhibición — lote 01
+# Catálogo de exhibición — entrega Android preview
 
-**Estado vigente (14oct, 16:15 Caracas): cinco referencias oficiales UGREEN integradas y comprobadas exclusivamente en una exportación WEB local privada.** No son cinco fotografías autorizadas para distribuir: origen fotográfico no documentado, correspondencia comercial pendiente y cero permisos de redistribución. Registro de la aplicación compartida restaurado vacío; cero recursos oficiales en Git público o EAS Update.
+**Estado vigente (14 de octubre, 21:43 UTC): cinco modelos con seis fotografías autorizadas integradas y publicadas en Android preview, compatible con APK5.** Dos UGREEN, Samsung, Anker y StarTech sustituyen los candidatos oficiales sin permiso; modelos y colores corresponden al material distribuido. Créditos de autor/licencia visibles en cada ficha. Aviso de pruebas e `is_demo` permanecen, sin badges Demo repetitivos. Precios y existencias intactos.
+
+Manifiesto autorizado: [lote-02-autorizado.json](catalogo-exhibicion/lote-02-autorizado.json). Archivos WebP y permisos en `apps/mobile/assets/catalog-exhibition`. Exportaciones y comprobaciones focalizadas aprobadas; EAS run38642215601, fuente69f1c45, grupo72ffe95f-d27a-481a-889c-9de9a4c1305c. Recepción nativa **2/2 sin reintentos**: run38642731907 Success, OTA `01a13c5e-f303-7822-acda-7ce771cf4db2` confirmada en diagnósticos claro/oscuro. Veinticuatro capturas nativas revisadas. Evidencia: [entrega-android-2026-10-14.json](catalogo-exhibicion/entrega-android-2026-10-14.json). Sin APK nuevo, iOS o production. Los siguientes apartados son históricos y no describen el estado actual.
+
+**Estado histórico (14oct, 16:15 Caracas): cinco referencias oficiales UGREEN integradas y comprobadas exclusivamente en una exportación WEB local privada.** No son cinco fotografías autorizadas para distribuir: origen fotográfico no documentado, correspondencia comercial pendiente y cero permisos de redistribución. Registro de la aplicación compartida restaurado vacío; cero recursos oficiales en Git público o EAS Update.
 
 ## Entrega local efectiva — cinco referencias, sin nueva OTA
 

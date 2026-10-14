@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-14 21:56Z · Codex cloud · Oliver · fotografías entregadas en Android preview
+
+- Cinco referencias sin permiso sustituidas por modelos correspondientes a fotografías reales licenciadas: dos UGREEN, Samsung, Anker y StarTech. Seis WebP integrados en assets/Metro; créditos CC visibles. Solo metadatos de cinco productos demo actualizados remotamente con guardas de precios/stock/actividad e is_demo; sin finanzas, esquema o tienda.
+- Presentación privada Android preview activa: Inicio C prioriza fotografías, galerías muestran recursos autorizados, badges Demo repetitivos ocultos y aviso de pruebas conservado. Preparador3/3, recursos4/4, móvil tipos/lint y web/Android Hermes aprobados; Playwright2/2 claro/oscuro esperando resultados reales/imágenes cargadas.
+- EAS38642215601 Success, fuente69f1c45, guard exactoAPK5, grupo72ffe95f-d27a-481a-889c-9de9a4c1305c. Android41/38642731907 **2/2 sin reintentos**, OTA `01a13c5e-f303-7822-acda-7ce771cf4db2` recibida, preview/runtime/backend confirmados. 24 capturas nativas revisadas para Inicio C/Buscar/cinco fichas/diagnósticos; evidencia JSON y origen ci/capturas `8497754a36dc72b85bef86adeb915ba564f91a63`.
+- Sin APK nuevo, production, iOS, cuentas, pedidos o pagos. BCV y Mi tienda intactos. Entrega cerrada; Oliver abre conectado y vuelve a abrir en Samsung. Recepción física no observada; otros productos conservan imágenes previas.
+
 ### 2026-10-13 03:54Z · Codex cloud · Oliver · C elegida publicada y entrega cerrada
 
 - Oliver eligió C por continuidad y luego autorizó reemplazo en su Android. C integrada fullwidth, categorías puente, cuatro productos después; sin reconvertir B ni usar imágenes generadas como catálogo. Banda web316/319, primeras fotos421/424, dos completas. C original395,58px a412: reducción79,58(~20%); frente app previa solo8px antes, mejora estructural honesta. Reporte/galería en C_EDITORIAL_REFINADA/diseno-v2/c-refinada.

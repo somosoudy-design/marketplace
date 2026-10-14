@@ -21,14 +21,18 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.locator('[data-testid="catalog-exhibition-notice"]:visible')).toHaveCount(1);
       await expect(page.getByTestId('home-hero')).not.toContainText('Demo');
       await expect(page.getByTestId('home-recommended').locator('[data-testid^="exhibition-photo-"]').first()).toBeVisible();
+      await expect.poll(() => page.getByTestId('home-hero').locator('img').evaluateAll((imgs) => imgs.length > 0 && imgs.every((img) => img.complete && img.naturalWidth > 0))).toBe(true);
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({ path:testInfo.outputPath('01-home.png') });
       await page.getByRole('tab',{ name:'Buscar',exact:true }).click();
       await expect(page.getByTestId('catalog-search')).toBeVisible();
+      const searchResult = page.waitForResponse((response) => response.url().endsWith('/rpc/search_products') && response.request().postDataJSON()?.p_query === 'UGREEN lector' && response.ok());
       await page.getByTestId('catalog-search').fill('UGREEN lector');
+      await searchResult;
       const reader = page.getByTestId('explore-list').getByTestId('product-card-ugreen-cable-usb-c-100w');
       await expect(reader).toContainText('UGREEN lector SD');
       await expect(reader.locator('[data-testid^="exhibition-photo-"]')).toHaveCount(1);
+      await expect.poll(() => reader.locator('img').evaluateAll((imgs) => imgs.length > 0 && imgs.every((img) => img.complete && img.naturalWidth > 0))).toBe(true);
       await page.screenshot({ path:testInfo.outputPath('02-search.png') });
       for (const [slug,id,title] of products) {
         await page.goto(`/p/${slug}`);
