@@ -8,11 +8,11 @@
 
 **Última revisión:** 2026-10-14.
 
-## Prioridad inmediata — VEN-OPS-R: activar las dos migraciones existentes
+## Mi tienda activada — verificación física; continúa BCV
 
-Operación desbloqueo autorizada para preparación/pruebas/commits; ejecución SQL exige confirmación específica de Oliver. Paquete y auditor APROBADOS, SHA2567bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd; identidad Vault y prerrequisitos vigentes en READ ONLY. Esperar solo la autorización de20261011172600/20261011174200, ejecutarlas exactamente y verificar RPC/permisos/operaciones; no repetir preparación, nuevo diagnóstico o publicación móvil. Cambio de moderación incluido explícitamente en el alcance.
+**VEN-OPS-R activación completada:** Oliver autorizó; dos migraciones ejecutadas con paquete exacto, cuatro RPC y12/12 pruebas SQL remotas reversibles aprobados. Grants/RLS/aislamiento/edición/pedidos comprobados, auditor APROBADO. Evidencia `mi-tienda-activacion-2026-10-14.json`. Sin cambios en datos originales/finanzas o nueva OTA; no reconstruir ni reactivar. Pendiente solo verificación autenticada del formulario/guardado en Android de Oliver, distinta de los tests backend.
 
-Orden vigente: **Mi tienda → BCV → catálogo (con evaluación local si falta permiso) → otros pendientes esenciales**. Investigación fotográfica vuelve a Codex, no se limita a pedir archivos al propietario. Sin imágenes no autorizadas en repo público/OTA. No nuevo APK, production o iOS; despliegues financieros y OTA con autorización específica.
+Orden vigente: **BCV corrección local → autorización/despliegue financiero concreto → catálogo cinco/evaluación local → otros pendientes esenciales**. Investigación fotográfica a cargo de Codex; referencias sin permiso solo locales, no repo público/OTA. Sin APK nuevo, production o iOS.
 
 ## Supabase — diagnóstico cerrado; activaciones pendientes
 
@@ -21,7 +21,7 @@ Orden vigente: **Mi tienda → BCV → catálogo (con evaluación local si falta
 Orden del diagnóstico histórico: BCV/VES → vendedor → fotografías → compra integral; supersedido por la prioridad inmediata de Mi tienda indicada arriba.
 
 1. **BCV-TLS-01 — crítica, lista para investigación/corrección local:** logs reales muestran UnknownIssuer, ninguna observación BCV directa; respaldo DolarAPI 877,90. Analizar cadena y confianza Edge conservando validación TLS. Casos de vigencia/Fecha Valor futura y snapshot separados; 0 tasas futuras almacenadas. Preparar solución antes de autorizar despliegue; no tasas manuales ni alterar cálculos como atajo.
-2. **VEN-OPS-R — activación remota pendiente de revisión/autorización:** faltan exactamente las migraciones 20261011172600 y 20261011174200 y sus cuatro RPC. Paquete existente probado; no repetir editor/VEN-01A/publicación. Políticas Storage actuales sí permiten catalog/stores por miembro/carpeta; no inventar otra migración por el nombre de la política. Aplicar solo el paquete concreto cuando se autorice, luego validar permisos/persistencia con cuentas permitidas.
+2. **VEN-OPS-R — actualización posterior:** ambas migraciones y RPC ya activos/verificados con autorización de Oliver. No repetir aplicación. Falta prueba física autenticada Android; las políticas Storage existentes siguen sin requerir otra migración.
 3. **Fotografías y compra integral:** originales/derechos del lote aún pendientes; UGREEN accesible. Métodos manuales habilitados, PayPal/Binance Pay desactivados. Pruebas remotas que creen órdenes/pagos/uploads requieren autorización posterior. La solicitud de publicar en la app no produjo cambios nuevos en este diagnóstico; preview es el canal de APK5.
 
 ## CAT-EXH-01 — cinco UGREEN; continuar evaluación local/investigación a cargo de Codex
@@ -90,7 +90,7 @@ existentes del panel/backend; no duplicar reglas comerciales ni crear permisos d
 Código de los tres bloques cerrado y subido, fuente 5a3b884; cierre documental en git log. Informe:
 MI_TIENDA_OPERATIVA.md. No repetir implementación ni considerar la exportación una prueba en el teléfono.
 
-1. **Activación remota pendiente de autorización:** acceso seguro recuperado el 14oct; confirmado que faltan 20261011172600/20261011174200 y sus cuatro RPC. Paquete exacto preparado en tools/supabase-remote/aplicar-mi-tienda-operativa.sql y probado **8/8**, más **24/24** permisos/persistencia en copia local conservada. Identidad Marketplace/Vault, transacción, historia conflictiva aborta, registradas se omiten. Revisar y autorizar antes de aplicar; después validar con cuentas permitidas. Sin seed, db push general ni build.py antiguo. No repetir autenticación ni pedir claves por chat.
+1. **Activación remota completada el14oct:** 20261011172600/20261011174200 ejecutadas con aprobación «SIII», HTTP201 y dos flags true. Cuatro RPC/grants,12/12 pruebas reversibles y auditor APROBADO. Propietario/ajeno/comprador/anon/admin, creación/edición/stock/pausa/moderación/detalle/logística comprobados en SQL remoto; conteos originales y funciones financieras sin cambios. Ver mi-tienda-activacion-2026-10-14.json. No reejecutar ni pedir nueva aprobación del mismo paquete; Android autenticado sigue por comprobar.
 2. **Publicación cumplida:** preview 38165223060/2a38dfb, guard APK 5, OTA `01a12c4b` de 18:48 UTC.
    Android 15 revisión 36/run 38165564922 visitante 2/2 claro/oscuro, seis rutas protegidas, Atrás/inicio/
    recepción comprobados; 18 capturas revisadas. Sin APK nuevo, cuentas o escrituras remotas.

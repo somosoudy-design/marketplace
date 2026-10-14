@@ -8,6 +8,16 @@ verificar por falta de acceso. Perfil usa contrato existente; catálogo/acciones
 falta soporte del servidor. Ningún APK nuevo ni cambio de servicio/dato backend remoto, iOS o checkout.
 La corrección de tasas BCV conserva su prioridad crítica separada.
 
+## Activación completada — 14 de octubre de 2026
+
+Oliver autorizó **«SIII»**. Ejecutado el paquete exacto SHA2567bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd en Marketplace; HTTP201, dos flags true, ambas migraciones registradas. Las secciones de diagnóstico/preflight siguientes son históricas: ya no falta activación.
+
+**12/12 pruebas SQL remotas**: guardado y reintento; edición/stock/pausa; atomicidad de errores; configuración propia y denegación ajena; aislamiento de vendedor/catálogo privado; administración/moderación; detalle propio/ajeno; bloqueo por pago; preparación/despacho/guía/historial/duplicados/pasos administrativos/saldo; comprador y anon. Fixtures con UUID nuevos y roles reales SQL, **todo revertido**, sin conservar filas temporales o modificar productos/pedidos reales ni hacer pagos. No demuestra un commit de guardado desde el Samsung. Secuencias pueden consumir números; sin efectos comerciales persistentes.
+
+Cuatro RPC con grants y modos correctos; REST readiness401/42501 deniega anon en vez de404. Segunda conexión confirma los siete conteos comerciales y hashes de las dos funciones financieras originales iguales. Auditor independiente APROBADO; falsos positivos por NULL corregidos antes de correr y runner exige12 passedtrue. [Evidencia sanitizada](mi-tienda-activacion-2026-10-14.json).
+
+No hubo OTA: el JS publicado ya refetch al abrir Mi tienda. Oliver puede comprobar creación/edición y pedidos con su cuenta asignada; validación física autenticada/galería/teclado sigue pendiente. No volver a desplegar estas migraciones ni repetir el desarrollo móvil como remedio. Próximo bloque BCV solo preparación local y autorización específica antes de backend financiero.
+
 ## Diagnóstico remoto confirmado — 14 de octubre de 2026
 
 Acceso administrativo recuperado mediante token personal seguro; Marketplace ACTIVE_HEALTHY, 26 migraciones. **No están aplicadas 20261011172600_seller_product_editor ni 20261011174200_seller_fulfillment_detail.** Los cuatro RPC nuevos tampoco existen en pg_proc. El 404/PGRST202 ya está confirmado como falta de activación, no solo caché. Los RPC anteriores y sus grants permanecen; no reconstruir los editores ni publicar para intentar aplicar SQL.

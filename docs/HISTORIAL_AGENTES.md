@@ -855,3 +855,12 @@ Baseff532a1 sincronizada. Instrucción nueva requiere autorización específica 
 Paquete exacto builder--check aprobado, SHA2567bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd. Auditor APROBADO sin cambiosSQL. Confirmación incluye sustitución de enforce_product_moderation y cuatroRPC, no solo funciones nuevas. Preflight remoto acotado READONLY: proyecto correcto, dosversionesausentes, prerequisitos y Vaultpresentes; igualdad de identidadtrue sin exponervalor. APIlectorreadonly no permitedescifrado; APIadmin conBEGINREADONLY para compararbooleano solamente, sin escrituras.
 
 No migraciones/OTAs/datoscomerciales aún. Siguienteacción: respuesta explícita de Oliver a ejecutar esas dosversiones; proceder una única vez, verificar historia/RPC/grants/permisos/operacionescontroladas y cerrar entrega funcional. No volverapedir autorización del mismo despliegue ni preparar nuevasfunciones. Runnerlocal debe aislarPGHOSTADDR heredado (observaciónauditor no bloqueante); pruebas previas8/8+24/24 no se repitieron en este turno.
+
+
+## 2026-10-14 — Codex: ENTREGA FUNCIONAL Mi tienda activada
+
+Oliver aprobó «SIII» las dos migraciones y pruebas controladas. Ejecutado UNA vez el paquete exacto7bebd4d2 en Marketplace: HTTP201, catalog_supported/orders_supportedtrue; historia20261011172600/20261011174200 registrada. CuatroRPC con grantsmodos correctos; POST/GETRESTreadyanon denegado40142501 ya no404. Sin nuevaOTA.
+
+12/12 pruebas SQL remotas con UUID nuevos y ROLLBACK, rolesauthenticated/anon y pertenencias/tablaroles reales de fixtures: create/edit/stock/pause/atomicidad/aislamiento/moderación/admin/detalle/pago/logística/guía/historial/duplicados/saldo/visitante. Condición paid solo fixture temporal, sin PaymentRPC/cobros. Otra conexión confirma conteos originales44productos31pedidos6pagos y demás iguales, hashesadvance/setcosts intactos. No filas temporales persistentes; puede haber huecos de secuencias. No se prueba guardado físico Android.
+
+Auditor realrelease_auditor APROBADO: exigió assertsNULLsafe y conteoexacto12, corregidos antes de ejecutar. Evidencia mi-tienda-activacion-2026-10-14.json y .local/seller-activation-20261014. PróximoBCVcorrecciónlocal, con permiso separado de desplieguefinanciero; catálogo local/investigaciónsin devolver búsqueda al propietario y sin imágenes no autorizadas en repo/OTA. No repetir activación o desarrollo de Mi tienda.

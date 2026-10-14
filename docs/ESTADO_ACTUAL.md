@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: operación desbloqueo, Mi tienda como primer incremento. Paquete exacto comprobado y aprobado por auditor independiente; prerrequisitos e identidad Vault del proyecto correcto verificados en READ ONLY. Se solicita autorización expresa de esas dos migraciones; todavía no ejecutadas.
+**Última actualización:** 2026-10-14: Mi tienda ACTIVADA en Marketplace con autorización expresa de Oliver. Dos migraciones aplicadas (28 totales), cuatro RPC operativos, 12/12 pruebas SQL remotas reversibles y auditor APROBADO. Sin cambios en datos comerciales originales ni OTA. Continúa BCV: corrección y pruebas locales; despliegue financiero requiere autorización concreta.
 
 ## Dónde está el trabajo
 
@@ -13,25 +13,23 @@
 | Repositorio | https://github.com/somosoudy-design/marketplace (público: nunca subir secretos) |
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
-| Último commit confirmado | Diagnóstico `6671820`; parada de lote cinco en `git log -1 origin/claude/marketplace-v1`. Infraestructura `40d37ea`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
+| Último commit confirmado | Confirmación `f4184c6`; cierre de activación actual en `git log -1 origin/claude/marketplace-v1`. OTA permanece `01a13354-e5fd-70f0-90bc-feec7f425a03` |
 | Plan vigente | Entregas cortas: activar Mi tienda → corregir BCV local/deploy autorizado → catálogo cinco/local si falta permiso → cerrar pendientes operativos. C permanece |
-| Objetivo actual | Autorizar y ejecutar exclusivamente 20261011172600 y 20261011174200 en Marketplace; comprobar RPC, permisos y operaciones sin otra implementación |
+| Objetivo actual | Mi tienda activada y verificada en backend; preparar corrección TLS/fechas BCV localmente sin desplegar cambios financieros todavía |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
-## Trabajo en curso — activación Mi tienda, confirmación concreta solicitada
+## Última entrega funcional cerrada — Mi tienda ACTIVADA
 
-Nueva instrucción del propietario: no limitar el trabajo al catálogo ni repetir diagnóstico; pedir autorización específica antes de estas dos migraciones, y ejecutarlas en cuanto se autoricen. Raíz ejecutor/único escritor; release_auditor independiente de lectura. Builder --check aprobado; paquete **SHA256 7bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd**, sin cambios respecto a las fuentes. Auditor APROBADO, sin cambios obligatorios.
+Oliver autorizó explícitamente **«SIII»** a las dos migraciones y pruebas controladas. Paquete exacto SHA2567bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd ejecutado UNA vez vía Management API en Marketplace; HTTP201, catalog_supported/orders_supported=true. Ambas versiones registradas:20261011172600/20261011174200; total esperado28. No reejecutar migración ni pedir aprobación otra vez.
 
-Preflight acotado real: Management confirma Marketplace/mimnotafmfasvwrclxan; ambas versiones todavía ausentes, funciones/tablas requeridas presentes, una identidad Vault. La comparación de identidad se hizo dentro de READ ONLY con rol postgres y devolvió **true**, sin extraer el valor: el lector administrativo read_only:true no permite la vista descifrada. No se ejecutó SQL de migración, mutaciones comerciales ni otra inspección general.
+**Operación comprobada:** 12/12 casos SQL remotos con fixtures UUID nuevas: creación y reintento sin duplicados; edición/stock/pausa; fallo atómico sin edición parcial; perfil de tienda propio/ajeno; aislamiento vendedor y catálogo privado; admin real/revisión preservada; detalle por tienda/id; bloqueo sin pago; preparación/despacho/guía/historial/duplicados/estados admin/saldo; comprador y visitante denegados. Las escrituras/lecturas se verificaron dentro de una transacción revertida. No se comprometieron cambios de productos/pedidos reales ni se realizaron/revisaron pagos; secuencias pueden dejar huecos, sin filas de fixture persistentes.
 
-Paquete `tools/supabase-remote/aplicar-mi-tienda-operativa.sql`: exactamente dos migraciones, transacción/lock, guard de proyecto, conflictos abortan y registradas se omiten, grants finales y schema reload. Incluye reemplazo esperado de `enforce_product_moderation()` además de cuatro RPC; preserva revisión/rechazo manual y RLS. Sin DROP/TRUNCATE/DELETE, seed ni modificación de fórmulas o procedimientos financieros. Sus pruebas previas8/8 y24/24 son históricas; en este incremento se ejecutaron congruencia/guardas/preflight y revisión, sin afirmar nueva corrida funcional.
+Cuatro RPC existentes en servidor, editor INVOKER/detalle DEFINER, anon sin EXECUTE y authenticated/service_role habilitados. REST readiness pasó de404 a401/42501 para anon, según grants. Otra conexión confirmó mismos conteos originales (44productos,63variantes,104imágenes,5tiendas,31pedidos,35entregas,6pagos) y hashes de advance_fulfillment/set_product_costs intactos. Evidencia sanitizada `docs/mi-tienda-activacion-2026-10-14.json`. Auditor independiente APROBADO tras exigir asserts NULL-safe y12 resultados explícitos; corregidos antes de ejecutar.
 
-**Próxima acción exacta:** recibir respuesta explícita a la ejecución de ambas migraciones. Al autorizar, enviar el archivo exacto por Management API al único proyecto, comprobar historia/RPC/grants y verificación controlada de propietario/vendedor ajeno/producto/pedidos. Nada de db push general ni OTA: JS operativo ya publicado. No pedir autorización otra vez para el mismo despliegue aprobado. En pruebas locales fijar localhost y retirar PGHOSTADDR/servicios heredados; el auditor detectó ese límite no bloqueante del runner actual.
+**Android:** no OTA necesaria. Pantallas publicadas consultan readiness con staleTime0/refetchOnMount always; Oliver debe volver a entrar Cuenta→Mi tienda. Backend verificado; sesión/formularios/guardado confirmado en Samsung físico aún por comprobar. No atribuir estas pruebas SQL a Android nativo.
 
-Inventario ejecutivo por continuidad: funcionando/publicado C y navegación comprador; desarrollado sin activar los dos contratos vendedor; sin verificar autenticado nativo y persistencia remota controlada; parcial BCV directo/TLS y fotografías/integraciones pendientes de credenciales; no desarrollado borradores persistentes. No una nueva auditoría general.
-
-**Catálogo, instrucción actual:** Codex retoma búsqueda y evaluación; no devolver al propietario la búsqueda como único siguiente paso. Referencias sin derechos pueden evaluarse **solo localmente**, nunca Git público/OTA. Reutilizar infraestructura para cinco; no dejar detenido el resto del proyecto por fotografías. Las peticiones PC de la sección histórica siguiente no son la instrucción vigente. BCV financiero remoto y OTA mantienen autorizaciones específicas.
+**Próxima acción exacta:** preparar localmente corrección BCV TLS UnknownIssuer y separación publicación/observación/Fecha Valor, pruebas de vigencia hoy/futuro/fines de semana/Caracas. Antes del despliegue financiero presentar cambio exacto y pedir autorización específica; no modificar remoto por el permiso de Mi tienda. Después evaluación fotográfica local con las fuentes disponibles: no devolver búsqueda al propietario ni bloquear el resto por permisos; nada sin licencia en Git/OTA. iOS pospuesto, sin APK nuevo o cambios de InicioC.
 
 ## Histórico CAT-EXH-01 — parada bajo instrucción anterior
 
