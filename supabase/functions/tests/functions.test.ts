@@ -301,6 +301,30 @@ Deno.test('rates-sync: BCV UnknownIssuer keeps TLS failure explicit; DolarAPI fa
   }
 });
 
+Deno.test('rates-sync: future BCV Fecha Valor is retained by the actual parser and ingest RPC', async () => {
+  const localDate = new Intl.DateTimeFormat('en-CA', { timeZone:'America/Caracas', year:'numeric', month:'2-digit', day:'2-digit' }).format(new Date());
+  const [next] = await service<{ day:string }[]>(`/rest/v1/bcv_banking_calendar?day=gt.${localDate}&is_business_day=eq.true&order=day.asc&limit=1&select=day`);
+  assert(next, 'next verified banking date required');
+  const before = await service<{ id:number }[]>('/rest/v1/exchange_rates?source_code=eq.bcv_official&select=id');
+  const effective = `${next.day}T00:00:00-04:00`;
+  // Reproducible HTML fixture, no real provider call or real financial transaction.
+  const html = `<div id="dolar"><strong>877,90230000</strong></div>Fecha Valor: <span content="${effective}"></span>`;
+  const futureBcv: typeof fetch = (input) => String(input) === 'https://www.bcv.org.ve/'
+    ? Promise.resolve(new Response(html)) : Promise.reject(new Error('other sources offline in test'));
+  try {
+    const response = await (await call(ratesSync({ env:envWith({}), fetch:futureBcv }), {}, { authorization:`Bearer ${SERVICE}` })).json();
+    const bcv = response.results.find((r: { source:string }) => r.source === 'bcv_official');
+    eq([bcv.ok, bcv.observedAt], [true, new Date(effective).toISOString()]);
+    const [stored] = await service<{ rate:number; observed_at:string }[]>(`/rest/v1/exchange_rates?source_code=eq.bcv_official&observed_at=eq.${encodeURIComponent(bcv.observedAt)}&select=rate,observed_at`);
+    eq([Number(stored.rate), new Date(stored.observed_at).toISOString()], [877.9023, bcv.observedAt]);
+    const status = await rpc<{ available:boolean; observed_at?:string }>('rate_status', { p_pair:'USD/VES' });
+    if (status.available) assert(new Date(status.observed_at!).getTime() <= Date.now(), 'future rate must never be selected');
+  } finally {
+    const after = await service<{ id:number }[]>('/rest/v1/exchange_rates?source_code=eq.bcv_official&select=id');
+    for (const row of after) if (!before.some((b) => b.id === row.id)) await service(`/rest/v1/exchange_rates?id=eq.${row.id}`, { method:'DELETE' });
+  }
+});
+
 Deno.test('push-dispatch: sends once, drops dead devices, never runs for others', async () => {
   const h = pushDispatch;
   eq((await call(h({ env: envWith({}), fetch: noNetwork }), {}, { authorization: `Bearer ${ANON}` })).status, 401);

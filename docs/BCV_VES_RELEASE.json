@@ -1,0 +1,59 @@
+{
+  "project_ref": "mimnotafmfasvwrclxan",
+  "status": "tested_locally_awaiting_backend_authorization",
+  "migration": "supabase/migrations/20261014202228_bcv_effective_dates.sql",
+  "migration_sha256": "809818451d97d92a3e4e18563ed3bd32aed2705bccdebbcafe07a06d70b959cf",
+  "sql_bundle": "tools/supabase-remote/aplicar-bcv-ves.sql",
+  "sql_bundle_sha256": "a144ab6b8895060dc806177d267ad0ea2322e29a2a28afaae2b4488cdbe0005c",
+  "preflight_financial_md5": {
+    "current_rate(text)": "1b58a5d6a04120c1ab8cd55c51f1f1fb",
+    "ingest_rate(text,text,numeric,timestamp with time zone,jsonb,boolean)": "c531294e1ccac0e88b93c3b1edbd11d4",
+    "pricing_snapshot_current()": "a86cb8033453805626ffc25c297a1238"
+  },
+  "postflight_financial_md5": {
+    "current_rate(text)": "ec69de556081f8abe6fb974302f582e8",
+    "ingest_rate(text,text,numeric,timestamp with time zone,jsonb,boolean)": "f2e8c00fc79b715375872f97ad42ea15",
+    "pricing_snapshot_current()": "f08bb2d1ae6739ee3b4394fccf44756d"
+  },
+  "edge_functions": [
+    {
+      "name": "rates-sync",
+      "entrypoint_path": "rates-sync/index.ts",
+      "verify_jwt": false,
+      "authentication": "existing service/job-token",
+      "files_sha256": {
+        "_shared/auth.ts": "92dbc026052515e8f628a5a8a493f6f8724bfa8f73232e99e15dc8ed2e8b74d1",
+        "_shared/core/rates.ts": "1e5d5753c3c2ed149540f6a7a7129cbe219aedad0e423a9abad624b6157d5755",
+        "_shared/env.ts": "517f1ff31555fcf9fd442727d0a4e71b6dd9123a40f09e321da9732ec1d9ca87",
+        "_shared/http.ts": "359c64350c088a243c9d9ae01e3e7bf124342f8205fac6964b1ae2955566723a",
+        "_shared/rest.ts": "888eec25887e4c42ffcf835b02bbf8dfcf896e212c94b0fdca6df890f4422cfc",
+        "rates-sync/handler.ts": "4459f7dcccc1aeb10479a2675ec6904a31003f04e2ac58effe5abe65237d9cd5",
+        "rates-sync/index.ts": "1011b55c32882291e155a1d48f28e385f9e6e1e33492aacba1ddc51377898a70"
+      }
+    },
+    {
+      "name": "panel-api",
+      "entrypoint_path": "panel-api/index.ts",
+      "verify_jwt": true,
+      "authentication": "existing user JWT + admin authorization",
+      "files_sha256": {
+        "_shared/core/errors.ts": "8b05c1d1349769e49e432f828be7598285e8f7dd5e876411284e9dcfa526bc76",
+        "_shared/core/import.ts": "95b3757005ecbd81180f524771178bffa3abb3ba5dbaf67d47e8fd188ac7d498",
+        "_shared/core/rates.ts": "1e5d5753c3c2ed149540f6a7a7129cbe219aedad0e423a9abad624b6157d5755",
+        "_shared/env.ts": "517f1ff31555fcf9fd442727d0a4e71b6dd9123a40f09e321da9732ec1d9ca87",
+        "_shared/http.ts": "359c64350c088a243c9d9ae01e3e7bf124342f8205fac6964b1ae2955566723a",
+        "_shared/rest.ts": "888eec25887e4c42ffcf835b02bbf8dfcf896e212c94b0fdca6df890f4422cfc",
+        "_shared/safe-fetch.ts": "d1957b5dbf587ce70ceca425e4728ef3acecae1993ec32f154391aeea8687145",
+        "panel-api/handler.ts": "523cfd9ecf4656d2ed324879ecada6a14ca3b669b1703effcec1dcb097473283",
+        "panel-api/index.ts": "1011b55c32882291e155a1d48f28e385f9e6e1e33492aacba1ddc51377898a70"
+      }
+    }
+  ],
+  "mobile_release_required": false,
+  "calendar_valid_through": "2026-12-31",
+  "calendar_sources": [
+    "https://iusdata.com/wp-content/uploads/2025/11/Calendario-Bancario-2026.pdf",
+    "https://asobanca.com.ve/wp-content/uploads/2025/11/calendario-bancario-asobanca-6.pdf"
+  ],
+  "provider_date_contract": "https://github.com/enzonotario/dolarapi.com/blob/main/cron/ve/bcv.extractor.js"
+}

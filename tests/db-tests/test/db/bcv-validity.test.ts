@@ -16,7 +16,7 @@ async function at(time: string, readings: [string, string, number][], fn: (sql: 
   const sql = async (q: string, p?: unknown[]) => (await c.query(q, p)).rows;
   try {
     await sql('begin');
-    for (const signature of ['public.current_rate(text)', 'public.ingest_rate(text,text,numeric,timestamptz,jsonb,boolean)']) {
+    for (const signature of ['public.current_rate(text)', 'public.ingest_rate(text,text,numeric,timestamptz,jsonb,boolean)', 'public.pricing_snapshot_current()']) {
       const [{ def }] = await sql('select pg_get_functiondef($1::regprocedure) as def', [signature]);
       await sql(def.replaceAll('now()', `timestamptz '${time}'`));
     }
@@ -111,6 +111,28 @@ describe('BCV effective dates in the real VES buyer quote', () => {
     expect(days.map((d) => d.day)).toEqual(['2026-01-06', '2026-05-14']);
     const [grants] = await admin("select has_function_privilege('anon','public._bcv_business_day(timestamptz)','EXECUTE') as anon, has_function_privilege('authenticated','public._bcv_business_day(timestamptz)','EXECUTE') as buyer");
     expect(grants).toEqual({ anon:false, buyer:false });
+  });
+
+  it('a future snapshot does not replace the currently effective snapshot', async () => {
+    await at('2026-10-14T22:00:00Z', [], async (sql) => {
+      await sql("update public.pricing_snapshots set taken_at='2026-10-13T04:00:00Z', valid_until='2026-10-14T04:00:00Z'");
+      const insert = `insert into public.pricing_snapshots(taken_at,valid_until,bcv_rate,bcv_source,bcv_observed_at,usdt_ves_rate,usdt_source,usdt_observed_at,usd_usdt_rate,usd_usdt_source,gap_pct)
+        values ($1,'2026-10-16T04:00:00Z',877.9,'dolarapi_oficial','2026-10-14T04:00:00Z',1012,'binance_p2p','2026-10-14T20:00:00Z',1.0011,'kraken_usdt',15.2) returning id`;
+      const active = (await sql(insert,['2026-10-14T20:00:00Z']))[0].id;
+      await sql(insert,['2026-10-15T04:00:00Z']);
+      expect((await sql('select (public.pricing_snapshot_current()).id as id'))[0].id).toBe(active);
+    });
+  });
+  it('midnight UTC still uses the Caracas calendar date', async () => {
+    await at('2026-10-13T03:59:59Z', [friday], async (sql) => {
+      expect(await quote(sql)).toMatchObject({ rate_applied:875.65 });
+    });
+  });
+  it.each(['2026-10-12', '2026-10-11'])('a missing calendar day cannot silently bridge a holiday or weekend: %s', async (day) => {
+    await at('2026-10-12T22:00:00Z', [friday], async (sql) => {
+      await sql('delete from public.bcv_banking_calendar where day=$1', [day]);
+      await expect(quote(sql)).rejects.toMatchObject({ hint:'rate_unavailable' });
+    });
   });
 
 });

@@ -30,15 +30,25 @@ from generate_series(date '2026-01-01', date '2026-12-31', interval '1 day') d;
 -- INVOKER helpers are private to the existing DEFINER rate functions. No user-supplied quote clock.
 create function public._bcv_business_day(p_at timestamptz) returns date
 language sql stable set search_path = public as $$
-  select max(day) from public.bcv_banking_calendar
-   where day <= (p_at at time zone 'America/Caracas')::date and is_business_day
-     and exists (select 1 from public.bcv_banking_calendar where day = (p_at at time zone 'America/Caracas')::date);
+  with bounds as (
+    select max(day) as business_day from public.bcv_banking_calendar
+     where day <= (p_at at time zone 'America/Caracas')::date and is_business_day
+  )
+  select business_day from bounds where business_day is not null
+    and (select count(*) from public.bcv_banking_calendar
+          where day between business_day and (p_at at time zone 'America/Caracas')::date)
+        = (p_at at time zone 'America/Caracas')::date - business_day + 1;
 $$;
 create function public._bcv_next_business_day(p_at timestamptz) returns date
 language sql stable set search_path = public as $$
-  select min(day) from public.bcv_banking_calendar
-   where day > (p_at at time zone 'America/Caracas')::date and is_business_day
-     and exists (select 1 from public.bcv_banking_calendar where day = (p_at at time zone 'America/Caracas')::date);
+  with bounds as (
+    select min(day) as business_day from public.bcv_banking_calendar
+     where day > (p_at at time zone 'America/Caracas')::date and is_business_day
+  )
+  select business_day from bounds where business_day is not null
+    and (select count(*) from public.bcv_banking_calendar
+          where day between (p_at at time zone 'America/Caracas')::date and business_day)
+        = business_day - (p_at at time zone 'America/Caracas')::date + 1;
 $$;
 revoke execute on function public._bcv_business_day(timestamptz), public._bcv_next_business_day(timestamptz)
   from public, anon, authenticated, service_role;
