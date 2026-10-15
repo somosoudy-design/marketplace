@@ -6,6 +6,14 @@
 
 **Última actualización:** 2026-10-14: entrega visual publicada y recibida en APK5 Android preview; claro/oscuro aprobados. BCV/VES y Mi tienda cerrados, sin cambios en esta entrega.
 
+## Trabajo en curso — Experiencia V3 / solo diseño
+
+Nueva instrucción del propietario: dos direcciones completas, A Comercio fluido y B Comercio estructurado, para comprador Carrito→Checkout→Pago y vendedor Cuenta→Mi tienda→Operaciones. Sin código funcional, Supabase, finanzas, OTA, APK, production o iOS. Guardar/subir solo documentación/prototipos/recursos de diseño. Al entregar, detenerse para decisión.
+
+Directorio `docs/experiencia-v3`: galería, prototipos aislados sin API,15vistas por propuesta,80capturas iniciales412/320/oscuro/estados, dos exploraciones Product Design reales. Capturas nuevas del código actual con fixtures interceptadas; no validar operación de backend. Especialista operaciones y auditor independientes de lectura; raíz único escritor. Ronda1 en curso; operaciones pidió conservar contexto entre entregas/resultados, campos de editor y fecha de emisión. No aprobado aún.
+
+Próxima acción: corregir esas continuidades en el prototipo, verificar recorridos y foco/contraste, cerrar máximo2rondas y entregar galería privada accesible + recomendación. No modificar la app ni iniciar implementación después.
+
 ## Entrega visual — cinco modelos, seis fotografías autorizadas
 
 Se reemplazaron las referencias UGREEN sin permiso por fotografías reales de Wikimedia Commons con licencias CC BY, CC BY-SA o CC0: Samsung EP-T4510 (dos fotografías), Anker PowerCore 10.000, UGREEN lector SD USB-A/USB-C, StarTech ST7300U3M y UGREEN cargador de carro 25845. Archivos integrados en `apps/mobile/assets/catalog-exhibition`, registro Metro y créditos visibles en las fichas. Procedencia, licencia y hashes en `catalogo-exhibicion/lote-02-autorizado.json`. Ningún packshot oficial sin permiso fue distribuido.
