@@ -8,6 +8,8 @@
 
 ## Trabajo en curso — Experiencia V3 / solo diseño
 
+**Revisión del propietario: ambas direcciones V3 rechazadas visualmente.** No tratarlas como aprobadas ni implementarlas. Oliver aporta referencia de catálogo/ficha/carrito y pide composición comercial integrada y compacta, con acabado general profesional. Nueva propuesta única en `docs/experiencia-v4/`, comprador únicamente, prototipo aislado sin API. En curso: catálogo/ficha/carrito/entrega/revisión/pago conectados; validación visual y auditor independiente pendientes. No app, backend, OTA o publicación del sitio remoto. Enlace Work bloqueado por red del entorno; inspección de la fuente A/B del repositorio mediante Chromium local, no afirmar inspección del sitio vivo. Próximo: terminar capturas comparables, corregir jerarquía/estados/navegación y entregar propuesta para revisión, sin implementación nativa.
+
 Nueva instrucción del propietario: dos direcciones completas, A Comercio fluido y B Comercio estructurado, para comprador Carrito→Checkout→Pago y vendedor Cuenta→Mi tienda→Operaciones. Sin código funcional, Supabase, finanzas, OTA, APK, production o iOS. Guardar/subir solo documentación/prototipos/recursos de diseño. Al entregar, detenerse para decisión.
 
 Directorio `docs/experiencia-v3`: galería, prototipos aislados sin API,15vistas por propuesta,80capturas iniciales412/320/oscuro/estados, dos exploraciones Product Design reales. Capturas nuevas del código actual con fixtures interceptadas; no validar operación de backend. Especialista operaciones y auditor independientes de lectura; raíz único escritor. Ronda1 en curso; operaciones pidió conservar contexto entre entregas/resultados, campos de editor y fecha de emisión. No aprobado aún.
