@@ -1,0 +1,89 @@
+# APK 5 + preview. Public reads and visitor navigation only; no remote account, order or payment.
+appId: com.example.kora.preview
+name: Inicio V2 — apertura, comparación y destinos
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-hero
+    timeout: 60000
+- assertVisible:
+    id: home-search
+- assertVisible:
+    id: home-recommended
+- takeScreenshot: inicio-v2-01-portada
+- tapOn:
+    id: collection-.*-all
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- takeScreenshot: inicio-v2-02-coleccion
+- back
+- tapOn:
+    id: category-tecnologia
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- takeScreenshot: inicio-v2-03-categoria
+- back
+- tapOn:
+    id: product-card-.*
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- takeScreenshot: inicio-v2-04-ficha
+- back
+- takeScreenshot: inicio-v2-05-regreso
+- tapOn:
+    id: card-favorite-.*
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: sign-in-submit
+    timeout: 15000
+- back
+- tapOn:
+    id: home-cart
+- assertVisible:
+    id: buyer-tab-cart
+- tapOn:
+    id: buyer-tab-index
+- tapOn:
+    id: home-search
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- hideKeyboard
+- takeScreenshot: inicio-v2-06-buscar
+- tapOn:
+    id: buyer-tab-index
+- swipe:
+    start: 50%, 75%
+    end: 50%, 25%
+- extendedWaitUntil:
+    visible:
+      id: home-search-sticky
+    timeout: 15000
+- takeScreenshot: inicio-v2-08-buscador-persistente
+- tapOn:
+    id: home-search-sticky
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- hideKeyboard
+- tapOn:
+    id: buyer-tab-index
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- takeScreenshot: inicio-v2-07-diagnostico

@@ -1,0 +1,18 @@
+{
+  "name": "@kora/db-tests",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bash ../../tools/local-stack/test-db.sh && vitest run --no-file-parallelism test/db",
+    "test:e2e": "vitest run --no-file-parallelism test/e2e",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@kora/api": "workspace:*",
+    "@kora/core": "workspace:*",
+    "@supabase/supabase-js": "^2.117.3",
+    "@types/pg": "^8.23.1",
+    "pg": "^8.23.1"
+  }
+}

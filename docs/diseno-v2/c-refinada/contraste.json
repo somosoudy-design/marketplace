@@ -1,0 +1,35 @@
+{
+  "scope": "Cinco pares sólidos usados en C; no certificación WCAG ni contraste sobre fotografías",
+  "pairs": [
+    {
+      "role": "editorial principal",
+      "foreground": "#FFFFFF",
+      "background": "#22125A",
+      "ratio": 16.13
+    },
+    {
+      "role": "editorial secundario",
+      "foreground": "#DACDFF",
+      "background": "#22125A",
+      "ratio": 10.87
+    },
+    {
+      "role": "búsqueda",
+      "foreground": "#55516A",
+      "background": "#F6F2FF",
+      "ratio": 6.88
+    },
+    {
+      "role": "catálogo claro",
+      "foreground": "#1C1928",
+      "background": "#F8F7FC",
+      "ratio": 16.16
+    },
+    {
+      "role": "catálogo oscuro",
+      "foreground": "#F3F1FA",
+      "background": "#110F18",
+      "ratio": 16.98
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+# requiere: registro-sin-correo
+# Recorrido con cuenta en el APK real (Maestro) contra el proyecto de pruebas: un visitante agrega el cable, crea
+# una cuenta de tester maestro-<hora>@example.com (sin correo: solo corre si el proyecto tiene «Confirm email»
+# desactivado; lo decide el workflow apk-emulator), conserva el carrito, agrega una dirección ficticia, confirma
+# el pedido, ve la cotización de Pago Móvil en bolívares con su tasa y cancela el pedido sin reportar ningún pago.
+# Desde el APK 5 también activa los avisos (rechazando el permiso la primera vez), espera el aviso push real del
+# pedido, lo toca, reabre la app con la sesión y vuelve a entrar.
+# Nada se paga ni se marca como pagado: queda un pedido cancelado de una cuenta @example.com.
+appId: com.example.kora.preview
+name: Comprador con cuenta hasta la cotización y cancelación
+---
+- evalScript: ${output.email = 'maestro-' + new Date().getTime() + '@example.com'}
+# no clearState: it would also erase the EAS Update the app downloaded and run the APK's original JavaScript.
+# 01-visitante runs first and leaves the 2 m cable in the visitor cart; this flow adds the 1 m one.
+# Maestro grants every permission on launch unless told otherwise; notices start without permission here, as on a
+# freshly installed phone, so step 3b sees the system prompt.
+- launchApp:
+    permissions:
+      all: deny
+- runFlow:
+    # a slow emulator can show a system "isn't responding" dialog over the app
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+# a second attempt after a failure starts with the first attempt's session: sign out so it begins as a visitor
+- tapOn: Cuenta
+- extendedWaitUntil:
+    visible:
+      id: (account-name|account-sign-in)
+    timeout: 30000
+- runFlow:
+    when:
+      visible:
+        id: account-name
+    commands:
+      - scrollUntilVisible:
+          element:
+            text: Cerrar sesión
+          direction: DOWN
+          timeout: 20000
+      - tapOn: Cerrar sesión
+      - extendedWaitUntil:
+          visible:
+            id: account-sign-in
+          timeout: 30000
+
+# 1. visitante compra el cable (1 m, el precio base): «Comprar» lo agrega y abre el carrito
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-cta
+    timeout: 30000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 20000
+- tapOn:
+    id: cart-continue
+
+# 2. crea la cuenta desde «Iniciar sesión»
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 20000
+- tapOn: Crear una cuenta
+- tapOn:
+    id: sign-up-name
+- inputText: Maestro Prueba
+- tapOn:
+    id: sign-up-email
+- inputText: ${output.email}
+- tapOn:
+    id: sign-up-password
+- inputText: Kora-prueba-2026
+- hideKeyboard
+- takeScreenshot: flujo-cuenta-01-registro
+- tapOn:
+    id: sign-up-submit
+
+# 3. vuelve al carrito con la sesión abierta y el mismo producto
+- extendedWaitUntil:
+    visible:
+      text: Continuar
+      id: cart-continue
+    timeout: 30000
+- assertVisible:
+    id: cart-line-.*
+- takeScreenshot: flujo-cuenta-02-carrito-con-cuenta
+
+# 3b. avisos push: primero sin permiso (el sistema lo pregunta y se rechaza), luego con permiso. Con permiso, el
+# dispositivo queda registrado para esta cuenta de prueba (token de Expo con Firebase)
+- openLink: kora://settings
+- extendedWaitUntil:
+    visible:
+      id: settings-push
+    timeout: 20000
+- tapOn:
+    id: settings-push
+- extendedWaitUntil:
+    visible:
+      id: .*:id/permission_deny_button
+    timeout: 20000
+- tapOn:
+    id: .*:id/permission_deny_button
+- extendedWaitUntil:
+    visible:
+      id: settings-push-status
+      text: No diste permiso.*
+    timeout: 20000
+- takeScreenshot: flujo-cuenta-02b-avisos-sin-permiso
+- tapOn:
+    id: settings-push
+- extendedWaitUntil:
+    visible:
+      id: .*:id/permission_allow_button
+    timeout: 20000
+- tapOn:
+    id: .*:id/permission_allow_button
+- extendedWaitUntil:
+    visible:
+      id: settings-push-status
+      text: Avisos activados en este dispositivo.
+    timeout: 60000
+- takeScreenshot: flujo-cuenta-02c-avisos-activados
+- openLink: kora://cart
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 20000
+- tapOn:
+    id: cart-continue
+
+# 4. checkout: dirección ficticia
+- extendedWaitUntil:
+    visible:
+      id: checkout-add-address
+    timeout: 30000
+- tapOn:
+    id: checkout-add-address
+- extendedWaitUntil:
+    visible:
+      id: addr-recipient
+    timeout: 20000
+- tapOn:
+    id: addr-recipient
+- inputText: Maestro Prueba
+- tapOn:
+    id: addr-phone
+- inputText: '04125550101'
+- hideKeyboard
+- tapOn:
+    id: addr-region
+- scrollUntilVisible:
+    element:
+      text: Distrito Capital
+    direction: DOWN
+    timeout: 20000
+- tapOn: Distrito Capital
+- tapOn:
+    id: addr-city
+- inputText: Caracas
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: addr-line1
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: addr-line1
+- inputText: Av. de Ejemplo, Edif. Demo, piso 2
+- hideKeyboard
+- takeScreenshot: flujo-cuenta-03-direccion
+- scrollUntilVisible:
+    element:
+      id: addr-save
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: addr-save
+
+# 5. resumen y confirmación del pedido
+- extendedWaitUntil:
+    visible:
+      id: checkout-address
+    timeout: 30000
+# the address card is a View: Maestro matches the text of its children, not of the container
+- assertVisible: .*Maestro Prueba.*
+- takeScreenshot: flujo-cuenta-04-checkout
+- scrollUntilVisible:
+    element:
+      id: checkout-place
+    direction: DOWN
+    timeout: 20000
+- tapOn:
+    id: checkout-place
+
+# 6. cotización de Pago Móvil en bolívares (sin reportar nada). Sin una tasa BCV vigente (fines de semana, cuando la
+# fuente no publica) los bolívares no se cotizan y la app lo dice al elegir el método: entonces se cotiza con Zelle.
+- extendedWaitUntil:
+    visible:
+      id: method-pago_movil
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-05-metodos
+- tapOn:
+    id: method-pago_movil
+- extendedWaitUntil:
+    visible:
+      id: (method-amount-pago_movil|method-rate-unavailable)
+    timeout: 20000
+- evalScript: ${output.ves = true}
+- runFlow:
+    when:
+      visible:
+        id: method-rate-unavailable
+    commands:
+      - evalScript: ${output.ves = false}
+      - takeScreenshot: flujo-cuenta-05b-sin-tasa-bcv
+      # centered, so the row is not under the bottom bar (a tap there would hit "Continuar")
+      - scrollUntilVisible:
+          element:
+            id: method-zelle
+          direction: DOWN
+          centerElement: true
+          timeout: 20000
+      - tapOn:
+          id: method-zelle
+- tapOn:
+    id: pay-quote
+- extendedWaitUntil:
+    visible:
+      id: quote-amount
+    timeout: 30000
+- runFlow:
+    when:
+      true: ${output.ves}
+    commands:
+      - assertVisible:
+          id: quote-amount
+          text: .*Bs.*
+      - assertVisible:
+          id: quote-rate
+- takeScreenshot: flujo-cuenta-06-cotizacion
+
+# 7. el pedido se cancela desde su ficha
+- openLink: kora://orders
+- extendedWaitUntil:
+    visible:
+      id: order-P-.*
+    timeout: 30000
+- tapOn:
+    id: order-P-.*
+- extendedWaitUntil:
+    visible:
+      id: order-number
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      id: order-cancel
+    direction: DOWN
+    timeout: 20000
+- tapOn:
+    id: order-cancel
+- tapOn:
+    id: order-cancel-sheet-confirm
+# the order screen stays scrolled at the bottom, where the delivery shows it was cancelled
+- extendedWaitUntil:
+    visible: Entrega cancelada
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-07-cancelado
+- scrollUntilVisible:
+    element:
+      id: order-number
+    direction: UP
+    timeout: 20000
+- takeScreenshot: flujo-cuenta-08-pedido-cancelado
+
+# 8. aviso push real: el pedido creado arriba genera «Pedido P-… recibido» para esta cuenta de prueba, y push-dispatch
+# (cada minuto en el proyecto de pruebas) lo envía por Expo y Firebase a este dispositivo. Tocarlo abre el pedido
+# La app queda en otra pantalla, así que ver la ficha del pedido después de tocar el aviso prueba que el aviso la abrió.
+- openLink: kora://settings
+- extendedWaitUntil:
+    visible:
+      id: settings-push
+    timeout: 20000
+- swipe:
+    start: 50%, 1%
+    end: 50%, 75%
+- extendedWaitUntil:
+    visible: Pedido P-.* recibido
+    timeout: 240000
+# the emulator draws a new notification a moment after it is in the hierarchy
+- waitForAnimationToEnd:
+    timeout: 5000
+- takeScreenshot: flujo-cuenta-09-aviso-push
+- tapOn: Pedido P-.* recibido
+- extendedWaitUntil:
+    visible:
+      id: order-number
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-10-pedido-desde-aviso
+
+# 9. la sesión sigue al cerrar y abrir la app; cerrar sesión y volver a entrar
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- tapOn: Cuenta
+- extendedWaitUntil:
+    visible:
+      id: account-name
+      text: Maestro Prueba
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      text: Cerrar sesión
+    direction: DOWN
+    timeout: 20000
+- tapOn: Cerrar sesión
+- extendedWaitUntil:
+    visible:
+      id: account-sign-in
+    timeout: 30000
+- tapOn:
+    id: account-sign-in
+- tapOn:
+    id: sign-in-email
+- inputText: ${output.email}
+- tapOn:
+    id: sign-in-password
+- inputText: Kora-prueba-2026
+- hideKeyboard
+- tapOn:
+    id: sign-in-submit
+- extendedWaitUntil:
+    visible:
+      id: account-name
+      text: Maestro Prueba
+    timeout: 30000
+- takeScreenshot: flujo-cuenta-11-sesion-de-nuevo

@@ -1,0 +1,33 @@
+Mi tienda
+TU NEGOCIO
+Voltio · Tienda de ejemplo
+Accesorios para tu día
+Activa
+Tienda de demostración
+Tu tienda de un vistazo
+13
+Productos
+2
+Por preparar
+3
+En camino
+Estado de tus productos
+Pendiente
+1
+Publicado
+12
+En revisión
+0
+Rechazado
+0
+Suspendido
+0
+Mis productos
+Consulta tu catálogo y sus estados
+Pedidos
+Entregas recibidas y seguimiento
+Configuración de tienda
+Datos y políticas de tu negocio
+Para operaciones avanzadas, usa el panel web con tu cuenta habitual.
+Abrir panel web
+Volver a comprar

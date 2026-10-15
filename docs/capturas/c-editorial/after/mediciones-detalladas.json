@@ -1,0 +1,946 @@
+[
+  {
+    "theme": "light",
+    "width": 320,
+    "textScale": 1,
+    "kind": "app web normal",
+    "masthead": {
+      "top": 0,
+      "bottom": 118,
+      "left": 0,
+      "right": 320,
+      "height": 118,
+      "width": 320
+    },
+    "editorial": {
+      "top": 118,
+      "bottom": 319,
+      "left": 0,
+      "right": 320,
+      "height": 201,
+      "width": 320
+    },
+    "categories": {
+      "top": 319,
+      "bottom": 376,
+      "left": 0,
+      "right": 320,
+      "height": 57,
+      "width": 320
+    },
+    "comparison": {
+      "top": 424,
+      "bottom": 658,
+      "left": 0,
+      "right": 320,
+      "height": 234,
+      "width": 320
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 320,
+      "height": 814,
+      "width": 320
+    },
+    "upperHeight": 319,
+    "completeProducts": 2,
+    "cards": [
+      {
+        "top": 424,
+        "bottom": 658,
+        "left": 16,
+        "right": 154,
+        "complete": true
+      },
+      {
+        "top": 424,
+        "bottom": 658,
+        "left": 166,
+        "right": 304,
+        "complete": true
+      },
+      {
+        "top": 670,
+        "bottom": 904,
+        "left": 16,
+        "right": 154,
+        "complete": false
+      },
+      {
+        "top": 670,
+        "bottom": 904,
+        "left": 166,
+        "right": 304,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 15
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 11
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 21
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 12
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 13
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 16
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 13
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "width": 320,
+    "textScale": 1.6,
+    "kind": "stress CSS; fontScale de React Native permanece1, no prueba OS",
+    "masthead": {
+      "top": 0,
+      "bottom": 163.203125,
+      "left": 0,
+      "right": 320,
+      "height": 163.203125,
+      "width": 320
+    },
+    "editorial": {
+      "top": 163.203125,
+      "bottom": 527.375,
+      "left": 0,
+      "right": 320,
+      "height": 364.171875,
+      "width": 320
+    },
+    "categories": {
+      "top": 527.375,
+      "bottom": 584.375,
+      "left": 0,
+      "right": 320,
+      "height": 57,
+      "width": 320
+    },
+    "comparison": {
+      "top": 646.78125,
+      "bottom": 903.578125,
+      "left": 0,
+      "right": 320,
+      "height": 256.796875,
+      "width": 320
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 320,
+      "height": 814,
+      "width": 320
+    },
+    "upperHeight": 527.375,
+    "completeProducts": 0,
+    "cards": [
+      {
+        "top": 646.78125,
+        "bottom": 903.578125,
+        "left": 16,
+        "right": 154,
+        "complete": false
+      },
+      {
+        "top": 646.78125,
+        "bottom": 903.578125,
+        "left": 166,
+        "right": 304,
+        "complete": false
+      },
+      {
+        "top": 915.578125,
+        "bottom": 1172.375,
+        "left": 16,
+        "right": 154,
+        "complete": false
+      },
+      {
+        "top": 915.578125,
+        "bottom": 1172.375,
+        "left": 166,
+        "right": 304,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 24
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 17.6
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 33.6
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 19.2
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 20.8
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 25.6
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 20.8
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "width": 412,
+    "textScale": 1,
+    "kind": "app web normal",
+    "masthead": {
+      "top": 0,
+      "bottom": 118,
+      "left": 0,
+      "right": 412,
+      "height": 118,
+      "width": 412
+    },
+    "editorial": {
+      "top": 118,
+      "bottom": 316,
+      "left": 0,
+      "right": 412,
+      "height": 198,
+      "width": 412
+    },
+    "categories": {
+      "top": 316,
+      "bottom": 373,
+      "left": 0,
+      "right": 412,
+      "height": 57,
+      "width": 412
+    },
+    "comparison": {
+      "top": 421,
+      "bottom": 712.5,
+      "left": 0,
+      "right": 412,
+      "height": 291.5,
+      "width": 412
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 412,
+      "height": 814,
+      "width": 412
+    },
+    "upperHeight": 316,
+    "completeProducts": 2,
+    "cards": [
+      {
+        "top": 421,
+        "bottom": 712.5,
+        "left": 16,
+        "right": 200,
+        "complete": true
+      },
+      {
+        "top": 421,
+        "bottom": 712.5,
+        "left": 212,
+        "right": 396,
+        "complete": true
+      },
+      {
+        "top": 724.5,
+        "bottom": 1016,
+        "left": 16,
+        "right": 200,
+        "complete": false
+      },
+      {
+        "top": 724.5,
+        "bottom": 1016,
+        "left": 212,
+        "right": 396,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 15
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 11
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 21
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 12
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 13
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 16
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 13
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "light",
+    "width": 412,
+    "textScale": 1.6,
+    "kind": "stress CSS; fontScale de React Native permanece1, no prueba OS",
+    "masthead": {
+      "top": 0,
+      "bottom": 128,
+      "left": 0,
+      "right": 412,
+      "height": 128,
+      "width": 412
+    },
+    "editorial": {
+      "top": 128,
+      "bottom": 463.375,
+      "left": 0,
+      "right": 412,
+      "height": 335.375,
+      "width": 412
+    },
+    "categories": {
+      "top": 463.375,
+      "bottom": 520.375,
+      "left": 0,
+      "right": 412,
+      "height": 57,
+      "width": 412
+    },
+    "comparison": {
+      "top": 582.78125,
+      "bottom": 897.078125,
+      "left": 0,
+      "right": 412,
+      "height": 314.296875,
+      "width": 412
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 412,
+      "height": 814,
+      "width": 412
+    },
+    "upperHeight": 463.375,
+    "completeProducts": 0,
+    "cards": [
+      {
+        "top": 582.78125,
+        "bottom": 897.078125,
+        "left": 16,
+        "right": 200,
+        "complete": false
+      },
+      {
+        "top": 582.78125,
+        "bottom": 897.078125,
+        "left": 212,
+        "right": 396,
+        "complete": false
+      },
+      {
+        "top": 909.078125,
+        "bottom": 1223.375,
+        "left": 16,
+        "right": 200,
+        "complete": false
+      },
+      {
+        "top": 909.078125,
+        "bottom": 1223.375,
+        "left": 212,
+        "right": 396,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 24
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 17.6
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 33.6
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 19.2
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 20.8
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 25.6
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 20.8
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "width": 320,
+    "textScale": 1,
+    "kind": "app web normal",
+    "masthead": {
+      "top": 0,
+      "bottom": 118,
+      "left": 0,
+      "right": 320,
+      "height": 118,
+      "width": 320
+    },
+    "editorial": {
+      "top": 118,
+      "bottom": 319,
+      "left": 0,
+      "right": 320,
+      "height": 201,
+      "width": 320
+    },
+    "categories": {
+      "top": 319,
+      "bottom": 376,
+      "left": 0,
+      "right": 320,
+      "height": 57,
+      "width": 320
+    },
+    "comparison": {
+      "top": 424,
+      "bottom": 658,
+      "left": 0,
+      "right": 320,
+      "height": 234,
+      "width": 320
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 320,
+      "height": 814,
+      "width": 320
+    },
+    "upperHeight": 319,
+    "completeProducts": 2,
+    "cards": [
+      {
+        "top": 424,
+        "bottom": 658,
+        "left": 16,
+        "right": 154,
+        "complete": true
+      },
+      {
+        "top": 424,
+        "bottom": 658,
+        "left": 166,
+        "right": 304,
+        "complete": true
+      },
+      {
+        "top": 670,
+        "bottom": 904,
+        "left": 16,
+        "right": 154,
+        "complete": false
+      },
+      {
+        "top": 670,
+        "bottom": 904,
+        "left": 166,
+        "right": 304,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 15
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 11
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 21
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 12
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 13
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 16
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 13
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "width": 320,
+    "textScale": 1.6,
+    "kind": "stress CSS; fontScale de React Native permanece1, no prueba OS",
+    "masthead": {
+      "top": 0,
+      "bottom": 163.203125,
+      "left": 0,
+      "right": 320,
+      "height": 163.203125,
+      "width": 320
+    },
+    "editorial": {
+      "top": 163.203125,
+      "bottom": 527.375,
+      "left": 0,
+      "right": 320,
+      "height": 364.171875,
+      "width": 320
+    },
+    "categories": {
+      "top": 527.375,
+      "bottom": 584.375,
+      "left": 0,
+      "right": 320,
+      "height": 57,
+      "width": 320
+    },
+    "comparison": {
+      "top": 646.78125,
+      "bottom": 903.578125,
+      "left": 0,
+      "right": 320,
+      "height": 256.796875,
+      "width": 320
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 320,
+      "height": 814,
+      "width": 320
+    },
+    "upperHeight": 527.375,
+    "completeProducts": 0,
+    "cards": [
+      {
+        "top": 646.78125,
+        "bottom": 903.578125,
+        "left": 16,
+        "right": 154,
+        "complete": false
+      },
+      {
+        "top": 646.78125,
+        "bottom": 903.578125,
+        "left": 166,
+        "right": 304,
+        "complete": false
+      },
+      {
+        "top": 915.578125,
+        "bottom": 1172.375,
+        "left": 16,
+        "right": 154,
+        "complete": false
+      },
+      {
+        "top": 915.578125,
+        "bottom": 1172.375,
+        "left": 166,
+        "right": 304,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 24
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 17.6
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 33.6
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 19.2
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 20.8
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 25.6
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 20.8
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "width": 412,
+    "textScale": 1,
+    "kind": "app web normal",
+    "masthead": {
+      "top": 0,
+      "bottom": 118,
+      "left": 0,
+      "right": 412,
+      "height": 118,
+      "width": 412
+    },
+    "editorial": {
+      "top": 118,
+      "bottom": 316,
+      "left": 0,
+      "right": 412,
+      "height": 198,
+      "width": 412
+    },
+    "categories": {
+      "top": 316,
+      "bottom": 373,
+      "left": 0,
+      "right": 412,
+      "height": 57,
+      "width": 412
+    },
+    "comparison": {
+      "top": 421,
+      "bottom": 712.5,
+      "left": 0,
+      "right": 412,
+      "height": 291.5,
+      "width": 412
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 412,
+      "height": 814,
+      "width": 412
+    },
+    "upperHeight": 316,
+    "completeProducts": 2,
+    "cards": [
+      {
+        "top": 421,
+        "bottom": 712.5,
+        "left": 16,
+        "right": 200,
+        "complete": true
+      },
+      {
+        "top": 421,
+        "bottom": 712.5,
+        "left": 212,
+        "right": 396,
+        "complete": true
+      },
+      {
+        "top": 724.5,
+        "bottom": 1016,
+        "left": 16,
+        "right": 200,
+        "complete": false
+      },
+      {
+        "top": 724.5,
+        "bottom": 1016,
+        "left": 212,
+        "right": 396,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 15
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 11
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 21
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 12
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 13
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 16
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 13
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  },
+  {
+    "theme": "dark",
+    "width": 412,
+    "textScale": 1.6,
+    "kind": "stress CSS; fontScale de React Native permanece1, no prueba OS",
+    "masthead": {
+      "top": 0,
+      "bottom": 128,
+      "left": 0,
+      "right": 412,
+      "height": 128,
+      "width": 412
+    },
+    "editorial": {
+      "top": 128,
+      "bottom": 463.375,
+      "left": 0,
+      "right": 412,
+      "height": 335.375,
+      "width": 412
+    },
+    "categories": {
+      "top": 463.375,
+      "bottom": 520.375,
+      "left": 0,
+      "right": 412,
+      "height": 57,
+      "width": 412
+    },
+    "comparison": {
+      "top": 582.78125,
+      "bottom": 897.078125,
+      "left": 0,
+      "right": 412,
+      "height": 314.296875,
+      "width": 412
+    },
+    "viewport": {
+      "top": 0,
+      "bottom": 814,
+      "left": 0,
+      "right": 412,
+      "height": 814,
+      "width": 412
+    },
+    "upperHeight": 463.375,
+    "completeProducts": 0,
+    "cards": [
+      {
+        "top": 582.78125,
+        "bottom": 897.078125,
+        "left": 16,
+        "right": 200,
+        "complete": false
+      },
+      {
+        "top": 582.78125,
+        "bottom": 897.078125,
+        "left": 212,
+        "right": 396,
+        "complete": false
+      },
+      {
+        "top": 909.078125,
+        "bottom": 1223.375,
+        "left": 16,
+        "right": 200,
+        "complete": false
+      },
+      {
+        "top": 909.078125,
+        "bottom": 1223.375,
+        "left": 212,
+        "right": 396,
+        "complete": false
+      }
+    ],
+    "texts": [
+      {
+        "text": "Buscar productos o marcas",
+        "clipped": false,
+        "size": 24
+      },
+      {
+        "text": "Colección",
+        "clipped": false,
+        "size": 17.6
+      },
+      {
+        "text": "Esenciales para cargar todo",
+        "clipped": false,
+        "size": 33.6
+      },
+      {
+        "text": "Producto mostrado · Demo",
+        "clipped": false,
+        "size": 19.2
+      },
+      {
+        "text": "UGREEN Nexode cargador GaN 65 W",
+        "clipped": false,
+        "size": 20.8
+      },
+      {
+        "text": "$42,00",
+        "clipped": false,
+        "size": 25.6
+      },
+      {
+        "text": "Ver colección",
+        "clipped": false,
+        "size": 20.8
+      }
+    ],
+    "overflow": false,
+    "stickyReachable": true,
+    "errors": []
+  }
+]
