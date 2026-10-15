@@ -8,6 +8,14 @@
 
 **Última revisión:** 2026-10-14.
 
+## UX-V4 — propuesta comprador corregida; pendiente de Oliver
+
+**V3 A/B rechazadas por el propietario.** No implementar ni continuar auditoría de esas dos propuestas. V4 en `docs/experiencia-v4/` adapta la referencia aportada: recorrido real del prototipo catálogo/ficha/carrito, una barra de controlesBuscar, checkout entrega+revisión fusionado, estados de pedido/pago distintos. Solo diseño, sinAPI o cambios de app/backend/finanzas.
+
+Cierre local:36capturas412/320 claro/oscuro,8grupos de verificaciones, HTMLautocontenido probado conredoffline. Auditor independiente corrigió3objeciones y emitió LISTA PARA REVISIÓN DE OLIVER. Medidas/antesdespués/recursos en README/evidence/comparison; fuenteV3 delrepo, no sitioWork inaccesible. Descargable `.local/diseno-v4/HAYAZGO-comprar.html`; file:// no verificado por bloqueo de navegador gestionado. No nuevaOTA/hosting.
+
+**Siguiente:** decisión visual de Oliver. Antes de nativo completar variantes de cuotas/anticipos, estados comerciales, sesión/errores y fuente ampliada/accesibilidad. Fotografías documentales limitan acabado; no afirmar nivel comercial definitivo. Aprobación interna no autoriza implementación/publicación. No repetir activaciones BCV/Mi tienda ni publicación fotográfica cerradas.
+
 ## Mi tienda activada — VES desplegado; verificación física pendiente
 
 **VEN-OPS-R activación completada:** Oliver autorizó; dos migraciones ejecutadas con paquete exacto, cuatro RPC y12/12 pruebas SQL remotas reversibles aprobados. Grants/RLS/aislamiento/edición/pedidos comprobados, auditor APROBADO. Evidencia `mi-tienda-activacion-2026-10-14.json`. Sin cambios en datos originales/finanzas o nueva OTA; no reconstruir ni reactivar. Pendiente solo verificación autenticada del formulario/guardado en Android de Oliver, distinta de los tests backend.

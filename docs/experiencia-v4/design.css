@@ -17,3 +17,24 @@ dialog{position:fixed;inset:auto 0 0;margin:0 auto;padding:0;width:min(600px,100
 .quantity button{width:44px;min-height:44px}
 .card-favorite{background:transparent}
 .card-favorite .icon{box-sizing:content-box;width:18px;height:18px;padding:5px;background:#fffffff0;border-radius:50%}
+/* Dense browsing and one checkout surface; brand remains in the editorial Home. */
+.search-head{padding-top:10px}
+.search-head .searchbox{margin-bottom:4px}
+.catalog-tools{padding-top:0;padding-bottom:4px;min-height:48px}
+.context-category{min-width:0;max-width:36%}
+.context-category button{min-width:0;max-width:100%;font-weight:600;gap:5px}
+.context-category button>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.context-category button .icon{width:14px;flex-shrink:0}
+.catalog-tools>.row{gap:12px;flex-shrink:0}
+.catalog-tools button{font-size:11px}
+.card-photo{aspect-ratio:4/3}
+.card-photo img{object-fit:cover}
+.cart-photo{object-fit:cover;object-position:left center}
+.product-option{display:flex;justify-content:space-between;gap:12px;padding-top:12px;margin-top:12px;border-top:1px solid var(--line)}
+@media(max-width:350px){.catalog-tools{padding-left:12px;padding-right:12px}.catalog-tools>.row{gap:9px}.catalog-tools button{font-size:10px}}
+.card-title{font-size:13px;line-height:1.45;min-height:38px}
+.card-add{font-size:12px;gap:8px}
+.gallery-index{min-height:44px;min-width:60px;display:flex;align-items:center;justify-content:center;gap:6px}
+.icon-btn[aria-pressed=true]{color:var(--violet)}
+.icon-btn[aria-pressed=true] .icon{fill:var(--violet)}
+.topbar h1{display:flex;align-items:baseline;gap:6px;min-width:0}

@@ -4,17 +4,21 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: entrega visual publicada y recibida en APK5 Android preview; claro/oscuro aprobados. BCV/VES y Mi tienda cerrados, sin cambios en esta entrega.
+**Última actualización:** 2026-10-14: V3 A/B rechazadas por Oliver. Nueva propuesta comprador V4 corregida, revisada visualmente y guardada para su decisión. Prototipo web/HTML descargable, no cambio de la app ni publicación Work/OTA. BCV/VES, Mi tienda y fotografías publicadas conservados.
 
-## Trabajo en curso — Experiencia V3 / solo diseño
+## Trabajo en curso — V4 comprador, revisión de Oliver
 
-**Revisión del propietario: ambas direcciones V3 rechazadas visualmente.** No tratarlas como aprobadas ni implementarlas. Oliver aporta referencia de catálogo/ficha/carrito y pide composición comercial integrada y compacta, con acabado general profesional. Nueva propuesta única en `docs/experiencia-v4/`, comprador únicamente, prototipo aislado sin API. En curso: catálogo/ficha/carrito/entrega/revisión/pago conectados; validación visual y auditor independiente pendientes. No app, backend, OTA o publicación del sitio remoto. Enlace Work bloqueado por red del entorno; inspección de la fuente A/B del repositorio mediante Chromium local, no afirmar inspección del sitio vivo. Próximo: terminar capturas comparables, corregir jerarquía/estados/navegación y entregar propuesta para revisión, sin implementación nativa.
+Oliver rechazó ambas propuestas V3 por acabado y composición; aportó referencia de catálogo/ficha/carrito. No implementarlas ni tratarlas como aprobadas. Se conserva su fuente histórica. Nuevo incremento `docs/experiencia-v4/`: una dirección Electric Violet, comprador únicamente, prototipo aislado sin API.
 
-Nueva instrucción del propietario: dos direcciones completas, A Comercio fluido y B Comercio estructurado, para comprador Carrito→Checkout→Pago y vendedor Cuenta→Mi tienda→Operaciones. Sin código funcional, Supabase, finanzas, OTA, APK, production o iOS. Guardar/subir solo documentación/prototipos/recursos de diseño. Al entregar, detenerse para decisión.
+**Resultado:** Inicio/Buscar/ficha/carrito/favoritos/checkout/pago/seguimiento conectados. Buscar reúne categoría/contador/filtro/orden en una barra; primer producto a131px. Carrito integra fotografía/variante/precio/cantidad por tienda; primera fotografía a163,39px frente302,50 deV3A y277,16 deV3B. Fotografías88×104 en412px frente64×72; dos completas y resumen a la vista. Entrega y revisión fusionadas; ambos envíos4+4 y productos51=total59 antesdecrear. Compromiso junto al botón, pago después. Referencia/comprobante y en verificación separados de confirmado. Datos y aritmética del prototipo son ficticios; no reutilizarlos como regla financiera.
 
-Directorio `docs/experiencia-v3`: galería, prototipos aislados sin API,15vistas por propuesta,80capturas iniciales412/320/oscuro/estados, dos exploraciones Product Design reales. Capturas nuevas del código actual con fixtures interceptadas; no validar operación de backend. Especialista operaciones y auditor independientes de lectura; raíz único escritor. Ronda1 en curso; operaciones pidió conservar contexto entre entregas/resultados, campos de editor y fecha de emisión. No aprobado aún.
+**Evidencia:**36capturas originales412/320 claro/oscuro y6V3 recién capturadas; comparison.html/README.md/evidence.json/design-qa.md. FuenteV3 del repo, no sitioWork: acceso al enlace devolvióCONNECT403. Ocho grupos de verificaciones aprobados conPlaywright/Chromium local; ceroerroresJS/redexterna/desbordamiento documentomain en casos ejecutados. HTML único `.local/diseno-v4/HAYAZGO-comprar.html` (~1,77MB), imágenes/fuentes/iconos/licencias integrados, recorrido probado con red offline después de cargaHTTP local. file:// denegado por política del navegador gestionado, no probado en Samsung ni publicado enSites.
 
-Próxima acción: corregir esas continuidades en el prototipo, verificar recorridos y foco/contraste, cerrar máximo2rondas y entregar galería privada accesible + recomendación. No modificar la app ni iniciar implementación después.
+**Revisión independiente:** release_auditor examinó capturas y comparaciones; exigió títulos13px en320, encuadre completo lectorUGREEN y eliminar snackbar redundante de resultado. Corregidos y revisados de nuevo; dictamen LISTA PARA REVISIÓN DE OLIVER, sin nuevas objeciones de este incremento. No equivale a aprobación comercial final. Product Design index/audit/get-context/user-context/image-to-code consultados; preflight sin contexto guardado; límites del recurso compartido no resuelto documentados. No ImageGen/Figma o investigación fingida.
+
+**Límites:** fotos autorizadas documentales, no estudio; cuotas/anticipos elegibles, variantes múltiples/encargo/agotado, sesión/errores remotos y fuenteOS/TalkBack requieren variantes y validación antes de implementación nativa. No vendedor, appExpo, backend/SQL/precios/tasas o pagos modificados. Sin OTA/APK/iOS/production. C del APK permanece. No republicar por aprobación del auditor.
+
+**Próxima acción exacta:** Oliver revisa V4 (HTML descargable y comparación). Si acepta la dirección, completar variantes comerciales de checkout con contratos actuales y proponer el primer incremento nativo; si rechaza, corregir la pantalla/composición señalada. No empezar integración en la app ni publicar automáticamente. Reproducir: activar `/workspace/.onboarding/env.sh`, servir raíz del repo en8098 con `tests/app-e2e/serve.mjs`, ejecutar `node docs/experiencia-v4/verify.cjs` y `python3 docs/experiencia-v4/build-download.py`. No rehacer diagnósticos BCV/vendedor/fotografías cerrados.
 
 ## Entrega visual — cinco modelos, seis fotografías autorizadas
 
@@ -50,8 +54,8 @@ Prueba remota real: comprador/pedido demo temporales y obligación25USD, sin pro
 | Rama compartida | `claude/marketplace-v1` (todos los agentes trabajan aquí; ver `AGENTS.md`) |
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Último commit confirmado | OTA visual fuente `69f1c45`; comprobación Android `8fd3d38`. OTA recibida `01a13c5e-f303-7822-acda-7ce771cf4db2`, grupo preview `72ffe95f-d27a-481a-889c-9de9a4c1305c` |
-| Plan vigente | Entrega visual cerrada; revisión de Oliver en Samsung. C conserva su diseño |
-| Objetivo actual | Abrir APK5 y ver las seis fotografías autorizadas; confirmar recepción en emulador |
+| Plan vigente | Propuesta V4 de comprador para revisión; C del APK conserva su diseño |
+| Objetivo actual | Revisión de Oliver de la propuesta comprador V4, sin integración nativa automática |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
