@@ -12,14 +12,32 @@ name: Inicio V2 — apertura, comparación y destinos
 - assertVisible:
     id: home-recommended
 - takeScreenshot: inicio-v2-01-portada
-- tapOn:
-    id: collection-.*-all
-- extendedWaitUntil:
-    visible:
-      id: catalog-search
-    timeout: 20000
-- takeScreenshot: inicio-v2-02-coleccion
-- back
+- runFlow:
+    when:
+      visible:
+        id: home-product-opening
+    commands:
+      - tapOn:
+          id: home-product-opening
+      - extendedWaitUntil:
+          visible:
+            id: product-title
+          timeout: 20000
+      - takeScreenshot: inicio-v2-02-producto-editorial
+      - back
+- runFlow:
+    when:
+      notVisible:
+        id: home-product-opening
+    commands:
+      - tapOn:
+          id: collection-.*-all
+      - extendedWaitUntil:
+          visible:
+            id: catalog-search
+          timeout: 20000
+      - takeScreenshot: inicio-v2-02-coleccion
+      - back
 - tapOn:
     id: category-tecnologia
 - extendedWaitUntil:
@@ -86,4 +104,5 @@ name: Inicio V2 — apertura, comparación y destinos
     timeout: 20000
 - assertVisible: preview
 - assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a1693d-60d9-7183-a309-92769e4ea219.*
 - takeScreenshot: inicio-v2-07-diagnostico

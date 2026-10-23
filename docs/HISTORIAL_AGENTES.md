@@ -969,3 +969,8 @@ Documentación/evidence/comparison/designQA actualizados. Fuente y artefacto sol
 ### 2026-10-23 — checkpoint Inicio real (Codex, único escritor)
 
 Oliver reclama ausencia de cambios visibles: comprobado que los commits recientes eran documentación/pruebas y que la OTA anterior sí estaba recibida. Se implementa apertura de producto publicado en C con consulta pública reciente/CTA de ficha, sin UUID fijo, sin inventar colección, sin repetir producto en feed ni priorizar las fotos documentales rechazadas.22unitarias/tipos/lint aprobados. Auditor detectó precio cero y datos recientes conservados tras fallo: guardas corregidas. Comparación base capturada en412/320claro/oscuro; recaptura compactada, auditor independiente, publicación preview y recepción aún pendientes. No cambios remotos/nativos/financieros. Agente de catálogo obtuvo siete originales SHEGLAM sólo locales,0mappings/0permisos.
+
+
+### 2026-10-23 — Inicio real validado; publicación solicitada
+
+Fuente058cb7b.22unitarias/12UI finales/tipos/lint sin warnings/exportaciones web y AndroidHermes aprobadas.12PNG originales antes/después412/320claro/oscuro/fichas, hashes/medidas e informe INICIO_REAL_2026-10-23. UX y auditor independiente APROBADO web tras resolver precio inválido/caché reciente fallida; catálogo fotográfico aún incompleto. Se adapta Maestro08/09a apertura de producto o colección y se solicita EAS preview/APK5 con autorización vigente. Guard/resultado EAS y recepción Android se documentarán después, no anticipados. Sin APK nuevo/nativo/backend/finanzas.

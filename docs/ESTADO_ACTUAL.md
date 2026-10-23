@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-23: incremento real de Inicio en curso; detalle y próxima acción inmediatamente debajo. Antecedente publicado:  compra publicada y recibida en APK 5/emulador Android 15 y **Samsung físico de Oliver**, OTA `01a1693d-60d9-7183-a309-92769e4ea219`; revisión independiente nativa APROBADA. Oliver aportó fotografía de diagnóstico con ID/canal/runtime correctos: recepción resuelta, no republicar. Catálogo continúa los demás productos por lotes; nuevos packshots oficiales solo locales mientras se resuelven permisos.
+**Última actualización:** 2026-10-23: Inicio real implementado y validado; solicitud Android preview/APK5 preparada. Publicación/recepción nuevas aún pendientes de resultado. OTA anterior01a1693d recibida en Samsung; los commits posteriores a ella sólo eran docs/pruebas hasta este incremento.
 
 ## Trabajo en curso — Inicio visible, no otra publicación de documentación
 
@@ -12,17 +12,17 @@ Oliver confirma que no percibe avances recientes. Se verificó que después de `
 
 **Incremento implementado, todavía sin publicar:** apertura de producto real dentro de C, elegida entre mercancía publicada/no demo/tienda activa/foto normal del backend/comprable. Consulta pública `newest`, primera página, sin UUID fijo ni pertenencia ficticia a colecciones. El backend actual ofrece DJI Mic 3; «Ver producto» abre su ficha. Todas las colecciones permanecen accesibles; se excluye el producto de la primera comparación y del feed repetido. Aviso de pruebas y restricciones comerciales conservados. Se retira de Inicio la prioridad artificial de las seis fotos documentales que Oliver rechazó; no se incluyen originales oficiales sin permiso.
 
-**Pruebas al checkpoint:** tipos/lint móvil y22unitarias aprobadas (18selección/4aislamiento fotográfico). Capturas nuevas de base real412/320claro/oscuro, sin cambios remotos. Primera iteración del después capturada; compactación adicional pendiente de recapturar y revisar. Auditor de código exigió excluir precio cero/no finito y la respuesta reciente tras fallo de refresco: corregidos, sin aprobación visual anticipada. Director UX consultó Product Design index/audit/user-context/preflight/framework; no Canvas disponible.
+**Validación final:** tipos/lint sin advertencias,22unitarias,12UI finales y exportaciones web/AndroidHermes aprobadas.12capturas nuevas412/320claro/oscuro: antes/despuésInicio y ficha. Banda320/306 y primeras fotos425/411 (412/320); dos tarjetas completas. Auditor exigió excluir precio cero/no finito y respuesta reciente tras fallo: corregidos/probados. Director UX y auditor APROBADO visual web, con límite explícito de catálogo fotográfico incompleto. Informe/evidencia [INICIO_REAL_2026-10-23.md](INICIO_REAL_2026-10-23.md). Director UX consultó Product Design index/audit/user-context/preflight/framework; no Canvas disponible.
 
 **Catálogo paralelo:** siete originales SHEGLAM descargados e inspeccionados1340×1785, sólo bajo `.local/arte-20261023/catalogo-restante`;0correspondencias aprobadas/0permisos de redistribución. GET CDN200 comprobado, ya no esperar aplicación de aquel borrador. Samsung403/Anker404/StarTech403 en prueba única; sin reintentos.
 
-**Próxima acción exacta:** exportar y recapturar Home C final, ejecutar pruebas específicas de apertura/producto/colecciones/fallo de búsqueda y revisión visual independiente. Tras aprobación, commit/push y solicitar EAS Android preview con guard APK5; comprobar nueva recepción en emulador antes del cierre. No tocar producción/backend/finanzas/iOS ni generar APK.
+**Próxima acción exacta:** comprobar el resultado de EAS disparado por este commit (guard exacto APK5 antes de publicación); después solicitar emulador con08+09enclaro/oscuro y fuente OS1,6. Verificar nueva OTA/Inicio y documentar ID/recepción; no atribuir a esta entrega la recepción anterior. No tocar producción/backend/finanzas/iOS ni generar APK.
 
 ## Autorización vigente — publicar cada avance validado
 
 Oliver instruye: **«No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente»**. Publicación progresiva autorizada en Android **preview**, compatible con APK 5, después de pruebas/revisión/guard de runtime y con comprobación de recepción. No volver a solicitar aprobación rutinaria de diseño o publicación para cada bloque del alcance comprador/catálogo. Mantener commits, push y continuidad; no generar APK ni modificar configuración nativa, finanzas o servicios remotos por este permiso.
 
-Comprobación de este turno: EAS39972699874 continúa Success y `git diff aa9510a HEAD -- apps/mobile packages` está vacío. Todo el código de app ya está en la OTA física confirmada; los commits posteriores solo incorporan pruebas/evidencia/documentación. No se publica idéntico código como un avance nuevo. Los originales oficiales locales aún no cumplen correspondencia/permiso para incorporarlos al lote distribuible: la autorización de publicación de Oliver ya está resuelta, esas condiciones del material siguen pendientes.
+Comprobación anterior a este incremento: EAS39972699874 continuaba Success y `git diff aa9510a HEAD -- apps/mobile packages` entonces estaba vacío. Todo el código de app ya está en la OTA física confirmada; los commits posteriores solo incorporan pruebas/evidencia/documentación. No se publica idéntico código como un avance nuevo. Los originales oficiales locales aún no cumplen correspondencia/permiso para incorporarlos al lote distribuible: la autorización de publicación de Oliver ya está resuelta, esas condiciones del material siguen pendientes.
 
 ## Compra publicada — recepción confirmada en emulador y Samsung
 

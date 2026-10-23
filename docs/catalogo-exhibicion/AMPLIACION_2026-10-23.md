@@ -38,3 +38,8 @@ SHEGLAM §2.1–2.2 requiere consentimiento para usos comerciales/reproducción;
 3. Con material autorizado y correspondencia resuelta, integrar el lote usando el registro/preparador existentes, comparar Inicio/Buscar/ficha y demás apariciones, comprobar APK5 y preparar la entrega. Este paquete de referencias todavía no cumple esas condiciones.
 
 La compra ya publicada sí fue recibida en el Samsung de Oliver: OTA `01a1693d-60d9-7183-a309-92769e4ea219`. Ese diagnóstico no acredita que estas fotografías nuevas estén dentro de la OTA. Si Oliver sigue percibiendo la app igual, precisar fotografías/carrito/checkout/diseño general; no enviar el mismo APK como si contuviera otro rediseño ni republicar idéntico código para cambiar solo el ID.
+
+
+## Checkpoint posterior — CDN SHEGLAM operativo
+
+En el turno de Inicio real, el agente de arte comprobó GET200 y descargó/inspeccionó siete originales SHEGLAM1340×1785 con hashes verificados. Recursos sólo ignorados: `.local/arte-20261023/catalogo-restante/sheglam-descargas-20261023.json`, lote02 y manifest39.0correspondencias aprobadas/0permisos de redistribución; polvo rechazado por formato, seis referencias con línea/tono/colaboración sin confirmar. La espera anterior por aplicación del dominioCDN queda superada. SamsungEP-T4510 respondió403, AnkerA1263 404 y StarTechST7300U3M403 en una sola prueba; no repetir reintentos ni incorporar fotos por parecido. Ningún original nuevo fue incluido en la app/OTA.

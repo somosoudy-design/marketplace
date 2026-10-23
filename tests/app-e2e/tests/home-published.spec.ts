@@ -3,12 +3,14 @@ import { expect, test, type Page } from '@playwright/test';
 
 // Opt-in against the preview export. All requests below are public reads; never sign in or create remote data.
 const enabled = process.env.KORA_HOME_PUBLISHED_TEST === 'readonly';
-const readOnlyRpc = new Set(['home_feed', 'search_products', 'product_detail', 'rate_status', 'pricing_today', 'support_info', 'public_support']);
+const readOnlyRpc = new Set(['home_feed', 'search_products', 'product_detail', 'product_reviews', 'rate_status', 'pricing_today', 'support_info', 'public_support']);
 
 async function readOnly(page: Page) {
   await page.route('**/rest/v1/**', (route) => {
     const request = route.request(); const url = new URL(request.url());
     if (url.hostname !== 'mimnotafmfasvwrclxan.supabase.co') throw new Error('Only Marketplace preview is allowed');
+    // Product navigation emits ordinary analytics. Handle it locally, so this read-only test sends no event.
+    if (url.pathname.endsWith('/rpc/track_event')) return route.fulfill({ status: 204, body: '' });
     if (request.method() === 'GET' || (request.method() === 'POST' && readOnlyRpc.has(url.pathname.split('/').at(-1)!))) return route.continue();
     throw new Error(`Unexpected mutation: ${url.pathname}`);
   });
@@ -21,16 +23,11 @@ for (const colorScheme of ['light', 'dark'] as const) {
     test.beforeEach(async ({ page }) => readOnly(page));
 
     test('opens the actual product, preserves every collection and avoids repeated recommendations', async ({ page }) => {
-      let feed!: HomeFeed; let recent: ProductCard[] = [];
-      await page.route('**/rpc/home_feed', async (route) => {
-        const response = await route.fetch(); feed = await response.json(); await route.fulfill({ response });
-      });
-      await page.route('**/rpc/search_products', async (route) => {
-        const response = await route.fetch();
-        if (route.request().postDataJSON().p_sort === 'newest') recent = await response.json();
-        await route.fulfill({ response });
-      });
+      const homeResponse = page.waitForResponse((response) => response.url().endsWith('/rpc/home_feed') && response.ok());
+      const recentResponse = page.waitForResponse((response) => response.url().endsWith('/rpc/search_products') && response.request().postDataJSON()?.p_sort === 'newest' && response.ok());
       await page.goto('/');
+      const feed: HomeFeed = await (await homeResponse).json();
+      const recent: ProductCard[] = await (await recentResponse).json();
       const opening = page.getByTestId('home-product-opening'); await expect(opening).toBeVisible();
       const actual = recent.find((p) => !p.is_demo && p.moderation_status === 'published' && p.store_status === 'active')!;
       expect(actual).toBeTruthy();
@@ -62,13 +59,15 @@ for (const colorScheme of ['light', 'dark'] as const) {
     });
 
     test('a live opening is not described as an empty catalog when other shelves are empty', async ({ page }) => {
-      await page.route('**/rpc/home_feed', async (route) => {
-        const response = await route.fetch(); const feed = await response.json();
-        await route.fulfill({ json: { ...feed, recommended: [], collections: [], stores: [] } });
-      });
+      // Observe the actual browser response first; route.fetch uses Node networking, which is unavailable in
+      // some cloud setups even when the configured browser can reach the same read-only API normally.
+      const response = page.waitForResponse((response) => response.url().endsWith('/rpc/home_feed') && response.ok());
+      await page.goto('/'); const feed: HomeFeed = await (await response).json();
+      await page.route('**/rpc/home_feed', (route) => route.fulfill({ json: { ...feed, recommended: [], collections: [], stores: [] } }));
       await page.route('**/rpc/search_products', (route) => route.request().postDataJSON().p_sort === 'newest'
         ? route.continue() : route.fulfill({ json: [] }));
       await page.goto('/'); await expect(page.getByTestId('home-product-opening')).toBeVisible();
+      await expect(page.locator('[data-testid^="home-recommended"] [data-testid^="product-card-"]')).toHaveCount(0);
       await expect(page.getByTestId('home-catalog-empty')).toHaveCount(0);
     });
 
