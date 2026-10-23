@@ -1,0 +1,154 @@
+{
+  "sourceRun": 40004177228,
+  "sourceSha": "f9fe1a1d589f6c0233ea08bf451e5cd3224a61c7",
+  "artifactId": 12524101560,
+  "recoveryRun": 40007057660,
+  "newJourneysExecuted": false,
+  "newUpdatePublished": false,
+  "files": [
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-01-portada.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-01-portada.png",
+      "sha256": "57ec235047835cca1f31bed6778f0322663a661290a28829ca09da6ba6542e31",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-02-producto-editorial.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-02-producto-editorial.png",
+      "sha256": "469f9efeb56b8500adb2ec0fab172a237bcdeb12d873aceaba3760096afdd13c",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-03-categoria.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-03-categoria.png",
+      "sha256": "144717383f7a16a43b6189823d868498240c19fb00354500e0e2691a96a34261",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-04-ficha.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-04-ficha.png",
+      "sha256": "214959d7f0682ae3bff8b3e6787da679a5a564c7edf2549b7f2fa6753cb58d8a",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-05-regreso.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-05-regreso.png",
+      "sha256": "4cd21ef01ec92cbaaea10f5038e4596aab0d2d50935ffbb1b5a6c65ce3a73b15",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-06-buscar.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-06-buscar.png",
+      "sha256": "ef9c274059e394903f8260b3700285c34118d8e31794229b0abcb74b569a881c",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-07-diagnostico.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-07-diagnostico.png",
+      "sha256": "b9e96fba1b86128559e6f88982a0c9bbebc4a47470bc5bff44fb382b7a53e778",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-08-buscador-persistente.png",
+      "source": "flujos/maestro/2026-10-23_183826/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-08-buscador-persistente.png",
+      "sha256": "e4d4880d5ad1b473958f5db5af61e50fcc752820e26295ca8253a187c60839ed",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-01-portada.png",
+      "source": "flujos/maestro/2026-10-23_183944/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-01-portada.png",
+      "sha256": "494cef972205b358f1424ad1a167c6bd5fcae38da49f575894fa31c42dd47e00",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-comparacion.png",
+      "source": "flujos/maestro/2026-10-23_183944/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-02-comparacion.png",
+      "sha256": "2b1d45de805c814bba656b48ec10bf3eb116b7dc7044bba0bd00d55244573b69",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-producto-editorial.png",
+      "source": "flujos/maestro/2026-10-23_183944/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-02-producto-editorial.png",
+      "sha256": "c214dee6250e7151768a213c399d73d2c794aabdc8a77bbca4b368c52b821b0c",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-03-diagnostico.png",
+      "source": "flujos/maestro/2026-10-23_183944/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-03-diagnostico.png",
+      "sha256": "6f123cd2e12e20f1bb74376c28908f5f31e9d882605a302c3369eea24e3a5a85",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-01-portada.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-01-portada.png",
+      "sha256": "64f8adbf00fcb4605331cb0453ea4e5ebd389c8f69b8ed0cd5a31f0501061768",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-02-producto-editorial.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-02-producto-editorial.png",
+      "sha256": "5b85f5f66c74048c8c7c2b9cefba34fc2f4b90c5cc5e6dcbb4d7f183c2f09258",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-03-categoria.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-03-categoria.png",
+      "sha256": "1cebd7156f07b32a03d4b8269ce893c52dbf7dd9c86f70b22e7f45892a976d6b",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-04-ficha.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-04-ficha.png",
+      "sha256": "90d1141089f90554d6226d55e4188203b662794ee8b839d7b5e2054d439441e5",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-05-regreso.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-05-regreso.png",
+      "sha256": "8d2ad6ae41bae395b7848e3f1812c572cf0fd8c486ed26fdfee022573a4b8abe",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-06-buscar.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-06-buscar.png",
+      "sha256": "1a7df06346775bbc212f8bd0565ac6131adf7bb521c8c17e70ae88c45a04a70c",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-07-diagnostico.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-07-diagnostico.png",
+      "sha256": "ff4e4de4d2fcc86a825ae6c8b0bd1a5fb6749139b05aaa25e57652b3e4fd5bd7",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-08-buscador-persistente.png",
+      "source": "flujos/maestro/2026-10-23_184022/Inicio V2 — apertura, comparación y destinos/takeScreenshot/inicio-v2-08-buscador-persistente.png",
+      "sha256": "33182dd051f13f666cc6baea8ec45fc4d87d00a36b85d9dd8fb18748e8d42616",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-01-portada.png",
+      "source": "flujos/maestro/2026-10-23_184138/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-01-portada.png",
+      "sha256": "1fa11ffd1dfeb53c812080c85f6d2334bd2469ab6a80c2b0f9aee3e5eab4b605",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-comparacion.png",
+      "source": "flujos/maestro/2026-10-23_184138/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-02-comparacion.png",
+      "sha256": "dcca7c0f7cf9b0dba40aa1ef0c84c39a282d85f824103873ba2a322ee7340785",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-producto-editorial.png",
+      "source": "flujos/maestro/2026-10-23_184138/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-02-producto-editorial.png",
+      "sha256": "38744f324d93bedf16aae98a2d84dab8739a5aa795062df2734c679c404c3949",
+      "edited": false
+    },
+    {
+      "file": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-03-diagnostico.png",
+      "source": "flujos/maestro/2026-10-23_184138/Inicio V2 — fuente Android ampliada/takeScreenshot/inicio-v2-texto-03-diagnostico.png",
+      "sha256": "134704d7b369d5294b2b3ac65cfbca3a43e7c60ff50de78019c16dd738c0bf94",
+      "edited": false
+    }
+  ]
+}
