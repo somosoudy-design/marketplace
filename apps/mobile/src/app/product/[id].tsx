@@ -2,7 +2,7 @@ import type { OrderItem, ProductDetail, ProductVariant } from '@kora/api';
 import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Platform, Share, useWindowDimensions, View } from 'react-native';
+import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Icon } from '@/components/ui/Icon';
 import { IconButton } from '@/components/ui/IconButton';
+import { ShareLinkSheet } from '@/components/ui/ShareLinkSheet';
 import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { Price } from '@/components/ui/Price';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -26,7 +27,7 @@ import { ReviewSheet } from '@/components/reviews/ReviewSheet';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
-import { brand } from '@/lib/brand';
+import { productLink } from '@/lib/links';
 import { isPrivateCatalogPresentation, productExhibitionGallery } from '@/lib/catalog-exhibition';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
@@ -91,6 +92,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const [variant, setVariant] = useState<ProductVariant | undefined>(purchasableVariants[0] ?? p.variants[0]);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [sharing, setSharing] = useState(false);
   // what this screen last put in the cart (variant and quantity), so "Comprar" after "Agregar" doesn't add it twice
   const [inCart, setInCart] = useState<string | null>(null);
   const [pending, setPending] = useState<'add' | 'buy' | null>(null);
@@ -156,13 +158,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
       },
     );
   };
-
-  const share = () =>
-    Share.share(
-      Platform.OS === 'ios'
-        ? { url: `https://${brand.webDomain}/p/${p.slug}`, message: p.title }
-        : { message: `${p.title} en ${brand.name}: https://${brand.webDomain}/p/${p.slug}` },
-    ).catch(() => undefined);
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
@@ -294,6 +289,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
         </Animated.ScrollView>
       </ImpressionScope>
 
+      <ShareLinkSheet visible={sharing} title="Compartir producto" name={p.title} link={productLink(p.slug)} onClose={() => setSharing(false)} testID="product-share" />
       <CollapsingHeader
         y={scroll.y}
         threshold={heroHeight}
@@ -301,7 +297,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
         left={<BackButton inline />}
         right={
           <View style={{ flexDirection: 'row', gap: 10 }}>
-            <IconButton icon="share-2" label="Compartir" tone="glass" onPress={share} />
+            <IconButton testID="product-share" icon="share-2" label="Compartir" tone="glass" onPress={() => setSharing(true)} />
             <IconButton
               testID="product-favorite"
               icon="heart"

@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · Oliver · checkpoint calidad app real, bloque1
+
+- Nueva autorización general de UX/robustez e imágenes; rama sincronizada desde b1e79a1. Product Design audit/framework, capturas nuevas y agentes reales de lectura/arte/revisión, raíz único escritor. No Canvas/Canva disponible; ImageGen sí.
+- Cuatro pruebas fallan antes; se corrigen pago visitante/pedido sin acceso/carga de métodos y cierres durante confirmación pendiente. Compartir producto sustituye dominio de ejemplo por origen/esquema válido, hoja/copia/reintento.10/10 finales claro/oscuro; compartir tienda2/2, tipos/lint móvil aprobados.
+- Fallos intermedios de fixture por reservas acumuladas: liberadas solo cuentas locales ui-quality por RPC real, limpieza por prueba añadida, sin cambios manuales de stock ni datos remotos. Sin finanzas/iOS/APK/OTA.
+- Siguiente bloque: composición de carrito/checkout/ficha y recursos aceptados. Auditoría en AUDITORIA_MARKETPLACE_2026-10-23.md; capturas antes ignoradas .local/ux-20261023/before. Primera capturaInicio skeleton rechazada; recapturar estable.
+
 ### 2026-10-14 21:56Z · Codex cloud · Oliver · fotografías entregadas en Android preview
 
 - Cinco referencias sin permiso sustituidas por modelos correspondientes a fotografías reales licenciadas: dos UGREEN, Samsung, Anker y StarTech. Seis WebP integrados en assets/Metro; créditos CC visibles. Solo metadatos de cinco productos demo actualizados remotamente con guardas de precios/stock/actividad e is_demo; sin finanzas, esquema o tienda.

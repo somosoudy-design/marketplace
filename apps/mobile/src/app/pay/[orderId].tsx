@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/Button';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { Card, Divider } from '@/components/ui/Layout';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { Banner, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
+import { Banner, EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { useAuth } from '@/lib/auth';
@@ -40,6 +40,7 @@ const FIELD_LABEL: Record<string, string> = {
 export default function PayScreen() {
   const { orderId, fresh } = useLocalSearchParams<{ orderId: string; fresh?: string }>();
   const t = useTheme();
+  const { user } = useAuth();
   const order = useOrder(orderId);
   const methods = usePaymentMethods();
   const [method, setMethod] = useState<PaymentMethod | null>(null);
@@ -66,9 +67,11 @@ export default function PayScreen() {
 
   const picking = !!nextObligation && !pending.length && !quote;
 
+  if (!user) return <EmptyState icon="lock" title="Inicia sesión para ver tu pedido" body="Solo la cuenta que hizo la compra puede consultarla y pagar." action="Iniciar sesión" onAction={() => router.push('/sign-in')} />;
   if (order.isError && !order.data) return <ErrorState error={order.error} onRetry={() => order.refetch()} />;
   if (waitingForNetwork(order)) return <OfflineState />;
-  if (!o) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[120, 260].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;
+  if (order.isPending) return <View style={{ padding: 16, gap: 12, flex: 1, backgroundColor: t.colors.background }}>{[120, 260].map((h, i) => <Skeleton key={i} height={h} radius={t.radii.lg} />)}</View>;
+  if (!o) return <EmptyState icon="package" title="Este pedido no está disponible" body="Revisa el enlace o entra en la cuenta con la que hiciste la compra." action="Ver mis pedidos" onAction={() => router.replace('/orders')} />;
 
   if (submitted) {
     return (
@@ -129,7 +132,13 @@ export default function PayScreen() {
 
         {!nextObligation ? (
           <Banner tone="success" icon="circle-check" title="Este pedido no tiene saldo pendiente" />
-        ) : pending.length ? null : !quote ? (
+        ) : pending.length ? null : !quote && waitingForNetwork(methods) ? <OfflineState /> : !quote && methods.isPending ? (
+          <View testID="pay-methods-loading" accessibilityLabel="Cargando métodos de pago" style={{ gap: 12 }}><Skeleton height={68} /><Skeleton height={68} /></View>
+        ) : !quote && methods.isError ? (
+          <ErrorState error={methods.error} message="No pudimos cargar los métodos de pago. Tu pedido sigue guardado; intenta de nuevo." onRetry={() => methods.refetch()} />
+        ) : !quote && !methods.data?.length ? (
+          <EmptyState icon="wallet" title="No hay métodos disponibles" body="Tu pedido sigue guardado. Vuelve a consultar antes de pagar." action="Volver a consultar" onAction={() => methods.refetch()} />
+        ) : !quote ? (
           <MethodPicker
             methods={methods.data ?? []}
             selected={method?.code ?? null}
@@ -157,10 +166,10 @@ export default function PayScreen() {
         <BottomBar maxWidth={MAX_W}>
           <Button
             testID="pay-quote"
-            title={method ? `Continuar con ${method.name}` : 'Elige un método'}
+            title={methods.isPending ? 'Cargando métodos…' : method ? `Continuar con ${method.name}` : 'Elige un método'}
             size="lg"
             full
-            disabled={!method}
+            disabled={!method || !methods.isSuccess || methods.isFetching || !methods.data?.some((m) => m.code === method.code)}
             loading={createQuote.isPending}
             onPress={() => method && createQuote.mutate(method.code)}
           />

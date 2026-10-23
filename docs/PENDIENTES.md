@@ -6,7 +6,13 @@
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-14.
+**Última revisión:** 2026-10-23.
+
+## UX-CALIDAD — app real, mejora general autorizada
+
+**En curso.** Primer bloque comprobado: recuperación pago/sesión/pedidos ausentes y métodos fallidos, confirmaciones sensibles durante solicitud, enlaces/copia de producto.10/10 nuevas pruebas y2/2 compartir tienda, tipos/lint móvil. No repetir estos fallos; continuar composición de carrito/checkout/ficha y recursos visuales autorizados. Informe `AUDITORIA_MARKETPLACE_2026-10-23.md`.
+
+Agentes de arte y revisión de fidelidad independientes; Canvas/Canva no disponible, ImageGen real utilizado. No recursos falsamente atribuidos a fotografías auténticas. Sin OTA autorizada para este bloque, APK, iOS, backend remoto o finanzas. Hipótesis de arranque/almacenamiento aún sin reproducción: investigar con adaptador controlado, no borrar datos.
 
 ## UX-V4 — propuesta comprador corregida; pendiente de Oliver
 

@@ -4,9 +4,15 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-14: V3 A/B rechazadas por Oliver. Nueva propuesta comprador V4 corregida, revisada visualmente y guardada para su decisión. Prototipo web/HTML descargable, no cambio de la app ni publicación Work/OTA. BCV/VES, Mi tienda y fotografías publicadas conservados.
+**Última actualización:** 2026-10-23: Oliver autoriza continuar la mejora general de la app real. Bloque1 de recuperación/confirmaciones/enlaces corregido y probado localmente; composición de compra e imágenes en curso. Sin OTA, APK o cambios remotos.
 
-## Trabajo en curso — V4 comprador, revisión de Oliver
+## Trabajo en curso — calidad general sobre la app real
+
+Base `b1e79a1`, sincronizada. Auditoría Product Design sobre capturas nuevas claro/oscuro y revisión independiente. Primer bloque: pago distingue sesión/carga/pedido sin acceso, recupera métodos fallidos; confirmaciones sensibles bloquean cierre durante solicitud; compartir producto usa enlace real y copia recuperable.10/10 pruebas nuevas finales,2/2 compartir tienda, tipos/lint móvil aprobados. Cuatro pruebas rojas previas reproducen fallos de la versión anterior. Se liberaron reservas de fixtures locales propias y se añadió limpieza automática; sin cambiar stock manualmente ni datos remotos.
+
+**Próxima acción exacta:** compactar carrito y checkout con resúmenes editables, reducir hero de ficha preservando capacidades. Integrar únicamente recursos aceptados por revisión de fidelidad/licencia: agente de arte produjo lector UGREEN editado y editorial; Anker rechazado. Usar `docs/AUDITORIA_MARKETPLACE_2026-10-23.md`. Root único escritor; agentes leen/revisan. V4 aislada sigue sin aprobación como dirección completa; no copiar su aritmética. No publicar sin autorización nueva.
+
+## Antecedente — V4 comprador, revisión de Oliver
 
 Oliver rechazó ambas propuestas V3 por acabado y composición; aportó referencia de catálogo/ficha/carrito. No implementarlas ni tratarlas como aprobadas. Se conserva su fuente histórica. Nuevo incremento `docs/experiencia-v4/`: una dirección Electric Violet, comprador únicamente, prototipo aislado sin API.
 

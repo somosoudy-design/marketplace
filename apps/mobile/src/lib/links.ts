@@ -11,7 +11,14 @@ export const webDomainReady = !/(^|\.)example\.(com|org|net)$/.test(brand.webDom
  * the app is served from; in the app, <scheme>://tienda/<slug>, which opens the store in the app.
  */
 export function storeLink(slug: string): string {
-  const path = `/tienda/${encodeURIComponent(slug)}`;
+  return publicLink(`/tienda/${encodeURIComponent(slug)}`);
+}
+
+export function productLink(slug: string): string {
+  return publicLink(`/p/${encodeURIComponent(slug)}`);
+}
+
+function publicLink(path: string): string {
   if (webDomainReady) return `https://${brand.webDomain}${path}`;
   if (Platform.OS === 'web' && typeof window !== 'undefined') return `${window.location.origin}${path}`;
   return `${brand.scheme}:/${path}`;

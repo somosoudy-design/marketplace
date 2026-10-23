@@ -19,11 +19,12 @@ export function ConfirmSheet({
       visible={visible}
       title={title}
       onClose={onClose}
+      dismissible={!loading}
       testID={testID}
       footer={
         <>
           <Button testID={testID ? `${testID}-confirm` : undefined} title={confirm} variant={danger ? 'danger' : 'primary'} full loading={loading} onPress={onConfirm} />
-          <Button title={cancel} variant="ghost" full onPress={onClose} />
+          <Button title={cancel} variant="ghost" full disabled={loading} onPress={onClose} />
         </>
       }
     >
