@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · compra recibida en Android; catálogo restante delegado
+
+- EAS39972699874 Success, fuenteaa9510a/funcional130d041, guard exacto APK5. Android15/run39973330513/b945400 **2/2 sin reintentos**, OTA `01a1693d-60d9-7183-a309-92769e4ea219`,23oct14:49UTC, preview/runtime/backend/sesión cifrada confirmados en ambos temas.14JPG de flujos copiados sin editar/hash idéntico desde ci/capturas9c64c933; evidencia COMPRA_ANDROID_2026-10-23.json.
+- Root y auditor independiente revisaron14capturas, dictamen nativo APROBADO para visitante, sin P1/P2. Ficha/copia/carrito/confirmación/Atrás/acceso/pago visitante; no checkout autenticado, TalkBack/fuenteOS o Samsung. Captura inicial con ANR de Pixel Launcher excluida; flujos limpios. Logs Actions bloqueados, ID leído de originales.
+- Oliver aún no ve cambios: Canal/Código solicitados de forma asíncrona, respuesta pendiente. No otra publicación a ciegas ni reinstalación/borrado. Valora diseño de productos; no interpretar como permiso de redistribución de nuevos packshots.
+- Nueva instrucción: catálogo para todos los restantes, delegado realmente a catalog_art por lotes, solo lectura/archivos ignorados. Root sigue único escritor. No backend/finanzas/iOS/APK/production ni nuevos recursos sin permiso. Próximo: identificar versión física y consolidar primer lote oficial útil sin repetir auditoría.
+
 ### 2026-10-23 · Codex cloud · compra publicada, recepción Android solicitada
 
 - EAS `39972699874` Success, fuente `aa9510a`, funcional `130d041`. Guard exacto APK 5, publicación Android preview y resultado aprobados. Sin nuevas fotografías oficiales ni otra OTA adicional.

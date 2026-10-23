@@ -10,9 +10,13 @@ Comparación efectiva en app Expo web privada usando registro UUID/ruta existent
 
 Procedencia sin píxeles: [direccion-fotografica-2026-10-23.json](catalogo-exhibicion/direccion-fotografica-2026-10-23.json). Agente de arte y auditor de fidelidad reales; Canvas/Canva no disponible. ImageGen se utilizó en candidatos anteriores rechazados por Oliver, no en los packshots oficiales.
 
+**Valoración posterior de Oliver:** «El diseño de los productos sí se ve mucho más profesional, eso está bien». Conservar ese criterio de acabado. Su valoración no acredita el permiso pendiente del packshot oficial. La OTA de compra del 23 de octubre (EAS `39972699874`) conserva los recursos fotográficos ya autorizados del lote 02; el nuevo original UGREEN continúa solo en la referencia local.
+
+**Ampliación expresa:** Oliver pide al agente de catálogo que continúe con todos los demás productos. Trabajo por lotes, reutilizando los UUID y recursos existentes. `catalog_art` solo investiga y prepara originales/metadatos en `.local/arte-20261023/catalogo-restante`; raíz integra y commitea. No sustituir el catálogo con modelos parecidos, comentarios de usuarios ni imágenes amateur/IA; distinguir candidato local de recurso con permiso para distribuir. Los dominios bloqueados siguen esperando aplicar el borrador; avanzar fuentes oficiales permitidas mientras tanto.
+
 **Siguiente exacto:** activar dominios oficiales ya guardados en borrador de Configuración del entorno (revisar/guardar/publicar), obtener material de fabricante con base de uso para SamsungEP-T4510, AnkerA1263 yStarTechST7300U3M y confirmarUGREEN25845. No asignar80887/90314 ni otros modelos parecidos, ni cambiar datos comerciales para encajar una fotografía. Confirmar SKU/variante y uso autorizado antes de distribuir. Sin nueva OTA ni cambios remotos en este bloque.
 
-## Última versión distribuida — 14 de octubre
+## Última entrega fotográfica distribuida — 14 de octubre
 
 **Estado vigente (14 de octubre, 21:43 UTC): cinco modelos con seis fotografías autorizadas integradas y publicadas en Android preview, compatible con APK5.** Dos UGREEN, Samsung, Anker y StarTech sustituyen los candidatos oficiales sin permiso; modelos y colores corresponden al material distribuido. Créditos de autor/licencia visibles en cada ficha. Aviso de pruebas e `is_demo` permanecen, sin badges Demo repetitivos. Precios y existencias intactos.
 
