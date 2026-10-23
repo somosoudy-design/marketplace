@@ -3,6 +3,11 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · solicitud de entrega de compra en APK 5
+
+- Oliver no ve cambios en la app y aprueba el acabado profesional de productos. Se retoma su autorización de publicación progresiva en Android preview; solicitud actualizada para fuente funcional `130d041`, sin incorporar nuevos packshots oficiales con permiso pendiente.
+- 36 casos locales y export Android/Hermes ya aprobados; no repetir auditoría ni pruebas generales. Workflow existente debe comprobar runtime exacto APK 5 antes de publicar. Próximo: verificar EAS, ID y recepción en Android 15 claro/oscuro. Ningún APK nuevo, production, iOS, backend o cambio financiero.
+
 ### 2026-10-23 · Codex cloud · comprobación final sobre130d041
 
 - Exportación Android/Hermes final aprobada incluyendo singular, HBC5,9MB. Ambos hashes de packshots oficiales ausentes de los assets nativos; registro de catálogo restaurado y árbol limpio. Evidencia `calidad-marketplace-2026-10-23.json`.
