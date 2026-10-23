@@ -51,7 +51,7 @@ La comparativa reveló «1 productos» en Buscar: corregido a«1 producto» y pr
 
 `release_auditor`, ronda2: **APROBADO para cerrar este incremento local**, sin P1/P2 abiertos del alcance revisado. Examinó código, nuevas capturas en ambos temas y estrésCSS320/160%; no ejecutó los22tests, que son ejecución del agente principal. Correcciones de ronda1 resueltas: edición congelada durante creación y tarifa demo visible. `catalog_review`: packshot50706 apto para evaluación local, sin aprobar redistribución o SKU de cada variante. No desacuerdos sin resolver; aprobación interna no sustituye revisión de Oliver.
 
-Exportación Android/Hermes aprobada para la implementación funcional `8c27fab` (HBC5,9MB). El ajuste posterior de singular está probado en exportación web; no cambia APIs nativas. No dependencias/configuración nativa, backend, vendedor, pagos/tasas/cálculos o producción modificados. Runtime APK5 exacto debe verificarse con su archivo Firebase del entornoEAS y guard existente antes de una publicación; no se afirma ese guard ni recepción Android para este bloque.
+Exportación Android/Hermes final aprobada en fuente funcional **`130d041`** (HBC5,9MB), incluido el singular. Comprobado por hash que ninguno de los dos packshots oficiales sin permiso forma parte de los assets del export nativo. Evidencia sin secretos: [calidad-marketplace-2026-10-23.json](calidad-marketplace-2026-10-23.json). No dependencias/configuración nativa, backend, vendedor, pagos/tasas/cálculos o producción modificados. Runtime APK5 exacto debe verificarse con su archivo Firebase del entornoEAS y guard existente antes de una publicación; no se afirma ese guard ni recepción Android para este bloque.
 
 | Paso | Estado y alcance comprobado |
 |---|---|

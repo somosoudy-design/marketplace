@@ -3,6 +3,11 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · comprobación final sobre130d041
+
+- Exportación Android/Hermes final aprobada incluyendo singular, HBC5,9MB. Ambos hashes de packshots oficiales ausentes de los assets nativos; registro de catálogo restaurado y árbol limpio. Evidencia `calidad-marketplace-2026-10-23.json`.
+-36casos locales únicos, tipos/lint/web y auditor ronda2 aprobados. No OTA, guardAPK5, emulador o teléfono nuevos. Se conserva el siguiente trabajo de fotografía oficial/red/derechos/variantes; nada remoto modificado.
+
 ### 2026-10-23 · Codex cloud · Oliver · cierre compra revisada y referencia oficial profesional
 
 - Fuentes funcionales d56eb9f y8c27fab, push confirmado. Auditor independiente ronda2 APROBADO para incremento local; P1edicionesduranteplace/P2tarifademo corregidos.26PNG comparables/medidas,22/22 foco y12regresiones únicas, luego singular2/2:36casosconsolidados. Último retest adicional de enlace tienda aprobado; tipos/lint/web. Android/Hermes fuente8c27fab5,9MB. No prueba física o guardAPK5 nuevo.
