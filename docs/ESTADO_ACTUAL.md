@@ -6,6 +6,18 @@
 
 **Última actualización:** 2026-10-23: Inicio real publicado y recibido en emulador Android15/APK5. OTA `01a16a08-5900-7324-83c5-8f833e369d19`,23oct18:31UTC/14:31Caracas. EAS40003745928 Success/e6fccbd/guard exacto;4/4nativos claro/oscuro/OS1,6 sin reintentos. Recepción de esta nueva OTA en Samsung aún no observada.
 
+## Prioridad del propietario — imágenes completas antes de otra mejora UX
+
+Oliver rechaza considerar cumplida la renovación fotográfica: exige actualizar el catálogo en la aplicación, verificar que lo ve y sólo después retomar UX general. **Aclaración expresa: Android/APK5; no iPhone.** No tocar iOS ni preparar su entrega. Autorización de publicación progresiva preview sigue vigente, distinta de permiso de uso del material.
+
+Lectura pública fresca de `search_products`:44productos/43demo/0UUID nuevos; sin cambios remotos. Inventario ignorado `.local/catalogo-completo-20261023/inventario-actual.json`, SHA256 `a1fd5b61df557718a8349b1756c62fbab91c4cde9dffe6900a30a95d7d20690f`. Catálogo/arte entregó lista accionable de44 y briefs25 en `.local/arte-20261023/catalogo-restante/catalogo-44-accionable.{json,md}`. **0 imágenes nuevas generadas, integradas o publicadas en esta ejecución.** No presentar la portada DJI anterior como renovación del catálogo.
+
+Material:5modelos con fotosCC ya distribuidas pero rechazadas visualmente;25muestras genéricas candidatas a originales generados con identificación honesta;14restantes de marca con modelo/variante/derechos pendientes. Total19modelos de marca necesitan sustitución profesional. Los originales oficiales locales siguen con0correspondencias/0permisos nuevos: no publicarlos ni transformarlos para eludir esa condición. Android preview compartido y Git público no son almacenamiento privado con control de acceso.
+
+**Información pendiente de Oliver:** si las25muestras genéricas pueden usar imágenes originales generadas como exhibición o exige fotografías auténticas también para ellas; fuente autorizada/referencias para las19de marca. Pregunta asíncrona presentada; no asumir su respuesta. La pregunta de dispositivo ya está resuelta: Android. Las3composiciones dentales (espejos, kit y cubetas) requieren contenido exacto antes de representar un set.
+
+**Próxima acción exacta:** con esa definición, trabajar sobre el registro/preparador existentes, preparar recursos correctos y distribuibles, integrarlos realmente porUUID/ruta en todos los usos de la app, comparar y probar Android preview/APK5 y publicar con guard/recepción. Contabilizar únicamente archivos integrados en la actualización, no referencias locales. Si falta material autorizado de marca, entregar sus referencias exactas existentes y declarar cobertura parcial; no afirmar44/44. No retomar auditoría/rediseño general hasta que Oliver confirme que ve las imágenes.
+
 ## Incremento Inicio real — publicado y recibido en Android
 
 Oliver confirma que no percibe avances recientes. Se verificó que después de `aa9510a` sólo se habían añadido documentación/pruebas; la recepción física de aquella OTA está comprobada y no explica la falta de cambio en Inicio. No republicar código idéntico ni pedir otro diagnóstico.
