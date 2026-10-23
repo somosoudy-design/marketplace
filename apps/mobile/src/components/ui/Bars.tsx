@@ -11,12 +11,13 @@ import { Text } from './Text';
  * Bar pinned to the bottom edge (purchase, checkout, payment). Opaque on purpose: translucent bars without a
  * real blur let the content underneath ghost through the price and the button.
  */
-export function BottomBar({ children, maxWidth = 760, testID, safeArea = true }: { children: ReactNode; maxWidth?: number; testID?: string; /** false inside tabs, where the tab bar already owns the bottom inset */ safeArea?: boolean }) {
+export function BottomBar({ children, maxWidth = 760, testID, safeArea = true, onHeightChange }: { children: ReactNode; maxWidth?: number; testID?: string; /** false inside tabs, where the tab bar already owns the bottom inset */ safeArea?: boolean; onHeightChange?: (height: number) => void }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   return (
     <View
       testID={testID}
+      onLayout={onHeightChange ? (event) => onHeightChange(event.nativeEvent.layout.height) : undefined}
       style={{
         position: 'absolute',
         left: 0,

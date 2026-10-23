@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · Oliver · checkpoint composición de compra y criterio fotográfico corregido
+
+- Carrito elimina explicación redundante, prioriza tienda/grupo/producto y confirma retirada; checkout resume envíos reales con alternativas en hoja, identifica productos/cantidad y aclara creación/reserva/pago posterior; ficha reduce galería sin cortar objeto y elimina promesa universal50%. Altura de barra adapta scroll. Escape web durante apertura de hoja corregido.
+- Auditor ronda1 exigió congelar edición durante place_order y preservar tarifa de ejemplo; corregido.22/22 finales sin reintentos claro/oscuro y320texto160%; tipos/lint/web aprobados. Regresiones6 comprador+3ficha+1compra local+2compartir tienda.26PNG originales/JSON medidos. Fallos de harness/servicios documentados, no ocultados. Ronda2 pendiente.
+- Oliver rechaza fuente documentalUGREEN y todo derivado amateur. Agentes de arte/revisión cambiaron a oficiales:2packshotsSKU50706 descargados/inspeccionados; solo comparación local, permisos redistribución sin acreditar. No imágenes oficiales subidas a Git ni OTA. Samsung/Anker/StarTech/Amazon bloqueados; borrador de dominios guardado, requiere review/save/publish del entorno.
+- Siguiente exacto: dictamen ronda2, Android/Hermes y comparativa local oficial mediante registro temporal restaurado. No publicar ni ampliar retoques amateur. No backend remoto/finanzas/iOS/APK.
+
 ### 2026-10-23 · Codex cloud · Oliver · checkpoint calidad app real, bloque1
 
 - Nueva autorización general de UX/robustez e imágenes; rama sincronizada desde b1e79a1. Product Design audit/framework, capturas nuevas y agentes reales de lectura/arte/revisión, raíz único escritor. No Canvas/Canva disponible; ImageGen sí.

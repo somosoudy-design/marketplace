@@ -18,6 +18,8 @@ import { useAddresses } from '@/lib/hooks';
 import { intentKey } from '@/lib/ids';
 import { api } from '@/lib/supabase';
 import { RadioRow, SummaryRow } from '@/components/checkout/Rows';
+import { Sheet } from '@/components/ui/Sheet';
+import { ScalePressable } from '@/components/ui/Pressable';
 import { useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
 
@@ -36,6 +38,7 @@ export default function CheckoutScreen() {
   const [pickAddress, setPickAddress] = useState(false);
   const [shipping, setShipping] = useState<ShippingSelection>({});
   const [plan, setPlan] = useState('full');
+  const [barHeight, setBarHeight] = useState(200);
   // one key per checkout visit: double taps and retries resolve to the same order
   const orderKey = useRef(intentKey('order')).current;
 
@@ -84,7 +87,8 @@ export default function CheckoutScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      <ScrollView testID="checkout-scroll" contentContainerStyle={{ padding: 16, gap: 22, paddingBottom: 200, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+      <ScrollView testID="checkout-scroll" contentContainerStyle={{ padding: 16, gap: 20, paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+        {preview.isError ? <View testID="checkout-refresh-error" style={{ gap: 8 }}><Banner tone="danger" body="No pudimos actualizar tu compra. Revisa el resumen antes de confirmar." /><Button title="Reintentar actualización" variant="secondary" onPress={() => preview.refetch()} loading={preview.isFetching} /></View> : null}
         {/* 1. address */}
         <Section step={1} title="Entrega en">
           {address && !pickAddress ? (
@@ -95,9 +99,9 @@ export default function CheckoutScreen() {
                 <Text variant="bodySmall" color="textSecondary">{address.line1}</Text>
                 <Text variant="bodySmall" color="textSecondary">{[address.municipality, address.city].filter(Boolean).join(', ')} · {address.phone}</Text>
               </View>
-              <Pressable accessibilityRole="button" onPress={() => setPickAddress(true)} hitSlop={8}>
+              <ScalePressable testID="checkout-change-address" disabled={place.isPending} accessibilityRole="button" accessibilityLabel="Cambiar dirección de entrega" onPress={() => setPickAddress(true)} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 2, opacity: place.isPending ? 0.4 : 1 }}>
                 <Text variant="label" color="brand">Cambiar</Text>
-              </Pressable>
+              </ScalePressable>
             </Card>
           ) : (
             <Card padded={false}>
@@ -108,12 +112,13 @@ export default function CheckoutScreen() {
                     selected={a.id === addressId}
                     title={`${a.label} · ${a.recipient}`}
                     subtitle={`${a.line1}, ${a.city}`}
+                    disabled={place.isPending}
                     onPress={() => { setAddressId(a.id); setShipping({}); setPickAddress(false); }}
                   />
                 </View>
               ))}
               {addresses.data?.length ? <Divider /> : null}
-              <Pressable testID="checkout-add-address" accessibilityRole="button" onPress={() => router.push({ pathname: '/addresses/edit', params: { from: 'checkout' } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, padding: 16 }}>
+              <Pressable testID="checkout-add-address" disabled={place.isPending} accessibilityRole="button" onPress={() => router.push({ pathname: '/addresses/edit', params: { from: 'checkout' } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, padding: 16, opacity: place.isPending ? 0.4 : 1 }}>
                 <Icon name="plus" size={20} color={t.colors.brand} />
                 <Text variant="label" color="brand">Agregar dirección</Text>
               </Pressable>
@@ -123,19 +128,19 @@ export default function CheckoutScreen() {
 
         {/* 2. deliveries */}
         <Section step={2} title={s.groups.length > 1 ? `${s.groups.length} entregas` : 'Envío'}>
-          {s.groups.length > 1 ? <Text variant="bodySmall" color="textSecondary">Tus productos salen de lugares distintos, así que llegan por separado. Cada entrega tiene su propio envío y seguimiento.</Text> : null}
+          {s.groups.length > 1 ? <Text variant="caption" color="textSecondary">Elige cómo recibir cada entrega. Cada una tiene su propio seguimiento.</Text> : null}
           {s.groups.map((g, i) => (
-            <DeliveryCard key={g.key} group={g} index={i} total={s.groups.length} onSelect={(methodId) => setShipping((x) => ({ ...currentSelection(s, x), [g.key]: methodId }))} />
+            <DeliveryCard key={g.key} group={g} index={i} total={s.groups.length} disabled={place.isPending} onSelect={(methodId) => setShipping((x) => ({ ...currentSelection(s, x), [g.key]: methodId }))} />
           ))}
         </Section>
 
         {/* 3. plan */}
-        <Section step={3} title="Cómo quieres pagar">
+        <Section step={3} title="Plan de pago">
           <Card padded={false}>
             {s.plans.map((p, i) => (
               <View key={p.code}>
                 {i > 0 ? <Divider inset={16} /> : null}
-                <RadioRow testID={`plan-${p.code}`} selected={plan === p.code} title={p.name} subtitle={p.description ?? undefined} onPress={() => setPlan(p.code)} />
+                <RadioRow testID={`plan-${p.code}`} selected={plan === p.code} title={p.name} subtitle={p.description ?? undefined} disabled={place.isPending} onPress={() => setPlan(p.code)} />
               </View>
             ))}
           </Card>
@@ -168,7 +173,7 @@ export default function CheckoutScreen() {
         {place.error ? <Banner tone="danger" icon="circle-alert" body={(place.error as Error).message} /> : null}
       </ScrollView>
 
-      <BottomBar maxWidth={MAX_W}>
+      <BottomBar testID="checkout-bottom-bar" maxWidth={MAX_W} onHeightChange={setBarHeight}>
           {blocking ? <Text variant="caption" color="danger">{blocking}</Text> : null}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <Text variant="subtitle">{s.schedule.length > 1 ? 'Pagas hoy' : 'Total'}</Text>
@@ -182,10 +187,10 @@ export default function CheckoutScreen() {
             size="lg"
             full
             loading={place.isPending}
-            disabled={!s.can_place || !!blocking || preview.isFetching}
+            disabled={!s.can_place || !!blocking || preview.isFetching || preview.isError || preview.isPlaceholderData}
             onPress={() => place.mutate()}
           />
-          <Text variant="caption" color="textMuted" align="center">En el siguiente paso eliges el método de pago y ves el monto exacto.</Text>
+          <Text variant="caption" color="textMuted" align="center">Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.</Text>
       </BottomBar>
     </View>
   );
@@ -216,42 +221,58 @@ function Section({ step, title, children }: { step: number; title: string; child
   );
 }
 
-function DeliveryCard({ group: g, index, total, onSelect }: { group: DeliveryGroup; index: number; total: number; onSelect: (methodId: string) => void }) {
+function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: DeliveryGroup; index: number; total: number; onSelect: (methodId: string) => void; disabled?: boolean }) {
   const t = useTheme();
   const sel = g.selected_shipping;
+  const [choosing, setChoosing] = useState(false);
+  const [allProducts, setAllProducts] = useState(false);
+  const label = `${total > 1 ? `Entrega ${index + 1} · ` : ''}${g.store.name}`;
   return (
-    <Card padded={false} style={{ overflow: 'hidden' }}>
+    <View style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: t.colors.border, backgroundColor: t.colors.surface }}>
       <View style={{ padding: 14, gap: 10 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
-          <Text variant="label" style={{ flex: 1 }}>{total > 1 ? `Entrega ${index + 1} · ` : ''}{g.label}</Text>
-          <Text variant="caption" color="textMuted">{g.store.name}</Text>
-        </View>
-        <View style={{ flexDirection: 'row', gap: 8 }}>
-          {g.lines.slice(0, 5).map((l) => <ProductImage key={l.variant_id} path={l.image_path} style={{ width: 44 }} radius={t.radii.sm} />)}
-          {g.lines.length > 5 ? <Text variant="caption" color="textMuted">+{g.lines.length - 5}</Text> : null}
-        </View>
+        <View style={{ gap: 2 }}><Text variant="label">{label}</Text><Text variant="caption" color="textSecondary">{g.label}</Text></View>
+        {(allProducts ? g.lines : g.lines.slice(0, 2)).map((l) => (
+          <View key={l.variant_id} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+            <ProductImage productId={l.product_id} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
+            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text><Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text></View>
+          </View>
+        ))}
+        {g.lines.length > 2 ? <Button title={allProducts ? 'Ver menos productos' : `Ver los ${g.lines.length} productos`} variant="ghost" onPress={() => setAllProducts((x) => !x)} /> : null}
       </View>
       <Divider />
       {g.shipping_options == null ? (
         <View style={{ padding: 14 }}><Text variant="bodySmall" color="textMuted">Agrega una dirección para ver las opciones y el costo del envío.</Text></View>
       ) : g.shipping_options.length === 0 ? (
         <View style={{ padding: 14 }}><Text variant="bodySmall" color="danger">No hay envío disponible a esta dirección para esta entrega.</Text></View>
-      ) : (
-        g.shipping_options.map((o, i) => (
+      ) : <>
+        <ScalePressable testID={`delivery-choice-${index}`} disabled={disabled} accessibilityRole="button" accessibilityLabel={`Cambiar envío de ${label}${sel ? `. ${sel.name}, ${Number(sel.cost_usd) === 0 ? 'gratis' : formatUSD(sel.cost_usd)}${sel.is_demo ? ', tarifa de ejemplo' : ''}` : ''}`} onPress={() => setChoosing(true)} style={{ paddingHorizontal: 14, paddingVertical: 12, minHeight: 68, gap: 4, opacity: disabled ? 0.4 : 1 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <Icon name="truck" size={18} color={t.colors.brand} />
+            <Text variant="label" style={{ flex: 1 }}>{sel?.name ?? 'Elegir envío'}</Text>
+            <Icon name="chevron-right" size={18} color={t.colors.brand} />
+          </View>
+          {sel ? <Text variant="caption" color="textSecondary">{Number(sel.cost_usd) === 0 ? 'Gratis' : formatUSD(sel.cost_usd)} · {describeEtaDates(sel.eta_min_date, sel.eta_max_date)}{sel.kind !== 'home_delivery' ? ' · retiras tú' : ''}</Text> : null}
+          {sel?.is_demo ? <Text variant="caption" color="textSecondary">Tarifa de ejemplo</Text> : null}
+          <Text variant="caption" color="brand">Cambiar opciones de envío</Text>
+        </ScalePressable>
+        <Sheet visible={choosing} title={`Envío · ${g.store.name}`} testID={`delivery-options-${index}`} dismissible={!disabled} onClose={() => setChoosing(false)}>
+          {g.shipping_options.map((o, i) => (
           <View key={o.method_id}>
             {i > 0 ? <Divider inset={16} /> : null}
             <RadioRow
               testID={`shipping-${o.code}`}
               selected={sel?.method_id === o.method_id}
+              disabled={disabled}
               title={o.name}
               subtitle={`${describeEtaDates(o.eta_min_date, o.eta_max_date)}${o.kind !== 'home_delivery' ? ' · retiras tú' : ''}`}
               trailing={Number(o.cost_usd) === 0 ? 'Gratis' : formatUSD(o.cost_usd)}
               badge={o.is_demo ? 'Tarifa de ejemplo' : undefined}
-              onPress={() => onSelect(o.method_id)}
+              onPress={() => { onSelect(o.method_id); setChoosing(false); }}
             />
           </View>
-        ))
-      )}
-    </Card>
+          ))}
+        </Sheet>
+      </>}
+    </View>
   );
 }

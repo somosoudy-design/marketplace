@@ -1,7 +1,8 @@
 import type { CartLine, DeliveryGroup } from '@kora/api';
 import { D, formatUSD, presentAvailability } from '@kora/core';
 import { router } from 'expo-router';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { useState } from 'react';
+import { RefreshControl, ScrollView, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
@@ -10,6 +11,8 @@ import { Badge } from '@/components/ui/Badge';
 import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
+import { IconButton } from '@/components/ui/IconButton';
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet';
 import { Card, Divider, SectionHeader, Stepper } from '@/components/ui/Layout';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -44,6 +47,8 @@ function AccountCart({ header }: { header: React.ReactNode }) {
   const t = useTheme();
   const cart = useCart();
   const setQty = useSetCartQuantity();
+  const [removing, setRemoving] = useState<CartLine | null>(null);
+  const [barHeight, setBarHeight] = useState(180);
   const s = cart.data;
 
   if (waitingForNetwork(cart)) return <View>{header}<OfflineState /></View>;
@@ -66,69 +71,70 @@ function AccountCart({ header }: { header: React.ReactNode }) {
     <>
       <ScrollView
         testID="cart-scroll"
-        contentContainerStyle={{ paddingBottom: 200, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}
+        contentContainerStyle={{ paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}
         refreshControl={<RefreshControl refreshing={cart.isRefetching} onRefresh={() => cart.refetch()} tintColor={t.colors.brand} />}
       >
         {header}
         <View style={{ paddingHorizontal: 16, gap: 16 }}>
           {setQty.isError ? <Banner tone="danger" icon="circle-alert" body="No pudimos actualizar la cantidad. Intenta de nuevo." /> : null}
-          {groups.length > 1 ? (
-            <Banner tone="brand" icon="package" title={`Tu compra llega en ${groups.length} entregas`} body="Los productos salen de lugares o tiempos distintos. Cada entrega tiene su propio seguimiento." />
-          ) : null}
+          <Text variant="bodySmall" color="textSecondary" testID="cart-deliveries">{s.line_count} {s.line_count === 1 ? 'producto' : 'productos'}{groups.length > 1 ? ` · ${groups.length} entregas con seguimiento independiente` : ''}</Text>
           {s.issues > 0 ? <Banner tone="warning" icon="circle-alert" title="Revisa tu carrito" body="Algunos productos cambiaron. Ajusta las cantidades marcadas para continuar." /> : null}
           {groups.map((g, i) => (
-            <GroupCard key={g.key} group={g} index={i} total={groups.length} disabled={setQty.isPending} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
+            <GroupCard key={g.key} group={g} index={i} total={groups.length} disabled={setQty.isPending} onRemove={setRemoving} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
           ))}
         </View>
       </ScrollView>
       <CartFooter
         items={s.items_usd}
-        note="El envío y el total final se calculan con tu dirección en el siguiente paso."
+        note="Envío y total final con tu dirección, en el siguiente paso."
         cta="Continuar"
         disabled={s.issues > 0 || setQty.isPending || cart.isFetching}
         onPress={() => router.push('/checkout')}
+        onHeightChange={setBarHeight}
       />
+      <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error ? 'No pudimos quitarlo. Sigue en tu carrito; intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
     </>
   );
 }
 
-function GroupCard({ group: g, index, total, onQty, disabled }: { group: DeliveryGroup; index: number; total: number; onQty: (variantId: string, q: number) => void; disabled?: boolean }) {
+function GroupCard({ group: g, index, total, onQty, onRemove, disabled }: { group: DeliveryGroup; index: number; total: number; onQty: (variantId: string, q: number) => void; onRemove: (line: CartLine) => void; disabled?: boolean }) {
   const t = useTheme();
   return (
-    <Card padded={false} style={{ overflow: 'hidden' }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, padding: 14, backgroundColor: t.colors.surfaceSunken }}>
+    <View style={{ backgroundColor: t.colors.surface, borderTopWidth: 1, borderBottomWidth: 1, borderColor: t.colors.border }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, paddingVertical: 10 }}>
         <Icon name={g.flow === 'import_order' ? 'plane' : g.flow === 'seller_shipping' ? 'store' : 'package'} size={18} color={t.colors.textSecondary} />
         <View style={{ flex: 1 }}>
-          <Text variant="label">{total > 1 ? `Entrega ${index + 1} de ${total} · ` : ''}{g.label}</Text>
-          <Text variant="caption" color="textMuted">{g.store.name}{g.ready_max_days > 1 ? ` · listo en ${g.ready_min_days}–${g.ready_max_days} días` : ''}</Text>
+          <Text variant="label">{g.store.name}</Text>
+          <Text variant="caption" color="textSecondary">{total > 1 ? `Entrega ${index + 1} de ${total} · ` : ''}{g.label}{g.ready_max_days > 1 ? ` · ${g.ready_min_days}–${g.ready_max_days} días` : ''}</Text>
         </View>
       </View>
       {g.lines.map((l, i) => (
         <View key={l.variant_id}>
           {i > 0 ? <Divider inset={14} /> : null}
-          <LineRow line={l} onQty={onQty} disabled={disabled} />
+          <LineRow line={l} onQty={onQty} onRemove={() => onRemove(l)} disabled={disabled} />
         </View>
       ))}
-    </Card>
+    </View>
   );
 }
 
-function LineRow({ line: l, onQty, disabled }: { line: CartLine; onQty: (variantId: string, q: number) => void; disabled?: boolean }) {
-  const t = useTheme();
+function LineRow({ line: l, onQty, onRemove, disabled }: { line: CartLine; onQty: (variantId: string, q: number) => void; onRemove: () => void; disabled?: boolean }) {
+  const { width } = useWindowDimensions();
   const a = presentAvailability(l.availability);
   return (
-    <View style={{ flexDirection: 'row', gap: 12, padding: 14 }} testID={`cart-line-${l.variant_id}`}>
+    <View style={{ flexDirection: 'row', gap: 12, padding: 12 }} testID={`cart-line-${l.variant_id}`}>
       <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id } })}>
-        <ProductImage productId={l.product_id} path={l.image_path} style={{ width: 76 }} radius={t.radii.md} />
+        <ProductImage productId={l.product_id} path={l.image_path} aspect={0.85} style={{ width: width < 360 ? 72 : 88 }} radius={6} />
       </ScalePressable>
       <View style={{ flex: 1, gap: 4 }}>
         <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
         {l.variant_title ? <Text variant="caption" color="textMuted">{l.variant_title}</Text> : null}
+        <Text variant="price" tabular>{formatUSD(l.line_total_usd)}</Text>
         {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
         {l.issue ? <Text variant="caption" color="danger">{ISSUE_TEXT[l.issue] ?? 'Revisa este producto.'}</Text> : null}
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
-          <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} disabled={disabled} onChange={(q) => onQty(l.variant_id, q)} />
-          <Text variant="price" tabular style={{ marginLeft: 'auto' }}>{formatUSD(l.line_total_usd)}</Text>
+          <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} disabled={disabled} onChange={(q) => q === 0 ? onRemove() : onQty(l.variant_id, q)} />
+          <IconButton testID={`cart-remove-${l.variant_id}`} icon="trash" label={`Quitar ${l.title}`} disabled={disabled} onPress={onRemove} />
         </View>
       </View>
     </View>
@@ -160,6 +166,8 @@ function EmptyCart({ header, body }: { header: React.ReactNode; body: string }) 
 function GuestCartView({ header }: { header: React.ReactNode }) {
   const lines = useGuestCart();
   const setQty = useSetCartQuantity();
+  const [removing, setRemoving] = useState<GuestLine | null>(null);
+  const [barHeight, setBarHeight] = useState(180);
   if (!lines.length) {
     return (
       <EmptyCart header={header} body="Agrega productos y continúa cuando quieras. Al iniciar sesión los guardamos en tu cuenta." />
@@ -168,7 +176,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
   const subtotal = lines.reduce((s, l) => s.plus(D(l.price_usd).times(l.quantity)), D(0));
   return (
     <>
-      <ScrollView contentContainerStyle={{ paddingBottom: 200, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}>
         {header}
         <View style={{ paddingHorizontal: 16, gap: 16 }}>
           <Card padded={false}>
@@ -178,6 +186,8 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
                 <LineRow
                   line={{ issue: null, title: l.title, quantity: l.quantity, image_path: l.image_path, product_id: l.product_id, variant_id: l.variant_id, availability: l.availability as CartLine['availability'], max_quantity: 20, variant_title: l.variant_title, line_total_usd: Number(D(l.price_usd).times(l.quantity)), unit_price_usd: l.price_usd }}
                   onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })}
+                  onRemove={() => setRemoving(l)}
+                  disabled={setQty.isPending}
                 />
               </View>
             ))}
@@ -187,14 +197,15 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
           </Text>
         </View>
       </ScrollView>
-      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push('/sign-in')} />
+      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push('/sign-in')} onHeightChange={setBarHeight} />
+      <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error ? 'No pudimos quitarlo. Intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
     </>
   );
 }
 
-function CartFooter({ items, note, cta, onPress, disabled }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean }) {
+function CartFooter({ items, note, cta, onPress, disabled, onHeightChange }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean; onHeightChange?: (height: number) => void }) {
   return (
-    <BottomBar maxWidth={MAX_CONTENT} safeArea={false}>
+    <BottomBar maxWidth={MAX_CONTENT} safeArea={false} onHeightChange={onHeightChange}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <Text variant="subtitle">Productos</Text>
         <ChangingText value={formatUSD(items)}>

@@ -81,7 +81,6 @@ function BackButton({ inline }: { inline?: boolean }) {
 
 function ProductView({ product: p }: { product: ProductDetail }) {
   const t = useTheme();
-  const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { user } = useAuth();
   const qc = useQueryClient();
@@ -93,6 +92,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const [barHeight, setBarHeight] = useState(120);
   // what this screen last put in the cart (variant and quantity), so "Comprar" after "Agregar" doesn't add it twice
   const [inCart, setInCart] = useState<string | null>(null);
   const [pending, setPending] = useState<'add' | 'buy' | null>(null);
@@ -119,7 +119,8 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
   const tracking = useViewportTracking();
   const scroll = useScrollY(tracking.onWindow);
-  const heroHeight = imageWidth / t.imagery.productAspect;
+  // Square, bounded gallery: the buyer reaches name, price and variants without losing the object.
+  const heroHeight = Math.min(imageWidth, 460);
   const scrollRef = useRef<Animated.ScrollView>(null);
   const reviewsY = useRef(0);
 
@@ -162,7 +163,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <ImpressionScope tracking={tracking} enabled={!!user}>
-        <Animated.ScrollView ref={scrollRef} testID="product-scroll" onScroll={scroll.onScroll} onLayout={tracking.onLayout} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 140 + insets.bottom }} showsVerticalScrollIndicator={false}>
+        <Animated.ScrollView ref={scrollRef} testID="product-scroll" onScroll={scroll.onScroll} onLayout={tracking.onLayout} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: barHeight + 24 }} showsVerticalScrollIndicator={false}>
           {/* gallery */}
           <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
             <FlatList
@@ -175,7 +176,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               showsHorizontalScrollIndicator={false}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage productId={p.id} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
+                <ProductImage productId={p.id} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
               )}
             />
             {images.length > 1 ? (
@@ -240,7 +241,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             {/* delivery, protection and payment in one card, below what the buyer decides on */}
             <Card style={{ gap: 14 }}>
               <InfoRow icon="truck" title="Entrega" lead={lead ? `${lead}${eta ? ` · ${eta}` : ''}` : undefined} body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
-              {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Puedes pagar el 100 % o un anticipo del 50 % y el resto cuando llegue a Venezuela." /> : null}
+              {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Antes de confirmar verás los planes de pago disponibles para tu compra y el plazo estimado de llegada." /> : null}
               <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
               {methods.data?.length ? <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. Cada método muestra su monto exacto al pagar.`} /> : null}
             </Card>
@@ -312,7 +313,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
       />
 
       {/* sticky purchase bar */}
-      <BottomBar maxWidth={MAX_W}>
+      <BottomBar maxWidth={MAX_W} onHeightChange={setBarHeight}>
           {added ? (
             <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>
               <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
@@ -418,7 +419,7 @@ function ProductSkeleton() {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background, alignItems: 'center' }}>
       <BackButton />
-      <Skeleton width={w} height={w * 1.25} radius={0} />
+      <Skeleton width={w} height={Math.min(w, 460)} radius={0} />
       <View style={{ width: w, padding: 20, gap: 12 }}>
         <Skeleton width="40%" height={14} />
         <Skeleton width="85%" height={24} />

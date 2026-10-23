@@ -12,7 +12,7 @@
 
 **En curso.** Primer bloque comprobado: recuperación pago/sesión/pedidos ausentes y métodos fallidos, confirmaciones sensibles durante solicitud, enlaces/copia de producto.10/10 nuevas pruebas y2/2 compartir tienda, tipos/lint móvil. No repetir estos fallos; continuar composición de carrito/checkout/ficha y recursos visuales autorizados. Informe `AUDITORIA_MARKETPLACE_2026-10-23.md`.
 
-Agentes de arte y revisión de fidelidad independientes; Canvas/Canva no disponible, ImageGen real utilizado. No recursos falsamente atribuidos a fotografías auténticas. Sin OTA autorizada para este bloque, APK, iOS, backend remoto o finanzas. Hipótesis de arranque/almacenamiento aún sin reproducción: investigar con adaptador controlado, no borrar datos.
+Bloque2 implementado y probado22/22: carrito/checkout/ficha, retirada con error/reintento, guardas de confirmación, reflujo real de barras; comparación26PNG. Falta dictamen ronda2, Hermes y cierre documental. Agentes de arte/revisión independientes. **Oliver rechaza fuentes amateur y derivadosIA:** no incorporarlos. Dos packshots UGREEN50706 oficiales obtenidos; solo evaluación local, redistribución aún no acreditada. Nuevos dominios oficiales guardados en borrador de red pendiente de publicar por propietario. Canvas/Canva no disponible; ImageGen realmente utilizado en candidatos descartados. Sin OTA autorizada para este bloque, APK, iOS, backend remoto o finanzas. Hipótesis de arranque/almacenamiento aún sin reproducción: investigar con adaptador controlado, no borrar datos.
 
 ## UX-V4 — propuesta comprador corregida; pendiente de Oliver
 

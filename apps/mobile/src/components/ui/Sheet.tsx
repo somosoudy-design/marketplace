@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { Modal, Pressable, ScrollView, View } from 'react-native';
+import type { KeyboardEvent, ReactNode } from 'react';
+import { Modal, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useReducedMotion } from 'react-native-reanimated';
 import { useTheme } from '@/theme';
@@ -19,6 +19,10 @@ export function Sheet({ visible, title, onClose, children, footer, testID, dismi
         testID={testID}
         accessibilityViewIsModal
         onAccessibilityEscape={close}
+        {...(Platform.OS === 'web' ? { onKeyDown: (event: KeyboardEvent) => {
+          // RN Web activates its Escape listener after the opening animation; respond during it too.
+          if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); }
+        } } : {})}
         style={{ backgroundColor: t.colors.surface, borderTopLeftRadius: t.radii.xl, borderTopRightRadius: t.radii.xl, paddingBottom: insets.bottom + 16, paddingTop: 10, width: '100%', maxWidth: 640, alignSelf: 'center', maxHeight: '88%' }}
       >
         <View style={{ alignSelf: 'center', width: 40, height: 5, borderRadius: 3, backgroundColor: t.colors.borderStrong, marginBottom: 12 }} />
