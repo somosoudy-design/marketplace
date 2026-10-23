@@ -3,6 +3,11 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Oliver · recepción física APK 5 comprobada
+
+- Fotografía de Diagnóstico del Samsung muestra preview, runtime exacto APK5 y OTA `01a1693d-60d9-7183-a309-92769e4ea219`, publicada23oct14:49UTC; API36, Marketplace responde1266ms, sesión cifrada/con sesión. Foto personal no copiada al Git público. Actualizada COMPRA_ANDROID_2026-10-23.json.
+- Queda resuelta identificación/recepción de actualización. No otra OTA ni reiterar forzar cierre/reinstalar/pedir registros. Se aclaró que compra cambió, nuevas fotografías oficiales siguen locales. Catálogo continúa por lotes para39restantes; no afirmar validación física completa de compra o aprobación visual por este diagnóstico.
+
 ### 2026-10-23 · Codex cloud · compra recibida en Android; catálogo restante delegado
 
 - EAS39972699874 Success, fuenteaa9510a/funcional130d041, guard exacto APK5. Android15/run39973330513/b945400 **2/2 sin reintentos**, OTA `01a1693d-60d9-7183-a309-92769e4ea219`,23oct14:49UTC, preview/runtime/backend/sesión cifrada confirmados en ambos temas.14JPG de flujos copiados sin editar/hash idéntico desde ci/capturas9c64c933; evidencia COMPRA_ANDROID_2026-10-23.json.

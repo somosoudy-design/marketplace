@@ -41,7 +41,20 @@
   "nativeConfigChanged": false,
   "remoteBackendChanged": false,
   "financialRulesChanged": false,
-  "physicalSamsungReceipt": "not yet verified; Canal/Código requested from owner",
+  "physicalSamsungReceipt": {
+    "status": "confirmed_by_owner_diagnostics_photo",
+    "observedDate": "2026-10-23",
+    "apiLevel": 36,
+    "channel": "preview",
+    "updateId": "01a1693d-60d9-7183-a309-92769e4ea219",
+    "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+    "publishedTime": "2026-10-23 14:49 UTC",
+    "backend": "Marketplace correct project; responds in 1266 ms",
+    "sessionEncrypted": true,
+    "signedIn": true,
+    "personalPhotoCommitted": false,
+    "scope": "Receipt/version confirmation only; not a full physical checkout test"
+  },
   "independentNativeReview": "approved for visitor scope; 14 screenshots reviewed, no open P1/P2",
   "screenshotOrigin": {
     "branch": "ci/capturas",

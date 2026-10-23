@@ -4,9 +4,9 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-23: compra publicada y recibida en APK 5/emulador Android 15, OTA `01a1693d-60d9-7183-a309-92769e4ea219`; revisión independiente nativa APROBADA. Oliver aún no ve cambios en Samsung: pendiente leer su Canal/Código. Agente de catálogo continúa los demás productos por lotes; nuevos packshots oficiales solo locales mientras se resuelven permisos.
+**Última actualización:** 2026-10-23: compra publicada y recibida en APK 5/emulador Android 15 y **Samsung físico de Oliver**, OTA `01a1693d-60d9-7183-a309-92769e4ea219`; revisión independiente nativa APROBADA. Oliver aportó fotografía de diagnóstico con ID/canal/runtime correctos: recepción resuelta, no republicar. Catálogo continúa los demás productos por lotes; nuevos packshots oficiales solo locales mientras se resuelven permisos.
 
-## Compra publicada — recepción en emulador confirmada; Samsung por identificar
+## Compra publicada — recepción confirmada en emulador y Samsung
 
 Oliver indica que no ve los cambios en el teléfono y valora positivamente el acabado profesional de productos. Se continúa la autorización de entrega progresiva en su APK 5: publicar únicamente las mejoras funcionales ya revisadas y probadas (36 casos locales, tipos/lint/web/Android Hermes), conservando las imágenes distribuibles existentes. No interpretar su valoración visual como permiso de redistribución del nuevo packshot oficial.
 
@@ -14,11 +14,13 @@ EAS `39972699874` terminó Success, fuente `aa9510a`: proyecto, perfil preview, 
 
 Evidencia [COMPRA_ANDROID_2026-10-23.json](COMPRA_ANDROID_2026-10-23.json),14JPG nativos sin edición en `capturas/calidad-2026-10-23/android/`, hashes idénticos al origen inmutable `ci/capturas@9c64c933f3d3dae70d84a3c07136ff6769844e0f`. Captura inicial de instalación con ANR del Pixel Launcher excluida de evidencia aceptada; no fue cierre de la app y los flujos posteriores no tienen ese diálogo. Los logs Actions no son descargables por la política cloud; ID leído de diagnósticos originales, sin inventar grupo EAS ni fecha exacta con segundos.
 
-**Trabajo en curso:** Oliver comunica que Samsung aún no se actualiza. Pregunta asíncrona pendiente: Cuenta→línea de versión→Diagnóstico, campos Canal/Código (sin credenciales). `checkAutomatically: ON_LOAD`/`fallbackToCacheTimeout:0`: abre conectado, deja descargar y cierra/abre completamente para ejecutar. No reinstalar ni borrar datos. Si el ID coincide, investigar la pantalla/cambio concreto esperado; si conserva otro, comprobar canal/runtime y descarga antes de republicar. Sin acceso directo a su teléfono, no afirmar recepción física ni resuelto el síntoma.
+**Recepción física confirmada por evidencia del propietario:** Oliver envió fotografía de su diagnóstico. Samsung/API36, canal preview, runtime exacto APK5 y OTA `01a1693d-60d9-7183-a309-92769e4ea219`, publicada23oct14:49UTC, Marketplace responde1266ms, sesión cifrada y cuenta con sesión. No se almacena esa foto personal en Git público. Esto acredita la versión ejecutada en su teléfono; no equivale a prueba física completa del checkout o aprobación visual del recorrido. Se informó a Oliver: la OTA cambia carrito/checkout/ficha pero conserva las fotografías anteriores; los packshots nuevos siguen locales. No otra publicación, reinstalación, borrado ni diagnóstico repetido de recepción.
 
 **Paralelo autorizado:** Oliver pide al agente de catálogo continuar **todos los demás productos**. `catalog_art` investiga por lotes con originales profesionales y modelo/variante/permiso verificables; archivos de trabajo ignorados `.local/arte-20261023/catalogo-restante`. Root único escritor/committer; no nueva OTA fotográfica ni datos comerciales. Integrar resultados útiles y revisar independientemente antes de distribuir.
 
-## Trabajo en curso — calidad general sobre la app real
+## Base del incremento — calidad de la app real antes de publicar
+
+El siguiente registro describe las pruebas y el cierre de código previos a la OTA. Su publicación y recepción posteriores constan arriba; no volver a tratar este incremento como pendiente de publicar.
 
 Base `b1e79a1`, sincronizada. Auditoría Product Design sobre capturas nuevas claro/oscuro y revisión independiente. Primer bloque: pago distingue sesión/carga/pedido sin acceso, recupera métodos fallidos; confirmaciones sensibles bloquean cierre durante solicitud; compartir producto usa enlace real y copia recuperable.10/10 pruebas nuevas finales,2/2 compartir tienda, tipos/lint móvil aprobados. Cuatro pruebas rojas previas reproducen fallos de la versión anterior. Se liberaron reservas de fixtures locales propias y se añadió limpieza automática; sin cambiar stock manualmente ni datos remotos.
 
@@ -81,7 +83,7 @@ Prueba remota real: comprador/pedido demo temporales y obligación25USD, sin pro
 | PR | #1 en borrador hacia `main` (`main` solo tiene el README inicial; no fusionar sin Oliver) |
 | Última publicación | Compra funcional `130d041`, solicitud `aa9510a`; EAS `39972699874` Success. OTA `01a1693d-60d9-7183-a309-92769e4ea219` recibida en Android15/run39973330513,2/2 |
 | Plan vigente | Inicio C conservado; mejoras de compra implementadas en la app real y publicadas; fotografías oficiales nuevas solo locales |
-| Objetivo actual | Identificar Código/Canal del Samsung de Oliver; continuar demás fotografías por lotes profesionales autorizados |
+| Objetivo actual | Ampliar catálogo fotográfico profesional por lotes; Oliver revisa visualmente compra ya recibida en Samsung |
 | Panel publicado | **https://kora-panel.expo.app** (EAS Hosting; cuentas reales del proyecto de pruebas, no las demo locales) |
 | Respaldo extra | `/mnt/project-files/marketplace` (copia del repo y bundle; solo existe en el proyecto de Claude) |
 
