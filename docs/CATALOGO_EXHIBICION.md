@@ -1,5 +1,19 @@
 # Catálogo de exhibición — entrega Android preview
 
+## Dirección vigente — 23 de octubre de 2026
+
+Oliver rechazó el acabado documental/amateur de las fotografías distribuidas y de sus retoques. **La licencia no equivale a aprobación visual.** No continuar recortando la foto del lector sobre mesa ni Anker documental para intentar cumplir el nuevo criterio. Las fotos publicadas del14oct siguen en el APK; no se reemplazaron remotamente en este bloque.
+
+Se obtuvieron **dos packshots oficiales originales de UGREEN50706 para una referencia de producto**, EU1600×1600 yDE600×600. Sin generación ni edición nuestra; método cámara/render no documentado. Fuente de fabricante ySKU verificados en dos mercados. Correspondencia exterior fuerte con el lector de exhibición; aquella foto no muestra etiqueta para certificar la revisión exacta. TarjetasSD/microSD como utilería, sin afirmar incluidas.
+
+Comparación efectiva en app Expo web privada usando registro UUID/ruta existente: InicioC, resultadosBuscar y ficha, claro/oscuro, ficha320.18PNG nuevos aceptados tras esperar búsqueda y transiciones. Sin peticiones mutadoras remotas; ocho intentos de tracking bloqueados por el guard de prueba. Aviso de entorno/precios de ejemplo y `is_demo` conservados. Registro fuente restaurado byte a byte tras exportar; **no incorporado al paquete distribuible** porque no hay permiso de redistribución acreditado. Fotos/exportaciones/capturas oficiales solo en `.local/ux-20261023/official-comparison` y `.local/arte-20261023/oficial`, fuera de Git/OTA/Hosting.
+
+Procedencia sin píxeles: [direccion-fotografica-2026-10-23.json](catalogo-exhibicion/direccion-fotografica-2026-10-23.json). Agente de arte y auditor de fidelidad reales; Canvas/Canva no disponible. ImageGen se utilizó en candidatos anteriores rechazados por Oliver, no en los packshots oficiales.
+
+**Siguiente exacto:** activar dominios oficiales ya guardados en borrador de Configuración del entorno (revisar/guardar/publicar), obtener material de fabricante con base de uso para SamsungEP-T4510, AnkerA1263 yStarTechST7300U3M y confirmarUGREEN25845. No asignar80887/90314 ni otros modelos parecidos, ni cambiar datos comerciales para encajar una fotografía. Confirmar SKU/variante y uso autorizado antes de distribuir. Sin nueva OTA ni cambios remotos en este bloque.
+
+## Última versión distribuida — 14 de octubre
+
 **Estado vigente (14 de octubre, 21:43 UTC): cinco modelos con seis fotografías autorizadas integradas y publicadas en Android preview, compatible con APK5.** Dos UGREEN, Samsung, Anker y StarTech sustituyen los candidatos oficiales sin permiso; modelos y colores corresponden al material distribuido. Créditos de autor/licencia visibles en cada ficha. Aviso de pruebas e `is_demo` permanecen, sin badges Demo repetitivos. Precios y existencias intactos.
 
 Manifiesto autorizado: [lote-02-autorizado.json](catalogo-exhibicion/lote-02-autorizado.json). Archivos WebP y permisos en `apps/mobile/assets/catalog-exhibition`. Exportaciones y comprobaciones focalizadas aprobadas; EAS run38642215601, fuente69f1c45, grupo72ffe95f-d27a-481a-889c-9de9a4c1305c. Recepción nativa **2/2 sin reintentos**: run38642731907 Success, OTA `01a13c5e-f303-7822-acda-7ce771cf4db2` confirmada en diagnósticos claro/oscuro. Veinticuatro capturas nativas revisadas. Evidencia: [entrega-android-2026-10-14.json](catalogo-exhibicion/entrega-android-2026-10-14.json). Sin APK nuevo, iOS o production. Los siguientes apartados son históricos y no describen el estado actual.

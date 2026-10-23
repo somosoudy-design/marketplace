@@ -164,7 +164,7 @@ export function Catalog({ initial, locked = [], showSearch = true, autoFocusKey,
       <View style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         <View style={{ flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: 4 }}>
           <Text variant="caption" color="textSecondary" numberOfLines={1} testID="catalog-count" accessibilityLiveRegion="polite" aria-busy={search.isFetching} style={{ flexShrink: 1 }}>
-            {pinnedControls && f.category ? `${topCategories.find((c) => c.slug === f.category)?.name ?? f.category} · ` : ''}{search.isLoading ? 'Buscando…' : items.length === 0 ? 'Sin resultados' : `${items.length}${search.hasNextPage ? '+' : ''} productos`}
+            {pinnedControls && f.category ? `${topCategories.find((c) => c.slug === f.category)?.name ?? f.category} · ` : ''}{search.isLoading ? 'Buscando…' : items.length === 0 ? 'Sin resultados' : `${items.length}${search.hasNextPage ? '+' : ''} ${items.length === 1 && !search.hasNextPage ? 'producto' : 'productos'}`}
           </Text>
           <View style={{ width: 12, height: 12 }}>{search.isFetching && !search.isLoading ? <ActivityIndicator size={12} color={t.colors.brand} accessibilityLabel="Actualizando resultados" /> : null}</View>
         </View>

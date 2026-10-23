@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · Oliver · cierre compra revisada y referencia oficial profesional
+
+- Fuentes funcionales d56eb9f y8c27fab, push confirmado. Auditor independiente ronda2 APROBADO para incremento local; P1edicionesduranteplace/P2tarifademo corregidos.26PNG comparables/medidas,22/22 foco y12regresiones únicas, luego singular2/2:36casosconsolidados. Último retest adicional de enlace tienda aprobado; tipos/lint/web. Android/Hermes fuente8c27fab5,9MB. No prueba física o guardAPK5 nuevo.
+- Arte: Oliver rechaza fotos documentales/derivadosIA. Agentes obtienen dos originales de tiendas oficialesUGREEN50706, inspeccionados por auditor de catálogo; uno probado en appweb privada en InicioC/Buscar/ficha,18PNG/4grupos. Primeras capturas durante debounce/transición rechazadas y recapturadas. Un recurso de producto oficial local, cero nuevos oficiales distribuibles; derechos/variante por confirmar. Registro de exhibición temporal restaurado byte a byte. Procedencia sin píxeles versionada, archivos oficiales solo ignorados.
+- Dominios bloqueados Samsung/Anker/StarTech/Amazon agregados a borrador conservando resto, requiere review/save/publish del entorno. Instrucciones de inicio persistente de backend y exportar antes de servir guardadas/verificadas; no instalación ni secretos nuevos. Sin Canvas/Canva; ImageGenreal en candidatos descartados, no en oficiales.
+- Sin backend remoto/precios/stock/tasas/pagos/SQL/vendedor/iOS/APK/OTA/production. Próximo: aplicar red oficial, obtener recursos autorizados exactos restantes y confirmar variantes, luego aprobación/guardEASAPK5/validaciónAndroid. No repetir auditoría genérica o retoque de fotoamateur. Hipótesis de arranque permanece sin reproducir.
+
 ### 2026-10-23 · Codex cloud · Oliver · checkpoint composición de compra y criterio fotográfico corregido
 
 - Carrito elimina explicación redundante, prioriza tienda/grupo/producto y confirma retirada; checkout resume envíos reales con alternativas en hoja, identifica productos/cantidad y aclara creación/reserva/pago posterior; ficha reduce galería sin cortar objeto y elimina promesa universal50%. Altura de barra adapta scroll. Escape web durante apertura de hoja corregido.

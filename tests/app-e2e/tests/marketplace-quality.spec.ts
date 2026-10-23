@@ -118,5 +118,15 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await other.goto(link);
       await expect(other.getByTestId('product-title')).toContainText('UGREEN cable');
     });
+
+    test('un solo resultado usa el singular y espera la búsqueda final', async ({ page }) => {
+      await page.goto('/explore');
+      await expect(page.getByTestId('catalog-search')).toBeVisible();
+      const response = page.waitForResponse((r) => r.url().endsWith('/rpc/search_products') && r.request().postDataJSON()?.p_query === 'lino' && r.ok());
+      await page.getByTestId('catalog-search').fill('lino');
+      await response;
+      await expect(page.getByTestId('catalog-count')).toHaveText('1 producto');
+      await expect(page.getByTestId('explore-list').locator('[data-testid^="product-card-"]')).toHaveCount(1);
+    });
   });
 }

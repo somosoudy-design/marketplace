@@ -1,0 +1,81 @@
+{
+  "observedAt": "2026-10-23",
+  "scope": "professional-official-reference-local-only",
+  "ownerRejectsAmateurSources": true,
+  "canvasIntegrationAvailable": false,
+  "officialResourcesUsedImageGeneration": false,
+  "resources": [
+    {
+      "market": "eu",
+      "sourcePage": "https://eu.ugreen.com/products/50706",
+      "metadataUrl": "https://eu.ugreen.com/products/50706.js",
+      "officialTitle": "UGREEN Micro SD Card Reader USB C USB 3.0 to Memory Card Reader Adapter",
+      "sku": "50706",
+      "variants": [
+        {
+          "sku": "50706",
+          "title": "Default Title"
+        }
+      ],
+      "originalUrl": "https://cdn.shopify.com/s/files/1/0573/0979/0291/files/ugreen-micro-sd-card-reader-usb-c-usb-30-to-memory-card-reader-adapter-698369.png?v=1743164373",
+      "file": "ugreen-reader-50706-official-eu-original.png",
+      "httpStatus": 200,
+      "width": 1600,
+      "height": 1600,
+      "bytes": 239714,
+      "sha256": "4cd2fd52245a20f27dfdb63ee61f66c55b8f48c034716a6d11f6e6ac709ee662",
+      "publisher": "UGREEN official store",
+      "author": "Not separately identified",
+      "provenance": "Original professionally prepared manufacturer packshot, downloaded byte-for-byte; no edits or AI generation",
+      "cameraCaptureMethod": "Not documented; may be studio photograph or render",
+      "catalogMatch": "Official SKU50706 confirmed by manufacturer JSON in two markets. Strong visual correspondence to current rigid dualUSB-A/USB-C reader: metallic body, black collars/two caps and wrist strap. Current original documentary photo does not expose a factory model label; no claim of proof of that individual unit or revision.",
+      "rightsStatus": "unconfirmed for redistribution; local reference only",
+      "licenseEvidence": null,
+      "reviewedVisually": true,
+      "productIdentityStatus": "manufacturer reference confirmed; current generic exhibition reader model candidate50706 for principal/catalog review",
+      "integrationStatus": "local reference only pending redistribution permission",
+      "visualNotes": "Professional original packshot includes SD and microSD cards as demonstration props; do not imply cards included. No AI processing or edits.",
+      "licenseSourceToReview": "https://www.ugreen.com/pages/terms-and-conditions",
+      "licenseNotes": "No public redistribution permission or CC license has been established for this official resource. Do not copy into Git/OTA/public app assets without a valid basis."
+    },
+    {
+      "market": "de",
+      "sourcePage": "https://de.ugreen.com/products/ugreen-sd-kartenleser-usb-c-sd-card-reader-sd-kartenlesegerat-usb-3-0-micro-sd-kartenleser-otg-aluminum-fur-macbook-pro-air-ipad-pro-air-galaxy-s22-s21-tab-s8-s7-surface-pro-go-usw",
+      "metadataUrl": "https://de.ugreen.com/products/ugreen-sd-kartenleser-usb-c-sd-card-reader-sd-kartenlesegerat-usb-3-0-micro-sd-kartenleser-otg-aluminum-fur-macbook-pro-air-ipad-pro-air-galaxy-s22-s21-tab-s8-s7-surface-pro-go-usw.js",
+      "officialTitle": "UGREEN USB 3.0 Micro SD Kartenleser OTG Aluminum",
+      "sku": "50706",
+      "variants": [
+        {
+          "sku": "50706",
+          "title": "Default Title"
+        }
+      ],
+      "originalUrl": "https://cdn.shopify.com/s/files/1/0669/7336/8632/products/50706_db1fccbf-b68d-4d40-a7dd-f091b7441017-625915.png?v=1695015635",
+      "file": "ugreen-reader-50706-official-de-original.png",
+      "httpStatus": 200,
+      "width": 600,
+      "height": 600,
+      "bytes": 44089,
+      "sha256": "4be3f6787fa435cf5e78a8cb1f88a9bb3c3c0767174072d5ce98b05523be5d6b",
+      "publisher": "UGREEN official store",
+      "author": "Not separately identified",
+      "provenance": "Original professionally prepared manufacturer packshot, downloaded byte-for-byte; no edits or AI generation",
+      "cameraCaptureMethod": "Not documented; may be studio photograph or render",
+      "catalogMatch": "Official SKU50706 confirmed by manufacturer JSON in two markets. Strong visual correspondence to current rigid dualUSB-A/USB-C reader: metallic body, black collars/two caps and wrist strap. Current original documentary photo does not expose a factory model label; no claim of proof of that individual unit or revision.",
+      "rightsStatus": "unconfirmed for redistribution; local reference only",
+      "licenseEvidence": null,
+      "reviewedVisually": true,
+      "productIdentityStatus": "manufacturer reference confirmed; current generic exhibition reader model candidate50706 for principal/catalog review",
+      "integrationStatus": "local reference only pending redistribution permission",
+      "visualNotes": "Professional original packshot includes SD and microSD cards as demonstration props; do not imply cards included. No AI processing or edits.",
+      "licenseSourceToReview": "https://www.ugreen.com/pages/terms-and-conditions",
+      "licenseNotes": "No public redistribution permission or CC license has been established for this official resource. Do not copy into Git/OTA/public app assets without a valid basis."
+    }
+  ],
+  "appBackendModified": false,
+  "trackedExhibitionRegistryRestored": true,
+  "otaPublished": false,
+  "rightsForDistributionConfirmed": false,
+  "localEvidencePath": ".local/ux-20261023/official-comparison",
+  "pendingNativeReceipt": true
+}

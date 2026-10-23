@@ -43,10 +43,28 @@ Obtenidos dos originales de tienda oficial UGREEN para SKU50706: EU1600×1600/23
 
 UGREEN80887 y cargador90314 rechazados por modelo distinto. Samsung/Anker/StarTech devuelvenCONNECT403: política del entorno. Se guardó borrador de red preservando configuración previa y agregando www.samsung.com/images.samsung.com/www.startech.com/media.startech.com/www.anker.com/www.amazon.com/m.media-amazon.com. Herramienta confirmó `saved`, `requires_publish:true`; requiere revisar/guardar/publicar en Configuración del entorno, todavía no aplicado. No se pidieron credenciales ni se eludió el proxy.
 
-Se prepara comparación en app web local con el registro de exhibición existente y lecturas públicas del Marketplace correcto. Overlay temporal solo para exportación local, registro restaurado byte a byte. No implica fotografía incorporada al paquete distribuible; la app publicada conserva recursos anteriores. Canvas/Canva no utilizado porque no está disponible.
+Comparación completada en app web local con registro de exhibición existente y lecturas públicas del Marketplace correcto. **Una referencia de producto probada con packshot oficial**,18PNG originales, InicioC/resultados/ficha en ambos temas y ficha320. Overlay temporal solo para exportación local, registro restaurado byte a byte. Ocho intentos de tracking bloqueados; ninguna escritura remota. Primeras capturas tomadas durante debounce/transición rechazadas y recapturadas después de resultado y opacidad estable. No implica fotografía incorporada al paquete distribuible; la app publicada conserva recursos anteriores. Canvas/Canva no utilizado porque no está disponible.
+
+La comparativa reveló «1 productos» en Buscar: corregido a«1 producto» y probado en dos temas con consulta real local de un único resultado. Tipos/lint/exportación web final y3/3 pruebas adicionales (singular en ambos temas y enlace de tienda) aprobados. **Cobertura consolidada:36 casos únicos locales**:22 nuevos de composición/robustez,2singular,6errores comprador,3ficha,1compra completa,2compartir tienda. No contar repeticiones como casos nuevos. Cuatro grupos de comparación fotográfica son comprobaciones adicionales de lectura web, no casos Android.
+
+## Control de calidad y estado de entrega
+
+`release_auditor`, ronda2: **APROBADO para cerrar este incremento local**, sin P1/P2 abiertos del alcance revisado. Examinó código, nuevas capturas en ambos temas y estrésCSS320/160%; no ejecutó los22tests, que son ejecución del agente principal. Correcciones de ronda1 resueltas: edición congelada durante creación y tarifa demo visible. `catalog_review`: packshot50706 apto para evaluación local, sin aprobar redistribución o SKU de cada variante. No desacuerdos sin resolver; aprobación interna no sustituye revisión de Oliver.
+
+Exportación Android/Hermes aprobada para la implementación funcional `8c27fab` (HBC5,9MB). El ajuste posterior de singular está probado en exportación web; no cambia APIs nativas. No dependencias/configuración nativa, backend, vendedor, pagos/tasas/cálculos o producción modificados. Runtime APK5 exacto debe verificarse con su archivo Firebase del entornoEAS y guard existente antes de una publicación; no se afirma ese guard ni recepción Android para este bloque.
+
+| Paso | Estado y alcance comprobado |
+|---|---|
+| 1 Inicio/descubrimiento | EstructuraC conservada; referencia oficial evaluada localmente, catálogo fotográfico profesional aún incompleto |
+| 2 Buscar | Capacidades conservadas, singular corregido; referencia/mismoUUID y regreso de ficha comprobados por pruebas existentes |
+| 3 Ficha/decisión | Galería más corta sin cortar objeto, variantes antes, encargo sin promesa universal; fotografía oficial local |
+| 4 Carrito | Primera foto74px antes en ambos anchos, retirada confirmada con recuperación, datos monetarios del servidor |
+| 5 Checkout | Alternativas accesibles con selección resumida, estado/compromiso claros, ediciones bloqueadas durante envío y refresco fallido impide confirmar |
+| 6 Pago | Sesión/pedido ausente/error/carga/métodos recuperables; no se cambian cotizaciones ni verificación de pagos |
+| 7 Cuenta/posventa | Confirmación sensible compartida protege operación en curso; no auditoría de autorización de todo el backend ni cambios de permisos |
 
 ## Seguimiento
 
 Hipótesis del auditor: un rechazo excepcional de restauración de sesión podría bloquear arranque. No reproducido; no presentar como vulnerabilidad confirmada ni borrar credenciales para ocultarlo. Evaluar con fallo controlado del adaptador antes de cambiar autenticación.
 
-Pendientes de cierre: dictamen visual ronda2, exportación Android/Hermes y comparación local de la referencia oficial. Luego actualización final de continuidad. No nueva OTA autorizada ni comprobación física de este incremento.
+Incremento de compra cerrado en código y documentación. **Próximo trabajo:** material profesional oficial del resto de referencias con acceso de red aplicado y base de redistribución, revisión SKU/variantes y publicación únicamente cuando procedan autorización/guard APK5/validación Android. No nueva OTA ni comprobación física de este incremento. Hipótesis de arranque pendiente de reproducción acotada, fuera del cierre actual.
