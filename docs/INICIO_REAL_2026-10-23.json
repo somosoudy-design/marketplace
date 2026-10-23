@@ -1,6 +1,6 @@
 {
   "date": "2026-10-23",
-  "status": "published_pending_emulator_receipt",
+  "status": "published_and_received_in_android_emulator",
   "functionalSource": "058cb7b",
   "channel": "preview",
   "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
@@ -19,7 +19,7 @@
     "analytics": "intercepted locally; not sent to backend"
   },
   "unitTests": 22,
-  "independentReview": "UX and independent auditor approve web increment; initial two P2 fixed and tested; native receipt pending",
+  "independentReview": "Web and Android Home increment approved after visual review; no new Home P1/P2; catalog not completed",
   "measurements": {
     "before": [
       {
@@ -346,13 +346,121 @@
   ],
   "limitations": [
     "This is a Home increment, not a completed professional catalog. Existing CC/documentary photos and illustrations remain in comparison.",
-    "Normal text web capture is not an Android OS font-scale test.",
-    "Native receipt of this increment is not yet verified."
+    "Web320/412 and Android OS font-scale1.6 were tested separately; no physical Samsung receipt of this update observed.",
+    "Original emulator workflow cancelled only after its evidence publisher stalled; native test step success and4/4 report were recovered from its sealed artifact.",
+    "Pre-existing P2 on dark product detail: white status-bar icons/clock lose contrast over light images; not corrected by this Home increment."
   ],
   "publicationSource": "e6fccbd34461078052274dfbd0364d67c54863ff",
   "publicationRun": 40003745928,
   "publicationResult": "success",
   "exactRuntimeGuard": "passed",
-  "updateId": null,
-  "emulatorReceipt": "requested_revision43_flows08_09_light_dark_OS1.6"
+  "updateId": "01a16a08-5900-7324-83c5-8f833e369d19",
+  "emulatorReceipt": "confirmed_by_four_diagnostics_and_visible_new_opening",
+  "publishedTimeFromDiagnostics": "2026-10-23 18:31 UTC",
+  "publishedTimeCaracas": "2026-10-23 14:31",
+  "emulatorRun": 40004177228,
+  "emulatorSource": "f9fe1a1d589f6c0233ea08bf451e5cd3224a61c7",
+  "emulator": "Android15 / API35 / Pixel6",
+  "emulatorNativeStepResult": "success",
+  "emulatorOverallWorkflow": "cancelled only after its post-test evidence publisher stalled; native step success and original4/4 report recovered without rerunning tests or OTA",
+  "emulatorResults": {
+    "light-08-inicio-v2": "passed_first_attempt",
+    "light-09-inicio-v2-texto": "passed_first_attempt_OS_font_scale1.6",
+    "dark-08-inicio-v2": "passed_first_attempt",
+    "dark-09-inicio-v2-texto": "passed_first_attempt_OS_font_scale1.6"
+  },
+  "physicalSamsungReceiptOfThisUpdate": "not_observed",
+  "recovery": {
+    "run": 40007057660,
+    "result": "success",
+    "artifact": 12524101560,
+    "branch": "ci/evidencia-40007057660",
+    "commit": "589fc143ec7fd0436e1c92eb37c098a8fb01a7e5",
+    "screenshots": 24,
+    "hashesVerified": 24,
+    "newJourneysExecuted": false,
+    "newUpdatePublished": false,
+    "filesCopiedToDocs": [
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.0/inicio-v2-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-01-portada.png",
+        "sha256": "57ec235047835cca1f31bed6778f0322663a661290a28829ca09da6ba6542e31",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.0/inicio-v2-07-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-07-diagnostico.png",
+        "sha256": "b9e96fba1b86128559e6f88982a0c9bbebc4a47470bc5bff44fb382b7a53e778",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.0/inicio-v2-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-02-producto-editorial.png",
+        "sha256": "469f9efeb56b8500adb2ec0fab172a237bcdeb12d873aceaba3760096afdd13c",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.6/inicio-v2-texto-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-01-portada.png",
+        "sha256": "494cef972205b358f1424ad1a167c6bd5fcae38da49f575894fa31c42dd47e00",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.6/inicio-v2-texto-03-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-03-diagnostico.png",
+        "sha256": "6f123cd2e12e20f1bb74376c28908f5f31e9d882605a302c3369eea24e3a5a85",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.6/inicio-v2-texto-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-producto-editorial.png",
+        "sha256": "c214dee6250e7151768a213c399d73d2c794aabdc8a77bbca4b368c52b821b0c",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.0/inicio-v2-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-01-portada.png",
+        "sha256": "64f8adbf00fcb4605331cb0453ea4e5ebd389c8f69b8ed0cd5a31f0501061768",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.0/inicio-v2-07-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-07-diagnostico.png",
+        "sha256": "ff4e4de4d2fcc86a825ae6c8b0bd1a5fb6749139b05aaa25e57652b3e4fd5bd7",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.0/inicio-v2-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-02-producto-editorial.png",
+        "sha256": "5b85f5f66c74048c8c7c2b9cefba34fc2f4b90c5cc5e6dcbb4d7f183c2f09258",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.6/inicio-v2-texto-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-01-portada.png",
+        "sha256": "1fa11ffd1dfeb53c812080c85f6d2334bd2469ab6a80c2b0f9aee3e5eab4b605",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.6/inicio-v2-texto-03-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-03-diagnostico.png",
+        "sha256": "134704d7b369d5294b2b3ac65cfbca3a43e7c60ff50de78019c16dd738c0bf94",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.6/inicio-v2-texto-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-producto-editorial.png",
+        "sha256": "38744f324d93bedf16aae98a2d84dab8739a5aa795062df2734c679c404c3949",
+        "edited": false
+      }
+    ]
+  },
+  "independentNativeReview": {
+    "verdict": "approved_for_Home_increment",
+    "originalScreenshotsViewed": 24,
+    "hashesVerified": 24,
+    "newHomeP1P2": 0,
+    "existingOutsideHomeP2": "Dark product detail: white status-bar clock/icons lose contrast over light photos; already documented, still pending",
+    "physicalSamsungReceiptConfirmed": false
+  }
 }

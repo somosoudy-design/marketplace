@@ -4,9 +4,9 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-23: Inicio real publicado Android preview/APK5, EAS40003745928 Success/fuentee6fccbd/guard exacto aprobado; recepción nueva solicitada en emulador. OTA anterior01a1693d recibida en Samsung; los commits posteriores a ella sólo eran docs/pruebas hasta este incremento.
+**Última actualización:** 2026-10-23: Inicio real publicado y recibido en emulador Android15/APK5. OTA `01a16a08-5900-7324-83c5-8f833e369d19`,23oct18:31UTC/14:31Caracas. EAS40003745928 Success/e6fccbd/guard exacto;4/4nativos claro/oscuro/OS1,6 sin reintentos. Recepción de esta nueva OTA en Samsung aún no observada.
 
-## Trabajo en curso — Inicio visible, no otra publicación de documentación
+## Incremento Inicio real — publicado y recibido en Android
 
 Oliver confirma que no percibe avances recientes. Se verificó que después de `aa9510a` sólo se habían añadido documentación/pruebas; la recepción física de aquella OTA está comprobada y no explica la falta de cambio en Inicio. No republicar código idéntico ni pedir otro diagnóstico.
 
@@ -16,13 +16,18 @@ Oliver confirma que no percibe avances recientes. Se verificó que después de `
 
 **Catálogo paralelo:** siete originales SHEGLAM descargados e inspeccionados1340×1785, sólo bajo `.local/arte-20261023/catalogo-restante`;0correspondencias aprobadas/0permisos de redistribución. GET CDN200 comprobado, ya no esperar aplicación de aquel borrador. Samsung403/Anker404/StarTech403 en prueba única; sin reintentos.
 
-**Próxima acción exacta:** recuperar evidencias del run40004177228/fuentef9fe1a1: el paso nativo terminó Success y el artefacto12524101560 (15,75MB) existe; el publicador ci/capturas lleva más de10min atascado. Workflow acotado `recuperar-evidencia-inicio.yml` descarga ese mismo artefacto dentro deGitHub, verifica fuente/paso nativo y conserva sólo PNG manuales/summary en rama de evidencias única, sin conversión/apt ni repetir pruebas/OTA. Leer ID de esos diagnósticos y solicitar inspección independiente nativa. EAS40003745928 terminó Success (guard/publicar/resultado), fuentee6fccbd. No atribuir a esta entrega la recepción anterior. No tocar producción/backend/finanzas/iOS ni generar APK.
+**Recepción Android:** run40004177228/fuentef9fe1a1,08+09,4/4sinreintentos; normal y fuenteOS1,6 en claro/oscuro. Diagnósticos originales muestran nueva OTA/canal/runtime correctos y Marketplace responde257/285ms en normales; portada DJI visible y destino/regreso comprobados.24PNG/hash24/24 recuperados del artefacto12524101560 mediante run40007057660 Success, rama inmutable `ci/evidencia-40007057660@589fc143ec7fd0436e1c92eb37c098a8fb01a7e5`;12PNG representativos copiados sin editar a `capturas/inicio-real-2026-10-23/native/`. El workflow original se canceló sólo después de recuperar su evidencia: su paso de pruebas sí terminó Success, el publicador posterior llevaba más de10min atascado. No repetir pruebas/OTA por esa cancelación. Auditor independiente nativo APROBADO tras24PNG/24hashes, sin P1/P2 nuevos deHome. Persiste P2 preexistente de ficha oscura: reloj/iconos blancos sobre fotos claras; no se corrigió en este bloque.
+
+**Trabajo en curso:** ninguno pendiente de este incremento. Código publicado y recepción en emulador comprobada; revisión física de esta nueva versión por Oliver aún no observada.
+
+**Próxima acción exacta:** siguiente bloque pequeño del comprador: corregir contraste de barra de estado sobre galería clara en ficha oscura (`apps/mobile/src/app/product/[id].tsx` y gestión compartida deStatusBar), conservando retornoHome y configuración nativa. Reproducir primero con DJI/SHEGLAM claro/oscuro/OS1,6; capturar antes/después, tipos/lint/pruebas focalizadas, auditor y publicación preview/APK5 con guard. No afirmar que este fallo ya se resolvió. Catálogo paralelo continúa con SKU/tono/composición/permisos de originales ya obtenidos (seis SHEGLAM pendientes, polvo rechazado,0mappings/0permisos), sin repetir investigación/descargas. No hay código móvil pendiente de publicar; no republicar idéntico código ni pedir otra confirmación rutinaria. Sin APK/config nativa/backend/finanzas/iOS.
+
 
 ## Autorización vigente — publicar cada avance validado
 
 Oliver instruye: **«No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente»**. Publicación progresiva autorizada en Android **preview**, compatible con APK 5, después de pruebas/revisión/guard de runtime y con comprobación de recepción. No volver a solicitar aprobación rutinaria de diseño o publicación para cada bloque del alcance comprador/catálogo. Mantener commits, push y continuidad; no generar APK ni modificar configuración nativa, finanzas o servicios remotos por este permiso.
 
-Comprobación anterior a este incremento: EAS39972699874 continuaba Success y `git diff aa9510a HEAD -- apps/mobile packages` entonces estaba vacío. Todo el código de app ya está en la OTA física confirmada; los commits posteriores solo incorporan pruebas/evidencia/documentación. No se publica idéntico código como un avance nuevo. Los originales oficiales locales aún no cumplen correspondencia/permiso para incorporarlos al lote distribuible: la autorización de publicación de Oliver ya está resuelta, esas condiciones del material siguen pendientes.
+Comprobación anterior a este incremento: EAS39972699874 continuaba Success y `git diff aa9510a HEAD -- apps/mobile packages` entonces estaba vacío. En aquel momento todo el código estaba en la OTA física confirmada; los commits posteriores hasta el incremento Inicio sólo incorporaban pruebas/evidencia/documentación. No se publica idéntico código como un avance nuevo. Los originales oficiales locales aún no cumplen correspondencia/permiso para incorporarlos al lote distribuible: la autorización de publicación de Oliver ya está resuelta, esas condiciones del material siguen pendientes.
 
 ## Compra publicada — recepción confirmada en emulador y Samsung
 
