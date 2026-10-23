@@ -8,6 +8,8 @@
 
 **Última revisión:** 2026-10-23.
 
+**Publicación progresiva autorizada por Oliver:** «No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente». Cada bloque implementado y validado se publica en Android preview/APK5 con guard y recepción comprobados, sin nueva aprobación rutinaria. La consulta visual anterior es opcional y no bloquea continuar. La autorización del propietario está resuelta; los requisitos pendientes de identidad/licencia del material fotográfico siguen documentados. Todo el código actual ya está en la OTA01a1693d; no publicar pruebas/documentación o código idéntico como si fueran nuevos cambios visuales.
+
 ## UX-CALIDAD — app real, mejora general autorizada
 
 **En curso.** Primer bloque comprobado: recuperación pago/sesión/pedidos ausentes y métodos fallidos, confirmaciones sensibles durante solicitud, enlaces/copia de producto.10/10 nuevas pruebas y2/2 compartir tienda, tipos/lint móvil. No repetir estos fallos; continuar composición de carrito/checkout/ficha y recursos visuales autorizados. Informe `AUDITORIA_MARKETPLACE_2026-10-23.md`.
@@ -26,7 +28,7 @@
 
 Cierre local:36capturas412/320 claro/oscuro,8grupos de verificaciones, HTMLautocontenido probado conredoffline. Auditor independiente corrigió3objeciones y emitió LISTA PARA REVISIÓN DE OLIVER. Medidas/antesdespués/recursos en README/evidence/comparison; fuenteV3 delrepo, no sitioWork inaccesible. Descargable `.local/diseno-v4/HAYAZGO-comprar.html`; file:// no verificado por bloqueo de navegador gestionado. No nuevaOTA/hosting.
 
-**Siguiente:** decisión visual de Oliver. Antes de nativo completar variantes de cuotas/anticipos, estados comerciales, sesión/errores y fuente ampliada/accesibilidad. Fotografías documentales limitan acabado; no afirmar nivel comercial definitivo. Aprobación interna no autoriza implementación/publicación. No repetir activaciones BCV/Mi tienda ni publicación fotográfica cerradas.
+**Siguiente:** continuar incrementos del comprador con la autorización progresiva vigente, reutilizando lo ya integrado en app y las reglas reales del servidor. Conservar variantes de cuotas/anticipos, estados comerciales, sesión/errores y fuente ampliada/accesibilidad; no trasladar cálculos ficticios del prototipo. La antigua espera de aprobación visual/publicación está superada por la instrucción posterior de Oliver. No repetir activaciones BCV/Mi tienda ni publicaciones cerradas.
 
 ## Mi tienda activada — VES desplegado; verificación física pendiente
 

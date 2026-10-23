@@ -3,6 +3,12 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Oliver · autorización permanente de publicación progresiva
+
+- Instrucción explícita: «No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente». Registrar como permiso vigente para publicar cada bloque comprador/catálogo implementado y validado mediante Android preview compatibleAPK5; no volver a pedir aprobación rutinaria. Mantener pruebas, revisión, guard exacto y recepción comprobada.
+- Rama sincronizada, EAS39972699874 Success verificado. Diff de apps/mobile/packages frente a fuente publicadaaa9510a vacío: no hay código móvil nuevo pendiente. OTA01a1693d ya ejecutándose en Samsung por evidencia del propietario. No se publicó idéntico código ni se generó APK.
+- Pregunta visual anterior no bloqueante. Catálogo local sigue con condiciones de modelo/variante y permiso del material pendientes; permiso de publicación del propietario ya resuelto. Red oficial/CDN sigue sin aplicar, sin reintentos ni nuevos cambios de entorno. Próximo: completar lote distribuible según paquete39, integrar/probar y publicar sin otra confirmación de rutina. Solo documentos de continuidad modificados en este turno.
+
 ### 2026-10-23 · Codex cloud · catálogo restante39, checkpoint de referencias profesionales
 
 - Delegación real catalog_art/catalog_review, raíz único escritor. Inventario44 y39restantes sin mutaciones:6UGREEN con7originales,7SHEGLAM conrefsSKU/CDNbloqueado,25genéricos con datos concretos faltantes,1DJI con4galeríasexistentes inspeccionadas. Dos rondas de revisión UGREEN, hashes/medidas de11archivos verificados;0mappings/0permisos/0nuevos píxelesenapp/Git/OTA. Descripciones comerciales extensas y píxeles excluidos del registro público sanitizado.
