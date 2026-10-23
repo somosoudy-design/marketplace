@@ -4,19 +4,19 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-23: Inicio real implementado y validado; solicitud Android preview/APK5 preparada. Publicación/recepción nuevas aún pendientes de resultado. OTA anterior01a1693d recibida en Samsung; los commits posteriores a ella sólo eran docs/pruebas hasta este incremento.
+**Última actualización:** 2026-10-23: Inicio real publicado Android preview/APK5, EAS40003745928 Success/fuentee6fccbd/guard exacto aprobado; recepción nueva solicitada en emulador. OTA anterior01a1693d recibida en Samsung; los commits posteriores a ella sólo eran docs/pruebas hasta este incremento.
 
 ## Trabajo en curso — Inicio visible, no otra publicación de documentación
 
 Oliver confirma que no percibe avances recientes. Se verificó que después de `aa9510a` sólo se habían añadido documentación/pruebas; la recepción física de aquella OTA está comprobada y no explica la falta de cambio en Inicio. No republicar código idéntico ni pedir otro diagnóstico.
 
-**Incremento implementado, todavía sin publicar:** apertura de producto real dentro de C, elegida entre mercancía publicada/no demo/tienda activa/foto normal del backend/comprable. Consulta pública `newest`, primera página, sin UUID fijo ni pertenencia ficticia a colecciones. El backend actual ofrece DJI Mic 3; «Ver producto» abre su ficha. Todas las colecciones permanecen accesibles; se excluye el producto de la primera comparación y del feed repetido. Aviso de pruebas y restricciones comerciales conservados. Se retira de Inicio la prioridad artificial de las seis fotos documentales que Oliver rechazó; no se incluyen originales oficiales sin permiso.
+**Incremento implementado y publicado:** apertura de producto real dentro de C, elegida entre mercancía publicada/no demo/tienda activa/foto normal del backend/comprable. Consulta pública `newest`, primera página, sin UUID fijo ni pertenencia ficticia a colecciones. El backend actual ofrece DJI Mic 3; «Ver producto» abre su ficha. Todas las colecciones permanecen accesibles; se excluye el producto de la primera comparación y del feed repetido. Aviso de pruebas y restricciones comerciales conservados. Se retira de Inicio la prioridad artificial de las seis fotos documentales que Oliver rechazó; no se incluyen originales oficiales sin permiso.
 
 **Validación final:** tipos/lint sin advertencias,22unitarias,12UI finales y exportaciones web/AndroidHermes aprobadas.12capturas nuevas412/320claro/oscuro: antes/despuésInicio y ficha. Banda320/306 y primeras fotos425/411 (412/320); dos tarjetas completas. Auditor exigió excluir precio cero/no finito y respuesta reciente tras fallo: corregidos/probados. Director UX y auditor APROBADO visual web, con límite explícito de catálogo fotográfico incompleto. Informe/evidencia [INICIO_REAL_2026-10-23.md](INICIO_REAL_2026-10-23.md). Director UX consultó Product Design index/audit/user-context/preflight/framework; no Canvas disponible.
 
 **Catálogo paralelo:** siete originales SHEGLAM descargados e inspeccionados1340×1785, sólo bajo `.local/arte-20261023/catalogo-restante`;0correspondencias aprobadas/0permisos de redistribución. GET CDN200 comprobado, ya no esperar aplicación de aquel borrador. Samsung403/Anker404/StarTech403 en prueba única; sin reintentos.
 
-**Próxima acción exacta:** comprobar el resultado de EAS disparado por este commit (guard exacto APK5 antes de publicación); después solicitar emulador con08+09enclaro/oscuro y fuente OS1,6. Verificar nueva OTA/Inicio y documentar ID/recepción; no atribuir a esta entrega la recepción anterior. No tocar producción/backend/finanzas/iOS ni generar APK.
+**Próxima acción exacta:** comprobar emulador revisión43 con08+09claro/oscuro y fuenteOS1,6. Obtener capturas de ci/capturas, verificar SHA/run y nueva OTA/Inicio; registrar ID/recepción después de inspección independiente nativa. EAS40003745928 terminó Success (guard/publicar/resultado), fuentee6fccbd. No atribuir a esta entrega la recepción anterior. No tocar producción/backend/finanzas/iOS ni generar APK.
 
 ## Autorización vigente — publicar cada avance validado
 

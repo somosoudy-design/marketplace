@@ -65,7 +65,7 @@ generación de imágenes ni investigación externa simulada. No Canvas/Canva dis
 ## Publicación y límites
 
 Publicación progresiva autorizada por Oliver: sólo Android preview/APK5, guard exacto de runtime antes de
-EAS. Solicitud preparada tras pruebas/revisión. Resultado e ID se registrarán después de comprobarlos;
+EAS. EAS40003745928 Success, fuente `e6fccbd`, guard/publicación/resultado aprobados. Revisión43 de emulador solicitada con08+09ambos temas/fuenteOS1,6. ID y recepción se registrarán después de comprobarlos;
 no afirmar recepción del nuevo Home por el diagnóstico de la OTA anterior.
 
 Este incremento no completa el catálogo profesional: las tarjetas mantienen fotos CC/ilustraciones

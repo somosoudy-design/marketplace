@@ -974,3 +974,8 @@ Oliver reclama ausencia de cambios visibles: comprobado que los commits reciente
 ### 2026-10-23 — Inicio real validado; publicación solicitada
 
 Fuente058cb7b.22unitarias/12UI finales/tipos/lint sin warnings/exportaciones web y AndroidHermes aprobadas.12PNG originales antes/después412/320claro/oscuro/fichas, hashes/medidas e informe INICIO_REAL_2026-10-23. UX y auditor independiente APROBADO web tras resolver precio inválido/caché reciente fallida; catálogo fotográfico aún incompleto. Se adapta Maestro08/09a apertura de producto o colección y se solicita EAS preview/APK5 con autorización vigente. Guard/resultado EAS y recepción Android se documentarán después, no anticipados. Sin APK nuevo/nativo/backend/finanzas.
+
+
+### 2026-10-23 — Inicio real publicado; recepción Android solicitada
+
+EAS40003745928 Success, fuentee6fccbd34461078052274dfbd0364d67c54863ff: guardruntimeAPK5/publicarpreview/resultado aprobados. Oliver informado inmediatamente. Se solicita revisión43 en APK5 existente, flujos08+09ambos temas/fuenteOS1,6. Sin nuevo APK ni otra publicación. ID/recepción aún no observados; obtenerlos de diagnósticos originales del emulador, no asumirlos de la OTA anterior.

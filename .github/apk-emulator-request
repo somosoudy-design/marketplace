@@ -1,6 +1,6 @@
-# Revisión42 · Compra revisada, EAS39972699874 Success/fuenteaa9510a, guard exacto APK5 aprobado.
-# Visitante: ficha, compartir/copia, carrito local, confirmar retirada, acceso/pago sin sesión y regreso.
-# Ambos temas. No registros, pedidos, cotizaciones ni pagos remotos. No generar otro APK.
+# Revisión43 · Inicio real, EAS40003745928 Success/fuentee6fccbd, guard exacto APK5 aprobado.
+# Visitante: apertura publicada, ficha/regreso, categorías/búsqueda persistente y recepción distinta de OTA anterior.
+# Ambos temas y fuente OS1,6. No registros, pedidos, cotizaciones ni pagos remotos. No generar otro APK.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
-flows: 11-compra-revisada
+flows: 08-inicio-v2 09-inicio-v2-texto
 themes: light dark

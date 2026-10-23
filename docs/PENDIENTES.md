@@ -12,7 +12,7 @@
 
 ## UX-INICIO-REAL — incremento visible en curso
 
-Nueva apertura de producto publicado dentro de Electric Violet C, sin prioridad forzada de fotos documentales. Consulta pública existente, destino real de ficha, todas las colecciones conservadas y producto sin repetición en comparación/feed.22unitarias/12UI/tipos/lint/web/Hermes aprobados;12capturas y revisión UX/auditor APROBADA para incremento web. Solicitud OTA preview preparada; guard/resultado EAS y recepción Android pendientes. No tratar los commits anteriores de documentación como una mejora nueva de app ni pedir otra confirmación rutinaria a Oliver.
+Nueva apertura de producto publicado dentro de Electric Violet C, sin prioridad forzada de fotos documentales. Consulta pública existente, destino real de ficha, todas las colecciones conservadas y producto sin repetición en comparación/feed.22unitarias/12UI/tipos/lint/web/Hermes aprobados;12capturas y revisión UX/auditor APROBADA para incremento web. EAS40003745928 Success/e6fccbd y guardAPK5 aprobados. Recepción Android revisión43/08+09claro-oscuro/OS1,6 solicitada; ID/capturas nativas pendientes de comprobación. No tratar los commits anteriores de documentación como una mejora nueva de app ni pedir otra confirmación rutinaria a Oliver.
 
 SHEGLAM CDN ya responde: siete originales descargados/inspeccionados, sólo ignorados. La confirmación de modelo/tono y permiso de distribución sigue pendiente; no asignar fotografías por parecido.
 

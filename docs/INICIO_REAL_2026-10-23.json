@@ -1,6 +1,6 @@
 {
   "date": "2026-10-23",
-  "status": "validated_publication_requested",
+  "status": "published_pending_emulator_receipt",
   "functionalSource": "058cb7b",
   "channel": "preview",
   "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
@@ -348,5 +348,11 @@
     "This is a Home increment, not a completed professional catalog. Existing CC/documentary photos and illustrations remain in comparison.",
     "Normal text web capture is not an Android OS font-scale test.",
     "Native receipt of this increment is not yet verified."
-  ]
+  ],
+  "publicationSource": "e6fccbd34461078052274dfbd0364d67c54863ff",
+  "publicationRun": 40003745928,
+  "publicationResult": "success",
+  "exactRuntimeGuard": "passed",
+  "updateId": null,
+  "emulatorReceipt": "requested_revision43_flows08_09_light_dark_OS1.6"
 }
