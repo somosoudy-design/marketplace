@@ -11,6 +11,7 @@ import { CategoryTiles } from '@/components/catalog/CategoryTiles';
 import { MiniProductCard } from '@/components/catalog/MiniProductCard';
 import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
 import { EditorialOpening } from '@/components/catalog/EditorialOpening';
+import { ProductEditorialOpening } from '@/components/catalog/ProductEditorialOpening';
 import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { useScrollY } from '@/components/ui/Bars';
@@ -25,7 +26,8 @@ import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } 
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { isPrivateCatalogPresentation, prioritizeExhibitionProducts, productExhibitionPhoto } from '@/lib/catalog-exhibition';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+import { selectHomeOpening, type HomeOpening } from '@/lib/home-opening';
 import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
 import { ImpressionScope, recordImpressions, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { qk } from '@/lib/query';
@@ -59,6 +61,8 @@ export default function HomeScreen() {
 
   // the feed under the shelves: everything published, by recent popularity (the ranked picks have their own rail)
   const more = useSearch({ sort: 'popular' });
+  const recent = useSearch({ sort: 'newest' });
+  const opening = useMemo(() => selectHomeOpening(data, recent.isError ? [] : recent.data?.pages[0] ?? []), [data, recent.data, recent.isError]);
   const rows = useMemo<Row[]>(() => {
     if (!data) return [{ kind: 'loading', key: 'loading' }];
     const out: Row[] = [];
@@ -66,16 +70,16 @@ export default function HomeScreen() {
       for (let i = 0; i < items.length; i += grid.columns) out.push({ kind: 'products', key: `${slot}-${i}`, slot, items: items.slice(i, i + grid.columns) });
     };
     const first = data.recommended;
-    const rest = (more.data?.pages.flat() ?? []).filter((p) => !first.some((f) => f.id === p.id) && p.availability !== 'unavailable');
+    const rest = (more.data?.pages.flat() ?? []).filter((p) => p.id !== opening?.product.id && !first.some((f) => f.id === p.id) && p.availability !== 'unavailable');
     // a marketplace that has published nothing yet says so instead of showing empty shelves
-    if (!first.length && !rest.length && !data.collections.some((c) => c.products.length) && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
+    if (!opening && !first.length && !rest.length && !data.collections.some((c) => c.products.length) && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
     if (rest.length) {
       out.push({ kind: 'title', key: 'popular', overline: 'Más del catálogo', title: 'Sigue descubriendo' });
       push('home_popular', rest);
     }
     if (more.isFetchingNextPage || (more.isLoading && !rest.length)) out.push({ kind: 'loading', key: 'more' });
     return out;
-  }, [data, more.data, more.isFetchingNextPage, more.isLoading, more.isError, grid.columns]);
+  }, [data, more.data, more.isFetchingNextPage, more.isLoading, more.isError, grid.columns, opening]);
   const empty = rows.length === 1 && rows[0]!.kind === 'empty';
 
   // impressions: shelves count when their section enters the viewport, the feed per visible row
@@ -95,8 +99,9 @@ export default function HomeScreen() {
   const refresh = useCallback(() => {
     void home.refetch();
     void more.refetch();
+    void recent.refetch();
     void qc.invalidateQueries({ queryKey: qk.rate });
-  }, [home, more, qc]);
+  }, [home, more, recent, qc]);
 
   return (
     <ImpressionScope tracking={tracking} enabled={enabled}>
@@ -115,7 +120,7 @@ export default function HomeScreen() {
           refreshControl={<RefreshControl refreshing={home.isRefetching} onRefresh={refresh} tintColor={t.colors.brand} progressViewOffset={insets.top} />}
           onEndReachedThreshold={0.6}
           onEndReached={() => more.hasNextPage && !more.isFetchingNextPage && void more.fetchNextPage()}
-          ListHeaderComponent={<Header home={home} onSearchBottom={setSearchBottom} />}
+          ListHeaderComponent={<Header home={home} opening={opening} onSearchBottom={setSearchBottom} />}
           ListFooterComponent={data && !empty && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
           renderItem={({ item }) => {
             if (item.kind === 'empty') return <CatalogOpening signedIn={!!user} />;
@@ -141,7 +146,7 @@ export default function HomeScreen() {
 }
 
 /** Everything above the feed. Each TrackedSection must stay a direct child of the root view (see impressions). */
-function Header({ home, onSearchBottom }: { home: ReturnType<typeof useHome>; onSearchBottom: (bottom: number) => void }) {
+function Header({ home, opening, onSearchBottom }: { home: ReturnType<typeof useHome>; opening?: HomeOpening; onSearchBottom: (bottom: number) => void }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { width, fontScale } = useWindowDimensions();
@@ -156,15 +161,13 @@ function Header({ home, onSearchBottom }: { home: ReturnType<typeof useHome>; on
   const comparisonWidth = Math.floor((contentWidth - 32 - comparisonGrid.gap * (comparisonColumns - 1)) / comparisonColumns);
   const firstName = profile.data?.full_name?.trim().split(/\s+/)[0];
   const collections = (data?.collections ?? []).filter((c) => c.products.length);
-  // "feature" collections lead as the hero; the rest are shelves further down
-  const exhibitionHero = isPrivateCatalogPresentation ? collections.find((c) => c.products.some((p) => productExhibitionPhoto(p.id, p.image_path))) : undefined;
-  const hero = exhibitionHero ?? collections.find((c) => c.layout === 'feature' && c.products.some((p) => p.image_path && p.availability !== 'unavailable'));
-  const heroProduct = prioritizeExhibitionProducts(hero?.products ?? []).find((p) => p.image_path && p.availability !== 'unavailable');
+  const hero = opening?.kind === 'collection' ? opening.collection : undefined;
+  const heroProduct = opening?.product;
   const shelves = collections.filter((c) => c.id !== hero?.id);
   const head = shelves.slice(0, 2);
   const tail = shelves.slice(2);
   const personalized = !!user && profile.data?.personalization_enabled === true && !!data?.personalized;
-  const recommended = prioritizeExhibitionProducts(data?.recommended ?? []);
+  const recommended = data?.recommended ?? [];
   const comparison = recommended.filter((p) => p.id !== heroProduct?.id).slice(0, 4);
   const remainingPicks = recommended.filter((p) => !comparison.some((shown) => shown.id === p.id) && p.id !== heroProduct?.id);
   const picksSlot = personalized ? 'home_for_you' : 'home_featured';
@@ -193,7 +196,7 @@ function Header({ home, onSearchBottom }: { home: ReturnType<typeof useHome>; on
       </View>
 
       {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, paddingBottom: 16, backgroundColor: palette.violet[900] }}><Skeleton height={170} radius={6} /></View> : null}
-      {hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
+      {opening?.kind === 'product' ? <ProductEditorialOpening product={opening.product} width={contentWidth} onOpen={() => router.push({ pathname: '/product/[id]', params: { id: opening.product.id } })} /> : hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
 
       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 

@@ -4,7 +4,19 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-23: compra publicada y recibida en APK 5/emulador Android 15 y **Samsung físico de Oliver**, OTA `01a1693d-60d9-7183-a309-92769e4ea219`; revisión independiente nativa APROBADA. Oliver aportó fotografía de diagnóstico con ID/canal/runtime correctos: recepción resuelta, no republicar. Catálogo continúa los demás productos por lotes; nuevos packshots oficiales solo locales mientras se resuelven permisos.
+**Última actualización:** 2026-10-23: incremento real de Inicio en curso; detalle y próxima acción inmediatamente debajo. Antecedente publicado:  compra publicada y recibida en APK 5/emulador Android 15 y **Samsung físico de Oliver**, OTA `01a1693d-60d9-7183-a309-92769e4ea219`; revisión independiente nativa APROBADA. Oliver aportó fotografía de diagnóstico con ID/canal/runtime correctos: recepción resuelta, no republicar. Catálogo continúa los demás productos por lotes; nuevos packshots oficiales solo locales mientras se resuelven permisos.
+
+## Trabajo en curso — Inicio visible, no otra publicación de documentación
+
+Oliver confirma que no percibe avances recientes. Se verificó que después de `aa9510a` sólo se habían añadido documentación/pruebas; la recepción física de aquella OTA está comprobada y no explica la falta de cambio en Inicio. No republicar código idéntico ni pedir otro diagnóstico.
+
+**Incremento implementado, todavía sin publicar:** apertura de producto real dentro de C, elegida entre mercancía publicada/no demo/tienda activa/foto normal del backend/comprable. Consulta pública `newest`, primera página, sin UUID fijo ni pertenencia ficticia a colecciones. El backend actual ofrece DJI Mic 3; «Ver producto» abre su ficha. Todas las colecciones permanecen accesibles; se excluye el producto de la primera comparación y del feed repetido. Aviso de pruebas y restricciones comerciales conservados. Se retira de Inicio la prioridad artificial de las seis fotos documentales que Oliver rechazó; no se incluyen originales oficiales sin permiso.
+
+**Pruebas al checkpoint:** tipos/lint móvil y22unitarias aprobadas (18selección/4aislamiento fotográfico). Capturas nuevas de base real412/320claro/oscuro, sin cambios remotos. Primera iteración del después capturada; compactación adicional pendiente de recapturar y revisar. Auditor de código exigió excluir precio cero/no finito y la respuesta reciente tras fallo de refresco: corregidos, sin aprobación visual anticipada. Director UX consultó Product Design index/audit/user-context/preflight/framework; no Canvas disponible.
+
+**Catálogo paralelo:** siete originales SHEGLAM descargados e inspeccionados1340×1785, sólo bajo `.local/arte-20261023/catalogo-restante`;0correspondencias aprobadas/0permisos de redistribución. GET CDN200 comprobado, ya no esperar aplicación de aquel borrador. Samsung403/Anker404/StarTech403 en prueba única; sin reintentos.
+
+**Próxima acción exacta:** exportar y recapturar Home C final, ejecutar pruebas específicas de apertura/producto/colecciones/fallo de búsqueda y revisión visual independiente. Tras aprobación, commit/push y solicitar EAS Android preview con guard APK5; comprobar nueva recepción en emulador antes del cierre. No tocar producción/backend/finanzas/iOS ni generar APK.
 
 ## Autorización vigente — publicar cada avance validado
 

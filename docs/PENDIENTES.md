@@ -10,6 +10,12 @@
 
 **Publicación progresiva autorizada por Oliver:** «No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente». Cada bloque implementado y validado se publica en Android preview/APK5 con guard y recepción comprobados, sin nueva aprobación rutinaria. La consulta visual anterior es opcional y no bloquea continuar. La autorización del propietario está resuelta; los requisitos pendientes de identidad/licencia del material fotográfico siguen documentados. Todo el código actual ya está en la OTA01a1693d; no publicar pruebas/documentación o código idéntico como si fueran nuevos cambios visuales.
 
+## UX-INICIO-REAL — incremento visible en curso
+
+Nueva apertura de producto publicado dentro de Electric Violet C, sin prioridad forzada de fotos documentales. Consulta pública existente, destino real de ficha, todas las colecciones conservadas y producto sin repetición en comparación/feed.22unitarias/tipos/lint aprobados; capturas finales/revisión/OTA y recepción Android pendientes. No tratar los commits anteriores de documentación como una mejora nueva de app ni pedir otra confirmación rutinaria a Oliver.
+
+SHEGLAM CDN ya responde: siete originales descargados/inspeccionados, sólo ignorados. La confirmación de modelo/tono y permiso de distribución sigue pendiente; no asignar fotografías por parecido.
+
 ## UX-CALIDAD — app real, mejora general autorizada
 
 **En curso.** Primer bloque comprobado: recuperación pago/sesión/pedidos ausentes y métodos fallidos, confirmaciones sensibles durante solicitud, enlaces/copia de producto.10/10 nuevas pruebas y2/2 compartir tienda, tipos/lint móvil. No repetir estos fallos; continuar composición de carrito/checkout/ficha y recursos visuales autorizados. Informe `AUDITORIA_MARKETPLACE_2026-10-23.md`.

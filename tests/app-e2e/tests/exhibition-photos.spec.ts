@@ -17,7 +17,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.route('**/rest/v1/rpc/submit_payment', (r) => r.abort());
       await page.route('**/rest/v1/rpc/place_order', (r) => r.abort());
       await page.goto('/');
-      await expect(page.getByTestId('home-hero').locator('[data-testid^="exhibition-photo-"]')).toHaveCount(1);
+      // The opening may now be a published product with its normal backend image. The five exact licensed
+      // exhibition mappings are still required in their search result/details below, without forcing a demo hero.
+      await expect(page.getByTestId('home-hero').locator('img')).toHaveCount(1);
       await expect(page.locator('[data-testid="catalog-exhibition-notice"]:visible')).toHaveCount(1);
       await expect(page.getByTestId('home-hero')).not.toContainText('Demo');
       await expect(page.getByTestId('home-recommended').locator('[data-testid^="exhibition-photo-"]').first()).toBeVisible();
