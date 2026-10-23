@@ -4,13 +4,13 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-23: publicación de las mejoras de compra solicitada para Android preview/APK 5, fuente funcional `130d041`. Pendientes resultado de EAS, guard de runtime y recepción en emulador. Los nuevos packshots oficiales siguen exclusivamente locales, con permiso pendiente.
+**Última actualización:** 2026-10-23: mejoras de compra publicadas en Android preview/APK 5; EAS `39972699874` Success, fuente `aa9510a` (funcional `130d041`), guard exacto aprobado. Recepción en emulador aún pendiente. Los nuevos packshots oficiales siguen exclusivamente locales, con permiso pendiente.
 
 ## Publicación en curso — compra revisada
 
 Oliver indica que no ve los cambios en el teléfono y valora positivamente el acabado profesional de productos. Se continúa la autorización de entrega progresiva en su APK 5: publicar únicamente las mejoras funcionales ya revisadas y probadas (36 casos locales, tipos/lint/web/Android Hermes), conservando las imágenes distribuibles existentes. No interpretar su valoración visual como permiso de redistribución del nuevo packshot oficial.
 
-Solicitud `.github/eas-update-request` actualizada; el workflow existente comprueba el runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba` con Firebase EAS antes de publicar. No se modifica configuración nativa, backend, datos, finanzas ni canal production. **Próximo paso:** comprobar resultado real de EAS; si publica, ejecutar recorridos de visitante en emulador Android 15 con ambos temas y verificar ID de OTA en diagnóstico. No afirmar recepción física en Samsung.
+EAS `39972699874` terminó Success: proyecto, perfil preview, Firebase, guard exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, publicación y resultado aprobados. La red cloud impide descargar logs Actions; no inferir identificador de OTA. No se modifica configuración nativa, backend, datos, finanzas ni canal production. **Próximo paso:** revisión 42 del emulador Android 15, flujo `11-compra-revisada`, ambos temas: ficha/compartir/copiar, conservar/quitar producto, acceso desde carrito/pago y regreso; leer ID real en diagnóstico y revisar capturas publicadas en `ci/capturas`. No afirmar recepción física en Samsung.
 
 ## Trabajo en curso — calidad general sobre la app real
 

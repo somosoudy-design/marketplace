@@ -3,6 +3,11 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · compra publicada, recepción Android solicitada
+
+- EAS `39972699874` Success, fuente `aa9510a`, funcional `130d041`. Guard exacto APK 5, publicación Android preview y resultado aprobados. Sin nuevas fotografías oficiales ni otra OTA adicional.
+- Revisión 42 solicita flujo visitante `11-compra-revisada` en ambos temas; carrito del dispositivo, sin cuentas/pedidos/cotizaciones/pagos remotos. YAML y destinos comprobados. Los logs Actions no se pueden descargar por la política cloud; verificar ID/capturas a través de `ci/capturas`, sin inventar el resultado.
+
 ### 2026-10-23 · Codex cloud · solicitud de entrega de compra en APK 5
 
 - Oliver no ve cambios en la app y aprueba el acabado profesional de productos. Se retoma su autorización de publicación progresiva en Android preview; solicitud actualizada para fuente funcional `130d041`, sin incorporar nuevos packshots oficiales con permiso pendiente.

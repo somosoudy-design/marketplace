@@ -1,7 +1,6 @@
-# Revisión41 · Fotografías autorizadas; OTA preview38642215601 Success/fuente69f1c45. Solo lecturas ycapturas.
-# Revisión40 · C elegida por Oliver, cierre1a37860/códigoef44048. EAS38342356897 Success/fuentead41160.
-# Guard runtime APK5 aprobado; publicación2026-10-13 03:36UTC. 08 incluye búsqueda persistente/regreso/statusbar; 09 fuenteOS1,6.
-# Solo visitante/lecturas públicas/carrito local. No registros/pedidos/pagos remotos.
+# Revisión42 · Compra revisada, EAS39972699874 Success/fuenteaa9510a, guard exacto APK5 aprobado.
+# Visitante: ficha, compartir/copia, carrito local, confirmar retirada, acceso/pago sin sesión y regreso.
+# Ambos temas. No registros, pedidos, cotizaciones ni pagos remotos. No generar otro APK.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
-flows: 10-exhibicion-fotos
+flows: 11-compra-revisada
 themes: light dark

@@ -1,0 +1,115 @@
+# APK 5 + OTA preview. Visitante: lecturas públicas y carrito del dispositivo.
+# No inicia sesión ni crea cuentas, pedidos, cotizaciones o pagos remotos.
+appId: com.example.kora.preview
+name: Compra revisada — ficha, compartir, carrito y acceso al pago
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: buyer-tab-index
+    timeout: 60000
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 30000
+- assertVisible:
+    id: exhibition-photo-22516bf2-7283-45c1-a3a5-2449797a25db
+- takeScreenshot: compra-01-ficha
+- tapOn:
+    id: product-share
+- extendedWaitUntil:
+    visible:
+      id: product-share-link
+    timeout: 10000
+- assertVisible: kora://p/ugreen-cable-usb-c-100w
+- tapOn:
+    id: product-share-copy
+- assertVisible: Enlace copiado
+- takeScreenshot: compra-02-compartir
+- tapOn:
+    id: product-share-sheet-close
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 15000
+- assertVisible:
+    id: cart-remove-.*
+- assertVisible:
+    id: cart-subtotal
+- takeScreenshot: compra-03-carrito
+- tapOn:
+    id: cart-remove-.*
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- takeScreenshot: compra-04-confirmar-retirada
+- tapOn: Conservar producto
+- extendedWaitUntil:
+    notVisible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- assertVisible:
+    id: cart-remove-.*
+- tapOn:
+    id: cart-continue
+- extendedWaitUntil:
+    visible:
+      id: sign-in-submit
+    timeout: 15000
+- back
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-.*
+    timeout: 15000
+- tapOn:
+    id: cart-remove-.*
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- back
+- extendedWaitUntil:
+    notVisible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- assertVisible:
+    id: cart-remove-.*
+- tapOn:
+    id: cart-remove-.*
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- tapOn:
+    id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- takeScreenshot: compra-05-carrito-vacio
+- openLink: kora://pay/00000000-0000-4000-a000-000000000099
+- extendedWaitUntil:
+    visible: Inicia sesión para ver tu pedido
+    timeout: 15000
+- takeScreenshot: compra-06-pago-visitante
+- tapOn: Iniciar sesión
+- extendedWaitUntil:
+    visible:
+      id: sign-in-submit
+    timeout: 15000
+- back
+- extendedWaitUntil:
+    visible: Inicia sesión para ver tu pedido
+    timeout: 15000
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a13c5e-f303-7822-acda-7ce771cf4db2.*
+- takeScreenshot: compra-07-recepcion
