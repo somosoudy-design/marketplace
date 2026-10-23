@@ -979,3 +979,8 @@ Fuente058cb7b.22unitarias/12UI finales/tipos/lint sin warnings/exportaciones web
 ### 2026-10-23 — Inicio real publicado; recepción Android solicitada
 
 EAS40003745928 Success, fuentee6fccbd34461078052274dfbd0364d67c54863ff: guardruntimeAPK5/publicarpreview/resultado aprobados. Oliver informado inmediatamente. Se solicita revisión43 en APK5 existente, flujos08+09ambos temas/fuenteOS1,6. Sin nuevo APK ni otra publicación. ID/recepción aún no observados; obtenerlos de diagnósticos originales del emulador, no asumirlos de la OTA anterior.
+
+
+### 2026-10-23 — checkpoint de recuperación de evidencia, sin otra OTA
+
+EAS publicado Success. Emulador40004177228/f9fe1a1 completó paso nativo Success y subió artefacto12524101560(15,75MB); el paso posterior de publicación de capturas supera10min sin terminar, y logs/artefactos desdecloud no son descargables por red. Se añade recuperación acotada de ese mismo artefacto desdeActions a rama de evidencia única, PNG sin conversión ni nuevas pruebas/builds/OTA. ID/inspección nativa aún pendientes: no inventarlos ni usar capturas del runanterior. Catálogo paralelo: revisión independiente7/7originalesSHEGLAM/hash/procedencia, seis identidades pendientes y polvo rechazado por formato,0mappings/0permisos. Manifiesto público sanitizado actualizado, sin píxeles oficiales nuevos enGit/app.

@@ -12,14 +12,17 @@
     "ugreenArchivedRejectedImagesReviewed": 1,
     "sheglamProducts": 7,
     "sheglamOfficialReferenceMetadata": 7,
-    "sheglamImagesDownloaded": 0,
+    "sheglamImagesDownloaded": 7,
     "genericProductsWithPreciseMissingIdentity": 25,
     "djiProducts": 1,
     "djiExistingGalleryImagesInspected": 4,
     "newOfficialImagesAuthorizedForRedistribution": 0,
-    "approvedNewCatalogMappings": 0
+    "approvedNewCatalogMappings": 0,
+    "sheglamImagesVisuallyReviewed": 7,
+    "newOfficialOriginalFilesLocal": 14,
+    "existingDjiGalleryFilesLocal": 4
   },
-  "sourceManifestSha256": "dd623b3cad14eeff45cccaac5bfb44c4e9d9f796fa135306624369bb500a22c5",
+  "sourceManifestSha256": "91e021264b7f871f9326d1b54c0021d3d8d21913cf4ac78ee1baad7f6c32fcbb",
   "catalogSkuCheck": {
     "scopeProducts": 39,
     "variants": 56,
@@ -45,17 +48,41 @@
       "45366 color and demonstration accessories unconfirmed",
       "90314 belongs only to candidate648be, not to25845; variant and cable bundle unconfirmed",
       "Four original images600px: no artificial enlargement"
-    ]
+    ],
+    "sheglam": {
+      "scope": "Seven new originals inspected independently; metadata only, pixels local",
+      "imagesReviewed": 7,
+      "hashDimensionsAndSourceRecords": "7/7 verified; all 1340x1785",
+      "approvedCatalogMappings": 0,
+      "redistributionPermissionsConfirmed": 0,
+      "verdict": "Six identities unconfirmed; Baked Glow loose powder rejected against compact powder",
+      "missing": [
+        "Manufacturer SKU for each catalog product",
+        "Matte Allure True Faith shade correspondence",
+        "Powerpuff Blossom collaboration, shade and single-unit contents",
+        "Color Bloom Hot Topic shade correspondence",
+        "Skinfinite Linen shade correspondence",
+        "Wonka palette collaboration and eight-shade composition",
+        "Pro Core eight-tool kit composition"
+      ],
+      "sourceLimit": "Gloss source is category JSON-LD; direct page HTTP503 is historical",
+      "rights": "Locally inspected official terms sections2.1–2.2 do not authorize redistribution"
+    }
   },
   "network": {
     "policyCheckedOnce": true,
     "mode": "restricted",
-    "currentPolicyEnforced": true,
+    "currentPolicyEnforced": null,
     "ugreenAndSheglamPages": "accessible200",
-    "samsungAnkerStartechAmazon": "not in applied policy; prior CONNECT403 not retried",
-    "sheglamImageCDN": "img.ltwebstatic.com CONNECT403 in one probe; root added draft only/requires_publish:true, not applied; no retry",
-    "djiOfficialDomains": "not in applied policy; not requested",
-    "infrastructureChangedByThisAgent": false
+    "samsungAnkerStartechAmazon": "New allowed-host listing observed; one legitimate request per exact Samsung/Anker/StarTech page: SamsungHTTP403,AnkerHTTP404,StarTechHTTP403. No retries; Amazon not requested.",
+    "sheglamImageCDN": "Actual7imageGET200 and downloads verified after allowed-host change; previousCONNECT403historical",
+    "djiOfficialDomains": "Not requested in this checkpoint; prior listing is historical, current enforcement state unknown",
+    "infrastructureChangedByThisAgent": false,
+    "currentPolicyObservationState": "unknown",
+    "latestObservationsCurrent": true,
+    "newExactModelSourceProbeFile": "../oficial/official-models-one-pass-after-network-change.json",
+    "probeEvidenceFile": "sources/sheglam-cdn-recheck-after-policy-change.json",
+    "readinessNote": "Successful CDN requests prove these URLs accessible; configuration policy.state unknown does not prove general enforcement/readiness."
   },
   "reusedPriorReaderResources": {
     "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
@@ -97,7 +124,7 @@
           }
         }
       ],
-      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "status": "official professional original downloaded; exact catalog line/shade/variant unconfirmed",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea comercial/SKU real del producto en catálogo",
@@ -120,12 +147,30 @@
             "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/a2/17744116669fbf69aaadfc442e7514028230005922.jpg",
             "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/1d/1774411667d7f832ad7c6ab7071a3b8bbcdb5aacab.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Matte-Allure-Liquid-Lipstick-True-FaIth-5922630795429.json",
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-labial-liquido-mate-sbbeauty03200817648-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/9e/17744116693e4fdf5d86114e235100266a393cb5cd.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 70576,
+              "sha256": "edf40b71375f8b6eda1cfba6eeddeba027469721b1807269f519902b82a28e87",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade not confirmed",
+              "visualNotes": "Professional white-background packshot: cream-cap MatteAllure tube and applicator, muted brown/nude appearance. Manufacturer shade TrueFaith; no documented equivalence to catalog Rosa nude/Terracota/Rojo clásico. Two displayed parts do not imply two units."
+            }
+          ],
+          "imageSha256": "edf40b71375f8b6eda1cfba6eeddeba027469721b1807269f519902b82a28e87",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Matte-Allure-Liquid-Lipstick-True-FaIth-5922630795429.json",
           "sourceMetadataSha256": "0dd77d397d4e597bf88f658b02e9f5eb3ad271d2f49979532f9b72b1be6f70b9",
-          "imageVisuallyReviewed": false,
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "rights": {
@@ -139,7 +184,10 @@
             "scope": "reference metadata/local only, not app/Git/OTA"
           },
           "correspondenceStatus": "unconfirmed-line-and-variant",
-          "catalogComparison": "Línea Matte Allure y tono True Faith no identificados en catálogo. No equivalencia acreditada con Rosa nude/Terracota/Rojo clásico."
+          "catalogComparison": "Línea Matte Allure y tono True Faith no identificados en catálogo. No equivalencia acreditada con Rosa nude/Terracota/Rojo clásico.",
+          "visualInspection": "Professional white-background packshot: cream-cap MatteAllure tube and applicator, muted brown/nude appearance. Manufacturer shade TrueFaith; no documented equivalence to catalog Rosa nude/Terracota/Rojo clásico. Two displayed parts do not imply two units.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00"
         }
       ],
       "approvedCatalogMapping": false,
@@ -167,7 +215,7 @@
           }
         }
       ],
-      "status": "identidad insuficiente; referencia de categoría oficial, producto503 y CDN bloqueado",
+      "status": "official professional original downloaded; exact catalog line/shade/variant unconfirmed",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea de gloss y SKU real",
@@ -183,15 +231,33 @@
           "sourceEvidencePage": "https://www.sheglam.com/category/Lip-Gloss-2252",
           "sourceEvidenceHttpStatus": 200,
           "sourceEvidenceType": "official category JSON-LD Product record",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Lip-Gloss-2252.json",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Lip-Gloss-2252.json",
           "sourceMetadataSha256": "83da70ba377744110a56f0513b44440ed8660d0b57447d1cf5622eb221bbfae3",
           "officialImageUrls": [
             "https://img.ltwebstatic.com/images3_pi/2024/08/19/65/1724065447d41534b5edca3ee7cc35c8a265871241.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-CDN-CONNECT403",
-          "imageVisuallyReviewed": false,
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-brillo-labial-sb2407220579666515-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/images3_pi/2024/08/19/65/1724065447d41534b5edca3ee7cc35c8a265871241.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 110672,
+              "sha256": "1d9f384bce4fac0ec5333721cedc20c48bde7eb71a905ba4498d0640ae964988",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade/format not confirmed or rejected",
+              "visualNotes": "Professional white-background PowerpuffGirls/Blossom pink glitter gloss with character decoration/charm and applicator. Specific collaboration, not established by generic Rosado/Baya catalog. No substitute product assigned."
+            }
+          ],
+          "imageSha256": "1d9f384bce4fac0ec5333721cedc20c48bde7eb71a905ba4498d0640ae964988",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "correspondenceStatus": "unconfirmed-line-and-variant",
@@ -204,7 +270,11 @@
             "termsObservedAt": "2026-10-23",
             "clause": "§2.1–2.2 require prior express commercial/reproduction permission",
             "scope": "reference metadata/local only"
-          }
+          },
+          "visualInspection": "Professional white-background PowerpuffGirls/Blossom pink glitter gloss with character decoration/charm and applicator. Specific collaboration, not established by generic Rosado/Baya catalog. No substitute product assigned.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00",
+          "sourcePageStatusNote": "Direct product503 is historical earlier23Oct; not re-requested. Image CDN GET200 now verified; original SKU evidence remains category JSON-LD200."
         }
       ],
       "approvedCatalogMapping": false,
@@ -223,7 +293,7 @@
           "options": {}
         }
       ],
-      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "status": "official professional original downloaded; exact catalog line/shade/variant unconfirmed",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea comercial/SKU real del producto en catálogo",
@@ -250,12 +320,30 @@
             "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/42/1783584496bb3ce7eddc3aa501ac4e225c69efd24c.jpg",
             "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/45/1783584499bd24a00c34abd45813d0f8104964777d.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Color-Bloom-Liquid-Blush-Hot-Topic-8580912054437.json",
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-rubor-liquido-sb2402227745578144-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/17/1783584498024b362f27b72986df465d8c24e9320a.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 74927,
+              "sha256": "fa907629badc7557eb6ec289436a9597a4ccad7be115c0f1a8d14f0d57ec74dd",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade/format not confirmed or rejected",
+              "visualNotes": "Professional white-background pink/gold faceted ColorBloom bottle and sponge-tip applicator; manufacturer HotTopic shade. Do not translate to catalog Coral by eye."
+            }
+          ],
+          "imageSha256": "fa907629badc7557eb6ec289436a9597a4ccad7be115c0f1a8d14f0d57ec74dd",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Color-Bloom-Liquid-Blush-Hot-Topic-8580912054437.json",
           "sourceMetadataSha256": "e96e0fe0ce05f2958440d93a858b4755a92a5963629d927f7292891c7afbecc2",
-          "imageVisuallyReviewed": false,
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "rights": {
@@ -269,7 +357,10 @@
             "scope": "reference metadata/local only, not app/Git/OTA"
           },
           "correspondenceStatus": "unconfirmed-line-and-variant",
-          "catalogComparison": "Color Bloom/Hot Topic es una referencia exacta oficial; catálogo Coral no acredita esa línea ni ese tono."
+          "catalogComparison": "Color Bloom/Hot Topic es una referencia exacta oficial; catálogo Coral no acredita esa línea ni ese tono.",
+          "visualInspection": "Professional white-background pink/gold faceted ColorBloom bottle and sponge-tip applicator; manufacturer HotTopic shade. Do not translate to catalog Coral by eye.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00"
         }
       ],
       "approvedCatalogMapping": false,
@@ -509,7 +600,7 @@
           }
         }
       ],
-      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "status": "official professional original downloaded; exact catalog line/shade/variant unconfirmed",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea comercial/SKU real del producto en catálogo",
@@ -535,12 +626,30 @@
             "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/454defddb84e98008daa1e9e78d8aac06d41fc644fdd9573d49300fd99eefdb0.jpg",
             "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/aa79575a8e5407b2f7c2cb65accf85b05712f411852349c9bbfaf15b34c4957f.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Skinfinite-Hydrating-Foundation-Linen-8816507781285.json",
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-base-fluida-sb2406284202626862-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/947af1e2eacd2543fac95249d82aa05d3ec133aab2eb636260c752712dc3c5cc.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 363426,
+              "sha256": "8819544c92147650bff9525c37670a8f07378f8a557265da537195bbe07b7793",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade/format not confirmed or rejected",
+              "visualNotes": "Professional white-background bottle with legible SHEGLAM/SKINFINITE HydratingFoundation markings. Source Linen shade cannot stand for all catalog Claro/Medio/Profundo variants."
+            }
+          ],
+          "imageSha256": "8819544c92147650bff9525c37670a8f07378f8a557265da537195bbe07b7793",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Skinfinite-Hydrating-Foundation-Linen-8816507781285.json",
           "sourceMetadataSha256": "5ac1b182553fee2c3bb51948d05428c20416cd3b340557376c2546bf6d229b47",
-          "imageVisuallyReviewed": false,
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "rights": {
@@ -554,7 +663,10 @@
             "scope": "reference metadata/local only, not app/Git/OTA"
           },
           "correspondenceStatus": "unconfirmed-line-and-variant",
-          "catalogComparison": "Skinfinite ofrece cobertura media, pero no se acredita esa línea ni que Linen corresponda a Claro/Medio/Profundo."
+          "catalogComparison": "Skinfinite ofrece cobertura media, pero no se acredita esa línea ni que Linen corresponda a Claro/Medio/Profundo.",
+          "visualInspection": "Professional white-background bottle with legible SHEGLAM/SKINFINITE HydratingFoundation markings. Source Linen shade cannot stand for all catalog Claro/Medio/Profundo variants.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00"
         }
       ],
       "approvedCatalogMapping": false,
@@ -693,7 +805,7 @@
           "options": {}
         }
       ],
-      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "status": "official professional original downloaded; exact catalog line/shade/variant unconfirmed",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea comercial/SKU real del producto en catálogo",
@@ -717,12 +829,30 @@
             "https://img.ltwebstatic.com/images3_pi/2025/03/20/a7/1742454754988ba5d858ddfffbc7d56e1e8c24853f.jpg",
             "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/00/1770624033c664b176c0a09f0ff6cd26c991b96abc.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Wonka-Bar-Eyeshadow-Palette-8074106994853.json",
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-paleta-sombras-sb2207191171232773-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/f1/17706240343d9c5803acfbc24ebc9f69eb38c32150.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 224422,
+              "sha256": "4a6ad626bfbdd104c9863cf1bf4370aede7da57f9da2539dd1a3bb952ee2a49c",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade/format not confirmed or rejected",
+              "visualNotes": "Professional white-background WonkaBar closed packaging and open eight-pan palette; visible brown/gold/pink shades. Specific licensed collaboration not established by catalog Cálidos; no mapping inferred."
+            }
+          ],
+          "imageSha256": "4a6ad626bfbdd104c9863cf1bf4370aede7da57f9da2539dd1a3bb952ee2a49c",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Wonka-Bar-Eyeshadow-Palette-8074106994853.json",
           "sourceMetadataSha256": "a5f3c9c1d523844b2dfe64aad79b0b39f76898776dedf8c8d263140991d03cf1",
-          "imageVisuallyReviewed": false,
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "rights": {
@@ -736,7 +866,10 @@
             "scope": "reference metadata/local only, not app/Git/OTA"
           },
           "correspondenceStatus": "unconfirmed-line-and-variant",
-          "catalogComparison": "La fuente corresponde a colaboración Wonka de8tonos; catálogo no identifica esa línea ni su gama exacta. No asignar por decir tonos cálidos."
+          "catalogComparison": "La fuente corresponde a colaboración Wonka de8tonos; catálogo no identifica esa línea ni su gama exacta. No asignar por decir tonos cálidos.",
+          "visualInspection": "Professional white-background WonkaBar closed packaging and open eight-pan palette; visible brown/gold/pink shades. Specific licensed collaboration not established by catalog Cálidos; no mapping inferred.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00"
         }
       ],
       "approvedCatalogMapping": false,
@@ -887,7 +1020,7 @@
           "options": {}
         }
       ],
-      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "status": "official professional original downloaded; exact catalog line/shade/variant unconfirmed",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea comercial/SKU real del producto en catálogo",
@@ -909,12 +1042,30 @@
             "https://img.ltwebstatic.com/images3_pi/2023/09/06/64/16939876599dffe62f065c465c0ab5934e2edda913.jpg",
             "https://img.ltwebstatic.com/images3_pi/2023/06/29/16880325722e9e9022113aea1c5ee3f39fc3d351f4.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Pro-Core-Brush-Kit-8210438783141.json",
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-set-brochas-sb2306055918004384-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/images3_pi/2024/06/04/c5/17174867566aea57e070ab22cc0eeb170c71360e6e.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 176546,
+              "sha256": "3db67fcff0bdd9a4c6fedb2e2da0d1b0a66ae5fa7ce386a4932adfcb26b3df6d",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade/format not confirmed or rejected",
+              "visualNotes": "Professional white-background ProCore kit, eight visible beige-handled tools including spoolie/angled dual end. Catalog only says Set, so exact line and composition unconfirmed."
+            }
+          ],
+          "imageSha256": "3db67fcff0bdd9a4c6fedb2e2da0d1b0a66ae5fa7ce386a4932adfcb26b3df6d",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Pro-Core-Brush-Kit-8210438783141.json",
           "sourceMetadataSha256": "6bfe0dce6774384d4b2bb728180cde6505e2858ebcc7adece8bdd071390c3340",
-          "imageVisuallyReviewed": false,
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "rights": {
@@ -928,7 +1079,10 @@
             "scope": "reference metadata/local only, not app/Git/OTA"
           },
           "correspondenceStatus": "unconfirmed-line-and-variant",
-          "catalogComparison": "Pro Core Brush Kit es una línea exacta del fabricante, pero el catálogo solo declara Set; cantidad/composición/línea sin confirmar."
+          "catalogComparison": "Pro Core Brush Kit es una línea exacta del fabricante, pero el catálogo solo declara Set; cantidad/composición/línea sin confirmar.",
+          "visualInspection": "Professional white-background ProCore kit, eight visible beige-handled tools including spoolie/angled dual end. Catalog only says Set, so exact line and composition unconfirmed.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00"
         }
       ],
       "approvedCatalogMapping": false,
@@ -1169,7 +1323,7 @@
           "options": {}
         }
       ],
-      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "status": "REJECTED_FORMAT_MISMATCH: original official loose powder does not match compact powder catalog",
       "manufacturerSku": null,
       "missingIdentification": [
         "Línea comercial/SKU real del producto en catálogo",
@@ -1193,12 +1347,30 @@
             "https://img.ltwebstatic.com/images3_pi/2025/03/27/5c/1743072290a56bd03cb1d4859ee58cf833cd427ff0.jpg",
             "https://img.ltwebstatic.com/images3_pi/2023/05/05/1683275801b3f6369cb20650670b97af36873b2b14.jpg"
           ],
-          "downloadedImageFiles": [],
-          "imageSha256": null,
-          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
-          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Baked-Glow-Setting-Powder-Translucent-5694029267109.json",
+          "downloadedImageFiles": [
+            {
+              "file": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-polvo-sellador-sbbeauty03200727122-official-original.jpg",
+              "originalUrl": "https://img.ltwebstatic.com/images3_pi/2024/05/28/95/1716883466cc29e3763186c359ecf7e67dd18a1d3d.jpg",
+              "httpStatus": 200,
+              "width": 1340,
+              "height": 1785,
+              "format": "JPEG",
+              "mime": "image/jpeg",
+              "bytes": 72686,
+              "sha256": "3e0789b6ab1b67d749f18067a7b0d5ee901682cd671ed6483dc5f583ecbd957f",
+              "unalteredOriginal": true,
+              "aiGeneratedOrEdited": false,
+              "visualReview": "reviewed directly with view_image",
+              "rightsStatus": "unchanged: redistribution permission not established",
+              "catalogCorrespondence": "unchanged: line/shade/format not confirmed or rejected",
+              "visualNotes": "Professional white-background round jar with white loose powder,puff and black SHEGLAM lid. Confirms previously documented manufacturer loose-powder format; REJECTED against catalog polvo compacto despite Translucent name."
+            }
+          ],
+          "imageSha256": "3e0789b6ab1b67d749f18067a7b0d5ee901682cd671ed6483dc5f583ecbd957f",
+          "imageDownloadStatus": "GET200 verified after network state change; original downloaded and visually reviewed, local reference only",
+          "sourceMetadataFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/sources/sheglam-source-Baked-Glow-Setting-Powder-Translucent-5694029267109.json",
           "sourceMetadataSha256": "e0acb9c9dcf3616be7cc0ccdcda3dd81d3e07594b142b019c7a6d042f227f9e0",
-          "imageVisuallyReviewed": false,
+          "imageVisuallyReviewed": true,
           "publisher": "SHEGLAM official store",
           "author": "Not individually identified",
           "rights": {
@@ -1212,7 +1384,10 @@
             "scope": "reference metadata/local only, not app/Git/OTA"
           },
           "correspondenceStatus": "rejected-format-mismatch",
-          "catalogComparison": "RECHAZADO: fabricante describe loose powder; catálogo declara polvo compacto. No basta coincidencia Translucent/Translúcido."
+          "catalogComparison": "RECHAZADO: fabricante describe loose powder; catálogo declara polvo compacto. No basta coincidencia Translucent/Translúcido.",
+          "visualInspection": "Professional white-background round jar with white loose powder,puff and black SHEGLAM lid. Confirms previously documented manufacturer loose-powder format; REJECTED against catalog polvo compacto despite Translucent name.",
+          "visualInspectionMethod": "view_image on original downloaded file; no edit/AI/crop",
+          "visualInspectedAtUTC": "2026-10-23T18:11:22.439895+00:00"
         }
       ],
       "approvedCatalogMapping": false,
@@ -1913,5 +2088,6 @@
       "approvedCatalogMapping": false,
       "batch": "03-GENERICOS"
     }
-  ]
+  ],
+  "updatedAtUTC": "2026-10-23T18:11:22.439895+00:00"
 }
