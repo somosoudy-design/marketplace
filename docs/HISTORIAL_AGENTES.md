@@ -3,6 +3,13 @@
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 
+### 2026-10-23 · Codex cloud · catálogo restante39, checkpoint de referencias profesionales
+
+- Delegación real catalog_art/catalog_review, raíz único escritor. Inventario44 y39restantes sin mutaciones:6UGREEN con7originales,7SHEGLAM conrefsSKU/CDNbloqueado,25genéricos con datos concretos faltantes,1DJI con4galeríasexistentes inspeccionadas. Dos rondas de revisión UGREEN, hashes/medidas de11archivos verificados;0mappings/0permisos/0nuevos píxelesenapp/Git/OTA. Descripciones comerciales extensas y píxeles excluidos del registro público sanitizado.
+- Verificación administrativa estrictaREADONLY, solo39UUID:56variantes/55SKUdemo/1vacío/0fabricante, sin valores privados deSKU ni cambios. No repetir diagnóstico BCV/Mi tienda o consultas. Rechazos:25208crema,90314variante/paquete;65958azul es OTROmodelo. Discrepancias/props/600px conservadas como límites.
+- Borrador de red leído antes de editar y guardado con `img.ltwebstatic.com`, conserva dominios previos; saved/requires_publish:true, no aplicado. Usuario informado de Configuración del entorno→revisar/guardar/publicar, distinto de OTA.
+- Entrega documental concreta: catalogo-exhibicion/AMPLIACION_2026-10-23.md +catalogo-restante-2026-10-23.json. Originales ignorados en .local/arte-20261023/catalogo-restante. Sin nueva publicación/APK/backend/finanzas. Recepción Samsung ya probada; usuario sigue sin percibir cambios, recibió enlace APK5 explícitamente identificado como mismo instalador y pregunta asíncrona sobre fotos/carrito-checkout/diseño general. Próximo: precisión visual del propietario y desbloqueos concretos del lote; no republicar idéntico código ni presentar material local como integrado.
+
 ### 2026-10-23 · Oliver · recepción física APK 5 comprobada
 
 - Fotografía de Diagnóstico del Samsung muestra preview, runtime exacto APK5 y OTA `01a1693d-60d9-7183-a309-92769e4ea219`, publicada23oct14:49UTC; API36, Marketplace responde1266ms, sesión cifrada/con sesión. Foto personal no copiada al Git público. Actualizada COMPRA_ANDROID_2026-10-23.json.

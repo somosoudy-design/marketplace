@@ -1,0 +1,1917 @@
+{
+  "version": 1,
+  "observedAtUTC": "2026-10-23T15:18:29.553196+00:00",
+  "scope": "Referencia documental; NO es un registro para importar en la app",
+  "project": "mimnotafmfasvwrclxan",
+  "inventoryPublicProducts": 44,
+  "remainingProducts": 39,
+  "counts": {
+    "ugreenProducts": 6,
+    "ugreenOfficialFilesDownloaded": 7,
+    "ugreenPrimaryImagesReviewed": 6,
+    "ugreenArchivedRejectedImagesReviewed": 1,
+    "sheglamProducts": 7,
+    "sheglamOfficialReferenceMetadata": 7,
+    "sheglamImagesDownloaded": 0,
+    "genericProductsWithPreciseMissingIdentity": 25,
+    "djiProducts": 1,
+    "djiExistingGalleryImagesInspected": 4,
+    "newOfficialImagesAuthorizedForRedistribution": 0,
+    "approvedNewCatalogMappings": 0
+  },
+  "sourceManifestSha256": "dd623b3cad14eeff45cccaac5bfb44c4e9d9f796fa135306624369bb500a22c5",
+  "catalogSkuCheck": {
+    "scopeProducts": 39,
+    "variants": 56,
+    "demoStyleSkus": 55,
+    "emptySkus": 1,
+    "manufacturerSkusIdentified": 0,
+    "readOnly": true,
+    "rawPrivateSkuValuesIncluded": false
+  },
+  "publication": {
+    "newImagesIntegratedIntoApp": 0,
+    "newMappingsApproved": 0,
+    "redistributionPermissionsConfirmed": 0,
+    "newOtaForThisCatalogBlock": false,
+    "pixelsIncludedInGit": false,
+    "appAssetRegistryChanged": false
+  },
+  "independentReview": {
+    "ugreen": "Two focused rounds; metadata publication only, no commercial matching or image distribution approved",
+    "notes": [
+      "25208 cream rejected against Azul",
+      "65958 is another model, not a blue variant of 25208; award not independently verified",
+      "45366 color and demonstration accessories unconfirmed",
+      "90314 belongs only to candidate648be, not to25845; variant and cable bundle unconfirmed",
+      "Four original images600px: no artificial enlargement"
+    ]
+  },
+  "network": {
+    "policyCheckedOnce": true,
+    "mode": "restricted",
+    "currentPolicyEnforced": true,
+    "ugreenAndSheglamPages": "accessible200",
+    "samsungAnkerStartechAmazon": "not in applied policy; prior CONNECT403 not retried",
+    "sheglamImageCDN": "img.ltwebstatic.com CONNECT403 in one probe; root added draft only/requires_publish:true, not applied; no retry",
+    "djiOfficialDomains": "not in applied policy; not requested",
+    "infrastructureChangedByThisAgent": false
+  },
+  "reusedPriorReaderResources": {
+    "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
+    "manufacturerSku": "50706",
+    "sourcePage": "https://eu.ugreen.com/products/50706",
+    "files": [
+      "../oficial/ugreen-reader-50706-official-eu-original.png",
+      "../oficial/ugreen-reader-50706-official-de-original.png"
+    ],
+    "rightsStatus": "pending, not counted as new remaining products"
+  },
+  "products": [
+    {
+      "productId": "5abf4366-e062-41e5-966e-1c7908ca2a7a",
+      "catalogSlug": "sheglam-labial-liquido-mate",
+      "catalogTitle": "SHEGLAM labial líquido mate",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-labial-liquido-mate-1.webp",
+      "catalogVariants": [
+        {
+          "id": "cda87461-a64b-498c-b311-adea913a04a2",
+          "title": "Rosa nude",
+          "options": {
+            "Tono": "Rosa nude"
+          }
+        },
+        {
+          "id": "8ee86f11-cfaf-4c34-8130-53b8fc991461",
+          "title": "Terracota",
+          "options": {
+            "Tono": "Terracota"
+          }
+        },
+        {
+          "id": "e8d0ee55-4d21-455a-9ede-7508fcba47ea",
+          "title": "Rojo clásico",
+          "options": {
+            "Tono": "Rojo clásico"
+          }
+        }
+      ],
+      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea comercial/SKU real del producto en catálogo",
+        "Correspondencia exacta de variantes/tonos comerciales"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "Matte Allure Liquid Lipstick-True FaIth",
+          "manufacturerSku": "sbbeauty03200817648",
+          "manufacturerMpn": "1514049",
+          "manufacturerShade": "True Faith",
+          "sourcePage": "https://www.sheglam.com/product/Matte-Allure-Liquid-Lipstick-True-FaIth-5922630795429",
+          "sourceHttpStatus": 200,
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/9e/17744116693e4fdf5d86114e235100266a393cb5cd.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/a4/1774411659c856f561e3dfb1741f568122ac517027.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/be/1774411661d5a4d509efb368132a9da691c8ab541d.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/33/17744116633b92d0939f19ec7b2b6138dee6566680.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/4e/17744116646385200e93d738fe50df5175bf48bc55.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/a2/17744116669fbf69aaadfc442e7514028230005922.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/1d/1774411667d7f832ad7c6ab7071a3b8bbcdb5aacab.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Matte-Allure-Liquid-Lipstick-True-FaIth-5922630795429.json",
+          "sourceMetadataSha256": "0dd77d397d4e597bf88f658b02e9f5eb3ad271d2f49979532f9b72b1be6f70b9",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "restrictiveClause": "§2.1: not for any commercial use or use on behalf of any third party, except as explicitly permitted by the Company in advance; §2.2 requires express written permission to reproduce/distribute/display/modify.",
+            "operatorDeclared": "Roadget Business Pte. Ltd",
+            "scope": "reference metadata/local only, not app/Git/OTA"
+          },
+          "correspondenceStatus": "unconfirmed-line-and-variant",
+          "catalogComparison": "Línea Matte Allure y tono True Faith no identificados en catálogo. No equivalencia acreditada con Rosa nude/Terracota/Rojo clásico."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "96f52279-bb49-4d5c-a47d-495611d67191",
+      "catalogSlug": "sheglam-brillo-labial",
+      "catalogTitle": "SHEGLAM brillo labial",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-brillo-labial-1.webp",
+      "catalogVariants": [
+        {
+          "id": "0782aae9-7fcb-4c9f-97f2-655c8741984a",
+          "title": "Rosado",
+          "options": {
+            "Tono": "Rosado"
+          }
+        },
+        {
+          "id": "01b52cfb-de49-4611-963f-0785c16fc972",
+          "title": "Baya",
+          "options": {
+            "Tono": "Baya"
+          }
+        }
+      ],
+      "status": "identidad insuficiente; referencia de categoría oficial, producto503 y CDN bloqueado",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea de gloss y SKU real",
+        "Identificación oficial de Rosado/Baya y unidad/kit"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "The Powerpuff Girls X SHEGLAM Super Trio Lip Gloss-Blossom",
+          "manufacturerSku": "sb2407220579666515",
+          "manufacturerShade": "Blossom (from manufacturer product title; direct product page unavailable503)",
+          "sourcePage": "https://www.sheglam.com/product/The-Powerpuff-Girls-X-SHEGLAM-Super-Trio-Lip-Gloss-Blossom-8815106883749",
+          "sourcePageHttpStatus": 503,
+          "sourceEvidencePage": "https://www.sheglam.com/category/Lip-Gloss-2252",
+          "sourceEvidenceHttpStatus": 200,
+          "sourceEvidenceType": "official category JSON-LD Product record",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Lip-Gloss-2252.json",
+          "sourceMetadataSha256": "83da70ba377744110a56f0513b44440ed8660d0b57447d1cf5622eb221bbfae3",
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/images3_pi/2024/08/19/65/1724065447d41534b5edca3ee7cc35c8a265871241.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-CDN-CONNECT403",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "correspondenceStatus": "unconfirmed-line-and-variant",
+          "catalogComparison": "Powerpuff Girls Super Trio/Blossom is a specific licensed collaboration; generic Rosado/Baya does not establish that model or shade. No substitute assigned.",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "clause": "§2.1–2.2 require prior express commercial/reproduction permission",
+            "scope": "reference metadata/local only"
+          }
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "1cb658e6-5f4a-4d13-83e4-97a5af667920",
+      "catalogSlug": "sheglam-rubor-liquido",
+      "catalogTitle": "SHEGLAM rubor líquido",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-rubor-liquido-1.webp",
+      "catalogVariants": [
+        {
+          "id": "aa4199ef-cc1f-46e4-9767-6a3b275b7cc8",
+          "title": "Coral",
+          "options": {}
+        }
+      ],
+      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea comercial/SKU real del producto en catálogo",
+        "Correspondencia exacta de variantes/tonos comerciales"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "Color Bloom Liquid Blush-Hot Topic",
+          "manufacturerSku": "sb2402227745578144",
+          "manufacturerMpn": "32376094",
+          "manufacturerShade": "Hot Topic",
+          "sourcePage": "https://www.sheglam.com/product/Color-Bloom-Liquid-Blush-Hot-Topic-8580912054437",
+          "sourceHttpStatus": 200,
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/17/1783584498024b362f27b72986df465d8c24e9320a.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/85/1783584485c7b4aa41f65687b869727213ddbbdeb6.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/23/1783584487379b0e115bc5ee4cf78aa6b174465157.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/5a/1783584489cd8f77dcf18e111a955b017b910c90ae.jpg",
+            "https://img.ltwebstatic.com/v4/g/pi/2026/02/27/5c/1772174629d287e54cd21e166d93351dd387832b57.gif",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/6d/1783584490d356b0cd59b35dc911bb47d5c1ad455d.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/9d/1783584492bdba062d017b7c73c73c488e243f78b1.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/a4/17835844938288d7ce256715880b1313fff9d83696.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/4c/1783584495fc5678df908ad0b8851c719708049989.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/42/1783584496bb3ce7eddc3aa501ac4e225c69efd24c.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/45/1783584499bd24a00c34abd45813d0f8104964777d.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Color-Bloom-Liquid-Blush-Hot-Topic-8580912054437.json",
+          "sourceMetadataSha256": "e96e0fe0ce05f2958440d93a858b4755a92a5963629d927f7292891c7afbecc2",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "restrictiveClause": "§2.1: not for any commercial use or use on behalf of any third party, except as explicitly permitted by the Company in advance; §2.2 requires express written permission to reproduce/distribute/display/modify.",
+            "operatorDeclared": "Roadget Business Pte. Ltd",
+            "scope": "reference metadata/local only, not app/Git/OTA"
+          },
+          "correspondenceStatus": "unconfirmed-line-and-variant",
+          "catalogComparison": "Color Bloom/Hot Topic es una referencia exacta oficial; catálogo Coral no acredita esa línea ni ese tono."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
+      "catalogSlug": "audifonos-anc-over-ear",
+      "catalogTitle": "Audífonos inalámbricos con cancelación de ruido",
+      "originalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "variants": [
+        {
+          "id": "f4965176-bf53-4a7e-a9e1-07bf0608e856",
+          "title": "Salvia",
+          "options": {
+            "Color": "Salvia"
+          }
+        },
+        {
+          "id": "f984e205-a702-4f95-b0e2-c2249127a4a0",
+          "title": "Arena",
+          "options": {
+            "Color": "Arena"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante y modelo",
+        "Referencia exacta de Salvia y Arena",
+        "Diseño de diadema/copas y controles"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "f1752791-3273-4001-beb6-000b7aace947",
+      "catalogSlug": "audifonos-in-ear-estuche",
+      "catalogTitle": "Audífonos in-ear con estuche de carga",
+      "originalPath": "demo/audifonos-in-ear-estuche-1.webp",
+      "variants": [
+        {
+          "id": "c243b59e-84a8-4be8-bc71-bd7552dcffeb",
+          "title": "Blanco",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante y modelo",
+        "Revisión del estuche y diseño de auriculares",
+        "Referencia Blanco"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "c3a54b68-0659-421d-baf9-86d3fa3caeca",
+      "catalogSlug": "vela-aromatica-vaso",
+      "catalogTitle": "Vela aromática en vaso de vidrio",
+      "originalPath": "demo/vela-aromatica-vaso-1.webp",
+      "variants": [
+        {
+          "id": "a8ed7b38-9366-433a-b2bc-6f411b76228c",
+          "title": "Vainilla",
+          "options": {
+            "Aroma": "Vainilla"
+          }
+        },
+        {
+          "id": "b04652ac-9e46-4387-b012-e690a1a1e0c6",
+          "title": "Cedro",
+          "options": {
+            "Aroma": "Cedro"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Marca y línea",
+        "Capacidad/peso y dimensiones del vaso ámbar",
+        "Referencias exactas Vainilla y Cedro"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "3e280c0e-dd8b-404a-927e-39c0fd9e4a9e",
+      "catalogSlug": "guantes-nitrilo-x100",
+      "catalogTitle": "Guantes de nitrilo sin polvo · caja x100",
+      "originalPath": "demo/guantes-nitrilo-x100-1.webp",
+      "variants": [
+        {
+          "id": "073e6883-f5d7-4390-b2ff-474d76f21877",
+          "title": "S",
+          "options": {
+            "Talla": "S"
+          }
+        },
+        {
+          "id": "b29a9ea2-e5aa-4d53-8f09-7e929c5a19c9",
+          "title": "M",
+          "options": {
+            "Talla": "M"
+          }
+        },
+        {
+          "id": "66b4902e-5f05-4202-9e51-cf0e9beb709d",
+          "title": "L",
+          "options": {
+            "Talla": "L"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante y referencia",
+        "Color y especificación exacta del guante",
+        "Referencias de tallas S/M/L y caja100"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "1b895714-8723-4330-8472-75ade944652a",
+      "catalogSlug": "cama-ovalada-mascotas",
+      "catalogTitle": "Cama ovalada para mascotas",
+      "originalPath": "demo/cama-ovalada-mascotas-1.webp",
+      "variants": [
+        {
+          "id": "3a73454c-b2ce-4663-8595-9ae34ce28ddc",
+          "title": "S",
+          "options": {
+            "Tamaño": "S"
+          }
+        },
+        {
+          "id": "3cdf2f95-f5ec-4ad3-8ea5-c4606ebb9357",
+          "title": "M",
+          "options": {
+            "Tamaño": "M"
+          }
+        },
+        {
+          "id": "945c6c91-72da-44e8-b137-9dd761881887",
+          "title": "L",
+          "options": {
+            "Tamaño": "L"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/línea",
+        "Dimensiones reales por talla S/M/L",
+        "Color y material del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "04e929cf-0be8-45db-a957-aa418599b572",
+      "catalogSlug": "sheglam-base-fluida",
+      "catalogTitle": "SHEGLAM base de maquillaje fluida",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-base-fluida-1.webp",
+      "catalogVariants": [
+        {
+          "id": "355ca171-81c1-4b52-8de6-bd3b96ecf690",
+          "title": "Claro",
+          "options": {
+            "Tono": "Claro"
+          }
+        },
+        {
+          "id": "b5982486-3fac-492e-9913-5f83368c3e89",
+          "title": "Medio",
+          "options": {
+            "Tono": "Medio"
+          }
+        },
+        {
+          "id": "64713b70-8fcf-42c4-bcab-413adec8eb8c",
+          "title": "Profundo",
+          "options": {
+            "Tono": "Profundo"
+          }
+        }
+      ],
+      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea comercial/SKU real del producto en catálogo",
+        "Correspondencia exacta de variantes/tonos comerciales"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "Skinfinite Hydrating Foundation-Linen",
+          "manufacturerSku": "sb2406284202626862",
+          "manufacturerMpn": "41701626",
+          "manufacturerShade": "Linen",
+          "sourcePage": "https://www.sheglam.com/product/Skinfinite-Hydrating-Foundation-Linen-8816507781285",
+          "sourceHttpStatus": 200,
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/947af1e2eacd2543fac95249d82aa05d3ec133aab2eb636260c752712dc3c5cc.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/a5f657a76710a9773eb24cfbb3401ec7f3d0dcd25b0b892b3de38725cecd708f.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/6b37ccbb859654b31756b2a8253012a8fa3932eb1e80d704efd075d1c818d76a.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/64a947e240144ba9917e2cfcee3b03308eed79e43c2328cfeaac97c7f6e93e30.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/897a93ee8dce98768f615eb7792003acc39d27b18749457b32e2157788c103be.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/71395631d29887a10a7e8061c4e8925100f7035352139a916a41839e5c419735.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/44ab4cd4834d486c76d97f19b0d7e110ce8365bbc89b4cca144a1ca02ab8b77e.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/ca8cea2e953a40baffd124cdf09f9056ae64783f0576c5c07b31bb1044f04ab3.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/454defddb84e98008daa1e9e78d8aac06d41fc644fdd9573d49300fd99eefdb0.jpg",
+            "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/aa79575a8e5407b2f7c2cb65accf85b05712f411852349c9bbfaf15b34c4957f.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Skinfinite-Hydrating-Foundation-Linen-8816507781285.json",
+          "sourceMetadataSha256": "5ac1b182553fee2c3bb51948d05428c20416cd3b340557376c2546bf6d229b47",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "restrictiveClause": "§2.1: not for any commercial use or use on behalf of any third party, except as explicitly permitted by the Company in advance; §2.2 requires express written permission to reproduce/distribute/display/modify.",
+            "operatorDeclared": "Roadget Business Pte. Ltd",
+            "scope": "reference metadata/local only, not app/Git/OTA"
+          },
+          "correspondenceStatus": "unconfirmed-line-and-variant",
+          "catalogComparison": "Skinfinite ofrece cobertura media, pero no se acredita esa línea ni que Linen corresponda a Claro/Medio/Profundo."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
+      "catalogSlug": "parlante-portatil",
+      "catalogTitle": "Parlante portátil resistente al agua",
+      "originalPath": "demo/parlante-portatil-1.webp",
+      "variants": [
+        {
+          "id": "1b7afb4c-1b8f-488f-a241-f0b028694416",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "767912c9-9b59-4bb2-8b90-71e42748ac2c",
+          "title": "Coral",
+          "options": {
+            "Color": "Coral"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Referencia exacta Turquesa y Coral",
+        "Forma,controles y especificación de resistencia al agua"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "4a16b9ea-86e1-428e-8989-461848dad920",
+      "catalogSlug": "reloj-inteligente-deportivo",
+      "catalogTitle": "Reloj inteligente deportivo",
+      "originalPath": "demo/reloj-inteligente-deportivo-1.webp",
+      "variants": [
+        {
+          "id": "a9202235-ee54-480f-b8d6-b7d582144479",
+          "title": "Negro",
+          "options": {
+            "Color": "Negro"
+          }
+        },
+        {
+          "id": "e5cec675-8b8c-4904-98a2-a78b3ff793af",
+          "title": "Oliva",
+          "options": {
+            "Color": "Oliva"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Tamaño y forma de caja/pantalla",
+        "Referencias de correa Negro y Oliva"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "ff742b48-0d15-4f33-8775-1efb54d05f5b",
+      "catalogSlug": "set-tazas-ceramica-x4",
+      "catalogTitle": "Set de tazas de cerámica · x4",
+      "originalPath": "demo/set-tazas-ceramica-x4-1.webp",
+      "variants": [
+        {
+          "id": "286878c6-29cf-4027-b027-dd67996ae96a",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "7ccd0285-c16f-402c-a6d8-a671b44a6a4d",
+          "title": "Mostaza",
+          "options": {
+            "Color": "Mostaza"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/línea",
+        "Capacidad y forma del juego4piezas",
+        "Referencias de esmalte Turquesa/Mostaza"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "e38df4e4-9633-4e67-82a7-c4f581607fbc",
+      "catalogSlug": "sheglam-paleta-sombras",
+      "catalogTitle": "SHEGLAM paleta de sombras",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-paleta-sombras-1.webp",
+      "catalogVariants": [
+        {
+          "id": "a78cb1e6-6e8c-4c51-b2c5-4c2bd03b93cc",
+          "title": "Cálidos",
+          "options": {}
+        }
+      ],
+      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea comercial/SKU real del producto en catálogo",
+        "Correspondencia exacta de variantes/tonos comerciales"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "Wonka Bar Eyeshadow Palette",
+          "manufacturerSku": "sb2207191171232773",
+          "manufacturerMpn": "11638349",
+          "manufacturerShade": "Multicolor",
+          "sourcePage": "https://www.sheglam.com/product/Wonka-Bar-Eyeshadow-Palette-8074106994853",
+          "sourceHttpStatus": 200,
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/f1/17706240343d9c5803acfbc24ebc9f69eb38c32150.jpg",
+            "https://img.ltwebstatic.com/v4/g/pi/2026/02/09/0c/17706240289f41555c6e16c40445c8746b7e2d399e.gif",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/9f/17706240293338b0f46671ec5fe805bac56095a55d.jpg",
+            "https://img.ltwebstatic.com/v4/g/pi/2026/02/09/47/1770624031642d4976f808b2491c8943df5e59da75.gif",
+            "https://img.ltwebstatic.com/v4/j/pi/2025/06/12/e4/1749699659898ec965f53ba86b30b8ec6d21f82036.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/c7/177062403233174b18e773b82439169c4268f08f7b.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2025/03/20/a7/1742454754988ba5d858ddfffbc7d56e1e8c24853f.jpg",
+            "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/00/1770624033c664b176c0a09f0ff6cd26c991b96abc.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Wonka-Bar-Eyeshadow-Palette-8074106994853.json",
+          "sourceMetadataSha256": "a5f3c9c1d523844b2dfe64aad79b0b39f76898776dedf8c8d263140991d03cf1",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "restrictiveClause": "§2.1: not for any commercial use or use on behalf of any third party, except as explicitly permitted by the Company in advance; §2.2 requires express written permission to reproduce/distribute/display/modify.",
+            "operatorDeclared": "Roadget Business Pte. Ltd",
+            "scope": "reference metadata/local only, not app/Git/OTA"
+          },
+          "correspondenceStatus": "unconfirmed-line-and-variant",
+          "catalogComparison": "La fuente corresponde a colaboración Wonka de8tonos; catálogo no identifica esa línea ni su gama exacta. No asignar por decir tonos cálidos."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "1003a685-601c-4806-9e24-007db516e7c0",
+      "catalogSlug": "ugreen-nexode-100w",
+      "catalogTitle": "UGREEN Nexode cargador GaN 100 W",
+      "catalogBrand": "UGREEN",
+      "originalPath": "demo/ugreen-nexode-100w-1.webp",
+      "catalogVariants": [
+        {
+          "id": "2fa942f9-ac75-4eca-9340-fab52f2fc063",
+          "title": "Gris",
+          "options": {}
+        }
+      ],
+      "batch": "01-UGREEN",
+      "status": "candidate-unconfirmed-exact-model",
+      "manufacturerSku": null,
+      "candidates": [
+        {
+          "productId": "1003a685-601c-4806-9e24-007db516e7c0",
+          "catalogTitle": "UGREEN Nexode cargador GaN 100 W",
+          "catalogSlug": "ugreen-nexode-100w",
+          "originalPath": "demo/ugreen-nexode-100w-1.webp",
+          "manufacturerTitle": "UGREEN Nexode 100W 4-Port Charger",
+          "manufacturerSku": "40737",
+          "manufacturerVariants": [
+            {
+              "sku": "40737",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://us.ugreen.com/products/100w-3c1a-gan-fast-charger",
+          "metadataUrl": "https://us.ugreen.com/products/100w-3c1a-gan-fast-charger.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-nexode-100w-usb-c-gan-charger-4-ports-wall-charger-676996.png?v=1692790967",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-nexode-100w-40737-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 600,
+          "height": 600,
+          "bytes": 74572,
+          "sha256": "f855fb40260a25ce2a9ed234dd57644fd425a1e4cd2bd9667a877d7a80586c29",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "candidate-unconfirmed-exact-model",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app imports/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "Gray/black body,3USB-C+1USB-A,flat US plug; broadly consistent with100W/Gris but catalog does not specifySKU or plug."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "missingIdentification": [
+        "SKU/modelo exacto del catálogo y revisión de variante",
+        "Evidencia de permiso para distribución app/repositorio/OTA"
+      ]
+    },
+    {
+      "productId": "d23a9fbb-8e4a-4299-ab29-5d1e73522c21",
+      "catalogSlug": "lampara-mesa-lino",
+      "catalogTitle": "Lámpara de mesa con pantalla de lino",
+      "originalPath": "demo/lampara-mesa-lino-1.webp",
+      "variants": [
+        {
+          "id": "c703b052-af15-46fa-8b67-a5c02f5491ab",
+          "title": "Roble",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Dimensiones,base Roble y forma de pantalla de lino",
+        "Tipo de enchufe del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "e2963fef-06a4-41e7-8dcd-5ae42576c923",
+      "catalogSlug": "teclado-mecanico-compacto",
+      "catalogTitle": "Teclado mecánico compacto",
+      "originalPath": "demo/teclado-mecanico-compacto-1.webp",
+      "variants": [
+        {
+          "id": "9c30455d-8d6c-4476-8125-97e4ea73790a",
+          "title": "Crema",
+          "options": {
+            "Color": "Crema"
+          }
+        },
+        {
+          "id": "27202dd8-a0ee-4609-8dca-36bde90210ef",
+          "title": "Grafito",
+          "options": {
+            "Color": "Grafito"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Distribución de teclas/idioma y switches",
+        "Referencias Crema/Grafito"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "c36a2f27-0634-45cf-aa96-2fe0a693476d",
+      "catalogSlug": "sheglam-set-brochas",
+      "catalogTitle": "SHEGLAM set de brochas",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-set-brochas-1.webp",
+      "catalogVariants": [
+        {
+          "id": "1a104f54-e971-41bf-a1de-331aa3284491",
+          "title": "Set",
+          "options": {}
+        }
+      ],
+      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea comercial/SKU real del producto en catálogo",
+        "Correspondencia exacta de variantes/tonos comerciales"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "Pro Core Brush Kit",
+          "manufacturerSku": "sb2306055918004384",
+          "manufacturerMpn": "18584525",
+          "manufacturerShade": "Beige",
+          "sourcePage": "https://www.sheglam.com/product/Pro-Core-Brush-Kit-8210438783141",
+          "sourceHttpStatus": 200,
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/images3_pi/2024/06/04/c5/17174867566aea57e070ab22cc0eeb170c71360e6e.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2024/12/23/f0/173492821719ecab57fb699f93464ab2391af06011.gif",
+            "https://img.ltwebstatic.com/images3_pi/2023/06/29/1688041289ff32454763b59176f5d024e0e66dfc75.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2023/09/06/e2/169398764200e560e5c79282eb0c7f646edd7bf630.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2023/09/06/64/16939876599dffe62f065c465c0ab5934e2edda913.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2023/06/29/16880325722e9e9022113aea1c5ee3f39fc3d351f4.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Pro-Core-Brush-Kit-8210438783141.json",
+          "sourceMetadataSha256": "6bfe0dce6774384d4b2bb728180cde6505e2858ebcc7adece8bdd071390c3340",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "restrictiveClause": "§2.1: not for any commercial use or use on behalf of any third party, except as explicitly permitted by the Company in advance; §2.2 requires express written permission to reproduce/distribute/display/modify.",
+            "operatorDeclared": "Roadget Business Pte. Ltd",
+            "scope": "reference metadata/local only, not app/Git/OTA"
+          },
+          "correspondenceStatus": "unconfirmed-line-and-variant",
+          "catalogComparison": "Pro Core Brush Kit es una línea exacta del fabricante, pero el catálogo solo declara Set; cantidad/composición/línea sin confirmar."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "0e4494b7-b93f-4e69-b39f-64486dd85b2e",
+      "catalogSlug": "ugreen-soporte-laptop",
+      "catalogTitle": "UGREEN soporte de aluminio para laptop",
+      "catalogBrand": "UGREEN",
+      "originalPath": "demo/ugreen-soporte-laptop-1.webp",
+      "catalogVariants": [
+        {
+          "id": "477f3514-1998-409a-ab80-a65b0a451c40",
+          "title": "Plata",
+          "options": {}
+        }
+      ],
+      "batch": "01-UGREEN",
+      "status": "candidate-unconfirmed-exact-model",
+      "manufacturerSku": null,
+      "candidates": [
+        {
+          "productId": "0e4494b7-b93f-4e69-b39f-64486dd85b2e",
+          "catalogTitle": "UGREEN soporte de aluminio para laptop",
+          "catalogSlug": "ugreen-soporte-laptop",
+          "originalPath": "demo/ugreen-soporte-laptop-1.webp",
+          "manufacturerTitle": "UGREEN Laptop Stand for Desk Adjustable",
+          "manufacturerSku": "40289",
+          "manufacturerVariants": [
+            {
+              "sku": "40289",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://eu.ugreen.com/products/ugreen-laptop-stand-for-desk-adjustable",
+          "metadataUrl": "https://eu.ugreen.com/products/ugreen-laptop-stand-for-desk-adjustable.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0573/0979/0291/products/ugreen-laptop-stand-for-desk-adjustable-793286.png?v=1697187385",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-soporte-laptop-40289-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 600,
+          "height": 600,
+          "bytes": 26848,
+          "sha256": "868cb37e5a5427657c90d19f734f65ec67a2384930ff7b9c6db1c7350944f7d7",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "candidate-unconfirmed-exact-model",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "Silver aluminum folding adjustable stand matches stated material/function/color at category level; SKU40289 not established by current catalog."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "missingIdentification": [
+        "SKU/modelo exacto del catálogo y revisión de variante",
+        "Evidencia de permiso para distribución app/repositorio/OTA"
+      ]
+    },
+    {
+      "productId": "22e5a48f-a7d7-4799-8e5c-5ea695a486db",
+      "catalogSlug": "comedero-doble-acero",
+      "catalogTitle": "Comedero doble de acero inoxidable",
+      "originalPath": "demo/comedero-doble-acero-1.webp",
+      "variants": [
+        {
+          "id": "c39c4ccd-bc53-4b96-9b5f-3f32e9d3058e",
+          "title": "Único",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Capacidad y dimensiones de los dos cuencos",
+        "Soporte y acabado del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "0f0f1c24-b4d4-4f44-9a93-f1c4c0fb4eea",
+      "catalogSlug": "esponjas-maquillaje-x4",
+      "catalogTitle": "Esponjas de maquillaje · pack x4",
+      "originalPath": "demo/esponjas-maquillaje-x4-1.webp",
+      "variants": [
+        {
+          "id": "a8895e5b-d054-4a6b-b73d-a35a50ce2045",
+          "title": "Pack x4",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Formas y colores exactos",
+        "Composición real del pack4(no sustituir por6)"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "97157db3-7c15-467d-b9a6-03d7a43fb25a",
+      "catalogSlug": "ugreen-power-bank-magnetico",
+      "catalogTitle": "UGREEN power bank magnético 10.000 mAh",
+      "catalogBrand": "UGREEN",
+      "originalPath": "demo/ugreen-power-bank-magnetico-1.webp",
+      "catalogVariants": [
+        {
+          "id": "6e8b77f6-ae45-49c6-b083-7f7527764a28",
+          "title": "Azul",
+          "options": {}
+        }
+      ],
+      "batch": "01-UGREEN",
+      "status": "candidate-unconfirmed-exact-model",
+      "manufacturerSku": null,
+      "candidates": [
+        {
+          "productId": "97157db3-7c15-467d-b9a6-03d7a43fb25a",
+          "catalogTitle": "UGREEN power bank magnético 10.000 mAh",
+          "catalogSlug": "ugreen-power-bank-magnetico",
+          "originalPath": "demo/ugreen-power-bank-magnetico-1.webp",
+          "manufacturerTitle": "UGREEN Magnetic Wireless Power Bank 10000mAh 20W",
+          "manufacturerSku": "25208",
+          "manufacturerVariants": [
+            {
+              "sku": "25208",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://us.ugreen.com/products/ugreen-10000mah-20w-magnetic-power-bank",
+          "metadataUrl": "https://us.ugreen.com/products/ugreen-10000mah-20w-magnetic-power-bank.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-10000mah-20w-magnetic-power-bank-387983.png?v=1706721956",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-power-bank-magnetico-25208-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 123951,
+          "sha256": "6b09b6d97efa009f8cd48b30f475b91998bbc341a8d2e886ea4b35cc4717de2b",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "REJECTED_COLOR_MISMATCH",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app imports/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "SKU25208 image is cream/white, contradicts catalog Azul. Rejected as current variant; blue alternative65958 under separate review."
+        },
+        {
+          "productId": "97157db3-7c15-467d-b9a6-03d7a43fb25a",
+          "catalogTitle": "UGREEN power bank magnético 10.000 mAh",
+          "catalogSlug": "ugreen-power-bank-magnetico",
+          "originalPath": "demo/ugreen-power-bank-magnetico-1.webp",
+          "manufacturerTitle": "UGREEN MagFlow Magnetic Wireless Power Bank 10000mAh Qi2 25W",
+          "manufacturerSku": "65958",
+          "manufacturerVariants": [
+            {
+              "sku": "65958",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://us.ugreen.com/products/ugreen-25w-magnetic-power-bank-10000mah",
+          "metadataUrl": "https://us.ugreen.com/products/ugreen-25w-magnetic-power-bank-10000mah.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/files/ugreen-magflow-magnetic-wireless-power-bank-10000mah-qi2-25w-magsafe-compatible-5144609.png?v=1763994040",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-power-bank-magnetico-65958-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 362743,
+          "sha256": "ecb3bca4af333e8b2210e74dff6211eea6c68573eb2425f39c9c4d2d3c399d3e",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "candidate-unconfirmed-exact-model",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app imports/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "Light-blue magnetic10000mAh Qi2 25W model65958 with integrated cable and Engadget award graphic. Color broadly fits Azul, exact currentSKU/output/cable unconfirmed; award is part of original manufacturer asset, do not remove or treat as independent endorsement.",
+          "distinctModelNotice": "65958 is a separate manufacturer model, NOT a color variant of25208. Neither is an approved catalog mapping. Engadget badge is in original manufacturer pixels and is not an endorsement verified by this team."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "missingIdentification": [
+        "SKU/modelo exacto del catálogo y revisión de variante",
+        "Evidencia de permiso para distribución app/repositorio/OTA"
+      ]
+    },
+    {
+      "productId": "791b9673-d6b4-4f5a-a9b3-4019f2094fb3",
+      "catalogSlug": "sheglam-polvo-sellador",
+      "catalogTitle": "SHEGLAM polvo sellador",
+      "catalogBrand": "SHEGLAM",
+      "originalPath": "demo/sheglam-polvo-sellador-1.webp",
+      "catalogVariants": [
+        {
+          "id": "c3d0784f-0379-4fb3-a668-1b3a68def040",
+          "title": "Translúcido",
+          "options": {}
+        }
+      ],
+      "status": "identidad insuficiente; fuente oficial de referencia localizada, sin asignación",
+      "manufacturerSku": null,
+      "missingIdentification": [
+        "Línea comercial/SKU real del producto en catálogo",
+        "Correspondencia exacta de variantes/tonos comerciales"
+      ],
+      "candidates": [
+        {
+          "manufacturerTitle": "Baked Glow Setting Powder-Translucent",
+          "manufacturerSku": "sbbeauty03200727122",
+          "manufacturerMpn": "1451786",
+          "manufacturerShade": "Translucent",
+          "sourcePage": "https://www.sheglam.com/product/Baked-Glow-Setting-Powder-Translucent-5694029267109",
+          "sourceHttpStatus": 200,
+          "officialImageUrls": [
+            "https://img.ltwebstatic.com/images3_pi/2024/05/28/95/1716883466cc29e3763186c359ecf7e67dd18a1d3d.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2024/05/14/e8/17156536175e9774d45a1818112275680f35f4ae62.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2024/05/14/83/1715653616bfb87000449ae11e37f4cd6392aa01cc.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2025/03/27/63/1743072705adf222f55cec84ba508894a4c2216acc.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2025/03/27/12/1743072707887cd7c1615f0b4f79f3b55d925fdca7.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2025/03/27/06/17430727078d89fd869936edda2b516d38ef84f14e.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2025/03/27/5c/1743072290a56bd03cb1d4859ee58cf833cd427ff0.jpg",
+            "https://img.ltwebstatic.com/images3_pi/2023/05/05/1683275801b3f6369cb20650670b97af36873b2b14.jpg"
+          ],
+          "downloadedImageFiles": [],
+          "imageSha256": null,
+          "imageDownloadStatus": "not_downloaded-img.ltwebstatic.com-CONNECT403-single-probe; do not retry until policy applied",
+          "sourceMetadataFile": ".local/arte-20261023/catalogo-restante/sources/sheglam-source-Baked-Glow-Setting-Powder-Translucent-5694029267109.json",
+          "sourceMetadataSha256": "e0acb9c9dcf3616be7cc0ccdcda3dd81d3e07594b142b019c7a6d042f227f9e0",
+          "imageVisuallyReviewed": false,
+          "publisher": "SHEGLAM official store",
+          "author": "Not individually identified",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.sheglam.com/page/terms",
+            "termsObservedAt": "2026-10-23",
+            "restrictiveClause": "§2.1: not for any commercial use or use on behalf of any third party, except as explicitly permitted by the Company in advance; §2.2 requires express written permission to reproduce/distribute/display/modify.",
+            "operatorDeclared": "Roadget Business Pte. Ltd",
+            "scope": "reference metadata/local only, not app/Git/OTA"
+          },
+          "correspondenceStatus": "rejected-format-mismatch",
+          "catalogComparison": "RECHAZADO: fabricante describe loose powder; catálogo declara polvo compacto. No basta coincidencia Translucent/Translúcido."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "batch": "02-SHEGLAM"
+    },
+    {
+      "productId": "6a90d97a-df57-4052-b2fb-1eb64a4f8e6b",
+      "catalogSlug": "juguete-cuerda-perros",
+      "catalogTitle": "Juguete de cuerda para perros",
+      "originalPath": "demo/juguete-cuerda-perros-1.webp",
+      "variants": [
+        {
+          "id": "441caae3-1f6f-4bf2-b2aa-b171c079c78f",
+          "title": "Único",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Dimensiones,nudos y forma",
+        "Colores/material del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "a22d2098-4aa9-422f-8c29-2ee0cfd59417",
+      "catalogSlug": "mochila-urbana-laptop",
+      "catalogTitle": "Mochila urbana para laptop",
+      "originalPath": "demo/mochila-urbana-laptop-1.webp",
+      "variants": [
+        {
+          "id": "1b79c80d-7a89-4e23-846c-b71e014db051",
+          "title": "Azul marino",
+          "options": {
+            "Color": "Azul marino"
+          }
+        },
+        {
+          "id": "7565525e-ab73-4e3f-97f0-104ed5ac6c82",
+          "title": "Oliva",
+          "options": {
+            "Color": "Oliva"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Tamaño compatible y diseño de compartimentos",
+        "Referencias Azul marino/Oliva"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "d727246f-decd-4c7e-8060-385f78d8ac04",
+      "catalogSlug": "ugreen-cable-usb-c-lightning",
+      "catalogTitle": "UGREEN cable USB-C a Lightning",
+      "catalogBrand": "UGREEN",
+      "originalPath": "demo/ugreen-cable-usb-c-lightning-1.webp",
+      "catalogVariants": [
+        {
+          "id": "b6794122-c95b-4355-8d5b-3d4203485e49",
+          "title": "1 m",
+          "options": {}
+        }
+      ],
+      "batch": "01-UGREEN",
+      "status": "candidate-unconfirmed-exact-model",
+      "manufacturerSku": null,
+      "candidates": [
+        {
+          "productId": "d727246f-decd-4c7e-8060-385f78d8ac04",
+          "catalogTitle": "UGREEN cable USB-C a Lightning",
+          "catalogSlug": "ugreen-cable-usb-c-lightning",
+          "originalPath": "demo/ugreen-cable-usb-c-lightning-1.webp",
+          "manufacturerTitle": "UGREEN 20W USB C to Lightning Cable 3.3FT",
+          "manufacturerSku": "60759",
+          "manufacturerVariants": [
+            {
+              "sku": "60759",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://us.ugreen.com/products/ugreen-20w-usb-c-to-lightning-cable",
+          "metadataUrl": "https://us.ugreen.com/products/ugreen-20w-usb-c-to-lightning-cable.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-20w-usb-c-to-lightning-cable-445068.png?v=1692790940",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-cable-usb-c-lightning-60759-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 600,
+          "height": 600,
+          "bytes": 78599,
+          "sha256": "35ef82410708da55952c94d00ff4643d901d6a01535a2bbaf39ce8d4d6548d0e",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "candidate-unconfirmed-exact-model",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app imports/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "Black braided cable,metallic gray ends,USB-C andLightning. Official3.3FT marketed length; catalog1m is broadly consistent, exact SKU/finish unconfirmed."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "missingIdentification": [
+        "SKU/modelo exacto del catálogo y revisión de variante",
+        "Evidencia de permiso para distribución app/repositorio/OTA"
+      ]
+    },
+    {
+      "productId": "589c3a62-09aa-4256-bf45-057a494cdb69",
+      "catalogSlug": "espejos-bucales-x12",
+      "catalogTitle": "Espejos bucales planos · caja x12",
+      "originalPath": "demo/espejos-bucales-x12-1.webp",
+      "variants": [
+        {
+          "id": "adafa406-5071-444c-8305-26ba7e29e994",
+          "title": "Caja x12",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Número/diámetro del espejo plano",
+        "Contenido exacto de caja12(cabezas,mangos o conjuntos)"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "0eb5df2e-b2c2-4cd1-ba83-362cd140f85d",
+      "catalogSlug": "rascador-gatos-torre",
+      "catalogTitle": "Rascador para gatos tipo torre",
+      "originalPath": "demo/rascador-gatos-torre-1.webp",
+      "variants": [
+        {
+          "id": "04c38ded-9b75-4946-82e2-82b0e170ea93",
+          "title": "Beige",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Altura y estructura de plataformas/postes",
+        "Referencia Beige"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "3d0aae18-6668-4b5a-b094-7b322e67b6e4",
+      "catalogSlug": "ugreen-hub-usb-c-10-en-1",
+      "catalogTitle": "UGREEN hub USB-C 10 en 1",
+      "catalogBrand": "UGREEN",
+      "originalPath": "demo/ugreen-hub-usb-c-10-en-1-1.webp",
+      "catalogVariants": [
+        {
+          "id": "a67a8203-b5bd-4588-a774-ad37cd168141",
+          "title": "Plata",
+          "options": {}
+        }
+      ],
+      "batch": "01-UGREEN",
+      "status": "REJECTED_COLOR_MISMATCH_AND_EXACT_MODEL_UNCONFIRMED",
+      "manufacturerSku": null,
+      "candidates": [
+        {
+          "productId": "3d0aae18-6668-4b5a-b094-7b322e67b6e4",
+          "catalogTitle": "UGREEN hub USB-C 10 en 1",
+          "catalogSlug": "ugreen-hub-usb-c-10-en-1",
+          "originalPath": "demo/ugreen-hub-usb-c-10-en-1-1.webp",
+          "manufacturerTitle": "UGREEN Revodok Pro 10-in-1 USB-C Docking Station",
+          "manufacturerSku": "45366",
+          "manufacturerVariants": [
+            {
+              "sku": "45366",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://us.ugreen.com/products/ugreen-10-in-1-usb-c-docking-station",
+          "metadataUrl": "https://us.ugreen.com/products/ugreen-10-in-1-usb-c-docking-station.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/files/ugreen-revodok-pro-2102-10-in-1-usb-c-docking-station-707465.png?v=1740094255",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-hub-usb-c-10-en-1-45366-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 1080,
+          "height": 1080,
+          "bytes": 248710,
+          "sha256": "aa1c542513e21be46ca3f3b2f5c9c18018040f0eaa5ccfa4cd173e7c401e7e57",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "REJECTED_COLOR_MISMATCH_AND_EXACT_MODEL_UNCONFIRMED",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app imports/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "Graphite/silver ribbed10-in-1 hub with numerous accessories as demonstration props; do not imply extra cables/cards/USB drive included. ExactSKU/ports and Plata shade unconfirmed. Independent review rejects graphite as proof of the catalog Plata variant."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "missingIdentification": [
+        "SKU/modelo exacto del catálogo y revisión de variante",
+        "Evidencia de permiso para distribución app/repositorio/OTA"
+      ]
+    },
+    {
+      "productId": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d",
+      "catalogSlug": "correa-reflectiva",
+      "catalogTitle": "Correa reflectiva",
+      "originalPath": "demo/correa-reflectiva-1.webp",
+      "variants": [
+        {
+          "id": "16af21c2-ab3a-43ee-a716-b8597c6b8690",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "14a5e387-664f-4353-8ec6-563649f42b91",
+          "title": "Coral",
+          "options": {
+            "Color": "Coral"
+          }
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Longitud,anchura y herrajes",
+        "Referencias Turquesa/Coral"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "74ebec82-84d2-40f4-b5ac-52a455572dea",
+      "catalogSlug": "kit-exploradores-pinzas",
+      "catalogTitle": "Kit de exploradores y pinzas",
+      "originalPath": "demo/kit-exploradores-pinzas-1.webp",
+      "variants": [
+        {
+          "id": "6b98a399-9d74-48fe-a343-51024c505123",
+          "title": "Kit",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia del kit",
+        "Cantidad y diseños de instrumentos",
+        "Material y acabado del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "5eb2d0c6-0ea1-4036-92b4-6c542cef3a4e",
+      "catalogSlug": "juego-toallas-algodon",
+      "catalogTitle": "Juego de toallas de algodón",
+      "originalPath": "demo/juego-toallas-algodon-1.webp",
+      "variants": [
+        {
+          "id": "8fba0742-700e-4d3e-87d2-ac85e95be6ab",
+          "title": "Salvia",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/línea",
+        "Cantidad,dimensiones y gramaje",
+        "Referencia Salvia"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "24210e39-1b0b-4cb9-8ca7-5415bd02637a",
+      "catalogSlug": "eyectores-saliva-x100",
+      "catalogTitle": "Eyectores de saliva · bolsa x100",
+      "originalPath": "demo/eyectores-saliva-x100-1.webp",
+      "variants": [
+        {
+          "id": "c4204dda-85ec-42ad-a8db-1981e92a06b4",
+          "title": "Bolsa x100",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Longitud,forma/material y color",
+        "Contenido exacto bolsa100"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "43184890-9356-490f-be9d-2c00199ba8d5",
+      "catalogSlug": "organizador-bambu",
+      "catalogTitle": "Organizador de bambú",
+      "originalPath": "demo/organizador-bambu-1.webp",
+      "variants": [
+        {
+          "id": "bf2733b7-06b0-49c5-a140-d2b223c5c7f0",
+          "title": "Natural",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Dimensiones y distribución de compartimentos",
+        "Acabado Natural del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "648be3ae-6ce1-4293-af7a-0cae15648c09",
+      "catalogSlug": "ugreen-cargador-auto",
+      "catalogTitle": "UGREEN cargador de auto USB-C",
+      "catalogBrand": "UGREEN",
+      "originalPath": "demo/ugreen-cargador-auto-1.webp",
+      "catalogVariants": [
+        {
+          "id": "5a9fccb0-17d3-42c7-8e15-32b9067f29a1",
+          "title": "Negro",
+          "options": {}
+        }
+      ],
+      "batch": "01-UGREEN",
+      "status": "REJECTED_VARIANT_AND_BUNDLE_UNCONFIRMED",
+      "manufacturerSku": null,
+      "candidates": [
+        {
+          "productId": "648be3ae-6ce1-4293-af7a-0cae15648c09",
+          "catalogTitle": "UGREEN cargador de auto USB-C",
+          "catalogSlug": "ugreen-cargador-auto",
+          "originalPath": "demo/ugreen-cargador-auto-1.webp",
+          "manufacturerTitle": "UGREEN 30W PD Car Charger 2 Ports with 60W USB-C Cable",
+          "manufacturerSku": "90314",
+          "manufacturerVariants": [
+            {
+              "sku": "90314",
+              "title": "Default Title"
+            }
+          ],
+          "sourcePage": "https://uk.ugreen.com/products/ugreen-30w-pd-car-charger-2-ports-with-60w-usb-c-cable",
+          "metadataUrl": "https://uk.ugreen.com/products/ugreen-30w-pd-car-charger-2-ports-with-60w-usb-c-cable.js",
+          "originalUrl": "https://cdn.shopify.com/s/files/1/0697/8207/7746/products/ugreen-30w-pd-car-charger-2-ports-with-60w-usb-c-cable-631505.png?v=1692927221",
+          "file": ".local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-cargador-auto-90314-original.png",
+          "httpStatus": 200,
+          "author": "Not separately identified",
+          "publisher": "UGREEN official manufacturer storefront",
+          "width": 600,
+          "height": 600,
+          "bytes": 58441,
+          "sha256": "e1c7d5e9583ebcc3261f872d86a7edcf3d15261b2317e8f59885af381618dff2",
+          "unalteredOriginal": true,
+          "generatedOrEditedByAI": false,
+          "correspondenceStatus": "REJECTED_VARIANT_AND_BUNDLE_UNCONFIRMED",
+          "rights": {
+            "status": "not_confirmed_for_redistribution",
+            "license": null,
+            "evidence": null,
+            "termsSource": "https://www.ugreen.com/pages/terms-and-conditions",
+            "scope": "local review only; outside app imports/Git/OTA"
+          },
+          "visualReview": "reviewed directly with view_image",
+          "visualNotes": "SKU90314 is metallic gray with black face and a60W USB-C cable bundle; catalog says Negro and does not confirm bundle. Do not use for catalog25845 or infer exact match."
+        }
+      ],
+      "approvedCatalogMapping": false,
+      "missingIdentification": [
+        "SKU/modelo exacto del catálogo y revisión de variante",
+        "Evidencia de permiso para distribución app/repositorio/OTA"
+      ]
+    },
+    {
+      "productId": "f441a857-6c8c-49c3-83e0-e6fc05476398",
+      "catalogSlug": "baberos-desechables-x125",
+      "catalogTitle": "Baberos desechables · paquete x125",
+      "originalPath": "demo/baberos-desechables-x125-1.webp",
+      "variants": [
+        {
+          "id": "a9fc6bdc-b3ec-48d6-9b9f-1dcdd41da31a",
+          "title": "Celeste",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Dimensiones y composición/capas",
+        "Referencia Celeste y paquete125"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "5b0d1430-8d4f-4b49-a3cf-fb96ae6b0979",
+      "catalogSlug": "cubetas-impresion-set",
+      "catalogTitle": "Cubetas de impresión · set",
+      "originalPath": "demo/cubetas-impresion-set-1.webp",
+      "variants": [
+        {
+          "id": "0bb43649-5825-4686-9086-cd50ec47eb2f",
+          "title": "Set",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/referencia",
+        "Cantidad,tallas y formas del set",
+        "Material y perforación del modelo"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "ea963d02-a8d3-412d-a683-483aaaf61bba",
+      "catalogSlug": "lampara-fotocurado-led",
+      "catalogTitle": "Lámpara de fotocurado LED inalámbrica",
+      "originalPath": "demo/lampara-fotocurado-led-1.webp",
+      "variants": [
+        {
+          "id": "6b5d9ec0-44d9-48fc-a142-49c82762f81c",
+          "title": "Unidad",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Geometría,controles y accesorios incluidos",
+        "Referencia identificable del equipo; ficha declara documentación pendiente"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    },
+    {
+      "productId": "d9b01dc4-2f12-4b45-b726-c34325f1f9bb",
+      "catalogSlug": "dji-mic-3-2-tx-1-rx-charging-case-wireless-microphone-mini-mic-for-iphone-camera",
+      "catalogTitle": "DJI Mic 3 (2 TX + 1 RX + Charging Case), Wireless Microphone",
+      "catalogBrand": null,
+      "originalPath": "5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+      "catalogVariants": [
+        {
+          "id": "cd4c5040-e7e7-40cb-88d4-4e43a4d0dead",
+          "title": "Única",
+          "options": {}
+        }
+      ],
+      "batch": "04-DJI",
+      "status": "Modelo/kit declarados en catálogo; origen/licencia de galería profesional no acreditados",
+      "manufacturerSku": null,
+      "manufacturerModel": "DJI Mic3",
+      "kit": "2TX+1RX+Charging Case",
+      "existingResources": [
+        {
+          "file": ".local/arte-20261023/catalogo-restante/lote-04-dji/dji-mic3-current-catalog-1.jpg",
+          "sourceUrl": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+          "sourcePath": "5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+          "httpStatus": 200,
+          "width": 679,
+          "height": 589,
+          "format": "JPEG",
+          "bytes": 39820,
+          "sha256": "56b4bc1ead1629169d79522f482979cffade00f1b0086bfbfcaa58a8b8637299",
+          "unalteredOriginal": true,
+          "provenanceStatus": "Already-uploaded public Marketplace resource; manufacturer/Amazon origin not established",
+          "rightsStatus": "not_confirmed_no_publisher_license_evidence",
+          "visualReview": "reviewed directly with view_image",
+          "manufacturerPublicationVerified": false
+        },
+        {
+          "file": ".local/arte-20261023/catalogo-restante/lote-04-dji/dji-mic3-current-catalog-2.jpg",
+          "sourceUrl": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588872736-1.jpg",
+          "sourcePath": "5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588872736-1.jpg",
+          "httpStatus": 200,
+          "width": 500,
+          "height": 500,
+          "format": "JPEG",
+          "bytes": 20765,
+          "sha256": "949c5c8a319d22bc08122e5791973d52fc231e3c8c7c28648659e8e3b6c8617d",
+          "unalteredOriginal": true,
+          "provenanceStatus": "Already-uploaded public Marketplace resource; manufacturer/Amazon origin not established",
+          "rightsStatus": "not_confirmed_no_publisher_license_evidence",
+          "visualReview": "reviewed directly with view_image",
+          "manufacturerPublicationVerified": false
+        },
+        {
+          "file": ".local/arte-20261023/catalogo-restante/lote-04-dji/dji-mic3-current-catalog-3.jpg",
+          "sourceUrl": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588873472-2.jpg",
+          "sourcePath": "5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588873472-2.jpg",
+          "httpStatus": 200,
+          "width": 679,
+          "height": 626,
+          "format": "JPEG",
+          "bytes": 60817,
+          "sha256": "5f4d4e72ee0815f739be9277ca9abfc57bff24946bb0b01a8a6cdbe11ede7dfd",
+          "unalteredOriginal": true,
+          "provenanceStatus": "Already-uploaded public Marketplace resource; manufacturer/Amazon origin not established",
+          "rightsStatus": "not_confirmed_no_publisher_license_evidence",
+          "visualReview": "reviewed directly with view_image",
+          "manufacturerPublicationVerified": false
+        },
+        {
+          "file": ".local/arte-20261023/catalogo-restante/lote-04-dji/dji-mic3-current-catalog-4.jpg",
+          "sourceUrl": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588874339-3.jpg",
+          "sourcePath": "5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588874339-3.jpg",
+          "httpStatus": 200,
+          "width": 679,
+          "height": 679,
+          "format": "JPEG",
+          "bytes": 51638,
+          "sha256": "361563dc7aa9a91b55861b678f18c2b45643148c2c3af0648ae032c3715372e8",
+          "unalteredOriginal": true,
+          "provenanceStatus": "Already-uploaded public Marketplace resource; manufacturer/Amazon origin not established",
+          "rightsStatus": "not_confirmed_no_publisher_license_evidence",
+          "visualReview": "reviewed directly with view_image",
+          "manufacturerPublicationVerified": false
+        }
+      ],
+      "missingIdentification": [
+        "Manufacturer part number and exact kit revision",
+        "Original manufacturer/Amazon publication URL for each existing image",
+        "Documented image reuse permission"
+      ],
+      "approvedCatalogMapping": false
+    },
+    {
+      "productId": "efd602ef-4735-4c13-8c54-c9542a98610b",
+      "catalogSlug": "audifonos-deportivos",
+      "catalogTitle": "Audífonos deportivos",
+      "originalPath": "demo/audifonos-deportivos-1.webp",
+      "variants": [
+        {
+          "id": "19aeca53-5ba5-4557-a0cd-23d2ae2aed63",
+          "title": "Coral",
+          "options": {}
+        }
+      ],
+      "manufacturerSku": null,
+      "manufacturer": null,
+      "status": "identidad insuficiente",
+      "missingIdentification": [
+        "Fabricante/modelo",
+        "Formato y forma de ajuste/conectividad",
+        "Referencia Coral"
+      ],
+      "candidateSources": [],
+      "downloadedFiles": [],
+      "sourceEvidence": "Public anonymous RPC product_detail2026-10-23; no manufacturer/model identifiers returned. No model inferred from demo illustration.",
+      "rights": {
+        "status": "not_applicable_no_selected_resource",
+        "license": null,
+        "evidence": null
+      },
+      "approvedCatalogMapping": false,
+      "batch": "03-GENERICOS"
+    }
+  ]
+}
