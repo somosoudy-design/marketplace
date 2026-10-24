@@ -4,7 +4,11 @@
 
 Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
 
-Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y reflujo corregidos, auditor/comercio APROBADO, EAS40045652185 Success/19a1329 ya publicado. Próxima acción: cerrar recepción Android40045853547, 13/14 normal/OS1,6, leer ID real y revisar capturas; no repetir pruebas o publicación ya hechas. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.
+Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y reflujo corregidos, auditor/comercio web APROBADO, EAS40045652185 Success/19a1329. **Recibida en Android40045853547, 4/4 sin reintentos**, 13/14 claro/oscuro normal/OS1,6. Última OTA **`01a16b56-46a9-7960-a239-4b2271e68d5a`**, 24oct00:36UTC, conserva todas las imágenes del primer lote.36JPG/hash36/36 en `capturas/ficha-seleccion-2026-10-24/native/`. No repetir pruebas o publicación ya hechas. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.
+
+**Auditor independiente nativo APROBADO:**36JPG examinados y36/36hashes/dimensiones verificados; cierra selección/compra/contraste del recorrido. Sin Samsung, TalkBack o checkout autenticado nuevos.
+
+**Siguiente bloque:** corregir `StoreCard.tsx:82`, altura18 fija de línea auxiliar de `StoreChip`, recorte preexistente de «Aún sin opiniones» con fuente Android OS1,6. Cubrir tienda con/sin opiniones, ambos temas, conservando estados03/04 como antes. Después, claridad comercial de carrito con varias líneas/dos unidades, precio unitario frente a importe de línea, variante y acciones; conservar cálculos/DTO. No afirmar accesibilidad completa por aprobar el resumen de selección.
 
 
 > Por prioridad. Lo actualiza el agente que cambia una prioridad, termina una tarea o encuentra un bloqueo. Lo
@@ -13,7 +17,7 @@ Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y ref
 > Estados: **Lista** (se puede empezar), **Bloqueada** (espera algo externo), **En curso**, **Hecha** (se borra
 > de aquí y queda en `docs/HISTORIAL_AGENTES.md`).
 
-**Última revisión:** 2026-10-23.
+**Última revisión:** 2026-10-24.
 
 **Publicación progresiva autorizada por Oliver:** «No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente». Cada bloque implementado y validado se publica en Android preview/APK5 con guard y recepción comprobados, sin nueva aprobación rutinaria. La consulta visual anterior es opcional y no bloquea continuar. La autorización del propietario está resuelta; los requisitos pendientes de identidad/licencia del material fotográfico siguen documentados. Antes del nuevo incremento Inicio, todo el código estaba en la OTA01a1693d; no publicar pruebas/documentación o código idéntico como si fueran nuevos cambios visuales.
 
@@ -29,9 +33,9 @@ Nueva apertura de producto publicado dentro de Electric Violet C, sin prioridad 
 
 SHEGLAM CDN ya responde: siete originales descargados/inspeccionados, sólo ignorados. La confirmación de modelo/tono y permiso de distribución sigue pendiente; no asignar fotografías por parecido.
 
-## Próximo bloque acotado — contraste de estado en ficha oscura
+## Contraste de estado en ficha oscura — resuelto en la última OTA
 
-P2 preexistente confirmada de nuevo por el auditor en DJI normal/OS1,6 y SHEGLAM: reloj e iconos blancos pierden contraste al cruzar a una fotografía clara. No corregida en el incremento Home. Reproducir/capturar y corregir gestión deStatusBar en ficha manteniendo regreso aHome, ambos temas y fuenteOS1,6, sin configuración nativa ni cambios financieros. Validación/revisión/publicación preview con autorización progresiva vigente. No repetir la OTA de Home ni la batería completa de compra por este punto.
+La ficha reserva una sola vez la franja de sistema y mantiene superficie/iconos del tema. Corregido y publicado en OTA01a16b56; nativo40045853547 verifica galería clara, ambos temas/fuenteOS1,6 y regreso aInicio con iconos blancos sobre violeta. Evidencia estados07/08 de13/14. No reconstruir ni volver a abrir este fallo resuelto. El recorte distinto de la tarjeta de vendedor con texto OS ampliado permanece registrado arriba.
 
 ## UX-CALIDAD — app real, mejora general autorizada
 

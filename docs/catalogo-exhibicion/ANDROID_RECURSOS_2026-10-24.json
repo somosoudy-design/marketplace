@@ -1,0 +1,201 @@
+{
+  "sourceCode": "73be557",
+  "scope": "Actual optimized asset bytes in the final Android/Hermes export, not merely source files",
+  "expectedResources": 32,
+  "includedResources": 32,
+  "productCount": 25,
+  "matches": [
+    {
+      "productId": "4a16b9ea-86e1-428e-8989-461848dad920",
+      "variantId": "e5cec675-8b8c-4904-98a2-a78b3ff793af",
+      "sha256": "02328a2a70bf7a1171441fca14835eab95da4e7fc56094f60f5a2fa69c2979ed",
+      "exportPath": "assets/1b6f3901c9ae62c4ce228c080fe07d1b"
+    },
+    {
+      "productId": "ff742b48-0d15-4f33-8775-1efb54d05f5b",
+      "variantId": "7ccd0285-c16f-402c-a6d8-a671b44a6a4d",
+      "sha256": "06824ba63e832d75cf84c0ef0d9c474f6939c4ec1cd4e497a72fdc5fd46e4a13",
+      "exportPath": "assets/ccc8d6bf50cc3f69ad4847a6509a74c2"
+    },
+    {
+      "productId": "0f0f1c24-b4d4-4f44-9a93-f1c4c0fb4eea",
+      "variantId": "a8895e5b-d054-4a6b-b73d-a35a50ce2045",
+      "sha256": "0a974fc9da63f6e94463e5216de8cf89b5c467a2158b8576bb58c338e05b8bfc",
+      "exportPath": "assets/8048b7323e2034abff351289c3e9071b"
+    },
+    {
+      "productId": "f441a857-6c8c-49c3-83e0-e6fc05476398",
+      "variantId": null,
+      "sha256": "2165268e2a1965b8646c4ab8665871780daf61dfbede5d816905c3f26dfb5244",
+      "exportPath": "assets/4f635a3f44f5c829d227df86147ec814"
+    },
+    {
+      "productId": "4a16b9ea-86e1-428e-8989-461848dad920",
+      "variantId": "a9202235-ee54-480f-b8d6-b7d582144479",
+      "sha256": "267944a6d67455f0d0b6235d67f478c39bc3466e791be1ade3af0d02ead24ac5",
+      "exportPath": "assets/f073d20dd6362664191a2fac362c64c1"
+    },
+    {
+      "productId": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d",
+      "variantId": "16af21c2-ab3a-43ee-a716-b8597c6b8690",
+      "sha256": "2af53d90f8ef3db64ff64d66d6a58024a047bba1a35eaff10369dd6b13e12143",
+      "exportPath": "assets/64c02121a02932c19b615e4d1453f42a"
+    },
+    {
+      "productId": "c3a54b68-0659-421d-baf9-86d3fa3caeca",
+      "variantId": null,
+      "sha256": "2ea773da4c5da1cde2b523762e2421079d2b6488b194b7964ac8282aa4bca5c1",
+      "exportPath": "assets/4961022bbc21b3dcdd53352dadc53444"
+    },
+    {
+      "productId": "e2963fef-06a4-41e7-8dcd-5ae42576c923",
+      "variantId": "9c30455d-8d6c-4476-8125-97e4ea73790a",
+      "sha256": "30451e56d8a63fbf442997a6f3296f6d85d53fc7376584198a29cff2a1bdfd91",
+      "exportPath": "assets/2d88edc2f7d33284ac7dc7c61a85425e"
+    },
+    {
+      "productId": "43184890-9356-490f-be9d-2c00199ba8d5",
+      "variantId": "bf2733b7-06b0-49c5-a140-d2b223c5c7f0",
+      "sha256": "307d097ef885b41e23730c50ed2a6051eab564aef03bbb7b2bfe0bcc96eadc47",
+      "exportPath": "assets/76218b962382b97ea9d8a683689db76c"
+    },
+    {
+      "productId": "efd602ef-4735-4c13-8c54-c9542a98610b",
+      "variantId": "19aeca53-5ba5-4557-a0cd-23d2ae2aed63",
+      "sha256": "33e482998fe4d46c83b5a7ce935fff846d7598b8d55075f00520cb061d4d517c",
+      "exportPath": "assets/a3d432a6dd7f69e177649ffcb8cde169"
+    },
+    {
+      "productId": "5b0d1430-8d4f-4b49-a3cf-fb96ae6b0979",
+      "variantId": null,
+      "sha256": "3b01ef7ead4eadac5e40a02c38edfd0425413495110ce5b5cf1f44162fd10154",
+      "exportPath": "assets/e5d20f34846490e5f4ed4e23cf8a905c"
+    },
+    {
+      "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
+      "variantId": "f4965176-bf53-4a7e-a9e1-07bf0608e856",
+      "sha256": "3d1c939237215f667002692f54d35cc291306966f10498a7b23a5f3d8884fcba",
+      "exportPath": "assets/273bdc37d1813a6f28f393736481e4bd"
+    },
+    {
+      "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
+      "variantId": "1b7afb4c-1b8f-488f-a241-f0b028694416",
+      "sha256": "50f29b167b1cef522d4156dd6a9a4fab2cf0775d07901a69d2403588ad7f35e4",
+      "exportPath": "assets/02585a2d7683a532a0969bc49b3cfce8"
+    },
+    {
+      "productId": "1b895714-8723-4330-8472-75ade944652a",
+      "variantId": null,
+      "sha256": "5cd7116a40233041d3859e40e9d1d10b7e185578a20b42cb3ed3bcccece4c509",
+      "exportPath": "assets/b8d5e1a1532c08a87b002d570be3ee78"
+    },
+    {
+      "productId": "a22d2098-4aa9-422f-8c29-2ee0cfd59417",
+      "variantId": "1b79c80d-7a89-4e23-846c-b71e014db051",
+      "sha256": "63265823f4eec812903d339c62fd9e09e0fad031d5bdac263e676f86cebd5c04",
+      "exportPath": "assets/8f92339c815a1c73c931a19c73049e5c"
+    },
+    {
+      "productId": "589c3a62-09aa-4256-bf45-057a494cdb69",
+      "variantId": null,
+      "sha256": "6de1da616ef010e193ad38763e4168061ab08093119d921673edf056a414c39e",
+      "exportPath": "assets/320d534b8cb889ede33a726eb419e8a6"
+    },
+    {
+      "productId": "e2963fef-06a4-41e7-8dcd-5ae42576c923",
+      "variantId": "27202dd8-a0ee-4609-8dca-36bde90210ef",
+      "sha256": "79223ecfbe1e79ee7ce0b3ba8843ceb4439f822a5408bb752ec35e724b512ae0",
+      "exportPath": "assets/974ea6c9508140fdd674d04d8c1c70fa"
+    },
+    {
+      "productId": "ff742b48-0d15-4f33-8775-1efb54d05f5b",
+      "variantId": "286878c6-29cf-4027-b027-dd67996ae96a",
+      "sha256": "8326bddef32a3708bdc6719d38b58465187aca5d96688ec8d91c55e0e88884d8",
+      "exportPath": "assets/5bf675bf3e9d5af6a78a03e5a0861719"
+    },
+    {
+      "productId": "22e5a48f-a7d7-4799-8e5c-5ea695a486db",
+      "variantId": "c39c4ccd-bc53-4b96-9b5f-3f32e9d3058e",
+      "sha256": "87c86f7cef6ce3c3af3a56ebf6c41e47a5e980eee52e77f429abdc83bb6c706c",
+      "exportPath": "assets/e6c6f474296a79b1674281af0c18bbb6"
+    },
+    {
+      "productId": "6a90d97a-df57-4052-b2fb-1eb64a4f8e6b",
+      "variantId": "441caae3-1f6f-4bf2-b2aa-b171c079c78f",
+      "sha256": "89e6e3816a616bbacdb1e323bfd972d796c346a11c213b48f1a9c4f88e53c2f9",
+      "exportPath": "assets/f73326becc74c9fbb3811393beef105e"
+    },
+    {
+      "productId": "24210e39-1b0b-4cb9-8ca7-5415bd02637a",
+      "variantId": null,
+      "sha256": "8ac37715ca56a5d217fa22b843b9ca37dc8fe23cd27bfd8414995d83cb40e904",
+      "exportPath": "assets/ec0ce3160f292509164b00641a7d8375"
+    },
+    {
+      "productId": "3e280c0e-dd8b-404a-927e-39c0fd9e4a9e",
+      "variantId": null,
+      "sha256": "98b885041887954f5851912c9975e5b2c9222952fd02f5d5e55b00ffbb96d23a",
+      "exportPath": "assets/10efc603339d75f726de61abae19f688"
+    },
+    {
+      "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
+      "variantId": "f984e205-a702-4f95-b0e2-c2249127a4a0",
+      "sha256": "9a447315e1c8594eb4c30728a3d17f1767d383689c1a9d230f01c35501fc4933",
+      "exportPath": "assets/13ef9472538c88dcc772bc095e57607a"
+    },
+    {
+      "productId": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d",
+      "variantId": "14a5e387-664f-4353-8ec6-563649f42b91",
+      "sha256": "9d241d64c800e695b95fcd8dba3bff0cfb0a0c65d6f9360214482d12f7ab1c01",
+      "exportPath": "assets/a849faf5a87876c206ef141c255236bb"
+    },
+    {
+      "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
+      "variantId": "767912c9-9b59-4bb2-8b90-71e42748ac2c",
+      "sha256": "aa422768790afab8e62b31f5a654f10919d94bf92177260c868e6b1e158d674c",
+      "exportPath": "assets/a327132e84c9001f6fa1f202f463eca2"
+    },
+    {
+      "productId": "ea963d02-a8d3-412d-a683-483aaaf61bba",
+      "variantId": null,
+      "sha256": "af34d5098bea4ed4ac16de3c3fda48aa2b0e45aa23992787c0b0d4217cafac08",
+      "exportPath": "assets/7358e8fb06cbe8396409b3a51a820250"
+    },
+    {
+      "productId": "5eb2d0c6-0ea1-4036-92b4-6c542cef3a4e",
+      "variantId": "8fba0742-700e-4d3e-87d2-ac85e95be6ab",
+      "sha256": "b287247bde7a1c13fd08d9b972fa91a433aa5e3e379af082cc3fcd47ee980c1f",
+      "exportPath": "assets/d260d4b3d7e6b163982d0cf260ca8c03"
+    },
+    {
+      "productId": "74ebec82-84d2-40f4-b5ac-52a455572dea",
+      "variantId": null,
+      "sha256": "c61019fa45f0bbc68e24f6b05f75fdb2b9b85b9b1628fd3385912fc2579f7b0a",
+      "exportPath": "assets/03d004f0c67cc17440efa3e6ee1d7696"
+    },
+    {
+      "productId": "a22d2098-4aa9-422f-8c29-2ee0cfd59417",
+      "variantId": "7565525e-ab73-4e3f-97f0-104ed5ac6c82",
+      "sha256": "d4bf750e7d12df16fc959928d560c5c20a4bd8e824c1c29eec89de4f73349df4",
+      "exportPath": "assets/8fe71c598a96d0094454cede3ab01410"
+    },
+    {
+      "productId": "f1752791-3273-4001-beb6-000b7aace947",
+      "variantId": "c243b59e-84a8-4be8-bc71-bd7552dcffeb",
+      "sha256": "d97e1446a17c799ec4195c1540096ed21c077eb24879516a54cdd4bc0f8fb185",
+      "exportPath": "assets/2a58ca27021576c0e6226bef7ebd1322"
+    },
+    {
+      "productId": "d23a9fbb-8e4a-4299-ab29-5d1e73522c21",
+      "variantId": "c703b052-af15-46fa-8b67-a5c02f5491ab",
+      "sha256": "da7e43dac53de1566c25ecd4be82b6efeb7b12e15a7570e505d8b99d95f46af8",
+      "exportPath": "assets/627606674f36de09e3b586831ed77741"
+    },
+    {
+      "productId": "0eb5df2e-b2c2-4cd1-ba83-362cd140f85d",
+      "variantId": "04c38ded-9b75-4946-82e2-82b0e170ea93",
+      "sha256": "dba061bc8fde1df6aede82191ad41190c12bb1cb9f4224d3d88edf8c7ecd902a",
+      "exportPath": "assets/e2a63e72023eaa5bb250229d5037d687"
+    }
+  ]
+}
