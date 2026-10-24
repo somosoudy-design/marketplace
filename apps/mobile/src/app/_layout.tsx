@@ -17,6 +17,7 @@ import { ConfigMissing } from '@/components/ConfigMissing';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/env';
 import { persistOptions, queryClient } from '@/lib/query';
+import '@/lib/checkout-navigation';
 import { OfflineFrame } from '@/components/OfflineNotice';
 import { PushBridge } from '@/components/PushBridge';
 import { UpdateNotice } from '@/components/UpdateNotice';

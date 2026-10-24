@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { emailCode } from './support/mail';
+import { checkoutToReview } from './support/checkout';
 
 // Full buyer journey: visitor cart -> sign up -> code from the email -> cart merge -> checkout with a new address ->
 // double tap on "Confirmar" -> Pago Móvil quote in Bs -> reference -> payment stays in verification.
@@ -46,6 +47,7 @@ test('a new buyer completes checkout and submits a Pago Móvil payment for verif
   await page.getByTestId('addr-save').click();
 
   await expect(page.getByTestId('checkout-address')).toContainText('Ana Prueba');
+  await checkoutToReview(page);
   await expect(page.getByTestId('checkout-total')).toContainText('$');
   const place = page.getByTestId('checkout-place');
   await expect(place).toBeEnabled();

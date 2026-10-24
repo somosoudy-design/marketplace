@@ -1,5 +1,12 @@
 # Pendientes de Kora
 
+
+## Prioridad inmediata · checkout progresivo (24oct2026)
+
+- Oliver solicita una fase por decisión: Dirección → Entregas → Plan → Revisión. Implementación local en curso, sin nueva OTA todavía. No repetir fotografías/Supabase en este bloque.
+- Cerrar validación local y revisión independiente, conservar importes/reglas del servidor y una intención de pedido por visita; publicar sólo Android preview/APK5 con la autorización vigente y recepción comprobada.
+- Detalles y próxima acción exacta: `ESTADO_ACTUAL.md`, `CHECKOUT_PROGRESIVO_2026-10-24.md`. Trece fotos de marca siguen pendientes, no se declaran completadas.
+
 ## Prioridad activa — completar el material del catálogo
 
 **Lote adicional cerrado y recibido en emulador:** cinco referencias / seis ediciones de estudio CC. EAS40051620927 Success, fuente7f4c556; OTA **`01a16b9c-4322-7c4a-851a-3cfd0e4c93aa`**, Android preview/APK5. Android40051872738/sourcecb647bf: cuatro recorridos sin reintentos, ambos temas y fuente OS normal/1,6. Auditor independiente nativo APROBADO tras40JPG y40pares de hashes. [Informe y evidencia](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md).

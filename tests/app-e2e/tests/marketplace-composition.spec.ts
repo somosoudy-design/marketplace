@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { newBuyer } from './support/db';
+import { checkoutToReview } from './support/checkout';
 
 const stage = process.env.HAYAZGO_QUALITY_STAGE === 'before' ? 'before' : 'after';
 const root = resolve(import.meta.dirname, `../../../.local/ux-20261023/composition/${stage}`);
@@ -47,7 +48,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await capture(page, `${folder}/01-cart-${width}.png`);
         measurements[`cart-${width}`] = await page.locator('[data-testid^="cart-line-"] img').first().boundingBox();
         await page.getByTestId('cart-continue').click();
-        await expect(page.getByTestId('checkout-place')).toBeEnabled();
+        await expect(page.getByTestId('checkout-next')).toBeEnabled();
         await capture(page, `${folder}/02-checkout-${width}.png`);
         await page.goto('/p/ugreen-cable-usb-c-100w');
         await expect(page.getByTestId('product-title')).toBeVisible();
@@ -61,9 +62,10 @@ for (const colorScheme of ['light', 'dark'] as const) {
     test('delivery summaries keep every server option in a sheet and preserve the chosen delivery', async ({ page }) => {
       await filledCart(page, 'ui-delivery-choices');
       await page.getByTestId('cart-continue').click();
-      await expect(page.getByTestId('checkout-place')).toBeEnabled();
+      await expect(page.getByTestId('checkout-next')).toBeEnabled();
+      await page.getByTestId('checkout-next').click();
       await expect(page.getByTestId('delivery-choice-0')).toBeVisible();
-      await expect(page.getByTestId('delivery-choice-1')).toBeVisible();
+      await expect(page.getByTestId('delivery-choice-1')).toHaveCount(0);
       await expect(page.getByTestId('delivery-choice-0')).toContainText('Tarifa de ejemplo');
       await page.getByTestId('delivery-choice-0').click();
       const sheet = page.getByTestId('delivery-options-0');
@@ -72,7 +74,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       const name = await option.innerText();
       await option.click();
       await expect(sheet).not.toBeVisible();
-      await expect(page.getByTestId('checkout-place')).toBeEnabled();
+      await expect(page.getByTestId('checkout-next')).toBeEnabled();
       await expect(page.getByTestId('delivery-choice-0')).toContainText(name.split('\n')[0]!);
       await page.getByTestId('delivery-choice-0').click();
       await expect(sheet.getByRole('radio').last()).toHaveAttribute('aria-checked', 'true');
@@ -89,6 +91,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.route('**/rest/v1/rpc/checkout_preview', (r) => fail ? r.abort('failed') : r.continue());
       await page.route('**/rest/v1/rpc/place_order', (r) => { orders++; return r.abort(); });
       await page.getByTestId('cart-continue').click();
+      await checkoutToReview(page);
       await expect(page.getByTestId('checkout-place')).toBeEnabled();
       fail = true;
       await page.clock.setSystemTime(new Date(Date.now() + 31_000));
@@ -130,6 +133,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.setViewportSize({ width: 320, height: 892 });
       await filledCart(page, 'ui-checkout-reflow');
       await page.getByTestId('cart-continue').click();
+      await checkoutToReview(page);
       await expect(page.getByTestId('checkout-place')).toBeEnabled();
       await page.evaluate(() => {
         for (const n of document.querySelectorAll<HTMLElement>('[dir="auto"]')) {
@@ -156,6 +160,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
     test('creating an order freezes delivery, address and plan until the request resolves', async ({ page }) => {
       await filledCart(page, 'ui-checkout-freeze');
       await page.getByTestId('cart-continue').click();
+      await checkoutToReview(page);
       await expect(page.getByTestId('checkout-place')).toBeEnabled();
       let release!: () => void;
       const held = new Promise<void>((resolve) => { release = resolve; });
@@ -168,13 +173,12 @@ for (const colorScheme of ['light', 'dark'] as const) {
       try {
         await page.getByTestId('checkout-place').click();
         await expect.poll(() => requests).toBe(1);
-        await expect(page.getByTestId('checkout-change-address')).toBeDisabled();
-        for (const choice of await page.locator('[data-testid^="delivery-choice-"]').all()) await expect(choice).toBeDisabled();
-        for (const plan of await page.locator('[data-testid^="plan-"]').all()) await expect(plan).toBeDisabled();
+        await expect(page.getByTestId('checkout-back')).toBeDisabled();
+        for (const edit of await page.locator('[data-testid^="checkout-edit-"]').all()) await expect(edit).toBeDisabled();
         await expect(page.getByTestId('checkout-place')).toBeDisabled();
         release();
         await expect(page.getByTestId('checkout-place')).toBeEnabled();
-        await expect(page.getByTestId('checkout-change-address')).toBeEnabled();
+        await expect(page.getByTestId('checkout-edit-address')).toBeEnabled();
         expect(requests).toBe(1);
       } finally { release(); }
     });

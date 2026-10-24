@@ -4,9 +4,17 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-**Última actualización:** 2026-10-24. Catálogo: **30 productos renovados de 44 / 38 imágenes activas nuevas**, Android preview/APK5. Última OTA **`01a16b9c-4322-7c4a-851a-3cfd0e4c93aa`**, publicada24oct01:52UTC /23oct21:52Venezuela. EAS40051620927 y recepción Android40051872738 Success,4/4 sin reintentos, ambos temas y fuente OS normal/1,6. Trece muestras siguen pendientes; DJI conserva las imágenes del backend.
+**Última actualización:** 2026-10-24. Checkout progresivo solicitado por Oliver: implementación local y validación en curso; todavía sin nueva OTA. Última publicación vigente: catálogo `01a16b9c-4322-7c4a-851a-3cfd0e4c93aa` en Android preview/APK5.
 
-## Trabajo en curso — lote adicional cerrado; 13 muestras pendientes de material
+## Trabajo en curso — checkout progresivo
+
+Oliver cambia la prioridad de este bloque: una decisión por fase después del carrito. Ruta existente `/checkout`: **Dirección → Entregas (una por vez) → Plan → Revisión**. La dirección va primero porque el backend determina opciones, costo y calendario según el destino; al final se puede revisar/cambiar. Root único escritor, especialistas UX/comercio y auditor independientes sólo lectura. No volver al catálogo ni abrir pulido global en este bloque.
+
+Implementado en `apps/mobile/src/app/checkout.tsx`: fase activa única, progreso, Atrás por fases, foco/scroll, selecciones conservadas y confirmación final. Reconciliación de dirección/envíos retirados, planes retirados y errores sin usar datos viejos para avanzar; clave de intención única y bloqueo de edición al crear. Backend/totales/calendarios intactos. Tipos y lint móviles aprobados; antes real local claro/oscuro320/412 capturado. Tres pruebas focales finales aprobadas: claro/oscuro320/412, Atrás del navegador por fases, confirmación con doble activación y una sola orden local; suites restantes y cierre de capturas aún en curso. El guard web se instala antes de Expo en `lib/checkout-navigation.ts`, sólo activo con checkout enfocado. No se ha solicitado publicación nueva.
+
+**Próxima acción exacta:** terminar `checkout-progressive.spec.ts` y suites afectadas `purchase`, `buyer-errors`, `marketplace-composition`; corregir fallos comprobados, revisar capturas finales con auditor y export Hermes. Sólo después solicitar EAS Android preview con guard exacto APK5, autorización persistente de Oliver; verificar recepción en emulador y cerrar los tres documentos. Informe: [CHECKOUT_PROGRESIVO_2026-10-24.md](CHECKOUT_PROGRESIVO_2026-10-24.md). No crear pedidos/pagos remotos para validar.
+
+## Bloque anterior cerrado — catálogo; 13 muestras pendientes de material
 
 **Publicado y recibido:** EAS40051620927 Success/fuente7f4c556, guard exacto APK5. Android40051872738 Success/sourcecb647bf/revisión46, flujos15/16 claro/oscuro normal/OS1,6,4/4 sin reintentos. Cuatro diagnósticos confirman la nueva OTA indicada arriba, preview/runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, Marketplace212/244/169/158ms y visitante. Cuarenta JPG derivados de CI copiados sin más edición/hash40/40 desde `ci/capturas@611a5db855e6c333a4a3af8eeac58e7051fb52d6`; cuatro de instalación excluidos. No atribuir recepción al Samsung físico sin su evidencia. [Manifiesto nativo](capturas/estudio-cc-2026-10-24/native/evidencia.json).
 

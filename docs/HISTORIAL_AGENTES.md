@@ -1,5 +1,12 @@
 # Historial de agentes
 
+### 2026-10-24 · Codex · checkpoint de checkout progresivo
+
+- Nueva prioridad explícita de Oliver: separar entrega/dirección, envíos, plan y resumen en fases. Rama sincronizada desdefe2d588. Root único escritor; UX, comercio y auditor en lectura independiente.
+- Se conserva la ruta/operación existente, sin backend, finanzas, iOS, nativo o APK nuevo. Dirección primero por dependencia real del envío; una entrega por decisión, plan después, confirmación sólo al final. Clave única, selección conservada y recuperación de opciones retiradas.
+- Tipos/lint móviles aprobados. Ocho capturas antes reales locales; comparación/errores/compra UI final en curso, sin nueva publicación ni recepción atribuida. Los P1/P2 identificados por los revisores se corrigieron en código y requieren cierre focal documentado.
+- Próxima acción: terminar las suites/capturas/auditoría específicas y, si son satisfactorias, publicar Android preview con guard APK5 y verificar recepción. Informe CHECKOUT_PROGRESIVO_2026-10-24.md.
+
 Registro de relevos entre agentes (Claude, ChatGPT u otros) y personas. Cada turno que termina agrega una entrada
 arriba de la bitácora, con este formato:
 

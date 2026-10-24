@@ -25,7 +25,7 @@ export function RadioRow({ selected, title, subtitle, trailing, badge, icon, dis
           <Icon name={icon} size={18} color={selected ? t.colors.brand : t.colors.text} />
         </View>
       ) : null}
-      <View style={{ flex: 1, gap: 2 }}>
+      <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
         <Text variant="subtitle" style={{ fontSize: 15 }}>{title}</Text>
         {subtitle ? <Text variant="caption" color="textMuted">{subtitle}</Text> : null}
         {badge ? <Badge label={badge} tone="muted" style={{ marginTop: 4 }} /> : null}
@@ -37,8 +37,8 @@ export function RadioRow({ selected, title, subtitle, trailing, badge, icon, dis
 
 export function SummaryRow({ label, value, strong, testID }: { label: string; value: string; strong?: boolean; testID?: string }) {
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-      <Text variant={strong ? 'subtitle' : 'body'} color={strong ? 'text' : 'textSecondary'}>{label}</Text>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
+      <Text variant={strong ? 'subtitle' : 'body'} color={strong ? 'text' : 'textSecondary'} style={{ flexShrink: 1 }}>{label}</Text>
       <Text variant={strong ? 'priceLarge' : 'label'} style={strong ? { fontSize: 22 } : null} tabular testID={testID}>{value}</Text>
     </View>
   );

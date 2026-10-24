@@ -37,7 +37,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.unroute(route);
       await page.getByRole('button', { name: 'Reintentar', exact: true }).click();
       await expect(page.getByTestId('checkout-address')).toContainText('Ana Prueba');
-      await expect(page.getByTestId('checkout-place')).toBeEnabled();
+      await expect(page.getByTestId('checkout-next')).toBeEnabled();
+      await expect(page.getByTestId('checkout-place')).toHaveCount(0);
       expect(orders).toBe(0);
     });
 
