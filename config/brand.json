@@ -1,0 +1,15 @@
+{
+  "$comment": "PROVISIONAL BRAND. Change here only: app name, scheme, ids, support contact and order prefix are read from this file by the mobile app, the admin web and docs. Store identifiers must also be updated in the developer consoles before the first public build.",
+  "name": "Kora",
+  "shortName": "Kora",
+  "tagline": "Lo que buscas, con entrega clara",
+  "legalName": "Kora Marketplace (nombre provisional)",
+  "scheme": "kora",
+  "iosBundleId": "com.example.kora",
+  "androidPackage": "com.example.kora",
+  "webDomain": "kora.example.com",
+  "supportEmail": "soporte@example.com",
+  "country": "VE",
+  "locale": "es-VE",
+  "currency": "USD"
+}

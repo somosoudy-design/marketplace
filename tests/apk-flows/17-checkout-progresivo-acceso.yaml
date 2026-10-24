@@ -1,0 +1,62 @@
+# Read-only backend and device-only visitor cart. No account, order, quote or payment is created.
+appId: com.example.kora.preview
+name: Checkout progresivo — acceso protegido y recepción
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- openLink: kora://checkout
+- extendedWaitUntil:
+    visible: Inicia sesión para continuar
+    timeout: 20000
+- assertNotVisible:
+    id: checkout-place
+- assertNotVisible:
+    id: checkout-next
+- takeScreenshot: checkout-progresivo-01-acceso-protegido
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-cta
+    timeout: 20000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 20000
+- takeScreenshot: checkout-progresivo-02-carrito
+- tapOn:
+    id: cart-continue
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 15000
+- takeScreenshot: checkout-progresivo-03-sesion-requerida
+- back
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 15000
+- tapOn:
+    id: cart-remove-.*
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- tapOn:
+    id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a16b9c-4322-7c4a-851a-3cfd0e4c93aa.*
+- takeScreenshot: checkout-progresivo-04-recepcion

@@ -1,0 +1,79 @@
+/* generated from @kora/design-tokens — do not edit */
+:root {
+  --background: #F8F7FC;
+  --surface: #FFFFFF;
+  --surface-sunken: #F0EEF6;
+  --surface-raised: #FFFFFF;
+  --border: rgba(28, 25, 40, 0.08);
+  --border-strong: rgba(28, 25, 40, 0.16);
+  --text: #1C1928;
+  --text-secondary: #55516A;
+  --text-muted: #6B6779;
+  --text-inverse: #FFFFFF;
+  --brand: #6D42E8;
+  --brand-pressed: #5B31D2;
+  --brand-soft: #EDE6FF;
+  --on-brand: #FFFFFF;
+  --accent: #FF746B;
+  --accent-soft: #FFF1EF;
+  --on-accent: #1C1928;
+  --danger: #C2362D;
+  --danger-soft: #FFF1EF;
+  --success: #137A55;
+  --success-soft: #E7F6EF;
+  --warning: #9A5B00;
+  --warning-soft: #FFF5E0;
+  --info: #2563CC;
+  --info-soft: #EAF1FE;
+  --editorial: #4826AB;
+  --editorial-soft: #F6F2FF;
+  --overlay: rgba(28, 25, 40, 0.48);
+  --skeleton: #ECE9F3;
+  --skeleton-highlight: #F6F4FA;
+  --tab-bar: rgba(255, 255, 255, 0.96);
+  --chrome: #FFFFFF;
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+  --amber: #F5A524;
+  --coral: #FF746B;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+  --background: #110F18;
+  --surface: #1B1825;
+  --surface-sunken: #0B0A10;
+  --surface-raised: #252131;
+  --border: rgba(243, 241, 250, 0.09);
+  --border-strong: rgba(243, 241, 250, 0.18);
+  --text: #F3F1FA;
+  --text-secondary: #C4C0D3;
+  --text-muted: #9893AA;
+  --text-inverse: #1C1928;
+  --brand: #A98CFF;
+  --brand-pressed: #C2AEFF;
+  --brand-soft: rgba(169, 140, 255, 0.16);
+  --on-brand: #14101F;
+  --accent: #FF8A82;
+  --accent-soft: rgba(255, 116, 107, 0.16);
+  --on-accent: #14101F;
+  --danger: #FF8A82;
+  --danger-soft: rgba(255, 116, 107, 0.14);
+  --success: #5CC79A;
+  --success-soft: rgba(92, 199, 154, 0.14);
+  --warning: #F8C25C;
+  --warning-soft: rgba(248, 194, 92, 0.14);
+  --info: #8DB4F5;
+  --info-soft: rgba(141, 180, 245, 0.14);
+  --editorial: #C2AEFF;
+  --editorial-soft: rgba(169, 140, 255, 0.14);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --skeleton: #252131;
+  --skeleton-highlight: #2C2839;
+  --tab-bar: rgba(27, 24, 37, 0.96);
+  --chrome: #1B1825;
+  }
+}

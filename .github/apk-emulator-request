@@ -1,0 +1,6 @@
+# Revisión47 · Checkout progresivo, EAS40057075911 Success/fuente0ca7699, guard exacto APK5 aprobado.
+# Acceso protegido a checkout, carrito/login/regreso y recepción; ambos temas y fuente OS1,6.
+# Sólo lectura pública y carrito local; no registros, pedidos, cotizaciones o pagos. No generar otro APK.
+APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
+flows: 17-checkout-progresivo-acceso 18-checkout-progresivo-texto
+themes: light dark

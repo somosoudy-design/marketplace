@@ -1,0 +1,18 @@
+{
+  "name": "@kora/demo-assets",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-images.mjs && node build-seed.mjs",
+    "seed": "node build-seed.mjs",
+    "icons": "node generate-icons.mjs",
+    "brand": "node generate-brand.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.34.4"
+  },
+  "devDependencies": {
+    "lucide-static": "1.53.0"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "checks": [
+    {
+      "name": "light-412: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+      "passed": true
+    },
+    {
+      "name": "light-320: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+      "passed": true
+    },
+    {
+      "name": "dark-412: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+      "passed": true
+    },
+    {
+      "name": "dark-320: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+      "passed": true
+    },
+    {
+      "name": "filter, ordering, empty search, favorites, actual removal and empty cart",
+      "passed": true
+    },
+    {
+      "name": "independent pickup cost and optional cash reference",
+      "passed": true
+    },
+    {
+      "name": "Home is a real editorial/catalogue destination, not a cart redirect",
+      "passed": true
+    },
+    {
+      "name": "direct payment link cannot impersonate an existing order",
+      "passed": true
+    }
+  ],
+  "screenshots": 36,
+  "metrics": [
+    {
+      "theme": "light",
+      "width": 412,
+      "firstCartPhotoTop": 163.390625,
+      "fullyVisibleCartPhotos": 2,
+      "firstCatalogPhotoTop": 131
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "firstCartPhotoTop": 163.390625,
+      "fullyVisibleCartPhotos": 2,
+      "firstCatalogPhotoTop": 131
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "firstCartPhotoTop": 163.390625,
+      "fullyVisibleCartPhotos": 2,
+      "firstCatalogPhotoTop": 131
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "firstCartPhotoTop": 163.390625,
+      "fullyVisibleCartPhotos": 2,
+      "firstCatalogPhotoTop": 131
+    }
+  ],
+  "errors": [],
+  "blocked": [],
+  "source": "local repository prototype; remote Work site not accessed",
+  "android": false,
+  "backend": false,
+  "realTransactions": false
+}

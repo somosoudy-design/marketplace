@@ -1,0 +1,18 @@
+Mis productos
+Voltio · Tienda de ejemplo
+Gestiona el catálogo de tu tienda y consulta sus estados de publicación.
+Agregar producto
+Samsung cargador USB-C45W
+$42,00
+Disponible
+Publicado
+Demo
+Editar producto
+UGREEN lector SD
+$9,00
+Disponible
+Publicado
+Demo
+Editar producto
+Para operaciones avanzadas, usa el panel web con tu cuenta habitual.
+Abrir panel web

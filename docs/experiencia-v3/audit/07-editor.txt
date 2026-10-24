@@ -1,0 +1,34 @@
+Producto de mi tienda
+Agregar producto
+Información del producto
+Nombre del producto
+Subtítulo
+Descripción del producto
+Características destacadas
+Una por línea, máximo seis.
+Categoría
+Elegir
+Disponibilidad
+Disponible
+No disponible pausa la venta. Agotado se ajusta al inventario. HAYAZGO revisa la publicación cuando corresponde.
+Precio e inventario
+El precio del producto corresponde a la variante activa más económica. El cobro se calcula al comprar.
+Variante 1
+Nombre de variante 1
+Precio USD de variante 1
+Inventario de variante 1
+Vacío: sin control de cantidades. La disponibilidad se ajusta al inventario.
+SKU de variante 1
+Pausar variante
+Agregar variante
+Peso en kg
+Máximo por pedido
+Precio anterior en USD
+Solo si realmente se vendió a ese precio.
+Fotografías (0/10)
+Usa imágenes propias o autorizadas. La primera es la portada.
+Agregar fotografía
+Crear producto
+Los borradores aún no están disponibles. Guarda cuando la información esté lista.
+Para operaciones avanzadas, usa el panel web con tu cuenta habitual.
+Abrir panel web

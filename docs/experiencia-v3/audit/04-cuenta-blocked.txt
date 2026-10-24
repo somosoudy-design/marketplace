@@ -1,0 +1,3 @@
+Algo no salió bien
+Tuvimos un problema mostrando esta pantalla. Tus datos y pedidos están a salvo.
+Reintentar

@@ -1,0 +1,111 @@
+{
+  "date_utc": "2026-10-13",
+  "purpose": "Tres conceptos generados de Inicio; no implementación ni capturas reales",
+  "target_logical_viewport": [
+    412,
+    892
+  ],
+  "actual_generated_dimensions": [
+    853,
+    1844
+  ],
+  "published_android_update_id": "01a131f4-143f-7afa-a03e-9ac8ffc20573",
+  "display_order": [
+    "a-editorial-inmersiva.png",
+    "b-marketplace-modular.png",
+    "c-electric-violet-editorial.png"
+  ],
+  "generator": "built-in image_gen.imagegen; 3 direcciones iniciales independientes y 4 ediciones de las mismas direcciones",
+  "references": [
+    {
+      "path": "docs/capturas/inicio-v2/after/light-412-inicio.png",
+      "sha256": "b8fcdbba4afea3e53effe971c1634035a27a0e20c752ec9e2cb08bedbdef0f23"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/referencias/sheglam-labial-liquido-mate-1.webp",
+      "sha256": "01735863d9b0c210e410b225cfb50f5048dc5cefd3cf8f0a9749748d2e4a587f"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/referencias/ugreen-cable-usb-c-100w-1.webp",
+      "sha256": "275dc4258397d9fdfbdbbd3d8a4fd1df952e19b49a98b3fc0785923937dcadb6"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/referencias/ugreen-nexode-65w-1.webp",
+      "sha256": "d778dcc385e2e3e3ab48df2cf1ce27374611ce1294b56bcc11e2e3c08e2a40cc"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/referencias/ugreen-power-bank-20000-1.webp",
+      "sha256": "19545503707e54d05613235fdacc39e634fff49a36dc0cb7bbf113c05e486145"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/diseno-v2/alternativas/a-editorial-inmersiva.png",
+      "sha256": "ae0f24d4582b7d0acd254e237bbbe29d002bc4d9df40776b9367f1abf534488f"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/b-marketplace-modular.png",
+      "sha256": "2951808942adfe444f6a19a8bea14814acbd1d6ff2aef86d5cb1b8a7a1c5596a"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/c-electric-violet-editorial.png",
+      "sha256": "42893669293b3d69fc8bbd4b66ad8d571fde54fc3071e1e497ed0329979264b0"
+    }
+  ],
+  "limitations": [
+    "La generación reinterpreta los assets Demo y no garantiza identidad de píxeles; no usar outputs como imágenes de catálogo",
+    "Las imágenes no prueban accesibilidad, fuentes OS, navegación o recepción OTA",
+    "La salida conserva proporción aproximada; no es render exacto 412x892",
+    "No se retocó, recortó o deformó ninguna propuesta"
+  ],
+  "reviewRound1": [
+    {
+      "path": "docs/diseno-v2/alternativas/ronda-1/a-editorial-inmersiva.png",
+      "sha256": "ec7db6ca2305391e286e367df4d677aac3a733c695aa38f14f80dbf3f947fb35",
+      "status": "primera ronda; no versión final"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/ronda-1/b-marketplace-modular.png",
+      "sha256": "9d2f317a1e634f808f7d680c662117391db83808ad89254148496e5a3d153bea",
+      "status": "primera ronda; no versión final"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/ronda-1/c-correccion-encuadre-rechazado.png",
+      "sha256": "b9a003dcdb66d268dc00c0d30a58e9fc4ab479d12b95e258d784c4a0a090bf04",
+      "status": "rechazada por proporción incorrecta"
+    },
+    {
+      "path": "docs/diseno-v2/alternativas/ronda-1/c-electric-violet-editorial.png",
+      "sha256": "0d48ee84e41cb7986c1b5fbb41d52a3eeb03dd8ceb31364a00fe86a641843db8",
+      "status": "primera ronda; no versión final"
+    }
+  ],
+  "generationCalls": {
+    "initialIndependentDirections": 3,
+    "editsToSameDirections": 4,
+    "finalDirections": 3
+  },
+  "displayHistory": [
+    "A inicial",
+    "B inicial",
+    "C inicial",
+    "A corregida",
+    "B corregida",
+    "C corregida con proporción incorrecta, rechazada",
+    "C encuadre final"
+  ],
+  "finalVerdicts": {
+    "A": "APROBADO como concepto",
+    "B": "APROBADO como concepto y recomendado",
+    "C": "CAMBIOS OBLIGATORIOS: altura superior; no recomendado. Elevado a Oliver, sin tercera ronda"
+  },
+  "promptFiles": [
+    "prompt-a.txt",
+    "prompt-b.txt",
+    "prompt-c.txt",
+    "revision-a.txt",
+    "revision-b.txt",
+    "revision-c-encuadre.txt",
+    "revision-c.txt"
+  ]
+}

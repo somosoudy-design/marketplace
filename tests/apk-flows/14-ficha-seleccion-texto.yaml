@@ -1,0 +1,6 @@
+# font-scale: 1.6
+# OS text-size stress in the isolated emulator only. No APK/native configuration changes.
+appId: com.example.kora.preview
+name: Ficha — selección con fuente Android ampliada
+---
+- runFlow: 13-ficha-seleccion.yaml

@@ -1,0 +1,92 @@
+# Publishes the admin and seller panel (apps/admin) as a static site on EAS Hosting, in the same Expo project as the
+# app (plan without cost, the EXPO_TOKEN secret the other workflows use). The panel talks to the test Supabase
+# project with its public anon key; authorization stays in the database (RLS and functions). Its server actions
+# (URL import, "consultar ahora" of the rates) run in the panel-api edge function.
+# Runs when the panel or the code it uses changes on the work branch, or when .github/panel-deploy-request changes.
+name: Panel web (EAS Hosting)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths:
+      - '.github/panel-deploy-request'
+      - '.github/workflows/panel-deploy.yml'
+      - 'apps/admin/**'
+      - 'packages/api/**'
+      - 'packages/core/**'
+      - 'packages/design-tokens/**'
+      - 'config/brand.json'
+      - 'tools/panel/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: panel-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      # the same backend and public key as the preview APK (apps/mobile/eas.json), so app and panel see the same data
+      - name: Variables públicas del panel
+        run: |
+          url=$(node -p "require('./apps/mobile/eas.json').build.preview.env.EXPO_PUBLIC_SUPABASE_URL")
+          key=$(node -p "require('./apps/mobile/eas.json').build.preview.env.EXPO_PUBLIC_SUPABASE_ANON_KEY")
+          {
+            echo "NEXT_PUBLIC_SUPABASE_URL=$url"
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$key"
+            echo "NEXT_PUBLIC_PANEL_API=$url/functions/v1/panel-api"
+          } >> "$GITHUB_ENV"
+
+      - name: Exportar el panel
+        env:
+          KORA_PANEL_EXPORT: '1'
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: |
+          pnpm --filter @kora/admin build
+          node tools/panel/eas-routes.mjs apps/admin/out
+          # the export may only carry the public anon key
+          node tools/panel/check-export.mjs apps/admin/out
+
+      - name: Publicar en EAS Hosting
+        id: deploy
+        working-directory: apps/mobile
+        env:
+          APP_VARIANT: preview
+        run: |
+          npx --yes eas-cli@24.12.1 deploy --prod --export-dir ../admin/out --dev-domain kora-panel --non-interactive --json > "$GITHUB_WORKSPACE/panel-deploy.json"
+          cat "$GITHUB_WORKSPACE/panel-deploy.json"
+          node -e "
+            const d = require(process.env.GITHUB_WORKSPACE + '/panel-deploy.json');
+            console.log('url=' + (d?.production?.url ?? d?.url ?? ''));
+            console.log('deployment=' + (d?.url ?? ''));
+          " >> "$GITHUB_OUTPUT"
+
+      - name: Comprobar la publicación
+        shell: bash
+        env:
+          PANEL_URL: ${{ steps.deploy.outputs.url }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment }}
+        run: |
+          set -o pipefail
+          node tools/panel/check-deploy.mjs "$DEPLOYMENT_URL" "$PANEL_URL" | tee -a "$GITHUB_STEP_SUMMARY"
