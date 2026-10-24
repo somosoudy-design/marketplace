@@ -1,6 +1,6 @@
 # Catálogo original de exhibición — Android APK5
 
-**Checkpoint sin publicar.**25productos/32imágenes originales generadas, siete colores adicionales,2,84MB de WebP1024. No son fotografías auténticas ni certifican una unidad comercial. Ningún original oficial de tercero se utilizó como entrada.19productos de marca siguen pendientes de material correcto y distribuible. No afirmar44/44.
+**Validado, publicación en preparación.** 25 productos / 32 imágenes originales generadas, siete colores adicionales, 2,84 MB de WebP a 1024 px. No son fotografías auténticas ni certifican una unidad comercial. Ningún original oficial de tercero se utilizó como entrada.19productos de marca siguen pendientes de material correcto y distribuible. No afirmar44/44.
 
 Se reutiliza el registro de exhibición existente. UUID+ruta original+variante. PreviewAndroid y backend Marketplace exclusivamente; web sólo loopback. Producción/iOS desactivados. No cambios remotos, precios, pagos, moderación ni permisos. Aviso de entorno y generación por pantalla, explicación específica en ficha. No se sustituyen por imágenes sintéticas productos no-demo. DTO sinestado se corrobora con product_detail; error/carga/no-demo conservaStorage.
 
@@ -38,6 +38,25 @@ La auditoría de arte rechazó el explorador aislado para el título que incluye
 
 Procedencia, prompts (Salvia reconstruido y marcado no literal), hashes de original/derivado, revisión y variantes en [generated-manifest.json](../../apps/mobile/assets/catalog-exhibition/generated-manifest.json). Los originales permanecen ignorados en la carpeta de salida de la herramienta. Preparación e integración sólo por root; agentes arte y auditor trabajan en lectura/recursos ignorados. Canvas/Canva no disponible; ImageGen realmente utilizado.
 
-## Validación y siguiente acción
+## Validación y control de calidad
 
-26unitarias y tipos/lint móvil aprobados. Antes de publicar: comparación real Inicio/Buscar/ficha claro/oscuro320/412, variante→carrito, errores/no-demo, exportaciónAndroid y auditoría final. Después commit/push, guard exactoAPK5, EASpreview y recepción en emulador. Este checkpoint todavía no acredita una OTA nueva ni recepción en Samsung.
+- 26 pruebas unitarias aprobadas: aislamiento, rutas, identidad, variantes, estado demo y selección de Inicio.
+- Tipos y lint móvil sin errores ni advertencias. Exportaciones web y Android/Hermes correctas.
+- 20 casos UI únicos aprobados: 25 fichas en cada tema, galería sin ilustraciones anteriores, selección Arena → carrito local → regreso → acceso a sesión, error y cambio a no-demo con retorno a Storage; diez regresiones de Inicio y dos de las fotos CC anteriores. Dos casos requirieron corregir un selector que también encontraba la ficha oculta en la pila; pasaron después. No se modificó la app para ocultar ese fallo de la prueba.
+- 24 capturas originales comparables: Inicio, Buscar y ficha, antes/después, 320/412 px, claro/oscuro. No son pruebas físicas Android. El auditor rechazó dos capturas tomadas antes de acabar la carga/transición: recapturadas únicamente esas vistas tras exigir una imagen cargada y opacidad final por producto visible. [Hashes y corrección de QA](../capturas/catalogo-generado-2026-10-24/web-evidence.json).
+- Arte y catálogo independientes inspeccionaron los 32 originales; un kit rechazado fue corregido. Auditor de código exigió cierre por defecto del estado demo y explicación de imagen generada por pantalla: ambos corregidos antes de publicar.
+- Límites: checkout autenticado no recorrido en este bloque; su imagen usa el mismo componente y verificación de DTO probados en carrito. Resumen de pedidos conserva Storage porque su contrato no devuelve UUID/variante. No se probó en el Samsung de Oliver.
+
+| Estado real web | Antes | Después |
+|---|---|---|
+| Inicio, claro 412 | [Captura](../capturas/catalogo-generado-2026-10-24/before/light/412-inicio.png) | [Captura](../capturas/catalogo-generado-2026-10-24/after/light/412-inicio.png) |
+| Buscar, oscuro 320 | [Captura](../capturas/catalogo-generado-2026-10-24/before/dark/320-buscar.png) | [Captura](../capturas/catalogo-generado-2026-10-24/after/dark/320-buscar.png) |
+| Ficha, claro 412 | [Captura](../capturas/catalogo-generado-2026-10-24/before/light/412-ficha.png) | [Captura](../capturas/catalogo-generado-2026-10-24/after/light/412-ficha.png) |
+
+**Dictamen final independiente:** APROBADO web para publicar el lote de 32 recursos / 25 productos; 12 vistas finales y 24 hashes comprobados. Sin P1/P2 nuevas en el alcance. La aprobación no acredita checkout autenticado ni recepción Android física.
+
+## Publicación y continuación
+
+Preparada publicación exclusivamente Android preview, guard exacto APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. No hay APK nuevo, cambios nativos ni publicación production. Registrar aquí el ID real de EAS y la recepción nativa cuando existan; todavía no atribuir recepción a Samsung.
+
+Después de la primera publicación, continuar el incremento comprador «Ficha: selección vinculada a compra»: conservar variante, cantidad y precio unitario visibles junto a las acciones; Editar vuelve al selector. Recomendación del director UX basada en la ficha real y framework Product Design, sin modificar reglas comerciales. No cambiar la marca provisional ni reabrir el backend.
