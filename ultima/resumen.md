@@ -1,7 +1,7 @@
 ### Recorridos con Maestro (2.11.0) sobre apk1.apk
 ```
-light-15-catalogo-estudio: pasó
-light-16-catalogo-estudio-texto: pasó
-dark-15-catalogo-estudio: pasó
-dark-16-catalogo-estudio-texto: pasó
+light-17-checkout-progresivo-acceso: pasó
+light-18-checkout-progresivo-texto: pasó
+dark-17-checkout-progresivo-acceso: pasó
+dark-18-checkout-progresivo-texto: pasó
 ```
