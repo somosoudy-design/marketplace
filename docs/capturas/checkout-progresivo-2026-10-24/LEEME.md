@@ -18,3 +18,5 @@ Las cinco vistas del recorrido (cuatro fases; dos entregas dentro del paso2):
 ![Revisión](despues/light/05-revision-412.png)
 
 Los archivos `font-160-*` cubren las mismas fases y el total a320px en ambos temas. El total se desplazó hasta quedar, por medición, encima de la barra; no se recortaron ni compusieron capturas.
+
+Recepción Android real: [16JPG y manifiesto](native/evidencia.json), [4/4 recorridos](native/resumen.md) y [run/source](native/LEEME.md). Son derivados de CI; visitante normal/OS1,6 en ambos temas, no la compra autenticada física. OTA `01a16be3-4827-77bc-bcf4-0f28d5895325`.

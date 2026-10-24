@@ -1,6 +1,6 @@
 # Checkout progresivo · 24 de octubre de 2026
 
-Estado: código y revisión local aprobados. Publicación Android preview solicitada a continuación; IDs y recepción se registrarán al comprobarse.
+Estado: **publicado y recibido en emulador Android con APK5**. OTA `01a16be3-4827-77bc-bcf4-0f28d5895325`. Revisión física autenticada del Samsung pendiente, sin atribuirla al emulador.
 
 ## Decisión y alcance
 
@@ -53,8 +53,12 @@ La prueba real local de confirmación conserva dirección/envíos/plan revisados
 
 Se conserva la autorización de Oliver para publicar avances validados en **Android preview**, runtimeAPK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Sólo se publica si el guard de fingerprint exacto de CI coincide. No se generan APK ni se publica en `production`.
 
-Recepción nativa prevista: flujos17/18, claro/oscuro normal/OS1,6, lectura pública, carrito del visitante, acceso protegido a checkout, Atrás desde login y Diagnóstico. No crean cuentas, pedidos, cotizaciones o pagos remotos. El flujo autenticado02 se adapta a las fases para futuras ejecuciones, pero no se ejecuta en este bloque porque opera sobre el backend remoto.
+**Publicación real:** [EAS40057075911](https://github.com/somosoudy-design/marketplace/actions/runs/40057075911), fuente `0ca76990f1fb7cde0a2dc346e00b820a17c52911`, Success en guard exacto APK5, publicar y resultado. OTA Android `01a16be3-4827-77bc-bcf4-0f28d5895325`, publicada **2026-10-24 03:10UTC** (23oct23:10Venezuela).
 
-**Límite explícito:** el checkout autenticado y la compra completa se prueban contra el backend local en web; el emulador verifica OTA y acceso de visitante con el APK real. La prueba autenticada física en el Samsung de Oliver no se puede atribuir a estos resultados. No hay aprobación física de su teléfono todavía.
+**Recepción real:** [Android40057284410](https://github.com/somosoudy-design/marketplace/actions/runs/40057284410), fuente `dacf455ab491682801c2e1d5a299a9253290326c`, solicitud47. Flujos17/18, claro/oscuro normal/OS1,6: **4/4 sin reintentos**. Los cuatro diagnósticos ejecutan esa misma OTA/canal/runtime y Marketplace responde114/129/137/104ms, cuenta visitante, sesión cifrada.16JPG derivados por CI, copiados sin más edición/hash16/16; cuatro de instalación excluidos. Procedencia/bytes en [manifiesto nativo](capturas/checkout-progresivo-2026-10-24/native/evidencia.json), rama `ci/capturas@40bcebb20c1010fba4e459f0597ddb2054288a62`.
 
-Solicitud efectiva: [EAS40057075911](https://github.com/somosoudy-design/marketplace/actions/runs/40057075911), commit `0ca7699`; guard exacto APK5 **Success**. Publicación **Success**: guard de runtime, publicar y resultado aprobados en EAS40057075911. Recepción Android revisión47 solicitada; UUID aún pendiente de leer del diagnóstico. Cierre local final: tipos/lint monorepo, Hermes y nueve regresiones de Pago (ocho relacionadas + compra original) aprobados sobre el código publicado;32casos del bloque cubiertos,40UI distintos en total.
+**Auditor independiente nativo: APROBADO.** Inspeccionó16JPG y hashes, los cuatro diagnósticos y controles/acceso/cart/login en ambos temas/escalas, sin nuevos P1/P2 observables. No repetir revisión web ya cerrada. El flujo autenticado02 se adapta a las fases para futuras ejecuciones, pero no se ejecutó en remoto en este bloque.
+
+**Límite explícito:** el checkout y Pago autenticados se probaron contra el backend local en web; el emulador acredita OTA y acceso visitante con el APK real. No se atribuye una compra autenticada, recepción física en el Samsung ni prueba TalkBack. No se crearon cuentas, pedidos, cotizaciones o pagos remotos. Todo el código móvil actual está incluido en0ca7699; los commits posteriores sólo documentan/verifican esa entrega.
+
+**Siguiente comprobación física concreta:** Diagnóstico → Código arriba; carrito de dos tiendas → dirección → primera/segunda entrega → plan → revisión; cambiar dirección y recorrer de nuevo; Atrás conserva selecciones. Puede detenerse antes de confirmar para no crear un pedido remoto. Las13muestras de catálogo pendientes de material autorizado permanecen en su iniciativa; no se abren otros cambios en este bloque.

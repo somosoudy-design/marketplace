@@ -1,11 +1,13 @@
 # Pendientes de Kora
 
 
-## Prioridad inmediata · checkout progresivo (24oct2026)
+## Bloque cerrado · checkout progresivo (24oct2026)
 
-- Oliver solicita una fase por decisión: Dirección → Entregas → Plan → Revisión. Implementación local aprobada:40casos UI,44capturas/hash44/44, tipos/lint/web/Hermes. Publicación y recepción aún pendientes. No repetir fotografías/Supabase en este bloque.
-- Validación local/revisión cerradas; conservar importes/reglas y una intención por visita. Solicitar una OTA Android preview/APK5, comprobar guard/Success y recepción por17/18, registrar IDs. No repetir pruebas cerradas.
-- Detalles y próxima acción exacta: `ESTADO_ACTUAL.md`, `CHECKOUT_PROGRESIVO_2026-10-24.md`. Trece fotos de marca siguen pendientes, no se declaran completadas.
+- Dirección → Entregas (una por vez) → Plan → Revisión implementado y publicado en Android preview/APK5. OTA `01a16be3-4827-77bc-bcf4-0f28d5895325`, EAS40057075911 Success/fuente0ca7699. Recepción40057284410 Success,17/18 claro/oscuro normal/OS1,6,4/4 sin reintentos. Sin APK nuevo u operaciones remotas.
+-40UI locales,44PNG/hash44/44 y16JPG nativos/hash16/16, tipos/lint/web/Hermes y revisión independiente aprobados. No repetir pruebas, auditoría o publicación cerradas sin nueva incidencia/cambio material.
+- Pendiente sólo comprobación física autenticada en Samsung: código anterior, dos tiendas → dirección → cada entrega → plan → revisión; cambiar dirección y volver. Detenerse antes de confirmar evita crear un pedido remoto. Informe y pasos exactos: `CHECKOUT_PROGRESIVO_2026-10-24.md`, `ESTADO_ACTUAL.md`.
+- Las13fotos de marca siguen pendientes de material autorizado; no declararlas completas ni reinvestigar lo cerrado. Seguimiento UX acotado para un futuro bloque: verificar contador del carrito con dos referencias de la misma tienda; checkout ya no usa `line_count` como cantidad de productos. No se modifica ese contador en esta entrega.
+
 
 ## Prioridad activa — completar el material del catálogo
 

@@ -1,5 +1,12 @@
 # Historial de agentes
 
+### 2026-10-24 · Codex · checkout progresivo publicado y recibido
+
+- Código1737f16 +0ca7699 publicado una sola vez en Android preview: EAS40057075911 Success, guard exacto APK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. OTA `01a16be3-4827-77bc-bcf4-0f28d5895325`,24oct03:10UTC. No APK, configuración nativa, iOS, SQL, backend remoto, precios o reglas financieras modificados.
+- Recepción Android40057284410 Success/fuente dacf455/revisión47:17/18 claro/oscuro normal/OS1,6,4/4 sin reintentos. Cuatro diagnósticos coinciden en OTA/canal/runtime/Marketplace y visitante.16JPG de CI copiados byte a byte/hash16/16, cuatro de instalación excluidos, fuente `ci/capturas@40bcebb20c1010fba4e459f0597ddb2054288a62`. Auditor independiente inspecciona los16 y aprueba el cierre nativo visitante, sin nuevos P1/P2 observables.
+-40UI distintos locales aprobados,44PNG web antes/después y hashes, tipos/lint monorepo y export web/Hermes. Regresión original de Pago recuperada: refresco obligado al reabrir y bloqueo de cotización hasta estado vigente, incluida caché/offline/reconexión. Misma compra local confirma importe/snapshot/una orden; ningún pedido, pago, cotización o cuenta remotos.
+- Próximo: comprobación física autenticada del Samsung, código y secuencia exacta en ESTADO_ACTUAL/CHECKOUT_PROGRESIVO_2026-10-24. No atribuirla al emulador ni afirmar TalkBack/compra nativa autenticada probados. No repetir OTA, capturas o diagnóstico;13fotos aún requieren material autorizado. Rama preservada con un único escritor, especialistas sólo lectura.
+
 ### 2026-10-24 · Codex · cierre local del checkout progresivo
 
 - Funcional1737f16 guardado/push.40casos UI distintos aprobados:31 originales más compra recuperada y8 casos de Pago; tipos/lint monorepo y export web/Android Hermes correctos.44PNG originales copiados/hash44/44, comparaciones con idénticos envíos/importe. Auditor visual y comercio cierran objeciones; no aprobación física Android.
