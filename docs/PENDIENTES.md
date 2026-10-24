@@ -4,7 +4,7 @@
 
 Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
 
-Ficha «Tu selección»: ocho pruebas específicas aprobadas, foco corregido y reflujo de variante larga en cierre. Próxima acción: retest de reflujo, auditor final, EASpreview/APK5 y recepción normal/OS1,6. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.
+Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y reflujo corregidos, auditor/comercio APROBADO, EAS40045652185 Success/19a1329 ya publicado. Próxima acción: cerrar recepción Android40045853547, 13/14 normal/OS1,6, leer ID real y revisar capturas; no repetir pruebas o publicación ya hechas. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.
 
 
 > Por prioridad. Lo actualiza el agente que cambia una prioridad, termina una tarea o encuentra un bloqueo. Lo
