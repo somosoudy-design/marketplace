@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { exhibitionEnabled, exhibitionPhoto, type ExhibitionContext, type ExhibitionPhoto } from '../../apps/mobile/src/lib/catalog-exhibition-policy';
+import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionPhoto, prioritizeGeneratedExhibition, type ExhibitionContext, type ExhibitionPhoto } from '../../apps/mobile/src/lib/catalog-exhibition-policy';
 
 const preview: ExhibitionContext = {
   optIn: 'private-preview', platform: 'android', channel: 'preview',
@@ -28,6 +28,43 @@ describe('private catalogue presentation is closed by default', () => {
       expect(exhibitionEnabled({ ...web, webHostname: host })).toBe(false);
     }
     expect(exhibitionEnabled({ ...web, webHostname: 'localhost', backendUrl: 'http://127.0.0.1:9999' })).toBe(false);
+  });
+});
+
+describe('original generated demos preserve identity, colors and commercial status', () => {
+  const common = { productId: 'headphones', originalPath: 'demo/headphones-1.webp', kind: 'generated-demo' as const, width: 1024, height: 1024 };
+  const photos: ExhibitionPhoto[] = [
+    { ...common, source: 10, sha256: 'sage' },
+    { ...common, variantId: 'sage', source: 10, sha256: 'sage' },
+    { ...common, variantId: 'sand', source: 11, sha256: 'sand' },
+  ];
+  it('shows the selected color in detail/cart and keeps unknown future colors on normal storage', () => {
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath, undefined, true)?.source).toBe(10);
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath, 'sand', true)?.source).toBe(11);
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath, 'sage', true)?.source).toBe(10);
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath, 'new-blue', true)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'headphones', 'seller/replaced.webp', 'sand')).toBeUndefined();
+  });
+  it('never supplies synthetic demo images when demo status is absent or becomes false', () => {
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath, 'sage', false)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'headphones', common.originalPath, 'sage', true)?.source).toBe(10);
+  });
+  it('reuses a category representative only when its exact source identifies one product', () => {
+    expect(exhibitionCategoryPhoto(true, photos, common.originalPath, undefined, true)?.source).toBe(10);
+    expect(exhibitionCategoryPhoto(false, photos, common.originalPath)).toBeUndefined();
+    expect(exhibitionCategoryPhoto(true, photos, 'other/path')).toBeUndefined();
+    expect(exhibitionCategoryPhoto(true, [...photos, { ...photos[0]!, productId: 'different-product' }], common.originalPath)).toBeUndefined();
+  });
+  it('curates only actual generated demos in preview, without dropping other products or changing backend order elsewhere', () => {
+    const products = [
+      { id: 'ordinary', image_path: 'ordinary.webp', is_demo: false },
+      { id: 'headphones', image_path: common.originalPath, is_demo: true },
+      { id: 'another', image_path: 'another.webp', is_demo: true },
+    ];
+    expect(prioritizeGeneratedExhibition(true, photos, products).map((p) => p.id)).toEqual(['headphones', 'ordinary', 'another']);
+    expect(prioritizeGeneratedExhibition(false, photos, products)).toEqual(products);
+    expect(prioritizeGeneratedExhibition(true, photos, [{ ...products[1]!, is_demo: false }, products[0]!]).map((p) => p.id)).toEqual(['headphones', 'ordinary']);
   });
 });
 

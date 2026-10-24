@@ -35,7 +35,7 @@ export function ProductEditorialOpening({ product, width, onOpen }: { product: P
               <Icon name="arrow-right" size={16} color={palette.ink[0]} />
             </View>
           </View>
-          <ProductImage productId={product.id} path={product.image_path} alt={product.title} fit="contain" aspect={1} radius={8} priority="high" style={{ width: photoWidth, backgroundColor: palette.ink[0] }} />
+          <ProductImage productId={product.id} productIsDemo={product.is_demo} path={product.image_path} alt={product.title} fit="contain" aspect={1} radius={8} priority="high" style={{ width: photoWidth, backgroundColor: palette.ink[0] }} />
         </View>
       </ScalePressable>
     </TrackedSection>

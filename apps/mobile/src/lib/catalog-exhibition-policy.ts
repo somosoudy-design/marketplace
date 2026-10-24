@@ -34,6 +34,11 @@ export interface ExhibitionPhoto {
   license?: string;
   licenseUrl?: string;
   originUrl?: string;
+  /** Original synthetic illustration of an unbranded demo; never described as an authentic photograph. */
+  kind?: 'generated-demo';
+  variantId?: string;
+  referenceOnly?: boolean;
+  disclosure?: string;
 }
 
 /** Keep the original order except the cleared photographs which lead the private showcase. */
@@ -46,8 +51,30 @@ export function prioritizeExhibitionPhotos<T extends { id: string; image_path: s
 }
 
 export function exhibitionPhoto(
-  enabled: boolean, photos: readonly ExhibitionPhoto[], productId?: string, path?: string | null,
+  enabled: boolean, photos: readonly ExhibitionPhoto[], productId?: string, path?: string | null, variantId?: string, isDemo?: boolean,
 ): ExhibitionPhoto | undefined {
   if (!enabled || !productId || !path) return undefined;
-  return photos.find((photo) => photo.productId === productId && photo.originalPath === path);
+  const matches = photos.filter((photo) => photo.productId === productId && photo.originalPath === path && (isDemo === true || photo.kind !== 'generated-demo'));
+  if (variantId) {
+    const exact = matches.find((photo) => photo.variantId === variantId);
+    if (exact) return exact;
+    // Never substitute another known color for a variant without a matching visual.
+    if (matches.some((photo) => photo.variantId)) return undefined;
+  }
+  return matches.find((photo) => !photo.variantId);
+}
+
+/** Private, non-personalized curation: newly generated demos lead without changing backend ranks or claims. */
+export function prioritizeGeneratedExhibition<T extends { id: string; image_path: string | null; is_demo: boolean }>(
+  enabled: boolean, photos: readonly ExhibitionPhoto[], products: readonly T[],
+): T[] {
+  const ready = (p: T) => p.is_demo && exhibitionPhoto(enabled, photos, p.id, p.image_path, undefined, p.is_demo)?.kind === 'generated-demo';
+  return [...products.filter(ready), ...products.filter((p) => !ready(p))];
+}
+
+/** Categories carry an image path, not a product identity: accept only an unambiguous registered source. */
+export function exhibitionCategoryPhoto(enabled: boolean, photos: readonly ExhibitionPhoto[], path?: string | null): ExhibitionPhoto | undefined {
+  if (!enabled || !path) return undefined;
+  const matches = photos.filter((photo) => photo.originalPath === path && !photo.variantId);
+  return new Set(matches.map((photo) => photo.productId)).size === 1 ? matches[0] : undefined;
 }

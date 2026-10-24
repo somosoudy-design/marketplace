@@ -26,7 +26,7 @@ import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } 
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+import { isPrivateCatalogPresentation, prioritizeGeneratedProducts } from '@/lib/catalog-exhibition';
 import { selectHomeOpening, type HomeOpening } from '@/lib/home-opening';
 import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
 import { ImpressionScope, recordImpressions, TrackedSection, useViewportTracking } from '@/lib/impressions';
@@ -63,13 +63,20 @@ export default function HomeScreen() {
   const more = useSearch({ sort: 'popular' });
   const recent = useSearch({ sort: 'newest' });
   const opening = useMemo(() => selectHomeOpening(data, recent.isError ? [] : recent.data?.pages[0] ?? []), [data, recent.data, recent.isError]);
+  const picks = useMemo(() => {
+    if (!data) return [];
+    if (!isPrivateCatalogPresentation || data.personalized) return data.recommended;
+    const candidates = [...data.recommended, ...(more.data?.pages.flat() ?? [])];
+    const unique = candidates.filter((p, i) => candidates.findIndex((other) => other.id === p.id) === i);
+    return prioritizeGeneratedProducts(unique).slice(0, Math.max(8, data.recommended.length));
+  }, [data, more.data]);
   const rows = useMemo<Row[]>(() => {
     if (!data) return [{ kind: 'loading', key: 'loading' }];
     const out: Row[] = [];
     const push = (slot: string, items: Card[]) => {
       for (let i = 0; i < items.length; i += grid.columns) out.push({ kind: 'products', key: `${slot}-${i}`, slot, items: items.slice(i, i + grid.columns) });
     };
-    const first = data.recommended;
+    const first = picks;
     const rest = (more.data?.pages.flat() ?? []).filter((p) => p.id !== opening?.product.id && !first.some((f) => f.id === p.id) && p.availability !== 'unavailable');
     // a marketplace that has published nothing yet says so instead of showing empty shelves
     if (!opening && !first.length && !rest.length && !data.collections.some((c) => c.products.length) && !more.isLoading && !more.isError) return [{ kind: 'empty', key: 'empty' }];
@@ -79,7 +86,7 @@ export default function HomeScreen() {
     }
     if (more.isFetchingNextPage || (more.isLoading && !rest.length)) out.push({ kind: 'loading', key: 'more' });
     return out;
-  }, [data, more.data, more.isFetchingNextPage, more.isLoading, more.isError, grid.columns, opening]);
+  }, [data, more.data, more.isFetchingNextPage, more.isLoading, more.isError, grid.columns, opening, picks]);
   const empty = rows.length === 1 && rows[0]!.kind === 'empty';
 
   // impressions: shelves count when their section enters the viewport, the feed per visible row
@@ -120,7 +127,7 @@ export default function HomeScreen() {
           refreshControl={<RefreshControl refreshing={home.isRefetching} onRefresh={refresh} tintColor={t.colors.brand} progressViewOffset={insets.top} />}
           onEndReachedThreshold={0.6}
           onEndReached={() => more.hasNextPage && !more.isFetchingNextPage && void more.fetchNextPage()}
-          ListHeaderComponent={<Header home={home} opening={opening} onSearchBottom={setSearchBottom} />}
+          ListHeaderComponent={<Header home={home} opening={opening} picks={picks} onSearchBottom={setSearchBottom} />}
           ListFooterComponent={data && !empty && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
           renderItem={({ item }) => {
             if (item.kind === 'empty') return <CatalogOpening signedIn={!!user} />;
@@ -146,7 +153,7 @@ export default function HomeScreen() {
 }
 
 /** Everything above the feed. Each TrackedSection must stay a direct child of the root view (see impressions). */
-function Header({ home, opening, onSearchBottom }: { home: ReturnType<typeof useHome>; opening?: HomeOpening; onSearchBottom: (bottom: number) => void }) {
+function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typeof useHome>; opening?: HomeOpening; picks: Card[]; onSearchBottom: (bottom: number) => void }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { width, fontScale } = useWindowDimensions();
@@ -167,7 +174,7 @@ function Header({ home, opening, onSearchBottom }: { home: ReturnType<typeof use
   const head = shelves.slice(0, 2);
   const tail = shelves.slice(2);
   const personalized = !!user && profile.data?.personalization_enabled === true && !!data?.personalized;
-  const recommended = data?.recommended ?? [];
+  const recommended = picks;
   const comparison = recommended.filter((p) => p.id !== heroProduct?.id).slice(0, 4);
   const remainingPicks = recommended.filter((p) => !comparison.some((shown) => shown.id === p.id) && p.id !== heroProduct?.id);
   const picksSlot = personalized ? 'home_for_you' : 'home_featured';

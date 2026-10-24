@@ -3,8 +3,13 @@ import { productExhibitionPhoto } from '@/lib/catalog-exhibition';
 import { Text } from '@/components/ui/Text';
 
 /** Attribution travels with the cleared photographs in the preview app. */
-export function ExhibitionPhotoCredit({ productId, path }: { productId: string; path?: string }) {
-  const photo = productExhibitionPhoto(productId, path);
+export function ExhibitionPhotoCredit({ productId, path, variantId, isDemo }: { productId: string; path?: string; variantId?: string; isDemo?: boolean }) {
+  const photo = productExhibitionPhoto(productId, path, variantId, isDemo);
+  if (photo?.kind === 'generated-demo') return (
+    <Text testID="exhibition-generated-credit" variant="caption" color="textSecondary">
+      {photo.disclosure ?? `Imagen generada de exhibición${photo.referenceOnly ? ' · Representación de referencia; no acredita la composición del set.' : ' · Producto de demostración.'}`}
+    </Text>
+  );
   if (!photo?.author || !photo.originUrl || !photo.licenseUrl) return null;
   return (
     <Text testID="exhibition-photo-credit" variant="caption" color="textSecondary">

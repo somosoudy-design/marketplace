@@ -39,7 +39,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         }}
       >
         <View>
-          <ProductImage productId={p.id} path={p.image_path} tone={p.tone} priority={priority} radius={0} />
+          <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} priority={priority} radius={0} />
           {/* Demo prices and stock never masquerade as a real promotion or scarcity claim. */}
           <View style={{ position: 'absolute', left: 8, top: 8, gap: 4, maxWidth: width - 58 }}>
             {p.is_demo ? (!isPrivateCatalogPresentation ? <Badge onPhoto label="Demo" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null) : <>

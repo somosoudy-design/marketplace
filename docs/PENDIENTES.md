@@ -1,5 +1,10 @@
 # Pendientes de Kora
 
+## Prioridad activa — imágenes visibles en Android, sin preguntas rutinarias
+
+Renovación25muestras genéricas mediante originales ImageGen honestamente identificados;19productos de marca pendientes de fuente/identidad/permisos, no44/44. Checkpoint:25productos/32recursos integrados,2,84MB; kit corregido. Falta revisión visual web/nativa y publicar previewAPK5. Latest instrucción permite continuar después con mejoras sustanciales de comprador; no esperar otra confirmación rutinaria. No repetir diagnóstico de backend ni investigación de originales ya descargados.
+
+
 > Por prioridad. Lo actualiza el agente que cambia una prioridad, termina una tarea o encuentra un bloqueo. Lo
 > que se está haciendo ahora mismo va en `docs/ESTADO_ACTUAL.md` («Trabajo en curso»).
 >

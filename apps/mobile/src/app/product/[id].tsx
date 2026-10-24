@@ -105,7 +105,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const eta = p.lead_min_days != null && p.lead_max_days != null && availability.purchasable ? etaFromToday(p.lead_min_days, p.lead_max_days) : null;
   const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id) || p.is_favorite;
-  const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }]);
+  const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }], p.is_demo);
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
   const statusKey = variantSoldOut ? 'sold_out' : p.availability;
@@ -172,11 +172,12 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               horizontal
               pagingEnabled
               data={images}
+              extraData={variant?.id}
               keyExtractor={(img, i) => `${img.path}-${i}`}
               showsHorizontalScrollIndicator={false}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage productId={p.id} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
+                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
               )}
             />
             {images.length > 1 ? (
@@ -190,7 +191,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
             <View style={{ gap: 12 }}>
               <ExhibitionNotice explain />
-              <ExhibitionPhotoCredit productId={p.id} path={images[page]?.path} />
+              <ExhibitionPhotoCredit productId={p.id} variantId={variant?.id} path={images[page]?.path} isDemo={p.is_demo} />
               <View style={{ gap: 4 }}>
                 {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
                 <Text variant="displayM" testID="product-title">{p.title}</Text>
@@ -318,7 +319,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>
               <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
                 <View style={{ width: 36, height: 45, borderRadius: 8, overflow: 'hidden' }}>
-                  <ProductImage productId={p.id} path={p.image_path} tone={p.tone} radius={8} />
+                  <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} radius={8} />
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text variant="label" color="success">Agregado al carrito</Text>

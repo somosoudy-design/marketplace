@@ -49,7 +49,7 @@ export function EditorialOpening({ block, product, width, onOpen }: {
               <Icon name="arrow-right" size={16} color={palette.ink[0]} />
             </View>
           </View>
-          <ProductImage productId={product.id} aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={8} priority="high" style={{ width: photoWidth }} />
+          <ProductImage productId={product.id} productIsDemo={product.is_demo} aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={8} priority="high" style={{ width: photoWidth }} />
         </View>
       </ScalePressable>
     </TrackedSection>

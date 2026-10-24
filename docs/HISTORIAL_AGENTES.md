@@ -994,3 +994,10 @@ PublicaciónEAS40003745928 Success/e6fccbd, runtimeAPK5 exacto. OTA01a16a08-5900
 ### 2026-10-23 — nueva prioridad de imágenes y dispositivo aclarado
 
 Oliver exige renovación completa efectiva del catálogo antes de UX general y aclara Android/APK5, no iPhone. Rama sincronizada73f5b99. Lectura pública fresca44productos/43demo/0UUID nuevos, sin mutaciones; agente catálogo/arte entregó44registros accionables y25briefs ignorados.5fotosCC existentes rechazadas visualmente+25genéricos+14marcas;0imágenes nuevas generadas/integradas/publicadas en este bloque. Se solicita definición sobre generación original identificada de muestras y material/modelos autorizados para19de marca; no tratar autorización OTA como licencia. Revisión técnica iPhone sólo de lectura detectó OTA desactivada/guard excluyente, pero se descarta ese frente al aclarar Android; sin cambios iOS. Próximo paso depende de material, no credenciales ni otra aprobación rutinaria de publicación.
+
+
+### 2026-10-23 — checkpoint de originales de exhibición Android
+
+Root integra, arte genera recursos ignorados y auditor independiente inspecciona:19productos/25archivos generados nuevos,2,16MB, variantes exactas y disclosures; no fotografías de fabricante ni 44/44. Conservadas6asignacionesCC anteriores.26unitarias aprobadas; pruebas/capturas/publicación pendientes. Catálogo solicitó corrección de un explorador aislado: debe verse también pinza en kit; arte ya prepara reemplazo. Oliver aclara Android y ordena trabajo continuo/publicación preview revisada, sin otra pregunta rutinaria; iOS fuera. La OTA anterior sigue vigente, ningún nuevo lote aún publicado. Próxima acción detallada al principio de ESTADO_ACTUAL.
+
+Cierre del checkpoint:25productos/32recursos,2,84MB,kit corregido;26unitarias+tipos+lint aprobados. Auditor de código exigió is_demo acreditado y aviso de generación en todas las superficies: corregidos; pruebas UI/capturas y publicación pendientes.

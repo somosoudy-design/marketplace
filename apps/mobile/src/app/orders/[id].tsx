@@ -231,7 +231,7 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, cla
         return (
           <View key={it.id} style={{ flexDirection: 'row', gap: 12, padding: 14, alignItems: 'center' }}>
             <ScalePressable accessibilityRole="link" accessibilityLabel={`Ver ${it.title}`} onPress={() => router.push({ pathname: '/product/[id]', params: { id: it.product_id } })} style={{ flexDirection: 'row', gap: 12, flex: 1 }}>
-              <ProductImage path={it.image_path} style={{ width: 48 }} radius={t.radii.sm} />
+              <ProductImage productId={it.product_id} variantId={it.variant_id} path={it.image_path} style={{ width: 48 }} radius={t.radii.sm} />
               <View style={{ flex: 1, gap: 2 }}>
                 <Text variant="bodySmall" numberOfLines={2}>{it.title}</Text>
                 <Text variant="caption" color="textMuted">{it.variant_title ? `${it.variant_title} · ` : ''}{it.quantity} × {formatUSD(it.unit_price_usd)}</Text>

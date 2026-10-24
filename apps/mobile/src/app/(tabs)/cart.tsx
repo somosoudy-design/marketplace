@@ -124,7 +124,7 @@ function LineRow({ line: l, onQty, onRemove, disabled }: { line: CartLine; onQty
   return (
     <View style={{ flexDirection: 'row', gap: 12, padding: 12 }} testID={`cart-line-${l.variant_id}`}>
       <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id } })}>
-        <ProductImage productId={l.product_id} path={l.image_path} aspect={0.85} style={{ width: width < 360 ? 72 : 88 }} radius={6} />
+        <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={0.85} style={{ width: width < 360 ? 72 : 88 }} radius={6} />
       </ScalePressable>
       <View style={{ flex: 1, gap: 4 }}>
         <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>

@@ -233,7 +233,7 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
         <View style={{ gap: 2 }}><Text variant="label">{label}</Text><Text variant="caption" color="textSecondary">{g.label}</Text></View>
         {(allProducts ? g.lines : g.lines.slice(0, 2)).map((l) => (
           <View key={l.variant_id} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-            <ProductImage productId={l.product_id} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
+            <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
             <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text><Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text></View>
           </View>
         ))}
