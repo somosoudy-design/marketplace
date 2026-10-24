@@ -2,7 +2,7 @@ import type { OrderItem, ProductDetail, ProductVariant } from '@kora/api';
 import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
+import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
@@ -131,9 +131,20 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const scrollRef = useRef<Animated.ScrollView>(null);
   const infoY = useRef(0);
   const selectionY = useRef(0);
+  const selectionHeading = useRef<View>(null);
   const reviewsY = useRef(0);
   const reduced = useReducedMotion();
-  const editSelection = () => scrollRef.current?.scrollTo({ y: Math.max(0, infoY.current + selectionY.current - 68), animated: !reduced });
+  const editSelection = () => {
+    scrollRef.current?.scrollTo({ y: Math.max(0, infoY.current + selectionY.current - 68), animated: !reduced });
+    requestAnimationFrame(() => {
+      if (Platform.OS === 'web') {
+        (selectionHeading.current as unknown as HTMLElement | null)?.focus({ preventScroll: true });
+      } else if (Platform.OS === 'android' && selectionHeading.current) {
+        const tag = findNodeHandle(selectionHeading.current);
+        if (tag != null) AccessibilityInfo.setAccessibilityFocus(tag);
+      }
+    });
+  };
 
   // a different variant starts again from one unit
   const [qtyVariant, setQtyVariant] = useState(variant?.id);
@@ -232,7 +243,9 @@ function ProductView({ product: p }: { product: ProductDetail }) {
 
             {/* One selection, shared with the persistent purchase summary. */}
             {p.variants.length > 1 || canBuy ? <View testID="product-selection" style={{ gap: 14, paddingTop: 16, paddingBottom: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: t.colors.border }} onLayout={(event) => { selectionY.current = event.nativeEvent.layout.y; }}>
-              <Text variant="subtitle">Tu selección</Text>
+              <View ref={selectionHeading} testID="product-selection-heading" accessible accessibilityRole="header" accessibilityLabel="Tu selección" {...(Platform.OS === 'web' ? { tabIndex: -1 as const } : {})}>
+                <Text variant="subtitle">Tu selección</Text>
+              </View>
               {p.variants.length > 1 ? <View style={{ gap: 10 }}>
                 <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
@@ -337,7 +350,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               <Text variant="subtitle" tabular testID="product-selected-price">{formatUSD(variant.price_usd)}</Text>
               <Text variant="caption" color="textSecondary">por unidad</Text>
             </View>
-            <Icon name="chevron-up" size={18} color={t.colors.brand} />
+            <Icon name="arrow-up" size={18} color={t.colors.brand} />
           </ScalePressable> : null}
           {added ? (
             <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>

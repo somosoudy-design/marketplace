@@ -1009,3 +1009,5 @@ Cierre del checkpoint:25productos/32recursos,2,84MB,kit corregido;26unitarias+ti
 ### 2026-10-24 — publicación del catálogo y checkpoint de ficha
 
 EAS 40043643824 Success/04b384c: guard APK 5 y publicación preview aprobados; recepción nativa revisión 44 solicitada, ID aún pendiente de leer. Continúa ficha «Tu selección» por indicación más reciente de Oliver: resumen fijo unitario, volver a selector medido, vendedor antes de condiciones, edición bloqueada mientras agrega, envío simultáneo impedido y contraste de franja Android. Tipos/lint aprobados; pruebas/capturas/auditor de este segundo bloque pendientes. No está publicado todavía y no hay cambios de finanzas, servicios remotos, nativo o iOS.
+
+Revisión de ficha: ocho UI específicas aprobadas y 16 capturas antes/después; composición normal aceptable por auditor. P2 nueva: Editar desplazaba pero no transfería foco; corregida con destino semántico y foco web/Android. Icono inexistente corregido a arrow-up real. Retest de foco/destino y estrés, exportación/recepción nativa pendientes.
