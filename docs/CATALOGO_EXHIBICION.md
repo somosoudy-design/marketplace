@@ -1,5 +1,14 @@
 # Catálogo de exhibición — entrega Android preview
 
+## Actualización efectiva — 24 de octubre de 2026
+
+**25 productos / 32 imágenes originales generadas ya publicadas y recibidas en Android APK 5.** No son fotografías auténticas de fabricantes; aviso por pantalla y explicación específica en ficha. Siete colores adicionales vinculados a variantes exactas. No cambios en datos, precios, moderación, backend ni permisos.
+
+EAS `40043643824` Success, fuente `04b384c`, guard exacto APK 5. OTA **`01a16b40-71a9-7bce-9e05-29cf30866e11`**, publicada 24oct 00:12 UTC / 23oct 20:12 Venezuela. Recepción Android 15: run `40043939016`, fuente `b4d70b9`, **4/4 sin reintentos**, claro/oscuro y fuente OS 1,6. Diagnósticos en ambos temas muestran canal/runtime correctos y Marketplace responde 126/152 ms. No afirmar recepción en el Samsung de Oliver sin su evidencia.
+
+[Informe, cobertura y comparación real](catalogo-exhibicion/GENERADOS_2026-10-23.md). [Evidencia Android](capturas/catalogo-generado-2026-10-24/native/evidencia.json), 24 JPG derivados por el publicador CI, copiados sin más cambios y con hashes; PNG originales en el artefacto de esa ejecución. Permanecen **19 referencias de marca sin renovación nueva**, con material/modelo/derechos pendientes. No repetir descargas ni presentar el lote como 44/44. Se conservan las seis asignaciones CC anteriores. Los apartados siguientes son antecedentes donde contradigan esta actualización.
+
+
 ## Dirección vigente — 23 de octubre de 2026
 
 Oliver rechazó el acabado documental/amateur de las fotografías distribuidas y de sus retoques. **La licencia no equivale a aprobación visual.** No continuar recortando la foto del lector sobre mesa ni Anker documental para intentar cumplir el nuevo criterio. Las fotos publicadas del14oct siguen en el APK; no se reemplazaron remotamente en este bloque.

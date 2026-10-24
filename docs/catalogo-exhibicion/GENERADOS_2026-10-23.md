@@ -1,6 +1,6 @@
 # Catálogo original de exhibición — Android APK5
 
-**Validado, publicación en preparación.** 25 productos / 32 imágenes originales generadas, siete colores adicionales, 2,84 MB de WebP a 1024 px. No son fotografías auténticas ni certifican una unidad comercial. Ningún original oficial de tercero se utilizó como entrada.19productos de marca siguen pendientes de material correcto y distribuible. No afirmar44/44.
+**Publicado y recibido en Android.** 25 productos / 32 imágenes originales generadas, siete colores adicionales, 2,84 MB de WebP a 1024 px. No son fotografías auténticas ni certifican una unidad comercial. Ningún original oficial de tercero se utilizó como entrada.19productos de marca siguen pendientes de material correcto y distribuible. No afirmar44/44.
 
 Se reutiliza el registro de exhibición existente. UUID+ruta original+variante. PreviewAndroid y backend Marketplace exclusivamente; web sólo loopback. Producción/iOS desactivados. No cambios remotos, precios, pagos, moderación ni permisos. Aviso de entorno y generación por pantalla, explicación específica en ficha. No se sustituyen por imágenes sintéticas productos no-demo. DTO sinestado se corrobora con product_detail; error/carga/no-demo conservaStorage.
 
@@ -57,6 +57,8 @@ Procedencia, prompts (Salvia reconstruido y marcado no literal), hashes de origi
 
 ## Publicación y continuación
 
-Preparada publicación exclusivamente Android preview, guard exacto APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. No hay APK nuevo, cambios nativos ni publicación production. Registrar aquí el ID real de EAS y la recepción nativa cuando existan; todavía no atribuir recepción a Samsung.
+**EAS40043643824 Success**, fuente `04b384c`, guard exacto APK 5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. OTA **`01a16b40-71a9-7bce-9e05-29cf30866e11`**, 24oct 00:12 UTC / 23oct 20:12 Venezuela. Sólo Android preview; sin APK nuevo, cambios nativos o production.
 
-Después de la primera publicación, continuar el incremento comprador «Ficha: selección vinculada a compra»: conservar variante, cantidad y precio unitario visibles junto a las acciones; Editar vuelve al selector. Recomendación del director UX basada en la ficha real y framework Product Design, sin modificar reglas comerciales. No cambiar la marca provisional ni reabrir el backend.
+**Recepción real en Android 15:** run40043939016 Success, fuente `b4d70b9`, **4/4 sin reintentos** (12-catálogo + 09-fuente OS1,6, ambos temas). Los diagnósticos muestran nueva OTA/canal/runtime y Marketplace responde 126/152 ms. Buscar, Salvia/Arena, carrito de visitante y hogar/dental visibles. [Evidencia y hashes](../capturas/catalogo-generado-2026-10-24/native/evidencia.json). 24 JPG derivados por CI copiados sin recodificar; no son los PNG originales, que permanecen en el artefacto de la ejecución. No afirmar recepción en Samsung sin evidencia del propietario.
+
+Sigue el incremento comprador [Ficha: selección vinculada a compra](../FICHA_SELECCION_2026-10-24.md), conservando este lote. La instrucción más reciente permite continuar y publicar avances revisados sin otra confirmación rutinaria; no altera la identidad, reglas comerciales ni las condiciones pendientes de las 19 referencias de marca.

@@ -1,8 +1,10 @@
 # Pendientes de Kora
 
-## Prioridad activa — imágenes visibles en Android, sin preguntas rutinarias
+## Prioridad activa — entregas visibles en Android
 
-Renovación25muestras genéricas mediante originales ImageGen honestamente identificados;19productos de marca pendientes de fuente/identidad/permisos, no44/44. Checkpoint:25productos/32recursos integrados,2,84MB; kit corregido. Falta revisión visual web/nativa y publicar previewAPK5. Latest instrucción permite continuar después con mejoras sustanciales de comprador; no esperar otra confirmación rutinaria. No repetir diagnóstico de backend ni investigación de originales ya descargados.
+Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
+
+Ficha «Tu selección»: ocho pruebas específicas aprobadas, foco corregido y reflujo de variante larga en cierre. Próxima acción: retest de reflujo, auditor final, EASpreview/APK5 y recepción normal/OS1,6. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.
 
 
 > Por prioridad. Lo actualiza el agente que cambia una prioridad, termina una tarea o encuentra un bloqueo. Lo
@@ -15,11 +17,11 @@ Renovación25muestras genéricas mediante originales ImageGen honestamente ident
 
 **Publicación progresiva autorizada por Oliver:** «No esperes confirmación, actualiza todos los avances para ir viendo en la aplicación directamente». Cada bloque implementado y validado se publica en Android preview/APK5 con guard y recepción comprobados, sin nueva aprobación rutinaria. La consulta visual anterior es opcional y no bloquea continuar. La autorización del propietario está resuelta; los requisitos pendientes de identidad/licencia del material fotográfico siguen documentados. Antes del nuevo incremento Inicio, todo el código estaba en la OTA01a1693d; no publicar pruebas/documentación o código idéntico como si fueran nuevos cambios visuales.
 
-## CATÁLOGO COMPLETO — prioridad absoluta, Android APK5
+## CATÁLOGO COMPLETO — continuación después del lote publicado
 
-Oliver aclara Android, no iPhone. Primero imágenes realmente integradas y recibidas; después de su confirmación, UX general. Inventario fresco44/43demo, sin UUID nuevos.0imágenes nuevas integradas/publicadas en esta ejecución.25muestras sin marca pendientes de definición de imágenes originales generadas frente a fotografía auténtica;19de marca requieren sustitución profesional con modelo/variante y base de uso acreditados. La publicación OTA está autorizada; no confundirla con derechos del fabricante. Pregunta de material pendiente; dispositivo resuelto.
+25 de las 44 referencias tienen imágenes nuevas generadas de exhibición, con variantes y avisos honestos; se conserva `is_demo` y todas las protecciones comerciales. 19 productos de marca requieren material correcto y distribuible. Fuentes oficiales anteriores siguen como referencia local si no tienen permiso/correspondencia; no publicarlas ni recrearlas para eludir esa condición. Inventario y briefs ya registrados, no repetir investigación ni descargar de nuevo lo disponible.
 
-Reutilizar infraestructura existente; nada de referencias locales sin integrar presentadas como entrega. Catálogo/arte produjo44fichas/25briefs en archivos ignorados; no repetir investigación/downloads anteriores. El contraste de ficha y otras mejoras UX se posponen hasta que Oliver vea la renovación fotográfica. No tocar iOS.
+La nueva instrucción de Oliver autoriza trabajo continuo después de imágenes; no mantener la espera anterior de otra confirmación para UX. Alcance Android preview/APK5, sin iOS ni producción.
 
 ## UX-INICIO-REAL — publicado, recibido y aprobado en emulador
 

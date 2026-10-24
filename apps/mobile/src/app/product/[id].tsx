@@ -252,7 +252,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
                   {p.variants.map((v) => {
                     const out = v.stock != null && v.stock <= 0;
                     const label = `${v.title}${variantPrices ? ` · ${formatUSD(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
-                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} disabled={pending !== null} onPress={() => { setVariant(v); setAdded(false); addToCart.reset(); }} />;
+                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => { setVariant(v); setAdded(false); addToCart.reset(); }} />;
                   })}
                 </View>
               </View> : null}

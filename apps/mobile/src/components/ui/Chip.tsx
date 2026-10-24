@@ -5,7 +5,7 @@ import { Icon, type IconName } from './Icon';
 import { ScalePressable } from './Pressable';
 import { Text } from './Text';
 
-export function Chip({ label, selected, onPress, icon, count, testID, disabled = false }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string; disabled?: boolean }) {
+export function Chip({ label, selected, onPress, icon, count, testID, disabled = false, wrap = false }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string; disabled?: boolean; wrap?: boolean }) {
   const { colors, radii, layout } = useTheme();
   return (
     <ScalePressable
@@ -24,6 +24,7 @@ export function Chip({ label, selected, onPress, icon, count, testID, disabled =
         gap: 6,
         minHeight: layout.minTouch,
         minWidth: layout.minTouch,
+        maxWidth: wrap ? '100%' : undefined,
         paddingVertical: 10,
         paddingHorizontal: 13,
         borderRadius: radii.pill,
@@ -33,7 +34,7 @@ export function Chip({ label, selected, onPress, icon, count, testID, disabled =
       }}
     >
       {icon ? <Icon name={icon} size={16} color={selected ? colors.onBrand : colors.textSecondary} /> : null}
-      <Text variant="label" style={{ color: selected ? colors.onBrand : colors.text }}>{label}</Text>
+      <Text variant="label" style={{ color: selected ? colors.onBrand : colors.text, flexShrink: wrap ? 1 : undefined }}>{label}</Text>
       {count ? (
         <View style={{ minWidth: 18, height: 18, borderRadius: 9, backgroundColor: selected ? colors.onBrand : colors.brand, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 }}>
           <Text variant="caption" style={{ color: selected ? colors.brand : colors.onBrand, fontFamily: 'PlusJakartaSans_700Bold', fontSize: 11 }}>{count}</Text>

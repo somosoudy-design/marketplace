@@ -20,7 +20,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
     test.use({ colorScheme, viewport: { width: 412, height: 892 }, reducedMotion: 'reduce' });
     test.beforeEach(async ({ page }) => readOnly(page));
 
-    test('persistent summary returns to the measured selection and sends the selected color/quantity to cart', async ({ page }) => {
+    test('persistent summary returns to the measured selection and sends the selected color/quantity to cart', async ({ page }, info) => {
       await page.goto(`/product/${id}`);
       const summary = page.getByTestId('product-selection-summary');
       await expect(summary).toContainText('Salvia · 1 unidad');
@@ -32,6 +32,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
       const selected = page.getByTestId('product-selection');
       await expect(selected).toBeInViewport();
       expect((await selected.boundingBox())!.y).toBeGreaterThanOrEqual(60);
+      const selectionBox = (await selected.boundingBox())!;
+      expect(selectionBox.y + selectionBox.height).toBeLessThanOrEqual((await page.getByTestId('product-purchase-bar').boundingBox())!.y);
+      await page.screenshot({ path: info.outputPath('selector-destino.png') });
       await selected.getByRole('button', { name: 'Aumentar cantidad' }).click();
       await expect(summary).toContainText('2 unidades');
       await expect(page.getByTestId('product-selected-price')).toContainText('89,00'); // unit, not a new client total
@@ -71,7 +74,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('product-selection-summary')).toContainText('Arena');
     });
 
-    test('320px, long variants and enlarged web text keep selection, unit price and action readable', async ({ page }) => {
+    test('320px, long variants and enlarged web text keep selection, unit price and action readable', async ({ page }, info) => {
       await page.setViewportSize({ width: 320, height: 892 });
       const response = page.waitForResponse((r) => r.url().endsWith('/rpc/product_detail') && r.ok());
       await page.goto(`/product/${id}`); const actual: ProductDetail = await (await response).json();
@@ -79,6 +82,10 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.route('**/rpc/product_detail', (r) => r.fulfill({ json: { ...actual, max_per_order: 2, variants: actual.variants.map((v, i) => ({ ...v, title: i ? 'Arena cálida · edición de exposición' : v.title, price_usd: i ? 99.5 : v.price_usd })) } }));
       await page.reload(); await page.getByTestId('variant-Arena cálida · edición de exposición').click();
       const selection = page.getByTestId('product-selection');
+      const choice = await page.getByTestId('variant-Arena cálida · edición de exposición').boundingBox();
+      expect(choice!.x + choice!.width).toBeLessThanOrEqual(300);
+      const choiceText = await page.getByTestId('variant-Arena cálida · edición de exposición').locator('[dir="auto"]').evaluateAll((nodes) => nodes.map((n) => ({ width: n.clientWidth, scrollWidth: n.scrollWidth, height: n.clientHeight, scrollHeight: n.scrollHeight })));
+      expect(choiceText.every((b) => b.scrollWidth <= b.width + 1 && b.scrollHeight <= b.height + 1)).toBe(true);
       await selection.getByRole('button', { name: 'Aumentar cantidad' }).click();
       await expect(selection.getByRole('button', { name: 'Aumentar cantidad' })).toBeDisabled();
       await expect(page.getByTestId('product-selected-price')).toContainText('99,50');
@@ -95,6 +102,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
       expect(boxes.every((b) => b.scrollWidth <= b.width + 1 && b.scrollHeight <= b.height + 1)).toBe(true);
       await page.getByTestId('product-description').scrollIntoViewIfNeeded();
       await page.getByTestId('product-selection-summary').click(); await expect(selection).toBeInViewport();
+      const selectedBox = (await selection.boundingBox())!;
+      expect(selectedBox.y + selectedBox.height).toBeLessThanOrEqual((await bar.boundingBox())!.y);
+      await page.screenshot({ path: info.outputPath('seleccion-estres-web.png') });
     });
 
     test('sold-out product keeps stock alert and never shows a purchasable selection summary', async ({ page }) => {

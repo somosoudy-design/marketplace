@@ -1,0 +1,87 @@
+# APK5 preview. Public reads and device-only cart, no remote account/order/quote/payment.
+appId: com.example.kora.preview
+name: Ficha — editar selección y comprar con contexto
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-hero
+    timeout: 60000
+- takeScreenshot: ficha-seleccion-01-inicio
+- openLink: kora://p/audifonos-anc-over-ear
+- extendedWaitUntil:
+    visible:
+      id: product-selection-summary
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-0d93e509-6738-4d99-88ec-a5a1f5d08fdf
+- takeScreenshot: ficha-seleccion-02-apertura
+- tapOn:
+    id: product-selection-summary
+- extendedWaitUntil:
+    visible:
+      id: product-selection-heading
+    timeout: 15000
+- assertVisible:
+    id: variant-Arena
+- assertVisible: Aumentar cantidad
+- takeScreenshot: ficha-seleccion-03-editar
+- tapOn:
+    id: variant-Arena
+- tapOn: Aumentar cantidad
+- takeScreenshot: ficha-seleccion-04-arena-dos
+- tapOn:
+    id: product-add
+- extendedWaitUntil:
+    visible:
+      id: added-to-cart
+    timeout: 15000
+- takeScreenshot: ficha-seleccion-05-agregado
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-line-f984e205-a702-4f95-b0e2-c2249127a4a0
+    timeout: 20000
+- assertVisible: Arena
+- assertVisible: Cantidad 2
+- takeScreenshot: ficha-seleccion-06-carrito
+- tapOn:
+    id: cart-remove-f984e205-a702-4f95-b0e2-c2249127a4a0
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- tapOn:
+    id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- tapOn:
+    id: buyer-tab-index
+- extendedWaitUntil:
+    visible:
+      id: home-product-opening
+    timeout: 15000
+- tapOn:
+    id: home-product-opening
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- takeScreenshot: ficha-seleccion-07-contraste-sistema
+- back
+- extendedWaitUntil:
+    visible:
+      id: home-hero
+    timeout: 15000
+- takeScreenshot: ficha-seleccion-08-regreso
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a16b40-71a9-7bce-9e05-29cf30866e11.*
+- takeScreenshot: ficha-seleccion-09-recepcion
