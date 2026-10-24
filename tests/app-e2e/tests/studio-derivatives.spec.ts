@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
-import manifest from '../../../apps/mobile/assets/catalog-exhibition/studio-manifest.json';
+import { readFileSync } from 'node:fs';
+
+interface StudioResource { productId: string; variantId: string | null; optimizedSha256: string; author: string; license: string }
+const manifest = JSON.parse(readFileSync(new URL('../../../apps/mobile/assets/catalog-exhibition/studio-manifest.json', import.meta.url), 'utf8')) as { resources: StudioResource[] };
 
 const enabled = process.env.KORA_STUDIO_DERIVATIVES_TEST === 'readonly';
 const samsung = 'e7a91cd8-d3a2-4436-986c-71d1d95da813';
@@ -34,6 +37,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await expect(attribution).toContainText(resource.author);
         await expect(attribution.getByRole('link', { name: resource.license, exact: true })).toBeVisible();
         await expect(attribution.getByRole('link', { name: resource.author, exact: true })).toBeVisible();
+        if (id === samsung) await expect(attribution.getByRole('link', { name: 'Detalle original', exact: true })).toBeVisible();
         await expect(detail.getByTestId('catalog-exhibition-notice')).toContainText('Precios de ejemplo');
         await expect(page.getByTestId('product-demo')).toHaveCount(0);
         expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
@@ -49,7 +53,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       const alone = manifest.resources.find((r) => r.variantId === solo)!;
       const gallery = page.locator('[data-testid="product-gallery"]:visible');
       await expect(gallery.locator('img')).toHaveAttribute('src', new RegExp(kit.optimizedSha256.slice(0, 12)));
-      await page.getByTestId('product-selection-edit').click();
+      await page.getByTestId('product-selection-summary').click();
       await page.getByTestId('variant-Solo cargador · Negro').click();
       await expect(gallery.locator('img')).toHaveAttribute('src', new RegExp(alone.optimizedSha256.slice(0, 12)));
       await expect.poll(() => gallery.locator('img').evaluateAll((xs) => xs.every((x) => x.complete && x.naturalWidth === 1024))).toBe(true);

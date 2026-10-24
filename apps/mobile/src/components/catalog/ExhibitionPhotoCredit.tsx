@@ -11,6 +11,9 @@ export function ExhibitionPhotoCredit({ productId, path, variantId, isDemo }: { 
       {photo.disclosure ?? `Imagen generada de exhibición${photo.referenceOnly ? ' · Representación de referencia; no acredita la composición del set.' : ' · Producto de demostración.'}`}
       {attributed ? <Text testID="exhibition-photo-credit" variant="caption" color="textSecondary">
         {' · Original: '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(photo.originUrl!)} style={{ textDecorationLine: 'underline' }}>{photo.author}</Text>
+        {photo.additionalSources?.map((source) => <Text key={source.url} variant="caption" color="textSecondary">
+          {' · '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(source.url)} style={{ textDecorationLine: 'underline' }}>{source.label}</Text>
+        </Text>)}
         {' · '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(photo.licenseUrl!)} style={{ textDecorationLine: 'underline' }}>{photo.license}</Text>
       </Text> : null}
     </Text>

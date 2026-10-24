@@ -34,6 +34,7 @@ export interface ExhibitionPhoto {
   license?: string;
   licenseUrl?: string;
   originUrl?: string;
+  additionalSources?: readonly { label: string; url: string }[];
   /** Original synthetic illustration of an unbranded demo; never described as an authentic photograph. */
   kind?: 'generated-demo';
   variantId?: string;
