@@ -1,20 +1,18 @@
 # Pendientes de Kora
 
-## Prioridad activa — entregas visibles en Android
+## Prioridad activa — completar el material del catálogo
 
-**CATÁLOGO PRIMERO, reafirmado por Oliver24oct:** cinco referencias adicionales/seis derivados CC integrados y aprobados por auditor de arte. Código final69dcac5, seis UI y ocho unitarias/tipos/lint/web/Hermes aprobados;60PNG/hash60/60. Fuentes Samsung completas; capturas prematuras descartadas y corregidas. Pendiente dictamen final, publicación y recepción15/16, sin repetir pruebas. Reutiliza infraestructura y fuentes CC con crédito. Trece muestras siguen bloqueadas por identidad/uso; DJI conserva foto backend. [Informe](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md), [referencias exactas de las13pendientes](catalogo-exhibicion/RECURSOS_PENDIENTES_2026-10-24.md). Última OTA sigue01a16b56 hasta nueva publicación comprobada. No StoreChip/carrito antes de este bloque.
+**Lote adicional cerrado y recibido en emulador:** cinco referencias / seis ediciones de estudio CC. EAS40051620927 Success, fuente7f4c556; OTA **`01a16b9c-4322-7c4a-851a-3cfd0e4c93aa`**, Android preview/APK5. Android40051872738/sourcecb647bf: cuatro recorridos sin reintentos, ambos temas y fuente OS normal/1,6. Auditor independiente nativo APROBADO tras40JPG y40pares de hashes. [Informe y evidencia](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md).
 
-Dictamen final web ya **APROBADO** por auditor tras60hashes/28posteriores/4validaciones y bytes Android. Publicación preview solicitada en este commit; comprobar guard/EAS real y después recepción15/16. No otra revisión web ni publicación idéntica.
+**Cobertura actual:** 30 de 44 productos renovados, 38 imágenes nuevas activas (25/32 originales generadas +5/6 derivados CC). DJI conserva sus imágenes existentes. No afirmar44/44 ni fotografías oficiales: las nuevas ediciones están declaradas y atribuidas.
 
-**Publicación confirmada:** EAS40051620927 Success/7f4c556, guard APK5 y publicación correctos. Recepción revisión46 solicitada15/16, normal/OS1,6, ambos temas. Pendientes ID real/diagnósticos/capturas nativas; código y pruebas locales cerrados. No publicar de nuevo para obtener evidencia.
+**Pendientes reales: 13 muestras, seis UGREEN y siete SHEGLAM.** Faltan identidad/SKU/tonos y material con uso acreditado según [el paquete concreto](catalogo-exhibicion/RECURSOS_PENDIENTES_2026-10-24.md). Reutilizar sus fuentes y decisiones; no repetir inventario, diagnóstico de Supabase, descargas o consultas de términos ya cerradas. No sustituir por modelos parecidos ni inventar permisos para llenar la interfaz. La autorización de publicar avances ya existe; falta material, no otra confirmación rutinaria.
 
-Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
+**Código/pruebas/publicación cerrados:** código funcional69dcac5 incluido íntegramente en7f4c556; ocho unitarias, seis UI finales, tipos/lint/web/Hermes aprobados.60PNG web comparables/validaciones y40JPG nativos conservados con hashes. Todos los38recursos comprobados por bytes en export Android. No repetir pruebas, capturas ni publicar idéntico código. No Samsung físico, TalkBack o checkout autenticado nuevos.
 
-Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y reflujo corregidos, auditor/comercio web APROBADO, EAS40045652185 Success/19a1329. **Recibida en Android40045853547, 4/4 sin reintentos**, 13/14 claro/oscuro normal/OS1,6. Última OTA **`01a16b56-46a9-7960-a239-4b2271e68d5a`**, 24oct00:36UTC, conserva todas las imágenes del primer lote.36JPG/hash36/36 en `capturas/ficha-seleccion-2026-10-24/native/`. No repetir pruebas o publicación ya hechas. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.
+**UX secundario:** StoreChip tiene recorte previo de «Aún sin opiniones» con fuente OS1,6 (`StoreCard.tsx:82`, altura18); después, claridad de precio unitario/importe de línea en carrito con varias unidades. Mantener esas tareas registradas sin desplazar la prioridad de imágenes ni tocar cálculos/backend.
 
-**Auditor independiente nativo APROBADO:**36JPG examinados y36/36hashes/dimensiones verificados; cierra selección/compra/contraste del recorrido. Sin Samsung, TalkBack o checkout autenticado nuevos.
-
-**Siguiente bloque:** corregir `StoreCard.tsx:82`, altura18 fija de línea auxiliar de `StoreChip`, recorte preexistente de «Aún sin opiniones» con fuente Android OS1,6. Cubrir tienda con/sin opiniones, ambos temas, conservando estados03/04 como antes. Después, claridad comercial de carrito con varias líneas/dos unidades, precio unitario frente a importe de línea, variante y acciones; conservar cálculos/DTO. No afirmar accesibilidad completa por aprobar el resumen de selección.
+Los apartados inferiores conservan contexto anterior; donde mencionen entregas o próximas acciones ya superadas, prevalece este estado.
 
 
 > Por prioridad. Lo actualiza el agente que cambia una prioridad, termina una tarea o encuentra un bloqueo. Lo
@@ -29,7 +27,7 @@ Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y ref
 
 ## CATÁLOGO COMPLETO — continuación después del lote publicado
 
-25 de las 44 referencias tienen imágenes nuevas generadas de exhibición, con variantes y avisos honestos; se conserva `is_demo` y todas las protecciones comerciales. 19 productos de marca requieren material correcto y distribuible. Fuentes oficiales anteriores siguen como referencia local si no tienen permiso/correspondencia; no publicarlas ni recrearlas para eludir esa condición. Inventario y briefs ya registrados, no repetir investigación ni descargar de nuevo lo disponible.
+30 de las 44 referencias tienen imágenes renovadas de exhibición:25con generaciones originales y5con derivados CC de estudio. Se conserva `is_demo` y las protecciones comerciales. Trece muestras requieren material correcto y distribuible; DJI conserva las imágenes existentes. Fuentes oficiales sin permiso/correspondencia siguen como referencia local: no publicarlas ni recrearlas para eludir esa condición. Inventario, briefs y referencias ya registrados; no repetir investigación ni descargar lo disponible.
 
 La nueva instrucción de Oliver autoriza trabajo continuo después de imágenes; no mantener la espera anterior de otra confirmación para UX. Alcance Android preview/APK5, sin iOS ni producción.
 

@@ -1,6 +1,6 @@
 # Referencias pendientes para completar el catálogo
 
-**13 muestras pendientes: seis UGREEN y siete SHEGLAM.** Las cinco referencias con fuentes CC tienen seis derivados preparados y probados; DJI conserva su fotografía real existente. Este documento no acredita una nueva publicación.
+**13 muestras pendientes: seis UGREEN y siete SHEGLAM.** Las cinco referencias con fuentes CC tienen seis derivados publicados y recibidos en emulador: OTA `01a16b9c-4322-7c4a-851a-3cfd0e4c93aa`, EAS40051620927, Android40051872738,4/4. DJI conserva las imágenes existentes del backend. Este paquete identifica lo que falta para completar las muestras restantes; no declara renovado todo el catálogo.
 
 Para cada UUID se necesita una fotografía profesional propia/autorizada del producto y variante reales, o el material oficial con una base de uso que cubra la app, OTA preview, capturas y repositorio público. Una imagen descargable o un modelo parecido no resuelve identidad y permiso. No hace falta volver a diagnosticar Supabase ni modificar datos comerciales.
 

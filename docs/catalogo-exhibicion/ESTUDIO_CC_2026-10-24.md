@@ -1,6 +1,6 @@
 # Catálogo: cinco referencias con edición de estudio
 
-**Publicado en Android preview; recepción pendiente.** EAS40051620927 **Success**, fuente `7f4c556`, guard exacto APK5/publicación/resultado aprobados. Código funcional `69dcac5`, base `7025f23`. Registrar el nuevo ID sólo al leer diagnóstico; no usar el de la versión anterior `01a16b56-46a9-7960-a239-4b2271e68d5a`.
+**Publicado y recibido en Android preview/APK5.** EAS40051620927 **Success**, fuente `7f4c556`, guard exacto APK5/publicación/resultado aprobados. Código funcional `69dcac5`, base `7025f23`. OTA **`01a16b9c-4322-7c4a-851a-3cfd0e4c93aa`**, publicada24oct01:52UTC /23oct21:52Venezuela, leída en cuatro diagnósticos nuevos.
 
 ## Cambio efectivo
 
@@ -42,13 +42,26 @@ UGREEN todavía muestra seis referencias con recursos anteriores; la comparació
 - Arte: auditor independiente aprobó seis finales tras corregir puerto USB-C, indicador, cable cortado y lateral inventado. Anker terminó con vista conservadora sin panel de conexiones. Borradores rechazados ignorados y fuera del paquete.
 - Código: auditor exigió atribuir también la macro Samsung; enlace añadido y probado. Una Home oscura y varias validaciones estaban en transición/scroll: descartadas y recapturadas tras comprobar región activa, posición, recurso decodificado y pintura final. No se modificó la app para ocultar fallos del capturador.
 
-Flujos Android preparados: `15-catalogo-estudio` / `16-catalogo-estudio-texto`, claro/oscuro y fuente OS normal/1,6. Sintaxis YAML comprobada; ejecución y nueva recepción OTA pendientes. No atribuir al Samsung de Oliver la evidencia web o del emulador.
+**Android40051872738 Success**, fuentecb647bf/revisión46: `15-catalogo-estudio` / `16-catalogo-estudio-texto`, claro/oscuro y fuente OS normal/1,6, **4/4 sin reintentos**. Cuatro diagnósticos muestran nuevaOTA, preview, runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, backend Marketplace212/244/169/158ms, visitante. Sin Samsung físico, TalkBack o checkout autenticado nuevos.
+
+**40 JPG de flujos**, derivados por el publicador CI y copiados sin más edición, hashes40/40 desde `ci/capturas@611a5db855e6c333a4a3af8eeac58e7051fb52d6`. Cuatro capturas de instalación excluidas; PNG originales permanecen en el artefacto. [Manifiesto](../capturas/estudio-cc-2026-10-24/native/evidencia.json) · [Resumen](../capturas/estudio-cc-2026-10-24/native/resumen.md).
+
+| Evidencia Android posterior | Claro | Oscuro |
+|---|---|---|
+| Inicio, fuente normal | [Captura](../capturas/estudio-cc-2026-10-24/native/light/15-01-inicio.jpg) | [Captura](../capturas/estudio-cc-2026-10-24/native/dark/15-01-inicio.jpg) |
+| Buscar UGREEN | [Captura](../capturas/estudio-cc-2026-10-24/native/light/15-02-buscar.jpg) | [Captura](../capturas/estudio-cc-2026-10-24/native/dark/15-02-buscar.jpg) |
+| Lector, fuente OS1,6 | [Captura](../capturas/estudio-cc-2026-10-24/native/light/16-03-lector.jpg) | [Captura](../capturas/estudio-cc-2026-10-24/native/dark/16-03-lector.jpg) |
+| Samsung solo, fuente OS1,6 | [Captura](../capturas/estudio-cc-2026-10-24/native/light/16-05-samsung-solo.jpg) | [Captura](../capturas/estudio-cc-2026-10-24/native/dark/16-05-samsung-solo.jpg) |
+| Carrito, misma presentación | [Captura](../capturas/estudio-cc-2026-10-24/native/light/16-06-carrito-solo.jpg) | [Captura](../capturas/estudio-cc-2026-10-24/native/dark/16-06-carrito-solo.jpg) |
+| Código ejecutado | [Diagnóstico](../capturas/estudio-cc-2026-10-24/native/light/15-10-recepcion.jpg) | [Diagnóstico](../capturas/estudio-cc-2026-10-24/native/dark/15-10-recepcion.jpg) |
+
+**Dictamen independiente final nativo: APROBADO.** Inspeccionó40JPG y verificó40pares de hashes/rutas; fotos, variantes, créditos y carrito coherentes en ambos temas y escalas. Comprobó el aviso y crédito Samsung completos también en OS1,6. La vista Solo clara normal quedó parcialmente desplazada tras swipe; las ampliadas y el carrito muestran el recurso completo. Es un límite de esa captura, no un defecto acreditado del archivo. Sin P1/P2 nuevas del lote; no acredita TalkBack, accesibilidad global o recepción física del propietario. No se necesitan más pruebas ni otra publicación.
 
 **Dictamen independiente final web: APROBADO publicar**, fuente69dcac5. Auditor inspeccionó las28posteriores y4validaciones, comparó cuatro anteriores representativas, verificó60/60hashes y los bytes reales de6/6recursos en el export Android. Confirmó créditos completos, aislamiento y coherencia kit/solo/carrito; sin P1/P2 nuevas en este alcance. No requiere otra ronda web. La recepción nativa y fuente OS se aceptarán únicamente tras la ejecución correspondiente.
 
 ## Cobertura pendiente
 
-Publicados **30 productos renovados de 44**, con 38 imágenes activas nuevas. Permanecen **13 muestras pendientes: seis UGREEN y siete SHEGLAM**. DJI no demo conserva su fotografía real del backend. Recepción de esta última publicación todavía pendiente.
+Publicados y recibidos en emulador **30 productos renovados de 44**, con 38 imágenes activas nuevas. Permanecen **13 muestras pendientes: seis UGREEN y siete SHEGLAM**. DJI, producto no demo, conserva las imágenes existentes del backend. La recepción física de esta OTA en el Samsung del propietario no está comprobada.
 
 Dos agentes revisaron fuentes previas y páginas oficiales de términos/medios/sitemaps, sin repetir descargas de productos ni diagnóstico de Supabase. No localizaron nueva licencia pública ni correspondencia suficiente de SKU/tono para esas muestras. Afiliación o CDN200 no acredita esos requisitos.
 

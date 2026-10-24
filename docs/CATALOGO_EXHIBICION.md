@@ -1,6 +1,14 @@
 # Catálogo de exhibición — entrega Android preview
 
-## Actualización efectiva — 24 de octubre de 2026
+## Actualización vigente — 30 productos renovados de 44
+
+**Cinco referencias adicionales publicadas y recibidas en emulador Android**, con seis ediciones de estudio de fuentes CC: UGREENlector, UGREEN25845, SamsungEP-T4510 con cable/solo, Anker y StarTech. Mantienen créditos y licencia; son derivados generativos declarados, no fotos oficiales. Conservadas las25referencias/32imágenes anteriores. Total30productos/38imágenes activas nuevas; las13muestras restantes requieren identidad/material autorizado y DJI conserva sus imágenes del backend.
+
+OTA **`01a16b9c-4322-7c4a-851a-3cfd0e4c93aa`**,24oct01:52UTC, Androidpreview/runtimeAPK5 exacto. EAS40051620927 Success/7f4c556; Android40051872738 Success/cb647bf,15/16normal/OS1,6 ambos temas,4/4 sin reintentos. Auditor independiente nativo APROBADO tras40JPG/hash40/40; no recepción física Samsung, TalkBack o checkout autenticado nuevos. Sin APK, configuración nativa, producción o datos remotos modificados.
+
+[Informe y comparaciones](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md) · [Evidencia Android](capturas/estudio-cc-2026-10-24/native/evidencia.json) · [Paquete exacto de las13pendientes](catalogo-exhibicion/RECURSOS_PENDIENTES_2026-10-24.md). Todo el código actual ya está publicado; no otra OTA idéntica. Los apartados siguientes documentan entregas anteriores.
+
+## Entrega anterior — 25 productos, 24 de octubre de 2026
 
 **25 productos / 32 imágenes originales generadas ya publicadas y recibidas en Android APK 5.** No son fotografías auténticas de fabricantes; aviso por pantalla y explicación específica en ficha. Siete colores adicionales vinculados a variantes exactas. No cambios en datos, precios, moderación, backend ni permisos.
 

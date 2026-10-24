@@ -40,5 +40,8 @@
       "file": "assets/90363596d3dedf8961f13430265cdbd9"
     }
   ],
-  "sourceCode": "69dcac5"
+  "sourceCode": "69dcac5",
+  "cumulativeProducts": 30,
+  "cumulativeResourcesIncluded": 38,
+  "previousBatch32HashesAlsoVerified": true
 }
