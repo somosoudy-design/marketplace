@@ -2,6 +2,8 @@
 
 ## Prioridad activa — entregas visibles en Android
 
+**CATÁLOGO PRIMERO, reafirmado por Oliver24oct:** cinco referencias adicionales/seis derivadosCC integrados localmente y aprobados por auditor de arte; pruebas/capturas/publicación aún pendientes. Reutiliza infraestructura y fuentesCC con crédito, no originales oficiales sin permiso.13muestras de marca siguen bloqueadas por identidad/uso; DJI conserva foto backend. Cerrar este bloque antes de StoreChip/carrito. [Informe](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md). ÚltimaOTA permanece01a16b56 hasta nueva publicación comprobada.
+
 Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
 
 Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y reflujo corregidos, auditor/comercio web APROBADO, EAS40045652185 Success/19a1329. **Recibida en Android40045853547, 4/4 sin reintentos**, 13/14 claro/oscuro normal/OS1,6. Última OTA **`01a16b56-46a9-7960-a239-4b2271e68d5a`**, 24oct00:36UTC, conserva todas las imágenes del primer lote.36JPG/hash36/36 en `capturas/ficha-seleccion-2026-10-24/native/`. No repetir pruebas o publicación ya hechas. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.

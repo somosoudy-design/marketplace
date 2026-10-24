@@ -6,7 +6,13 @@
 
 **Última actualización:** 2026-10-24. Dos incrementos publicados y recibidos en Android preview/APK 5: catálogo 25/32 y ficha de compra contextual. Última OTA **`01a16b56-46a9-7960-a239-4b2271e68d5a`**, publicada 24oct 00:36 UTC / 23oct 20:36 Venezuela. Recepción nativa final 4/4 sin reintentos, ambos temas y fuente OS normal/1,6.
 
-## Trabajo en curso — ninguno pendiente de estas dos entregas
+## Trabajo en curso — catálogo primero, cinco derivados CC en validación
+
+Oliver confirma recepción parcial de imágenes y pide continuar esa prioridad. Se posponen StoreChip/carrito hasta cerrar este bloque. Cinco referencias de marca existentes tienen seis nuevos derivados de estudio aprobados por auditor visual independiente, con correcciones de conectores/indicadores/encuadre y vistas conservadoras. Fuentes CC ya distribuidas, no packshots oficiales sin permiso. Integrados localmente por UUID/ruta/variante con aviso de edición generativa y atribución/licencia; no publicados todavía.28capturas anteriores reales,320/412claro/oscuro. Próxima acción: tipos/lint, exportar web/Android, cuatro UI nuevas y regresiones focalizadas, capturas posteriores y auditor, commit/push → EASpreview con guardAPK5 → recepción nativa. [Estado del bloque](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md).
+
+SeisUGREEN/sieteSHEGLAM siguen sin modelo/tono o permiso acreditados; DJI no demo conserva foto existente. Dos agentes cerraron investigación acotada usando fuentes previas, sin imágenes nuevas descargadas ni backend. No volver a presentar25/44como catálogo completo, ni afirmar que estos cinco más ya están en el teléfono.
+
+### Entregas anteriores cerradas
 
 **No repetir la implementación, las pruebas ni la publicación ya cerradas.** Ficha: EAS `40045652185` **Success**, fuente `19a1329`; recepción Android `40045853547` **Success**, solicitud revisión 45/fuente `0608286`, flujos `13-ficha-seleccion` y `14-ficha-seleccion-texto`, **4/4 sin reintentos**. Los cuatro diagnósticos ejecutan la última OTA indicada arriba, preview, runtime exacto `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, Marketplace responde 344/229/306/261 ms, sin sesión. No se acredita aún recepción física de esta nueva versión en Samsung.
 

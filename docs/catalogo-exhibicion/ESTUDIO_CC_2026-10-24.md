@@ -1,0 +1,15 @@
+# Catálogo pendiente: cinco referencias con edición de estudio
+
+**En curso, no publicado todavía.** Prioridad reafirmada por Oliver: terminar imágenes antes de continuar UX general. Base `7025f23`, Android preview/APK5 exclusivamente. La última OTA vigente sigue siendo `01a16b56-46a9-7960-a239-4b2271e68d5a`.
+
+Se reutilizan cinco fotografías con licencia verificable ya presentes en el catálogo. Se preparan seis derivados de estudio: lector UGREEN, cargador de carro UGREEN25845, SamsungEP-T4510 con cable/solo cargador, AnkerPowerCore10000 y hubStarTechST7300U3M. Son **ediciones generativas de fuentes CC**, con atribución y licencia heredadas; no fotografías oficiales ni evidencia de una unidad comercial. No se editaron los packshots oficiales cuyo permiso está pendiente.
+
+Seis recursos finales aprobados visualmente por auditor independiente. Correcciones exigidas: receptáculo USB-C y margen del kit Samsung, indicador del cargador de carro, eliminación de cable cortado en Anker y lateral inventado del hub. Anker final usa vista cenital sin panel de conexiones; hub usa vista frontal conservadora. Las versiones rechazadas quedan ignoradas y no se distribuyen. El recurso Samsung sin cable se vincula a su variante real.
+
+**Estado local:** cinco UUID / seis WebP1024 /426812bytes integrados mediante el registro existente. Conservadas55asignaciones del lote anterior; sustituidas las seis asignacionesCC documentales por12asignaciones de portada/variantes. `is_demo` se confirma como en las32generaciones anteriores. Fuentes/autores/licencias/prompts/hashes en [studio-manifest.json](../../apps/mobile/assets/catalog-exhibition/studio-manifest.json). Sin backend, precios, permisos, finanzas, iOS o configuración nativa.
+
+**Comparación:**28capturas web anteriores tomadas sobre la exportación vigente antes de editar el código, Inicio/BuscarUGREEN/cincofichas,320/412,claro/oscuro. Pendiente exportación posterior, pruebas, revisión de capturas y publicación/recepción. No equiparar originales generados en una carpeta con cambios ya recibidos en Android.
+
+**Resto:** sieteSHEGLAM y seisUGREEN siguen con identidad/SKU/tono o permiso de distribución sin acreditar. DJI no demo conserva su fotografía existente del backend. Los agentes reutilizaron evidencias y descargaron sólo páginas de términos/medios/sitemaps, sin repetir imágenes o diagnóstico de Supabase. No se localizó nueva licencia pública en las fuentes oficiales revisadas; afiliación/CDN200 no la concede. Matrices exactas preparadas en rutas ignoradas, pendientes de conservar como metadatos. No afirmar44/44.
+
+Product Design: reutilizados los criterios leídos de `c1/audit`, `skill://Plugin_fa77aec24fc08191bc6e57f377126d76/audit/references/design-audit-framework.md`: consistencia entre apariciones, claridad perceptiva y confianza. No se realizó una nueva auditoría general ni se atribuye al framework una licencia o fidelidad que no puede certificar. Canvas/Canva no disponible; ImageGen realmente utilizado para las ediciones. Root único escritor/committer; catálogo/derechos y auditor independientes.
