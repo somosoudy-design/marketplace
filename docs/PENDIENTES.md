@@ -2,7 +2,9 @@
 
 ## Prioridad activa — entregas visibles en Android
 
-**CATÁLOGO PRIMERO, reafirmado por Oliver24oct:** cinco referencias adicionales/seis derivadosCC integrados localmente y aprobados por auditor de arte; pruebas/capturas/publicación aún pendientes. Reutiliza infraestructura y fuentesCC con crédito, no originales oficiales sin permiso.13muestras de marca siguen bloqueadas por identidad/uso; DJI conserva foto backend. Cerrar este bloque antes de StoreChip/carrito. [Informe](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md). ÚltimaOTA permanece01a16b56 hasta nueva publicación comprobada.
+**CATÁLOGO PRIMERO, reafirmado por Oliver24oct:** cinco referencias adicionales/seis derivados CC integrados y aprobados por auditor de arte. Código final69dcac5, seis UI y ocho unitarias/tipos/lint/web/Hermes aprobados;60PNG/hash60/60. Fuentes Samsung completas; capturas prematuras descartadas y corregidas. Pendiente dictamen final, publicación y recepción15/16, sin repetir pruebas. Reutiliza infraestructura y fuentes CC con crédito. Trece muestras siguen bloqueadas por identidad/uso; DJI conserva foto backend. [Informe](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md), [referencias exactas de las13pendientes](catalogo-exhibicion/RECURSOS_PENDIENTES_2026-10-24.md). Última OTA sigue01a16b56 hasta nueva publicación comprobada. No StoreChip/carrito antes de este bloque.
+
+Dictamen final web ya **APROBADO** por auditor tras60hashes/28posteriores/4validaciones y bytes Android. Publicación preview solicitada en este commit; comprobar guard/EAS real y después recepción15/16. No otra revisión web ni publicación idéntica.
 
 Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
 

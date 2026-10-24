@@ -1,0 +1,44 @@
+{
+  "scope": "Actual exported Android/Hermes asset bytes match all six final reviewed resources",
+  "resourcesExpected": 6,
+  "resourcesIncluded": 6,
+  "files": [
+    {
+      "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
+      "variantId": null,
+      "sha256": "b43c56af1ab7e462f6c82ea69bbc630763ace1d721a53858e7208bcc6a914e9f",
+      "file": "assets/e02904be6447f44285f15b106fd903da"
+    },
+    {
+      "productId": "6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "variantId": null,
+      "sha256": "82659fe4d9a2050bf3276ee1a3031cb78ffe22c8b4a54da756ee77a3e5285c3e",
+      "file": "assets/5d09dcf6dcd0b85aa4435e28ec2f5799"
+    },
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "variantId": "930576a5-751f-4f67-904e-19f21b2e969b",
+      "sha256": "8c61cdefcfe4d3aedd2ee2d8954cb8c2c42022be4290c773e71009cded4e8630",
+      "file": "assets/df8ebe24fa72902c826e70be47b23d6d"
+    },
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "variantId": "03c25cc2-2186-466f-a3a5-0f0201dfad81",
+      "sha256": "576d875fea45592048b1cdabea5cf019c69b569418bd39a9d3143641a620a1b2",
+      "file": "assets/237110f1301533d4aab3c793951ed06f"
+    },
+    {
+      "productId": "01a43334-e485-41cc-a12a-c049e933665d",
+      "variantId": null,
+      "sha256": "260faf99c42c1a87181c51915c0b7f958a2e17ed435a11a9d11a693b5425d000",
+      "file": "assets/0469500e736a6418255d7d87ffb6931b"
+    },
+    {
+      "productId": "910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "variantId": null,
+      "sha256": "dc7596241ac536337fbecc585967f8fdac36ca1922fb03d8c9a54772f1a3751e",
+      "file": "assets/90363596d3dedf8961f13430265cdbd9"
+    }
+  ],
+  "sourceCode": "69dcac5"
+}
