@@ -6,13 +6,15 @@
 
 **Última actualización:** 2026-10-24. Dos incrementos publicados y recibidos en Android preview/APK 5: catálogo 25/32 y ficha de compra contextual. Última OTA **`01a16b56-46a9-7960-a239-4b2271e68d5a`**, publicada 24oct 00:36 UTC / 23oct 20:36 Venezuela. Recepción nativa final 4/4 sin reintentos, ambos temas y fuente OS normal/1,6.
 
-## Trabajo en curso — publicación del catálogo validado
+## Trabajo en curso — recepción Android del catálogo publicado
+
+**EAS40051620927 Success**, fuente7f4c556, guard exacto APK5/publicación/resultado aprobados. Se solicita revisión46, flujos15/16 claro/oscuro normal/OS1,6 mediante este commit. Última publicación incluye30productos renovados/38imágenes;13muestras pendientes yDJI conservado. Nuevo ID deOTA aún no leído; no confundir con01a16b56. No otra publicación idéntica.
 
 Oliver confirma recepción parcial y prioriza terminar imágenes. StoreChip/carrito se posponen. Cinco referencias tienen seis derivados de estudio CC aprobados visualmente, con correcciones de conectores, indicador, encuadre y vistas conservadoras. Integrados por UUID/ruta/variante con aviso y atribución, **sin publicar todavía**. Código final `69dcac5`: ambas fuentes Samsung enlazadas; tipos/lint y web/Android Hermes finales correctos, seis UI finales y ocho unitarias aprobadas. Sesenta PNG finales: 56 comparables 320/412 en ambos temas más cuatro de Samsung solo/carrito, hashes 60/60 y cero desbordamientos. Fotos prematuras rechazadas y recapturadas tras carga/decodificación/pintura final; no cambios de app para ocultarlas. [Informe](catalogo-exhibicion/ESTUDIO_CC_2026-10-24.md).
 
 **Auditor independiente final web: APROBADO publicar.** Revisó28posteriores+4validaciones, cuatro anteriores representativas,60/60hashes y6/6bytes de archivos Android; créditos/aislamiento/variantes correctos, sin P1/P2 nuevas del alcance. No más rondas web.
 
-**Próxima acción exacta:** verificar ejecución EAS disparada por este commit de `.github/eas-update-request`, incluyendo guard exacto APK5 y publicación real. Sólo después solicitar recepción nativa con `.github/apk-emulator-request`, flujos15/16 normal/OS1,6 claro/oscuro. No repetir pruebas o exportaciones: aprobadas sobre69dcac5. Servidor actual8097. No imágenes oficiales sin permiso, configuración nativa, finanzas o backend. No declarar recibida antes de revisar los nuevos diagnósticos y fotos.
+**Próxima acción exacta:** localizar ejecución nativa de este commit/revisión46, esperar pasos de pruebas/publicador, recuperar su `ci/capturas` inmutable y comprobar LEEME/source/run y resumen15/16. Leer el nuevo ID/canal/runtime en cuatro diagnósticos y revisar las fotografías/variante/carrito normal/OS1,6 con auditor antes de cerrar. No repetir pruebas locales/exportaciones ni publicar idéntico código. Servidor actual8097. Sin configuración nativa, finanzas o backend; no atribuir al Samsung físico una recepción del emulador.
 
 SeisUGREEN/sieteSHEGLAM siguen sin modelo/tono o permiso acreditados; DJI no demo conserva foto existente. Dos agentes cerraron investigación acotada usando fuentes previas, sin imágenes nuevas descargadas ni backend. No volver a presentar25/44como catálogo completo, ni afirmar que estos cinco más ya están en el teléfono.
 

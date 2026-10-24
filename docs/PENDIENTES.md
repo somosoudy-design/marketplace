@@ -6,6 +6,8 @@
 
 Dictamen final web ya **APROBADO** por auditor tras60hashes/28posteriores/4validaciones y bytes Android. Publicación preview solicitada en este commit; comprobar guard/EAS real y después recepción15/16. No otra revisión web ni publicación idéntica.
 
+**Publicación confirmada:** EAS40051620927 Success/7f4c556, guard APK5 y publicación correctos. Recepción revisión46 solicitada15/16, normal/OS1,6, ambos temas. Pendientes ID real/diagnósticos/capturas nativas; código y pruebas locales cerrados. No publicar de nuevo para obtener evidencia.
+
 Catálogo: **25 productos / 32 imágenes originales generadas publicados y recibidos**. EAS40043643824, OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, Android40043939016, 4/4 sin reintentos. **19 referencias de marca pendientes** de material/modelo/permisos; no 44/44 ni volver a generar las 25 terminadas.
 
 Ficha «Tu selección»: ocho pruebas específicas finales aprobadas, foco y reflujo corregidos, auditor/comercio web APROBADO, EAS40045652185 Success/19a1329. **Recibida en Android40045853547, 4/4 sin reintentos**, 13/14 claro/oscuro normal/OS1,6. Última OTA **`01a16b56-46a9-7960-a239-4b2271e68d5a`**, 24oct00:36UTC, conserva todas las imágenes del primer lote.36JPG/hash36/36 en `capturas/ficha-seleccion-2026-10-24/native/`. No repetir pruebas o publicación ya hechas. Oliver autoriza continuar y publicar avances validados sin otra confirmación rutinaria. No repetir diagnóstico del backend ni trabajo iOS.

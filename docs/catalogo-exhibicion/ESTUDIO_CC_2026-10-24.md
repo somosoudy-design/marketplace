@@ -1,6 +1,6 @@
 # Catálogo: cinco referencias con edición de estudio
 
-**Validación local terminada; publicación y recepción Android pendientes.** Prioridad reafirmada por Oliver: completar imágenes antes de continuar UX general. Código final `69dcac5`, base `7025f23`. Android preview/APK 5 exclusivamente. La OTA vigente sigue siendo `01a16b56-46a9-7960-a239-4b2271e68d5a` hasta confirmar la nueva publicación.
+**Publicado en Android preview; recepción pendiente.** EAS40051620927 **Success**, fuente `7f4c556`, guard exacto APK5/publicación/resultado aprobados. Código funcional `69dcac5`, base `7025f23`. Registrar el nuevo ID sólo al leer diagnóstico; no usar el de la versión anterior `01a16b56-46a9-7960-a239-4b2271e68d5a`.
 
 ## Cambio efectivo
 
@@ -48,7 +48,7 @@ Flujos Android preparados: `15-catalogo-estudio` / `16-catalogo-estudio-texto`, 
 
 ## Cobertura pendiente
 
-Tras publicar serán **30 productos renovados de 44**, con 38 imágenes activas nuevas. Permanecen **13 muestras pendientes: seis UGREEN y siete SHEGLAM**. DJI no demo conserva su fotografía real del backend.
+Publicados **30 productos renovados de 44**, con 38 imágenes activas nuevas. Permanecen **13 muestras pendientes: seis UGREEN y siete SHEGLAM**. DJI no demo conserva su fotografía real del backend. Recepción de esta última publicación todavía pendiente.
 
 Dos agentes revisaron fuentes previas y páginas oficiales de términos/medios/sitemaps, sin repetir descargas de productos ni diagnóstico de Supabase. No localizaron nueva licencia pública ni correspondencia suficiente de SKU/tono para esas muestras. Afiliación o CDN200 no acredita esos requisitos.
 

@@ -15,6 +15,8 @@ Cierre local final sobre69dcac5: tipos/lint y web/Android Hermes correctos;6UI f
 
 Auditor final web **APROBADO publicar**: inspeccionó28posteriores+4validaciones, cuatro anteriores,60hashes únicos y6/6bytes del export Android; créditos, guard y variante/carrito coherentes. Sin P1/P2 nuevas del alcance. Root conserva60PNG sin editar y solicita una sola EAS Update Android preview con guard APK5. ID y recepción nativa15/16 pendientes, no otra ronda de pruebas web.
 
+Publicación real: EAS40051620927 Success/fuente7f4c556; guardAPK5 Success01:51:47UTC y publicación/resultado01:52:46UTC. Sólo Androidpreview, sinAPK ni producción. NuevoID aún no observado. Recepción revisión46/15+16claro-oscuro normal/OS1,6 solicitada con este commit. Sin repetir pruebas/exportaciones ya aprobadas ni otraOTA.
+
 ### 2026-10-24 · Codex cloud · dos avances publicados y recibidos en APK5
 
 - Catálogo: 25 productos / 32 imágenes originales generadas, siete colores adicionales, 2,84 MB. Registro UUID/ruta/variante existente, comprobación de `is_demo` cerrada por defecto y aviso de exhibición. Conserva precios, stock, moderación y backend. No son fotografías auténticas de fabricante ni 44/44: 19 referencias de marca siguen pendientes. Arte/catálogo revisaron 32 originales y corrigieron un kit. 26 unitarias, 20 UI únicas, tipos/lint/web/Hermes aprobados; 24 PNG comparables. Primera OTA `01a16b40-71a9-7bce-9e05-29cf30866e11`, EAS40043643824/04b384c; recepción40043939016, 4/4 sin reintentos, 24 JPG revisados y hashes conservados.

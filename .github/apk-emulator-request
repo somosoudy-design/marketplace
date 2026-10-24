@@ -1,6 +1,6 @@
-# Revisión45 · Ficha contextual, EAS40045652185 Success/fuente19a1329, guard exacto APK5 aprobado.
-# Visitante: apertura publicada, ficha/regreso, categorías/búsqueda persistente y recepción distinta de OTA anterior.
-# Ambos temas y fuente OS1,6. No registros, pedidos, cotizaciones ni pagos remotos. No generar otro APK.
+# Revisión46 · Catálogo de estudio, EAS40051620927 Success/fuente7f4c556, guard exacto APK5 aprobado.
+# Cinco referencias/seis imágenes, Samsung kit/solo y carrito del visitante. Ambos temas y fuente OS1,6.
+# Sólo lectura pública y carrito local; no registros, pedidos, cotizaciones o pagos. No generar otro APK.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
-flows: 13-ficha-seleccion 14-ficha-seleccion-texto
+flows: 15-catalogo-estudio 16-catalogo-estudio-texto
 themes: light dark
