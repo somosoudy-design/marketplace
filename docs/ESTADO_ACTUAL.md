@@ -6,6 +6,14 @@
 
 **Última actualización:** 2026-10-24: catálogo original validado, publicación preview en preparación. Antecedente —  Inicio real publicado y recibido en emulador Android15/APK5. OTA `01a16a08-5900-7324-83c5-8f833e369d19`,23oct18:31UTC/14:31Caracas. EAS40003745928 Success/e6fccbd/guard exacto;4/4nativos claro/oscuro/OS1,6 sin reintentos. Recepción de esta nueva OTA en Samsung aún no observada.
 
+## Siguiente incremento comprador — ficha con selección vinculada a compra
+
+El catálogo 25/32 ya fue publicado: EAS `40043643824` Success, fuente `04b384c`, guard exacto APK 5 y publicación Android preview aprobados. Se inició recepción nativa con solicitud revisión 44, fuente `b4d70b9`, flujos `12-catalogo-original` y `09-inicio-v2-texto`, claro/oscuro. Falta leer el ID de OTA en evidencia original; no afirmar recepción Samsung.
+
+Root continúa un bloque específico de ficha, recomendado por director UX con framework Product Design y revisado estructuralmente por auditor: sección «Tu selección», resumen fijo de variante/cantidad y precio por unidad del DTO, Editar devuelve al selector medido, vendedor antes de condiciones. No otro modal ni cálculos. Se bloquea edición mientras agrega y se evita un segundo envío simultáneo; cambiar selección retira la confirmación anterior. Android reserva el inset superior una sola vez para que los iconos del sistema conserven contraste sobre las fotos claras; skeleton coherente y apariencia restaurada al salir. No cambios iOS/nativos/backend/financieros.
+
+**Checkpoint:** código de ficha y Chip opcionalmente deshabilitado, tipos/lint aprobados; validación UI/capturas/Android pendiente. No incluido en la primera OTA del catálogo y no publicar la segunda hasta cerrar su revisión y comprobar la recepción de la primera. Próxima acción: exportación web bajo `.local/ficha-seleccion-20261024`, pruebas focalizadas Editar→color/cantidad→Agregar→carrito, bloqueo/envío único/error/sin stock, capturas 320/412 claro/oscuro y revisión independiente. No repetir suites generales ni regenerar imágenes.
+
 ## Trabajo en curso — renovación real de imágenes Android
 
 Oliver aclara Android/APK5, descarta iPhone y ordena continuar sin preguntas rutinarias con imágenes y después mejoras sustanciales de la app. Autoriza las publicaciones progresivas Android preview ya revisadas. La instrucción más reciente de continuar sustituye la espera anterior de confirmación entre imágenes y UX; no concede derechos sobre fotografías de terceros.

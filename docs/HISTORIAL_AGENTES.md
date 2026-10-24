@@ -1005,3 +1005,7 @@ Cierre del checkpoint:25productos/32recursos,2,84MB,kit corregido;26unitarias+ti
 ### 2026-10-24 — lote visual validado, publicación en preparación
 
 25 productos / 32 originales generados, 2,84 MB. Auditoría independiente de 32 imágenes aprobada; kit corregido. Se cerraron dos P2: estado demo exigido/corroborado y aviso por pantalla de generación. 26 unitarias, tipos/lint, web/Android Hermes y 20 casos UI únicos aprobados; 24 capturas comparables. Dos capturas prematuras rechazadas por auditor y sustituidas por capturas reales cargadas, sin modificar imagen. Próxima acción: EAS Android preview con guard APK 5 y recepción en emulador, después incremento comprador de selección contextual en ficha. No declarar las 19 referencias de marca renovadas ni recepción en Samsung.
+
+### 2026-10-24 — publicación del catálogo y checkpoint de ficha
+
+EAS 40043643824 Success/04b384c: guard APK 5 y publicación preview aprobados; recepción nativa revisión 44 solicitada, ID aún pendiente de leer. Continúa ficha «Tu selección» por indicación más reciente de Oliver: resumen fijo unitario, volver a selector medido, vendedor antes de condiciones, edición bloqueada mientras agrega, envío simultáneo impedido y contraste de franja Android. Tipos/lint aprobados; pruebas/capturas/auditor de este segundo bloque pendientes. No está publicado todavía y no hay cambios de finanzas, servicios remotos, nativo o iOS.

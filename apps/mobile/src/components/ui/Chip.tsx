@@ -5,13 +5,14 @@ import { Icon, type IconName } from './Icon';
 import { ScalePressable } from './Pressable';
 import { Text } from './Text';
 
-export function Chip({ label, selected, onPress, icon, count, testID }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string }) {
+export function Chip({ label, selected, onPress, icon, count, testID, disabled = false }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string; disabled?: boolean }) {
   const { colors, radii, layout } = useTheme();
   return (
     <ScalePressable
       testID={testID}
       accessibilityRole="button"
-      accessibilityState={{ selected }}
+      accessibilityState={{ selected, disabled }}
+      disabled={disabled}
       aria-pressed={selected}
       onPress={() => {
         haptics.select();

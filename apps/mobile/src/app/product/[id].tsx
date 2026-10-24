@@ -1,9 +1,9 @@
 import type { OrderItem, ProductDetail, ProductVariant } from '@kora/api';
 import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Platform, useWindowDimensions, View } from 'react-native';
-import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
+import Animated, { FadeIn, FadeInDown, FadeOut, useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
 import { ProductImage } from '@/components/catalog/ProductImage';
@@ -46,6 +46,11 @@ export default function ProductScreen() {
   const q = useProduct(id);
   const t = useTheme();
   const insets = useSafeAreaInsets();
+  useFocusEffect(useCallback(() => {
+    if (Platform.OS !== 'android') return;
+    const entry = StatusBar.pushStackEntry({ barStyle: t.scheme === 'dark' ? 'light-content' : 'dark-content' });
+    return () => StatusBar.popStackEntry(entry);
+  }, [t.scheme]));
 
   useEffect(() => {
     if (id) void api.catalog.track('view', { productId: id });
@@ -81,6 +86,7 @@ function BackButton({ inline }: { inline?: boolean }) {
 
 function ProductView({ product: p }: { product: ProductDetail }) {
   const t = useTheme();
+  const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { user } = useAuth();
   const qc = useQueryClient();
@@ -96,6 +102,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   // what this screen last put in the cart (variant and quantity), so "Comprar" after "Agregar" doesn't add it twice
   const [inCart, setInCart] = useState<string | null>(null);
   const [pending, setPending] = useState<'add' | 'buy' | null>(null);
+  const submitting = useRef(false);
   const [page, setPage] = useState(0);
   const availability = presentAvailability(p.availability);
   const imageWidth = Math.min(width, MAX_W);
@@ -122,7 +129,11 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   // Square, bounded gallery: the buyer reaches name, price and variants without losing the object.
   const heroHeight = Math.min(imageWidth, 460);
   const scrollRef = useRef<Animated.ScrollView>(null);
+  const infoY = useRef(0);
+  const selectionY = useRef(0);
   const reviewsY = useRef(0);
+  const reduced = useReducedMotion();
+  const editSelection = () => scrollRef.current?.scrollTo({ y: Math.max(0, infoY.current + selectionY.current - 68), animated: !reduced });
 
   // a different variant starts again from one unit
   const [qtyVariant, setQtyVariant] = useState(variant?.id);
@@ -140,9 +151,10 @@ function ProductView({ product: p }: { product: ProductDetail }) {
 
   // "Agregar" keeps the buyer here with a link to the cart; "Comprar" adds and opens the cart to pay
   const add = (buy: boolean) => {
-    if (!variant) return;
+    if (!variant || submitting.current) return;
     const key = `${variant.id}:${qty}`;
     if (buy && inCart === key) return router.navigate('/cart');
+    submitting.current = true;
     setPending(buy ? 'buy' : 'add');
     addToCart.mutate(
       { product: p, variant, quantity: qty },
@@ -155,7 +167,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           setTimeout(() => setAdded(false), 4000);
         },
         onError: () => haptics.warning(),
-        onSettled: () => setPending(null),
+        onSettled: () => { submitting.current = false; setPending(null); },
       },
     );
   };
@@ -163,7 +175,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <ImpressionScope tracking={tracking} enabled={!!user}>
-        <Animated.ScrollView ref={scrollRef} testID="product-scroll" onScroll={scroll.onScroll} onLayout={tracking.onLayout} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: barHeight + 24 }} showsVerticalScrollIndicator={false}>
+        <Animated.ScrollView ref={scrollRef} testID="product-scroll" style={{ marginTop: Platform.OS === 'android' ? insets.top : 0 }} onScroll={scroll.onScroll} onLayout={tracking.onLayout} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: barHeight + 24 }} showsVerticalScrollIndicator={false}>
           {/* gallery */}
           <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
             <FlatList
@@ -187,7 +199,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             ) : null}
           </View>
 
-          <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+          <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} onLayout={(event) => { infoY.current = event.nativeEvent.layout.y; }}>
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
             <View style={{ gap: 12 }}>
               <ExhibitionNotice explain />
@@ -218,26 +230,31 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               ) : null}
             </View>
 
-            {/* variants */}
-            {p.variants.length > 1 ? (
-              <View style={{ gap: 10 }}>
+            {/* One selection, shared with the persistent purchase summary. */}
+            {p.variants.length > 1 || canBuy ? <View testID="product-selection" style={{ gap: 14, paddingTop: 16, paddingBottom: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: t.colors.border }} onLayout={(event) => { selectionY.current = event.nativeEvent.layout.y; }}>
+              <Text variant="subtitle">Tu selección</Text>
+              {p.variants.length > 1 ? <View style={{ gap: 10 }}>
                 <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                   {p.variants.map((v) => {
                     const out = v.stock != null && v.stock <= 0;
                     const label = `${v.title}${variantPrices ? ` · ${formatUSD(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
-                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} onPress={() => setVariant(v)} />;
+                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} disabled={pending !== null} onPress={() => { setVariant(v); setAdded(false); addToCart.reset(); }} />;
                   })}
                 </View>
-              </View>
-            ) : null}
+              </View> : null}
 
             {canBuy ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text variant="label" color="textSecondary">Cantidad</Text>
-                <Stepper value={qty} max={maxQty} onChange={setQty} />
+                <Stepper value={qty} max={maxQty} disabled={pending !== null} onChange={(value) => { setQty(value); setAdded(false); }} />
               </View>
             ) : null}
+            </View> : null}
+
+            <View testID="product-store">
+              <StoreChip store={{ ...p.store, tagline: null, cover_path: null }} overline="Vendido por" />
+            </View>
 
             {/* delivery, protection and payment in one card, below what the buyer decides on */}
             <Card style={{ gap: 14 }}>
@@ -246,10 +263,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
               {methods.data?.length ? <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. Cada método muestra su monto exacto al pagar.`} /> : null}
             </Card>
-
-            <View testID="product-store">
-              <StoreChip store={{ ...p.store, tagline: null, cover_path: null }} overline="Vendido por" />
-            </View>
 
             {p.highlights?.length ? (
               <View style={{ gap: 10 }}>
@@ -314,7 +327,18 @@ function ProductView({ product: p }: { product: ProductDetail }) {
       />
 
       {/* sticky purchase bar */}
-      <BottomBar maxWidth={MAX_W} onHeightChange={setBarHeight}>
+      <BottomBar testID="product-purchase-bar" maxWidth={MAX_W} onHeightChange={setBarHeight}>
+          {canBuy && variant && !added ? <ScalePressable testID="product-selection-summary" accessibilityRole="button" accessibilityLabel={`Editar selección: ${p.variants.length > 1 ? `${variant.title}, ` : ''}${qty} ${qty === 1 ? 'unidad' : 'unidades'}. ${formatUSD(variant.price_usd)} por unidad`} disabled={pending !== null} onPress={editSelection} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 44 }}>
+            <View style={{ flex: 1, gap: 2 }}>
+              <Text variant="label" testID="product-selected-summary">{p.variants.length > 1 ? `${variant.title} · ` : ''}{qty} {qty === 1 ? 'unidad' : 'unidades'}</Text>
+              <Text variant="caption" color="brand">Editar selección</Text>
+            </View>
+            <View style={{ alignItems: 'flex-end', gap: 2 }}>
+              <Text variant="subtitle" tabular testID="product-selected-price">{formatUSD(variant.price_usd)}</Text>
+              <Text variant="caption" color="textSecondary">por unidad</Text>
+            </View>
+            <Icon name="chevron-up" size={18} color={t.colors.brand} />
+          </ScalePressable> : null}
           {added ? (
             <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>
               <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
@@ -415,10 +439,11 @@ function InfoRow({ icon, title, lead, body }: { icon: 'truck' | 'wallet' | 'shie
 
 function ProductSkeleton() {
   const t = useTheme();
+  const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const w = Math.min(width, MAX_W);
   return (
-    <View style={{ flex: 1, backgroundColor: t.colors.background, alignItems: 'center' }}>
+    <View style={{ flex: 1, paddingTop: Platform.OS === 'android' ? insets.top : 0, backgroundColor: t.colors.background, alignItems: 'center' }}>
       <BackButton />
       <Skeleton width={w} height={Math.min(w, 460)} radius={0} />
       <View style={{ width: w, padding: 20, gap: 12 }}>
