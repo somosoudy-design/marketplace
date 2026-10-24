@@ -51,3 +51,7 @@ Tipos/lint móvil y exportaciones web/Android Hermes aprobados. El estrés modif
 Auditor aceptó composición normal y exigió corregir el foco de Editar: resuelto y probado. Se sustituyó un nombre de icono inexistente que mostraba el pictograma de etiqueta por `arrow-up` del conjunto real. Al revisar el fixture estrecho se descubrió que una opción larga se recortaba: corregido reflujo opcional sólo en chips de variantes, probado ancho y texto completos, exportaciones finales correctas. Comercio detectó además cuatro validaciones mal etiquetadas porque Playwright truncó el nombre del tema en su carpeta: se inspeccionaron los originales y se corrigió el mapeo explícito. El registro final tiene 20 rutas únicas y 20 hashes correctos. Sin revisión infinita ni otra auditoría global.
 
 Cerrados foco, reflujo, procedencia de 20 capturas y 8 pruebas finales; sin P1/P2 web abiertas. Pendiente: commit/push de evidencia, EAS Android preview con guard exacto APK 5 y recepción nueva mediante `13-ficha-seleccion` / `14-ficha-seleccion-texto`, claro/oscuro normal/OS 1,6. No APK nuevo, production, cambios nativos, backend, cálculos o pagos.
+
+## Publicación confirmada
+
+EAS **40045652185 Success**, fuente `19a1329`, Android preview; guard exacto APK 5 y publicación correctos. Incluye el catálogo anterior 25/32 y la ficha nueva. Recepción nativa solicitada en revisión 45, flujos 13/14, claro/oscuro normal/OS1,6. Registrar el ID real de OTA al leer diagnóstico; no atribuir recepción a Samsung.

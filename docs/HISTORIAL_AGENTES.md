@@ -1019,3 +1019,5 @@ OTA `01a16b40-71a9-7bce-9e05-29cf30866e11` publicada 00:12 UTC / 23oct 20:12 Ven
 QA de ficha: comercio aprueba semántica unitaria/encargo/agotado y detecta copia de validaciones con tema inferido mal desde nombres truncados de Playwright: corregido con inspección de cuatro originales, 20 rutas únicas. Root detecta clipping real de variante extra larga a 320 px: reflujo opcional sólo para esas opciones y prueba de texto/medida; retest antes de publicar.
 
 Cierre local de ficha: reflujo optativo sólo para variantes, texto y ancho completos probados a 320, 8/8 UI finales, tipos/lint y exportaciones web/Android correctos. Las cuatro validaciones copian los originales al tema correcto; 20 rutas/hashs únicos. Comercio APROBADO. Auditor aprueba recepción previa del catálogo, 24 JPG examinados; pendiente dictamen final web de ficha y su nueva OTA/nativo.
+
+Segunda publicación: EAS40045652185 Success/19a1329, guard runtime APK5 y pasos publicación/resultado correctos. Recepción nativa revisión45 solicitada, 13/14 claro/oscuro normal/OS1,6; ID nuevo y dictamen nativo todavía pendientes.
