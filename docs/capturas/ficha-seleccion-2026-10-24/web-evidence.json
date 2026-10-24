@@ -1,6 +1,6 @@
 {
   "beforeCode": "04b384c (same catalogue assets25/32)",
-  "afterCode": "f195f8a",
+  "afterCode": "f195f8a normal compositions;73be557 final optional long-variant reflow in validation screenshots",
   "platform": "Chromium web, not physical Android",
   "screens": [
     {
@@ -86,14 +86,16 @@
     {
       "file": "validation/light-seleccion-estres-web.png",
       "source": "browser-output/product-selection-purchase-2557c-t-price-and-action-readable/seleccion-estres-web.png",
+      "sourceCommit": "73be557",
       "themeVerifiedByVisualInspection": true,
-      "sha256": "1ccd28d521ece9124f3312ff56a2f82c071042db4d5273c1a1abe2940aad681e",
+      "sha256": "eeaf03b16726329d2005813e8298e4e015b2fccca803677ad6bd3153722ddeac",
       "edited": false,
       "fixture": true
     },
     {
       "file": "validation/light-selector-destino.png",
       "source": "browser-output/product-selection-purchase-76ad4-cted-color-quantity-to-cart/selector-destino.png",
+      "sourceCommit": "73be557",
       "themeVerifiedByVisualInspection": true,
       "sha256": "2ce47180beace1ff04704c507a47e5d2b99164b4db7912ae41ce918c7f1f953e",
       "edited": false,
@@ -102,14 +104,16 @@
     {
       "file": "validation/dark-seleccion-estres-web.png",
       "source": "browser-output/product-selection-purchase-93563-t-price-and-action-readable/seleccion-estres-web.png",
+      "sourceCommit": "73be557",
       "themeVerifiedByVisualInspection": true,
-      "sha256": "5cd60f63b882ec362ccb59ac48bc4642fdb8a000c9f0acca4eb209d32a5744b5",
+      "sha256": "4ba074cafe1899030f849a90c349fcb5fa18438821e64814ac97d1f2a06b5612",
       "edited": false,
       "fixture": true
     },
     {
       "file": "validation/dark-selector-destino.png",
       "source": "browser-output/product-selection-purchase-9d748-cted-color-quantity-to-cart/selector-destino.png",
+      "sourceCommit": "73be557",
       "themeVerifiedByVisualInspection": true,
       "sha256": "1ffb55bc9fb6592857b71d44d739c2fa10e63194d27ed35bb463ce5368cc5bfb",
       "edited": false,

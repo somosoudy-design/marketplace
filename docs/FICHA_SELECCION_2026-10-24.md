@@ -1,6 +1,6 @@
 # Ficha: selección vinculada a compra
 
-**Segundo incremento del 24 de octubre de 2026.** El catálogo 25/32 ya está publicado y recibido; este bloque lo conserva. Fuente funcional `f195f8a`. Publicación de ficha todavía pendiente de cierre independiente.
+**Segundo incremento del 24 de octubre de 2026.** El catálogo 25/32 ya está publicado y recibido; este bloque lo conserva. Fuente funcional `f195f8a` y cierre de reflujo `73be557`. Dictamen independiente final web: **APROBADO** para publicar Android preview. Comercio también APROBADO.
 
 ## Problema y decisión
 
@@ -28,7 +28,7 @@ El framework aporta esos criterios; la composición y las medidas son decisiones
 
 La barra normal mide **131 px** en las cuatro combinaciones web 320/412 y claro/oscuro. El selector completo mide 198 px y, al activar Editar, comienza en **y=68**: queda entero por encima de la barra. El padding inferior responde a la altura real. Se acepta el coste vertical porque mantiene contexto comercial fuera del primer desplazamiento; no se acorta ni recorta la foto para compensarlo.
 
-**8/8 casos UI finales aprobados**, ambos temas:
+**8/8 casos UI finales aprobados** tras el último ajuste de reflujo, ambos temas:
 
 1. Descripción → Editar con Enter → foco del encabezado → Tab a variante → cambiar color/cantidad → agregar → carrito sin duplicar.
 2. Persistencia local retenida: edición bloqueada, doble pulsación rápida produce una escritura; confirmación desaparece al cambiar selección después.
@@ -48,6 +48,6 @@ Tipos/lint móvil y exportaciones web/Android Hermes aprobados. El estrés modif
 
 ## Control de calidad y entrega
 
-Auditor aceptó composición normal y exigió corregir el foco de Editar: resuelto y probado. Se sustituyó un nombre de icono inexistente que mostraba el pictograma de etiqueta por `arrow-up` del conjunto real. Sin revisión infinita ni otra auditoría global.
+Auditor aceptó composición normal y exigió corregir el foco de Editar: resuelto y probado. Se sustituyó un nombre de icono inexistente que mostraba el pictograma de etiqueta por `arrow-up` del conjunto real. Al revisar el fixture estrecho se descubrió que una opción larga se recortaba: corregido reflujo opcional sólo en chips de variantes, probado ancho y texto completos, exportaciones finales correctas. Comercio detectó además cuatro validaciones mal etiquetadas porque Playwright truncó el nombre del tema en su carpeta: se inspeccionaron los originales y se corrigió el mapeo explícito. El registro final tiene 20 rutas únicas y 20 hashes correctos. Sin revisión infinita ni otra auditoría global.
 
-Pendiente: dictamen final independiente, commit/push de evidencia, EAS Android preview con guard exacto APK 5 y recepción nueva mediante `13-ficha-seleccion` / `14-ficha-seleccion-texto`, claro/oscuro normal/OS 1,6. No APK nuevo, production, cambios nativos, backend, cálculos o pagos.
+Cerrados foco, reflujo, procedencia de 20 capturas y 8 pruebas finales; sin P1/P2 web abiertas. Pendiente: commit/push de evidencia, EAS Android preview con guard exacto APK 5 y recepción nueva mediante `13-ficha-seleccion` / `14-ficha-seleccion-texto`, claro/oscuro normal/OS 1,6. No APK nuevo, production, cambios nativos, backend, cálculos o pagos.
