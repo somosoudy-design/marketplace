@@ -193,6 +193,20 @@ name: Comprador con cuenta hasta la cotización y cancelación
 # the address card is a View: Maestro matches the text of its children, not of the container
 - assertVisible: .*Maestro Prueba.*
 - takeScreenshot: flujo-cuenta-04-checkout
+- tapOn:
+    id: checkout-next
+- extendedWaitUntil:
+    visible:
+      id: delivery-choice-0
+    timeout: 20000
+- tapOn:
+    id: checkout-next
+- extendedWaitUntil:
+    visible:
+      id: plan-full
+    timeout: 20000
+- tapOn:
+    id: checkout-next
 - scrollUntilVisible:
     element:
       id: checkout-place

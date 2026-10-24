@@ -76,12 +76,25 @@ test('a new buyer completes checkout and submits a Pago Móvil payment for verif
 
   // coming back to pay shows the payment being checked, not a method picker that would be rejected
   const orderId = page.url().split('/orders/')[1]!.split(/[?#]/)[0];
-  await page.goto(`/pay/${orderId}`);
   const pendingCard = page.locator('[data-testid^="pending-PG-"]');
-  await expect(pendingCard).toContainText('Estamos verificando tu pago');
-  await expect(pendingCard).toContainText('Pago Móvil');
-  await expect(pendingCard).toContainText('Bs');
-  await expect(page.getByTestId('pay-quote')).toHaveCount(0);
+  let release!: () => void;
+  const held = new Promise<void>((resolve) => { release = resolve; });
+  let refreshes = 0;
+  await page.route('**/rest/v1/orders*', async (r) => {
+    if (new URL(r.request().url()).searchParams.get('id') === `eq.${orderId}`) { refreshes++; await held; }
+    await r.continue();
+  });
+  try {
+    await page.goto(`/pay/${orderId}`);
+    await expect.poll(() => refreshes).toBe(1);
+    // A restored snapshot must not offer another quote while its payment state is being refreshed.
+    await expect(page.locator('[data-testid="pay-quote"]:enabled')).toHaveCount(0);
+    release();
+    await expect(pendingCard).toContainText('Estamos verificando tu pago');
+    await expect(pendingCard).toContainText('Pago Móvil');
+    await expect(pendingCard).toContainText('Bs');
+    await expect(page.getByTestId('pay-quote')).toHaveCount(0);
+  } finally { release(); }
 
   // 8. exactly one order exists for this account
   await page.goto('/orders');

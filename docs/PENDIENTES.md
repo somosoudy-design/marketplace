@@ -3,8 +3,8 @@
 
 ## Prioridad inmediata · checkout progresivo (24oct2026)
 
-- Oliver solicita una fase por decisión: Dirección → Entregas → Plan → Revisión. Implementación local en curso, sin nueva OTA todavía. No repetir fotografías/Supabase en este bloque.
-- Cerrar validación local y revisión independiente, conservar importes/reglas del servidor y una intención de pedido por visita; publicar sólo Android preview/APK5 con la autorización vigente y recepción comprobada.
+- Oliver solicita una fase por decisión: Dirección → Entregas → Plan → Revisión. Implementación local aprobada:40casos UI,44capturas/hash44/44, tipos/lint/web/Hermes. Publicación y recepción aún pendientes. No repetir fotografías/Supabase en este bloque.
+- Validación local/revisión cerradas; conservar importes/reglas y una intención por visita. Solicitar una OTA Android preview/APK5, comprobar guard/Success y recepción por17/18, registrar IDs. No repetir pruebas cerradas.
 - Detalles y próxima acción exacta: `ESTADO_ACTUAL.md`, `CHECKOUT_PROGRESIVO_2026-10-24.md`. Trece fotos de marca siguen pendientes, no se declaran completadas.
 
 ## Prioridad activa — completar el material del catálogo

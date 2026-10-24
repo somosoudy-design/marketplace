@@ -1,5 +1,12 @@
 # Historial de agentes
 
+### 2026-10-24 · Codex · cierre local del checkout progresivo
+
+- Funcional1737f16 guardado/push.40casos UI distintos aprobados:31 originales más compra recuperada y8 casos de Pago; tipos/lint monorepo y export web/Android Hermes correctos.44PNG originales copiados/hash44/44, comparaciones con idénticos envíos/importe. Auditor visual y comercio cierran objeciones; no aprobación física Android.
+- La regresión existente de compra detectó al reabrir Pago una copia vieja sin el pago pendiente real. Cambio mínimo: refresco al montar sólo ahí, cotizar bloqueado durante consulta/pausa/error/offline y antes del primer dato vigente. Prueba original conservada, ampliada con consulta retenida y nueva navegación caché→offline→online en ambos temas. Sin cálculos/SQL/servicios remotos.
+- Guard web temprano confirmado por UX: un listener tardío del screen era desmontado por el reset de Expo antes de popstate; misma prueba original ahora pasa con Atrás durante confirmación, doble activación y una sola orden local. Se conserva clave/snapshot y no se inventan entradas de historial.
+- Flujos17/18 preparados para recepción/autorización visitante sin operaciones remotas;02 adaptado pero no ejecutado. Próximo: una OTA preview con guardAPK5, recepción real del emulador y documentación de IDs/resultados. No repetir validación local cerrada ni generar APK.
+
 ### 2026-10-24 · Codex · checkpoint de checkout progresivo
 
 - Nueva prioridad explícita de Oliver: separar entrega/dirección, envíos, plan y resumen en fases. Rama sincronizada desdefe2d588. Root único escritor; UX, comercio y auditor en lectura independiente.

@@ -1,0 +1,5 @@
+# font-scale: 1.6
+appId: com.example.kora.preview
+name: Checkout progresivo — acceso con fuente Android ampliada
+---
+- runFlow: 17-checkout-progresivo-acceso.yaml

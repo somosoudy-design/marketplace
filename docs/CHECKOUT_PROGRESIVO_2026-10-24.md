@@ -1,6 +1,6 @@
 # Checkout progresivo · 24 de octubre de 2026
 
-Estado: implementación local en validación; no hay nueva OTA todavía.
+Estado: código y revisión local aprobados. Publicación Android preview solicitada a continuación; IDs y recepción se registrarán al comprobarse.
 
 ## Decisión y alcance
 
@@ -30,10 +30,29 @@ Product Design consultado realmente: `product-design:index`, `product-design:aud
 
 UX recomienda cuatro fases en la ruta existente; comercio confirma dependencias dirección→envíos→calendario, planes a nivel del carrito y conteo incorrecto. Revisión independiente exige separar el cuerpo del encabezado accesible y explicar `plan_invalid` fuera del resumen; comercio exige recuperar `shipping_invalid` y reconciliar destino. Se han incorporado; falta cierre sobre la evidencia final. La aprobación interna no sustituye la revisión física de Oliver.
 
-## Verificación y publicación
+## Evidencia y verificación final
 
-Antes local real capturado con backend Supabase-lite existente, sin reiniciar sus datos: claro/oscuro,320/412, mismo carrito cable UGREEN + lámpara de Casa Lumen, dos entregas. Se preparan comparaciones equivalentes, pruebas de fases/selecciones/errores/planes y compra real sólo en el backend local. Tipos/lint móviles aprobados inicialmente; resultados finales pendientes.
+[Comparaciones reales y manifiesto](capturas/checkout-progresivo-2026-10-24/LEEME.md): **44 PNG/hash44/44**, sin edición. Ocho antes +24 después normales +12 después con texto CSS1,6. Backend local existente, mismo cable UGREEN + lámpara de Casa Lumen, dos entregas, precio62,30USD en ambos. No reinicio de datos, fixtures exclusivamente locales.
 
-Se conserva la autorización del propietario para publicar avances validados en **Android preview**, runtimeAPK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Aún no se ha solicitado esta actualización. No se crean órdenes/pagos remotos ni se modifica configuración nativa. No hay prueba física en el Samsung atribuible a este bloque todavía.
+| Observación medida | Antes412 /320 | Después412 /320 |
+|---|---|---|
+| Contenido inicial del scroll (viewport892px, área828px) |1210 /1288px |828 /828px |
+| Fases editables montadas simultáneamente |4 |1 |
+| Entregas abiertas a la vez en este carrito |2 |1 en el paso2 |
+| Confirmación desde la entrada |Visible |Sólo en revisión |
 
-Checkpoint funcional: tipos/lint móviles y tres pruebas UI finales aprobados (dos comparaciones de temas/anchos + una confirmación real local con plan de cuotas, doble activación, Atrás durante espera y una sola orden). El retorno del navegador fallaba porque Expo restauraba el root antes del listener del screen; un guard web instalado desde el layout antes del montaje delega al checkout enfocado, sin fabricar entradas de historial. Prueba original conservada y aprobada; no se sustituyó por un caso menos exigente. Falta ejecutar las suites restantes y cerrar auditor/publicación.
+No se pretende mostrar más productos en la dirección: aquí se prioriza una decisión comercial. La revisión mantiene todos los productos e importes, con acceso a corregirlos. Las medidas son de este fixture; no se generalizan a todas las direcciones o carritos.
+
+**40 casos UI distintos aprobados:**31 de la suite inicial del bloque + compra completa corregida + ocho de Pago (sesión/deep link, pedido ajeno/inexistente, error de métodos y caché→offline→online, ambos temas). Se conserva el fallo inicial de la regresión de compra: el pago estaba `pending_verification` en el backend local, pero al reabrir se restauraba una copia anterior durante30s. `useOrder` permite refrescar al montar sólo en Pago; la acción de cotizar espera el primer dato vigente, conexión y consulta no pausada/sin error. Prueba original conservada y ampliada: consulta retenida, ninguna cotización habilitada, después panel de verificación. No se modifican precios, métodos ni operaciones financieras.
+
+La prueba real local de confirmación conserva dirección/envíos/plan revisados, total del DTO idéntico al persistido, una sola orden con doble activación, bloqueo de edición/Atrás y salida correcta a Pago. La clave no cambia en el reintento de error. Tipos y lint del monorepo aprobados; web y Android Hermes exportados. No se tocaron SQL, backend remoto, configuración nativa, iOS ni APK.
+
+**Revisión independiente final: APROBADO para preview**, cumplidos los casos focales requeridos. UX confirmó la causa del historial web en Chromium aislado; comercio cerró sus dos objeciones; auditor inspeccionó24 normales, las dos evidencias finales de total412 y12 de texto ampliado, más44hashes. Cerrados los avisos/accesibilidad, envío retirado/default, plan retirado y guard de Pago con caché offline. No se usa pasar tests como aprobación visual.
+
+## Publicación y límites
+
+Se conserva la autorización de Oliver para publicar avances validados en **Android preview**, runtimeAPK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. Sólo se publica si el guard de fingerprint exacto de CI coincide. No se generan APK ni se publica en `production`.
+
+Recepción nativa prevista: flujos17/18, claro/oscuro normal/OS1,6, lectura pública, carrito del visitante, acceso protegido a checkout, Atrás desde login y Diagnóstico. No crean cuentas, pedidos, cotizaciones o pagos remotos. El flujo autenticado02 se adapta a las fases para futuras ejecuciones, pero no se ejecuta en este bloque porque opera sobre el backend remoto.
+
+**Límite explícito:** el checkout autenticado y la compra completa se prueban contra el backend local en web; el emulador verifica OTA y acceso de visitante con el APK real. La prueba autenticada física en el Samsung de Oliver no se puede atribuir a estos resultados. No hay aprobación física de su teléfono todavía.

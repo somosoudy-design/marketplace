@@ -73,6 +73,30 @@ for (const colorScheme of ['light', 'dark'] as const) {
       expect(quotes).toBe(0);
     });
 
+    test('pago con copia guardada espera conexión y estado vigente antes de cotizar', async ({ page, context }) => {
+      const buyer = await orderFor('ui-quality-payment-offline');
+      let quotes = 0;
+      await page.route('**/rest/v1/rpc/create_payment_quote', (r) => { quotes++; return r.abort(); });
+      await signIn(page, buyer);
+      await page.goto(`/orders/${buyer.orderId}`);
+      await page.getByTestId('order-pay').click();
+      await page.getByTestId('method-pago_movil').click();
+      await expect(page.getByTestId('pay-quote')).toBeEnabled();
+      await page.goBack();
+      await expect(page).toHaveURL(new RegExp(`/orders/${buyer.orderId}$`));
+      try {
+        await context.setOffline(true);
+        await expect(page.getByTestId('offline-notice')).toBeVisible();
+        await page.getByTestId('order-pay').click();
+        await page.getByTestId('method-pago_movil').click();
+        await expect(page.getByTestId('pay-quote')).toBeDisabled();
+        await expect(page.getByTestId('pay-quote')).toHaveText('Sin conexión');
+        await context.setOffline(false);
+        await expect(page.getByTestId('pay-quote')).toBeEnabled();
+        expect(quotes).toBe(0);
+      } finally { await context.setOffline(false); }
+    });
+
     test('confirmación sensible permanece visible al esperar y recupera el error', async ({ page }) => {
       const buyer = await orderFor('ui-quality-confirm');
       let release!: () => void;

@@ -25,7 +25,7 @@ import { SOURCE_LABEL, shortDate, shortDateTime } from '@/lib/format';
 import { haptics } from '@/lib/haptics';
 import { useDivisas, useOrder, usePaymentMethods, useRateStatus, useVesRate } from '@/lib/hooks';
 import { intentKey } from '@/lib/ids';
-import { qk } from '@/lib/query';
+import { qk, useOnline } from '@/lib/query';
 import { api } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
@@ -41,7 +41,9 @@ export default function PayScreen() {
   const { orderId, fresh } = useLocalSearchParams<{ orderId: string; fresh?: string }>();
   const t = useTheme();
   const { user } = useAuth();
-  const order = useOrder(orderId);
+  const online = useOnline();
+  // A just-submitted payment may be newer than the device's persisted snapshot.
+  const order = useOrder(orderId, true);
   const methods = usePaymentMethods();
   const [method, setMethod] = useState<PaymentMethod | null>(null);
   const [quote, setQuote] = useState<PaymentQuote | null>(null);
@@ -166,10 +168,10 @@ export default function PayScreen() {
         <BottomBar maxWidth={MAX_W}>
           <Button
             testID="pay-quote"
-            title={methods.isPending ? 'Cargando métodos…' : method ? `Continuar con ${method.name}` : 'Elige un método'}
+            title={!online ? 'Sin conexión' : order.isFetching || order.isPaused || !order.isFetchedAfterMount ? 'Actualizando pedido…' : methods.isPending ? 'Cargando métodos…' : method ? `Continuar con ${method.name}` : 'Elige un método'}
             size="lg"
             full
-            disabled={!method || !methods.isSuccess || methods.isFetching || !methods.data?.some((m) => m.code === method.code)}
+            disabled={!online || order.isFetching || order.isPaused || !order.isFetchedAfterMount || order.isError || !method || !methods.isSuccess || methods.isFetching || !methods.data?.some((m) => m.code === method.code)}
             loading={createQuote.isPending}
             onPress={() => method && createQuote.mutate(method.code)}
           />
