@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { inspectRequest, parseRequest, validateRequest, REQUEST_PATH } from './release-request.mjs';
 import { parseMarker, sameMarker, writeMarker } from './release-marker.mjs';
-import { verifyDeployment, headerFailures, MISSING_PATH, PAGES } from './check-deploy.mjs';
+import { verifyDeployment, headerFailures, cspForbidsFrames, MISSING_PATH, PAGES } from './check-deploy.mjs';
 
 const SOURCE = 'a'.repeat(40);
 const HEAD = 'b'.repeat(40);
@@ -99,14 +99,46 @@ test('marker writer checks the built checkout SHA before writing the exact expec
   }
 });
 
-test('each expected security header is independently required', () => {
+test('CSP and the other three security headers remain independently required', () => {
   assert.deepEqual(headerFailures(new Headers(SECURITY)), []);
-  for (const header of Object.keys(SECURITY)) {
+  for (const header of Object.keys(SECURITY).filter((name) => name !== 'x-frame-options')) {
     const headers = new Headers(SECURITY);
     headers.delete(header);
     assert.deepEqual(headerFailures(headers), [header]);
   }
   assert.deepEqual(headerFailures(new Headers({ ...SECURITY, 'content-security-policy': "default-src 'self'; frame-ancestors 'none';", 'x-robots-tag': 'nofollow, noindex' })), []);
+});
+
+
+test('EAS may remove XFO only while effective enforcing CSP forbids every frame', () => {
+  const headers = new Headers(SECURITY);
+  headers.delete('x-frame-options');
+  assert.deepEqual(headerFailures(headers), []);
+  headers.delete('content-security-policy');
+  assert.deepEqual(headerFailures(headers), ['x-frame-options', 'content-security-policy']);
+  headers.set('content-security-policy-report-only', "frame-ancestors 'none'");
+  assert.deepEqual(headerFailures(headers), ['x-frame-options', 'content-security-policy']);
+  for (const value of ['', 'SAMEORIGIN', 'DENY, SAMEORIGIN', 'DENY, DENY', 'ALLOW-FROM https://example.com']) {
+    const conflicting = new Headers({ ...SECURITY, 'x-frame-options': value });
+    assert.deepEqual(headerFailures(conflicting), ['x-frame-options']);
+  }
+});
+
+test('CSP evaluates the first frame-ancestors directive of each conjunctive policy', () => {
+  for (const value of [
+    "frame-ancestors 'self'; frame-ancestors 'none'",
+    "default-src 'none'", "frame-ancestors 'none' https://example.com",
+    "frame-ancestors 'self', frame-ancestors https://example.com",
+  ]) {
+    assert.equal(cspForbidsFrames(value), false);
+    assert.ok(headerFailures(new Headers({ ...SECURITY, 'content-security-policy': value })).includes('content-security-policy'));
+  }
+  for (const value of [
+    "frame-ancestors 'none'", "default-src 'self'; frame-ancestors 'none';",
+    "frame-ancestors 'none'; frame-ancestors 'self'",
+    "frame-ancestors 'self', frame-ancestors 'none'",
+    "frame-ancestors 'self'; frame-ancestors 'none', frame-ancestors 'none'",
+  ]) assert.equal(cspForbidsFrames(value), true);
 });
 
 function fakeHosting(options = {}) {
@@ -150,6 +182,28 @@ test('matching marker passes both origins, all pages, 404s, headers and JavaScri
   assert.equal(calls.filter((call) => new URL(call.url).pathname === '/release.json').length, 2);
 });
 
+
+test('converted EAS headers pass with exact public values retained on both origins', async () => {
+  const security = { ...SECURITY };
+  delete security['x-frame-options'];
+  const { result } = await verify({ security });
+  assert.equal(result.rows.length, 22);
+  assert.deepEqual(result.security.map((item) => item.base), [IMMUTABLE, PRODUCTION]);
+  for (const item of result.security) {
+    assert.equal(item.path, '/login');
+    assert.equal(item.headers['x-frame-options'], null);
+    assert.equal(item.headers['content-security-policy'], "frame-ancestors 'none'");
+    assert.deepEqual(Object.keys(item.headers).sort(), Object.keys(SECURITY).sort());
+  }
+  security['content-security-policy'] = "frame-ancestors 'self'; frame-ancestors 'none'";
+  await assert.rejects(verify({ security }), (error) => {
+    assert.ok(error.failures.every((failure) => /x-frame-options|content-security-policy/.test(failure)));
+    assert.equal(error.security.length, 2);
+    assert.equal(error.security[0].headers['content-security-policy'], security['content-security-policy']);
+    return true;
+  });
+});
+
 test('a stale alias can catch up within the bounded wait', async () => {
   const { pauses } = await verify({ staleAttempts: 1 });
   assert.deepEqual(pauses, [1]);
@@ -176,8 +230,8 @@ test('an unexpected 404 result makes verification fail', async () => {
 
 test('missing security headers make verification fail', async () => {
   const security = { ...SECURITY };
-  delete security['x-frame-options'];
-  await assert.rejects(verify({ security }), /x-frame-options/);
+  delete security['x-content-type-options'];
+  await assert.rejects(verify({ security }), /x-content-type-options/);
 });
 
 test('bad HTML or missing JavaScript makes verification fail', async () => {
