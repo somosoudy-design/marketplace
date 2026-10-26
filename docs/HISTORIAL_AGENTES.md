@@ -1,5 +1,9 @@
 # Historial de agentes
 
+###2026-10-26 ·solicitud OTA después de dictamen independiente
+
+Auditor APROBADO móvil web sobre ff9784b:14galería+8errores+8tienda+4pares comerciales,38/38hashes, más40normales anteriores;15UI(7+6+2),25unitarias, tipos/lint/Hermes. Sin P1/P2 nuevas del alcance. Se solicita una OTA Androidpreview/APK5 con guardruntimeexacto. No nuevoAPK ni iOS, fotos o datos remotos. Publicación/ID/recepción19/20 aún por verificar. Hosting ya da200JSON y mismo marker1480274/40410656172.1 en alias/inmutable sin nueva publicación; verificaciónestricta adicional sólolectura en curso.
+
 ###2026-10-26 ·checkpoint móvil comercial y continuidad
 
 Fuente móvil y126PNG originales guardados. Carrito distingue referencias/unidades/entregas y precio unitario/importe sin cálculos nuevos; errores quantity/remove separados por operación/variante. Reputación con reflujo. AvisosUI Demo/entorno privados retirados, fuentes/licencias bajo demanda, contexto en Diagnóstico. Galería conserva fotos Storage nuevas, onScroll actualiza página/crédito y fallo de override retira toda atribución inaplicable.15UI(7+6+2),25unitarias, tipos/lint monorepo y AndroidHermes aprobados. Scope de description en StoreHeader corregido al detectar error de tipos antes de publicar. Auditor final visual pendiente; todavía no OTA nueva.40pares normales,8errores,14galería,8tienda y16comparativas reales de voz; hashes y límites documentados. Ilustraciones Storage locales mantienen texto incrustado y no acreditan fotos renovadas.13productos/18variantes en paquete de recepción concreto,0fotos nuevas. No finanzas/SQL/native/iOS/datos remotos.
