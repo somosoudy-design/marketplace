@@ -18,7 +18,10 @@ capacidades. Detalle en `docs/DIRECCION_PRODUCTO.md`.
 
 - **Oliver**: dueño del producto. Decide producto, gastos, cuentas externas y publicación.
 - **Kevin y Heisber**: socios; prueban la app y pueden continuar el desarrollo con sus propios agentes.
-- Se coordinan por WhatsApp. **Un solo agente trabaja a la vez** sobre el repositorio.
+- Se coordinan por WhatsApp. **Un único integrador modifica archivos versionados, hace commits y publica.**
+  Oliver autoriza especialistas paralelos para lectura, investigación, pruebas aisladas y propuestas en
+  carpetas ignoradas. No editar simultáneamente la fuente compartida ni publicar por cuenta de un subagente.
+  El integrador revisa las propuestas y exige revisión independiente de las capturas y recorridos afectados.
 - Toda comunicación con ellos, en español.
 
 ## Al empezar un turno (en este orden)

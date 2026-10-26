@@ -412,3 +412,10 @@ Panel40410656172 publicó fuente1480274 y comprobó deployment inmutable; el ali
 
 
 **Cierre de recepción26oct:** no volver a diagnosticar el alias.40414613732 Success comprueba release1480274/build40410656172.1 en https://kora-panel--5zogil9zbb.expo.app y https://kora-panel.expo.app,22rutas/JS/404. EAS convierte X-Frame-Options personalizados a CSP([documentación oficial](https://docs.expo.dev/eas/hosting/reference/responses-and-headers/#common-headers)); el gate exige CSP efectiva frame-ancestors none y las otras protecciones, permite XFOausente sólo con CSPnone y rechaza XFOconflictivo. Parser respeta primera directiva por política y políticas conjuntas.24tests aprobados, sin cambiar configuración o republicar panel. Las cabeceras observadas están en el manifiesto de recepción.
+
+
+### APK5 y metadata de la OTA · cierre26oct2026
+
+La URL histórica APK5 caducó24oct04:08UTC; `recover-apk5.mjs --archive-only` consulta UUID exacto validado, usa una URL de archivo fresca una vez y valida ZIP si existe.40416237632 devolvió404 antes de instalar: no repetir ni generar otroAPK. Necesita copia del mismo binario en otroalmacén para ejecutar19/20. `--observe-ota` es independiente y sólo obtiene ID/grupo/runtime/source/flags en EAS; está fijado a fuente8233df7 y debe actualizarse al aprobar una OTA diferente.13tests offline. Token sóloCI, sin URLsfirmadas/cuerpos en Git.
+
+La OTA publicada tiene dirtytrue enEAS. El workflow redirigía stdout a GITHUB_WORKSPACE/eas-update.json(noignorado); shell crea ese archivo antes de queCLI24.12.1 consulte gitstatus con untracked. Causa suficiente reproducida localmente con archivo vacío propio y eliminado. `b434cb9` mueve informe aRUNNER_TEMP, exige fuente limpia antes de publicar y exponeID/grupo/runtime por notice público. No se republicó elJSidéntico para cambiar metadata. El flag histórico permanece registrado, no se declara clean. Grupo9c671692-ae0a-44c0-ad59-09071ba7d0b7 eIDAndroid01a17a59-84da-79e1-a24e-ae78498e7c1c son distintos: comparar Diagnóstico con elIDAndroid.

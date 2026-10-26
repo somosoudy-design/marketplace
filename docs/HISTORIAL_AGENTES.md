@@ -1,5 +1,11 @@
 # Historial de agentes
 
+###2026-10-26 · cierre de entrega y bloqueo nativo comprobado
+
+OTA `01a17a59-84da-79e1-a24e-ae78498e7c1c`, grupo `9c671692-ae0a-44c0-ad59-09071ba7d0b7`, creada22:34:09UTC/18:34Venezuela, fuente8233df7, preview/runtimeAPK5. EAS40413225725 Success y lectura real40416237747 confirman identidad/latestcompatible/sinrollback. Metadata dirtytrue no se oculta: redirección creaba eas-update.json noignorado antes deCLI; mecanismo reproducido, flujo futuro corregido b434cb9 sin otraOTA. No se certifica fuente histórica limpia.
+
+APK histórico UUID d1d10c28-1d9e-4123-8487-602dc10b9710 validado porEAS, enlace expirado24oct04:08UTC. Tras separar lecturaOTA y recuperación deAPK(13tests offline), nativo50/40416237632 solicita applicationArchiveUrl fresco una vez→HTTP404. Emulador no instalado/ejecutado,0flujos/0capturas. No más reintentos niAPK nuevo: hace falta el mismo binario conservado en otroalmacén. Publicación no equivale a recepción. Evidencias públicas filtradas versionadas, sin secretos/URLsfirmadas. Panel recibido ycerrado, código móvil ypanel enHEAD coincide con respectivas fuentes publicadas. Fotos0nuevas,13productos/18variantes pendientes de material autorizado. Próximo agente continúa desde acción exacta de ESTADO_ACTUAL sin repetir trabajo cerrado.
+
 ###2026-10-26 ·publicación móvil real y recepción Hosting cerrada
 
 EAS40413225725 Success/fuente8233df7, códigoff9784b completo, runtimeAPK5exacto confirmado. OTAAndroidpreview publicada sinAPK/iOS/native/backend. UUIDAndroid por observar. Native40413548453 no abrió emulador: curl22 al descargar misma URLAPK5 válida en revisiones anteriores; no afirmar falloapp ni recepción. Recuperación autenticada de metadatos EAS en preparación, token sóloCI.
