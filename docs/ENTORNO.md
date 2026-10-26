@@ -404,3 +404,8 @@ para resolverlo sin un nuevo pedido. No implica publicación en Google Play/App 
 ## Control de publicación del panel · 26oct2026
 
 Los checkpoints de código no publican el panel. Tras validar UI, permisos, persistencia y export estático, commitear/pushear el código aprobado; el siguiente commit debe cambiar **únicamente** `.github/panel-deploy-request` con `source: <SHA40 del commit padre>` y `message: <resumen>`. El guard rechaza otro padre, merges, campos ambiguos o archivos adicionales. El workflow hace checkout del SHA y ejecuta tipos/lint/tests/build, genera release.json con fuente/build, publica y exige el mismo marcador en URLinmutable y https://kora-panel.expo.app, más rutas/JS/404/cabeceras correctos. No modificar el request para guardar trabajo incompleto. La autorización de Oliver para publicar avances validados sigue vigente.
+
+
+### Incidencia de recepción Hosting26oct2026
+
+Panel40410656172 publicó fuente1480274 y comprobó deployment inmutable; el alias habitual falló con release.json no JSON HTTP200. `panel-receipt.yml` es diagnóstico acotado de sólo lectura: disparar cambiando únicamente `.github/panel-receipt-request`, con source14802742ef1dfe7d327cc60adcdbb14293107e36 y build40410656172.1. Consulta GraphQL pública de Hosting con el token existente sólo dentro deCI; expone metadatos públicos filtrados y GET de marcadores por annotations de GitHub, sin logs privados, build, upload, alias mutation o Supabase. El helper está fijado a ese proyecto/fuente; no es un publicador genérico.4tests builtin aprobados. No existe `eas deploy:list` en CLI24.12.1; no utilizar un comando inventado. No volver a descargar bloblogs bloqueados.

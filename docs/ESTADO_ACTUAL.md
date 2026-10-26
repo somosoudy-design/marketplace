@@ -10,9 +10,9 @@
 
 Oliver autoriza catálogo, experiencia móvil y paneles de administración/ventas, con publicación incremental validada. Root único escritor; seis especialistas reales de lectura/parches/revisión. Directriz26oct: presentación comercial normal, sin Demo/banners técnicos en compra; metadata y controles conservados, diagnóstico/fuentes bajo demanda.
 
-**Panel aprobado:** OrderDetail carga/error/reintento y reflujo; ProductEditor IDs persistidos, retry parcial, borrador por tienda, bloqueo durante guardado y reflujo375.8/8 UI export estático local,28unitarias admin, tipos/lint y auditor APROBADO. Evidencia versionada en docs/capturas/equipo-2026-10-26/panel. Código en este checkpoint; todavía no publicado.
+**Panel aprobado:** OrderDetail carga/error/reintento y reflujo; ProductEditor IDs persistidos, retry parcial, borrador por tienda, bloqueo durante guardado y reflujo375.8/8 UI export estático local,28unitarias admin, tipos/lint y auditor APROBADO. Evidencia versionada en docs/capturas/equipo-2026-10-26/panel. Fuente1480274 publicada por EAS Hosting en CI40410656172; marcador inmutable correcto. Recepción en alias falló: release.json no JSON HTTP200. No declarar recibido en la URL habitual todavía.
 
-**Próxima acción panel:** siguiente commit cambia únicamente .github/panel-deploy-request con sourceSHA exacto de este commit(HEAD^). Push y comprobar CI, release.json fuente/build tanto deployment como alias. No juntar docs/OTA en ese commit.
+**Próxima acción panel:** ejecutar diagnósticoCI de recepción de sólo lectura, request exclusivo .github/panel-receipt-request (source14802742ef1dfe7d327cc60adcdbb14293107e36/build40410656172.1). Obtiene metadatos públicos de Hosting y HTTP/MIME/redirect/marcador exacto por annotations, sin volver a compilar/publicar ni consultar Supabase. Cuatro tests offline aprobados. Resolver la causa real; no rebajar gate. Los bloblogs están bloqueados en este entorno, no reintentarlos.
 
 **Móvil pendiente de cierre:** fuente integrada sin commit aún, QA final fija en8102(.local/equipo-20261026/mobile-final), backend54321 sin reset. UX7casos/contextos de error y catálogo6casos/Sheet,25unitarias galería/texto, tipos/lint/Hermes y auditor antes de OTA Androidpreview runtimeAPK5. No repetir40capturas normales ya aprobadas, sólo estados finales afectados. No declarar recibida en teléfono aún.
 

@@ -1,5 +1,9 @@
 # Historial de agentes
 
+###2026-10-26 ·checkpoint Hosting pendiente de recepción
+
+Fuente aprobada1480274, solicitud60aac8f. CI40410656172 completó build/gate/EASdeploy y marcador inmutable, pero falló alias habitual con release.json no JSONHTTP200. No afirmar recepción. Lectura deCLI24.12.1 y documentación oficial; `deploy:list` no existe y --dev-domain no es un customalias. Se prepara diagnóstico read-only con token sóloCI y salida pública por annotations porque bloblogs están bloqueados.4tests de redacción/proyecto/request/lectura aprobados por root. Sin nueva publicación ni cambios remotos. Móvil15UI y25unitarias/tipos/lint/Hermes aprobados, revisión visual independiente final en curso.
+
 ###2026-10-26 ·Codex cloud ·equipo coordinado y panel aprobado
 
 Root único integrador; seis especialistas reales. Gate de publicación01baea9 ya en remoto sin publicar. Panel OrderDetail y ProductEditor corregidos: carga/error real, reflujo, guardado sin duplicados conocidos, reintento parcial y aislamiento por tienda.8UI sobre export estático,28unitarias admin,16gate y tipos/lint, capturas claro/oscuro y auditor independiente APROBADO. Checkpoint de fuente/evidencia; publicación todavía pendiente de request exclusivo y recepción exacta. Móvil integrado y QA final8102 en curso, no publicar hasta cerrar. Directriz expresa de Oliver sobre presentación comercial registrada en AGENTS/diseño/producto; datos y seguridad conservados. Catálogo44/63/104 auditado,0fotos nuevas aptas,13productos/18variantes pendientes. No alteraciones remotas/financieras/nativas.
