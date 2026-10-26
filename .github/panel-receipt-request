@@ -3,3 +3,4 @@ build: 40410656172.1
 
 # Revision 2: setup-node sin cache de pnpm; sigue siendo solo lectura.
 # Revision 3: verificar rutas, JavaScript, 404 y cabeceras de la misma publicacion recibida.
+# Revision 4: conservar detalles publicos de comprobacion estricta en annotations.
