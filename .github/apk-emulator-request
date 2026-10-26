@@ -1,7 +1,8 @@
-# Revision49 · EAS40413225725 Success/fuente8233df7; runtime APK5 exacto aprobado.
+# Revision50 · EAS40413225725 Success/fuente8233df7; runtime APK5 exacto aprobado.
 # Comercial: carrito visitante2unidades/importe, StoreChipKora, Sheetimagen y recepcion.
 # Ambos temas y fuente OS1/1,6; sin auth, pedidos, cotizaciones, pagos o APKnuevo.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
 flows: 19-comercial-carrito-imagen 20-comercial-carrito-imagen-texto
 themes: light dark
 # Recuperar el mismo binario APK5 mediante metadatos EAS frescos, sin otra compilacion ni OTA.
+# Archivo historico por UUID exacto; independiente de flags OTA. Un intento de URLrefrescada.
