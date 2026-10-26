@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseMarker, sameMarker } from './release-marker.mjs';
+import { verifyDeployment } from './check-deploy.mjs';
 
 export const REQUEST_PATH = '.github/panel-receipt-request';
 export const APPROVED = { schemaVersion: 1, sourceSha: '14802742ef1dfe7d327cc60adcdbb14293107e36', buildVersion: '40410656172.1' };
@@ -126,10 +127,18 @@ function inspectRequest() {
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   try {
     const expected = inspectRequest();
-    await readReceipt({ token: process.env.EXPO_TOKEN, expected });
+    const receipt = await readReceipt({ token: process.env.EXPO_TOKEN, expected });
+    const current = receipt.metadata.deployments.find((deployment) =>
+      receipt.probes.some((probe) => probe.matchesExpected && new URL(probe.url).origin === deployment.url));
+    if (!current || receipt.metadata.production?.identifier !== current.identifier ||
+        !receipt.probes.some((probe) => probe.matchesExpected && new URL(probe.url).origin === CANONICAL)) {
+      throw new Error('receipt_not_verified');
+    }
+    const verified = await verifyDeployment({ deployment: current.url, production: CANONICAL, expected, aliasAttempts: 1 });
+    console.log(notice('Panel receipt verified', verified));
   } catch (error) {
     // Only static code errors or HTTP status are emitted; never upstream body, headers, token, or stack.
-    const known = /^(invalid_request|unapproved_request|request_only_commit_required|project_mismatch|invalid_public_url|invalid_identifier|invalid_deployments|missing_expo_token|graphql_http_\d{3}|graphql_read_failed)$/;
+    const known = /^(invalid_request|unapproved_request|request_only_commit_required|project_mismatch|invalid_public_url|invalid_identifier|invalid_deployments|missing_expo_token|graphql_http_\d{3}|graphql_read_failed|receipt_not_verified)$/;
     console.error(notice('Panel receipt failure', { error: known.test(error.message) ? error.message : 'receipt_failed' }));
     process.exitCode = 1;
   }
