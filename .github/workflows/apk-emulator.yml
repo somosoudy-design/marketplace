@@ -33,7 +33,7 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           mkdir -p apks shots
-          node tools/eas/recover-apk5.mjs --download
+          node tools/eas/recover-apk5.mjs --archive-only
 
       - name: Proyecto de pruebas (registro sin correo)
         # Flows marked "requiere: registro-sin-correo" create a tester account: they only run when the test project

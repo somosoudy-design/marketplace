@@ -7,7 +7,7 @@ import { ARCHIVE_QUERY, EXPECTED, METADATA_QUERY, downloadArchive, graphql, noti
 
 // Synthetic ZIP tests only archive integrity/entries, never impersonates a real APK.
 const ZIP = Buffer.from('UEsDBBQAAAAAAHC1Wl0fZCKCFAAAABQAAAATAAAAQW5kcm9pZE1hbmlmZXN0LnhtbG9mZmxpbmUgdGVzdCBmaXh0dXJlUEsDBBQAAAAAAHC1Wl0fZCKCFAAAABQAAAALAAAAY2xhc3Nlcy5kZXhvZmZsaW5lIHRlc3QgZml4dHVyZVBLAQIUAxQAAAAAAHC1Wl0fZCKCFAAAABQAAAATAAAAAAAAAAAAAACAAQAAAABBbmRyb2lkTWFuaWZlc3QueG1sUEsBAhQDFAAAAAAAcLVaXR9kIoIUAAAAFAAAAAsAAAAAAAAAAAAAAIABRQAAAGNsYXNzZXMuZGV4UEsFBgAAAAACAAIAegAAAIIAAAAAAA==', 'base64');
-const ID = 'd1d10c28-1234-4567-890a-123456789abc';
+const ID = EXPECTED.buildId;
 const BRANCH = { id: '10101010-1234-4567-890a-123456789abc', name: 'preview' };
 const UPDATE = {
   id: '20202020-1234-4567-890a-123456789abc', group: '30303030-1234-4567-890a-123456789abc',
@@ -37,7 +37,7 @@ test('download integration accepts only the existing APK5 request', () => {
 test('resolve unique historical build; never accept an arbitrary latest or duplicate prefix', () => {
   assert.equal(selectBuild(app()).id, ID);
   assert.throws(() => selectBuild(app([])), /build_prefix_not_found/);
-  assert.throws(() => selectBuild(app([BUILD, { ...BUILD, id: ID.replace('1234-', '2345-') } ])), /build_prefix_ambiguous/);
+  assert.throws(() => selectBuild(app([BUILD, { ...BUILD, id: ID.replace('-1d9e-', '-2d9e-') } ])), /build_prefix_ambiguous/);
   assert.throws(() => selectBuild({ ...app(), id: 'other' }), /project_mismatch/);
 });
 test('reject each identity mismatch before any archive access', () => {
@@ -46,15 +46,16 @@ test('reject each identity mismatch before any archive access', () => {
     app: { ...BUILD.app, id: 'other' }, status: 'ERRORED', platform: 'IOS', distribution: 'STORE',
     buildProfile: 'production', updateChannel: { name: 'production' },
   })) assert.throws(() => validateBuild({ ...BUILD, [field]: value }), undefined, field);
-  assert.throws(() => validateBuild(BUILD, ID.replace('1234-', '2345-')), /build_id_changed/);
+  assert.throws(() => validateBuild(BUILD, ID.replace('-1d9e-', '-2d9e-')), /build_id_changed/);
 });
-test('read exact Android OTA UUID separately from its group; reject dirty/rollback/wrong source', () => {
+test('read exact Android OTA UUID separately from its group; preserve real flags and reject wrong source', () => {
   const found = selectUpdate(app().updateChannelByName);
   assert.equal(found.id, UPDATE.id); assert.equal(found.group, UPDATE.group); assert.notEqual(found.id, found.group);
   assert.equal(found.latestCompatibleInBranch, true);
-  for (const change of [{ gitCommitHash: 'a'.repeat(40) }, { runtime: { version: 'other' } }, { platform: 'ios' }, { isGitWorkingTreeDirty: true }, { isRollBackToEmbedded: true }]) {
+  for (const change of [{ gitCommitHash: 'a'.repeat(40) }, { runtime: { version: 'other' } }, { platform: 'ios' }, { isGitWorkingTreeDirty: 'false' }, { isRollBackToEmbedded: 0 }]) {
     assert.throws(() => selectUpdate(app([BUILD], [{ ...UPDATE, ...change }]).updateChannelByName));
   }
+  assert.equal(found.workingTreeState, 'clean'); assert.equal(found.rollbackState, 'standard_update');
   assert.throws(() => selectUpdate({ ...app().updateChannelByName, updateBranches: [] }), /preview_branch_ambiguous/);
 });
 test('diagnostic makes only GraphQL read queries and never emits URL/token', async () => {
@@ -64,36 +65,61 @@ test('diagnostic makes only GraphQL read queries and never emits URL/token', asy
     calls.push({ url, init }); const body = JSON.parse(init.body);
     assert.equal(init.headers.authorization, 'Bearer ' + secret);
     if (body.query === METADATA_QUERY) return response({ app: { byId: app() } });
-    assert.equal(body.query, ARCHIVE_QUERY); assert.deepEqual(body.variables, { buildId: ID });
-    return response({ builds: { byId: { ...BUILD, artifacts: { applicationArchiveUrl: signed } } } });
+    assert.fail('metadata-only observation must not request archive metadata');
   };
   const result = await recover({ token: secret, fetchImpl, emit: (line) => output.push(line) });
-  assert.equal(result.buildId, ID); assert.equal(result.update.id, UPDATE.id); assert.equal(calls.length, 2);
+  assert.equal(result.update.id, UPDATE.id); assert.equal(calls.length, 1); assert.equal(result.observationOnly, true);
+  assert(!METADATA_QUERY.includes('builds(')); assert(!METADATA_QUERY.includes('applicationArchiveUrl'));
   assert(output.length < 10); assert(!output.join('').includes(signed)); assert(!output.join('').includes(secret));
   for (const call of calls) { assert.equal(call.url, 'https://api.expo.dev/graphql'); assert(!/\bmutation\b/.test(JSON.parse(call.init.body).query)); }
 });
-test('changed fresh metadata or a newer foreign OTA blocks archive download', async () => {
+test('null/absent flags remain unknown; observation makes one read and never requests a signed URL', async () => {
+  for (const flags of [{ isGitWorkingTreeDirty: null, isRollBackToEmbedded: null }, { isGitWorkingTreeDirty: undefined, isRollBackToEmbedded: undefined }]) {
+    let calls = 0; const output = [];
+    const result = await recover({ token: 'hidden', emit: (line) => output.push(line), fetchImpl: async (_url, init) => {
+      calls++; assert.equal(JSON.parse(init.body).query, METADATA_QUERY);
+      return response({ app: { byId: app([{ ...BUILD, expirationDate: '2026-10-24T04:08:34.494Z' }], [{ ...UPDATE, ...flags }]) } });
+    } });
+    assert.equal(calls, 1); assert.equal(result.update.id, UPDATE.id); assert.equal(result.update.group, UPDATE.group);
+    assert.equal(result.update.isGitWorkingTreeDirty, null); assert.equal(result.update.isRollBackToEmbedded, null);
+    assert.equal(result.update.workingTreeState, 'unknown'); assert.equal(result.update.rollbackState, 'unknown');
+    assert.equal(result.update.workingTreeFlagPresent, flags.isGitWorkingTreeDirty === null);
+    assert.equal(result.update.rollbackFlagPresent, flags.isRollBackToEmbedded === null);
+    assert.equal(output.length, 1); assert(output[0].includes('"workingTreeState":"unknown"'));
+  }
+});
+test('dirty/rollback true remains rejected after publishing the selected public identity', async () => {
+  for (const flags of [{ isGitWorkingTreeDirty: true }, { isRollBackToEmbedded: true }]) {
+    const output = []; let calls = 0;
+    await assert.rejects(recover({ token: 'hidden', emit: (line) => output.push(line), fetchImpl: async () => {
+      calls++; return response({ app: { byId: app([BUILD], [{ ...UPDATE, ...flags }]) } });
+    } }), /ota_dirty_or_rollback/);
+    assert.equal(calls, 1); assert.equal(output.length, 1); assert(output[0].includes(UPDATE.id)); assert(output[0].includes(UPDATE.group));
+    for (const [flag, value] of Object.entries(flags)) assert(output[0].includes(JSON.stringify(flag) + ':' + value));
+  }
+});
+test('changed archive identity blocks download; foreign newer OTA affects only observation', async () => {
   let calls = 0;
   await assert.rejects(recover({ token: 'hidden', download: true, emit: () => {}, fetchImpl: async (_url, init) => {
     calls++; const query = JSON.parse(init.body).query;
     return response(query === METADATA_QUERY ? { app: { byId: app() } } : { builds: { byId: { ...BUILD, runtime: { version: 'other' }, artifacts: { applicationArchiveUrl: 'https://must-not-fetch.test/archive' } } } });
   } }), /build_runtime_mismatch/);
-  assert.equal(calls, 2);
+  assert.equal(calls, 1);
   calls = 0;
   const newer = { ...UPDATE, id: '40404040-1234-4567-890a-123456789abc', gitCommitHash: 'a'.repeat(40), createdAt: '2026-10-26T23:59:00.000Z' };
-  await assert.rejects(recover({ token: 'hidden', download: true, emit: () => {}, fetchImpl: async () => {
+  await assert.rejects(recover({ token: 'hidden', emit: () => {}, fetchImpl: async () => {
     calls++; return response({ app: { byId: app([BUILD], [UPDATE, newer]) } });
   } }), /ota_source_not_latest_in_preview/);
   assert.equal(calls, 1);
 });
-test('download is atomic, checks ZIP and reports digest; token is not sent on redirects', async () => {
+test('archive mode reads only pinned build, independent of OTA flags; ZIP/digest/atomic write and redirects without auth', async () => {
   const temp = await mkdtemp(join(tmpdir(), 'apk5-test-'));
   try {
     const target = join(temp, 'apks', 'apk1.apk'); const output = []; let requests = 0;
     const result = await recover({ token: 'not-forwarded', download: true, target, emit: (line) => output.push(line), fetchImpl: async (url, init) => {
       if (url === 'https://api.expo.dev/graphql') {
-        const query = JSON.parse(init.body).query;
-        return response(query === METADATA_QUERY ? { app: { byId: app() } } : { builds: { byId: { ...BUILD, artifacts: { applicationArchiveUrl: 'https://expo.dev/artifact?signed=hidden' } } } });
+        const body = JSON.parse(init.body); assert.equal(body.query, ARCHIVE_QUERY); assert.deepEqual(body.variables, { buildId: EXPECTED.buildId });
+        return response({ builds: { byId: { ...BUILD, artifacts: { applicationArchiveUrl: 'https://expo.dev/artifact?signed=hidden' } } }, app: { byId: app([BUILD], [{ ...UPDATE, isGitWorkingTreeDirty: true, isRollBackToEmbedded: null }]) } });
       }
       assert.equal(init.headers, undefined); requests++;
       return requests === 1 ? new Response(null, { status: 302, headers: { location: 'https://cdn.example/archive?secret=hidden' } }) : new Response(ZIP, { status: 200 });
@@ -102,6 +128,20 @@ test('download is atomic, checks ZIP and reports digest; token is not sent on re
     assert.deepEqual(await readFile(target), ZIP); assert.deepEqual(await readdir(join(temp, 'apks')), ['apk1.apk']);
     assert(output.length < 10); assert(!output.join('').includes('signed=hidden')); assert(!output.join('').includes('secret=hidden'));
   } finally { await rm(temp, { recursive: true, force: true }); }
+});
+test('expired metadata permits exactly one refreshed archive attempt; 404 stops without fallback or retries', async () => {
+  const output = []; let reads = 0; let downloads = 0;
+  await assert.rejects(recover({ token: 'hidden', download: true, emit: (line) => output.push(line), fetchImpl: async (url, init) => {
+    if (url === 'https://api.expo.dev/graphql') {
+      reads++; assert.equal(JSON.parse(init.body).query, ARCHIVE_QUERY);
+      return response({ builds: { byId: { ...BUILD, expirationDate: '2026-10-24T04:08:34.494Z', artifacts: { applicationArchiveUrl: 'https://expo.dev/expired?signed=never-print' } } } });
+    }
+    downloads++; assert.equal(init.headers, undefined);
+    return new Response('never print this server body', { status: 404 });
+  } }), /^ReceiptError: archive_http_404$/);
+  assert.equal(reads, 1); assert.equal(downloads, 1);
+  assert.equal(output.length, 2); assert(output[0].includes('2026-10-24T04:08:34.494Z'));
+  assert(!output.join('').includes('never-print')); assert(!output.join('').includes('server body'));
 });
 test('invalid ZIP never replaces prior target and leaves no partial file', async () => {
   const temp = await mkdtemp(join(tmpdir(), 'apk5-test-'));

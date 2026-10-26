@@ -14,6 +14,7 @@ export const EXPECTED = Object.freeze({
   projectId: '9f629f10-d679-4a99-9965-8a9e588afc85',
   fullName: '@marketplacebrand/marketplace',
   buildPrefix: 'd1d10c28',
+  buildId: 'd1d10c28-1d9e-4123-8487-602dc10b9710',
   buildCommit: 'cc5b1010691a492745a52e5842a4baaaf8ec3da8',
   runtime: 'eb5ed1179b9c76c9c3cf27333aa48306728eb4ba',
   package: 'com.example.kora.preview',
@@ -26,10 +27,9 @@ const BUILD_FIELDS = `id status platform distribution buildProfile appIdentifier
   app { id fullName } expirationDate`;
 // Fields/arguments match EAS CLI24.12.1 BuildQuery/ChannelQuery/UpdateFragment.
 export const METADATA_QUERY = `query ExistingApk5Receipt(
-  $appId: String!, $buildFilter: BuildFilter!, $updateFilter: UpdatesFilter!
+  $appId: String!, $updateFilter: UpdatesFilter!
 ) { app { byId(appId: $appId) {
   id fullName
-  builds(offset: 0, limit: 50, filter: $buildFilter) { ${BUILD_FIELDS} }
   updateChannelByName(name: "preview") {
     name isPaused
     updateBranches(offset: 0, limit: 5) {
@@ -79,7 +79,7 @@ export async function graphql(query, variables, { token, fetchImpl = globalThis.
   return json.data;
 }
 
-export function validateBuild(build, fullId = null) {
+export function validateBuild(build, fullId = EXPECTED.buildId) {
   if (!build || !UUID.test(build.id ?? '') || !build.id.startsWith(EXPECTED.buildPrefix + '-')) fail('build_id_mismatch');
   if (fullId && build.id !== fullId) fail('build_id_changed');
   if (build.app?.id !== EXPECTED.projectId || build.app?.fullName !== EXPECTED.fullName) fail('build_project_mismatch');
@@ -115,7 +115,9 @@ export function selectUpdate(channel) {
   if (!matching.length) fail('ota_source_runtime_not_found');
   for (const u of matching) {
     if (!UUID.test(u.id ?? '') || !UUID.test(u.group ?? '') || !Number.isFinite(Date.parse(u.createdAt))) fail('ota_metadata_invalid');
-    if (u.isGitWorkingTreeDirty !== false || u.isRollBackToEmbedded !== false) fail('ota_dirty_or_rollback');
+    for (const flag of ['isGitWorkingTreeDirty', 'isRollBackToEmbedded']) {
+      if (u[flag] != null && typeof u[flag] !== 'boolean') fail('ota_flag_invalid');
+    }
     if (u.branch?.id !== branch.id || u.branch?.name !== branch.name) fail('ota_branch_mismatch');
   }
   matching.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
@@ -126,6 +128,12 @@ export function selectUpdate(channel) {
     platform: 'android', channel: 'preview', branch: branch.name,
     createdAt: u.createdAt, matchingUpdates: matching.length,
     latestCompatibleInBranch: latest?.id === u.id,
+    isGitWorkingTreeDirty: u.isGitWorkingTreeDirty ?? null,
+    isRollBackToEmbedded: u.isRollBackToEmbedded ?? null,
+    workingTreeState: u.isGitWorkingTreeDirty === true ? 'dirty' : u.isGitWorkingTreeDirty === false ? 'clean' : 'unknown',
+    rollbackState: u.isRollBackToEmbedded === true ? 'rollback' : u.isRollBackToEmbedded === false ? 'standard_update' : 'unknown',
+    workingTreeFlagPresent: Object.hasOwn(u, 'isGitWorkingTreeDirty'),
+    rollbackFlagPresent: Object.hasOwn(u, 'isRollBackToEmbedded'),
   };
 }
 
@@ -192,40 +200,49 @@ export async function downloadArchive(urlValue, target, { fetchImpl = globalThis
 
 export async function recover({ token, download = false, target = 'apks/apk1.apk', fetchImpl = globalThis.fetch, emit = console.log }) {
   const options = { token, fetchImpl };
-  const data = await graphql(METADATA_QUERY, {
-    appId: EXPECTED.projectId,
-    buildFilter: { platform: 'ANDROID', status: 'FINISHED', gitCommitHash: EXPECTED.buildCommit, appBuildVersion: EXPECTED.versionCode },
-    updateFilter: { platform: 'ANDROID', runtimeVersions: [EXPECTED.runtime] },
-  }, options);
-  const app = data.app?.byId;
-  const build = selectBuild(app);
+  if (!download) {
+    // OTA observation is independent of the old build and its expired archive.
+    const data = await graphql(METADATA_QUERY, {
+      appId: EXPECTED.projectId,
+      updateFilter: { platform: 'ANDROID', runtimeVersions: [EXPECTED.runtime] },
+    }, options);
+    const app = data.app?.byId;
+    if (app?.id !== EXPECTED.projectId || app?.fullName !== EXPECTED.fullName) fail('project_mismatch');
+    const update = selectUpdate(app.updateChannelByName);
+    emit(notice('Published Android OTA identity', update));
+    // Report before rejecting: null is unknown; true remains an explicit objection.
+    if (update.isGitWorkingTreeDirty === true || update.isRollBackToEmbedded === true) fail('ota_dirty_or_rollback');
+    if (!update.latestCompatibleInBranch) fail('ota_source_not_latest_in_preview');
+    return { update, observationOnly: true };
+  }
+  // Archive retrieval is independent of OTA flags. The full historical UUID was
+  // observed in CI40415242434; validate all its approved build fields again.
+  const build = validateBuild((await graphql(ARCHIVE_QUERY, { buildId: EXPECTED.buildId }, options)).builds?.byId);
   emit(notice('Existing APK5 identity', {
     id: build.id, projectId: EXPECTED.projectId, commit: EXPECTED.buildCommit,
     runtime: EXPECTED.runtime, package: EXPECTED.package, versionCode: EXPECTED.versionCode,
     channel: 'preview', profile: 'preview', expirationDate: build.expirationDate ?? null,
   }));
-  const update = selectUpdate(app.updateChannelByName);
-  emit(notice('Published Android OTA identity', update));
-  if (!update.latestCompatibleInBranch) fail('ota_source_not_latest_in_preview');
-  // Query by the resolved full UUID again: refresh archive metadata without a CLI cache.
-  const current = validateBuild((await graphql(ARCHIVE_QUERY, { buildId: build.id }, options)).builds?.byId, build.id);
-  const url = archiveUrl(current.artifacts?.applicationArchiveUrl);
-  emit(notice('Existing APK5 archive', { id: current.id, archiveAvailable: true, downloadRequested: download }));
-  if (!download) return { buildId: build.id, update };
+  const url = archiveUrl(build.artifacts?.applicationArchiveUrl);
+  emit(notice('Existing APK5 archive', { id: build.id, archiveAvailable: true, downloadRequested: true }));
+  // One refreshed archive query and one download attempt; no automatic retries.
   const archive = await downloadArchive(url.href, target, { fetchImpl });
-  emit(notice('Existing APK5 downloaded', { id: current.id, ...archive }));
-  return { buildId: build.id, update, archive };
+  emit(notice('Existing APK5 downloaded', { id: build.id, ...archive }));
+  return { buildId: build.id, archive };
 }
 
 async function main() {
-  if (process.argv.slice(2).some((arg) => arg !== '--download')) fail('invalid_argument');
-  if (process.argv.includes('--download')) {
+  const args = process.argv.slice(2);
+  if (args.length > 1 || args.some((arg) => !['--download', '--archive-only', '--observe-ota'].includes(arg))) fail('invalid_argument');
+  const download = args.includes('--download') || args.includes('--archive-only');
+  if (download) {
     let request;
     try { request = readFileSync('.github/apk-emulator-request', 'utf8'); } catch { fail('apk_request_missing'); }
     validateApkRequest(request);
   }
-  await recover({ token: process.env.EXPO_TOKEN, download: process.argv.includes('--download') });
+  await recover({ token: process.env.EXPO_TOKEN, download });
 }
+
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   main().catch((error) => {
     // Never print error.message/stack from fetch, GraphQL, unzip or the filesystem.

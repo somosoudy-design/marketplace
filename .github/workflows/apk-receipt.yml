@@ -1,0 +1,25 @@
+# Read existing build/OTA identity only. No download, emulator, build or publication.
+name: APK5 and Android OTA receipt (read-only)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/apk-receipt-request']
+
+permissions:
+  contents: read
+
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Observe existing APK5 and exact published Android OTA
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: node tools/eas/recover-apk5.mjs --observe-ota
