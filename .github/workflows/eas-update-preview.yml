@@ -69,13 +69,21 @@ jobs:
             exit 1
           fi
 
+      - name: Comprobar fuente limpia antes de publicar
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Hay cambios pendientes en la fuente de CI; no se publicará."
+            git status --short
+            exit 1
+          fi
+
       - name: Publicar en el canal preview
         id: update
         working-directory: apps/mobile
         run: |
           msg="$(grep -v '^#' "$GITHUB_WORKSPACE/.github/eas-update-request" | grep -v '^runtime:' | grep -v '^\s*$' | head -1)"
-          npx --yes eas-cli@24.12.1 update --channel preview --platform android --message "${msg:-Versión de prueba}" --non-interactive --json > "$GITHUB_WORKSPACE/eas-update.json"
+          npx --yes eas-cli@24.12.1 update --channel preview --platform android --message "${msg:-Versión de prueba}" --non-interactive --json > "$RUNNER_TEMP/eas-update.json"
 
       - name: Resultado
         if: always() && steps.update.outcome != 'skipped'
-        run: node tools/eas/update-report.mjs eas-update.json
+        run: node tools/eas/update-report.mjs "$RUNNER_TEMP/eas-update.json"

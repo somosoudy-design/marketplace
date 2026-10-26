@@ -12,6 +12,9 @@ if (start < 0) {
 const updates = JSON.parse(raw.slice(start));
 const lines = ['### Actualización publicada (EAS Update)'];
 for (const u of updates) {
+  const receipt = JSON.stringify({ id: u.id ?? null, group: u.group, platform: u.platform, runtimeVersion: u.runtimeVersion });
+  const annotation = receipt.replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A');
+  console.log('::notice title=EAS Update publicada,file=.github/workflows/eas-update-preview.yml,line=1::' + annotation);
   lines.push(
     `- ${u.platform}: grupo \`${u.group}\` · runtime \`${u.runtimeVersion}\` · canal preview · «${u.message ?? ''}»`,
     `  https://expo.dev/accounts/marketplacebrand/projects/marketplace/updates/${u.group}`,
