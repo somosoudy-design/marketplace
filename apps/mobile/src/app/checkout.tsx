@@ -1,3 +1,4 @@
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { ApiError, type CheckoutSummary, type DeliveryGroup, type ShippingSelection } from '@kora/api';
 import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL } from '@kora/core';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -278,7 +279,7 @@ export default function CheckoutScreen() {
           {s.groups.map((g, i) => <ReviewSection key={g.key} title={`Entrega ${i + 1} de ${s.groups.length} · ${g.store.name}`} testID={`checkout-edit-delivery-${i}`} disabled={busy} onEdit={() => goTo(1, i)}>
             <Text variant="caption" color="textSecondary">{g.label}</Text>
             {g.lines.map((l) => <Text key={l.variant_id} variant="bodySmall">{l.quantity} × {l.title}{l.variant_title ? ` · ${l.variant_title}` : ''}</Text>)}
-            {g.selected_shipping ? <View style={{ gap: 3 }}><Text variant="label">{g.selected_shipping.name} · {Number(g.selected_shipping.cost_usd) === 0 ? 'Gratis' : formatUSD(g.selected_shipping.cost_usd)}</Text><Text variant="caption" color="textSecondary">{describeEtaDates(g.selected_shipping.eta_min_date, g.selected_shipping.eta_max_date)}{g.selected_shipping.kind !== 'home_delivery' ? ' · retiras tú' : ''}{g.selected_shipping.is_demo ? ' · tarifa de ejemplo' : ''}</Text></View> : null}
+            {g.selected_shipping ? <View style={{ gap: 3 }}><Text variant="label">{g.selected_shipping.name} · {Number(g.selected_shipping.cost_usd) === 0 ? 'Gratis' : formatUSD(g.selected_shipping.cost_usd)}</Text><Text variant="caption" color="textSecondary">{describeEtaDates(g.selected_shipping.eta_min_date, g.selected_shipping.eta_max_date)}{g.selected_shipping.kind !== 'home_delivery' ? ' · retiras tú' : ''}{g.selected_shipping.is_demo && !isPrivateCatalogPresentation ? ' · tarifa de ejemplo' : ''}</Text></View> : null}
           </ReviewSection>)}
           <ReviewSection title="Plan de pago" testID="checkout-edit-plan" disabled={busy} onEdit={() => goTo(2)}>
             <Text variant="label">{s.plan?.name}</Text>
@@ -367,14 +368,14 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
       ) : g.shipping_options.length === 0 ? (
         <View style={{ padding: 14 }}><Text variant="bodySmall" color="danger">No hay envío disponible a esta dirección para esta entrega.</Text></View>
       ) : <>
-        <ScalePressable testID={`delivery-choice-${index}`} disabled={disabled} accessibilityRole="button" accessibilityLabel={`Cambiar envío de ${label}${sel ? `. ${sel.name}, ${Number(sel.cost_usd) === 0 ? 'gratis' : formatUSD(sel.cost_usd)}${sel.is_demo ? ', tarifa de ejemplo' : ''}` : ''}`} onPress={() => setChoosing(true)} style={{ paddingHorizontal: 14, paddingVertical: 12, minHeight: 68, gap: 4, opacity: disabled ? 0.4 : 1 }}>
+        <ScalePressable testID={`delivery-choice-${index}`} disabled={disabled} accessibilityRole="button" accessibilityLabel={`Cambiar envío de ${label}${sel ? `. ${sel.name}, ${Number(sel.cost_usd) === 0 ? 'gratis' : formatUSD(sel.cost_usd)}${sel.is_demo && !isPrivateCatalogPresentation ? ', tarifa de ejemplo' : ''}` : ''}`} onPress={() => setChoosing(true)} style={{ paddingHorizontal: 14, paddingVertical: 12, minHeight: 68, gap: 4, opacity: disabled ? 0.4 : 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <Icon name="truck" size={18} color={t.colors.brand} />
             <Text variant="label" style={{ flex: 1 }}>{sel?.name ?? 'Elegir envío'}</Text>
             <Icon name="chevron-right" size={18} color={t.colors.brand} />
           </View>
           {sel ? <Text variant="caption" color="textSecondary">{Number(sel.cost_usd) === 0 ? 'Gratis' : formatUSD(sel.cost_usd)} · {describeEtaDates(sel.eta_min_date, sel.eta_max_date)}{sel.kind !== 'home_delivery' ? ' · retiras tú' : ''}</Text> : null}
-          {sel?.is_demo ? <Text variant="caption" color="textSecondary">Tarifa de ejemplo</Text> : null}
+          {sel?.is_demo && !isPrivateCatalogPresentation ? <Text variant="caption" color="textSecondary">Tarifa de ejemplo</Text> : null}
           <Text variant="caption" color="brand">Cambiar opciones de envío</Text>
         </ScalePressable>
         <Sheet visible={choosing} title={`Envío · ${g.store.name}`} testID={`delivery-options-${index}`} dismissible={!disabled} onClose={() => setChoosing(false)}>
@@ -388,7 +389,7 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
               title={o.name}
               subtitle={`${describeEtaDates(o.eta_min_date, o.eta_max_date)}${o.kind !== 'home_delivery' ? ' · retiras tú' : ''}`}
               trailing={Number(o.cost_usd) === 0 ? 'Gratis' : formatUSD(o.cost_usd)}
-              badge={o.is_demo ? 'Tarifa de ejemplo' : undefined}
+              badge={o.is_demo && !isPrivateCatalogPresentation ? 'Tarifa de ejemplo' : undefined}
               onPress={() => { onSelect(o.method_id); setChoosing(false); }}
             />
           </View>

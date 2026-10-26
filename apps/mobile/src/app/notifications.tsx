@@ -1,3 +1,4 @@
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { Notification } from '@kora/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
@@ -102,7 +103,7 @@ export default function NotificationsScreen() {
         )
       }
       ListHeaderComponent={
-        allTest ? (
+        allTest && !isPrivateCatalogPresentation ? (
           <View style={{ marginTop: 16 }}>
             <Banner tone="info" icon="info" body="Estos avisos vienen de pedidos de demostración. Son de prueba y nunca se envían como notificación a tu teléfono." />
           </View>
@@ -112,7 +113,7 @@ export default function NotificationsScreen() {
         <Text variant="overline" color="textMuted" style={{ marginTop: 22, marginBottom: 8, marginLeft: 4 }}>{section.title}</Text>
       )}
       renderItem={({ item: n, index, section }) => (
-        <Row n={n} isNew={!!fresh?.has(n.id)} first={index === 0} last={index === section.data.length - 1} labelTest={!allTest} />
+        <Row n={n} isNew={!!fresh?.has(n.id)} first={index === 0} last={index === section.data.length - 1} labelTest={!allTest && !isPrivateCatalogPresentation} />
       )}
     />
   );

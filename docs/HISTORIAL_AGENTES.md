@@ -1,5 +1,9 @@
 # Historial de agentes
 
+###2026-10-26 ·checkpoint móvil comercial y continuidad
+
+Fuente móvil y126PNG originales guardados. Carrito distingue referencias/unidades/entregas y precio unitario/importe sin cálculos nuevos; errores quantity/remove separados por operación/variante. Reputación con reflujo. AvisosUI Demo/entorno privados retirados, fuentes/licencias bajo demanda, contexto en Diagnóstico. Galería conserva fotos Storage nuevas, onScroll actualiza página/crédito y fallo de override retira toda atribución inaplicable.15UI(7+6+2),25unitarias, tipos/lint monorepo y AndroidHermes aprobados. Scope de description en StoreHeader corregido al detectar error de tipos antes de publicar. Auditor final visual pendiente; todavía no OTA nueva.40pares normales,8errores,14galería,8tienda y16comparativas reales de voz; hashes y límites documentados. Ilustraciones Storage locales mantienen texto incrustado y no acreditan fotos renovadas.13productos/18variantes en paquete de recepción concreto,0fotos nuevas. No finanzas/SQL/native/iOS/datos remotos.
+
 ###2026-10-26 ·checkpoint Hosting pendiente de recepción
 
 Fuente aprobada1480274, solicitud60aac8f. CI40410656172 completó build/gate/EASdeploy y marcador inmutable, pero falló alias habitual con release.json no JSONHTTP200. No afirmar recepción. Lectura deCLI24.12.1 y documentación oficial; `deploy:list` no existe y --dev-domain no es un customalias. Se prepara diagnóstico read-only con token sóloCI y salida pública por annotations porque bloblogs están bloqueados.4tests de redacción/proyecto/request/lectura aprobados por root. Sin nueva publicación ni cambios remotos. Móvil15UI y25unitarias/tipos/lint/Hermes aprobados, revisión visual independiente final en curso.

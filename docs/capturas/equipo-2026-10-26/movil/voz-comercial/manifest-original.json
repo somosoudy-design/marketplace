@@ -1,0 +1,1912 @@
+{
+  "startedAtUTC": "2026-10-26T22:17:39.375Z",
+  "scope": "Eight pairs / sixteen unaltered PNG of REAL local app data; same actual editorial UGREEN65W article across Home/search/detail. No DTO fixtures or replay.",
+  "platform": "Exported Expo web in Chromium; 412x892 plus Home320x892; light/dark; deviceScaleFactor1",
+  "targetSlug": "ugreen-nexode-65w",
+  "query": "UGREEN",
+  "stages": [
+    {
+      "stage": "before",
+      "base": "http://127.0.0.1:8101",
+      "source": "private baseline743bb7c supplied by root"
+    },
+    {
+      "stage": "after",
+      "base": "http://127.0.0.1:8103",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root"
+    }
+  ],
+  "captures": [
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "412-light-home",
+      "surface": "home",
+      "theme": "light",
+      "width": 412,
+      "start": "2026-10-26T22:17:39.646Z",
+      "observedAtUTC": "2026-10-26T22:17:42.924Z",
+      "url": "http://127.0.0.1:8101/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-home.png",
+      "sha256": "450d0e8b7280ec1cb3608f7ea673bba78a47a610387e04762f5cb0e214966ff9",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-home-responses.json",
+      "dtoFileSha256": "ad6bf5f085d348f87ec44f50925114f5ed0a190c1ea6cdb43f707bb59a6936d3",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 1,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "412-light-home",
+      "surface": "home",
+      "theme": "light",
+      "width": 412,
+      "start": "2026-10-26T22:17:43.064Z",
+      "observedAtUTC": "2026-10-26T22:17:46.321Z",
+      "url": "http://127.0.0.1:8103/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-home.png",
+      "sha256": "03f70a5f6e43c399f3d9559b792e961b9e885ade933912d8c13acf6d06f9ba2a",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-home-responses.json",
+      "dtoFileSha256": "96f33ea67b7bf2c6e57bdde4a6e28fa94dd530d02e4aaf0d0c0c5e8aead73d9e",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 0,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "320-light-home",
+      "surface": "home",
+      "theme": "light",
+      "width": 320,
+      "start": "2026-10-26T22:20:04.720Z",
+      "observedAtUTC": "2026-10-26T22:20:07.965Z",
+      "url": "http://127.0.0.1:8101/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-light-home.png",
+      "sha256": "006cd581afbbdc3426992aa14a585635395ba9a68a25b216e207740453794a75",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-light-home-responses.json",
+      "dtoFileSha256": "fa52cb5a9447634b14e004a217a6616eb52f8539d7b04b73aade88b2d32228e3",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 1,
+      "metrics": {
+        "width": 320,
+        "height": 892,
+        "documentWidth": 320,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        320,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "320-light-home",
+      "surface": "home",
+      "theme": "light",
+      "width": 320,
+      "start": "2026-10-26T22:20:08.108Z",
+      "observedAtUTC": "2026-10-26T22:20:11.284Z",
+      "url": "http://127.0.0.1:8103/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-light-home.png",
+      "sha256": "a128b1877033d0e6750eac78189872593fb3dd92086840b07435a83bc491729a",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-light-home-responses.json",
+      "dtoFileSha256": "2ea4d8df7df447428dab2d258086d248f34a9351c36858f979c9d91a9a8662b6",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 0,
+      "metrics": {
+        "width": 320,
+        "height": 892,
+        "documentWidth": 320,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        320,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "412-dark-home",
+      "surface": "home",
+      "theme": "dark",
+      "width": 412,
+      "start": "2026-10-26T22:20:11.425Z",
+      "observedAtUTC": "2026-10-26T22:20:14.546Z",
+      "url": "http://127.0.0.1:8101/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-home.png",
+      "sha256": "612b058202f19a8ad073ea010bb0e4debd8f3915d7e2c1185250c63edb1b2dbc",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-home-responses.json",
+      "dtoFileSha256": "588c79b98db63976a96047fd84fbde871266da32ffff4a13edeb27eb3953740e",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 1,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "412-dark-home",
+      "surface": "home",
+      "theme": "dark",
+      "width": 412,
+      "start": "2026-10-26T22:20:14.696Z",
+      "observedAtUTC": "2026-10-26T22:20:17.845Z",
+      "url": "http://127.0.0.1:8103/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-home.png",
+      "sha256": "0c316f0f03d3ad29f53f69433eb6c915a22dc4dc1efc59f1bd3d131161f469d1",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-home-responses.json",
+      "dtoFileSha256": "c87a5e47785de600cc225fc89dda2983bccb95886ceab3cd610d339ddcdcbece",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 0,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "320-dark-home",
+      "surface": "home",
+      "theme": "dark",
+      "width": 320,
+      "start": "2026-10-26T22:20:28.001Z",
+      "observedAtUTC": "2026-10-26T22:20:31.267Z",
+      "url": "http://127.0.0.1:8101/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-dark-home.png",
+      "sha256": "1e098b4fd09b79538b10ea62ba0f1ecebd7bdc29033f1f35508aa6a47b587f53",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-dark-home-responses.json",
+      "dtoFileSha256": "c47f6f5c451efd421ad3df9811aa9750b8d6731fb93ada76c79103a8de1ffe93",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 1,
+      "metrics": {
+        "width": 320,
+        "height": 892,
+        "documentWidth": 320,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        320,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "320-dark-home",
+      "surface": "home",
+      "theme": "dark",
+      "width": 320,
+      "start": "2026-10-26T22:20:31.442Z",
+      "observedAtUTC": "2026-10-26T22:20:34.889Z",
+      "url": "http://127.0.0.1:8103/",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-dark-home.png",
+      "sha256": "bd92fdf14ba86505f712bac8abef01437d799466d9e6e28b4f18c6d506cd13d6",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-dark-home-responses.json",
+      "dtoFileSha256": "544b1c620851cb2f93da2fc4fefe9dc1a9db3cb540b95111a4673e1f9905b38d",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/home_feed",
+        "requestBody": {},
+        "canonicalPayloadSha256": "a58d4c37151fbf8d731366c24bd214c2d0dc1ad20da78eac33d8a71058e3623f"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": [
+        "UGREEN Nexode cargador GaN 65 W"
+      ],
+      "noticeCount": 0,
+      "metrics": {
+        "width": 320,
+        "height": 892,
+        "documentWidth": 320,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/audifonos-anc-over-ear-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/guantes-nitrilo-x100-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-labial-liquido-mate-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-power-bank-20000-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/sheglam-brillo-labial-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "targetSelectionNote": "Target metadata corrected to the actual editorial product from the original recorded home_feed; PNG and real API responses unchanged.",
+      "sha256Verified": true,
+      "pngDimensions": [
+        320,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "412-light-search",
+      "surface": "search",
+      "theme": "light",
+      "width": 412,
+      "start": "2026-10-26T22:23:17.223Z",
+      "observedAtUTC": "2026-10-26T22:23:18.810Z",
+      "url": "http://127.0.0.1:8101/explore",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-search.png",
+      "sha256": "f08e23757b8cce349eb17e9fc6280f8f8f90d0490c32cf5f7b86728ce2f154ea",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-search-responses.json",
+      "dtoFileSha256": "cc36e96048dee06279cda9ada6d40c2a2f3de1042f9ebc95ba880905f3f17f6a",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/search_products",
+        "requestBody": {
+          "p_query": "UGREEN",
+          "p_category": null,
+          "p_store": null,
+          "p_availability": null,
+          "p_min_price": null,
+          "p_max_price": null,
+          "p_sort": "relevance",
+          "p_limit": 20,
+          "p_offset": 0,
+          "p_collection": null
+        },
+        "canonicalPayloadSha256": "429185b7aaed9dffd7681a30f3b03a1dcfc58816eba5894750c0ad41ecd73ea3"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": null,
+      "noticeCount": 1,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-hub-usb-c-10-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cargador-auto-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-lightning-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-revodok-hub-6-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": []
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "412-light-search",
+      "surface": "search",
+      "theme": "light",
+      "width": 412,
+      "start": "2026-10-26T22:23:18.979Z",
+      "observedAtUTC": "2026-10-26T22:23:20.541Z",
+      "url": "http://127.0.0.1:8103/explore",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-search.png",
+      "sha256": "ddb4ffea938ca1c89373fb01d628a73dbdfba9c4d6f2facd35e771d36214c8a1",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-search-responses.json",
+      "dtoFileSha256": "5ce284db562da615d084da7b2d29aeac06c416d5e45a0a8cf537fd026bf7e37c",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/search_products",
+        "requestBody": {
+          "p_query": "UGREEN",
+          "p_category": null,
+          "p_store": null,
+          "p_availability": null,
+          "p_min_price": null,
+          "p_max_price": null,
+          "p_sort": "relevance",
+          "p_limit": 20,
+          "p_offset": 0,
+          "p_collection": null
+        },
+        "canonicalPayloadSha256": "429185b7aaed9dffd7681a30f3b03a1dcfc58816eba5894750c0ad41ecd73ea3"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": null,
+      "noticeCount": 0,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-hub-usb-c-10-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cargador-auto-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-lightning-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-revodok-hub-6-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": []
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "412-light-detail",
+      "surface": "detail",
+      "theme": "light",
+      "width": 412,
+      "start": "2026-10-26T22:23:20.697Z",
+      "observedAtUTC": "2026-10-26T22:23:23.719Z",
+      "url": "http://127.0.0.1:8101/product/f59d84f9-30b3-47a1-8681-6504374d195a",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-detail.png",
+      "sha256": "276bdb9d46066a83435d4ec8d321b97deb0b7eaf1bdaf4179482354c6f74c27d",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-detail-responses.json",
+      "dtoFileSha256": "b17e28a281d174bb429ed32e84e45e70e3103344fac78a8d940e1a4feb613798",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/product_detail",
+        "requestBody": {
+          "p_id": "f59d84f9-30b3-47a1-8681-6504374d195a"
+        },
+        "canonicalPayloadSha256": "fb22dad12c4e335ef407b67d675e2f276336bb972cbacb7c3bc2dc938cefdeb8"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true,
+        "variants": [
+          {
+            "id": "35b08e7c-1d16-48d8-aad8-b538eda81ce7",
+            "stock": 13,
+            "title": "Blanco",
+            "active": true,
+            "options": {
+              "Color": "Blanco"
+            },
+            "price_usd": 42
+          },
+          {
+            "id": "055249cf-3a15-431b-b456-1cd2aad58885",
+            "stock": 6,
+            "title": "Negro",
+            "active": true,
+            "options": {
+              "Color": "Negro"
+            },
+            "price_usd": 42
+          }
+        ]
+      },
+      "visibleTitle": "UGREEN Nexode cargador GaN 65 W",
+      "heroName": null,
+      "noticeCount": 1,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/stores/demo/kora-logo.webp",
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          },
+          {
+            "testId": "product-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [
+        {
+          "kind": "analytics-intercepted-locally",
+          "method": "POST",
+          "url": "http://127.0.0.1:54321/rest/v1/rpc/track_event"
+        }
+      ],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "412-light-detail",
+      "surface": "detail",
+      "theme": "light",
+      "width": 412,
+      "start": "2026-10-26T22:23:23.887Z",
+      "observedAtUTC": "2026-10-26T22:23:26.960Z",
+      "url": "http://127.0.0.1:8103/product/f59d84f9-30b3-47a1-8681-6504374d195a",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-detail.png",
+      "sha256": "4e401c0f91c8981273a71d8c2070751d1165c8dc98dbdb3b3bb1b0c9ac825fda",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-detail-responses.json",
+      "dtoFileSha256": "f85ca37f35b242abc6270352a742f99236185f0b4f1ec730bb15b7322e3bd45b",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/product_detail",
+        "requestBody": {
+          "p_id": "f59d84f9-30b3-47a1-8681-6504374d195a"
+        },
+        "canonicalPayloadSha256": "fb22dad12c4e335ef407b67d675e2f276336bb972cbacb7c3bc2dc938cefdeb8"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true,
+        "variants": [
+          {
+            "id": "35b08e7c-1d16-48d8-aad8-b538eda81ce7",
+            "stock": 13,
+            "title": "Blanco",
+            "active": true,
+            "options": {
+              "Color": "Blanco"
+            },
+            "price_usd": 42
+          },
+          {
+            "id": "055249cf-3a15-431b-b456-1cd2aad58885",
+            "stock": 6,
+            "title": "Negro",
+            "active": true,
+            "options": {
+              "Color": "Negro"
+            },
+            "price_usd": 42
+          }
+        ]
+      },
+      "visibleTitle": "UGREEN Nexode cargador GaN 65 W",
+      "heroName": null,
+      "noticeCount": 0,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/stores/demo/kora-logo.webp",
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          },
+          {
+            "testId": "product-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [
+        {
+          "kind": "analytics-intercepted-locally",
+          "method": "POST",
+          "url": "http://127.0.0.1:54321/rest/v1/rpc/track_event"
+        }
+      ],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "412-dark-search",
+      "surface": "search",
+      "theme": "dark",
+      "width": 412,
+      "start": "2026-10-26T22:23:27.108Z",
+      "observedAtUTC": "2026-10-26T22:23:28.678Z",
+      "url": "http://127.0.0.1:8101/explore",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-search.png",
+      "sha256": "e3ffe84dfcc73c520b705a19d73e18b27907976ee07624083f7cbae2f50fde85",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-search-responses.json",
+      "dtoFileSha256": "a17d5e12dc882c3b2d1bb74bdad79eb908b875fc195df862053d1c2f0198a5fd",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/search_products",
+        "requestBody": {
+          "p_query": "UGREEN",
+          "p_category": null,
+          "p_store": null,
+          "p_availability": null,
+          "p_min_price": null,
+          "p_max_price": null,
+          "p_sort": "relevance",
+          "p_limit": 20,
+          "p_offset": 0,
+          "p_collection": null
+        },
+        "canonicalPayloadSha256": "429185b7aaed9dffd7681a30f3b03a1dcfc58816eba5894750c0ad41ecd73ea3"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": null,
+      "noticeCount": 1,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-hub-usb-c-10-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cargador-auto-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-lightning-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-revodok-hub-6-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": []
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "412-dark-search",
+      "surface": "search",
+      "theme": "dark",
+      "width": 412,
+      "start": "2026-10-26T22:23:28.805Z",
+      "observedAtUTC": "2026-10-26T22:23:30.369Z",
+      "url": "http://127.0.0.1:8103/explore",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-search.png",
+      "sha256": "b9adf70ca7ad6cc3c06b4455b4c2988cc1db8da54249d7fdd59befb3bb634ac6",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-search-responses.json",
+      "dtoFileSha256": "88511cc9c730fa7dea8a14dce959752f368234c52f9b2bb6285e71b793387c34",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/search_products",
+        "requestBody": {
+          "p_query": "UGREEN",
+          "p_category": null,
+          "p_store": null,
+          "p_availability": null,
+          "p_min_price": null,
+          "p_max_price": null,
+          "p_sort": "relevance",
+          "p_limit": 20,
+          "p_offset": 0,
+          "p_collection": null
+        },
+        "canonicalPayloadSha256": "429185b7aaed9dffd7681a30f3b03a1dcfc58816eba5894750c0ad41ecd73ea3"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true
+      },
+      "visibleTitle": null,
+      "heroName": null,
+      "noticeCount": 0,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-100w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-hub-usb-c-10-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cargador-auto-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-cable-usb-c-lightning-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-revodok-hub-6-en-1-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": []
+      },
+      "pageErrors": [],
+      "blocked": [],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "before",
+      "source": "private baseline743bb7c supplied by root",
+      "name": "412-dark-detail",
+      "surface": "detail",
+      "theme": "dark",
+      "width": 412,
+      "start": "2026-10-26T22:23:30.501Z",
+      "observedAtUTC": "2026-10-26T22:23:33.600Z",
+      "url": "http://127.0.0.1:8101/product/f59d84f9-30b3-47a1-8681-6504374d195a",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-detail.png",
+      "sha256": "739ee5bbe3ef9db61d6f6916f0d7d309280193b0934f689844ba90458f5ae46b",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-detail-responses.json",
+      "dtoFileSha256": "645d69a57e87b677fc5944dc2903030b5f5b4d54ce58e6e7fe66c308d5aef7f4",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/product_detail",
+        "requestBody": {
+          "p_id": "f59d84f9-30b3-47a1-8681-6504374d195a"
+        },
+        "canonicalPayloadSha256": "fb22dad12c4e335ef407b67d675e2f276336bb972cbacb7c3bc2dc938cefdeb8"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true,
+        "variants": [
+          {
+            "id": "35b08e7c-1d16-48d8-aad8-b538eda81ce7",
+            "stock": 13,
+            "title": "Blanco",
+            "active": true,
+            "options": {
+              "Color": "Blanco"
+            },
+            "price_usd": 42
+          },
+          {
+            "id": "055249cf-3a15-431b-b456-1cd2aad58885",
+            "stock": 6,
+            "title": "Negro",
+            "active": true,
+            "options": {
+              "Color": "Negro"
+            },
+            "price_usd": 42
+          }
+        ]
+      },
+      "visibleTitle": "UGREEN Nexode cargador GaN 65 W",
+      "heroName": null,
+      "noticeCount": 1,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/stores/demo/kora-logo.webp",
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          },
+          {
+            "testId": "product-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [
+        {
+          "kind": "analytics-intercepted-locally",
+          "method": "POST",
+          "url": "http://127.0.0.1:54321/rest/v1/rpc/track_event"
+        }
+      ],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8101/_expo/static/js/web/entry-c96e2961539a7e1b8c83d5ec264b231d.js",
+          "sha256": "66384f27d536cf3f52d54c7f82e207b637c81134a2d43371fd9b1cad47b78142"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    },
+    {
+      "stage": "after",
+      "source": "private mobile-final; StoreHeader scope correction supplied by root",
+      "name": "412-dark-detail",
+      "surface": "detail",
+      "theme": "dark",
+      "width": 412,
+      "start": "2026-10-26T22:23:33.751Z",
+      "observedAtUTC": "2026-10-26T22:23:36.924Z",
+      "url": "http://127.0.0.1:8103/product/f59d84f9-30b3-47a1-8681-6504374d195a",
+      "path": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-detail.png",
+      "sha256": "043bb20ca916d974e870f2ee8978356dbdb840a0d11d7c9c207129f8a6d8a160",
+      "dtoPath": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-detail-responses.json",
+      "dtoFileSha256": "812892ffe35451c98d174534a07f9ab46910f8d77cd3a421e0238873d319de24",
+      "primaryDTO": {
+        "url": "http://127.0.0.1:54321/rest/v1/rpc/product_detail",
+        "requestBody": {
+          "p_id": "f59d84f9-30b3-47a1-8681-6504374d195a"
+        },
+        "canonicalPayloadSha256": "fb22dad12c4e335ef407b67d675e2f276336bb972cbacb7c3bc2dc938cefdeb8"
+      },
+      "targetProduct": {
+        "id": "f59d84f9-30b3-47a1-8681-6504374d195a",
+        "slug": "ugreen-nexode-65w",
+        "title": "UGREEN Nexode cargador GaN 65 W",
+        "price_usd": 42,
+        "image_path": "demo/ugreen-nexode-65w-1.webp",
+        "is_demo": true,
+        "variants": [
+          {
+            "id": "35b08e7c-1d16-48d8-aad8-b538eda81ce7",
+            "stock": 13,
+            "title": "Blanco",
+            "active": true,
+            "options": {
+              "Color": "Blanco"
+            },
+            "price_usd": 42
+          },
+          {
+            "id": "055249cf-3a15-431b-b456-1cd2aad58885",
+            "stock": 6,
+            "title": "Negro",
+            "active": true,
+            "options": {
+              "Color": "Negro"
+            },
+            "price_usd": 42
+          }
+        ]
+      },
+      "visibleTitle": "UGREEN Nexode cargador GaN 65 W",
+      "heroName": null,
+      "noticeCount": 0,
+      "metrics": {
+        "width": 412,
+        "height": 892,
+        "documentWidth": 412,
+        "visibleImages": [
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/catalog/demo/ugreen-nexode-65w-1.webp",
+            "naturalWidth": 800,
+            "naturalHeight": 1000,
+            "complete": true
+          },
+          {
+            "src": "http://127.0.0.1:54321/storage/v1/object/public/stores/demo/kora-logo.webp",
+            "naturalWidth": 256,
+            "naturalHeight": 256,
+            "complete": true
+          }
+        ],
+        "topScrollPositions": [
+          {
+            "testId": "home-scroll",
+            "top": 0
+          },
+          {
+            "testId": "product-scroll",
+            "top": 0
+          }
+        ]
+      },
+      "pageErrors": [],
+      "blocked": [
+        {
+          "kind": "analytics-intercepted-locally",
+          "method": "POST",
+          "url": "http://127.0.0.1:54321/rest/v1/rpc/track_event"
+        }
+      ],
+      "bundles": [
+        {
+          "url": "http://127.0.0.1:8103/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+          "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+        }
+      ],
+      "sha256Verified": true,
+      "pngDimensions": [
+        412,
+        892
+      ],
+      "unalteredBrowserCapture": true
+    }
+  ],
+  "pairs": [
+    {
+      "name": "412-light-home",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-home.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-home.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 3397,
+      "limit": null,
+      "commonReadDTOCount": 9,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "412-light-search",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-search.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-search.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 1731,
+      "limit": null,
+      "commonReadDTOCount": 3,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "412-light-detail",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-detail.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-detail.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 3241,
+      "limit": null,
+      "commonReadDTOCount": 13,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "320-light-home",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-light-home.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-light-home.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 3319,
+      "limit": null,
+      "commonReadDTOCount": 9,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "412-dark-home",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-home.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-home.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 3299,
+      "limit": null,
+      "commonReadDTOCount": 9,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "412-dark-search",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-search.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-search.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 1691,
+      "limit": null,
+      "commonReadDTOCount": 3,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "412-dark-detail",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-detail.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-detail.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 3324,
+      "limit": null,
+      "commonReadDTOCount": 13,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    },
+    {
+      "name": "320-dark-home",
+      "before": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-dark-home.png",
+      "after": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-dark-home.png",
+      "primaryDTOEqual": true,
+      "targetProductEqual": true,
+      "heroNameEqual": true,
+      "comparableWithIdenticalBusinessData": true,
+      "elapsedBetweenCapturesMs": 3622,
+      "limit": null,
+      "commonReadDTOCount": 9,
+      "changedCommonReadDTOs": [],
+      "allCommonReadDTOsEqual": true,
+      "onlyBeforeRequestKeys": [],
+      "onlyAfterRequestKeys": [],
+      "rawPNGHashesVerified": true
+    }
+  ],
+  "completedAtUTC": "2026-10-26T22:23:36.982Z",
+  "totalPNG": 16,
+  "identicalDataPairs": 8,
+  "verifiedAtUTC": "2026-10-26T22:25:33.241388+00:00",
+  "targetProductId": "f59d84f9-30b3-47a1-8681-6504374d195a",
+  "actualBackendOrigins": [
+    "http://127.0.0.1:54321"
+  ],
+  "allPNGHashesVerified": true,
+  "allCommonReadDTOsEqual": true,
+  "limits": [
+    "Local seed UUIDs differ from the38-resource Marketplace override registry. These captures show original Storage illustrations, including embeddedIMAGEN DEMO text; they do not verify renewed photos or their credits.",
+    "Comparison verifies composition and removal of UI notices over identical local commercial DTOs only. Mapping/Sheet/attributed-fallback behavior is covered separately by the six local intercepted-ID cases.",
+    "No Android device/emulator or reception validation; final8103StoreHeader scope fix is observed through these read-only comparisons, not another six-case run.",
+    "Home editorial product is the actual localUGREEN65W,UUIDf59d84f9-30b3-47a1-8681-6504374d195a; screenshotsdo not rename it to the remote Samsung presentation.",
+    "No auth, backend reset, mutation, remote API continuation, image pixel editing or asset changes. Browser analytics were handled locally with204; actual read responses were never replaced."
+  ]
+}

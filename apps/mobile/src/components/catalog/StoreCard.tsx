@@ -44,8 +44,8 @@ export function StoreCard({ store, width }: { store: StoreSummary; width: number
           <StoreBadge tier={storeTier(store)} />
         </View>
         <Text variant="caption" color="textMuted" numberOfLines={1}>{store.tagline ?? ' '}</Text>
-        {/* fixed-height line so cards in a rail align whether or not the store has reviews yet */}
-        <View style={{ height: 20, justifyContent: 'center' }}>
+        {/* Keep a common minimum while allowing larger text and wrapped reviews to grow. */}
+        <View style={{ minHeight: 20, justifyContent: 'center' }}>
           {store.rating_count ? <RatingInline avg={store.rating_avg ?? null} count={store.rating_count} /> : <Text variant="caption" color="textMuted">Aún sin opiniones</Text>}
         </View>
       </View>
@@ -72,14 +72,14 @@ export function StoreChip({ store, width, overline }: { store: StoreSummary; wid
       <View style={{ width: 52, height: 52, borderRadius: t.radii.md, overflow: 'hidden', backgroundColor: accent }}>
         {store.logo_path ? <Image source={{ uri: storeImage(store.logo_path) ?? undefined }} accessibilityLabel="" accessible={false} style={{ flex: 1 }} contentFit="cover" transition={150} /> : null}
       </View>
-      <View style={{ flex: 1, gap: 2 }}>
+      <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
         {overline ? <Text variant="caption" color="textMuted">{overline}</Text> : null}
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
           <Text variant="subtitle" numberOfLines={1} style={{ flexShrink: 1 }}>{store.name}</Text>
           <StoreBadge tier={storeTier(store)} />
         </View>
         {store.tagline || !overline ? <Text variant="caption" color="textMuted" numberOfLines={1}>{store.tagline ?? ' '}</Text> : null}
-        <View style={{ height: 18, justifyContent: 'center' }}>
+        <View style={{ minHeight: 18, justifyContent: 'center' }}>
           {store.rating_count ? <RatingInline avg={store.rating_avg ?? null} count={store.rating_count} /> : <Text variant="caption" color="textMuted">{overline ? 'Aún sin opiniones' : `Nueva en ${brand.name}`}</Text>}
         </View>
       </View>

@@ -32,7 +32,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         testID={`product-card-${p.slug}`}
         scaleTo={0.985}
         accessibilityRole="link"
-        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}, ${availability.label}${p.is_demo ? ', producto de demostración' : ''}`}
+        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}, ${availability.label}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
         onPress={() => {
           if (slot) recordClick(slot, p.id);
           router.push({ pathname: '/product/[id]', params: { id: p.id } });

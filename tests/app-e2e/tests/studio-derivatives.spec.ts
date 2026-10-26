@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 interface StudioResource { productId: string; variantId: string | null; optimizedSha256: string; author: string; license: string }
 const manifest = JSON.parse(readFileSync(new URL('../../../apps/mobile/assets/catalog-exhibition/studio-manifest.json', import.meta.url), 'utf8')) as { resources: StudioResource[] };
 
-const enabled = process.env.KORA_STUDIO_DERIVATIVES_TEST === 'readonly';
+const enabled = process.env.KORA_STUDIO_DERIVATIVES_TEST === 'readonly' && process.env.KORA_CATALOG_PRESENTATION_TEST === 'private-preview';
 const samsung = 'e7a91cd8-d3a2-4436-986c-71d1d95da813';
 const solo = '03c25cc2-2186-466f-a3a5-0f0201dfad81';
 const reads = new Set(['home_feed', 'search_products', 'product_detail', 'product_reviews', 'rate_status', 'pricing_today', 'support_info', 'public_support']);
@@ -31,14 +31,20 @@ for (const colorScheme of ['light', 'dark'] as const) {
         const detail = page.locator('[data-testid="product-scroll"]:visible');
         const gallery = detail.getByTestId('product-gallery');
         await expect(gallery.getByTestId(`exhibition-photo-${id}`)).toHaveCount(1);
-        await expect.poll(() => gallery.locator('img').evaluateAll((images, name) => images.length === 1 && images.every((img) => img.complete && img.naturalWidth === 1024 && img.src.includes(name)), resource.optimizedSha256.slice(0, 12))).toBe(true);
-        await expect(detail.getByTestId('exhibition-generated-credit')).toContainText('Edición generativa');
-        const attribution = detail.getByTestId('exhibition-photo-credit');
+        await expect.poll(() => gallery.locator('img').evaluateAll((images, name) => images.length === 1 && images.every((img) => (img as HTMLImageElement).complete && (img as HTMLImageElement).naturalWidth === 1024 && (img as HTMLImageElement).src.includes(name)), resource.optimizedSha256.slice(0, 12))).toBe(true);
+        await expect(page.getByTestId('exhibition-generated-credit')).toHaveCount(0);
+        await page.getByRole('button', { name: 'Información de la imagen', exact: true }).click();
+        const sheet = page.getByTestId('product-image-info-sheet');
+        await expect(sheet).toBeVisible();
+        await expect(sheet.getByTestId('exhibition-generated-credit')).toHaveText('Imagen editada digitalmente a partir de una fotografía.');
+        const attribution = sheet.getByTestId('exhibition-photo-credit');
         await expect(attribution).toContainText(resource.author);
         await expect(attribution.getByRole('link', { name: resource.license, exact: true })).toBeVisible();
-        await expect(attribution.getByRole('link', { name: resource.author, exact: true })).toBeVisible();
+        await expect(attribution.getByRole('link', { name: `Fuente: ${resource.author}`, exact: true })).toBeVisible();
         if (id === samsung) await expect(attribution.getByRole('link', { name: 'Detalle original', exact: true })).toBeVisible();
-        await expect(detail.getByTestId('catalog-exhibition-notice')).toContainText('Precios de ejemplo');
+        await page.getByTestId('product-image-info-sheet-close').click();
+        await expect(sheet).toBeHidden();
+        await expect(page.locator('[data-testid="catalog-exhibition-notice"]:visible')).toHaveCount(0);
         await expect(page.getByTestId('product-demo')).toHaveCount(0);
         expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
       }
@@ -56,7 +62,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByTestId('product-selection-summary').click();
       await page.getByTestId('variant-Solo cargador · Negro').click();
       await expect(gallery.locator('img')).toHaveAttribute('src', new RegExp(alone.optimizedSha256.slice(0, 12)));
-      await expect.poll(() => gallery.locator('img').evaluateAll((xs) => xs.every((x) => x.complete && x.naturalWidth === 1024))).toBe(true);
+      await expect.poll(() => gallery.locator('img').evaluateAll((xs) => xs.every((x) => (x as HTMLImageElement).complete && (x as HTMLImageElement).naturalWidth === 1024))).toBe(true);
       await page.getByTestId('product-scroll').evaluate((node) => node.scrollTo(0, 0));
       await page.screenshot({ path: info.outputPath('samsung-solo.png') });
       await page.getByTestId('product-add').click();

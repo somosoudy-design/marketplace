@@ -42,6 +42,21 @@ export interface ExhibitionPhoto {
   disclosure?: string;
 }
 
+/** An individual override can fail independently from another page or variant. */
+export function exhibitionSourceKey(productId: string | undefined, path: string | null | undefined, photo: ExhibitionPhoto | undefined): string | undefined {
+  return photo ? `${productId}:${photo.sha256}:${path}` : undefined;
+}
+
+/** Remove only recognised seed boilerplate in the explicitly internal commercial presentation. */
+export function commercialCatalogText(enabled: boolean, text: string | null | undefined, isDemo?: boolean): string | null | undefined {
+  if (!enabled || !isDemo || !text) return text;
+  return text
+    .replace(/\b(?:Producto|Artículo) de demostración\.?\s*/giu, '')
+    .replace(/^((?:Audífonos|Tienda|Cama|Comedero|Correa|Juguete|Esponjas)\b[^.\n]{0,70}) de demostración\b/iu, '$1')
+    .replace(/\s*\(demostración\)/giu, '')
+    .trim();
+}
+
 /** Keep the original order except the cleared photographs which lead the private showcase. */
 export function prioritizeExhibitionPhotos<T extends { id: string; image_path: string | null }>(
   enabled: boolean, photos: readonly ExhibitionPhoto[], products: readonly T[],
@@ -63,6 +78,16 @@ export function exhibitionPhoto(
     if (matches.some((photo) => photo.variantId)) return undefined;
   }
   return matches.find((photo) => !photo.variantId);
+}
+
+/** Hide superseded legacy illustrations; fresh seller/imported paths retain the backend order. */
+export function exhibitionGallery<T extends { path: string }>(
+  enabled: boolean, photos: readonly ExhibitionPhoto[], productId: string, images: T[], isDemo?: boolean,
+): T[] {
+  if (!enabled) return images;
+  const mappedPaths = new Set(images.filter((image) => exhibitionPhoto(enabled, photos, productId, image.path, undefined, isDemo)).map((image) => image.path));
+  if (!mappedPaths.size) return images;
+  return images.filter((image) => !image.path.startsWith('demo/') || mappedPaths.has(image.path));
 }
 
 /** Private, non-personalized curation: newly generated demos lead without changing backend ranks or claims. */

@@ -5,7 +5,7 @@ import { env } from './env';
 import { qk } from './query';
 import { api } from './supabase';
 import { exhibitionPhotos } from './catalog-exhibition-assets';
-import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionPhoto, prioritizeExhibitionPhotos, prioritizeGeneratedExhibition } from './catalog-exhibition-policy';
+import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionGallery, exhibitionPhoto, prioritizeExhibitionPhotos, prioritizeGeneratedExhibition } from './catalog-exhibition-policy';
 
 export const isPrivateCatalogPresentation = exhibitionEnabled({
   optIn: process.env.EXPO_PUBLIC_CATALOG_PRESENTATION,
@@ -48,7 +48,5 @@ export function prioritizeExhibitionProducts<T extends { id: string; image_path:
 }
 
 export function productExhibitionGallery<T extends { path: string }>(productId: string, images: T[], isDemo?: boolean): T[] {
-  if (!isPrivateCatalogPresentation) return images;
-  const cleared = images.filter((p) => productExhibitionPhoto(productId, p.path, undefined, isDemo));
-  return cleared.length ? cleared : images;
+  return exhibitionGallery(isPrivateCatalogPresentation, exhibitionPhotos, productId, images, isDemo);
 }

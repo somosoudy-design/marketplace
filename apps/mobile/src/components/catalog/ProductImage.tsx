@@ -4,6 +4,7 @@ import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
 import { catalogImage } from '@/lib/supabase';
 import { useProductExhibitionPhoto } from '@/lib/catalog-exhibition';
+import { exhibitionSourceKey } from '@/lib/catalog-exhibition-policy';
 import { useTheme } from '@/theme';
 
 interface Props {
@@ -18,16 +19,18 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   priority?: 'low' | 'normal' | 'high';
   fit?: 'cover' | 'contain';
+  onExhibitionError?: (key: string) => void;
+  onExhibitionLoad?: (key: string) => void;
 }
 
 /** Every product photo sits on its category tone at 4:5, so mixed sources still look like one catalog. */
-export function ProductImage({ productId, variantId, productIsDemo, path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover' }: Props) {
+export function ProductImage({ productId, variantId, productIsDemo, path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover', onExhibitionError, onExhibitionLoad }: Props) {
   const t = useTheme();
   const reduced = useReducedMotion();
   const bg = t.tone(tone);
   const uri = catalogImage(path);
   const exhibition = useProductExhibitionPhoto(productId, path, variantId, productIsDemo);
-  const exhibitionKey = exhibition ? `${productId}:${exhibition.sha256}:${path}` : undefined;
+  const exhibitionKey = exhibitionSourceKey(productId, path, exhibition);
   const [failed, setFailed] = useState<string>();
   const localPhoto = exhibition && failed !== exhibitionKey ? exhibition : undefined;
   return (
@@ -40,8 +43,9 @@ export function ProductImage({ productId, variantId, productIsDemo, path, tone, 
           transition={reduced ? 0 : 180}
           priority={priority}
           recyclingKey={localPhoto ? exhibitionKey : uri ?? undefined}
-          onError={localPhoto ? () => setFailed(exhibitionKey) : undefined}
-          accessibilityLabel={alt ? `${alt}${localPhoto?.kind === 'generated-demo' ? ', imagen generada de exhibición' : ''}` : ''}
+          onError={localPhoto && exhibitionKey ? () => { setFailed(exhibitionKey); onExhibitionError?.(exhibitionKey); } : undefined}
+          onLoad={localPhoto && exhibitionKey ? () => onExhibitionLoad?.(exhibitionKey) : undefined}
+          accessibilityLabel={alt ?? ''}
           accessible={!!alt}
           cachePolicy="memory-disk"
         />

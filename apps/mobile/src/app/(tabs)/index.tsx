@@ -12,7 +12,6 @@ import { MiniProductCard } from '@/components/catalog/MiniProductCard';
 import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
 import { EditorialOpening } from '@/components/catalog/EditorialOpening';
 import { ProductEditorialOpening } from '@/components/catalog/ProductEditorialOpening';
-import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { StoreChip } from '@/components/catalog/StoreCard';
 import { useScrollY } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -187,14 +186,14 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 8, minHeight: 44 }}>
         <View style={{ flex: 1 }}>
           <Wordmark inverse />
-          {isPrivateCatalogPresentation ? <ExhibitionNotice style={{ color: palette.violet[200] }} /> : firstName ? <Text variant="caption" style={{ color: palette.violet[200] }} numberOfLines={1}>Hola, {firstName}</Text> : null}
+          {firstName ? <Text variant="caption" style={{ color: palette.violet[200] }} numberOfLines={1}>Hola, {firstName}</Text> : null}
         </View>
         <View>
           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} color={palette.ink[0]} size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
           {unread ? <View testID="home-unread-indicator" pointerEvents="none" style={{ position: 'absolute', right: 9, top: 8, width: 9, height: 9, borderRadius: 5, backgroundColor: t.colors.accent, borderWidth: 1.5, borderColor: palette.violet[900] }} /> : null}
         </View>
         <View>
-          <IconButton testID="home-cart" icon="shopping-bag" label={cartCount ? `Carrito, ${cartCount} ${cartCount === 1 ? 'producto' : 'productos'}` : 'Carrito'} color={palette.ink[0]} size={44} onPress={() => router.navigate('/cart')} />
+          <IconButton testID="home-cart" icon="shopping-bag" label={cartCount ? `Carrito, ${cartCount} ${cartCount === 1 ? 'unidad' : 'unidades'}` : 'Carrito'} color={palette.ink[0]} size={44} onPress={() => router.navigate('/cart')} />
           <CountBadge count={cartCount} testID="home-cart-count" />
         </View>
       </View>

@@ -1,3 +1,4 @@
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { ModerationStatus } from '@kora/api';
 import { MODERATION_LABEL, STORE_STATUS_LABEL } from '@kora/core';
 import { useQuery } from '@tanstack/react-query';
@@ -39,7 +40,7 @@ function Dashboard() {
         <View style={{ flex: 1, gap: 6 }}><Text variant="overline" color="textMuted">Tu negocio</Text><Text variant="displayM" testID="seller-store-name">{s.name}</Text></View>
       </View>
       {s.tagline ? <Text color="textSecondary">{s.tagline}</Text> : null}
-      <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}><Badge label={STORE_STATUS_LABEL[s.status] ?? 'Estado sin informar'} tone={s.status === 'active' ? 'success' : 'warning'} />{s.is_demo ? <Badge label="Tienda de demostración" /> : null}</View>
+      <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}><Badge label={STORE_STATUS_LABEL[s.status] ?? 'Estado sin informar'} tone={s.status === 'active' ? 'success' : 'warning'} />{s.is_demo && !isPrivateCatalogPresentation ? <Badge label="Tienda de demostración" /> : null}</View>
     </Card>
     {q.isPending ? <SellerLoading /> : q.isError ? <ErrorState error={q.error} onRetry={() => q.refetch()} /> : <>
       <Text variant="title">Tu tienda de un vistazo</Text>

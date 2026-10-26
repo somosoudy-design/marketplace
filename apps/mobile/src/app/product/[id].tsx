@@ -29,6 +29,7 @@ import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { productLink } from '@/lib/links';
 import { isPrivateCatalogPresentation, productExhibitionGallery } from '@/lib/catalog-exhibition';
+import { commercialCatalogText } from '@/lib/catalog-exhibition-policy';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
@@ -104,6 +105,9 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const [pending, setPending] = useState<'add' | 'buy' | null>(null);
   const submitting = useRef(false);
   const [page, setPage] = useState(0);
+  const [failedImageSources, setFailedImageSources] = useState<Set<string>>(() => new Set());
+  const imageFailed = (key: string) => setFailedImageSources((old) => old.has(key) ? old : new Set([...old, key]));
+  const imageLoaded = (key: string) => setFailedImageSources((old) => { if (!old.has(key)) return old; const next = new Set(old); next.delete(key); return next; });
   const availability = presentAvailability(p.availability);
   const imageWidth = Math.min(width, MAX_W);
   const maxQty = Math.max(1, Math.min(p.max_per_order ?? 10, variant?.stock ?? 99));
@@ -113,6 +117,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id) || p.is_favorite;
   const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }], p.is_demo);
+  const description = commercialCatalogText(isPrivateCatalogPresentation, p.description, p.is_demo);
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
   const statusKey = variantSoldOut ? 'sold_out' : p.availability;
@@ -122,7 +127,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
   const canBuy = availability.purchasable && !variantSoldOut;
   const [moreText, setMoreText] = useState(false);
-  const longText = (p.description?.length ?? 0) > LONG_DESCRIPTION;
+  const longText = (description?.length ?? 0) > LONG_DESCRIPTION;
   // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
   const tracking = useViewportTracking();
   const scroll = useScrollY(tracking.onWindow);
@@ -198,9 +203,11 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               extraData={variant?.id}
               keyExtractor={(img, i) => `${img.path}-${i}`}
               showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={16}
+              onScroll={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} />
+                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
               )}
             />
             {images.length > 1 ? (
@@ -214,7 +221,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
             <View style={{ gap: 12 }}>
               <ExhibitionNotice explain />
-              <ExhibitionPhotoCredit productId={p.id} variantId={variant?.id} path={images[page]?.path} isDemo={p.is_demo} />
               <View style={{ gap: 4 }}>
                 {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
                 <Text variant="displayM" testID="product-title">{p.title}</Text>
@@ -289,10 +295,10 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               </View>
             ) : null}
 
-            {p.description ? (
+            {description ? (
               <View style={{ gap: 8 }}>
                 <Text variant="title">Descripción</Text>
-                <Text color="textSecondary" style={{ lineHeight: 24 }} numberOfLines={longText && !moreText ? 5 : undefined} testID="product-description">{p.description}</Text>
+                <Text color="textSecondary" style={{ lineHeight: 24 }} numberOfLines={longText && !moreText ? 5 : undefined} testID="product-description">{description}</Text>
                 {longText ? (
                   <ScalePressable accessibilityRole="button" hitSlop={8} onPress={() => setMoreText((v) => !v)} style={{ alignSelf: 'flex-start' }}>
                     <Text variant="label" color="brand">{moreText ? 'Ver menos' : 'Ver más'}</Text>
@@ -300,6 +306,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
                 ) : null}
               </View>
             ) : null}
+            <ExhibitionPhotoCredit productId={p.id} variantId={variant?.id} path={images[page]?.path} isDemo={p.is_demo} failedSources={failedImageSources} />
           </View>
 
           <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>

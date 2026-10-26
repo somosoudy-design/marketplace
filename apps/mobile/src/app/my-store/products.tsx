@@ -1,3 +1,4 @@
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { MODERATION_LABEL, presentAvailability } from '@kora/core';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
@@ -35,7 +36,7 @@ function Products() {
             {image ? <Image source={{ uri: catalogImage(image.path) ?? undefined }} style={{ width: 64, height: 64, borderRadius: 12 }} contentFit="cover" accessibilityLabel={p.title} /> : null}
             <View style={{ flex: 1, gap: 6 }}><Text variant="subtitle" numberOfLines={2}>{p.title}</Text><Price usd={p.base_price_usd} size="sm" /><Text variant="bodySmall" color="textSecondary">{presentAvailability(p.availability).label}</Text></View>
           </View>
-          <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}><Badge label={MODERATION_LABEL[p.moderation_status] ?? 'Estado sin informar'} tone={p.moderation_status === 'published' ? 'success' : p.moderation_status === 'rejected' || p.moderation_status === 'suspended' ? 'danger' : 'warning'} />{p.is_demo ? <Badge label="Demo" /> : null}</View>
+          <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}><Badge label={MODERATION_LABEL[p.moderation_status] ?? 'Estado sin informar'} tone={p.moderation_status === 'published' ? 'success' : p.moderation_status === 'rejected' || p.moderation_status === 'suspended' ? 'danger' : 'warning'} />{p.is_demo && !isPrivateCatalogPresentation ? <Badge label="Demo" /> : null}</View>
           {editor.data ? <Button testID={`seller-edit-${p.id}`} title="Editar producto" variant="secondary" full onPress={() => router.push({ pathname: '/my-store/product', params: { id: p.id } })} /> : null}
           {p.moderation_note ? <Text variant="bodySmall" color="textSecondary">{p.moderation_note}</Text> : null}
         </Card>;

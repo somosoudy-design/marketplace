@@ -20,7 +20,7 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
         testID={`mini-card-${p.slug}`}
         scaleTo={0.97}
         accessibilityRole="link"
-        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}${p.is_demo ? ', producto de demostración' : ''}`}
+        accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
         onPress={() => {
           if (slot) recordClick(slot, p.id);
           router.push({ pathname: '/product/[id]', params: { id: p.id } });

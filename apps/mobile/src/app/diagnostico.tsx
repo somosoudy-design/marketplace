@@ -1,3 +1,4 @@
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import Constants from 'expo-constants';
 import * as Updates from 'expo-updates';
 import { useEffect, useState } from 'react';
@@ -35,6 +36,7 @@ export default function DiagnosticsScreen() {
     ['Conexión', backend],
     ['Sesión cifrada', seal === 'ok' ? 'sí (llave en el almacén seguro del teléfono)' : seal === 'not-encrypted' ? 'no disponible en esta versión' : seal],
     ['Cuenta', user ? 'con sesión' : 'sin sesión'],
+    ['Catálogo', isPrivateCatalogPresentation ? 'Interno · datos de evaluación e imágenes de referencia' : 'Configuración habitual'],
   ];
 
   useEffect(() => {

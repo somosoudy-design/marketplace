@@ -1,3 +1,4 @@
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { PublicReview, ReviewSummary } from '@kora/api';
 import { View } from 'react-native';
 import { Icon } from '@/components/ui/Icon';
@@ -103,7 +104,7 @@ export function ReviewItem({ review: r, showProduct, storeName }: { review: Publ
         <Icon name="badge-check" size={13} color={t.colors.success} />
         <Text variant="caption" color="success">Compra verificada</Text>
         <Text variant="caption" color="textMuted">
-          {r.variant_title ? `· ${r.variant_title}` : ''}{showProduct && r.product_title ? ` · ${r.product_title}` : ''}{r.is_demo ? ' · Demostración' : ''}
+          {r.variant_title ? `· ${r.variant_title}` : ''}{showProduct && r.product_title ? ` · ${r.product_title}` : ''}{r.is_demo && !isPrivateCatalogPresentation ? ' · Demostración' : ''}
         </Text>
       </View>
       {r.reply_body ? (
@@ -121,10 +122,12 @@ export function RatingInline({ avg, count, onPress }: { avg: number | null; coun
   const t = useTheme();
   if (!count || avg == null) return null;
   const body = (
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-      <Icon name="star" size={14} color={t.colors.accent} fill={t.colors.accent} />
-      <Text variant="label" tabular>{formatRating(avg)}</Text>
-      <Text variant="caption" color="textMuted">· {count === 1 ? '1 opinión' : `${count} opiniones`}</Text>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', columnGap: 5, rowGap: 2 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+        <Icon name="star" size={14} color={t.colors.accent} fill={t.colors.accent} />
+        <Text variant="label" tabular>{formatRating(avg)}</Text>
+      </View>
+      <Text variant="caption" color="textMuted" style={{ flexShrink: 1 }}>· {count === 1 ? '1 opinión' : `${count} opiniones`}</Text>
     </View>
   );
   return onPress ? (

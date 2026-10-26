@@ -12,7 +12,7 @@ Un único integrador escribe y publica. Especialistas reales independientes: cat
 
 ## Móvil en cierre de QA
 
-Carrito distingue referencias/unidades/entregas e importe/precio unitario. Reputación admite texto ampliado. Presentación comercial privada sin avisos Demo repetidos; fuentes y licencias bajo demanda, contexto en Diagnóstico. Galería conserva nuevas fotos propias del vendedor, y sus créditos corresponden a la imagen activa y cargada. Pendientes: pruebas focales finales, auditor, Hermes, OTA preview APK5 y recepción emulador. No nueva APK ni iOS.
+Carrito distingue referencias/unidades/entregas e importe/precio unitario. Reputación admite texto ampliado. Presentación comercial privada sin avisos Demo repetidos; fuentes y licencias bajo demanda, contexto en Diagnóstico. Galería conserva nuevas fotos propias del vendedor, y sus créditos corresponden a la imagen activa y cargada. 15UI específicas,25unitarias, tipos/lint yHermes aprobados. Pendientes: dictamen visual final, OTA preview APK5 y recepción emulador. No nueva APK ni iOS.
 
 ## Catálogo: bloqueo concreto, sin ocultarlo
 

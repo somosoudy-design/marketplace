@@ -1,3 +1,5 @@
+import { commercialCatalogText } from '@/lib/catalog-exhibition-policy';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { StoreProfile } from '@kora/api';
 import { storeAccents } from '@kora/design-tokens';
 import { useQuery } from '@tanstack/react-query';
@@ -92,6 +94,7 @@ export default function StoreScreen() {
 
 function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | undefined; coverHeight: number }) {
   const t = useTheme();
+  const description = commercialCatalogText(isPrivateCatalogPresentation, s?.description, s?.is_demo);
   const [info, setInfo] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const accent = s ? (storeAccents[s.accent as keyof typeof storeAccents] ?? t.colors.brand) : t.colors.surfaceSunken;
@@ -126,10 +129,10 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
             </View>
 
             {s.tagline ? <Text variant="subtitle" color="textSecondary">{s.tagline}</Text> : null}
-            {s.description ? (
+            {description ? (
               <ScalePressable scaleTo={1} accessibilityRole="button" accessibilityLabel={expanded ? 'Mostrar menos' : 'Leer descripción completa'} onPress={() => setExpanded((v) => !v)}>
-                <Text variant="bodySmall" color="textSecondary" numberOfLines={expanded ? undefined : 2}>{s.description}</Text>
-                {!expanded && s.description.length > 110 ? <Text variant="label" color="brand" style={{ marginTop: 2 }}>Leer más</Text> : null}
+                <Text variant="bodySmall" color="textSecondary" numberOfLines={expanded ? undefined : 2}>{description}</Text>
+                {!expanded && description.length > 110 ? <Text variant="label" color="brand" style={{ marginTop: 2 }}>Leer más</Text> : null}
               </ScalePressable>
             ) : null}
 
@@ -151,7 +154,7 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
               </View>
             ) : null}
 
-            {s.is_demo ? (
+            {s.is_demo && !isPrivateCatalogPresentation ? (
               <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
                 <Icon name="info" size={15} color={t.colors.textMuted} />
                 <Text variant="caption" color="textMuted" style={{ flex: 1 }}>Tienda de demostración: sus datos y productos son de prueba.</Text>

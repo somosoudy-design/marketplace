@@ -35,7 +35,7 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { name: string; icon:
   }));
   const caption = useAnimatedStyle(() => ({ width: focus.value * (label.length * 7.5 * fontScale + 8), opacity: focus.value }));
   const color = isFocused ? colors.brand : colors.textSecondary;
-  const countLabel = badge > 0 ? `Carrito, ${badge} ${badge === 1 ? 'producto' : 'productos'}` : label;
+  const countLabel = badge > 0 ? `Carrito, ${badge} ${badge === 1 ? 'unidad' : 'unidades'}` : label;
   return (
     <AnimatedPressable
       ref={ref} {...props}

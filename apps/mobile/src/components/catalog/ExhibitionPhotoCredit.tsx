@@ -1,29 +1,42 @@
-import { Linking } from 'react-native';
+import { useState } from 'react';
+import { Linking, View } from 'react-native';
 import { productExhibitionPhoto } from '@/lib/catalog-exhibition';
+import { exhibitionSourceKey } from '@/lib/catalog-exhibition-policy';
+import { Icon } from '@/components/ui/Icon';
+import { ScalePressable } from '@/components/ui/Pressable';
+import { Sheet } from '@/components/ui/Sheet';
 import { Text } from '@/components/ui/Text';
+import { useTheme } from '@/theme';
 
-/** Attribution travels with the cleared photographs in the preview app. */
-export function ExhibitionPhotoCredit({ productId, path, variantId, isDemo }: { productId: string; path?: string; variantId?: string; isDemo?: boolean }) {
+/** Keep attribution beside its image without replacing product information with internal copy. */
+export function ExhibitionPhotoCredit({ productId, path, variantId, isDemo, failedSources }: { productId: string; path?: string; variantId?: string; isDemo?: boolean; failedSources?: ReadonlySet<string> }) {
+  const t = useTheme();
+  const [open, setOpen] = useState(false);
   const photo = productExhibitionPhoto(productId, path, variantId, isDemo);
-  const attributed = !!photo?.author && !!photo.originUrl && !!photo.licenseUrl;
-  if (photo?.kind === 'generated-demo') return (
-    <Text testID="exhibition-generated-credit" variant="caption" color="textSecondary">
-      {photo.disclosure ?? `Imagen generada de exhibición${photo.referenceOnly ? ' · Representación de referencia; no acredita la composición del set.' : ' · Producto de demostración.'}`}
-      {attributed ? <Text testID="exhibition-photo-credit" variant="caption" color="textSecondary">
-        {' · Original: '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(photo.originUrl!)} style={{ textDecorationLine: 'underline' }}>{photo.author}</Text>
-        {photo.additionalSources?.map((source) => <Text key={source.url} variant="caption" color="textSecondary">
-          {' · '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(source.url)} style={{ textDecorationLine: 'underline' }}>{source.label}</Text>
-        </Text>)}
-        {' · '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(photo.licenseUrl!)} style={{ textDecorationLine: 'underline' }}>{photo.license}</Text>
-      </Text> : null}
-    </Text>
-  );
-  if (!photo?.author || !photo.originUrl || !photo.licenseUrl) return null;
-  return (
-    <Text testID="exhibition-photo-credit" variant="caption" color="textSecondary">
-      Foto: <Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(photo.originUrl!)} style={{ textDecorationLine: 'underline' }}>{photo.author}</Text>
-      {' · '}<Text variant="caption" color="textSecondary" accessibilityRole="link" onPress={() => void Linking.openURL(photo.licenseUrl!)} style={{ textDecorationLine: 'underline' }}>{photo.license}</Text>
-      {' · tamaño adaptado'}
-    </Text>
-  );
+  if (!photo) return null;
+  const attributed = !!photo.author && !!photo.originUrl && !!photo.licenseUrl;
+  // The Storage fallback is not proven to share the override's provenance.
+  if (failedSources?.has(exhibitionSourceKey(productId, path, photo)!)) return null;
+  return <>
+    <ScalePressable testID="product-image-info" accessibilityRole="button" accessibilityLabel="Información de la imagen" onPress={() => setOpen(true)} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start' }}>
+      <Icon name="info" size={15} color={t.colors.textMuted} />
+      <Text variant="caption" color="textSecondary">Información de la imagen</Text>
+    </ScalePressable>
+    <Sheet visible={open} title="Información de la imagen" testID="product-image-info-sheet" onClose={() => setOpen(false)}>
+      <View style={{ gap: 12 }}>
+        {photo.kind === 'generated-demo' ? <Text testID="exhibition-generated-credit" variant="bodySmall" color="textSecondary">{attributed ? 'Imagen editada digitalmente a partir de una fotografía.' : 'Imagen creada digitalmente.'}</Text> : null}
+        {photo.referenceOnly ? <Text variant="bodySmall" color="textSecondary">Imagen referencial. Consulta las características y la variante seleccionada.</Text> : null}
+        {attributed ? <View testID="exhibition-photo-credit" style={{ gap: 8 }}>
+          <CreditLink label={`Fuente: ${photo.author}`} url={photo.originUrl!} />
+          {photo.additionalSources?.map((source) => <CreditLink key={source.url} label={source.label} url={source.url} />)}
+          <CreditLink label={photo.license ?? 'Licencia de la imagen'} url={photo.licenseUrl!} />
+          {photo.kind !== 'generated-demo' ? <Text variant="caption" color="textSecondary">Tamaño adaptado.</Text> : null}
+        </View> : null}
+      </View>
+    </Sheet>
+  </>;
+}
+
+function CreditLink({ label, url }: { label: string; url: string }) {
+  return <ScalePressable accessibilityRole="link" accessibilityLabel={label} onPress={() => void Linking.openURL(url)} style={{ minHeight: 44, justifyContent: 'center' }}><Text variant="bodySmall" color="brand" style={{ textDecorationLine: 'underline' }}>{label}</Text></ScalePressable>;
 }

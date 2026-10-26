@@ -29,7 +29,7 @@ export function EditorialOpening({ block, product, width, onOpen }: {
       <ScalePressable
         testID={`collection-${block.slug}-all`}
         accessibilityRole="link"
-        accessibilityLabel={`Colección ${block.title}. Producto mostrado: ${product.title}, ${formatUSD(product.price_usd)}, ${availability.label}${product.is_demo ? ', demostración' : ''}. Ver colección`}
+        accessibilityLabel={`Colección ${block.title}. Producto mostrado: ${product.title}, ${formatUSD(product.price_usd)}, ${availability.label}${product.is_demo && !isPrivateCatalogPresentation ? ', demostración' : ''}. Ver colección`}
         onPress={onOpen}
         scaleTo={0.99}
         style={{ backgroundColor: palette.violet[900], paddingHorizontal: 16, paddingTop: 6, paddingBottom: 16, gap: 10 }}
