@@ -60,3 +60,19 @@ test('receipt uses one read GraphQL query and public GET requests, emitting safe
   assert.ok(!notices.join('\n').includes('never-print'));
   assert.ok(!notice('safe', { value: '%\n::error::injection' }).includes('\n'));
 });
+
+test('historic deployments cannot exhaust the annotation budget before the strict verdict', async () => {
+  const value = app();
+  for (let i = 1; i < 10; i++) value.workerDeployments.edges.push({ node: {
+    deploymentIdentifier: 'old-' + i, url: `https://kora-panel--old-${i}.expo.app`, aliases: [],
+  } });
+  const notices = [];
+  const result = await readReceipt({ token: 'fixture', expected: APPROVED,
+    fetchImpl: async (url) => url === 'https://api.expo.dev/graphql'
+      ? Response.json({ data: { app: { byFullName: value } } }) : Response.json(APPROVED),
+    emit: (line) => notices.push(line),
+  });
+  assert.equal(result.metadata.deployments.length, 10);
+  assert.equal(result.probes.length, 2);
+  assert.equal(notices.length, 3);
+});

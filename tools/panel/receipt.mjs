@@ -111,7 +111,10 @@ export async function readReceipt({ token, expected, fetchImpl = globalThis.fetc
   if (json?.errors?.length || !json?.data?.app?.byFullName) throw new Error('graphql_read_failed');
   const metadata = publicMetadata(json.data.app.byFullName);
   emit(notice('Panel receipt metadata', { expected, ...metadata }));
-  const roots = [...new Set([CANONICAL, metadata.production?.url, ...metadata.deployments.map((d) => d.url)].filter(Boolean))];
+  // GitHub retains at most ten notices per step. Probe the current and newest exports,
+  // leaving room for the final strict verdict instead of consuming it on old deployments.
+  const currentExports = metadata.deployments.filter((d, i) => i === 0 || d.production);
+  const roots = [...new Set([CANONICAL, metadata.production?.url, ...currentExports.map((d) => d.url)].filter(Boolean))];
   const probes = await Promise.all(roots.map((root) => probeRelease(root, expected, fetchImpl)));
   probes.forEach((probe, i) => emit(notice('Panel receipt HTTP ' + (i + 1), probe)));
   return { metadata, probes };
