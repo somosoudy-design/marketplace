@@ -1,6 +1,6 @@
-# Revisión47 · Checkout progresivo, EAS40057075911 Success/fuente0ca7699, guard exacto APK5 aprobado.
-# Acceso protegido a checkout, carrito/login/regreso y recepción; ambos temas y fuente OS1,6.
-# Sólo lectura pública y carrito local; no registros, pedidos, cotizaciones o pagos. No generar otro APK.
+# Revision48 · EAS40413225725 Success/fuente8233df7; runtime APK5 exacto aprobado.
+# Comercial: carrito visitante2unidades/importe, StoreChipKora, Sheetimagen y recepcion.
+# Ambos temas y fuente OS1/1,6; sin auth, pedidos, cotizaciones, pagos o APKnuevo.
 APK 5 (build d1d10c28): https://expo.dev/artifacts/eas/gEaZhiqcOWHmuWuUJN3H6aU4bdWl7Kow_SU5l4pQefk.apk
-flows: 17-checkout-progresivo-acceso 18-checkout-progresivo-texto
+flows: 19-comercial-carrito-imagen 20-comercial-carrito-imagen-texto
 themes: light dark
