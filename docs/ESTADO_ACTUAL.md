@@ -6,6 +6,20 @@
 
 **Última actualización:** 2026-10-24. Checkout progresivo publicado Android preview/APK5. OTA `01a16be3-4827-77bc-bcf4-0f28d5895325`,24oct03:10UTC; EAS40057075911 Success/fuente0ca7699 y recepción Android40057284410 Success,4/4 sin reintentos.40casos UI locales,44PNG comparables y16JPG nativos inspeccionados. No recepción física Samsung acreditada.
 
+## Trabajo en curso · equipo coordinado26oct2026
+
+Oliver autoriza trabajo simultáneo en catálogo, experiencia móvil y paneles de administración/ventas; publicación incremental tras validar. Root único escritor/versionado/commits. Seis agentes reales: dos catálogo, UX móvil, admin, vendedor y auditor independiente. No usar ramas personales ni cambios concurrentes sobre fuente.
+
+**Nueva dirección de Oliver26oct:** presentación comercial normal, sin banners Demo/entorno de pruebas ni texto técnico/descriptivo que no ayude a comprar/vender. Metadata `is_demo`, RLS, condiciones financieras y procedencia/licencias se conservan; contexto técnico en Diagnóstico. No equivale a publicar ventas reales, inventar estadísticas, modificar reglas financieras o disponer de derechos sobre imágenes de terceros.
+
+Primer incremento integrado en workingtree, todavía sin publicar: carrito distingue referencias/unidades/entregas y precio unitario/importe; reputación de tienda admite reflujo; admindetalle muestra carga/error/reintento de ledger y evita overflow; vendedor reconciliaIDs tras guardar, mantiene borrador por tienda y evita duplicar variantes/fotos. Admin3/3 y vendedor5comportamientos locales aprobados con capturas; reflujo vendedor375 añadido y repetido1caso. QA móvil/exportestático y vozcomercial siguen pendientes. No declarar completado el lote aún.
+
+**Control de publicación:** panel autopublicaba cualquier cambio de apps/admin/packages; se sustituye por solicitud explícita con sourceSHA validado (HEAD^, commitdeúnicoarchivo), build delSHA fijado y recepción estricta release.json en URLinmutable+alias.16tests offline aprobados. Este checkpoint del gate NO modifica .github/panel-deploy-request ni debe publicar. No hacerpush de request hasta aprobar UI/export y preparar commitpadre definitivo.
+
+**Catálogo:** registro38/38 intacto;30referencias renovadas NOson30fotosauténticas (25generaciones+5derivadosCC). Dos agentes investigaron13marcaspendientes y genéricos:0nuevasfotografías con correspondencia/calidad/permisos simultáneamente. No sustituir por amateur ni modelos parecidos. Material y evidencia sóloignorados en .local/equipo-20261026/catalog_art y catalog_verify; preparar paquete exacto de recepción de13productos/18variantes. Se corrige también galería privada que ocultaba nuevas rutasdeStorage sinmapping; propuesta acotada aún pendiente de integrar.
+
+**Próxima acción exacta:** cerrar voz comercial/galería y QA móvil usando8099baseline/8100posterior, panelNext3100/backendlocal54321 sinreset. Integrar propuesta gallery y tests; revisar evidencia real claro/oscuro,320/412móvil y375/1280panel. Tipos/lint/exportestático y pruebas relevantes, auditor. Guardar fuentes aprobadas. Después una OTAAndroidpreview runtimeAPK5 y requestpanel separados; comprobar EAS/Hosting/recepción del emulador antes de cerrar. No crear pedidos/pagos/cuentas remotos. Losparches/evidencias por frente están en .local/equipo-20261026; losversionadosyaaplicados se ven en gitdiff.
+
 ## Bloque cerrado — checkout progresivo publicado y recibido
 
 Oliver solicita una decisión por fase después del carrito. Implementado sobre `/checkout`: **Dirección → Entregas (una por vez) → Plan → Revisión y confirmación**. Dirección primero por dependencia real del envío/costo/calendario; al final se revisa y puede cambiarse. Un responsable escribe; UX, comercio y auditor revisan independientemente. No se reconstruye el recorrido ni se cambian reglas financieras.

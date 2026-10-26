@@ -111,7 +111,7 @@ pnpm --filter @kora/admin build && pnpm --filter @kora/admin start   # producci�
 **Publicado:** https://kora-panel.expo.app (EAS Hosting, plan sin costo, mismo proyecto de Expo que la app). El
 workflow `panel-deploy.yml` lo exporta como sitio estático (`KORA_PANEL_EXPORT=1 pnpm --filter @kora/admin build`,
 carpeta `apps/admin/out`) con el backend y la clave `anon` del perfil `preview`, y lo publica con `eas deploy`
-cada vez que cambia el panel o lo que usa (o `.github/panel-deploy-request`). No necesita ningún secreto aparte de
+sólo mediante un commit que cambia `.github/panel-deploy-request`, separado del código ya aprobado. No necesita ningún secreto aparte de
 `EXPO_TOKEN`. Detalles:
 
 - Las tres acciones de servidor del panel (`/api/import`, `/api/import/publish`, `/api/rates/sync`) corren, en
@@ -278,7 +278,7 @@ Se disparan al cambiar un archivo de solicitud en `.github/` de la rama comparti
 | `.github/apk-emulator-request` | `apk-emulator.yml` | Instala y abre los APK listados en un Android 15 limpio (pantalla de Pixel 6), con capturas y registros, y corre los recorridos de Maestro de `tests/apk-flows` |
 | `.github/eas-update-request` | `eas-update-preview.yml` | Publica una actualización de JavaScript en el canal `preview` |
 | `.github/eas-production-update-request` | `eas-update-production.yml` | Promueve a `production` el mismo grupo Android probado en APK 5; exige runs preview/Android Success, commit/huella y código idénticos. Consulta builds consumidores; no genera APK ni cambia backend/perfil/enlace de preview |
-| `.github/panel-deploy-request` (o cualquier cambio en `apps/admin`, `packages/*`, `tools/panel`) | `panel-deploy.yml` | Exporta y publica el panel en https://kora-panel.expo.app y comprueba sus páginas |
+| `.github/panel-deploy-request` únicamente | `panel-deploy.yml` | Valida el SHA aprobado, construye esa fuente y comprueba release.json/rutas/cabeceras en deployment y alias |
 
 **Capturas del emulador sin bajar artefactos:** el contenedor de Claude no llega al almacenamiento de artefactos de
 Actions, así que `apk-emulator.yml` también copia las capturas (reducidas a JPEG) a la rama `ci/capturas`, carpeta
@@ -400,3 +400,7 @@ publicar production no cambia ese canal nativo. El reporte/aviso público del wo
 publicado y los builds Android terminados con canal production y el runtime exacto. Si son cero, el paquete
 queda publicado pero no hay un build compatible registrado para recibirlo por ese canal. No crear otro APK
 para resolverlo sin un nuevo pedido. No implica publicación en Google Play/App Store ni migrar backend.
+
+## Control de publicación del panel · 26oct2026
+
+Los checkpoints de código no publican el panel. Tras validar UI, permisos, persistencia y export estático, commitear/pushear el código aprobado; el siguiente commit debe cambiar **únicamente** `.github/panel-deploy-request` con `source: <SHA40 del commit padre>` y `message: <resumen>`. El guard rechaza otro padre, merges, campos ambiguos o archivos adicionales. El workflow hace checkout del SHA y ejecuta tipos/lint/tests/build, genera release.json con fuente/build, publica y exige el mismo marcador en URLinmutable y https://kora-panel.expo.app, más rutas/JS/404/cabeceras correctos. No modificar el request para guardar trabajo incompleto. La autorización de Oliver para publicar avances validados sigue vigente.

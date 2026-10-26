@@ -1,61 +1,112 @@
 #!/usr/bin/env node
-// After publishing: checks the pages that matter on the new deployment's own address (kora-panel--<id>.expo.app,
-// which never changes), then waits until the production address serves that same build (the alias takes a moment
-// to move). Prints a Markdown table for the job summary and fails if a page does not come back as HTML.
-// Usage: node tools/panel/check-deploy.mjs <deployment url> [production url]
-const clean = (u) => (u ?? '').replace(/\/$/, '');
-const deployment = clean(process.argv[2]);
-const production = clean(process.argv[3]);
-if (!/^https?:\/\//.test(deployment)) {
-  console.log('No hubo URL de publicación.');
-  process.exit(1);
-}
-const pages = ['/', '/login', '/admin', '/vendedor', '/admin/pedidos', '/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000', '/admin/tasas'];
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const get = async (url) => {
-  for (let i = 0; i < 4; i++) {
-    const res = await fetch(url, { redirect: 'manual' }).catch(() => null);
-    if (res && res.status < 500) return res;
-    await sleep(5000);
+// Verify this exact export at the immutable deployment and production alias.
+// Usage: node tools/panel/check-deploy.mjs <deployment> <production> <expected release.json>
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { parseMarker, readMarker, sameMarker } from './release-marker.mjs';
+
+export const PAGES = ['/', '/login', '/admin', '/vendedor', '/admin/pedidos', '/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000', '/admin/tasas'];
+export const MISSING_PATH = '/no-existe-esta-pagina';
+
+function cleanUrl(value) {
+  const url = new URL(value);
+  if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
+    throw new Error('La dirección del panel debe ser una raíz HTTPS sin credenciales ni parámetros.');
   }
-  return null;
-};
-/** The first script of the login page names the build (Next hashes every chunk). */
-const buildOf = async (base) => ((await (await get(`${base}/login`))?.text()) ?? '').match(/src="(\/_next\/static\/[^"]+\.js)"/)?.[1] ?? null;
-
-const rows = [];
-let ok = true;
-for (const path of pages) {
-  const res = await get(deployment + path);
-  const type = res?.headers.get('content-type') ?? '';
-  const good = res?.status === 200 && type.includes('text/html');
-  ok &&= good;
-  rows.push(`| ${path} | ${res?.status ?? 'sin respuesta'} | ${good ? 'sí' : 'NO'} |`);
+  return url.origin;
 }
-const missing = await get(`${deployment}/no-existe-esta-pagina`);
-rows.push(`| /no-existe-esta-pagina | ${missing?.status ?? 'sin respuesta'} | ${missing?.status === 404 ? 'sí (404)' : 'revisar'} |`);
-const script = await buildOf(deployment);
-const js = script ? await get(deployment + script) : null;
-ok &&= js?.status === 200;
-rows.push(`| ${script ?? 'script'} | ${js?.status ?? 'no encontrado'} | ${js?.status === 200 ? 'sí' : 'NO'} |`);
-const head = await get(`${deployment}/login`);
-const headers = ['x-frame-options', 'content-security-policy', 'x-content-type-options', 'referrer-policy', 'x-robots-tag'].map((h) => `${h}: ${head?.headers.get(h) ?? '—'}`);
 
-let live = 'sin dirección de producción';
-if (production) {
-  live = 'todavía sirve la versión anterior (revisar en unos minutos)';
-  for (let i = 0; i < 36; i++) {
-    if (script && (await buildOf(production)) === script) {
-      live = 'sirve esta versión';
-      break;
+export function headerFailures(headers) {
+  const value = (name) => (headers.get(name) ?? '').trim().toLowerCase();
+  const checks = [
+    ['x-frame-options', value('x-frame-options') === 'deny'],
+    ['content-security-policy', value('content-security-policy').split(';').some((part) => part.trim() === "frame-ancestors 'none'")],
+    ['x-content-type-options', value('x-content-type-options') === 'nosniff'],
+    ['referrer-policy', value('referrer-policy') === 'strict-origin-when-cross-origin'],
+    ['x-robots-tag', ['noindex', 'nofollow'].every((token) => value('x-robots-tag').split(/\s*,\s*/).includes(token))],
+  ];
+  return checks.filter(([, ok]) => !ok).map(([name]) => name);
+}
+
+export async function verifyDeployment({
+  deployment, production, expected,
+  fetchImpl = globalThis.fetch,
+  pause = (ms) => new Promise((done) => setTimeout(done, ms)),
+  aliasAttempts = 36, intervalMs = 5000,
+}) {
+  const immutable = cleanUrl(deployment);
+  const alias = cleanUrl(production);
+  if (immutable === alias) throw new Error('La URL inmutable y el alias de producción deben ser distintos.');
+  const marker = parseMarker(expected);
+  if (!Number.isInteger(aliasAttempts) || aliasAttempts < 1) throw new Error('Intentos de recepción inválidos.');
+  const get = (url) => fetchImpl(url, {
+    redirect: 'manual', cache: 'no-store',
+    headers: { 'Cache-Control': 'no-cache' },
+    signal: AbortSignal.timeout(15_000),
+  });
+  const markerPath = '/release.json?verify=' + encodeURIComponent(marker.buildVersion);
+  async function markerAt(base) {
+    const response = await get(base + markerPath);
+    if (response.status !== 200 || !(response.headers.get('content-type') ?? '').includes('application/json')) {
+      throw new Error(base + '/release.json no devuelve JSON HTTP200.');
     }
-    await sleep(5000);
+    return parseMarker(await response.text());
   }
+
+  if (!sameMarker(await markerAt(immutable), marker)) throw new Error('El deployment inmutable no contiene la fuente/build aprobados.');
+  let received = false;
+  let lastError = 'marcador de una versión anterior';
+  for (let attempt = 0; attempt < aliasAttempts; attempt++) {
+    try {
+      received = sameMarker(await markerAt(alias), marker);
+      if (received) break;
+      lastError = 'marcador de una versión anterior';
+    } catch (error) {
+      lastError = error.message;
+    }
+    if (attempt + 1 < aliasAttempts) await pause(intervalMs);
+  }
+  if (!received) throw new Error('El alias de producción no recibió la versión aprobada: ' + lastError);
+
+  const rows = [];
+  const failures = [];
+  for (const base of [immutable, alias]) {
+    const pages = await Promise.all(PAGES.map(async (path) => {
+      const response = await get(base + path);
+      const good = response.status === 200 && (response.headers.get('content-type') ?? '').includes('text/html');
+      rows.push({ base, path, status: response.status, ok: good });
+      if (!good) failures.push(base + path + ': se esperaba HTML HTTP200, llegó ' + response.status);
+      return { path, response, body: await response.text() };
+    }));
+    const missing = await get(base + MISSING_PATH);
+    rows.push({ base, path: MISSING_PATH, status: missing.status, ok: missing.status === 404 });
+    if (missing.status !== 404) failures.push(base + MISSING_PATH + ': se esperaba HTTP404, llegó ' + missing.status);
+    const login = pages.find((page) => page.path === '/login');
+    for (const header of headerFailures(login.response.headers)) failures.push(base + '/login: cabecera inválida o ausente ' + header);
+    // A chunk availability check; build identity comes from release.json, never this generic first chunk.
+    const script = login.body.match(/src="(\/_next\/static\/[^"]+\.js)"/)?.[1];
+    const js = script ? await get(base + script) : null;
+    const jsOk = js?.status === 200 && /(?:application|text)\/javascript/.test(js.headers.get('content-type') ?? '');
+    rows.push({ base, path: script ?? '(script ausente)', status: js?.status ?? 0, ok: jsOk });
+    if (!jsOk) failures.push(base + ': el JavaScript de acceso no está disponible.');
+  }
+  if (failures.length) throw new Error(failures.join('\n'));
+  return { marker, deployment: immutable, production: alias, rows };
 }
 
-console.log(`### Panel publicado: ${production || deployment}\n`);
-console.log(`Versión comprobada en ${deployment}; ${production ? `${production}: ${live}.` : ''}\n`);
-console.log('| Ruta | Estado | Bien |\n|---|---|---|');
-console.log(rows.join('\n'));
-console.log(`\nCabeceras de /login: ${headers.join(' · ')}`);
-if (!ok) process.exit(1);
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  try {
+    const [deployment, production, markerPath] = process.argv.slice(2);
+    if (!deployment || !production || !markerPath) throw new Error('Uso: node tools/panel/check-deploy.mjs <deployment> <production> <expected release.json>');
+    const result = await verifyDeployment({ deployment, production, expected: readMarker(markerPath) });
+    console.log('### Panel recibido: ' + result.production + '\n');
+    console.log('Fuente ' + result.marker.sourceSha + ' · build ' + result.marker.buildVersion + '\n');
+    console.log('El deployment inmutable y el alias sirven el mismo release.json aprobado.\n');
+    console.log('| Origen | Ruta | Estado | Bien |\n|---|---|---|---|');
+    for (const row of result.rows) console.log('| ' + row.base + ' | ' + row.path + ' | ' + row.status + ' | ' + (row.ok ? 'sí' : 'NO') + ' |');
+    console.log('\n404 y las cinco cabeceras de seguridad de /login comprobados en ambas direcciones.');
+  } catch (error) {
+    console.error('::error::' + error.message);
+    process.exitCode = 1;
+  }
+}
