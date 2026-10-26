@@ -15,7 +15,7 @@ estado y se comprueba por separado:
 | Funciones del servidor | `supabase/functions/*` | Desplegadas: `rates-sync`, `push-dispatch` y `panel-api` | Conector `list_edge_functions` / `get_edge_function` (versión y código), o el panel de Supabase |
 | Datos | `supabase/seed.sql` (solo local); `supabase/remote-demo/*.sql` (catálogo demo remoto) | Lo cargado en cada base | Consultas de solo lectura (abajo) |
 | App en teléfonos | `apps/mobile` | Parte nativa: el APK instalado (cambia solo con un APK nuevo). JavaScript: la última actualización publicada en el canal `preview` | Pantalla `kora://diagnostico` en el teléfono; página del proyecto en expo.dev; resumen del workflow `eas-update-preview` |
-| Panel web | `apps/admin` | https://kora-panel.expo.app (EAS Hosting, exportación estática; lo publica el workflow `panel-deploy.yml` en cada cambio del panel) | Resumen del workflow «Panel web (EAS Hosting)» |
+| Panel web | `apps/admin` | https://kora-panel.expo.app (EAS Hosting, exportación estática; lo publica `panel-deploy.yml` mediante solicitud explícita con fuente aprobada) | Resumen del workflow «Panel web (EAS Hosting)» |
 | Pruebas | `tests/`, `packages/*/src/**/*.test.ts`, `supabase/functions/tests` | Corren en local contra el stack local; no hay CI de pruebas en GitHub | Ejecutarlas (sección 7) |
 
 Consultas de solo lectura útiles en el proyecto de pruebas (conector `execute_sql` o SQL Editor):

@@ -1,0 +1,66 @@
+{
+  "base_url": "http://127.0.0.1:3101",
+  "type": "exportación estática real de root",
+  "tests": {
+    "file": "tests/app-e2e/panel/read-states.spec.ts",
+    "passed": 3,
+    "failed": 0,
+    "seconds": 17.6
+  },
+  "accepted_screenshots": [
+    {
+      "baseURL": "http://127.0.0.1:3101",
+      "path": "/admin/pedidos/ver",
+      "detail": "/admin/pedidos/ver?id=43c2a266-60b7-4ce4-9714-884f891c1e83",
+      "width": 390,
+      "height": 844,
+      "colorScheme": "light",
+      "ledgerRows": 2,
+      "documentSize": {
+        "client": 390,
+        "scroll": 390
+      },
+      "file": "static-confirm-390-light.png",
+      "sha256": "fa60c568180cfe4efed4337cc193be72d265eff5441d02c81c655d5fdf5f469c"
+    },
+    {
+      "baseURL": "http://127.0.0.1:3101",
+      "path": "/admin/pedidos/ver",
+      "detail": "/admin/pedidos/ver?id=43c2a266-60b7-4ce4-9714-884f891c1e83",
+      "width": 1360,
+      "height": 1000,
+      "colorScheme": "dark",
+      "ledgerRows": 2,
+      "documentSize": {
+        "client": 1360,
+        "scroll": 1360
+      },
+      "file": "static-confirm-1360-dark.png",
+      "sha256": "0a6edd6dce922b3415d1579a6ffea3725d3a6756ef6ea680e93e3f30e8837270"
+    }
+  ],
+  "role_navigation": [
+    {
+      "role": "seller",
+      "path": "/vendedor",
+      "adminHeadings": 0,
+      "ledgerRequests": []
+    },
+    {
+      "role": "buyer",
+      "path": "/sin-acceso",
+      "adminHeadings": 0,
+      "ledgerRequests": []
+    },
+    {
+      "role": "visitor",
+      "path": "/login",
+      "adminHeadings": 0,
+      "ledgerRequests": []
+    }
+  ],
+  "used_dev_server_3100": false,
+  "commercial_mutations": false,
+  "remote_mutations": false,
+  "source_changed_by_agent": false
+}

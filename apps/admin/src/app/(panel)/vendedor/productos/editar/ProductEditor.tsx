@@ -3,7 +3,7 @@ import { AVAILABILITY, MODERATION_LABEL, type Availability } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, ImagePlus, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ProductCosts } from '@/components/ProductCosts';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Textarea, cx } from '@/components/ui';
@@ -38,7 +38,7 @@ export default function ProductEditor() {
   if (!isNew && q.isPending) return <Loading rows={6} />;
   if (!isNew && q.isError) return <ErrorBox error={q.error} onRetry={() => q.refetch()} />;
   if (!isNew && q.data!.store_id !== store!.id) return <Notice tone="warning">Este producto pertenece a otra de tus tiendas. Cámbiala en el selector para editarlo.</Notice>;
-  return <Editor key={id || 'nuevo'} product={isNew ? null : q.data!} />;
+  return <Editor key={`${store!.id}:${id || 'nuevo'}`} product={isNew ? null : q.data!} />;
 }
 
 function Editor({ product: p }: { product: Product | null }) {
@@ -46,6 +46,11 @@ function Editor({ product: p }: { product: Product | null }) {
   const s = store!;
   const qc = useQueryClient();
   const toast = useToast();
+  // Keep completed writes when a later step fails, so retry updates the same product and rows.
+  const savedProductId = useRef<string | null>(p?.id ?? null);
+  const activeEditor = useRef(true);
+  const uploadedImages = useRef(new Map<string, string>());
+  const previewUrls = useRef(new Set<string>());
   const cats = useCategoriesIndex();
   const [f, setF] = useState({
     title: p?.title ?? '', subtitle: p?.subtitle ?? '', description: p?.description ?? '', highlights: (p?.highlights ?? []).join('\n'),
@@ -59,7 +64,11 @@ function Editor({ product: p }: { product: Product | null }) {
   const [images, setImages] = useState<Img[]>(p ? [...p.product_images].sort((a, b) => a.sort - b.sort).map((i) => ({ id: i.id, path: i.path, preview: catalogImage(i.path)! })) : []);
   const [removedImages, setRemovedImages] = useState<string[]>([]);
   const [tried, setTried] = useState(false);
-  useEffect(() => () => images.forEach((i) => i.file && URL.revokeObjectURL(i.preview)), []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    activeEditor.current = true;
+    const urls = previewUrls.current;
+    return () => { activeEditor.current = false; urls.forEach((url) => URL.revokeObjectURL(url)); };
+  }, []);
 
   const catOptions = useMemo(() => {
     const byId = new Map(cats.list.map((c) => [c.id, c]));
@@ -92,26 +101,38 @@ function Editor({ product: p }: { product: Product | null }) {
         highlights: f.highlights.split('\n').map((h) => h.trim()).filter(Boolean).slice(0, 6), category_id: f.category_id, availability: f.availability,
         compare_at_usd: f.compare_at.trim() ? n(f.compare_at) : null, weight_kg: n(f.weight), max_per_order: Number(f.max_per_order),
       };
-      const saved = p
-        ? await run<{ id: string; moderation_status: string }>(db('products').update(fields).eq('id', p.id).select('id, moderation_status').single())
+      const saved = savedProductId.current
+        ? await run<{ id: string; moderation_status: string }>(db('products').update(fields).eq('id', savedProductId.current).eq('store_id', s.id).select('id, moderation_status').single())
         : await run<{ id: string; moderation_status: string }>(db('products').insert({ ...fields, store_id: s.id, origin: s.kind === 'seller' ? 'seller' : 'local' }).select('id, moderation_status').single());
+      savedProductId.current = saved.id;
 
       for (const [i, v] of variants.entries()) {
         const row = { title: v.title.trim(), sku: v.sku.trim() || null, price_usd: n(v.price), stock: v.stock.trim() ? Number(v.stock) : null, active: v.active, sort: i };
-        if (v.id) await run(db('product_variants').update(row).eq('id', v.id));
-        else await run(db('product_variants').insert({ ...row, product_id: saved.id }));
+        if (v.id) await run(db('product_variants').update(row).eq('id', v.id).eq('product_id', saved.id).select('id').single());
+        else {
+          const created = await run<{ id: string }>(db('product_variants').insert({ ...row, product_id: saved.id }).select('id').single());
+          setVariants((rows) => rows.map((variant, j) => j === i ? { ...variant, id: created.id } : variant));
+        }
       }
 
-      if (removedImages.length) await run(db('product_images').delete().in('id', removedImages));
+      if (removedImages.length) {
+        await run(db('product_images').delete().eq('product_id', saved.id).in('id', removedImages));
+        setRemovedImages([]);
+      }
       for (const [i, img] of images.entries()) {
         if (img.file) {
-          const ext = img.file.type === 'image/png' ? 'png' : img.file.type === 'image/webp' ? 'webp' : 'jpg';
-          const path = `${s.id}/${saved.id}/${Date.now()}-${i}.${ext}`;
-          const { error } = await client.storage.from('catalog').upload(path, await img.file.arrayBuffer(), { contentType: img.file.type, upsert: true });
-          if (error) throw new Error(`No se pudo subir la imagen ${i + 1}: ${error.message}`);
-          await run(db('product_images').insert({ product_id: saved.id, path, alt: f.title.trim(), sort: i }));
+          let path = uploadedImages.current.get(img.preview);
+          if (!path) {
+            const ext = img.file.type === 'image/png' ? 'png' : img.file.type === 'image/webp' ? 'webp' : 'jpg';
+            path = `${s.id}/${saved.id}/${crypto.randomUUID()}.${ext}`;
+            const { error } = await client.storage.from('catalog').upload(path, await img.file.arrayBuffer(), { contentType: img.file.type, upsert: false });
+            if (error) throw new Error(`No se pudo subir la imagen ${i + 1}: ${error.message}`);
+            uploadedImages.current.set(img.preview, path);
+          }
+          const created = await run<{ id: string }>(db('product_images').insert({ product_id: saved.id, path, alt: f.title.trim(), sort: i }).select('id').single());
+          setImages((rows) => rows.map((image) => image.preview === img.preview ? { ...image, id: created.id, path, file: undefined } : image));
         } else if (img.id) {
-          await run(db('product_images').update({ sort: i }).eq('id', img.id));
+          await run(db('product_images').update({ sort: i }).eq('id', img.id).eq('product_id', saved.id).select('id').single());
         }
       }
       return run<{ id: string; moderation_status: string }>(db('products').select('id, moderation_status').eq('id', saved.id).single());
@@ -120,12 +141,13 @@ function Editor({ product: p }: { product: Product | null }) {
       qc.invalidateQueries({ queryKey: ['seller-products'] });
       qc.invalidateQueries({ queryKey: ['seller-product', r.id] });
       qc.invalidateQueries({ queryKey: ['stock'] });
+      if (!activeEditor.current) return;
       toast.ok(r.moderation_status === 'published' ? 'Guardado y publicado.' : r.moderation_status === 'suspended' ? 'Guardado. El producto sigue suspendido.' : 'Guardado. Quedó en revisión antes de publicarse.');
       // a new product gets its address without a page load: Next follows history.replaceState, so useQueryId()
       // gives the new id and the editor opens the saved product
       if (!p) window.history.replaceState(null, '', `/vendedor/productos/editar?id=${r.id}`);
     },
-    onError: toast.error,
+    onError: (error) => { if (activeEditor.current) toast.error(error); },
   });
 
   const setVariant = (i: number, patch: Partial<Variant>) => setVariants((vs) => vs.map((v, j) => (j === i ? { ...v, ...patch } : v)));
@@ -145,8 +167,8 @@ function Editor({ product: p }: { product: Product | null }) {
       ) : null}
       {s.status !== 'active' ? <div className="mb-5"><Notice tone="warning">Tu tienda está en revisión: los productos se publicarán cuando la activemos.</Notice></div> : null}
 
-      <div className="grid items-start gap-5 lg:grid-cols-[1fr_360px]">
-        <div className="flex flex-col gap-5">
+      <fieldset disabled={save.isPending} aria-busy={save.isPending} className="min-w-0 grid items-start gap-5 lg:grid-cols-[1fr_360px]">
+        <div className="flex min-w-0 flex-col gap-5">
           <Card title="Información">
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="Nombre" error={tried ? errors.title : null} className="md:col-span-2"><Input value={f.title} maxLength={140} onChange={(e) => setF({ ...f, title: e.target.value })} /></Field>
@@ -208,7 +230,8 @@ function Editor({ product: p }: { product: Product | null }) {
                   e.target.value = '';
                   const ok = files.filter((x) => x.size <= 5 * 1024 * 1024);
                   if (ok.length < files.length) toast.error(new Error('Cada foto debe pesar menos de 5 MB.'));
-                  setImages((l) => [...l, ...ok.map((file) => ({ file, preview: URL.createObjectURL(file) }))].slice(0, 10));
+                  const added = ok.slice(0, Math.max(0, 10 - images.length)).map((file) => { const preview = URL.createObjectURL(file); previewUrls.current.add(preview); return { file, preview }; });
+                  setImages((l) => [...l, ...added]);
                 }} />
               </label>
             }
@@ -221,7 +244,7 @@ function Editor({ product: p }: { product: Product | null }) {
                     {i === 0 ? <span className="absolute top-1.5 left-1.5 rounded-full bg-surface/90 px-2 py-0.5 text-[11px] font-bold">Portada</span> : null}
                     <div className="absolute inset-x-0 bottom-0 flex justify-between bg-surface/90 px-1 py-0.5">
                       <button aria-label="Mover a la izquierda" disabled={i === 0} onClick={() => moveImage(i, -1)} className="p-1 text-ink-2 disabled:opacity-30"><ArrowLeft size={14} /></button>
-                      <button aria-label={`Quitar foto ${i + 1}`} onClick={() => { if (img.id) setRemovedImages((r) => [...r, img.id!]); else URL.revokeObjectURL(img.preview); setImages((l) => l.filter((_, j) => j !== i)); }} className="p-1 text-ink-2 hover:text-danger"><Trash2 size={14} /></button>
+                      <button aria-label={`Quitar foto ${i + 1}`} onClick={() => { if (img.id) setRemovedImages((r) => [...r, img.id!]); else { URL.revokeObjectURL(img.preview); previewUrls.current.delete(img.preview); } setImages((l) => l.filter((_, j) => j !== i)); }} className="p-1 text-ink-2 hover:text-danger"><Trash2 size={14} /></button>
                       <button aria-label="Mover a la derecha" disabled={i === images.length - 1} onClick={() => moveImage(i, 1)} className="p-1 text-ink-2 disabled:opacity-30"><ArrowRight size={14} /></button>
                     </div>
                   </div>
@@ -244,7 +267,7 @@ function Editor({ product: p }: { product: Product | null }) {
             </Button>
           </div>
         </div>
-      </div>
+      </fieldset>
     </>
   );
 }

@@ -99,3 +99,7 @@ Requisitos de experiencia que ya se cumplen y no deben perderse:
   carrito persistente, checkout, cuotas, conversión de moneda, pagos simulados, pedidos, separación de
   vendedores, permisos, errores, conexión deficiente y sesiones persistentes.
 - El panel prioriza densidad y eficiencia sin perder la identidad.
+
+## Directriz de presentación comercial ·26oct2026
+
+Oliver evalúa el producto con lenguaje y continuidad de una tienda operativa. En la configuración privada no mostrar etiquetas Demo, banners del entorno ni explicaciones técnicas repetidas. Títulos y textos deben ayudar a elegir, actuar o recuperarse de un error. Mantener Electric Violet, jerarquía coherente, densidad útil y áreas táctiles accesibles; no agregar una caja por cada dato. Diagnóstico conserva el contexto técnico. La información de imagen, autor y licencia sigue disponible bajo demanda, sin competir con nombre/precio/compra. No alterar metadata `is_demo`, protecciones de pagos/permisos, moderación ni atribuir ventas o fotografías auténticas inexistentes. No es una autorización de lanzamiento público.

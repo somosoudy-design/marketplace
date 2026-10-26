@@ -55,7 +55,7 @@ export default function OrderDetail() {
         </Notice></div>
       ) : null}
       <div className="grid gap-5 xl:grid-cols-[1fr_360px]">
-        <div className="flex flex-col gap-5">
+        <div className="min-w-0 flex flex-col gap-5">
           <Card title="Entregas">
             <div className="flex flex-col gap-3">
               {[...o.fulfillments].sort((a, b) => a.seq - b.seq).map((f) => <FulfillmentCard key={f.id} f={f} role="admin" storeName={stores.name(f.store_id)} />)}
@@ -77,7 +77,9 @@ export default function OrderDetail() {
             </Table>
           </Card>
           <Card title="Movimientos contables" padded={false}>
-            {ledger.data?.length ? (
+            {ledger.isPending ? <Loading rows={3} /> : ledger.isError ? (
+              <ErrorBox error={ledger.error} onRetry={() => ledger.refetch()} />
+            ) : ledger.data.length ? (
               <Table head={['Fecha', 'Evento', 'Cuenta', 'Monto', 'Nota']}>
                 {ledger.data.map((l) => (
                   <tr key={l.id}>
@@ -91,7 +93,7 @@ export default function OrderDetail() {
             ) : <p className="p-5 text-sm text-ink-3">Sin movimientos todavía. Se registran al confirmar pagos, reembolsos y liquidaciones.</p>}
           </Card>
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="min-w-0 flex flex-col gap-5">
           <Card title="Saldo">
             <dl className="tabular flex flex-col gap-1.5 text-sm">
               <Row k="Productos" v={money(o.items_usd, 'USD')} />

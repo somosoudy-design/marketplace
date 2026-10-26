@@ -86,8 +86,13 @@ Datos y servicios:
   `mimnotafmfasvwrclxan` («Marketplace»), que hoy es el entorno de pruebas.
 - Nunca cargar `supabase/seed.sql` en un proyecto remoto (crea cuentas con clave conocida).
 - Nada destructivo sobre datos importantes (borrados, `DROP`, reinicios) sin autorización explícita.
-- Datos ficticios siempre rotulados (`is_demo`, `is_test`) y correos de prueba bajo `example.com`. No
-  presentar precios o especificaciones ficticias como reales.
+- Conservar los indicadores internos `is_demo`/`is_test` y correos de fixtures bajo `example.com`. No
+  inventar ventas, existencias, valoraciones, precios ni especificaciones comerciales.
+- **Directriz expresa de Oliver,26oct2026:** la presentación privada que revisa el propietario usa lenguaje
+  comercial normal: sin etiquetas Demo, banners de entorno ni explicaciones técnicas en el recorrido de
+  compra. El contexto de evaluación queda en Diagnóstico; fuentes/licencias de imágenes, bajo demanda.
+  No borrar metadata, retirar controles comerciales, ocultar estados de moderación/pago o atribuir
+  autenticidad/licencias no acreditadas. Esta excepción de presentación no autoriza lanzar ventas públicas.
 - No publicar en Google Play ni en App Store hasta que Oliver lo diga.
 - No pedir contraseñas por chat. Cada socio usa sus propias cuentas.
 
