@@ -8,6 +8,15 @@ import { parseMarker, readMarker, sameMarker } from './release-marker.mjs';
 export const PAGES = ['/', '/login', '/admin', '/vendedor', '/admin/pedidos', '/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000', '/vendedor/productos/nuevo', '/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000', '/admin/tasas'];
 export const MISSING_PATH = '/no-existe-esta-pagina';
 
+export class DeploymentVerificationError extends Error {
+  constructor(failures, rows) {
+    super(failures.join('\n'));
+    this.name = 'DeploymentVerificationError';
+    this.failures = failures;
+    this.rows = rows;
+  }
+}
+
 function cleanUrl(value) {
   const url = new URL(value);
   if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
@@ -90,7 +99,7 @@ export async function verifyDeployment({
     rows.push({ base, path: script ?? '(script ausente)', status: js?.status ?? 0, ok: jsOk });
     if (!jsOk) failures.push(base + ': el JavaScript de acceso no está disponible.');
   }
-  if (failures.length) throw new Error(failures.join('\n'));
+  if (failures.length) throw new DeploymentVerificationError(failures, rows);
   return { marker, deployment: immutable, production: alias, rows };
 }
 
