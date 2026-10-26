@@ -5,3 +5,4 @@ build: 40410656172.1
 # Revision 3: verificar rutas, JavaScript, 404 y cabeceras de la misma publicacion recibida.
 # Revision 4: conservar detalles publicos de comprobacion estricta en annotations.
 # Revision 5: conservar margen de annotations para el veredicto estricto final.
+# Revision 6: comprobar CSP efectiva según la conversion documentada de EAS; sin otra publicacion.
