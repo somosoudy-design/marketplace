@@ -1,5 +1,11 @@
 # Historial de agentes
 
+###2026-10-26 ·publicación móvil real y recepción Hosting cerrada
+
+EAS40413225725 Success/fuente8233df7, códigoff9784b completo, runtimeAPK5exacto confirmado. OTAAndroidpreview publicada sinAPK/iOS/native/backend. UUIDAndroid por observar. Native40413548453 no abrió emulador: curl22 al descargar misma URLAPK5 válida en revisiones anteriores; no afirmar falloapp ni recepción. Recuperación autenticada de metadatos EAS en preparación, token sóloCI.
+
+Panel40410656172 publicó fuente1480274/build40410656172.1. Alias inicialmente noJSON y después200 con markerexacto; sin redeploy/aliasmutation. Gate estricto detectó XFOausente; documentación oficialEAS aclara conversión a CSP. Root revisó24tests de parser efectivo/CSP/otrosheaders y corrigió falso negativo sin relajar protección.40414613732 Success:22/22rutas/JS/404 y CSPnone/nosniff/referrer/robots en ambos orígenes, markeridéntico; evidencia pública versionada. No repetir diagnósticoSupabase ni recepciónHosting cerrados. Auditor móvil web APROBADO con38nuevosPNG/40anteriores;126originales archivados,15UI/25unitarias/tipos/lint/Hermes verdes. Fotos0nuevas/13productos18variantes pendientes de material autorizado.
+
 ###2026-10-26 ·solicitud OTA después de dictamen independiente
 
 Auditor APROBADO móvil web sobre ff9784b:14galería+8errores+8tienda+4pares comerciales,38/38hashes, más40normales anteriores;15UI(7+6+2),25unitarias, tipos/lint/Hermes. Sin P1/P2 nuevas del alcance. Se solicita una OTA Androidpreview/APK5 con guardruntimeexacto. No nuevoAPK ni iOS, fotos o datos remotos. Publicación/ID/recepción19/20 aún por verificar. Hosting ya da200JSON y mismo marker1480274/40410656172.1 en alias/inmutable sin nueva publicación; verificaciónestricta adicional sólolectura en curso.

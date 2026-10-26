@@ -2,8 +2,8 @@
 
 ## Prioridad activa ·26oct2026
 
-- Panel aprobado local(8UI estáticas, admin28, gate16, auditor) y publicado en EAS40410656172, inmutable correcto; alias fallaHTTP. Resolver recepción con diagnósticoCI read-only y conservar gate. Ver ESTADO_ACTUAL, no autopublicar checkpoints.
-- Móvil:15UI y25unitarias/tipos/lint/Hermes verdes, cerrar revisión visual independiente final, luego Androidpreview compatibleAPK5 y recepción19/20. Oliver autoriza publicación progresiva, no pedir permiso rutinario.
+- Panel cerrado:1480274 publicado y recibido; verificación estricta40414613732 Success,22/22 y seguridad. No repetir recepción/diagnóstico cerrado. Ver ESTADO_ACTUAL, no autopublicar checkpoints.
+- Móvil publicado40413225725/8233df7 y guardAPK5 Success; auditorAPROBADO. Recepción19/20 pendiente porque descarga del APK5 existente falla antes de instalar. Recuperar binario exacto por EASread-only, no generarotroAPK ni republicarJSigual. Oliver autoriza publicación progresiva, no pedir permiso rutinario.
 - CAT-EXH-01:13productos/18variantes requieren fotografías exactas/autorizadas;0nuevas en esta ronda.30renovados=25generaciones+5CC, no catálogo44real. Mantener línea profesional y no descargar de comentarios ni sustituir por parecido.
 - Directriz comercial: sin Demo/banners técnicos en compra privada; diagnóstico/atribución accesibles y controles/metadata intactos. No reintroducir ruido visual por instrucciones históricas.
 
