@@ -27,13 +27,13 @@ jobs:
           sudo udevadm trigger --name-match=kvm
 
       - name: Descargar los APK
+        # Recover the exact existing APK5 through fresh, read-only EAS metadata.
+        # Token is confined to this step; signed archive URLs are never logged.
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           mkdir -p apks shots
-          i=0
-          for url in $(grep -o 'https://expo.dev/artifacts/[^ ]*\.apk' .github/apk-emulator-request); do
-            i=$((i+1)); curl -sSfL --retry 3 -o "apks/apk$i.apk" "$url"
-          done
-          ls -la apks
+          node tools/eas/recover-apk5.mjs --download
 
       - name: Proyecto de pruebas (registro sin correo)
         # Flows marked "requiere: registro-sin-correo" create a tester account: they only run when the test project
