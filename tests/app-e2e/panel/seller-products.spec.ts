@@ -66,6 +66,37 @@ test('a second save updates the returned variant and image IDs without duplicati
     for (const control of [page.getByLabel('Nombre', { exact: true }), page.getByLabel('Inventario de la variante 2', { exact: true }), page.getByRole('button', { name: 'Guardar cambios', exact: true })]) {
       expect(await control.evaluate((el) => el.getBoundingClientRect().right)).toBeLessThanOrEqual(375);
     }
+    // Target sizes must remain usable even if the browser's root font is smaller than 16px.
+    await page.evaluate(() => { document.documentElement.style.fontSize = '12px'; });
+    for (const width of [320, 375]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const [name, label] of [
+        ['Variante 1', 'Variante'],
+        ['Precio de la variante 1', 'Precio (USD)'],
+        ['Inventario de la variante 1', 'Inventario'],
+        ['SKU de la variante 1', 'SKU'],
+      ] as const) {
+        const input = page.getByLabel(name, { exact: true });
+        await expect(input.locator('..').getByText(label, { exact: true })).toBeVisible();
+      }
+      const buttons = [
+        page.getByRole('button', { name: 'Mover a la izquierda', exact: true }),
+        page.getByRole('button', { name: 'Mover a la derecha', exact: true }),
+        page.getByRole('button', { name: 'Quitar foto 1', exact: true }),
+      ];
+      const boxes = await Promise.all(buttons.map((button) => button.boundingBox()));
+      for (const box of boxes) {
+        expect(box).not.toBeNull();
+        expect(box!.width).toBeGreaterThanOrEqual(44);
+        expect(box!.height).toBeGreaterThanOrEqual(44);
+      }
+      for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
+        const a = boxes[i]!, b = boxes[j]!;
+        const overlap = a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+        expect(overlap).toBe(false);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+    }
   } finally { await product.remove(); }
 });
 

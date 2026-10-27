@@ -189,21 +189,33 @@ function Editor({ product: p }: { product: Product | null }) {
             </div>
           </Card>
 
-          <Card title="Variantes, precio e inventario" actions={<Button size="sm" variant="ghost" icon={Plus} onClick={() => setVariants([...variants, { title: '', sku: '', price: variants[0]?.price ?? '', stock: '', active: true }])}>Agregar variante</Button>}>
-            <div className="hidden grid-cols-[1fr_110px_110px_120px_76px] gap-2 pb-1.5 text-[12px] font-bold uppercase tracking-wide text-ink-3 md:grid">
+          <Card className="@container" title="Variantes, precio e inventario" actions={<Button size="sm" variant="ghost" icon={Plus} onClick={() => setVariants([...variants, { title: '', sku: '', price: variants[0]?.price ?? '', stock: '', active: true }])}>Agregar variante</Button>}>
+            <div className="hidden grid-cols-[minmax(0,1fr)_110px_110px_150px_76px] gap-2 pb-1.5 text-[12px] font-bold uppercase tracking-wide text-ink-3 @min-[680px]:grid">
               <span>Variante</span><span>Precio USD</span><span>Inventario</span><span>SKU</span><span />
             </div>
             <div className="flex flex-col gap-2">
               {variants.map((v, i) => (
-                <div key={v.id ?? `new-${i}`} className={cx('grid grid-cols-2 gap-2 md:grid-cols-[1fr_110px_110px_120px_76px]', !v.active && 'opacity-50')}>
-                  <Input aria-label={`Variante ${i + 1}`} className="col-span-2 md:col-span-1" value={v.title} placeholder="Negro / Talla M" onChange={(e) => setVariant(i, { title: e.target.value })} />
-                  <Input aria-label={`Precio de la variante ${i + 1}`} inputMode="decimal" className="tabular" placeholder="0.00" value={v.price} onChange={(e) => setVariant(i, { price: e.target.value })} />
-                  <Input aria-label={`Inventario de la variante ${i + 1}`} inputMode="numeric" className="tabular" placeholder="Sin control" value={v.stock} onChange={(e) => setVariant(i, { stock: e.target.value })} />
-                  <Input aria-label={`SKU de la variante ${i + 1}`} value={v.sku} onChange={(e) => setVariant(i, { sku: e.target.value })} />
+                <div key={v.id ?? `new-${i}`} className={cx('grid grid-cols-2 gap-2 @min-[680px]:grid-cols-[minmax(0,1fr)_110px_110px_150px_76px]', !v.active && 'opacity-50')}>
+                  <label className="col-span-2 flex min-w-0 flex-col gap-1.5 @min-[680px]:col-span-1">
+                    <span className="text-[13px] font-semibold text-ink-2 @min-[680px]:hidden">Variante</span>
+                    <Input aria-label={`Variante ${i + 1}`} value={v.title} placeholder="Negro / Talla M" onChange={(e) => setVariant(i, { title: e.target.value })} />
+                  </label>
+                  <label className="flex min-w-0 flex-col gap-1.5">
+                    <span className="text-[13px] font-semibold text-ink-2 @min-[680px]:hidden">Precio (USD)</span>
+                    <Input aria-label={`Precio de la variante ${i + 1}`} inputMode="decimal" className="tabular" placeholder="0.00" value={v.price} onChange={(e) => setVariant(i, { price: e.target.value })} />
+                  </label>
+                  <label className="flex min-w-0 flex-col gap-1.5">
+                    <span className="text-[13px] font-semibold text-ink-2 @min-[680px]:hidden">Inventario</span>
+                    <Input aria-label={`Inventario de la variante ${i + 1}`} inputMode="numeric" className="tabular" placeholder="Sin control" value={v.stock} onChange={(e) => setVariant(i, { stock: e.target.value })} />
+                  </label>
+                  <label className="col-span-2 flex min-w-0 flex-col gap-1.5 @min-[680px]:col-span-1">
+                    <span className="text-[13px] font-semibold text-ink-2 @min-[680px]:hidden">SKU</span>
+                    <Input aria-label={`SKU de la variante ${i + 1}`} value={v.sku} onChange={(e) => setVariant(i, { sku: e.target.value })} />
+                  </label>
                   {v.id ? (
-                    <Button size="sm" variant="ghost" onClick={() => setVariant(i, { active: !v.active })}>{v.active ? 'Pausar' : 'Activar'}</Button>
+                    <Button size="sm" variant="ghost" className="col-span-2 justify-self-end @min-[680px]:col-span-1 @min-[680px]:self-center @min-[680px]:justify-self-stretch" onClick={() => setVariant(i, { active: !v.active })}>{v.active ? 'Pausar' : 'Activar'}</Button>
                   ) : (
-                    <Button size="sm" variant="ghost" icon={Trash2} aria-label={`Quitar variante ${i + 1}`} onClick={() => setVariants(variants.filter((_, j) => j !== i))} />
+                    <Button size="sm" variant="ghost" icon={Trash2} className="col-span-2 justify-self-end @min-[680px]:col-span-1 @min-[680px]:self-center @min-[680px]:justify-self-stretch" aria-label={`Quitar variante ${i + 1}`} onClick={() => setVariants(variants.filter((_, j) => j !== i))} />
                   )}
                 </div>
               ))}
@@ -223,7 +235,7 @@ function Editor({ product: p }: { product: Product | null }) {
           <Card
             title={`Fotos (${images.length})`}
             actions={
-              <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold text-brand hover:bg-brand-soft">
+              <label className="inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold text-brand hover:bg-brand-soft focus-within:ring-2 focus-within:ring-brand">
                 <ImagePlus size={16} /> Agregar
                 <input type="file" multiple accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => {
                   const files = [...(e.target.files ?? [])];
@@ -242,10 +254,10 @@ function Editor({ product: p }: { product: Product | null }) {
                   <div key={img.id ?? img.preview} className="group relative overflow-hidden rounded-[12px] border border-line bg-sunken">
                     <img src={img.preview} alt={`Foto ${i + 1}`} className="aspect-[4/5] w-full object-cover" />
                     {i === 0 ? <span className="absolute top-1.5 left-1.5 rounded-full bg-surface/90 px-2 py-0.5 text-[11px] font-bold">Portada</span> : null}
-                    <div className="absolute inset-x-0 bottom-0 flex justify-between bg-surface/90 px-1 py-0.5">
-                      <button aria-label="Mover a la izquierda" disabled={i === 0} onClick={() => moveImage(i, -1)} className="p-1 text-ink-2 disabled:opacity-30"><ArrowLeft size={14} /></button>
-                      <button aria-label={`Quitar foto ${i + 1}`} onClick={() => { if (img.id) setRemovedImages((r) => [...r, img.id!]); else { URL.revokeObjectURL(img.preview); previewUrls.current.delete(img.preview); } setImages((l) => l.filter((_, j) => j !== i)); }} className="p-1 text-ink-2 hover:text-danger"><Trash2 size={14} /></button>
-                      <button aria-label="Mover a la derecha" disabled={i === images.length - 1} onClick={() => moveImage(i, 1)} className="p-1 text-ink-2 disabled:opacity-30"><ArrowRight size={14} /></button>
+                    <div className="grid grid-cols-2 bg-surface/90 px-1 min-[368px]:grid-cols-3">
+                      <button aria-label="Mover a la izquierda" style={{ outlineOffset: -2 }} disabled={i === 0} onClick={() => moveImage(i, -1)} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 disabled:opacity-30"><ArrowLeft size={16} /></button>
+                      <button aria-label="Mover a la derecha" style={{ outlineOffset: -2 }} disabled={i === images.length - 1} onClick={() => moveImage(i, 1)} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 disabled:opacity-30"><ArrowRight size={16} /></button>
+                      <button aria-label={`Quitar foto ${i + 1}`} style={{ outlineOffset: -2 }} onClick={() => { if (img.id) setRemovedImages((r) => [...r, img.id!]); else { URL.revokeObjectURL(img.preview); previewUrls.current.delete(img.preview); } setImages((l) => l.filter((_, j) => j !== i)); }} className="col-span-2 inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 hover:text-danger min-[368px]:col-span-1"><Trash2 size={16} /></button>
                     </div>
                   </div>
                 ))}

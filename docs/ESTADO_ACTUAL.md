@@ -6,6 +6,16 @@
 
 **Última actualización:** 26 de octubre de 2026. Móvil publicado en Android `preview`: [EAS40413225725](https://github.com/somosoudy-design/marketplace/actions/runs/40413225725), fuente `8233df7`, código funcional `ff9784b`, runtime exacto de APK5. ID Android `01a17a59-84da-79e1-a24e-ae78498e7c1c`, grupo `9c671692-ae0a-44c0-ad59-09071ba7d0b7`, observado en lectura EAS. Panel publicado y recibido en https://kora-panel.expo.app: fuente `1480274`, verificación estricta [40414613732](https://github.com/somosoudy-design/marketplace/actions/runs/40414613732) aprobada. Faltan fotografías autorizadas de13 productos/18 variantes; ninguna nueva en este bloque.
 
+## Trabajo en curso · pulido visual del 27 de octubre
+
+Oliver pidió mejorar jerarquía, distribución, tamaños, coherencia y microinteracciones en el ecosistema. Dirección Electric Violet y presentación comercial sin avisos Demo se conservan. La rama está sincronizada; cuatro especialistas trabajan en lectura/propuestas/revisión, root es el único integrador y publicador.
+
+**Checkpoint editor de vendedor:** etiquetas visuales asociadas a variante, precio, inventario y SKU cuando el espacio es estrecho; consulta por ancho real de la tarjeta, no sólo pantalla. SKU usa ancho completo cuando hace falta. Fotos conservan dos miniaturas a320; sus acciones tienen objetivos de44 px sin solaparse y foco visible. Control de añadir imagen también tiene objetivo44 y foco. Un test integrado local de persistencia/segundo guardado pasó, con etiquetas/controles a320 y375 y raíz de fuente12. QA visual inspeccionó la primera integración; revisar el ajuste final de objetivos antes de publicar. Este checkpoint aún no despliega el panel.
+
+**Fuentes móviles no guardadas aún:** root está integrando pie de carrito más compacto, fondo fotográfico editorial, contraste de indicadores de galería y respeto explícito de movimiento reducido en ficha. El export baseline de esta ejecución está servido en8110 y el backend local en54321, sin reset. QA y especialistas están comprobando nombres/precios de tarjetas, menú accesible, importes de panel y tablas desbordadas; no integrar propuestas automáticamente ni modificar finanzas o backend. Las propuestas en `.local/pulido-20261027` son locales, no publicación.
+
+**Siguiente paso:** integrar sólo parches revisados; probar editor, menú y cifras en claro/oscuro/anchos relevantes, con auditor independiente. Hacer un commit de fuente aprobada y otro separado sólo de `.github/panel-deploy-request` para Hosting. Validar el móvil en web/Hermes y publicar Androidpreview compatibleAPK5 tras QA, con la autorización ya otorgada. El emulador sigue bloqueado por la desaparición del APK5 histórico en EAS: no intentar la URL de nuevo ni generar APK; no afirmar recepción nativa. La OTA anterior sigue `01a17a59-84da-79e1-a24e-ae78498e7c1c`. Fotos13productos/18variantes siguen pendientes de material exacto autorizado, no se han renovado en esta sesión.
+
 ## Trabajo en curso · equipo coordinado del26 de octubre
 
 Oliver autoriza catálogo, experiencia móvil y paneles de administración/ventas con publicación incremental validada. Root es el único escritor e integrador. Seis especialistas reales trabajan mediante lectura, parches ignorados y revisión independiente.
