@@ -35,11 +35,11 @@ export default function SellerHome() {
       ) : null}
       {q.isPending ? <Loading rows={3} /> : q.isError ? <ErrorBox error={q.error} onRetry={() => q.refetch()} /> : (
         <>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-2 xl:grid-cols-4">
             <Stat label="Por preparar" value={d!.to_prepare} tone={d!.to_prepare ? 'brand' : 'default'} hint="Entregas recibidas o en preparación" href="/vendedor/pedidos" />
             <Stat label="En camino" value={d!.in_transit} href="/vendedor/pedidos" />
-            <Stat label="Ventas 30 días" value={money(d!.sales_30d_usd, 'USD')} hint={`${d!.units_30d} unidades`} href="/vendedor/ventas" />
-            <Stat label="Disponible para liquidar" value={money(d!.balance.available_usd, 'USD')} hint={`${money(d!.balance.pending_usd, 'USD')} en curso`} href="/vendedor/balance" />
+            <div className="col-span-2 min-[520px]:col-span-1"><Stat label="Ventas 30 días" value={money(d!.sales_30d_usd, 'USD')} hint={`${d!.units_30d} unidades`} href="/vendedor/ventas" /></div>
+            <div className="col-span-2 min-[520px]:col-span-1"><Stat label="Disponible para liquidar" value={money(d!.balance.available_usd, 'USD')} hint={`${money(d!.balance.pending_usd, 'USD')} en curso`} href="/vendedor/balance" /></div>
           </div>
           <div className="mt-5 grid gap-5 lg:grid-cols-2">
             <Card title="Catálogo" actions={<Link href="/vendedor/productos" className="text-sm font-semibold text-brand">Ver productos</Link>}>

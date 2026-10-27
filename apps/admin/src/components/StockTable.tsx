@@ -46,12 +46,17 @@ export function StockTable({ storeId, admin }: { storeId?: string; admin?: boole
                 <Td className="text-ink-2">{v.title ?? 'Única'}{v.sku ? <span className="block font-mono text-[12px] text-ink-3">{v.sku}</span> : null}</Td>
                 <Td className="tabular">{money(v.price_usd, 'USD')}</Td>
                 <Td>
-                  <div className="flex items-center gap-2">
-                    <Input aria-label={`Inventario de ${v.products.title}`} type="number" min={0} className="h-9 w-24" value={draft[v.id] ?? String(v.stock ?? 0)} onChange={(e) => setDraft((d) => ({ ...d, [v.id]: e.target.value }))} />
+                  <div className="flex flex-col items-start gap-1 min-[500px]:flex-row min-[500px]:items-center min-[500px]:gap-2">
+                    <Input aria-label={`Inventario de ${v.products.title}`} type="number" min={0} className="min-h-11 w-24 min-w-24 max-w-24 shrink-0" value={draft[v.id] ?? String(v.stock ?? 0)} onChange={(e) => setDraft((d) => ({ ...d, [v.id]: e.target.value }))} />
                     {v.stock === 0 ? <Badge tone="danger">Agotado</Badge> : (v.stock ?? 0) <= 3 ? <Badge tone="warning">Bajo</Badge> : null}
                   </div>
                 </Td>
-                <Td className="text-right">{draft[v.id] != null && draft[v.id] !== String(v.stock) ? <Button size="sm" loading={save.isPending && save.variables?.id === v.id} onClick={() => save.mutate(v)}>Guardar</Button> : null}</Td>
+                <Td className="text-right">
+                  {/* Reserve the action's width so editing a row does not move the end of the scrollable table. */}
+                  <div className="flex w-[96px] justify-end">
+                    {draft[v.id] != null && draft[v.id] !== String(v.stock) ? <Button size="sm" loading={save.isPending && save.variables?.id === v.id} onClick={() => save.mutate(v)}>Guardar</Button> : null}
+                  </div>
+                </Td>
               </tr>
             ))}
           </Table>

@@ -78,6 +78,13 @@ test('a second save updates the returned variant and image IDs without duplicati
       ] as const) {
         const input = page.getByLabel(name, { exact: true });
         await expect(input.locator('..').getByText(label, { exact: true })).toBeVisible();
+        const rect = await input.boundingBox();
+        expect(rect!.height).toBeGreaterThanOrEqual(44);
+      }
+      for (const control of [page.getByRole('button', { name: 'Agregar variante', exact: true }), page.getByRole('button', { name: 'Pausar', exact: true }).first(), page.locator('input[type=file]').locator('..')]) {
+        const rect = await control.boundingBox();
+        expect(rect!.width).toBeGreaterThanOrEqual(44);
+        expect(rect!.height).toBeGreaterThanOrEqual(44);
       }
       const buttons = [
         page.getByRole('button', { name: 'Mover a la izquierda', exact: true }),

@@ -36,7 +36,7 @@ export default function SellerSales() {
           </Select>
         }
       />
-      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="mb-5 grid grid-cols-1 gap-3 min-[520px]:grid-cols-2 xl:grid-cols-4">
         <Stat label="Vendido" value={money(sum('line_total_usd'), 'USD')} hint={`${rows.length} líneas`} />
         <Stat label="Reembolsado" value={money(sum('refunded_usd'), 'USD')} />
         <Stat label="Comisiones" value={money(sum('commission_usd'), 'USD')} />

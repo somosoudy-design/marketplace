@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-27 · checkpoint de pulido visual coordinado
+
+Root único integrador; UX, comercio, panel y auditoría independientes. Editor con etiquetas/fotos táctiles, menús accesibles, cifras y tablas adaptadas, e inventario con acción visible tras corrección de dos objeciones. Móvil: marca real separada, pie de carrito más compacto, galería contrastada y movimiento reducido. 13 UI móviles, 2 unitarias de marca, export Hermes; panel29 casos de navegación, cinco de editor y cuatro de inventario tras repetir un selector corregido, 28 unitarias y 19 del gate; tipos/lint. Capturas con fixtures y límites en PULIDO_VISUAL_2026-10-27. Pendientes dictamen final y publicación separada, sin asumir recepción Android; 13productos/18variantes sin nueva foto. Texto CSS1,6 en catálogo aún corta modelos/estados, no afirmar adaptación completa.
+
 ###2026-10-26 · cierre de entrega y bloqueo nativo comprobado
 
 OTA `01a17a59-84da-79e1-a24e-ae78498e7c1c`, grupo `9c671692-ae0a-44c0-ad59-09071ba7d0b7`, creada22:34:09UTC/18:34Venezuela, fuente8233df7, preview/runtimeAPK5. EAS40413225725 Success y lectura real40416237747 confirman identidad/latestcompatible/sinrollback. Metadata dirtytrue no se oculta: redirección creaba eas-update.json noignorado antes deCLI; mecanismo reproducido, flujo futuro corregido b434cb9 sin otraOTA. No se certifica fuente histórica limpia.

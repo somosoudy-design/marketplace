@@ -29,7 +29,7 @@ export default function InstallmentsPage() {
     <>
       <PageHeader eyebrow="Operación" title="Cuotas y anticipos" description="Cada cuota está fijada en USD; el monto en bolívares se calcula al momento de pagar con la tasa vigente. Los recordatorios salen automáticamente antes del vencimiento." />
       <Tabs value={tab} onChange={setTab} items={[{ value: 'overdue', label: 'Vencidas' }, { value: 'upcoming', label: 'Por vencer' }, { value: 'paid', label: 'Pagadas' }]} />
-      {tab !== 'paid' ? <div className="mb-5 grid max-w-md grid-cols-2 gap-3"><Stat label="Cuotas" value={q.data?.length ?? '—'} /><Stat label="Saldo" value={money(outstanding, 'USD')} tone={tab === 'overdue' && outstanding > 0 ? 'danger' : 'default'} /></div> : null}
+      {tab !== 'paid' ? <div className="mb-5 grid max-w-xl grid-cols-1 gap-3 min-[520px]:grid-cols-2"><Stat label="Cuotas" value={q.data?.length ?? '—'} /><Stat label="Saldo" value={money(outstanding, 'USD')} tone={tab === 'overdue' && outstanding > 0 ? 'danger' : 'default'} /></div> : null}
       <Card padded={false}>
         {q.isPending ? <Loading /> : q.isError ? <ErrorBox error={q.error} /> : !q.data.length ? <Empty title={tab === 'overdue' ? 'No hay cuotas vencidas' : 'Sin cuotas'} /> : (
           <Table head={['Pedido', 'Cliente', 'Cuota', 'Vence', 'Monto', 'Pagado', 'Estado']}>

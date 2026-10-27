@@ -14,7 +14,7 @@ export default function AdminHome() {
   const rate = d.rate as { available: boolean; rate?: number; source?: string; observed_at?: string; is_manual?: boolean; is_fallback?: boolean; reason?: string };
   return (
     <>
-      <PageHeader eyebrow="Administración" title="Resumen de hoy" description="Lo que necesita atención primero, y cómo va el negocio en los últimos 30 días." />
+      <PageHeader eyebrow="Administración" title="Resumen de hoy" />
       {!rate.available ? (
         <div className="mb-5"><Notice tone="danger" title="No hay una tasa USD/VES válida">Los pagos en bolívares están bloqueados hasta que una fuente responda o fijes una tasa manual. <Link className="font-bold underline" href="/admin/tasas">Ir a tasas</Link></Notice></div>
       ) : rate.source === 'demo' ? (
@@ -30,13 +30,13 @@ export default function AdminHome() {
         <Stat label="Solicitudes de borrado" value={d.deletion_requests} href="/admin/usuarios" />
       </div>
       <h2 className="mb-3 text-[13px] font-bold uppercase tracking-[0.12em] text-ink-3">Negocio</h2>
-      <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+      <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3">
         <Stat label="Pedidos hoy" value={d.orders_today} />
         <Stat label="Pedidos en curso" value={d.orders_open} href="/admin/pedidos" />
-        <Stat label="Ventas 30 días" value={money(d.gmv_30d_usd, 'USD')} />
-        <Stat label="Cobrado 30 días" value={money(d.collected_30d_usd, 'USD')} tone="brand" />
-        <Stat label="Ingreso de plataforma" value={money(d.platform_revenue_usd, 'USD')} hint="Comisiones y cargos" />
-        <Stat label="Por pagar a vendedores" value={money(d.seller_payable_usd, 'USD')} href="/admin/liquidaciones" />
+        <div className="col-span-2 min-[520px]:col-span-1"><Stat label="Ventas 30 días" value={money(d.gmv_30d_usd, 'USD')} /></div>
+        <div className="col-span-2 min-[520px]:col-span-1"><Stat label="Cobrado 30 días" value={money(d.collected_30d_usd, 'USD')} tone="brand" /></div>
+        <div className="col-span-2 min-[520px]:col-span-1"><Stat label="Ingreso de plataforma" value={money(d.platform_revenue_usd, 'USD')} hint="Comisiones y cargos" /></div>
+        <div className="col-span-2 min-[520px]:col-span-1"><Stat label="Por pagar a vendedores" value={money(d.seller_payable_usd, 'USD')} href="/admin/liquidaciones" /></div>
       </div>
       <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         <Card title="Tasa USD/VES en uso" actions={<Link href="/admin/tasas" className="text-sm font-bold text-brand">Gestionar</Link>}>

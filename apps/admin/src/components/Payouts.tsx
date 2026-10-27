@@ -24,7 +24,7 @@ export function usePayouts(storeId?: string) {
 
 export function BalanceStats({ b }: { b: Balance | undefined }) {
   return (
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+    <div className="grid grid-cols-1 gap-3 min-[520px]:grid-cols-2 xl:grid-cols-3">
       <Stat label="Disponible para liquidar" value={money(b?.available_usd, 'USD')} tone="brand" hint="Entregas cerradas, menos comisiones" />
       <Stat label="Programado" value={money(b?.scheduled_usd, 'USD')} hint="Pagos en preparación" />
       <Stat label="En curso" value={money(b?.pending_usd, 'USD')} hint="Se libera al entregar" />

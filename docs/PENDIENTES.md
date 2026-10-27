@@ -1,5 +1,11 @@
 # Pendientes de Kora
 
+## Pulido visual · 27oct2026
+
+- Fuente y capturas revisadas localmente; queda verificar la publicación separada del panel y la OTA Android preview, incluyendo runtime APK5 e identificador. No afirmar recepción física/emulador sin evidencia. Ver [informe](PULIDO_VISUAL_2026-10-27.md) y el primer bloque de ESTADO_ACTUAL.
+- Catálogo en fuente ampliada: a320 con escala CSS1,6 modelos parecidos, disponibilidad, contador y texto de pestaña aún se recortan. Diseñar y probar reflujo que preserve nombres, importes y acciones; la propuesta de autoajustar precios hasta12,49px se rechazó. Validar en Android con el APK5 existente cuando se pueda recuperar una copia.
+- CAT-EXH-01 sigue pendiente para13productos/18variantes; no se integraron imágenes nuevas en esta intervención.
+
 ## Prioridad activa ·26oct2026
 
 - Panel cerrado:1480274 publicado y recibido; verificación estricta40414613732 Success,22/22 y seguridad. No repetir recepción/diagnóstico cerrado. Ver ESTADO_ACTUAL, no autopublicar checkpoints.

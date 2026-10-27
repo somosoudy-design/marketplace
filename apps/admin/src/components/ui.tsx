@@ -36,21 +36,24 @@ export function Card({ children, className, title, actions, padded = true }: { c
 }
 
 export function Stat({ label, value, hint, tone = 'default', href }: { label: string; value: ReactNode; hint?: ReactNode; tone?: 'default' | 'warning' | 'danger' | 'brand'; href?: string }) {
+  // Fit primitive values within the available card width, preserving every character on one line.
+  const text = typeof value === 'string' || typeof value === 'number' ? String(value) : null;
+  const widthEm = text ? Array.from(text).reduce((sum, char) => sum + (/\d/.test(char) ? 0.66 : /[.,\s]/.test(char) ? 0.32 : 0.8), 0) : 0;
   const inner = (
-    <div className={cx('h-full rounded-[20px] border border-line bg-surface p-5 transition-colors', href && 'hover:border-line-strong')}>
+    <div className={cx('@container h-full rounded-[20px] border border-line bg-surface p-5 transition-colors', href && 'hover:border-line-strong')}>
       <p className="text-[13px] font-semibold text-ink-3">{label}</p>
-      <p className={cx('tabular mt-1 text-[28px] font-bold leading-tight', tone === 'warning' ? 'text-warning' : tone === 'danger' ? 'text-danger' : tone === 'brand' ? 'text-brand' : 'text-ink')}>{value}</p>
+      <p className={cx('tabular mt-1 text-[28px] font-bold leading-tight', tone === 'warning' ? 'text-warning' : tone === 'danger' ? 'text-danger' : tone === 'brand' ? 'text-brand' : 'text-ink')} style={widthEm ? { fontSize: `max(16px, min(28px, calc(100cqw / ${widthEm.toFixed(2)})))`, whiteSpace: 'nowrap' } : undefined}>{value}</p>
       {hint ? <p className="mt-1 text-[13px] text-ink-3">{hint}</p> : null}
     </div>
   );
-  return href ? <Link href={href} className="block">{inner}</Link> : inner;
+  return href ? <Link href={href} className="block h-full">{inner}</Link> : inner;
 }
 
 // ---------- controls ----------
 type BtnVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: BtnVariant; size?: 'sm' | 'md'; loading?: boolean; icon?: LucideIcon };
 const buttonClass = (variant: BtnVariant, size: 'sm' | 'md', className?: string) => cx(
-  'inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background,box-shadow,transform] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50',
+  'inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full font-semibold transition-[background,box-shadow,transform] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 disabled:cursor-not-allowed disabled:opacity-50',
   size === 'sm' ? 'h-8 px-3.5 text-[13px]' : 'h-10 px-5 text-sm',
   variant === 'primary' && 'bg-brand text-on-brand hover:bg-brand-pressed',
   variant === 'secondary' && 'border border-line-strong bg-surface text-ink hover:bg-sunken',
@@ -61,7 +64,7 @@ const buttonClass = (variant: BtnVariant, size: 'sm' | 'md', className?: string)
 export const Button = forwardRef<HTMLButtonElement, BtnProps>(function Button({ variant = 'primary', size = 'md', loading, icon: I, className, children, disabled, ...rest }, ref) {
   return (
     <button ref={ref} {...rest} disabled={disabled || loading} aria-busy={loading || undefined} className={buttonClass(variant, size, className)}>
-      {loading ? <LoaderCircle size={16} className="animate-spin" /> : I ? <I size={16} /> : null}
+      {loading ? <LoaderCircle size={16} className="animate-spin motion-reduce:animate-none" /> : I ? <I size={16} /> : null}
       {children}
     </button>
   );
@@ -80,14 +83,14 @@ export function LinkButton({ href, variant = 'primary', size = 'md', icon: I, cl
 const fieldBase = 'w-full rounded-[14px] border border-line-strong bg-surface px-3.5 text-[15px] text-ink placeholder:text-ink-3 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 disabled:opacity-60';
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input({ className, ...rest }, ref) {
-  return <input ref={ref} {...rest} className={cx(fieldBase, 'h-10', className)} />;
+  return <input ref={ref} {...rest} className={cx(fieldBase, 'h-10 min-h-[44px]', className)} />;
 });
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(function Textarea({ className, ...rest }, ref) {
   return <textarea ref={ref} {...rest} className={cx(fieldBase, 'min-h-24 py-2.5', className)} />;
 });
 export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(function Select({ className, children, ...rest }, ref) {
   return (
-    <select ref={ref} {...rest} className={cx(fieldBase, 'h-10 pr-8', className)}>
+    <select ref={ref} {...rest} className={cx(fieldBase, 'h-10 min-h-[44px] pr-8', className)}>
       {children}
     </select>
   );
@@ -120,9 +123,11 @@ export function Toggle({ checked, onChange, label, disabled }: { checked: boolea
       aria-label={label}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={cx('relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors disabled:opacity-50', checked ? 'bg-brand' : 'bg-line-strong')}
+      className="inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:opacity-50"
     >
-      <span className={cx('inline-block size-5 rounded-full bg-white shadow transition-transform', checked ? 'translate-x-[22px]' : 'translate-x-0.5')} />
+      <span aria-hidden="true" className={cx('inline-flex h-[24px] w-[44px] items-center rounded-full transition-colors motion-reduce:transition-none', checked ? 'bg-brand' : 'bg-line-strong')}>
+        <span className={cx('inline-block size-[20px] rounded-full bg-white shadow transition-transform motion-reduce:transition-none', checked ? 'translate-x-[22px]' : 'translate-x-[2px]')} />
+      </span>
     </button>
   );
 }
@@ -136,7 +141,7 @@ export function Tabs<T extends string>({ value, onChange, items, flush }: { valu
           role="tab"
           aria-selected={value === i.value}
           onClick={() => onChange(i.value)}
-          className={cx('inline-flex h-9 items-center gap-2 rounded-full border px-4 text-[13.5px] font-semibold transition-colors', value === i.value ? 'border-ink bg-ink text-surface' : 'border-line-strong bg-surface text-ink hover:bg-sunken')}
+          className={cx('inline-flex h-9 min-h-[44px] min-w-[44px] items-center gap-2 rounded-full border px-4 text-[13.5px] font-semibold transition-colors motion-reduce:transition-none', value === i.value ? 'border-ink bg-ink text-surface' : 'border-line-strong bg-surface text-ink hover:bg-sunken')}
         >
           {i.label}
           {i.count != null ? <span className={cx('tabular rounded-full px-1.5 text-[12px]', value === i.value ? 'bg-surface/20' : 'bg-sunken')}>{i.count}</span> : null}
@@ -203,18 +208,85 @@ export function ErrorBox({ error, onRetry }: { error: unknown; onRetry?: () => v
 
 // ---------- table ----------
 export function Table({ head, children, className }: { head: ReactNode[]; children: ReactNode; className?: string }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLParagraphElement>(null);
+  const previousRef = useRef<HTMLSpanElement>(null);
+  const nextRef = useRef<HTMLSpanElement>(null);
+  const hintId = useId();
+  const columns = head.filter((cell): cell is string => typeof cell === 'string' && !!cell.trim()).slice(0, 2).join(', ');
+  const regionLabel = columns ? `Tabla: ${columns}` : 'Tabla de datos';
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const hint = hintRef.current;
+    const previous = previousRef.current;
+    const next = nextRef.current;
+    const table = scroller?.querySelector('table');
+    if (!scroller || !hint || !previous || !next || !table) return;
+
+    let frame = 0;
+    let last = '';
+    const update = () => {
+      frame = 0;
+      const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+      const overflowing = maxScroll > 1;
+      const canGoBack = overflowing && scroller.scrollLeft > 1;
+      const canGoForward = overflowing && scroller.scrollLeft < maxScroll - 1;
+      const state = `${overflowing}-${canGoBack}-${canGoForward}`;
+      if (state === last) return;
+      last = state;
+      hint.hidden = !overflowing;
+      previous.hidden = !canGoBack;
+      next.hidden = !canGoForward;
+      if (overflowing) {
+        scroller.setAttribute('role', 'region');
+        scroller.setAttribute('aria-label', regionLabel);
+        scroller.setAttribute('aria-describedby', hintId);
+        scroller.tabIndex = 0;
+      } else {
+        scroller.removeAttribute('role');
+        scroller.removeAttribute('aria-label');
+        scroller.removeAttribute('aria-describedby');
+        scroller.removeAttribute('tabindex');
+      }
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
+    resize?.observe(scroller);
+    resize?.observe(table);
+    const mutation = !resize && typeof MutationObserver !== 'undefined' ? new MutationObserver(schedule) : null;
+    mutation?.observe(table, { childList: true, characterData: true, subtree: true });
+    scroller.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    schedule();
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      resize?.disconnect();
+      mutation?.disconnect();
+      scroller.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [hintId, regionLabel]);
+
   return (
-    <div className={cx('overflow-x-auto', className)}>
-      <table className="w-full border-collapse text-left text-sm">
-        <thead>
-          <tr className="border-b border-line text-[12px] uppercase tracking-wide text-ink-3">
-            {head.map((h, i) => (
-              <th key={i} className="whitespace-nowrap px-4 py-2.5 font-bold first:pl-5 last:pr-5">{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="[&>tr]:border-b [&>tr]:border-line [&>tr:last-child]:border-0">{children}</tbody>
-      </table>
+    <div className="min-w-0">
+      <p ref={hintRef} id={hintId} hidden className="border-b border-line px-5 py-2 text-right text-xs text-ink-2">
+        <span ref={previousRef} hidden aria-hidden="true" className="mr-1 text-brand">←</span>
+        Desliza o usa las flechas para ver las columnas
+        <span ref={nextRef} hidden aria-hidden="true" className="ml-1 text-brand">→</span>
+      </p>
+      <div ref={scrollerRef} className={cx('overflow-x-auto', className)}>
+        <table className="w-full border-collapse text-left text-sm">
+          <thead>
+            <tr className="border-b border-line text-[12px] uppercase tracking-wide text-ink-3">
+              {head.map((h, i) => (
+                <th key={i} className="whitespace-nowrap px-4 py-2.5 font-bold first:pl-5 last:pr-5">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="[&>tr]:border-b [&>tr]:border-line [&>tr:last-child]:border-0">{children}</tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,135 @@
+{
+  "environment": "Chromium, export web y backend local; no Android físico",
+  "captures": [
+    {
+      "file": "buscar-antes-light-320.png",
+      "sha256": "100236cc313a54a29440dc074387854ae3c0c536a9b493a091956d83973d6959",
+      "origin": "qa/06-buscar-live-light-320-f1.png"
+    },
+    {
+      "file": "buscar-despues-light-320.png",
+      "sha256": "37ea4a5b58b08ea8aca3284ba405686d1af7bbe2d6641753cdbd79682dbadd09",
+      "origin": "qa/20-buscar-final-light-320-f1.png"
+    },
+    {
+      "file": "buscar-antes-light-412.png",
+      "sha256": "3c8a3b94213693d47a4dd69cfe7af62a89e840b1c032f4bae1f07b8bdad4d8f9",
+      "origin": "qa/06-buscar-live-light-412-f1.png"
+    },
+    {
+      "file": "buscar-despues-light-412.png",
+      "sha256": "6714a02d0ba56e832606996de680d17a867cfecf8916c3cb2fb4ae6f918d6d09",
+      "origin": "qa/20-buscar-final-light-412-f1.png"
+    },
+    {
+      "file": "carrito-antes-light-320.png",
+      "sha256": "48858f0d5a64a79dc5fc8ae70210b488fed6e113dec639d4c98dd427a46b7eb7",
+      "origin": "commerce/03-carrito-light-320.png"
+    },
+    {
+      "file": "carrito-despues-light-320.png",
+      "sha256": "2810b9f977951e1bbd74e4b30ced7604b71cedce5811dd5f80541d204d41b99e",
+      "origin": "cart-integrado/normal-light-320.png"
+    },
+    {
+      "file": "editor-antes-light-320.png",
+      "sha256": "4b4c1d20a6baaefd3e1f981d23960470020d0e2dd4937590f37fd74674da7e4a",
+      "origin": "qa/13-editor-antes-light-320-variantes.png"
+    },
+    {
+      "file": "editor-despues-light-320.png",
+      "sha256": "2a264b4f852423226999f5813c11abef4dbf166db5a9d11021c510ed2acc82b0",
+      "origin": "qa/13-editor-integrado-light-320-variantes.png"
+    },
+    {
+      "file": "buscar-antes-dark-320.png",
+      "sha256": "9adf39154848447f763ef70a1dfce252b7691ba66817b0954b4007ad74f291ad",
+      "origin": "qa/06-buscar-live-dark-320-f1.png"
+    },
+    {
+      "file": "buscar-despues-dark-320.png",
+      "sha256": "6f814be88f07612ed716c8f11e8105531d71e12364feaf6786b358e43d2597e7",
+      "origin": "qa/20-buscar-final-dark-320-f1.png"
+    },
+    {
+      "file": "buscar-antes-dark-412.png",
+      "sha256": "d2151bc593ae7fb2652dd398fa13ab0a941208be5899007bf301f1b23209b559",
+      "origin": "qa/06-buscar-live-dark-412-f1.png"
+    },
+    {
+      "file": "buscar-despues-dark-412.png",
+      "sha256": "62edc17962714c88e55d52c862b091dc59104016d4dc2445c167ee452ae62ba9",
+      "origin": "qa/20-buscar-final-dark-412-f1.png"
+    },
+    {
+      "file": "carrito-antes-dark-320.png",
+      "sha256": "16fbf7e5a6412d27cf2bee893be1924dad7a0a86aef144749581e123770fcc2f",
+      "origin": "commerce/03-carrito-dark-320.png"
+    },
+    {
+      "file": "carrito-despues-dark-320.png",
+      "sha256": "c8c2d15ae75dcfbf045314c71cf1c4a7789b3e6477a31446bb51bef7baf58db9",
+      "origin": "cart-integrado/normal-dark-320.png"
+    },
+    {
+      "file": "editor-antes-dark-320.png",
+      "sha256": "3ad008f312b9b4a84b164e4a7aa5ad888e84685d2fb9994336b3a755c635bdce",
+      "origin": "qa/13-editor-antes-dark-320-variantes.png"
+    },
+    {
+      "file": "editor-despues-dark-320.png",
+      "sha256": "02f8f23d75992fcb813c70f9e4347daaccec0cc29983013574103c530d94d03f",
+      "origin": "qa/13-editor-integrado-dark-320-variantes.png"
+    },
+    {
+      "file": "inventario-admin-antes-light-320.png",
+      "sha256": "a4dfde2fc28affa255c14079036d66b59d145043acaae3a473b625957b4b23bd",
+      "origin": "qa/21-inventario-admin-light-320.png"
+    },
+    {
+      "file": "inventario-admin-despues-light-320.png",
+      "sha256": "92cf4fa30dc063452c4c81df74e62ab12f5076808b9c3aab623130d7f8d21c61",
+      "origin": "qa/29-inventario-final3-admin-light-320.png"
+    },
+    {
+      "file": "inventario-admin-antes-dark-320.png",
+      "sha256": "648fcfe6fe30464e26a7c887b09fea5638e5db2ca9eb666aa2ca3b60f8be7b24",
+      "origin": "qa/21-inventario-admin-dark-320.png"
+    },
+    {
+      "file": "inventario-admin-despues-dark-320.png",
+      "sha256": "0e06220b7a6a1ea00c586f09f41b42bdb22fcdaec84c7647bfedc9963514d1ab",
+      "origin": "qa/29-inventario-final3-admin-dark-320.png"
+    },
+    {
+      "file": "inventario-vendedor-antes-light-320.png",
+      "sha256": "9a0599905cabad5ec6d0eb455fd5bd2486960cde072b9f5ae881563d1e1ab71d",
+      "origin": "qa/21-inventario-vendedor-light-320.png"
+    },
+    {
+      "file": "inventario-vendedor-despues-light-320.png",
+      "sha256": "834cfcdf8444957abebd19169bd4ba1e354853422facc24f92c08676f39e6c6d",
+      "origin": "qa/29-inventario-final3-vendedor-light-320.png"
+    },
+    {
+      "file": "inventario-vendedor-antes-dark-320.png",
+      "sha256": "55d50c25c7efc37a10dec132f75b31ccd391ae7b82f08086b8d0f2ad2be282fa",
+      "origin": "qa/21-inventario-vendedor-dark-320.png"
+    },
+    {
+      "file": "inventario-vendedor-despues-dark-320.png",
+      "sha256": "d2868f8c44d195bd368462916d708c518d31174112a1ba46a2f60003a5398c61",
+      "origin": "qa/29-inventario-final3-vendedor-dark-320.png"
+    },
+    {
+      "file": "dashboard-admin-antes-light-1280.png",
+      "sha256": "cba35d82b2e63890258b39621ebb636b8555ed4a135bc09b62b560f45ad1973f",
+      "origin": "qa/07-panel-admin-light-1280.png"
+    },
+    {
+      "file": "dashboard-admin-despues-light-1280.png",
+      "sha256": "a429536c505a8f3fbf2646dd4716717f90eccfe67a6f1539c928a1b1244f4460",
+      "origin": "qa/30-dashboard-final-light-1280.png"
+    }
+  ]
+}
