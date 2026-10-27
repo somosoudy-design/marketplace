@@ -130,6 +130,66 @@
       "file": "dashboard-admin-despues-light-1280.png",
       "sha256": "a429536c505a8f3fbf2646dd4716717f90eccfe67a6f1539c928a1b1244f4460",
       "origin": "qa/30-dashboard-final-light-1280.png"
+    },
+    {
+      "file": "ficha-final-light-320.png",
+      "sha256": "dedacb8a749361a118aba33a7da19e2b206c8a5afc28ae9be89a486be58c566e",
+      "origin": "qa/31-ficha-final-light-320.png"
+    },
+    {
+      "file": "galeria-segunda-foto-light-320.png",
+      "sha256": "b4fc0c8e72223425c8e0e453044868ef26c08bf0db9ccebfddccce7f23855f6e",
+      "origin": "qa/31-galeria-final-light-320.png"
+    },
+    {
+      "file": "ficha-final-light-412.png",
+      "sha256": "c0ddd60defcb663848ae9d9870da530aa2039ba095828274fefb0ebef4def699",
+      "origin": "qa/31-ficha-final-light-412.png"
+    },
+    {
+      "file": "galeria-segunda-foto-light-412.png",
+      "sha256": "38bdab3ecf08c2f6c87efd60318386b0fcabd11101ddf8559578b1d061c873df",
+      "origin": "qa/31-galeria-final-light-412.png"
+    },
+    {
+      "file": "ficha-final-dark-320.png",
+      "sha256": "11c839f9577680f15e74545afeb1f0ad1ca7e0c54157a92e882ff67f84f675ab",
+      "origin": "qa/31-ficha-final-dark-320.png"
+    },
+    {
+      "file": "galeria-segunda-foto-dark-320.png",
+      "sha256": "9557015e0925788934efd7432e033449ed40272a8d4db3b5c4a60e4efa33a656",
+      "origin": "qa/31-galeria-final-dark-320.png"
+    },
+    {
+      "file": "ficha-final-dark-412.png",
+      "sha256": "edee15a5f6bc7f35108582e0ffebdf592f665f917a917dc5cca6c4f830b7e599",
+      "origin": "qa/31-ficha-final-dark-412.png"
+    },
+    {
+      "file": "galeria-segunda-foto-dark-412.png",
+      "sha256": "963e542d63c12bbdf18a7dbec4ab37906b647441c48c039657229073af4ea46b",
+      "origin": "qa/31-galeria-final-dark-412.png"
+    },
+    {
+      "file": "buscar-antes-light-320-texto160web.png",
+      "sha256": "dfa2d6074376be1b5d373296e446ab8b93a5359b7af6374abdfa861128905fbf",
+      "origin": "qa/06-buscar-live-light-320-f1.6.png"
+    },
+    {
+      "file": "buscar-despues-light-320-texto160web.png",
+      "sha256": "740174067758e8862c56ff2e3da5cd600133d379f2072152f012738c36925e44",
+      "origin": "qa/20-buscar-final-light-320-f1.6.png"
+    },
+    {
+      "file": "buscar-antes-dark-320-texto160web.png",
+      "sha256": "fb42b497925349695d270bcbf8db9a5646f9105c7f010a8ca18a4cb7157aeaff",
+      "origin": "qa/06-buscar-live-dark-320-f1.6.png"
+    },
+    {
+      "file": "buscar-despues-dark-320-texto160web.png",
+      "sha256": "a6f18c3beeb041444c1d2e29b97054c7734b6d4198c9852d07c3748c58336fd6",
+      "origin": "qa/20-buscar-final-dark-320-f1.6.png"
     }
   ]
 }

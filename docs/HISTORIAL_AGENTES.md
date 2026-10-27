@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-27 · publicación del pulido visual
+
+Auditora independiente aprobó panel y carrito/ficha en el alcance web, y Buscar a tamaño normal; texto CSS1,6/320 sigue parcialmente truncado. Panel fuente `2cb5801`, request `dd30a51`, CI40436798559 Success, deployment y alias verificados por CI. Móvil fuente `e6dd4c4`, request `0d11824`, EAS40436883342 Success, guard APK5 y fuente limpia aprobados; Android ID `01a17b21-55f2-7ebe-83b4-ff980e1d06fb`, grupo `0ec56278-b0f7-4b06-9009-f0382ce581cb`. Sin recepción nativa comprobada, nuevo APK, imágenes adicionales, iOS ni finanzas/backend alterados. Capturas web originales y límites en PULIDO_VISUAL_2026-10-27.
+
 ### 2026-10-27 · checkpoint de pulido visual coordinado
 
 Root único integrador; UX, comercio, panel y auditoría independientes. Editor con etiquetas/fotos táctiles, menús accesibles, cifras y tablas adaptadas, e inventario con acción visible tras corrección de dos objeciones. Móvil: marca real separada, pie de carrito más compacto, galería contrastada y movimiento reducido. 13 UI móviles, 2 unitarias de marca, export Hermes; panel29 casos de navegación, cinco de editor y cuatro de inventario tras repetir un selector corregido, 28 unitarias y 19 del gate; tipos/lint. Capturas con fixtures y límites en PULIDO_VISUAL_2026-10-27. Pendientes dictamen final y publicación separada, sin asumir recepción Android; 13productos/18variantes sin nueva foto. Texto CSS1,6 en catálogo aún corta modelos/estados, no afirmar adaptación completa.
