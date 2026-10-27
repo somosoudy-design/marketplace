@@ -179,3 +179,11 @@ Tarjeta comercial: fotografía4:5 intacta, superficie única con radio10/borde s
 ## Directriz de presentación comercial ·26oct2026
 
 Oliver evalúa el producto con lenguaje y continuidad de una tienda operativa. En la configuración privada no mostrar etiquetas Demo, banners del entorno ni explicaciones técnicas repetidas. Títulos y textos deben ayudar a elegir, actuar o recuperarse de un error. Mantener Electric Violet, jerarquía coherente, densidad útil y áreas táctiles accesibles; no agregar una caja por cada dato. Diagnóstico conserva el contexto técnico. La información de imagen, autor y licencia sigue disponible bajo demanda, sin competir con nombre/precio/compra. No alterar metadata `is_demo`, protecciones de pagos/permisos, moderación ni atribuir ventas o fotografías auténticas inexistentes. No es una autorización de lanzamiento público.
+
+## Reglas aplicadas al pulido ·27oct2026
+
+- En tarjetas compartidas, si el título empieza por la marca confirmada del producto y queda un nombre, mostrar el nombre en su línea y la marca en segundo plano junto al precio. En otros casos conservar el título sin alterar. El lector de pantalla recibe el título completo, precio y disponibilidad. La fotografía y los estados conservan sus funciones.
+- En carrito, agrupar subtotal y acción en una fila cuando caben; permitir que se apilen para importes extensos o texto grande. El visitante debe leer la explicación antes de iniciar sesión. La barra no debe ocultar el último producto.
+- Sobre fotos variables, los indicadores de galería necesitan un fondo contrastado que no intercepte gestos. Reducir o desactivar animaciones cuando el sistema solicite menos movimiento.
+- En paneles, las cifras deben caber completas; las tablas estrechas indican cómo desplazarse y son alcanzables con teclado. Mantener campo y acción de inventario simultáneamente visibles al editar, y un mínimo de 44 px para controles táctiles.
+- Estas reglas no resuelven aún la legibilidad del catálogo con fuente muy ampliada a 320 px. No reducir precios a un tamaño ilegible para forzar que quepan. Ver evidencia, límites y próxima acción en `PULIDO_VISUAL_2026-10-27.md`.
