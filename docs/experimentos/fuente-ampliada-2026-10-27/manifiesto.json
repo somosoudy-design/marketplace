@@ -1,0 +1,31 @@
+{
+  "estado": "rechazado, no integrado ni publicado",
+  "capturas": "Chromium y escala web simulada; no Android nativo",
+  "files": [
+    {
+      "file": "propuesta-no-aplicar.patch.gz",
+      "sha256": "80b75fb6e672de61cf02ea97c462f56c59296112d11b828d1c3013ca5db6b0a0",
+      "source": ".local/pulido-20261027/ux/font-adapt/propuesta-final.patch"
+    },
+    {
+      "file": "modelos-dark-320.png",
+      "sha256": "f9bc510682c51f845aa28a6ed4307d125707f2684c6fa8f52e145fcf3320e78b",
+      "source": ".local/pulido-20261027/ux/font-adapt/modelos-dark-320.png"
+    },
+    {
+      "file": "escala-antes-320.png",
+      "sha256": "fe66d3316ec80da485a14cd1dd815fe2b81bfaf09f521ac9b9341801e4040388",
+      "source": ".local/pulido-20261027/qa/32-escala-antes-320.png"
+    },
+    {
+      "file": "escala-despues-321.png",
+      "sha256": "4c10663908cdaf7fd90b10fd00727df52aa8b2b4942643b204751353aa4b8dee",
+      "source": ".local/pulido-20261027/qa/32-escala-despues-321.png"
+    },
+    {
+      "file": "medidas-retencion.json",
+      "sha256": "27292ec750db206393d9e32eee081f25900960fdfaca5577b190af807b7d30d9",
+      "source": ".local/pulido-20261027/qa/escala-retencion-preview.json"
+    }
+  ]
+}

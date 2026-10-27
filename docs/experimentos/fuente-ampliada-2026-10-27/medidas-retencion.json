@@ -1,0 +1,17 @@
+{
+  "source": "preview aislado 8137; cambio simulado CSS/RN Web de 1 a 1,6 más ancho de 320 a 321; no OS nativo",
+  "before": {
+    "top": 168,
+    "scroll": 874,
+    "client": 706
+  },
+  "after": {
+    "top": 0,
+    "scroll": 1204,
+    "client": 661
+  },
+  "query": "UGREEN",
+  "filter": "Filtrar (1)",
+  "horizontal": 6,
+  "blocked": []
+}

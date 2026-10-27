@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-27 · ensayo de texto ampliado rechazado
+
+Tras publicar `01a17b21`, UX ensayó en copia aislada una tarjeta horizontal y controles apilados con `Price` intacto. A escala simulada RN Web1,6 mejoraron contador, estados y varios modelos; QA independiente observó que «Revodok … 6 en 1» perdía el 6 y que cambiar columnas remontaba la lista y devolvía scroll168→0, aunque consulta/filtro sobrevivían. Dictamen CAMBIOS OBLIGATORIOS; no integrado ni OTA adicional. Parche inerte, tres capturas, medidas y próximos pasos en `docs/experimentos/fuente-ampliada-2026-10-27/`. No demuestra Android, TalkBack o recepción en Samsung.
+
 ### 2026-10-27 · publicación del pulido visual
 
 Auditora independiente aprobó panel y carrito/ficha en el alcance web, y Buscar a tamaño normal; texto CSS1,6/320 sigue parcialmente truncado. Panel fuente `2cb5801`, request `dd30a51`, CI40436798559 Success, deployment y alias verificados por CI. Móvil fuente `e6dd4c4`, request `0d11824`, EAS40436883342 Success, guard APK5 y fuente limpia aprobados; Android ID `01a17b21-55f2-7ebe-83b4-ff980e1d06fb`, grupo `0ec56278-b0f7-4b06-9009-f0382ce581cb`. Sin recepción nativa comprobada, nuevo APK, imágenes adicionales, iOS ni finanzas/backend alterados. Capturas web originales y límites en PULIDO_VISUAL_2026-10-27.
