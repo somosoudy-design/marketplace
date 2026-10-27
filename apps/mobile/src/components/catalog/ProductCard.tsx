@@ -12,6 +12,7 @@ import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
 import { ProductFavorite } from './ProductFavorite';
+import { splitCardBrand } from './card-brand';
 
 interface Props {
   product: Card;
@@ -26,6 +27,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
   const availability = presentAvailability(p.availability);
   const hint = stockHint(p.stock_total, p.availability);
   const discount = p.compare_at_usd && Number(p.compare_at_usd) > Number(p.price_usd) ? Math.round((1 - Number(p.price_usd) / Number(p.compare_at_usd)) * 100) : 0;
+  const { name, brand } = splitCardBrand(p.title, p.brand_name);
   return (
     <View testID={`product-surface-${p.slug}`} style={{ width, borderRadius: 10, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, overflow: 'hidden' }}>
       <ScalePressable
@@ -51,9 +53,12 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         </View>
         <View style={{ padding: 10, gap: 4 }}>
           <Text testID="card-title" variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold', letterSpacing: -0.1 }}>
-            {p.title}
+            {name}
           </Text>
-          <Price usd={p.price_usd} muted={!availability.purchasable} />
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 6, rowGap: 2 }}>
+            <Price usd={p.price_usd} muted={!availability.purchasable} />
+            {brand ? <Text testID="card-brand" variant="caption" color="textSecondary" numberOfLines={1} style={{ flexShrink: 1 }}>{brand}</Text> : null}
+          </View>
         </View>
       </ScalePressable>
       <View style={{ position: 'absolute', right: 0, top: 0 }}>

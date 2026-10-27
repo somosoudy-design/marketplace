@@ -55,6 +55,13 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId(`cart-item-total-${cable.variant_id}`)).toHaveText(formatUSD(cable.price_usd * 2));
       const original = lines.reduce((sum, l) => sum + l.price_usd * l.quantity, 0);
       await expect(page.getByTestId('cart-subtotal')).toHaveText(formatUSD(original));
+      const subtotalBox = await page.getByTestId('cart-subtotal').boundingBox();
+      const continueBox = await page.getByTestId('cart-continue').boundingBox();
+      expect(subtotalBox).not.toBeNull();
+      expect(continueBox).not.toBeNull();
+      expect(continueBox!.height).toBeGreaterThanOrEqual(44);
+      expect(subtotalBox!.x + subtotalBox!.width).toBeLessThanOrEqual(continueBox!.x);
+      expect(continueBox!.x + continueBox!.width).toBeLessThanOrEqual(320);
       await expect(page.getByTestId('buyer-tab-cart')).toHaveAccessibleName('Carrito, 3 unidades');
       await page.getByRole('tab', { name: 'Inicio', exact: true }).click();
       await expect(page.locator('[data-testid="home-cart"]:visible')).toHaveAccessibleName('Carrito, 3 unidades');

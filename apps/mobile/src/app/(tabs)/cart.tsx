@@ -204,23 +204,29 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
           </Card>
         </View>
       </ScrollView>
-      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push('/sign-in')} onHeightChange={setBarHeight} />
+      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push('/sign-in')} onHeightChange={setBarHeight} compact={false} />
       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
     </>
   );
 }
 
-function CartFooter({ items, note, cta, onPress, disabled, onHeightChange }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean; onHeightChange?: (height: number) => void }) {
+function CartFooter({ items, note, cta, onPress, disabled, onHeightChange, compact = true }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean; onHeightChange?: (height: number) => void; compact?: boolean }) {
+  const { fontScale } = useWindowDimensions();
+  const stacked = !compact || fontScale > 1;
+  const subtotal = (
+    <View style={{ flexGrow: 1, flexShrink: 0, minWidth: 120, maxWidth: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', columnGap: 8 }}>
+      <Text variant="subtitle">Subtotal</Text>
+      <ChangingText value={formatUSD(items)}>
+        <Text variant="priceLarge" style={{ fontSize: 22 }} tabular testID="cart-subtotal">{formatUSD(items)}</Text>
+      </ChangingText>
+    </View>
+  );
+  const action = <Button testID="cart-continue" title={cta} size="lg" full={stacked} disabled={disabled} onPress={onPress} accessibilityHint={stacked ? undefined : note} style={{ flexGrow: 1, flexShrink: 0, minWidth: 128, maxWidth: '100%' }} />;
   return (
-    <BottomBar maxWidth={MAX_CONTENT} safeArea={false} onHeightChange={onHeightChange}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <Text variant="subtitle">Subtotal</Text>
-        <ChangingText value={formatUSD(items)}>
-          <Text variant="priceLarge" style={{ fontSize: 22 }} tabular testID="cart-subtotal">{formatUSD(items)}</Text>
-        </ChangingText>
-      </View>
+    <BottomBar testID="cart-footer" maxWidth={MAX_CONTENT} safeArea={false} onHeightChange={onHeightChange}>
+      {stacked ? subtotal : <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>{subtotal}{action}</View>}
       <Text variant="caption" color="textMuted">{note}</Text>
-      <Button testID="cart-continue" title={cta} size="lg" full disabled={disabled} onPress={onPress} />
+      {stacked ? action : null}
     </BottomBar>
   );
 }

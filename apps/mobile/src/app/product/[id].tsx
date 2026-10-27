@@ -211,8 +211,8 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               )}
             />
             {images.length > 1 ? (
-              <View testID="product-gallery-page" accessible accessibilityLabel={`Foto ${page + 1} de ${images.length}`} {...(Platform.OS === 'web' ? { role: 'status' as const } : {})} style={{ position: 'absolute', bottom: 14, alignSelf: 'center', flexDirection: 'row', gap: 6 }}>
-                {images.map((_, i) => <View key={i} style={{ width: i === page ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: i === page ? t.colors.text : t.colors.borderStrong }} />)}
+              <View testID="product-gallery-page" pointerEvents="none" accessible accessibilityLabel={`Foto ${page + 1} de ${images.length}`} {...(Platform.OS === 'web' ? { role: 'status' as const } : {})} style={{ position: 'absolute', bottom: 12, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 12, backgroundColor: 'rgba(28,25,40,0.82)' }}>
+                {images.map((_, i) => <View key={i} style={{ width: i === page ? 18 : 6, height: 6, borderRadius: 3, backgroundColor: i === page ? '#FFFFFF' : 'rgba(255,255,255,0.72)' }} />)}
               </View>
             ) : null}
           </View>
@@ -226,9 +226,9 @@ function ProductView({ product: p }: { product: ProductDetail }) {
                 <Text variant="displayM" testID="product-title">{p.title}</Text>
                 {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
               </View>
-              <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: true })} />
+              <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: !reduced })} />
               {/* re-keyed so a variant with another price fades in instead of snapping */}
-              <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={FadeIn.duration(200)}>
+              <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={reduced ? undefined : FadeIn.duration(200)}>
                 <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" muted={!canBuy} />
               </Animated.View>
               {statusKey !== 'available' || hint ? (
@@ -360,7 +360,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <Icon name="arrow-up" size={18} color={t.colors.brand} />
           </ScalePressable> : null}
           {added ? (
-            <Animated.View entering={FadeInDown.duration(220)} exiting={FadeOut.duration(160)}>
+            <Animated.View entering={reduced ? undefined : FadeInDown.duration(220)} exiting={reduced ? undefined : FadeOut.duration(160)}>
               <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
                 <View style={{ width: 36, height: 45, borderRadius: 8, overflow: 'hidden' }}>
                   <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} radius={8} />

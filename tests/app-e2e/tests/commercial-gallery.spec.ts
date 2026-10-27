@@ -198,6 +198,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByTestId('catalog-search').fill('Audífonos');
       const card = page.getByTestId('explore-list').getByTestId('product-card-audifonos-anc-over-ear');
       await expect(card).toBeVisible(); await expect(card).not.toHaveAccessibleName(/demostración/i); await commercial(page);
+      await expect(card.getByTestId('card-title')).toHaveText(product.title);
+      await expect(card.getByTestId('card-brand')).toHaveCount(0);
       await card.click(); await expect(page.getByTestId('product-title')).toHaveText(product.title); await commercial(page);
       await expect(page.getByTestId('product-description')).toContainText('Audífonos over-ear genéricos');
       await expect(page.getByTestId('product-description')).not.toContainText(/demostración/i);
@@ -207,6 +209,21 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByTestId('product-add').click(); await expect(page.getByTestId('added-to-cart')).toBeVisible(); await page.getByTestId('added-to-cart').click();
       await expect(page.getByTestId('cart-subtotal')).toContainText(Number(product.variants[0].price_usd).toFixed(2).replace('.', ',')); await commercial(page);
       await page.screenshot({ path: testInfo.outputPath('commercial-cart.png') }); expect(unexpected).toEqual([]);
+    });
+    test('a confirmed leading brand leaves more space for the model and preserves the full accessible name', async ({ page }) => {
+      const product = fixture(samsung), unexpected = await localOnly(page, [product]);
+      await page.goto('/explore');
+      await page.getByTestId('catalog-search').fill('Samsung');
+      const card = page.getByTestId(`product-card-${product.slug}`);
+      await expect(card.getByTestId('card-title')).toHaveText('cargador USB-C 45 W · EP-T4510');
+      await expect(card.getByTestId('card-brand')).toHaveText('Samsung');
+      await expect(card).toHaveAccessibleName(/Samsung cargador USB-C 45 W · EP-T4510.*\$42,00.*Disponible/);
+      await card.click();
+      await expect(page.getByTestId('product-title')).toHaveText(product.title);
+      await page.goBack();
+      await expect(page.getByTestId('catalog-search')).toHaveValue('Samsung');
+      await expect(card.getByTestId('card-brand')).toHaveText('Samsung');
+      expect(unexpected).toEqual([]);
     });
     test('a fresh Storage path survives beside the mapped image; credits follow the active gallery page', async ({ page }, testInfo) => {
       const product = fixture(samsung); product.images = [product.images[0], product.images[1], { path: freshPath, alt: 'Fotografía propia de prueba local', width: 1600, height: 985 }];
