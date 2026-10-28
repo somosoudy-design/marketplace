@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · publicación de tarjetas recientes
+
+EAS40633532412 Success: fuente `477a319`, request `9202713`, Android preview y guard APK5 aprobado. ID `01a180d0-0eab-77b7-a60f-0deecff5e81c`, grupo `213707fb-07ce-46a1-a95a-f24b35f5c5ae`. No se ha comprobado recepción Samsung. Se prepara observación separada de metadatos EAS sin descarga ni publicación, fijada a request `9202713`. Product Design index/audit/user-context/framework y la skill de Oliver se aplicaron con capturas y crítica independiente; no hubo browser plugin, sólo Chromium web. Cero fotos nuevas.
+
 ### 2026-10-28 · tarjetas recientes y enlaces web
 
 Root integra una propuesta de UX tras rechazar la colisión precio/favorito: fotografía64, marca separada, precio a ancho completo, favorito44 e impresiones iniciales con umbral60%. Auditoría independiente APROBADA en el export web final, con foco de tarjeta/favorito completo y Enter independiente. 27 UI, una unitaria, tipos/lint y Hermes Android; capturas comparables y límite de medición horizontal en PULIDO_CATALOGO_2026-10-28. Sin fotos nuevas ni datos remotos modificados. Pendiente publicar este segundo incremento en preview/APK5 y registrar el resultado real; no afirmar recepción física.

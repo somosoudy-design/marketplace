@@ -35,4 +35,8 @@ El conteo inicial de impresiones de este anaquel incluye únicamente tarjetas qu
 
 La auditoría independiente aprobó el export integrado en web: geometría y dos acciones independientes, claro/oscuro, anillos completos y 44 px. **27 pruebas UI**: 16 de galería/navegación, siete de carrito/reputación, dos de tarjetas recientes y dos de impresiones; más una prueba unitaria del cálculo de visibilidad. La prueba de impresiones tuvo que fijar el orden del fixture local porque el feed se refresca con otra clasificación; se ejecutó nuevamente con los dos casos aprobados. Comprobados 280/320/412, importes extensos, CSS1,6 simulado, regreso, enlaces y personalización desactivada. Tipos/lint del monorepo y export Hermes Android aprobados. Estas pruebas no acreditan TalkBack, fuente ampliada nativa ni recepción Android.
 
-**Estado de publicación del segundo incremento:** pendiente de solicitud EAS tras commit y push.
+**Segundo incremento publicado:** [EAS40633532412](https://github.com/somosoudy-design/marketplace/actions/runs/40633532412) Success, fuente `477a319` y request `9202713`. Android preview, runtime APK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; ID `01a180d0-0eab-77b7-a60f-0deecff5e81c`, grupo `213707fb-07ce-46a1-a95a-f24b35f5c5ae`. Recepción en Samsung no comprobada; se solicita verificación separada de metadatos EAS de sólo lectura.
+
+## Métodos de diseño consultados
+
+Se leyeron Product Design `index`, `audit`, `user-context` y `audit/references/design-audit-framework.md`, además de la skill `oliver-design-direction`. Sus criterios se aplicaron a capturas reales del flujo web, jerarquía precio/nombre, tamaño táctil y contraste; la revisión independiente rechazó una primera composición y dos focos. El complemento de navegador de Product Design no estaba disponible: las capturas y comprobaciones son de Chromium/Playwright local y no se atribuyen al flujo completo del complemento ni a un teléfono físico.

@@ -3,7 +3,7 @@
 ## Catálogo y pulido · 28oct2026
 
 - Estado de imagen ausente/fallida: código, 21 UI y auditoría web aprobados. EAS40631857067 publicó en Android preview con guard APK5; ID `01a180bf-931c-7024-913b-156815835dd4`. No afirmar recepción Android sin prueba.
-- Tarjetas compactas y foco web: implementación integrada y auditada con importes largos, 44 px y conteo inicial de impresiones; 27 UI y una unitaria. Pendiente solicitar y registrar OTA Android preview. El anaquel todavía no mide impresiones de tarjetas reveladas después de deslizar horizontalmente.
+- Tarjetas compactas y foco web: implementación integrada y auditada con importes largos, 44 px y conteo inicial de impresiones; 27 UI y una unitaria. Publicadas en Android preview mediante EAS40633532412, ID `01a180d0-0eab-77b7-a60f-0deecff5e81c`; pendiente observación de metadatos EAS y recepción en Samsung. El anaquel todavía no mide impresiones de tarjetas reveladas después de deslizar horizontalmente.
 - Oliver autorizó usar las imágenes necesarias; esto no acredita SKU/tono ni licencia de terceros. Cuatro candidatos UGREEN y siete SHEGLAM siguen sin correspondencia exacta/derechos demostrados; no se agregaron imágenes. [Candidatas](catalogo-exhibicion/CANDIDATAS_2026-10-28.json), [informe](PULIDO_CATALOGO_2026-10-28.md).
 
 ## Pulido visual · 27oct2026
