@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · lectura independiente de última OTA
+
+EAS40646836620 Success confirmó que `01a1814a-4bcb-707e-a813-4169bf2732d0` es la última OTA Android preview compatible con runtime APK5, request `48f8dc0`, fuente limpia y sin rollback. Es metadato de servidor, no evidencia de recepción Samsung. Las tres muestras no resueltas y las licencias no acreditadas siguen en PENDIENTES; no repetir esta publicación.
+
 ### 2026-10-28 · segunda publicación fotográfica Android
 
 [EAS40646525648](https://github.com/somosoudy-design/marketplace/actions/runs/40646525648) Success: código `a87c3ac`, solicitud `48f8dc0`, Android preview, guard runtime APK5 aprobado. ID `01a1814a-4bcb-707e-a813-4169bf2732d0`, grupo `d4f0bb19-1d8d-4b12-98a4-b4dac570a42b`. Diez muestras/15 imágenes referenciales en total entre dos lotes; se conserva el carácter referencial y el límite de licencia de terceros. Recepción Samsung no observada. Se actualiza el observador de sólo lectura para esta solicitud; trece pruebas locales pasan.

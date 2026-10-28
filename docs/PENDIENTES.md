@@ -2,7 +2,7 @@
 
 ## Imágenes: prioridad indicada por Oliver · 28oct2026
 
-- Seis imágenes oficiales referenciales publicadas por EAS40636637928, Android preview/APK5, ID `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`; observación 40636914658 confirma última compatible, pero recepción Samsung pendiente. Segundo lote publicado EAS40646525648 con guard APK5: nueve imágenes para cuatro muestras de maquillaje, ID `01a1814a-4bcb-707e-a813-4169bf2732d0`. Recepción Samsung pendiente. [Fuentes y límites](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). **Quedan tres muestras** sin referencia adecuada: hub UGREEN plata, cargador de auto UGREEN negro y polvo compacto translúcido SHEGLAM. SKU y licencias de terceros no verificados; no afirmar catálogo completo.
+- Seis imágenes oficiales referenciales publicadas por EAS40636637928, Android preview/APK5, ID `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`; observación 40636914658 confirma última compatible, pero recepción Samsung pendiente. Segundo lote publicado EAS40646525648 con guard APK5: nueve imágenes para cuatro muestras de maquillaje, ID `01a1814a-4bcb-707e-a813-4169bf2732d0`; EAS40646836620 confirma última compatible y sin rollback. Recepción Samsung pendiente. [Fuentes y límites](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). **Quedan tres muestras** sin referencia adecuada: hub UGREEN plata, cargador de auto UGREEN negro y polvo compacto translúcido SHEGLAM. SKU y licencias de terceros no verificados; no afirmar catálogo completo.
 - La tarjeta de recientes se recompuso en una fila con precio junto al nombre; publicada junto con el lote de imágenes en EAS40636637928.
 
 ## Catálogo y pulido · 28oct2026
