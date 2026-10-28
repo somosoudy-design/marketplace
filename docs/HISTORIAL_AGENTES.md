@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · experimento de fuente ampliada no integrado
+
+UX probó contador y disponibilidad legibles a CSS1,6 y encontró que `scrollToIndex` fallaba al no existir medidas de filas. Con reintento acotado conservó un producto visible y filtro/consulta en un único cambio web 320→720. No cubre nombres/precios extensos, ciclos, modo oscuro para ancla ni Android, por lo que no está aprobado ni publicado. Parche inerte, imágenes, medidas y próxima acción en `docs/experimentos/fuente-ampliada-2026-10-28/`.
+
 ### 2026-10-28 · observación independiente EAS
 
 Lectura de sólo metadatos [40633808451](https://github.com/somosoudy-design/marketplace/actions/runs/40633808451) Success: Android `preview` sirve como última compatible la OTA `01a180d0-0eab-77b7-a60f-0deecff5e81c`, grupo `213707fb-07ce-46a1-a95a-f24b35f5c5ae`, request `9202713`, runtime APK5; `latestCompatibleInBranch=true`, `isGitWorkingTreeDirty=false`, `isRollBackToEmbedded=false`. Sin instalar APK ni probar recepción Samsung. El helper de lectura se fijó al request actual y pasó13 tests locales. Próxima acción: comprobar Código en Samsung y continuar fuente ampliada sin remontar la lista.

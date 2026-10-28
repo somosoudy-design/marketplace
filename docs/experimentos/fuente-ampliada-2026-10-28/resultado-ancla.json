@@ -1,0 +1,35 @@
+{
+  "description": "Exportados 8187 y 8192; datos sintéticos interceptados, ninguna escritura; 1.6 simulado CSS; navegador, no Android",
+  "runs": [
+    {
+      "test": "cambio-columnas",
+      "theme": "light",
+      "before": {
+        "top": 1946,
+        "visible": [
+          "product-card-synthetic-14",
+          "product-card-synthetic-15",
+          "product-card-synthetic-16",
+          "product-card-synthetic-17",
+          "product-card-synthetic-18",
+          "product-card-synthetic-19"
+        ]
+      },
+      "after": {
+        "top": 1515,
+        "visible": [
+          "product-card-synthetic-12",
+          "product-card-synthetic-13",
+          "product-card-synthetic-14",
+          "product-card-synthetic-15",
+          "product-card-synthetic-16",
+          "product-card-synthetic-17"
+        ]
+      },
+      "query": "UGREEN",
+      "filter": "Filtrar, 1 activos",
+      "retained": true
+    }
+  ],
+  "blocked": []
+}
