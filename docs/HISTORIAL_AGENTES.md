@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · segundo lote SHEGLAM revisado
+
+Root integró nueve originales de fabricante para base, labial, brillo y paleta, con ocho variantes mapeadas y leyenda referencial específica. La especialista confirmó por RPC de sólo lectura UUID, is_demo, ruta y once variantes activas en seis muestras SHEGLAM; no acredita SKU ni licencia. Auditora independiente aprobó ambos temas, fallos, variante desconocida y 18 capturas originales. 25 UI conjuntas más una prueba adicional, tipos/lint y Hermes aprobados. Primer lote observado como compatible por EAS40636914658; no se ha comprobado recepción Samsung. Próximo: checkpoint y una OTA preview con guard APK5. Quedan tres muestras sin referencia adecuada.
+
 ### 2026-10-28 · publicación de seis imágenes oficiales referenciales
 
 EAS40636637928 Success, código `6f955b3`/request `67f43c4`, runtime APK5 confirmado. ID Android `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`, grupo `ca4903f6-974e-4721-a4a7-be4c185d248d`; no se ha verificado recepción en Samsung. La auditoría independiente aprobó el alcance web privado; la licencia de fabricante y SKU exacto no están acreditados. Seis muestras muestran imágenes originales referenciales; siete siguen pendientes. Se prepara observación de metadatos y se continúa evaluando tonos de maquillaje.

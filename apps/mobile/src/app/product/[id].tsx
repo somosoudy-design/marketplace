@@ -221,7 +221,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             ) : null}
           </View>
 
-          {showReference ? <Text testID="product-reference-image" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>Imagen referencial; la presentación y los accesorios pueden variar.</Text> : null}
+          {showReference ? <Text testID="product-reference-image" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>{referencePhoto?.disclosure ?? 'Imagen referencial; la presentación y los accesorios pueden variar.'}</Text> : null}
 
           <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} onLayout={(event) => { infoY.current = event.nativeEvent.layout.y; }}>
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}

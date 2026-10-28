@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url';
 const repo = fileURLToPath(new URL('../../../', import.meta.url));
 const sources: { productId: string; title: string; variantId: string; variant: string; originalPath: string; sha256Original: string }[] =
   JSON.parse(readFileSync(resolve(repo, 'docs/catalogo-exhibicion/REFERENCIAS_OFICIALES_2026-10-28.json'), 'utf8')).fuentes;
+const toneGroups: { productId: string; producto: string; originalPath: string; variantes: { variantId: string; variant: string; sha256Original: string }[] }[] =
+  JSON.parse(readFileSync(resolve(repo, 'docs/catalogo-exhibicion/REFERENCIAS_TONOS_2026-10-28.json'), 'utf8')).productos;
 const fallback = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/X1sAAAAASUVORK5CYII=', 'base64');
 
 function product(source: typeof sources[number]) {
@@ -25,8 +27,18 @@ function product(source: typeof sources[number]) {
   };
 }
 
-async function fixtureOnly(page: Page, failAsset?: string) {
-  const products = sources.map(product), blocked: string[] = [];
+function toneProduct(group: typeof toneGroups[number], isDemo = true) {
+  const first = group.variantes[0]!;
+  return {
+    ...product({ productId: group.productId, title: group.producto, variantId: first.variantId, variant: first.variant, originalPath: group.originalPath, sha256Original: first.sha256Original }),
+    is_demo: isDemo, option_names: ['Tono'],
+    variants: [...group.variantes.map((v) => ({ id: v.variantId, title: v.variant, options: { Tono: v.variant }, sku: null, active: true, price_usd: 19, stock: 8 })),
+      { id: '00000000-0000-4000-a000-000000000099', title: 'Sin referencia', options: { Tono: 'Sin referencia' }, sku: null, active: true, price_usd: 19, stock: 8 }],
+  };
+}
+
+async function fixtureOnly(page: Page, failAsset?: string, extraProducts: ReturnType<typeof product>[] = []) {
+  const products = [...sources.map(product), ...extraProducts], blocked: string[] = [];
   await page.route('**/*', async (route) => {
     const req = route.request(), url = new URL(req.url());
     if (!['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)) { blocked.push(`${req.method()} ${url.pathname}`); return route.abort(); }
@@ -71,7 +83,46 @@ test('failed local reference hides its attribution and returns to the original S
   expect(blocked).toEqual([]);
 });
 
+test('reference shades never replace the original image when the item is not a sample', async ({ page }) => {
+  const group = toneGroups[0]!, { blocked } = await fixtureOnly(page, undefined, [toneProduct(group, false)]);
+  await page.goto(`/product/${group.productId}`);
+  await expect(page.getByTestId('product-gallery').locator('img').first()).toHaveAttribute('src', new RegExp(group.originalPath));
+  await expect(page.getByTestId('product-reference-image')).toHaveCount(0);
+  expect(blocked).toEqual([]);
+});
+
+test('a failed shade reference does not leak onto another selected shade', async ({ page }) => {
+  const group = toneGroups[0]!, first = group.variantes[0]!, second = group.variantes[1]!;
+  const { blocked } = await fixtureOnly(page, first.sha256Original.slice(0, 12), [toneProduct(group)]);
+  await page.goto(`/product/${group.productId}`);
+  const image = page.getByTestId('product-gallery').locator('img').first();
+  await expect(image).toHaveAttribute('src', new RegExp(group.originalPath));
+  await expect(page.getByTestId('product-reference-image')).toHaveCount(0);
+  await page.getByTestId(`variant-${second.variant}`).click();
+  await expect(image).toHaveAttribute('src', new RegExp(second.sha256Original.slice(0, 12)));
+  await expect(page.getByTestId('product-reference-image')).toHaveText('Imagen referencial; el modelo y el tono pueden variar.');
+  expect(blocked).toEqual([]);
+});
+
 for (const colorScheme of ['light', 'dark'] as const) {
+  test(`each reference shade follows the selected variant (${colorScheme})`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme, reducedMotion: 'reduce' });
+    const { blocked } = await fixtureOnly(page, undefined, toneGroups.map((group) => toneProduct(group)));
+    for (const group of toneGroups) {
+      await page.goto(`/product/${group.productId}`);
+      const image = page.getByTestId('product-gallery').locator('img').first();
+      for (const shade of group.variantes) {
+        await page.getByTestId(`variant-${shade.variant}`).click();
+        await expect(image).toHaveAttribute('src', new RegExp(shade.sha256Original.slice(0, 12)));
+        await expect(page.getByTestId('product-reference-image')).toHaveText('Imagen referencial; el modelo y el tono pueden variar.');
+      }
+      await page.getByTestId('variant-Sin referencia').click();
+      await expect(image).toHaveAttribute('src', new RegExp(group.originalPath));
+      await expect(page.getByTestId('product-reference-image')).toHaveCount(0);
+    }
+    expect(blocked).toEqual([]);
+  });
+
   test(`official reference assets render in search and detail (${colorScheme})`, async ({ page }, testInfo) => {
     await page.emulateMedia({ colorScheme, reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 320, height: 892 });
@@ -87,7 +138,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
     for (const [index, item] of sources.entries()) {
       await page.goto(`/product/${item.productId}`);
       await expect(page.getByTestId('product-title')).toHaveText(item.title);
-      await expect(page.getByTestId('product-reference-image')).toHaveText('Imagen referencial; la presentación y los accesorios pueden variar.');
+      const expectedNotice = item.title === 'SHEGLAM paleta de sombras' ? 'Imagen referencial; el modelo y la presentación pueden variar.' : 'Imagen referencial; la presentación y los accesorios pueden variar.';
+      await expect(page.getByTestId('product-reference-image')).toHaveText(expectedNotice);
       const image = page.getByTestId('product-gallery').getByTestId(`exhibition-photo-${item.productId}`).locator('img').first();
       await expect(image).toHaveAttribute('src', new RegExp(item.sha256Original.slice(0, 12)));
       await page.screenshot({ path: testInfo.outputPath(`detail-top-${index}.png`) });

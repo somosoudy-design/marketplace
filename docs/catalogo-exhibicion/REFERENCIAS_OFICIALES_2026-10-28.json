@@ -97,6 +97,22 @@
       "correspondencia": "Referencia visual de muestra compatible con atributos descritos; SKU exacto no confirmado.",
       "detallesNoConfirmados": "Juego de brochas para rostro y ojos compatible; número y modelo exactos de la muestra no identificados.",
       "derechos": "Oliver autorizó usar las imágenes necesarias; no se ha acreditado una licencia de redistribución otorgada por el fabricante."
+    },
+    {
+      "productId": "e38df4e4-9633-4e67-82a7-c4f581607fbc",
+      "title": "SHEGLAM paleta de sombras",
+      "variantId": "a78cb1e6-6e8c-4c51-b2c5-4c2bd03b93cc",
+      "variant": "Cálidos",
+      "originalPath": "demo/sheglam-paleta-sombras-1.webp",
+      "asset": "e38df4e4-9633-4e67-82a7-c4f581607fbc-reference-58748543adcb.jpg",
+      "sha256Original": "58748543adcb05edf887b822a72e7549574cce2b0bde7a3e5be1833f1fb9b0e8",
+      "width": 1340,
+      "height": 1785,
+      "sourcePage": "https://www.sheglam.com/product/Live-To-Roam-Palette-8227726721189",
+      "sourceImage": "https://img.ltwebstatic.com/images3_pi/2024/05/13/7a/1715568196437771b078521de7b6fd8ca02b099ef5.jpg",
+      "correspondencia": "Referencia visual de paleta cálida; línea y número de colores de la muestra no confirmados.",
+      "detallesNoConfirmados": "Ocho colores visibles en el original; el catálogo no identifica su cantidad.",
+      "derechos": "Oliver autorizó usar las imágenes necesarias; no se ha acreditado una licencia de redistribución otorgada por el fabricante."
     }
   ]
 }
