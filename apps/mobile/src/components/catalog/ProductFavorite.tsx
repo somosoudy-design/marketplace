@@ -22,6 +22,8 @@ export function ProductFavorite({ id, slug, onPhoto = false }: { id: string; slu
       accessibilityState={{ selected: saved }}
       aria-pressed={saved}
       scaleTo={0.9}
+      focusInset
+      focusBackground={colors.surface}
       style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}
       onPress={() => { haptics.tap(); if (user) favorites.toggle({ productId: id, on: !saved }); else router.push('/sign-in'); }}
     >

@@ -141,6 +141,17 @@ const freshPath = 'qa-local/own-product-photo.webp';
 const kit = studio.find((r: { productId: string; variantId: string | null }) => r.productId === samsung && r.variantId !== solo);
 const alone = studio.find((r: { variantId: string | null }) => r.variantId === solo);
 const localPhoto = readFileSync(resolve(repo, 'apps/mobile/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.webp'));
+function contrast(first: string, second: string) {
+  const luminance = (color: string) => {
+    const rgb = color.match(/\d+/g)!.slice(0, 3).map((value) => {
+      const s = Number(value) / 255;
+      return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * rgb[0]! + 0.7152 * rgb[1]! + 0.0722 * rgb[2]!;
+  };
+  const a = luminance(first), b = luminance(second);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
 function fixture(id: string): ProductDetail {
   const snapshot = snapshots.find((p: { id: string }) => p.id === id)!;
   // Controlled display values only; no assertion about current commercial prices.
@@ -165,6 +176,7 @@ async function localOnly(page: Page, products: ProductDetail[], failKit = false)
     if (rpc === 'product_detail') return route.fulfill({ json: products.find((p) => p.id === body.p_id) ?? null });
     if (rpc === 'search_products') return route.fulfill({ json: products.filter((p) => !body.p_query || p.title.toLocaleLowerCase().includes(String(body.p_query).toLocaleLowerCase())) });
     if (rpc === 'home_feed') return route.fulfill({ json: { stores: [], categories: [], recommended: products, recently_viewed: [], personalized: false, collections: [{ id: '00000000-0000-4000-a000-000000000003', slug: 'seleccion', title: 'Selección', tone: 'mist', layout: 'feature', products: [products[0]] }] } });
+    if (rpc === 'store_profile' && body.p_slug === 'local') return route.fulfill({ json: { ...products[0].store, tagline: null, description: null, cover_path: null, status: 'active', policies: {}, is_demo: false, since: '2025-01-01', product_count: products.length, categories: [], reviews: [] } });
     if (rpc === 'product_reviews') return route.fulfill({ json: { summary: { count: 0, avg: null, distribution: { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 } }, items: [] } });
     if (rpc === 'rate_status') return route.fulfill({ json: { pair: 'USD/VES', available: false, reason: 'stale_or_missing', last: null } });
     if (rpc === 'pricing_today') return route.fulfill({ json: { available: false, reason: 'disabled' } });
@@ -218,11 +230,58 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(card.getByTestId('card-title')).toHaveText('cargador USB-C 45 W · EP-T4510');
       await expect(card.getByTestId('card-brand')).toHaveText('Samsung');
       await expect(card).toHaveAccessibleName(/Samsung cargador USB-C 45 W · EP-T4510.*\$42,00.*Disponible/);
-      await card.click();
+      await page.keyboard.press('Tab');
+      await card.focus();
+      await expect(card).toBeFocused();
+      const ring = page.getByTestId(`product-surface-${product.slug}`).getByTestId('card-focus-ring');
+      await expect(ring).toBeVisible();
+      const [surfaceBox, ringBox] = await Promise.all([page.getByTestId(`product-surface-${product.slug}`).boundingBox(), ring.boundingBox()]);
+      expect(Math.abs(ringBox!.x - surfaceBox!.x)).toBeLessThanOrEqual(2);
+      expect(Math.abs(ringBox!.y - surfaceBox!.y)).toBeLessThanOrEqual(2);
+      expect(Math.abs((ringBox!.x + ringBox!.width) - (surfaceBox!.x + surfaceBox!.width))).toBeLessThanOrEqual(2);
+      expect(Math.abs((ringBox!.y + ringBox!.height) - (surfaceBox!.y + surfaceBox!.height))).toBeLessThanOrEqual(2);
+      const backing = await ring.getByTestId('card-focus-backing').evaluate((element) => getComputedStyle(element).borderColor);
+      const focusColor = await ring.getByTestId('card-focus-color').evaluate((element) => getComputedStyle(element).borderColor);
+      expect(contrast(backing, focusColor)).toBeGreaterThanOrEqual(3);
+      await page.keyboard.press('Enter');
       await expect(page.getByTestId('product-title')).toHaveText(product.title);
       await page.goBack();
       await expect(page.getByTestId('catalog-search')).toHaveValue('Samsung');
       await expect(card.getByTestId('card-brand')).toHaveText('Samsung');
+      const favorite = page.getByTestId(`card-favorite-${product.slug}`);
+      await favorite.focus();
+      await expect(favorite).toBeFocused();
+      const favoriteOutline = await favorite.evaluate((element) => ({ style: getComputedStyle(element).outlineStyle, width: getComputedStyle(element).outlineWidth, offset: getComputedStyle(element).outlineOffset, color: getComputedStyle(element).outlineColor, background: getComputedStyle(element).backgroundColor }));
+      expect(favoriteOutline).toMatchObject({ style: 'solid', width: '2px', offset: '-2px' });
+      expect(contrast(favoriteOutline.color, favoriteOutline.background)).toBeGreaterThanOrEqual(3);
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/sign-in$/);
+      expect(unexpected).toEqual([]);
+    });
+    test('keyboard activates collection, store and source links without opening external sites during the test', async ({ page }) => {
+      await page.addInitScript(() => {
+        const target = window as typeof window & { linkCalls: string[] };
+        target.linkCalls = [];
+        window.open = ((url?: string | URL) => { target.linkCalls.push(String(url)); return null; }) as typeof window.open;
+      });
+      const product = fixture(samsung), unexpected = await localOnly(page, [product]);
+      await page.goto('/');
+      const collection = page.getByTestId('collection-seleccion-all');
+      await collection.focus(); await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/catalog\?/);
+      await page.goBack();
+      await expect(collection).toBeVisible();
+
+      await page.goto(`/product/${samsung}`);
+      const store = page.getByTestId('store-local');
+      await store.scrollIntoViewIfNeeded(); await store.focus(); await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/store\/local$/);
+      await expect(page.getByTestId('store-name')).toHaveText('Tienda local');
+      await page.goBack();
+      const sheet = await info(page);
+      const source = sheet.getByRole('link', { name: `Fuente: ${kit.author}`, exact: true });
+      await source.focus(); await page.keyboard.press('Enter');
+      await expect.poll(() => page.evaluate(() => (window as typeof window & { linkCalls: string[] }).linkCalls)).toEqual([kit.originUrl]);
       expect(unexpected).toEqual([]);
     });
     test('a fresh Storage path survives beside the mapped image; credits follow the active gallery page', async ({ page }, testInfo) => {

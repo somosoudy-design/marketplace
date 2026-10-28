@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQueryClient } from '@tanstack/react-query';
 import { CategoryTiles } from '@/components/catalog/CategoryTiles';
 import { MiniProductCard } from '@/components/catalog/MiniProductCard';
+import { initialRecentVisibleCount, RECENT_RAIL_GAP, RECENT_RAIL_INSET } from '@/components/catalog/recent-visibility';
 import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
 import { EditorialOpening } from '@/components/catalog/EditorialOpening';
 import { ProductEditorialOpening } from '@/components/catalog/ProductEditorialOpening';
@@ -162,6 +163,11 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
   const cartCount = useCartCount();
   const data = home.data;
   const contentWidth = Math.min(width, MAX_CONTENT);
+  const recentItems = data?.recently_viewed.slice(0, 10) ?? [];
+  const recentIds = recentItems.map((p) => p.id);
+  // At 280px, 228px leaves a visible next card and fits full prices at the supported text scale.
+  const recentWidth = Math.min(280, Math.max(228, contentWidth * 0.78), contentWidth - 48);
+  const initialRecentVisible = initialRecentVisibleCount(recentIds.length, contentWidth, recentWidth);
   const comparisonGrid = useGridColumns();
   const comparisonColumns = fontScale > 1.3 && contentWidth < 600 ? 1 : comparisonGrid.columns;
   const comparisonWidth = Math.floor((contentWidth - 32 - comparisonGrid.gap * (comparisonColumns - 1)) / comparisonColumns);
@@ -234,11 +240,11 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
       })}
 
       {data?.recently_viewed.length ? (
-        <TrackedSection slot="home_recent" ids={data.recently_viewed.slice(0, 10).map((p) => p.id)} visible={2} testID="home-recent">
+        <TrackedSection slot="home_recent" ids={recentIds} visible={initialRecentVisible} testID="home-recent">
           <View style={{ marginTop: 24 }}>
             <SectionHeader title="Retoma donde quedaste" />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 16, gap: 10 }}>
-              {data.recently_viewed.slice(0, 10).map((p) => <MiniProductCard key={p.id} product={p} width={Math.min(250, contentWidth * 0.66)} slot="home_recent" />)}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: RECENT_RAIL_INSET, gap: RECENT_RAIL_GAP }}>
+              {recentItems.map((p) => <MiniProductCard key={p.id} product={p} width={recentWidth} slot="home_recent" />)}
             </ScrollView>
           </View>
         </TrackedSection>

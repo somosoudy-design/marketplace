@@ -8,12 +8,18 @@ const AnimatedPressable = Animated.createAnimatedComponent(RNPressable);
 
 export interface ScalePressableProps extends Omit<PressableProps, 'style'> {
   scaleTo?: number;
+  /** A parent surface may supply its own visible focus ring. */
+  focusOutline?: boolean;
+  /** Keep the default web ring inside a clipped touch target. */
+  focusInset?: boolean;
+  /** Give the web focus ring a stable background when the target overlays a photo. */
+  focusBackground?: string;
   style?: StyleProp<ViewStyle> | ((state: { pressed: boolean }) => StyleProp<ViewStyle>);
 }
 
 /** Pressable with a short physical press response. Collapses to no motion when the OS asks for reduced motion. */
 export const ScalePressable = forwardRef<View, ScalePressableProps>(function ScalePressable(
-  { scaleTo = motion.pressScale, style, onPressIn, onPressOut, onFocus, onBlur, ...rest },
+  { scaleTo = motion.pressScale, focusOutline = true, focusInset = false, focusBackground, style, onPressIn, onPressOut, onFocus, onBlur, ...rest },
   ref,
 ) {
   const reduced = useReducedMotion();
@@ -45,7 +51,15 @@ export const ScalePressable = forwardRef<View, ScalePressableProps>(function Sca
         onFocus?.(e);
       }}
       onBlur={(e) => { setFocusVisible(false); onBlur?.(e); }}
-      style={[resolved, animated, focusVisible ? { outlineStyle: 'solid', outlineWidth: 2, outlineOffset: 2, outlineColor: colors.brand } : null]}
+      {...(Platform.OS === 'web' && rest.accessibilityRole === 'link' ? { onKeyDown: (event: { key: string; repeat: boolean; defaultPrevented: boolean; preventDefault: () => void; stopPropagation: () => void; currentTarget: { click: () => void } }) => {
+        // RN Web renders these as role=link divs; unlike an anchor, Enter does not click them.
+        if (event.key === 'Enter' && !event.repeat && !event.defaultPrevented && !rest.disabled) {
+          event.preventDefault();
+          event.stopPropagation();
+          event.currentTarget.click();
+        }
+      } } as object : {})}
+      style={[resolved, animated, focusVisible && focusBackground ? { backgroundColor: focusBackground, borderRadius: 8 } : null, focusVisible && focusOutline ? { outlineStyle: 'solid', outlineWidth: 2, outlineOffset: focusInset ? -2 : 2, outlineColor: colors.brand } : null]}
       {...rest}
     />
   );

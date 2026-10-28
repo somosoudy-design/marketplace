@@ -10,30 +10,40 @@ import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { ProductFavorite } from './ProductFavorite';
+import { splitCardBrand } from './card-brand';
 
 /** Compact horizontal card for "keep browsing" shelves: thumbnail, title and price on one surface. */
 export const MiniProductCard = memo(function MiniProductCard({ product: p, width, slot }: { product: Card; width: number; slot?: string }) {
   const t = useTheme();
+  const { name, brand } = splitCardBrand(p.title, p.brand_name);
+  const amount = `${p.is_demo && !isPrivateCatalogPresentation ? 'Demo · ' : ''}${formatUSD(p.price_usd)}`;
+  const open = () => {
+    if (slot) recordClick(slot, p.id);
+    router.push({ pathname: '/product/[id]', params: { id: p.id } });
+  };
+  const price = <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 4, minWidth: 0 }}>
+    <Text testID="mini-price" variant="bodySmall" tabular style={{ fontFamily: 'PlusJakartaSans_700Bold', fontSize: 14 }}>{amount}</Text>
+    {brand ? <Text testID="mini-brand" variant="caption" color="textSecondary" numberOfLines={1} style={{ flexShrink: 1 }}>{brand}</Text> : null}
+  </View>;
   return (
-    <View style={{ width, flexDirection: 'row', alignItems: 'center', padding: 6, gap: 2, borderRadius: 10, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
+    <View style={{ width, padding: 6, borderRadius: 10, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
       <ScalePressable
         testID={`mini-card-${p.slug}`}
         scaleTo={0.97}
         accessibilityRole="link"
         accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
-        onPress={() => {
-          if (slot) recordClick(slot, p.id);
-          router.push({ pathname: '/product/[id]', params: { id: p.id } });
-        }}
-        style={{ flex: 1, flexDirection: 'row', gap: 10, alignItems: 'center', minWidth: 0 }}
+        onPress={open}
+        style={{ minWidth: 0 }}
       >
-        <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} style={{ width: 52 }} aspect={1} radius={6} />
-        <View style={{ flex: 1, gap: 2 }}>
-          <Text variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.title}</Text>
-          <Text variant="caption" color="textSecondary" tabular>{p.is_demo && !isPrivateCatalogPresentation ? 'Demo · ' : ''}{formatUSD(p.price_usd)}</Text>
+        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+          <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} style={{ width: 64 }} aspect={1} radius={6} />
+          <View style={{ flex: 1, minWidth: 0, paddingRight: 46, gap: 2 }}>
+            <Text testID="mini-title" variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{name}</Text>
+          </View>
         </View>
+        <View style={{ paddingTop: 4 }}>{price}</View>
       </ScalePressable>
-      <ProductFavorite id={p.id} slug={p.slug} />
+      <View style={{ position: 'absolute', right: 6, top: 16 }}><ProductFavorite id={p.id} slug={p.slug} /></View>
     </View>
   );
 });

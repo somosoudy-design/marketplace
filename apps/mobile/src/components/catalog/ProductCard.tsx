@@ -1,8 +1,8 @@
 import type { ProductCard as Card } from '@kora/api';
 import { formatUSD, presentAvailability, stockHint } from '@kora/core';
 import { router } from 'expo-router';
-import { memo } from 'react';
-import { View } from 'react-native';
+import { memo, useState } from 'react';
+import { Platform, View } from 'react-native';
 import { Badge } from '@/components/ui/Badge';
 import { Price } from '@/components/ui/Price';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -28,13 +28,22 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
   const hint = stockHint(p.stock_total, p.availability);
   const discount = p.compare_at_usd && Number(p.compare_at_usd) > Number(p.price_usd) ? Math.round((1 - Number(p.price_usd) / Number(p.compare_at_usd)) * 100) : 0;
   const { name, brand } = splitCardBrand(p.title, p.brand_name);
+  const [focusVisible, setFocusVisible] = useState(false);
   return (
     <View testID={`product-surface-${p.slug}`} style={{ width, borderRadius: 10, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, overflow: 'hidden' }}>
       <ScalePressable
         testID={`product-card-${p.slug}`}
         scaleTo={0.985}
+        focusOutline={false}
         accessibilityRole="link"
         accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}, ${availability.label}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
+        onFocus={(event) => {
+          if (Platform.OS === 'web') {
+            const target = event.target as unknown as { matches?: (selector: string) => boolean };
+            setFocusVisible(target.matches?.(':focus-visible') ?? false);
+          }
+        }}
+        onBlur={() => setFocusVisible(false)}
         onPress={() => {
           if (slot) recordClick(slot, p.id);
           router.push({ pathname: '/product/[id]', params: { id: p.id } });
@@ -64,6 +73,12 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
       <View style={{ position: 'absolute', right: 0, top: 0 }}>
         <ProductFavorite id={p.id} slug={p.slug} onPhoto />
       </View>
+      {focusVisible ? (
+        <View testID="card-focus-ring" pointerEvents="none" accessible={false} style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
+          <View testID="card-focus-backing" style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, borderWidth: 4, borderColor: colors.surface, borderRadius: 10 }} />
+          <View testID="card-focus-color" style={{ position: 'absolute', top: 1, bottom: 1, left: 1, right: 1, borderWidth: 2, borderColor: colors.brand, borderRadius: 9 }} />
+        </View>
+      ) : null}
     </View>
   );
 });

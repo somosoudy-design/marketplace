@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · tarjetas recientes y enlaces web
+
+Root integra una propuesta de UX tras rechazar la colisión precio/favorito: fotografía64, marca separada, precio a ancho completo, favorito44 e impresiones iniciales con umbral60%. Auditoría independiente APROBADA en el export web final, con foco de tarjeta/favorito completo y Enter independiente. 27 UI, una unitaria, tipos/lint y Hermes Android; capturas comparables y límite de medición horizontal en PULIDO_CATALOGO_2026-10-28. Sin fotos nuevas ni datos remotos modificados. Pendiente publicar este segundo incremento en preview/APK5 y registrar el resultado real; no afirmar recepción física.
+
 ### 2026-10-28 · publicación del estado de imágenes
 
 Fuente `e3e118e`, request `65d828d`, EAS40631857067 Success: guard runtime APK5 y publicación Android preview aprobados; ID `01a180bf-931c-7024-913b-156815835dd4`, grupo `fdae521f-b34e-44c5-bda8-f944bd9d1572`. Sin recepción nativa comprobada ni fotos nuevas. Tarjeta compacta permanece en trabajo aislado por validación de importes e impresiones; no publicar sin QA.
