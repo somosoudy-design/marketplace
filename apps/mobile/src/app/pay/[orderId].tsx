@@ -48,6 +48,7 @@ export default function PayScreen() {
   const [method, setMethod] = useState<PaymentMethod | null>(null);
   const [quote, setQuote] = useState<PaymentQuote | null>(null);
   const [submitted, setSubmitted] = useState<{ number: string; online?: string } | null>(null);
+  const [barHeight, setBarHeight] = useState(150);
   const qc = useQueryClient();
 
   const createQuote = useMutation({
@@ -66,6 +67,7 @@ export default function PayScreen() {
   const pending = (o?.payments ?? []).filter((p) => p.status === 'pending_verification' || p.status === 'processing');
   const outstanding = o ? D(o.total_usd).minus(o.refunded_usd ?? 0).minus(o.paid_usd) : D(0);
   const nextObligation = (o?.payment_obligations ?? []).find((x) => x.status === 'pending' || x.status === 'partially_paid');
+  const nextAmount = nextObligation ? D(nextObligation.amount_usd).minus(nextObligation.paid_usd).minus(nextObligation.waived_usd) : null;
 
   const picking = !!nextObligation && !pending.length && !quote;
 
@@ -94,25 +96,28 @@ export default function PayScreen() {
     );
   }
 
+  const orderSummary = <Card style={{ gap: 10 }}>
+    <SummaryRow label="Total del pedido" value={formatUSD(o.total_usd)} />
+    <SummaryRow label="Pagado y confirmado" value={formatUSD(o.paid_usd)} />
+    <Divider />
+    <SummaryRow label="Saldo pendiente" value={formatUSD(outstanding)} strong testID="pay-outstanding" />
+    {nextObligation && !pending.length ? (
+      <Text variant="caption" color="textMuted">
+        Ahora pagas: {OBLIGATION_KIND_LABEL[nextObligation.kind] ?? 'pago'}{nextObligation.kind === 'installment' ? ` ${nextObligation.seq}` : ''} por {formatUSD(nextAmount!)}
+        {nextObligation.due_date ? ` · vence ${shortDate(nextObligation.due_date)}` : ''}
+      </Text>
+    ) : null}
+  </Card>;
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Stack.Screen options={{ title: `Pagar ${o.number}`, headerBackVisible: !fresh }} />
-      <ScrollView testID="pay-scroll" contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: picking ? 150 : 60, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
+      <ScrollView testID="pay-scroll" contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: picking ? barHeight + 24 : 60, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
         <StaleNotice q={order} />
         {fresh ? <Banner tone="success" icon="circle-check" title={`Pedido ${o.number} creado`} body="Apartamos tus productos. Completa el pago para que lo preparemos." /> : null}
+        {picking && nextAmount ? <View testID="pay-base-amount" style={{ borderBottomWidth: 1, borderColor: t.colors.border, paddingBottom: 12 }}><SummaryRow label="Base de este pago" value={formatUSD(nextAmount)} strong /></View> : null}
 
-        <Card style={{ gap: 10 }}>
-          <SummaryRow label="Total del pedido" value={formatUSD(o.total_usd)} />
-          <SummaryRow label="Pagado y confirmado" value={formatUSD(o.paid_usd)} />
-          <Divider />
-          <SummaryRow label="Saldo pendiente" value={formatUSD(outstanding)} strong testID="pay-outstanding" />
-          {nextObligation && !pending.length ? (
-            <Text variant="caption" color="textMuted">
-              Ahora pagas: {OBLIGATION_KIND_LABEL[nextObligation.kind] ?? 'pago'}{nextObligation.kind === 'installment' ? ` ${nextObligation.seq}` : ''} por {formatUSD(D(nextObligation.amount_usd).minus(nextObligation.paid_usd).minus(nextObligation.waived_usd))}
-              {nextObligation.due_date ? ` · vence ${shortDate(nextObligation.due_date)}` : ''}
-            </Text>
-          ) : null}
-        </Card>
+        {!picking ? orderSummary : null}
 
         {/* while a payment is being checked the order can't be paid again, so the screen shows that payment instead of a picker */}
         {pending.filter((p) => p.status === 'pending_verification').map((p) => (
@@ -144,7 +149,7 @@ export default function PayScreen() {
           <MethodPicker
             methods={methods.data ?? []}
             selected={method?.code ?? null}
-            amountUsd={D(nextObligation.amount_usd).minus(nextObligation.paid_usd).minus(nextObligation.waived_usd)}
+            amountUsd={nextAmount!}
             onSelect={setMethod}
             error={createQuote.error ? (createQuote.error as Error).message : null}
           />
@@ -163,9 +168,10 @@ export default function PayScreen() {
             }}
           />
         )}
+        {picking ? orderSummary : null}
       </ScrollView>
       {picking ? (
-        <BottomBar maxWidth={MAX_W}>
+        <BottomBar maxWidth={MAX_W} onHeightChange={setBarHeight}>
           <Button
             testID="pay-quote"
             title={!online ? 'Sin conexión' : order.isFetching || order.isPaused || !order.isFetchedAfterMount ? 'Actualizando pedido…' : methods.isPending ? 'Cargando métodos…' : method ? `Continuar con ${method.name}` : 'Elige un método'}
@@ -229,7 +235,7 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
                 return (
                   <View key={m.code}>
                     {i > 0 ? <Divider inset={16} /> : null}
-                    <RadioRow testID={`method-${m.code}`} selected={on} disabled={!!limit} icon={RAIL_ICON[m.rail] ?? 'wallet'} title={m.name} subtitle={limit ?? undefined} onPress={() => onSelect(m)} />
+                    <RadioRow testID={`method-${m.code}`} selected={on} disabled={!!limit} icon={RAIL_ICON[m.rail] ?? 'wallet'} title={m.name} subtitle={limit ?? undefined} indicator="trailing" onPress={() => onSelect(m)} />
                     {on ? <MethodDetail method={m} amountUsd={amountUsd} vesRate={vesRate} divisas={divisas} rateStale={rate?.available === false} /> : null}
                   </View>
                 );

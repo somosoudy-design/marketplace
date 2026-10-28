@@ -1,11 +1,12 @@
 import { ActivityIndicator, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { palette as brandPalette } from '@kora/design-tokens';
 import { haptics } from '@/lib/haptics';
 import { useTheme } from '@/theme';
 import { Icon, type IconName } from './Icon';
 import { ScalePressable } from './Pressable';
 import { Text } from './Text';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'accent';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'accent' | 'inverse';
 
 interface Props {
   title: string;
@@ -31,6 +32,7 @@ export function Button({ title, onPress, variant = 'primary', size = 'md', icon,
     secondary: { bg: colors.surface, fg: colors.text, border: colors.borderStrong },
     ghost: { bg: 'transparent', fg: colors.brand },
     danger: { bg: colors.dangerSoft, fg: colors.danger },
+    inverse: { bg: brandPalette.ink[0], fg: brandPalette.violet[700] },
   };
   const p = palette[variant];
   const minHeight = size === 'lg' ? 52 : layout.minTouch;

@@ -1,5 +1,9 @@
 # Pendientes de Kora
 
+## Referencias visuales · 28oct2026
+
+- Tres puntos implementados y auditados para web/backend local: Inicio/catálogo, métodos de pago y revisión con totales. [Capturas y detalle](REDISENO_REFERENCIAS_2026-10-28.md). Compra completa local aprobada al repetir el caso con dato demo; siguiente checkpoint y una OTA preview/APK5. No afirmar recepción física.
+
 ## Imágenes: prioridad indicada por Oliver · 28oct2026
 
 - Seis imágenes oficiales referenciales publicadas por EAS40636637928, Android preview/APK5, ID `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`; observación 40636914658 confirma última compatible, pero recepción Samsung pendiente. Segundo lote publicado EAS40646525648 con guard APK5: nueve imágenes para cuatro muestras de maquillaje, ID `01a1814a-4bcb-707e-a813-4169bf2732d0`; EAS40646836620 confirma última compatible y sin rollback. Recepción Samsung pendiente. [Fuentes y límites](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). **Quedan tres muestras** sin referencia adecuada: hub UGREEN plata, cargador de auto UGREEN negro y polvo compacto translúcido SHEGLAM. SKU y licencias de terceros no verificados; no afirmar catálogo completo.

@@ -11,7 +11,7 @@ import { Text } from './Text';
  * Bar pinned to the bottom edge (purchase, checkout, payment). Opaque on purpose: translucent bars without a
  * real blur let the content underneath ghost through the price and the button.
  */
-export function BottomBar({ children, maxWidth = 760, testID, safeArea = true, onHeightChange }: { children: ReactNode; maxWidth?: number; testID?: string; /** false inside tabs, where the tab bar already owns the bottom inset */ safeArea?: boolean; onHeightChange?: (height: number) => void }) {
+export function BottomBar({ children, maxWidth = 760, testID, safeArea = true, onHeightChange, tone = 'default' }: { children: ReactNode; maxWidth?: number; testID?: string; /** false inside tabs, where the tab bar already owns the bottom inset */ safeArea?: boolean; onHeightChange?: (height: number) => void; tone?: 'default' | 'brand' }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -26,7 +26,9 @@ export function BottomBar({ children, maxWidth = 760, testID, safeArea = true, o
         paddingHorizontal: 16,
         paddingTop: 12,
         paddingBottom: (safeArea ? insets.bottom : 0) + 12,
-        backgroundColor: t.colors.chrome,
+        backgroundColor: tone === 'brand' ? palette.violet[700] : t.colors.chrome,
+        borderTopLeftRadius: tone === 'brand' ? 18 : 0,
+        borderTopRightRadius: tone === 'brand' ? 18 : 0,
         borderTopWidth: StyleSheet.hairlineWidth,
         borderTopColor: t.colors.borderStrong,
         shadowColor: palette.ink[900],
@@ -36,7 +38,7 @@ export function BottomBar({ children, maxWidth = 760, testID, safeArea = true, o
         elevation: 6,
       }}
     >
-      <View style={{ width: '100%', maxWidth, alignSelf: 'center', gap: 10 }}>{children}</View>
+      <View style={{ width: '100%', maxWidth, alignSelf: 'center', gap: tone === 'brand' ? 6 : 10 }}>{children}</View>
     </View>
   );
 }

@@ -188,7 +188,7 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
   return (
     <View>
       {/* Adjacent surfaces stay visually continuous; the tracked hero remains a direct scroll-content child. */}
-      <View testID="home-masthead" style={{ paddingTop: insets.top + 6, paddingBottom: 12, backgroundColor: palette.violet[900] }}>
+      <View testID="home-masthead" style={{ paddingTop: insets.top + 6, paddingBottom: 12, backgroundColor: palette.violet[600] }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 8, minHeight: 44 }}>
         <View style={{ flex: 1 }}>
           <Wordmark inverse />
@@ -196,7 +196,7 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
         </View>
         <View>
           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} color={palette.ink[0]} size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
-          {unread ? <View testID="home-unread-indicator" pointerEvents="none" style={{ position: 'absolute', right: 9, top: 8, width: 9, height: 9, borderRadius: 5, backgroundColor: t.colors.accent, borderWidth: 1.5, borderColor: palette.violet[900] }} /> : null}
+          {unread ? <View testID="home-unread-indicator" pointerEvents="none" style={{ position: 'absolute', right: 9, top: 8, width: 9, height: 9, borderRadius: 5, backgroundColor: t.colors.accent, borderWidth: 1.5, borderColor: palette.violet[600] }} /> : null}
         </View>
         <View>
           <IconButton testID="home-cart" icon="shopping-bag" label={cartCount ? `Carrito, ${cartCount} ${cartCount === 1 ? 'unidad' : 'unidades'}` : 'Carrito'} color={palette.ink[0]} size={44} onPress={() => router.navigate('/cart')} />
@@ -207,7 +207,7 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
       <SearchEntry editorial onBottom={onSearchBottom} />
       </View>
 
-      {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, paddingBottom: 16, backgroundColor: palette.violet[900] }}><Skeleton height={170} radius={6} /></View> : null}
+      {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, paddingBottom: 16, backgroundColor: palette.violet[600] }}><Skeleton height={170} radius={6} /></View> : null}
       {opening?.kind === 'product' ? <ProductEditorialOpening product={opening.product} width={contentWidth} onOpen={() => router.push({ pathname: '/product/[id]', params: { id: opening.product.id } })} /> : hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
 
       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}

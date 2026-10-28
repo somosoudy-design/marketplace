@@ -7,7 +7,9 @@ import { formatUSD } from '../../../packages/core/src/money';
 import { asOn, databaseUrl, newBuyer } from './support/db';
 import { checkoutToPlan, checkoutToReview } from './support/checkout';
 
-const root = resolve(import.meta.dirname, '../../../.local/checkout-progresivo-20261024/after');
+const root = process.env.CHECKOUT_EVIDENCE_DIR
+  ? resolve(process.env.CHECKOUT_EVIDENCE_DIR)
+  : resolve(import.meta.dirname, '../../../.local/checkout-progresivo-20261024/after');
 
 async function filledCart(page: Page, slugs = ['ugreen-cable-usb-c-100w', 'lampara-mesa-lino']) {
   const buyer = await newBuyer('ui-progressive');
@@ -91,11 +93,11 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await expect(page.getByTestId('checkout-scroll')).toContainText('UGREEN cable');
         await expect(page.getByTestId('checkout-scroll')).toContainText('Lámpara de mesa');
         await capture(page, `${folder}/05-revision-${width}.png`);
-        await page.getByTestId('checkout-total').scrollIntoViewIfNeeded();
+        await expect(page.getByTestId('checkout-bottom-bar').getByTestId('checkout-total')).toBeVisible();
         await expect.poll(async () => {
           const total = await page.getByTestId('checkout-total').boundingBox();
-          const bar = await page.getByTestId('checkout-bottom-bar').boundingBox();
-          return total!.y + total!.height < bar!.y;
+          const action = await page.getByTestId('checkout-place').boundingBox();
+          return total!.y + total!.height <= action!.y;
         }).toBe(true);
         await capture(page, `${folder}/06-total-${width}.png`);
         await page.getByTestId('checkout-edit-address').click();
@@ -196,11 +198,11 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await capture(page, `${folder}/font-160-${phase}-320.png`);
         if (phase !== 'revision') await action.click();
       }
-      await page.getByTestId('checkout-total').scrollIntoViewIfNeeded();
+      await expect(page.getByTestId('checkout-bottom-bar').getByTestId('checkout-total')).toBeVisible();
       await expect.poll(async () => {
         const total = await page.getByTestId('checkout-total').boundingBox();
-        const bar = await page.getByTestId('checkout-bottom-bar').boundingBox();
-        return total!.y + total!.height < bar!.y;
+        const action = await page.getByTestId('checkout-place').boundingBox();
+        return total!.y + total!.height <= action!.y;
       }).toBe(true);
       await capture(page, `${folder}/font-160-total-320.png`);
     });

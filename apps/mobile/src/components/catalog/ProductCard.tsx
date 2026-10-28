@@ -49,8 +49,8 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
           router.push({ pathname: '/product/[id]', params: { id: p.id } });
         }}
       >
-        <View>
-          <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} priority={priority} radius={0} />
+        <View style={{ margin: 5 }}>
+          <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} priority={priority} aspect={1} fit="contain" radius={7} />
           {/* Demo prices and stock never masquerade as a real promotion or scarcity claim. */}
           <View style={{ position: 'absolute', left: 8, top: 8, gap: 4, maxWidth: width - 58 }}>
             {p.is_demo ? (!isPrivateCatalogPresentation ? <Badge onPhoto label="Demo" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null) : <>
@@ -70,7 +70,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
           </View>
         </View>
       </ScalePressable>
-      <View style={{ position: 'absolute', right: 0, top: 0 }}>
+      <View style={{ position: 'absolute', right: 5, top: 5 }}>
         <ProductFavorite id={p.id} slug={p.slug} onPhoto />
       </View>
       {focusVisible ? (

@@ -4,6 +4,12 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · referencias de catálogo y compra, 28 de octubre
+
+Oliver pidió copiar tres composiciones para Inicio/catálogo, métodos de pago y revisión de compra. Root integra; especialistas de Inicio y compra analizan y la auditora independiente revisa. Hero con foto izquierda y acción derecha, categorías con iconos y tarjetas integradas; métodos con selector a la derecha e importe base visible; revisión con imagen/importe por línea y resumen violeta adaptable. La auditora rechazó cuatro problemas de legibilidad/altura; corregidos y aprobados en web/backend local. Capturas, decisiones y límites en [informe](REDISENO_REFERENCIAS_2026-10-28.md).
+
+**Pruebas:** 4 UI de checkout/pago + 2 de Inicio en export final, 52 unitarias core, tipos/lint monorepo, web y Android/Hermes aprobados. Batería previa 53/54; el único fallo fue tasa de prueba local vencida. El caso de compra se repitió y aprobó en el export final con dato demo local. Próxima acción: checkpoint/push; si no hay bloqueos publicar sólo Android preview con guard APK5 y observar identidad EAS, sin afirmar recepción Samsung. Sin APK, iOS, backend remoto ni reglas financieras.
+
 ## Prioridad actual · catálogo y tarjeta de recientes, 28 de octubre
 
 Oliver pidió corregir la composición rota y dar prioridad a las fotos. Tarjeta compacta y seis imágenes oficiales de referencia ya publicadas en Android preview por EAS40636637928, ID `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`; observación independiente 40636914658 confirma que era la última compatible, sin rollback. La recepción en Samsung sigue sin comprobarse.

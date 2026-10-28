@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · rediseño según tres referencias de Oliver
+
+Inicio, categorías y tarjetas se integraron con hero fotográfico; métodos reales usan icono/nombre/selector e importe base; revisión usa líneas e importes del servidor y un resumen violeta que se compacta con fuente grande o pantalla pequeña. Auditoría independiente aprobó tras corregir barra invasiva, importe oculto, título largo y categoría partida. 4 UI finales de compra y 2 de Inicio, 52 core y tipos/lint monorepo aprobados; 30 capturas web archivadas. Regresión previa 53/54: único bloqueo tasa demo local vencida; el caso se repitió y pasó en el export final con dato demo local. No compras remotas ni cambios financieros. Siguiente: checkpoint y publicar preview con guard APK5.
+
 ### 2026-10-28 · lectura independiente de última OTA
 
 EAS40646836620 Success confirmó que `01a1814a-4bcb-707e-a813-4169bf2732d0` es la última OTA Android preview compatible con runtime APK5, request `48f8dc0`, fuente limpia y sin rollback. Es metadato de servidor, no evidencia de recepción Samsung. Las tres muestras no resueltas y las licencias no acreditadas siguen en PENDIENTES; no repetir esta publicación.
