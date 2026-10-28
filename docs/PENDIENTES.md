@@ -1,5 +1,10 @@
 # Pendientes de Kora
 
+## Imágenes: prioridad indicada por Oliver · 28oct2026
+
+- Seis imágenes oficiales referenciales ya vinculadas a muestras y auditadas en web; SKU y licencias de terceros no verificados. [Fuentes y límites](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). Publicación Android preview pendiente de pruebas/guard. Siete muestras restantes no deben declararse actualizadas: hub, cargador de auto, labial, brillo, base, paleta y polvo compacto. No asignar tonos/modelos incompatibles.
+- La tarjeta de recientes se recompuso en una fila con precio junto al nombre; falta publicar la corrección validada con el lote de imágenes.
+
 ## Catálogo y pulido · 28oct2026
 
 - Estado de imagen ausente/fallida: código, 21 UI y auditoría web aprobados. EAS40631857067 publicó en Android preview con guard APK5; ID `01a180bf-931c-7024-913b-156815835dd4`. No afirmar recepción Android sin prueba.

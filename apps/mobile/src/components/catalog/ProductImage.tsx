@@ -58,7 +58,7 @@ function ProductImageContent({ productId, variantId, productIsDemo, path, tone, 
   }, [failedRemote, uri]);
 
   return (
-    <View testID={localPhoto ? `exhibition-photo-${productId}` : undefined} style={[{ aspectRatio: aspect ?? t.imagery.productAspect, backgroundColor: localPhoto?.kind === 'generated-demo' ? '#F5F4F1' : bg.bg, borderRadius: radius ?? t.radii.lg, overflow: 'hidden' }, style]}>
+    <View testID={localPhoto ? `exhibition-photo-${productId}` : undefined} style={[{ aspectRatio: aspect ?? t.imagery.productAspect, backgroundColor: localPhoto?.kind === 'generated-demo' || localPhoto?.kind === 'manufacturer-reference' ? '#F5F4F1' : bg.bg, borderRadius: radius ?? t.radii.lg, overflow: 'hidden' }, style]}>
       {localPhoto || remotePhoto ? (
         <Image
           source={localPhoto?.source ?? { uri: remotePhoto! }}

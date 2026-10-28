@@ -35,8 +35,8 @@ export interface ExhibitionPhoto {
   licenseUrl?: string;
   originUrl?: string;
   additionalSources?: readonly { label: string; url: string }[];
-  /** Original synthetic illustration of an unbranded demo; never described as an authentic photograph. */
-  kind?: 'generated-demo';
+  /** Synthetic sample or official sample reference; both require confirmed is_demo. */
+  kind?: 'generated-demo' | 'manufacturer-reference';
   variantId?: string;
   referenceOnly?: boolean;
   disclosure?: string;
@@ -70,7 +70,7 @@ export function exhibitionPhoto(
   enabled: boolean, photos: readonly ExhibitionPhoto[], productId?: string, path?: string | null, variantId?: string, isDemo?: boolean,
 ): ExhibitionPhoto | undefined {
   if (!enabled || !productId || !path) return undefined;
-  const matches = photos.filter((photo) => photo.productId === productId && photo.originalPath === path && (isDemo === true || photo.kind !== 'generated-demo'));
+  const matches = photos.filter((photo) => photo.productId === productId && photo.originalPath === path && (isDemo === true || (photo.kind !== 'generated-demo' && photo.kind !== 'manufacturer-reference')));
   if (variantId) {
     const exact = matches.find((photo) => photo.variantId === variantId);
     if (exact) return exact;
@@ -90,11 +90,14 @@ export function exhibitionGallery<T extends { path: string }>(
   return images.filter((image) => !image.path.startsWith('demo/') || mappedPaths.has(image.path));
 }
 
-/** Private, non-personalized curation: newly generated demos lead without changing backend ranks or claims. */
+/** Private curation: sample products with a prepared image lead without changing backend ranks or claims. */
 export function prioritizeGeneratedExhibition<T extends { id: string; image_path: string | null; is_demo: boolean }>(
   enabled: boolean, photos: readonly ExhibitionPhoto[], products: readonly T[],
 ): T[] {
-  const ready = (p: T) => p.is_demo && exhibitionPhoto(enabled, photos, p.id, p.image_path, undefined, p.is_demo)?.kind === 'generated-demo';
+  const ready = (p: T) => {
+    const kind = p.is_demo && exhibitionPhoto(enabled, photos, p.id, p.image_path, undefined, p.is_demo)?.kind;
+    return kind === 'generated-demo' || kind === 'manufacturer-reference';
+  };
   return [...products.filter(ready), ...products.filter((p) => !ready(p))];
 }
 

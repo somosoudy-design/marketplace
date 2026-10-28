@@ -28,8 +28,8 @@ import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { productLink } from '@/lib/links';
-import { isPrivateCatalogPresentation, productExhibitionGallery } from '@/lib/catalog-exhibition';
-import { commercialCatalogText } from '@/lib/catalog-exhibition-policy';
+import { isPrivateCatalogPresentation, productExhibitionGallery, productExhibitionPhoto } from '@/lib/catalog-exhibition';
+import { commercialCatalogText, exhibitionSourceKey } from '@/lib/catalog-exhibition-policy';
 import { haptics } from '@/lib/haptics';
 import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
@@ -117,6 +117,10 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
   const isFav = fav.isFavorite(p.id) || p.is_favorite;
   const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }], p.is_demo);
+  const currentImage = images[page]?.path;
+  const referencePhoto = productExhibitionPhoto(p.id, currentImage, variant?.id, p.is_demo);
+  const referenceKey = exhibitionSourceKey(p.id, currentImage, referencePhoto);
+  const showReference = referencePhoto?.kind === 'manufacturer-reference' && (!referenceKey || !failedImageSources.has(referenceKey));
   const description = commercialCatalogText(isPrivateCatalogPresentation, p.description, p.is_demo);
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
@@ -216,6 +220,8 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               </View>
             ) : null}
           </View>
+
+          {showReference ? <Text testID="product-reference-image" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>Imagen referencial; la presentación y los accesorios pueden variar.</Text> : null}
 
           <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} onLayout={(event) => { infoY.current = event.nativeEvent.layout.y; }}>
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}

@@ -14,6 +14,7 @@ export function ExhibitionPhotoCredit({ productId, path, variantId, isDemo, fail
   const [open, setOpen] = useState(false);
   const photo = productExhibitionPhoto(productId, path, variantId, isDemo);
   if (!photo) return null;
+  const hasSource = !!photo.author && !!photo.originUrl;
   const attributed = !!photo.author && !!photo.originUrl && !!photo.licenseUrl;
   // The Storage fallback is not proven to share the override's provenance.
   if (failedSources?.has(exhibitionSourceKey(productId, path, photo)!)) return null;
@@ -26,10 +27,10 @@ export function ExhibitionPhotoCredit({ productId, path, variantId, isDemo, fail
       <View style={{ gap: 12 }}>
         {photo.kind === 'generated-demo' ? <Text testID="exhibition-generated-credit" variant="bodySmall" color="textSecondary">{attributed ? 'Imagen editada digitalmente a partir de una fotografía.' : 'Imagen creada digitalmente.'}</Text> : null}
         {photo.referenceOnly ? <Text variant="bodySmall" color="textSecondary">Imagen referencial. Consulta las características y la variante seleccionada.</Text> : null}
-        {attributed ? <View testID="exhibition-photo-credit" style={{ gap: 8 }}>
+        {hasSource ? <View testID="exhibition-photo-credit" style={{ gap: 8 }}>
           <CreditLink label={`Fuente: ${photo.author}`} url={photo.originUrl!} />
           {photo.additionalSources?.map((source) => <CreditLink key={source.url} label={source.label} url={source.url} />)}
-          <CreditLink label={photo.license ?? 'Licencia de la imagen'} url={photo.licenseUrl!} />
+          {photo.licenseUrl ? <CreditLink label={photo.license ?? 'Licencia de la imagen'} url={photo.licenseUrl} /> : null}
           {photo.kind !== 'generated-demo' ? <Text variant="caption" color="textSecondary">Tamaño adaptado.</Text> : null}
         </View> : null}
       </View>

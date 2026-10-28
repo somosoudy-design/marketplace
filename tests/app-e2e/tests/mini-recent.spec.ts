@@ -56,14 +56,18 @@ for (const colorScheme of ['light', 'dark'] as const) {
         }
       });
       const [priceBox, cardBox, favBox] = await Promise.all([card.getByTestId('mini-price').boundingBox(), card.boundingBox(), favorite.boundingBox()]);
-      expect(priceBox!.x + priceBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width + 0.5);
-      expect(priceBox!.y).toBeGreaterThanOrEqual(favBox!.y + favBox!.height - 0.5);
+      const titleBox = await card.getByTestId('mini-title').boundingBox();
+      expect(priceBox!.x).toBeGreaterThan(cardBox!.x + 55);
+      expect(priceBox!.y).toBeGreaterThanOrEqual(titleBox!.y + titleBox!.height - 0.5);
+      const overlapsFavorite = priceBox!.x < favBox!.x + favBox!.width && priceBox!.x + priceBox!.width > favBox!.x && priceBox!.y < favBox!.y + favBox!.height && priceBox!.y + priceBox!.height > favBox!.y;
+      expect(overlapsFavorite).toBe(false);
+      expect(priceBox!.y + priceBox!.height).toBeLessThanOrEqual(cardBox!.y + cardBox!.height + 0.5);
       expect(favBox!.width).toBeGreaterThanOrEqual(44); expect(favBox!.height).toBeGreaterThanOrEqual(44);
       const amount = await card.getByTestId('mini-price').evaluate((element) => {
-        const range = document.createRange(); range.selectNodeContents(element);
-        return { width: element.clientWidth, scroll: element.scrollWidth, lines: range.getClientRects().length };
+        return { width: element.clientWidth, scroll: element.scrollWidth, height: element.clientHeight, scrollHeight: element.scrollHeight };
       });
-      expect(amount.scroll).toBeLessThanOrEqual(amount.width + 1); expect(amount.lines).toBe(1);
+      expect(amount.scroll).toBeLessThanOrEqual(amount.width + 1);
+      expect(amount.scrollHeight).toBeLessThanOrEqual(amount.height + 1);
     }
     await page.setViewportSize({ width: 320, height: 892 }); await page.goto('/');
     const shelf = page.getByTestId('home-recent'), card = shelf.getByTestId(`mini-card-${product.slug}`);

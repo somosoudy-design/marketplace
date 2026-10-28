@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · imágenes oficiales referenciales y corrección de recientes
+
+Oliver rechazó la tarjeta ampliada y priorizó fotos. Root corrigió la composición; especialistas identificaron originales UGREEN/SHEGLAM y auditora revisó seis referencias, ambos temas, variantes, foto fallida y disposición. Imágenes reales del fabricante asociadas a muestras, no SKU exactos; licencias de terceros no acreditadas, autorización de Oliver registrada. Hay 22 UI, unitarias, tipos/lint y Hermes; no se declara recepción Android. Sigue pendiente commit/publicación y comprobar el guard APK5. [Informe](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md).
+
 ### 2026-10-28 · experimento de fuente ampliada no integrado
 
 UX probó contador y disponibilidad legibles a CSS1,6 y encontró que `scrollToIndex` fallaba al no existir medidas de filas. Con reintento acotado conservó un producto visible y filtro/consulta en un único cambio web 320→720. No cubre nombres/precios extensos, ciclos, modo oscuro para ancla ni Android, por lo que no está aprobado ni publicado. Parche inerte, imágenes, medidas y próxima acción en `docs/experimentos/fuente-ampliada-2026-10-28/`.

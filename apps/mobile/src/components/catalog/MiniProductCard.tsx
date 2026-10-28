@@ -2,7 +2,7 @@ import type { ProductCard as Card } from '@kora/api';
 import { formatUSD } from '@kora/core';
 import { router } from 'expo-router';
 import { memo } from 'react';
-import { View } from 'react-native';
+import { Platform, View, type TextStyle } from 'react-native';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Text } from '@/components/ui/Text';
 import { recordClick } from '@/lib/impressions';
@@ -21,10 +21,6 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
     if (slot) recordClick(slot, p.id);
     router.push({ pathname: '/product/[id]', params: { id: p.id } });
   };
-  const price = <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 4, minWidth: 0 }}>
-    <Text testID="mini-price" variant="bodySmall" tabular style={{ fontFamily: 'PlusJakartaSans_700Bold', fontSize: 14 }}>{amount}</Text>
-    {brand ? <Text testID="mini-brand" variant="caption" color="textSecondary" numberOfLines={1} style={{ flexShrink: 1 }}>{brand}</Text> : null}
-  </View>;
   return (
     <View style={{ width, padding: 6, borderRadius: 10, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
       <ScalePressable
@@ -33,17 +29,20 @@ export const MiniProductCard = memo(function MiniProductCard({ product: p, width
         accessibilityRole="link"
         accessibilityLabel={`${p.title}, ${formatUSD(p.price_usd)}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
         onPress={open}
-        style={{ minWidth: 0 }}
+        style={{ flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: 10 }}
       >
-        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-          <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} style={{ width: 64 }} aspect={1} radius={6} />
-          <View style={{ flex: 1, minWidth: 0, paddingRight: 46, gap: 2 }}>
+        <ProductImage productId={p.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} style={{ width: 60 }} aspect={1} radius={6} />
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <View style={{ minHeight: 44, justifyContent: 'center', paddingRight: 44 }}>
             <Text testID="mini-title" variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{name}</Text>
           </View>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 4, minWidth: 0 }}>
+            <Text testID="mini-price" variant="bodySmall" tabular style={{ fontFamily: 'PlusJakartaSans_700Bold', fontSize: 14, flexShrink: 1, minWidth: 0, maxWidth: '100%', ...(Platform.OS === 'web' ? { overflowWrap: 'anywhere' } as TextStyle : {}) }}>{amount}</Text>
+            {brand ? <Text testID="mini-brand" variant="caption" color="textSecondary" numberOfLines={1} style={{ flexShrink: 1 }}>{brand}</Text> : null}
+          </View>
         </View>
-        <View style={{ paddingTop: 4 }}>{price}</View>
       </ScalePressable>
-      <View style={{ position: 'absolute', right: 6, top: 16 }}><ProductFavorite id={p.id} slug={p.slug} /></View>
+      <View style={{ position: 'absolute', right: 6, top: 6 }}><ProductFavorite id={p.id} slug={p.slug} /></View>
     </View>
   );
 });

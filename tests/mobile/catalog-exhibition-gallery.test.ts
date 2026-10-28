@@ -60,6 +60,14 @@ describe('preview gallery retains new uploads without restoring legacy demo illu
     expect(exhibitionGallery(true, generated, product, images, true)).toEqual([mapped, own]);
   });
 
+  it('does not hide seller gallery photos for a manufacturer reference unless the product is a confirmed sample', () => {
+    const references = photos.map((photo) => ({ ...photo, kind: 'manufacturer-reference' as const, referenceOnly: true }));
+    const images = [mapped, legacy, own];
+    expect(exhibitionGallery(true, references, product, images)).toBe(images);
+    expect(exhibitionGallery(true, references, product, images, false)).toBe(images);
+    expect(exhibitionGallery(true, references, product, images, true)).toEqual([mapped, own]);
+  });
+
   it('never applies a local asset to the newly uploaded path, even for a known variant', () => {
     const images = exhibitionGallery(true, photos, product, [mapped, legacy, own], true);
     expect(exhibitionPhoto(true, photos, product, images[1]!.path, 'known', true)).toBeUndefined();

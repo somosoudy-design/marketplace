@@ -4,6 +4,10 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Prioridad actual · imágenes y corrección de recientes, 28 de octubre
+
+Oliver rechaza la tarjeta anterior por verse rota y prioriza imágenes. Se corrigió la tarjeta en una fila compacta y se incorporaron seis referencias originales de fabricante para muestras con atributos coincidentes. Son referencias privadas con `is_demo`, UUID, ruta y variante comprobados; SKU exacto y licencias del fabricante no acreditados, sin afirmar lo contrario. Siete muestras siguen sin referencia suficientemente verificada. Auditoría web independiente aprobó el incremento privado; 22 UI, unitarias de aislamiento y export Hermes. La publicación Android preview aún está pendiente; no afirmar recepción. [Informe y capturas](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). Próxima acción: finalizar tipos/lint, commit/push, solicitar OTA con guard APK5 y registrar resultado; no cambiar Supabase, iOS ni finanzas.
+
 ## Trabajo en curso · integración visual del catálogo, 28 de octubre
 
 Oliver autorizó expresamente usar las imágenes necesarias y pidió continuar el pulido general. Rama sincronizada; root integra y publica, especialistas trabajan sólo en propuestas ignoradas. Dos agentes revisaron material UGREEN/SHEGLAM y la auditora lo contrastó: cuatro imágenes oficiales UGREEN coinciden con atributos generales pero no tienen modelo exacto ni derechos de redistribución acreditados; siete fichas SHEGLAM no contienen SKU/tono y una fotografía de polvo suelto contradice la ficha de polvo compacto. No se han integrado fotos nuevas. Autorización del propietario y licencia del titular son hechos distintos, sin atribuir derechos no comprobados.

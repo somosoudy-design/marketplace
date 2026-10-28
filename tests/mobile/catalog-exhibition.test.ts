@@ -86,3 +86,30 @@ describe('photographs never cross product or gallery identities', () => {
     expect(exhibitionPhoto(true, [], 'existing-id-a', 'demo/charger-1.webp')).toBeUndefined();
   });
 });
+
+describe('official reference images remain confined to confirmed preview samples', () => {
+  const path = 'demo/sample-1.webp';
+  const photos: ExhibitionPhoto[] = [
+    { productId: 'sample', originalPath: path, source: 10, sha256: 'base', width: 600, height: 600, kind: 'manufacturer-reference', referenceOnly: true },
+    { productId: 'sample', originalPath: path, variantId: 'silver', source: 11, sha256: 'silver', width: 600, height: 600, kind: 'manufacturer-reference', referenceOnly: true },
+  ];
+  it('requires preview, confirmed sample, matching product, photo and variant', () => {
+    expect(exhibitionPhoto(true, photos, 'sample', path, undefined, true)?.source).toBe(10);
+    expect(exhibitionPhoto(true, photos, 'sample', path, 'silver', true)?.source).toBe(11);
+    expect(exhibitionPhoto(true, photos, 'sample', path, 'new-variant', true)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'sample', path, 'silver', false)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'sample', path, 'silver')).toBeUndefined();
+    expect(exhibitionPhoto(false, photos, 'sample', path, 'silver', true)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'other', path, 'silver', true)).toBeUndefined();
+    expect(exhibitionPhoto(true, photos, 'sample', 'seller/updated.webp', 'silver', true)).toBeUndefined();
+  });
+  it('only promotes confirmed sample references in the private home curation', () => {
+    const products = [
+      { id: 'other', image_path: 'other.webp', is_demo: false },
+      { id: 'sample', image_path: path, is_demo: true },
+    ];
+    expect(prioritizeGeneratedExhibition(true, photos, products).map((p) => p.id)).toEqual(['sample', 'other']);
+    expect(prioritizeGeneratedExhibition(false, photos, products)).toEqual(products);
+    expect(prioritizeGeneratedExhibition(true, photos, [{ ...products[1]!, is_demo: false }, products[0]!])).toEqual([{ ...products[1]!, is_demo: false }, products[0]!]);
+  });
+});

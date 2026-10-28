@@ -21,10 +21,10 @@ export function productExhibitionPhoto(productId?: string, path?: string | null,
 
 export const categoryExhibitionPhoto = (path?: string | null) => exhibitionCategoryPhoto(isPrivateCatalogPresentation, exhibitionPhotos, path);
 
-/** Snapshot-only DTOs cannot prove demo status. Reuse the public detail query before showing a synthetic image. */
+/** Snapshot-only DTOs cannot prove sample status. Verify before showing sample-only imagery. */
 export function useProductExhibitionPhoto(productId?: string, path?: string | null, variantId?: string, isDemo?: boolean) {
   const candidate = productExhibitionPhoto(productId, path, variantId, true);
-  const verify = candidate?.kind === 'generated-demo' && isDemo === undefined;
+  const verify = (candidate?.kind === 'generated-demo' || candidate?.kind === 'manufacturer-reference') && isDemo === undefined;
   const product = useQuery({
     queryKey: qk.product(productId ?? ''),
     queryFn: () => api.catalog.product(productId!),
