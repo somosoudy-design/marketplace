@@ -18,4 +18,4 @@ Pruebas locales: 22 casos UI de galería, carrito invitado, búsqueda, detalle, 
 
 ## Publicación
 
-Pendiente de commit, solicitud y resultado EAS Android `preview`. No generar APK ni desplegar backend.
+EAS [40636637928](https://github.com/somosoudy-design/marketplace/actions/runs/40636637928) terminó Success; fuente `6f955b3`, request `67f43c4`, Android preview con guard APK5. ID `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`, grupo `ca4903f6-974e-4721-a4a7-be4c185d248d`. Se solicita una observación separada de metadatos de sólo lectura; no se ha comprobado recepción en el Samsung. No se generó APK ni desplegó backend.

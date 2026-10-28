@@ -19,7 +19,7 @@ export const EXPECTED = Object.freeze({
   runtime: 'eb5ed1179b9c76c9c3cf27333aa48306728eb4ba',
   package: 'com.example.kora.preview',
   versionCode: '4',
-  updateCommit: '9202713429b88b5ce26a04bd242153be290d173f',
+  updateCommit: '67f43c4b1eea7c3c4abe05ff252bbee798aa6596',
 });
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const BUILD_FIELDS = `id status platform distribution buildProfile appIdentifier

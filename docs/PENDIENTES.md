@@ -2,8 +2,8 @@
 
 ## Imágenes: prioridad indicada por Oliver · 28oct2026
 
-- Seis imágenes oficiales referenciales ya vinculadas a muestras y auditadas en web; SKU y licencias de terceros no verificados. [Fuentes y límites](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). Publicación Android preview pendiente de pruebas/guard. Siete muestras restantes no deben declararse actualizadas: hub, cargador de auto, labial, brillo, base, paleta y polvo compacto. No asignar tonos/modelos incompatibles.
-- La tarjeta de recientes se recompuso en una fila con precio junto al nombre; falta publicar la corrección validada con el lote de imágenes.
+- Seis imágenes oficiales referenciales ya vinculadas a muestras y auditadas en web; SKU y licencias de terceros no verificados. [Fuentes y límites](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md). Publicado por EAS40636637928, Android preview/APK5, ID `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`; recepción Samsung pendiente. Siete muestras restantes no deben declararse actualizadas: hub, cargador de auto, labial, brillo, base, paleta y polvo compacto. No asignar tonos/modelos incompatibles.
+- La tarjeta de recientes se recompuso en una fila con precio junto al nombre; publicada junto con el lote de imágenes en EAS40636637928.
 
 ## Catálogo y pulido · 28oct2026
 

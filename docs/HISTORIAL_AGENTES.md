@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · publicación de seis imágenes oficiales referenciales
+
+EAS40636637928 Success, código `6f955b3`/request `67f43c4`, runtime APK5 confirmado. ID Android `01a180ee-7cf3-7989-9fbe-56dd90bfbf97`, grupo `ca4903f6-974e-4721-a4a7-be4c185d248d`; no se ha verificado recepción en Samsung. La auditoría independiente aprobó el alcance web privado; la licencia de fabricante y SKU exacto no están acreditados. Seis muestras muestran imágenes originales referenciales; siete siguen pendientes. Se prepara observación de metadatos y se continúa evaluando tonos de maquillaje.
+
 ### 2026-10-28 · imágenes oficiales referenciales y corrección de recientes
 
 Oliver rechazó la tarjeta ampliada y priorizó fotos. Root corrigió la composición; especialistas identificaron originales UGREEN/SHEGLAM y auditora revisó seis referencias, ambos temas, variantes, foto fallida y disposición. Imágenes reales del fabricante asociadas a muestras, no SKU exactos; licencias de terceros no acreditadas, autorización de Oliver registrada. Hay 22 UI, unitarias, tipos/lint y Hermes; no se declara recepción Android. Sigue pendiente commit/publicación y comprobar el guard APK5. [Informe](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md).
