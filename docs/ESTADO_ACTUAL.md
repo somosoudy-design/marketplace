@@ -4,11 +4,11 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## Trabajo en curso · referencias de catálogo y compra, 28 de octubre
+## Entrega publicada · referencias de catálogo y compra, 28 de octubre
 
 Oliver pidió copiar tres composiciones para Inicio/catálogo, métodos de pago y revisión de compra. Root integra; especialistas de Inicio y compra analizan y la auditora independiente revisa. Hero con foto izquierda y acción derecha, categorías con iconos y tarjetas integradas; métodos con selector a la derecha e importe base visible; revisión con imagen/importe por línea y resumen violeta adaptable. La auditora rechazó cuatro problemas de legibilidad/altura; corregidos y aprobados en web/backend local. Capturas, decisiones y límites en [informe](REDISENO_REFERENCIAS_2026-10-28.md).
 
-**Pruebas:** 4 UI de checkout/pago + 2 de Inicio en export final, 52 unitarias core, tipos/lint monorepo, web y Android/Hermes aprobados. Batería previa 53/54; el único fallo fue tasa de prueba local vencida. El caso de compra se repitió y aprobó en el export final con dato demo local. Próxima acción: checkpoint/push; si no hay bloqueos publicar sólo Android preview con guard APK5 y observar identidad EAS, sin afirmar recepción Samsung. Sin APK, iOS, backend remoto ni reglas financieras.
+**Pruebas:** 4 UI de checkout/pago + 2 de Inicio en export final, 52 unitarias core, tipos/lint monorepo, web y Android/Hermes aprobados. Batería previa 53/54; el único fallo fue tasa de prueba local vencida. El caso de compra se repitió y aprobó en el export final con dato demo local. Publicado EAS40697681395 Success, fuente `6bff554`/request `003fa12`, guard APK5; ID `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`, grupo `fcf85e39-1888-4ae0-8132-d08734635f38`. Próxima acción: observar identidad EAS y comparar con Diagnóstico en Samsung sin afirmar recepción física. Sin APK, iOS, backend remoto ni reglas financieras.
 
 ## Prioridad actual · catálogo y tarjeta de recientes, 28 de octubre
 
@@ -16,7 +16,7 @@ Oliver pidió corregir la composición rota y dar prioridad a las fotos. Tarjeta
 
 **Segundo incremento publicado:** nueve imágenes originales SHEGLAM para cuatro muestras: base (tres tonos), labial mate (tres), brillo (dos) y paleta cálida. Total de esta intervención: diez productos y quince imágenes. Una especialista comprobó en sólo lectura seis SHEGLAM, sus rutas y once variantes en el Marketplace real; SKU exacto y licencias del fabricante permanecen sin acreditar. El recurso sólo se activa para muestras del preview privado y se identifica como referencial en ficha. 26 UI distintas, tipos/lint, Hermes y auditoría independiente de 18 capturas web aprobados. [Informe](CATALOGO_OFICIAL_PREVIEW_2026-10-28.md).
 
-**Publicación actual:** EAS40646525648 Success y guard APK5 aprobado, ID `01a1814a-4bcb-707e-a813-4169bf2732d0`, grupo `d4f0bb19-1d8d-4b12-98a4-b4dac570a42b`; código `a87c3ac`, solicitud `48f8dc0`. Lectura independiente EAS40646836620 Success confirma última compatible, fuente limpia y sin rollback. No afirmar recepción Samsung. Quedan sin resolver tres muestras: hub UGREEN 10 en 1 plata, cargador de auto UGREEN negro y polvo compacto translúcido SHEGLAM; evitar fotos incompatibles y verificar derechos de terceros y SKU antes de cualquier distribución pública. Sin cambios remotos, financieros, iOS o APK.
+**Publicación fotográfica anterior:** EAS40646525648 Success y guard APK5 aprobado, ID `01a1814a-4bcb-707e-a813-4169bf2732d0`, grupo `d4f0bb19-1d8d-4b12-98a4-b4dac570a42b`; código `a87c3ac`, solicitud `48f8dc0`. Lectura independiente EAS40646836620 Success confirma última compatible, fuente limpia y sin rollback. No afirmar recepción Samsung. Quedan sin resolver tres muestras: hub UGREEN 10 en 1 plata, cargador de auto UGREEN negro y polvo compacto translúcido SHEGLAM; evitar fotos incompatibles y verificar derechos de terceros y SKU antes de cualquier distribución pública. Sin cambios remotos, financieros, iOS o APK.
 
 ## Antecedente · integración visual del catálogo, 28 de octubre
 

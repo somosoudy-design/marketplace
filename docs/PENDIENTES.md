@@ -2,7 +2,7 @@
 
 ## Referencias visuales · 28oct2026
 
-- Tres puntos implementados y auditados para web/backend local: Inicio/catálogo, métodos de pago y revisión con totales. [Capturas y detalle](REDISENO_REFERENCIAS_2026-10-28.md). Compra completa local aprobada al repetir el caso con dato demo; siguiente checkpoint y una OTA preview/APK5. No afirmar recepción física.
+- Tres puntos implementados y auditados para web/backend local: Inicio/catálogo, métodos de pago y revisión con totales. [Capturas y detalle](REDISENO_REFERENCIAS_2026-10-28.md). Compra completa local aprobada al repetir el caso con dato demo. Publicado EAS40697681395 con guard APK5, ID `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`; observación EAS y recepción Samsung pendientes.
 
 ## Imágenes: prioridad indicada por Oliver · 28oct2026
 

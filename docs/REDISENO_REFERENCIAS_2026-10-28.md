@@ -28,4 +28,4 @@ En el export final: cuatro pruebas específicas de revisión/pago y dos de Inici
 
 ## Publicación
 
-Pruebas cerradas; pendiente checkpoint y solicitud de EAS Update Android preview con el guard del runtime de APK 5. No se generará un APK ni se publicará en production. La recepción en el Samsung sólo se puede afirmar al observarla en ese dispositivo.
+Publicado por [EAS40697681395](https://github.com/somosoudy-design/marketplace/actions/runs/40697681395) Success, fuente `6bff554`/request `003fa12`; guard del runtime APK5 aprobado. ID Android `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`, grupo `fcf85e39-1888-4ae0-8132-d08734635f38`. Se solicita una observación adicional de sólo lectura. Sin APK ni publicación en production; no se ha comprobado recepción en Samsung.

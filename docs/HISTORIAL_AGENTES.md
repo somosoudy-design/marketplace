@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · publicación Android de las tres referencias
+
+EAS40697681395 Success: fuente `6bff554`, request `003fa12`, Android preview, runtime APK5 aprobado. ID `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`, grupo `fcf85e39-1888-4ae0-8132-d08734635f38`. Compra completa local se repitió y pasó con dato demo; auditoría independiente APROBADA. Se solicita observación de metadatos por separado; no se afirma recepción Samsung. Sin APK, iOS ni cambios financieros o remotos.
+
 ### 2026-10-28 · rediseño según tres referencias de Oliver
 
 Inicio, categorías y tarjetas se integraron con hero fotográfico; métodos reales usan icono/nombre/selector e importe base; revisión usa líneas e importes del servidor y un resumen violeta que se compacta con fuente grande o pantalla pequeña. Auditoría independiente aprobó tras corregir barra invasiva, importe oculto, título largo y categoría partida. 4 UI finales de compra y 2 de Inicio, 52 core y tipos/lint monorepo aprobados; 30 capturas web archivadas. Regresión previa 53/54: único bloqueo tasa demo local vencida; el caso se repitió y pasó en el export final con dato demo local. No compras remotas ni cambios financieros. Siguiente: checkpoint y publicar preview con guard APK5.
