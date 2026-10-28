@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · segunda publicación fotográfica Android
+
+[EAS40646525648](https://github.com/somosoudy-design/marketplace/actions/runs/40646525648) Success: código `a87c3ac`, solicitud `48f8dc0`, Android preview, guard runtime APK5 aprobado. ID `01a1814a-4bcb-707e-a813-4169bf2732d0`, grupo `d4f0bb19-1d8d-4b12-98a4-b4dac570a42b`. Diez muestras/15 imágenes referenciales en total entre dos lotes; se conserva el carácter referencial y el límite de licencia de terceros. Recepción Samsung no observada. Se actualiza el observador de sólo lectura para esta solicitud; trece pruebas locales pasan.
+
 ### 2026-10-28 · segundo lote SHEGLAM revisado
 
 Root integró nueve originales de fabricante para base, labial, brillo y paleta, con ocho variantes mapeadas y leyenda referencial específica. La especialista confirmó por RPC de sólo lectura UUID, is_demo, ruta y once variantes activas en seis muestras SHEGLAM; no acredita SKU ni licencia. Auditora independiente aprobó ambos temas, fallos, variante desconocida y 18 capturas originales. 25 UI conjuntas más una prueba adicional, tipos/lint y Hermes aprobados. Primer lote observado como compatible por EAS40636914658; no se ha comprobado recepción Samsung. Próximo: checkpoint y una OTA preview con guard APK5. Quedan tres muestras sin referencia adecuada.
