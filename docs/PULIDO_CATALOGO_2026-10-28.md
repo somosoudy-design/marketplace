@@ -22,4 +22,4 @@ Oliver autorizó expresamente usar las imágenes necesarias. Dos especialistas r
 
 ## Publicación
 
-El propietario autoriza avances validados en Android `preview`. El resultado de EAS, el runtime y el ID se registrarán después de que el workflow termine; la publicación no demuestra que el Samsung haya recibido la actualización.
+El propietario autoriza avances validados en Android `preview`. [EAS40631857067](https://github.com/somosoudy-design/marketplace/actions/runs/40631857067) terminó **Success**: fuente `e3e118e`, request `65d828d`, runtime de APK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, ID Android `01a180bf-931c-7024-913b-156815835dd4`, grupo `fdae521f-b34e-44c5-bda8-f944bd9d1572`. La publicación no demuestra que el Samsung haya recibido la actualización.

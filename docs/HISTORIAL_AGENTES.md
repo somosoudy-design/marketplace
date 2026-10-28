@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · publicación del estado de imágenes
+
+Fuente `e3e118e`, request `65d828d`, EAS40631857067 Success: guard runtime APK5 y publicación Android preview aprobados; ID `01a180bf-931c-7024-913b-156815835dd4`, grupo `fdae521f-b34e-44c5-bda8-f944bd9d1572`. Sin recepción nativa comprobada ni fotos nuevas. Tarjeta compacta permanece en trabajo aislado por validación de importes e impresiones; no publicar sin QA.
+
 ### 2026-10-28 · checkpoint de integración visual del catálogo
 
 Oliver autoriza usar las imágenes necesarias y prioriza pulido. Dos especialistas revisan cuatro candidatas oficiales UGREEN y siete SHEGLAM; persisten modelo/tono y derechos no acreditados, por lo que no se asigna ninguna. Root corrige estado vacío de ProductImage en un 404 interceptado: fallback discreto, etiqueta en ficha, reconexión y variante; contraste corregido tras objeción independiente. Auditora aprueba web, 21 UI, tipos/lint monorepo y Hermes Android aprobados. Foto real nueva cero, backend remoto sin cambios. Publicación preview pendiente; propuesta de tarjeta compacta en revisión por solapamiento a280 con texto ampliado y conteo de impresiones.
