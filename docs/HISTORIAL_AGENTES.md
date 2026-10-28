@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · checkpoint de integración visual del catálogo
+
+Oliver autoriza usar las imágenes necesarias y prioriza pulido. Dos especialistas revisan cuatro candidatas oficiales UGREEN y siete SHEGLAM; persisten modelo/tono y derechos no acreditados, por lo que no se asigna ninguna. Root corrige estado vacío de ProductImage en un 404 interceptado: fallback discreto, etiqueta en ficha, reconexión y variante; contraste corregido tras objeción independiente. Auditora aprueba web, 21 UI, tipos/lint monorepo y Hermes Android aprobados. Foto real nueva cero, backend remoto sin cambios. Publicación preview pendiente; propuesta de tarjeta compacta en revisión por solapamiento a280 con texto ampliado y conteo de impresiones.
+
 ### 2026-10-27 · ensayo de texto ampliado rechazado
 
 Tras publicar `01a17b21`, UX ensayó en copia aislada una tarjeta horizontal y controles apilados con `Price` intacto. A escala simulada RN Web1,6 mejoraron contador, estados y varios modelos; QA independiente observó que «Revodok … 6 en 1» perdía el 6 y que cambiar columnas remontaba la lista y devolvía scroll168→0, aunque consulta/filtro sobrevivían. Dictamen CAMBIOS OBLIGATORIOS; no integrado ni OTA adicional. Parche inerte, tres capturas, medidas y próximos pasos en `docs/experimentos/fuente-ampliada-2026-10-27/`. No demuestra Android, TalkBack o recepción en Samsung.

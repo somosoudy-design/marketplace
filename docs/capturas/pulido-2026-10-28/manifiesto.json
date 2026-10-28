@@ -1,0 +1,65 @@
+{
+  "source": "Chromium y datos locales, con fallo 404 interceptado; no Android físico",
+  "captures": [
+    {
+      "file": "buscar-antes-light-320.png",
+      "sha256": "c3a685635ae6a214008dafd566b6bb73ee8c3ccdec84a15ba9fb1243808f8c63",
+      "origin": "auditoria-20261028/05-imagen-404-light-320.png"
+    },
+    {
+      "file": "buscar-despues-light-320.png",
+      "sha256": "5228f9f5ee3c2e56c2b9070753971fad593148a721dd56624b0039e59da0dba8",
+      "origin": "auditoria-20261028/10-fallback-buscar-light-320.png"
+    },
+    {
+      "file": "buscar-despues-light-412.png",
+      "sha256": "67a2663d532bb7ecca0685145e36e8b1fbdc7e0c195bc6a7ecae95beb47dd08e",
+      "origin": "auditoria-20261028/10-fallback-buscar-light-412.png"
+    },
+    {
+      "file": "ficha-antes-light-320.png",
+      "sha256": "bbf73098091a1a97884d44da5c96100e54ff5622167f078de6d7426a7c304df3",
+      "origin": "auditoria-20261028/06-ficha-404-light-320.png"
+    },
+    {
+      "file": "ficha-despues-light-320.png",
+      "sha256": "54b4c2caa9c793014911d161768ae67518e424584f2fa5dab22cebc9146b117f",
+      "origin": "auditoria-20261028/11-fallback-ficha-light-320.png"
+    },
+    {
+      "file": "ficha-despues-light-412.png",
+      "sha256": "0df57804d62d03d1b8844d72f32a83bfd5d7077e59b9c4fe86cb1b00f454f138",
+      "origin": "auditoria-20261028/11-fallback-ficha-light-412.png"
+    },
+    {
+      "file": "buscar-antes-dark-320.png",
+      "sha256": "bb84e497f26258a08a81ad5719d7d5ccb71b14c1fcb549149b6adc3e62ef8475",
+      "origin": "auditoria-20261028/05-imagen-404-dark-320.png"
+    },
+    {
+      "file": "buscar-despues-dark-320.png",
+      "sha256": "e748aafe6592d45892544f02132d4e1f499ae4a43f67f78aa7c013ca023f7b50",
+      "origin": "auditoria-20261028/10-fallback-buscar-dark-320.png"
+    },
+    {
+      "file": "buscar-despues-dark-412.png",
+      "sha256": "2a58e6116d581a4583fd67f9efd7fecf3a0bbec204b575cb6427cf84052a135a",
+      "origin": "auditoria-20261028/10-fallback-buscar-dark-412.png"
+    },
+    {
+      "file": "ficha-antes-dark-320.png",
+      "sha256": "f7aeb9db67982a0c96f22883507a06fde8fbe85e15ac0fed6a2e643abb80aa40",
+      "origin": "auditoria-20261028/06-ficha-404-dark-320.png"
+    },
+    {
+      "file": "ficha-despues-dark-320.png",
+      "sha256": "6ddb9185b6f74d8467a7c59402bcb32854f2f3712421bcff98ec5891c144fb25",
+      "origin": "auditoria-20261028/11-fallback-ficha-dark-320.png"
+    },
+    {
+      "file": "ficha-despues-dark-412.png",
+      "sha256": "5bde250833a35b24aa52845cb7f8f709381821bd194473a72cc518af7bfcfba7",
+      "origin": "auditoria-20261028/11-fallback-ficha-dark-412.png"
+    }
+  ]
+}

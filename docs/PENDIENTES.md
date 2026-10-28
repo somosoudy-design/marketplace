@@ -1,5 +1,11 @@
 # Pendientes de Kora
 
+## Catálogo y pulido · 28oct2026
+
+- Estado de imagen ausente/fallida: código, 21 UI y auditoría web aprobados; falta el resultado de publicación Android preview y su ID. No afirmar recepción Android sin prueba.
+- Tarjetas compactas de «Retoma donde quedaste»: propuesta aislada mejora nombre, precio y fotografía, pero su primera condición por longitud solapa importe y favorito a280 con CSS1,6. Corregir sin heurística frágil, mantener 44px y validar también impresiones reales; integrar sólo tras QA.
+- Oliver autorizó usar las imágenes necesarias; esto no acredita SKU/tono ni licencia de terceros. Cuatro candidatos UGREEN y siete SHEGLAM siguen sin correspondencia exacta/derechos demostrados; no se agregaron imágenes. [Candidatas](catalogo-exhibicion/CANDIDATAS_2026-10-28.json), [informe](PULIDO_CATALOGO_2026-10-28.md).
+
 ## Pulido visual · 27oct2026
 
 - Panel publicado y comprobado por CI40436798559. Android preview publicado por CI40436883342 con runtime APK5 e ID `01a17b21-55f2-7ebe-83b4-ff980e1d06fb`; queda comprobar recepción en el Samsung, sin atribuir recepción física/emulador sin evidencia. Ver [informe](PULIDO_VISUAL_2026-10-27.md) y el primer bloque de ESTADO_ACTUAL.

@@ -207,7 +207,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               onScroll={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
+                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} showUnavailableLabel onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
               )}
             />
             {images.length > 1 ? (

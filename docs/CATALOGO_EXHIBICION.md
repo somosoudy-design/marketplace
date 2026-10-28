@@ -1,5 +1,7 @@
 # Catálogo de exhibición — entrega Android preview
 
+> 28oct2026: Oliver autorizó expresamente usar las imágenes necesarias. Se registraron cuatro candidatos oficiales UGREEN de mayor calidad en [CANDIDATAS_2026-10-28.json](catalogo-exhibicion/CANDIDATAS_2026-10-28.json); sus modelos exactos y derechos de redistribución siguen sin acreditarse. Siete fichas SHEGLAM consultadas aún no identifican SKU/tonos y el polvo candidato no coincide con el formato. No se asignaron fotos nuevas; ver [PULIDO_CATALOGO_2026-10-28.md](PULIDO_CATALOGO_2026-10-28.md).
+
 ## Actualización vigente — 30 productos renovados de 44
 
 **Cinco referencias adicionales publicadas y recibidas en emulador Android**, con seis ediciones de estudio de fuentes CC: UGREENlector, UGREEN25845, SamsungEP-T4510 con cable/solo, Anker y StarTech. Mantienen créditos y licencia; son derivados generativos declarados, no fotos oficiales. Conservadas las25referencias/32imágenes anteriores. Total30productos/38imágenes activas nuevas; las13muestras restantes requieren identidad/material autorizado y DJI conserva sus imágenes del backend.

@@ -4,6 +4,14 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · integración visual del catálogo, 28 de octubre
+
+Oliver autorizó expresamente usar las imágenes necesarias y pidió continuar el pulido general. Rama sincronizada; root integra y publica, especialistas trabajan sólo en propuestas ignoradas. Dos agentes revisaron material UGREEN/SHEGLAM y la auditora lo contrastó: cuatro imágenes oficiales UGREEN coinciden con atributos generales pero no tienen modelo exacto ni derechos de redistribución acreditados; siete fichas SHEGLAM no contienen SKU/tono y una fotografía de polvo suelto contradice la ficha de polvo compacto. No se han integrado fotos nuevas. Autorización del propietario y licencia del titular son hechos distintos, sin atribuir derechos no comprobados.
+
+**Incremento local validado:** `ProductImage` diferencia carga y error, muestra una indicación discreta si falta/falla la imagen, explica el estado en la ficha y reintenta tras reconexión. Conserva fotos normales, sustituciones, variantes, créditos, ruta y gesto. Auditora independiente aprobó la solución en el alcance web tras corregir contraste; 21 UI, tipos/lint monorepo y export Android Hermes aprobados. [Informe y capturas](PULIDO_CATALOGO_2026-10-28.md). La propuesta visual de tarjetas compactas sigue aislada: una primera versión solapó importe y favorito a280 con texto ampliado y requiere verificar impresiones; no integrar hasta corregir y revisar.
+
+**Próxima acción:** commitear y publicar el incremento aprobado en Android preview usando el guard exacto APK5 y observar el ID de EAS; no afirmar recepción en Samsung/emulador. Continuar la tarjeta compacta sólo si supera pruebas con importes extensos y revisión independiente. El APK5 histórico sigue sin descarga recuperable: no intentar de nuevo ni generar APK. Cero cambios de finanzas, iOS, backend remoto o fotos oficiales en esta entrega.
+
 **Última actualización:** 27 de octubre de 2026. Móvil publicado en Android `preview`: [EAS40436883342](https://github.com/somosoudy-design/marketplace/actions/runs/40436883342), código funcional `e6dd4c4`, runtime exacto de APK5. ID Android **`01a17b21-55f2-7ebe-83b4-ff980e1d06fb`**, grupo `0ec56278-b0f7-4b06-9009-f0382ce581cb`, indicado en la anotación de EAS. La recepción en Samsung o emulador no está comprobada. Panel publicado y recibido en https://kora-panel.expo.app: fuente `2cb5801`, comprobación de deployment y alias [40436798559](https://github.com/somosoudy-design/marketplace/actions/runs/40436798559) aprobada en CI. Faltan fotografías autorizadas de13 productos/18 variantes; ninguna nueva en este bloque.
 
 ## Trabajo en curso · pulido visual del 27 de octubre

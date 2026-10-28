@@ -262,5 +262,90 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByTestId('product-image-info-sheet-close').click(); await expect(sheet).toBeHidden(); await commercial(page);
       await page.screenshot({ path: testInfo.outputPath('variant-credit-recovery.png') }); expect(unexpected).toEqual([]);
     });
+    test('a missing Storage photo is identified and can recover after reconnecting', async ({ page, context }) => {
+      const product = fixture(headphones);
+      product.is_demo = false;
+      product.image_path = 'qa-local/missing.webp';
+      product.images = [{ path: product.image_path, alt: 'Foto de prueba', width: 800, height: 1000 }];
+      const unexpected = await localOnly(page, [product]);
+      let fail = true, requests = 0;
+      await page.route('**/storage/v1/object/public/catalog/qa-local/missing.webp', (route) => {
+        requests++;
+        return fail ? route.fulfill({ status: 404, body: 'not found' }) : route.fulfill({ status: 200, contentType: 'image/webp', body: localPhoto });
+      });
+      await page.goto('/explore');
+      const surface = page.getByTestId(`product-surface-${product.slug}`);
+      await expect(surface.getByTestId('product-image-unavailable')).toBeVisible();
+      await expect(surface.getByTestId(`card-favorite-${product.slug}`)).toBeVisible();
+      await surface.getByTestId(`product-card-${product.slug}`).click();
+      const gallery = page.getByTestId('product-gallery');
+      const placeholder = gallery.getByTestId('product-image-unavailable');
+      await expect(placeholder).toBeVisible();
+      await expect(placeholder).toHaveAccessibleName('Foto de prueba. Imagen no disponible');
+      const message = placeholder.getByText('Imagen no disponible', { exact: true });
+      await expect(message).toBeVisible();
+      const contrast = await message.evaluate((element) => {
+        const rgb = (color: string) => color.match(/[\d.]+/g)!.slice(0, 3).map((part) => Number(part) / 255)
+          .map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+        const luminance = (color: string) => { const [r, g, b] = rgb(color); return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!; };
+        const foreground = luminance(getComputedStyle(element).color);
+        const background = luminance(getComputedStyle(element.closest('[data-testid="product-image-unavailable"]')!).backgroundColor);
+        return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+      });
+      expect(contrast).toBeGreaterThanOrEqual(4.5);
+      expect(requests).toBeGreaterThan(0);
+
+      await context.setOffline(true);
+      await expect(page.getByTestId('offline-notice')).toBeVisible();
+      fail = false;
+      await context.setOffline(false);
+      await expect(page.getByTestId('offline-notice')).toHaveCount(0);
+      await expect(placeholder).toHaveCount(0);
+      await expect.poll(() => gallery.locator('img').first().evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+      expect(unexpected).toEqual([]);
+    });
+    test('an image still loading is distinct from a product with no image', async ({ page }) => {
+      const loading = fixture(headphones), missing = fixture(samsung);
+      loading.is_demo = false;
+      loading.image_path = 'qa-local/slow.webp';
+      loading.images = [{ path: loading.image_path, alt: loading.title, width: 800, height: 1000 }];
+      missing.is_demo = false;
+      missing.image_path = null;
+      missing.images = [];
+      const unexpected = await localOnly(page, [loading, missing]);
+      let release!: () => void;
+      const wait = new Promise<void>((resolve) => { release = resolve; });
+      await page.route('**/storage/v1/object/public/catalog/qa-local/slow.webp', async (route) => {
+        await wait;
+        return route.fulfill({ status: 200, contentType: 'image/webp', body: localPhoto });
+      });
+      try {
+        await page.goto('/explore', { waitUntil: 'domcontentloaded' });
+        const loadingCard = page.getByTestId(`product-surface-${loading.slug}`);
+        const missingCard = page.getByTestId(`product-surface-${missing.slug}`);
+        await expect(loadingCard.locator('img')).toHaveCount(1);
+        await expect(loadingCard.getByTestId('product-image-unavailable')).toHaveCount(0);
+        await expect(missingCard.getByTestId('product-image-unavailable')).toBeVisible();
+        release();
+        await expect.poll(() => loadingCard.locator('img').first().evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+        await missingCard.getByTestId(`product-card-${missing.slug}`).click();
+        await expect(page.getByTestId('product-gallery').getByTestId('product-image-unavailable')).toHaveAccessibleName(`${missing.title}. Imagen no disponible`);
+        expect(unexpected).toEqual([]);
+      } finally { release(); }
+    });
+    test('an override and its Storage fallback can both fail without leaving false credits', async ({ page }) => {
+      const product = fixture(samsung), unexpected = await localOnly(page, [product], true);
+      await page.route(`**/storage/v1/object/public/catalog/${product.image_path}`, (route) => route.fulfill({ status: 404, body: 'not found' }));
+      await page.goto(`/product/${samsung}`);
+      const gallery = page.getByTestId('product-gallery');
+      await expect(gallery.getByTestId('product-image-unavailable').first()).toBeVisible();
+      await expect(page.getByTestId('product-image-info')).toHaveCount(0);
+      await expect(page.getByTestId('exhibition-photo-credit')).toHaveCount(0);
+      await page.getByTestId('product-selection-summary').click();
+      await page.getByTestId('variant-Solo cargador · Negro').click();
+      await expect(gallery.locator('img').first()).toHaveAttribute('src', new RegExp(alone.optimizedSha256.slice(0, 12)));
+      await expect(page.getByTestId('product-image-info')).toBeVisible();
+      expect(unexpected).toEqual([]);
+    });
   });
 }
