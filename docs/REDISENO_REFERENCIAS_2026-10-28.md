@@ -28,4 +28,4 @@ En el export final: cuatro pruebas específicas de revisión/pago y dos de Inici
 
 ## Publicación
 
-Publicado por [EAS40697681395](https://github.com/somosoudy-design/marketplace/actions/runs/40697681395) Success, fuente `6bff554`/request `003fa12`; guard del runtime APK5 aprobado. ID Android `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`, grupo `fcf85e39-1888-4ae0-8132-d08734635f38`. Se solicita una observación adicional de sólo lectura. Sin APK ni publicación en production; no se ha comprobado recepción en Samsung.
+Publicado por [EAS40697681395](https://github.com/somosoudy-design/marketplace/actions/runs/40697681395) Success, fuente `6bff554`/request `003fa12`; guard del runtime APK5 aprobado. ID Android `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`, grupo `fcf85e39-1888-4ae0-8132-d08734635f38`. La observación de sólo lectura [40698064910](https://github.com/somosoudy-design/marketplace/actions/runs/40698064910) confirmó que es la última compatible del canal y no es rollback. Sin APK ni publicación en production; no se ha comprobado recepción en Samsung.

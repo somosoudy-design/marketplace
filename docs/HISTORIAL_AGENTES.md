@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · observación de la entrega de referencias
+
+EAS40698064910 Success confirma `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4` como última OTA Android preview compatible con APK5, request `003fa12`, fuente limpia y sin rollback. Es observación del servidor, no recepción Samsung. No repetir publicación ni afirmar prueba física.
+
 ### 2026-10-28 · publicación Android de las tres referencias
 
 EAS40697681395 Success: fuente `6bff554`, request `003fa12`, Android preview, runtime APK5 aprobado. ID `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`, grupo `fcf85e39-1888-4ae0-8132-d08734635f38`. Compra completa local se repitió y pasó con dato demo; auditoría independiente APROBADA. Se solicita observación de metadatos por separado; no se afirma recepción Samsung. Sin APK, iOS ni cambios financieros o remotos.
