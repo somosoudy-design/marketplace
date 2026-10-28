@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-28 · observación independiente EAS
+
+Lectura de sólo metadatos [40633808451](https://github.com/somosoudy-design/marketplace/actions/runs/40633808451) Success: Android `preview` sirve como última compatible la OTA `01a180d0-0eab-77b7-a60f-0deecff5e81c`, grupo `213707fb-07ce-46a1-a95a-f24b35f5c5ae`, request `9202713`, runtime APK5; `latestCompatibleInBranch=true`, `isGitWorkingTreeDirty=false`, `isRollBackToEmbedded=false`. Sin instalar APK ni probar recepción Samsung. El helper de lectura se fijó al request actual y pasó13 tests locales. Próxima acción: comprobar Código en Samsung y continuar fuente ampliada sin remontar la lista.
+
 ### 2026-10-28 · publicación de tarjetas recientes
 
 EAS40633532412 Success: fuente `477a319`, request `9202713`, Android preview y guard APK5 aprobado. ID `01a180d0-0eab-77b7-a60f-0deecff5e81c`, grupo `213707fb-07ce-46a1-a95a-f24b35f5c5ae`. No se ha comprobado recepción Samsung. Se prepara observación separada de metadatos EAS sin descarga ni publicación, fijada a request `9202713`. Product Design index/audit/user-context/framework y la skill de Oliver se aplicaron con capturas y crítica independiente; no hubo browser plugin, sólo Chromium web. Cero fotos nuevas.
