@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-29 · publicación de recuperación de compra
+
+Oliver precisó que el blanco aparece al pulsar Confirmar pedido. EAS40999854509 Success: fuente `e34330c`, request `f23ffdc`, preview Android, guard runtime APK5 aprobado. ID `01a18af2-bd5c-7ec1-9e59-9b458a7e11f0`, grupo `4d390f5e-555d-450e-b0a2-88cdec5cede7`. Se solicita observación de metadatos sólo lectura (13 pruebas del helper aprobadas). No reproducción literal ni recepción Samsung; sí 42 UI finales/63 unitarias y auditoría focal independiente APROBADA. Sin APK, iOS, pagos reales o datos remotos modificados.
+
 ### 2026-10-29 · cierre de validación de confirmación
 
 Lint rechazó el snapshot en ref durante render. Se movió a estado sin cambiar clave ni guard síncrono; export final web/AndroidHermes, tipos/lint monorepo, 42 UI, 11 unitarias y 52 core aprobados. Auditor repitió 4/4 y revisó capturas finales, APROBADO web/local. Lectura remota confirma unicidad/serialización comprador-intención, sin escrituras. Blanco Samsung literal no observado. Próximo: solicitar una OTA preview/APK5 y registrar resultado/ID; no recompilar APK ni tocar finanzas.

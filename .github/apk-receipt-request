@@ -1,5 +1,5 @@
-# Read-only receipt for the OTA already published by CI40697681395.
+# Read-only receipt for the OTA already published by CI40999854509.
 # No APK download, build, OTA publish or channel mutation.
-source: 003fa1271791592d113b9222852bf11ddf2af08d
+source: f23ffdc06006db6f0127df12144bb33b1fd4377b
 runtime: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
 build: d1d10c28-1d9e-4123-8487-602dc10b9710

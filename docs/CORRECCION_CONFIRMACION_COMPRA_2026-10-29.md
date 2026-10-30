@@ -1,6 +1,6 @@
 # Recuperación al confirmar la compra · 29 de octubre
 
-Oliver reportó una pantalla completamente blanca al finalizar su compra en Android. No hay un Samsung conectado ni un APK5 recuperable para repetir su caso nativo en este entorno. No se atribuye la causa a una animación o a `usePreventRemove` sin evidencia.
+Oliver reportó una pantalla completamente blanca y confirmó que ocurre al pulsar «Confirmar pedido» en Android. No hay un Samsung conectado ni un APK5 recuperable para repetir su caso nativo en este entorno. No se atribuye la causa a una animación o a `usePreventRemove` sin evidencia.
 
 ## Fallo comprobado
 
@@ -25,4 +25,4 @@ En el export definitivo pasaron las **42 UI** de recuperación, fases, errores, 
 
 ## Continuación
 
-Regresiones cerradas; guardar el ajuste final y publicar Android preview con guard runtime APK5. Registrar resultado EAS e ID. La confirmación de que desaparece el blanco concreto en el Samsung requiere probarlo en ese teléfono; no equiparar publicación con recepción.
+Publicado [EAS40999854509](https://github.com/somosoudy-design/marketplace/actions/runs/40999854509) Success, fuente `e34330c`/request `f23ffdc`, Android preview y guard runtime APK5 aprobado. ID `01a18af2-bd5c-7ec1-9e59-9b458a7e11f0`, grupo `4d390f5e-555d-450e-b0a2-88cdec5cede7`. Observación de metadatos de sólo lectura solicitada. La confirmación de que desaparece el blanco concreto en el Samsung requiere probarlo en ese teléfono; no equiparar publicación con recepción.
