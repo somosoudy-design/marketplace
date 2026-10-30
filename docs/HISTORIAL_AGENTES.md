@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-29 · observación final de la corrección de compra
+
+EAS41000103125 Success confirmó `01a18af2-bd5c-7ec1-9e59-9b458a7e11f0` como última Android preview compatible con APK5, fuente limpia y sin rollback. Fuente móvil de HEAD coincide con solicitud publicada `f23ffdc`. Recepción/resultado del Samsung pendientes; no repetir OTA ni afirmar que fue observado el blanco nativo.
+
 ### 2026-10-29 · publicación de recuperación de compra
 
 Oliver precisó que el blanco aparece al pulsar Confirmar pedido. EAS40999854509 Success: fuente `e34330c`, request `f23ffdc`, preview Android, guard runtime APK5 aprobado. ID `01a18af2-bd5c-7ec1-9e59-9b458a7e11f0`, grupo `4d390f5e-555d-450e-b0a2-88cdec5cede7`. Se solicita observación de metadatos sólo lectura (13 pruebas del helper aprobadas). No reproducción literal ni recepción Samsung; sí 42 UI finales/63 unitarias y auditoría focal independiente APROBADA. Sin APK, iOS, pagos reales o datos remotos modificados.
