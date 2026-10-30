@@ -316,9 +316,10 @@ test('plan, dirección y envío revisados se guardan una sola vez; atrás y edic
   try {
     await page.getByTestId('checkout-place').evaluate((button: HTMLElement) => { button.click(); button.click(); });
     await expect.poll(() => requests.length).toBe(1);
+    await expect(page.getByTestId('checkout-confirming')).toBeVisible();
     await expect(page.getByTestId('checkout-back')).toBeDisabled();
-    await expect(page.getByTestId('checkout-edit-address')).toBeDisabled();
-    await expect(page.getByTestId('checkout-edit-plan')).toBeDisabled();
+    await expect(page.getByTestId('checkout-edit-address')).toHaveCount(0);
+    await expect(page.getByTestId('checkout-edit-plan')).toHaveCount(0);
     await page.goBack();
     await expect(page).toHaveURL(/\/checkout$/);
     release();

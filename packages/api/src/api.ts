@@ -181,6 +181,11 @@ export function createApi(client: KoraClient) {
       run<PlaceOrderResult>(
         rpc('place_order', { p_address_id: addressId, p_shipping: shipping, p_plan_code: planCode, p_idempotency_key: idempotencyKey }),
       ),
+    /** Recover this buyer's exact checkout attempt after an interrupted response, including for admin buyers. */
+    placedOrder: (buyerId: string, idempotencyKey: string) =>
+      run<Pick<Order, 'id' | 'number'> | null>(
+        from('orders').select('id, number').eq('buyer_id', buyerId).eq('idempotency_key', idempotencyKey).maybeSingle(),
+      ),
   };
 
   const payments = {

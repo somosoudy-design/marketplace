@@ -4,6 +4,12 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · confirmación de compra, 29 de octubre
+
+Oliver reportó blanco total al finalizar en Android. Root y dos especialistas revisaron navegación/Pago y reprodujeron dos veces un fallo local relacionado: el pedido se crea pero la respuesta se pierde; el preview vacío elimina la revisión y el acceso al pedido. Blanco literal Samsung no observado. Corrección integrada: lectura por comprador+intención exactos, snapshot/clave conservados, respuestas validadas, estados explícitos y check sólo lectura/reintento estable. El checkout se aísla por cuenta. [Informe y evidencia](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md).
+
+11 unitarias/10 UI nuevas, 52 core, tipos/lint y web/AndroidHermes aprobados. Auditor independiente ejecutó 4/4 y revisó cinco capturas, APROBADO web/backend local. Próxima acción: terminar regresiones en `.local/compra-blanco-20261029/regresiones.log`, checkpoint y publicar sólo preview/APK5 con autorización vigente; registrar ID/observación EAS sin afirmar recepción Samsung. No backend remoto, finanzas, APK o iOS.
+
 ## Entrega publicada · referencias de catálogo y compra, 28 de octubre
 
 Oliver pidió copiar tres composiciones para Inicio/catálogo, métodos de pago y revisión de compra. Root integra; especialistas de Inicio y compra analizan y la auditora independiente revisa. Hero con foto izquierda y acción derecha, categorías con iconos y tarjetas integradas; métodos con selector a la derecha e importe base visible; revisión con imagen/importe por línea y resumen violeta adaptable. La auditora rechazó cuatro problemas de legibilidad/altura; corregidos y aprobados en web/backend local. Capturas, decisiones y límites en [informe](REDISENO_REFERENCIAS_2026-10-28.md).

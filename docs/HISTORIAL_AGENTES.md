@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-29 · diagnóstico y recuperación de confirmación
+
+Dos especialistas revisaron sin editar. Se descartó un parche especulativo de temporización nativa; se reprodujo dos veces respuesta perdida tras crear pedido, con un solo pedido real local y carrito vacío sustituyendo confirmación. Root integra lookup por comprador/clave, snapshot/reintento estable, validación de respuesta y estados explícitos; sesión aislada por cuenta. 10 UI/11 unitarias nuevas, 52 core, tipos/lint/web/Hermes aprobados. Auditor 4/4 independiente y capturas APROBADO. Regresiones pendientes, no OTA nueva todavía. No se reprodujo literalmente blanco Samsung ni se tocaron datos/finanzas remotos.
+
 ### 2026-10-28 · observación de la entrega de referencias
 
 EAS40698064910 Success confirma `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4` como última OTA Android preview compatible con APK5, request `003fa12`, fuente limpia y sin rollback. Es observación del servidor, no recepción Samsung. No repetir publicación ni afirmar prueba física.

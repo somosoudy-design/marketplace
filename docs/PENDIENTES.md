@@ -1,5 +1,9 @@
 # Pendientes de Kora
 
+## Compra · 29oct2026
+
+- Reporte de blanco al finalizar en Samsung: se corrigió la pérdida de continuidad por respuesta perdida y la navegación con resultado incompleto. 10 UI nuevas/11 unitarias y auditoría independiente aprobadas; regresiones en curso y OTA preview pendiente. [Detalle](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md). No afirmar reproducción literal o recepción nativa.
+
 ## Referencias visuales · 28oct2026
 
 - Tres puntos implementados y auditados para web/backend local: Inicio/catálogo, métodos de pago y revisión con totales. [Capturas y detalle](REDISENO_REFERENCIAS_2026-10-28.md). Compra completa local aprobada al repetir el caso con dato demo. Publicado EAS40697681395 con guard APK5, ID `01a182ba-0cf5-7d7b-97a0-5cd6475af0b4`; observación EAS40698064910 confirmó última compatible; recepción Samsung pendiente.

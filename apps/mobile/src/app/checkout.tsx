@@ -1,12 +1,12 @@
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
-import { ApiError, type CheckoutSummary, type DeliveryGroup, type ShippingSelection } from '@kora/api';
+import { ApiError, type CheckoutSummary, type DeliveryGroup, type PlaceOrderResult, type ShippingSelection } from '@kora/api';
 import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL } from '@kora/core';
 import { palette } from '@kora/design-tokens';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack, useFocusEffect, useNavigation } from 'expo-router';
 import { usePreventRemove } from 'expo-router/react-navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, findNodeHandle, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { AccessibilityInfo, ActivityIndicator, findNodeHandle, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -18,6 +18,7 @@ import { Banner, EmptyState, ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { registerCheckoutWebBack } from '@/lib/checkout-navigation';
+import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/lib/checkout-confirmation';
 import { haptics } from '@/lib/haptics';
 import { useAddresses } from '@/lib/hooks';
 import { intentKey } from '@/lib/ids';
@@ -42,11 +43,18 @@ type OrderSelection = { addressId: string; shipping: ShippingSelection; plan: st
 type Preview = CheckoutSummary & { recoveredShipping: boolean };
 
 export default function CheckoutScreen() {
+  const { user } = useAuth();
+  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace('/sign-in')} />;
+  // An in-flight attempt belongs to one buyer; switching account must never recover or open another buyer's order.
+  return <CheckoutSession key={user.id} buyerId={user.id} />;
+}
+
+function CheckoutSession({ buyerId }: { buyerId: string }) {
   const t = useTheme();
   const { height: windowHeight, fontScale } = useWindowDimensions();
   const qc = useQueryClient();
   const navigation = useNavigation();
-  const { user, cartSyncing } = useAuth();
+  const { cartSyncing } = useAuth();
   const addresses = useAddresses();
   const [step, setStep] = useState(0);
   const [deliveryIndex, setDeliveryIndex] = useState(0);
@@ -59,12 +67,14 @@ export default function CheckoutScreen() {
   const [shippingRecovered, setShippingRecovered] = useState(false);
   const [lastPreview, setLastPreview] = useState<{ userId: string; summary: Preview } | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [recoveredOrder, setRecoveredOrder] = useState<PlaceOrderResult | null>(null);
   const [plan, setPlan] = useState('full');
   const [barHeight, setBarHeight] = useState(150);
   const scrollRef = useRef<ScrollView>(null);
   const headingRef = useRef<View>(null);
   const submitting = useRef(false);
   const leaving = useRef(false);
+  const attempt = useRef<{ selection: OrderSelection; snapshot: Preview } | null>(null);
   // One intent per checkout visit, including back, edits and retries after a lost response.
   const orderKey = useRef(intentKey('order')).current;
 
@@ -77,7 +87,7 @@ export default function CheckoutScreen() {
   }
 
   const preview = useQuery({
-    queryKey: ['checkout', user?.id, addressId, shipping, plan],
+    queryKey: ['checkout', buyerId, addressId, shipping, plan],
     queryFn: async () => {
       let selection = shipping;
       let planCode: string | null = plan;
@@ -93,14 +103,14 @@ export default function CheckoutScreen() {
       }
       throw new Error('No pudimos actualizar las opciones. Intenta de nuevo.');
     },
-    enabled: !!user && !cartSyncing && addresses.isSuccess && !confirming,
+    enabled: !cartSyncing && addresses.isSuccess && !confirming,
     staleTime: 0,
     placeholderData: keepPreviousData,
   });
   // A changed query key loses its placeholder on failure. Keep the last server snapshot legible,
   // scoped to this account, while the fresh/error guards prevent using it to advance or confirm.
-  const s = preview.data ?? (lastPreview?.userId === user?.id ? lastPreview?.summary : undefined);
-  if (preview.data && !preview.isPlaceholderData && user && preview.data !== lastPreview?.summary) setLastPreview({ userId: user.id, summary: preview.data });
+  const s = confirming && attempt.current ? attempt.current.snapshot : preview.data ?? (lastPreview?.userId === buyerId ? lastPreview?.summary : undefined);
+  if (preview.data && !preview.isPlaceholderData && preview.data !== lastPreview?.summary) setLastPreview({ userId: buyerId, summary: preview.data });
 
   if (s && !preview.isPlaceholderData && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
   if (s?.recoveredShipping && !preview.isPlaceholderData && Object.keys(shipping).length) {
@@ -111,7 +121,10 @@ export default function CheckoutScreen() {
   }
 
   const place = useMutation({
-    mutationFn: (selection: OrderSelection) => api.checkout.placeOrder(selection.addressId, selection.shipping, selection.plan, orderKey),
+    mutationFn: (selection: OrderSelection) => confirmCheckout(
+      () => api.checkout.placeOrder(selection.addressId, selection.shipping, selection.plan, orderKey),
+      () => api.checkout.placedOrder(buyerId, orderKey),
+    ),
     onSuccess: () => {
       haptics.success();
       qc.invalidateQueries({ queryKey: ['cart'] });
@@ -119,6 +132,11 @@ export default function CheckoutScreen() {
     },
     onError: (e) => {
       submitting.current = false;
+      if (e instanceof UnconfirmedCheckoutError) {
+        // Keep the reviewed attempt: an empty cart cannot tell us whether the order was created.
+        haptics.warning();
+        return;
+      }
       setConfirming(false);
       haptics.warning();
       if (e instanceof ApiError) {
@@ -134,37 +152,54 @@ export default function CheckoutScreen() {
     },
   });
 
+  const recovery = useMutation({
+    mutationFn: () => recoverCheckout(() => api.checkout.placedOrder(buyerId, orderKey)),
+    onSuccess: (result) => {
+      submitting.current = false;
+      if (!result) return;
+      setRecoveredOrder(result);
+      haptics.success();
+      qc.invalidateQueries({ queryKey: ['cart'] });
+      qc.invalidateQueries({ queryKey: ['orders'] });
+    },
+    onError: () => { submitting.current = false; haptics.warning(); },
+  });
+  const completed = recoveredOrder ?? (place.isSuccess ? place.data : null);
+
   const resetOrderError = place.reset;
   const goTo = useCallback((next: number, groupIndex = 0) => {
-    if (submitting.current) return;
+    if (submitting.current || confirming) return;
     resetOrderError();
     setDeliveryIndex(groupIndex);
     setStep(next);
-  }, [resetOrderError]);
+  }, [resetOrderError, confirming]);
   const deliveryCount = s?.groups.length ?? 1;
   const back = useCallback(() => {
-    if (submitting.current) return;
+    if (submitting.current || confirming) return;
     if (step === 1 && deliveryIndex > 0) goTo(1, deliveryIndex - 1);
     else if (step > 0) goTo(step - 1, step === 2 ? Math.max(0, deliveryCount - 1) : 0);
     else if (router.canGoBack()) router.back();
     else router.replace('/cart');
-  }, [step, deliveryIndex, deliveryCount, goTo]);
+  }, [step, deliveryIndex, deliveryCount, goTo, confirming]);
   // Native/header/browser back follows the phases instead of discarding the checkout selection.
-  usePreventRemove(!!user && (step > 0 || place.isPending) && !place.isSuccess, ({ data }) => {
+  usePreventRemove((step > 0 || confirming || place.isPending) && !completed, ({ data }) => {
     if (leaving.current && !submitting.current) navigation.dispatch(data.action);
     else back();
   });
   useFocusEffect(useCallback(() => {
     if (Platform.OS !== 'web') return;
     return registerCheckoutWebBack({
-      shouldHandle: () => !leaving.current && !place.isSuccess && (step > 0 || submitting.current),
-      isSubmitting: () => submitting.current && !place.isSuccess,
+      shouldHandle: () => !leaving.current && !completed && (step > 0 || confirming || submitting.current),
+      isSubmitting: () => (confirming || submitting.current) && !completed,
       onBack: back,
     });
-  }, [step, back, place.isSuccess]));
+  }, [step, back, confirming, completed]));
   useEffect(() => {
-    if (place.isSuccess && place.data) router.replace({ pathname: '/pay/[orderId]', params: { orderId: place.data.order_id, fresh: '1' } });
-  }, [place.isSuccess, place.data]);
+    if (!completed) return;
+    submitting.current = false;
+    leaving.current = true;
+    router.replace({ pathname: '/pay/[orderId]', params: { orderId: completed.order_id, fresh: '1' } });
+  }, [completed]);
   const hasSummary = !!s;
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -178,7 +213,40 @@ export default function CheckoutScreen() {
     return () => cancelAnimationFrame(frame);
   }, [step, deliveryIndex, hasSummary]);
 
-  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace('/sign-in')} />;
+  const viewOrders = () => {
+    if (submitting.current) return;
+    leaving.current = true;
+    router.replace('/orders');
+  };
+  if (completed) return <ScrollView testID="checkout-created" style={{ flex: 1, backgroundColor: t.colors.background }} contentContainerStyle={{ flexGrow: 1, padding: 24, gap: 16, justifyContent: 'center', alignItems: 'center' }}>
+    <Stack.Screen options={{ title: 'Pedido creado', headerBackVisible: false, headerLeft: () => null }} />
+    <Icon name="circle-check" size={44} color={t.colors.success} />
+    <Text variant="title" align="center">Pedido {completed.number} creado</Text>
+    <Text color="textSecondary" align="center">Tu pedido está guardado. Continúa para elegir cómo pagar.</Text>
+    <Button testID="checkout-open-payment" title="Continuar al pago" full onPress={() => router.replace({ pathname: '/pay/[orderId]', params: { orderId: completed.order_id, fresh: '1' } })} />
+    <Button title="Ver mi pedido" variant="ghost" onPress={() => router.replace({ pathname: '/orders/[id]', params: { id: completed.order_id } })} />
+  </ScrollView>;
+  if (confirming) {
+    const checking = place.isPending || recovery.isPending;
+    return <ScrollView testID={checking ? 'checkout-confirming' : 'checkout-recovery'} style={{ flex: 1, backgroundColor: t.colors.background }} contentContainerStyle={{ flexGrow: 1, padding: 24, gap: 16, justifyContent: 'center', alignItems: 'center' }}>
+      <Stack.Screen options={{ title: 'Confirmar pedido', headerLeft: () => <IconButton testID="checkout-back" icon="chevron-left" label="Ver mis pedidos" disabled={checking} onPress={viewOrders} /> }} />
+      {checking ? <ActivityIndicator size="large" color={t.colors.brand} /> : <Icon name="wifi-off" size={40} color={t.colors.textSecondary} />}
+      <Text testID="checkout-confirmation-status" variant="title" align="center" accessibilityLiveRegion="polite">{checking ? 'Estamos confirmando tu pedido' : 'No recibimos la confirmación'}</Text>
+      <Text color="textSecondary" align="center">{checking ? 'Estamos comprobando que tu compra quede guardada.' : 'Tu pedido podría haberse creado. Compruébalo para continuar con la misma compra.'}</Text>
+      {recovery.isError ? <Banner tone="danger" body="No pudimos consultar tu pedido. Revisa tu conexión e intenta de nuevo." /> : null}
+      {recovery.isSuccess && !recovery.data ? <Text variant="bodySmall" color="textSecondary" align="center">La confirmación aún no aparece. Puedes volver a confirmar esta misma compra.</Text> : null}
+      {!checking ? <>
+        <Button testID="checkout-check-order" title="Comprobar pedido" full onPress={() => { if (submitting.current) return; submitting.current = true; recovery.mutate(); }} />
+        {recovery.isSuccess && !recovery.data ? <Button testID="checkout-retry-confirmation" title="Reintentar confirmación" variant="secondary" full onPress={() => {
+          if (submitting.current || !attempt.current) return;
+          submitting.current = true;
+          recovery.reset();
+          place.mutate(attempt.current.selection);
+        }} /> : null}
+        <Button testID="checkout-view-orders" title="Ver mis pedidos" variant="ghost" onPress={viewOrders} />
+      </> : null}
+    </ScrollView>;
+  }
   if (addresses.isError) return <ErrorState error={addresses.error} onRetry={() => addresses.refetch()} />;
   if (preview.isError && !s) return <ErrorState error={preview.error} onRetry={() => preview.refetch()} />;
   if (!s) return <View style={{ padding: 16, gap: 14, backgroundColor: t.colors.background, flex: 1 }}><Skeleton height={65} /><Skeleton height={200} radius={t.radii.lg} /></View>;
@@ -210,9 +278,11 @@ export default function CheckoutScreen() {
   };
   const confirm = () => {
     if (step !== 3 || !canPlace || !addressId || submitting.current) return;
+    const selection = { addressId, shipping: currentSelection(s, shipping), plan };
+    attempt.current = { selection, snapshot: s };
     submitting.current = true;
     setConfirming(true);
-    place.mutate({ addressId, shipping: currentSelection(s, shipping), plan });
+    place.mutate(selection);
   };
 
   return (
