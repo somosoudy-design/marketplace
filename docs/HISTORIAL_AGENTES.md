@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-10-29 · cierre de validación de confirmación
+
+Lint rechazó el snapshot en ref durante render. Se movió a estado sin cambiar clave ni guard síncrono; export final web/AndroidHermes, tipos/lint monorepo, 42 UI, 11 unitarias y 52 core aprobados. Auditor repitió 4/4 y revisó capturas finales, APROBADO web/local. Lectura remota confirma unicidad/serialización comprador-intención, sin escrituras. Blanco Samsung literal no observado. Próximo: solicitar una OTA preview/APK5 y registrar resultado/ID; no recompilar APK ni tocar finanzas.
+
 ### 2026-10-29 · diagnóstico y recuperación de confirmación
 
 Dos especialistas revisaron sin editar. Se descartó un parche especulativo de temporización nativa; se reprodujo dos veces respuesta perdida tras crear pedido, con un solo pedido real local y carrito vacío sustituyendo confirmación. Root integra lookup por comprador/clave, snapshot/reintento estable, validación de respuesta y estados explícitos; sesión aislada por cuenta. 10 UI/11 unitarias nuevas, 52 core, tipos/lint/web/Hermes aprobados. Auditor 4/4 independiente y capturas APROBADO. Regresiones pendientes, no OTA nueva todavía. No se reprodujo literalmente blanco Samsung ni se tocaron datos/finanzas remotos.

@@ -74,7 +74,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const headingRef = useRef<View>(null);
   const submitting = useRef(false);
   const leaving = useRef(false);
-  const attempt = useRef<{ selection: OrderSelection; snapshot: Preview } | null>(null);
+  const [attempt, setAttempt] = useState<{ selection: OrderSelection; snapshot: Preview } | null>(null);
   // One intent per checkout visit, including back, edits and retries after a lost response.
   const orderKey = useRef(intentKey('order')).current;
 
@@ -109,7 +109,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   });
   // A changed query key loses its placeholder on failure. Keep the last server snapshot legible,
   // scoped to this account, while the fresh/error guards prevent using it to advance or confirm.
-  const s = confirming && attempt.current ? attempt.current.snapshot : preview.data ?? (lastPreview?.userId === buyerId ? lastPreview?.summary : undefined);
+  const s = confirming && attempt ? attempt.snapshot : preview.data ?? (lastPreview?.userId === buyerId ? lastPreview?.summary : undefined);
   if (preview.data && !preview.isPlaceholderData && preview.data !== lastPreview?.summary) setLastPreview({ userId: buyerId, summary: preview.data });
 
   if (s && !preview.isPlaceholderData && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
@@ -238,10 +238,10 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
       {!checking ? <>
         <Button testID="checkout-check-order" title="Comprobar pedido" full onPress={() => { if (submitting.current) return; submitting.current = true; recovery.mutate(); }} />
         {recovery.isSuccess && !recovery.data ? <Button testID="checkout-retry-confirmation" title="Reintentar confirmación" variant="secondary" full onPress={() => {
-          if (submitting.current || !attempt.current) return;
+          if (submitting.current || !attempt) return;
           submitting.current = true;
           recovery.reset();
-          place.mutate(attempt.current.selection);
+          place.mutate(attempt.selection);
         }} /> : null}
         <Button testID="checkout-view-orders" title="Ver mis pedidos" variant="ghost" onPress={viewOrders} />
       </> : null}
@@ -279,7 +279,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const confirm = () => {
     if (step !== 3 || !canPlace || !addressId || submitting.current) return;
     const selection = { addressId, shipping: currentSelection(s, shipping), plan };
-    attempt.current = { selection, snapshot: s };
+    setAttempt({ selection, snapshot: s });
     submitting.current = true;
     setConfirming(true);
     place.mutate(selection);

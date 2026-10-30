@@ -8,7 +8,7 @@
 
 Oliver reportó blanco total al finalizar en Android. Root y dos especialistas revisaron navegación/Pago y reprodujeron dos veces un fallo local relacionado: el pedido se crea pero la respuesta se pierde; el preview vacío elimina la revisión y el acceso al pedido. Blanco literal Samsung no observado. Corrección integrada: lectura por comprador+intención exactos, snapshot/clave conservados, respuestas validadas, estados explícitos y check sólo lectura/reintento estable. El checkout se aísla por cuenta. [Informe y evidencia](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md).
 
-11 unitarias/10 UI nuevas, 52 core, tipos/lint y web/AndroidHermes aprobados. Auditor independiente ejecutó 4/4 y revisó cinco capturas, APROBADO web/backend local. Próxima acción: terminar regresiones en `.local/compra-blanco-20261029/regresiones.log`, checkpoint y publicar sólo preview/APK5 con autorización vigente; registrar ID/observación EAS sin afirmar recepción Samsung. No backend remoto, finanzas, APK o iOS.
+Validación final: 42 UI (10 nuevas + 32 de regresión), 11 unitarias del helper/52 core, tipos/lint y web/AndroidHermes aprobados. Snapshot movido a estado React tras rechazo del lint; 42 UI repetidas en `.local/compra-blanco-20261029/state-tests.log` y auditor 4/4 final APROBADO. Cinco capturas finales archivadas. Próxima acción: checkpoint y publicar sólo preview/APK5 con autorización vigente; registrar ID/observación EAS sin afirmar recepción Samsung. No backend remoto, finanzas, APK o iOS.
 
 ## Entrega publicada · referencias de catálogo y compra, 28 de octubre
 

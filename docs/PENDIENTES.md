@@ -2,7 +2,7 @@
 
 ## Compra · 29oct2026
 
-- Reporte de blanco al finalizar en Samsung: se corrigió la pérdida de continuidad por respuesta perdida y la navegación con resultado incompleto. 10 UI nuevas/11 unitarias y auditoría independiente aprobadas; regresiones en curso y OTA preview pendiente. [Detalle](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md). No afirmar reproducción literal o recepción nativa.
+- Reporte de blanco al finalizar en Samsung: se corrigió la pérdida de continuidad por respuesta perdida y la navegación con resultado incompleto. 42 UI finales/11 unitarias/52 core, tipos/lint/Hermes y auditoría independiente aprobados; OTA preview pendiente. [Detalle](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md). No afirmar reproducción literal o recepción nativa.
 
 ## Referencias visuales · 28oct2026
 
