@@ -34,7 +34,7 @@ export default function LoginPage() {
 
   return (
     <div className="grid min-h-dvh place-items-center px-4">
-      <form onSubmit={submit} className="w-full max-w-[400px] rounded-[28px] border border-line bg-surface p-8 shadow-sm">
+      <form method="post" onSubmit={submit} className="w-full max-w-[400px] rounded-[28px] border border-line bg-surface p-8 shadow-sm">
         <span className="mb-6 block"><BrandMark size={44} radius={14} /></span>
         <h1 className="font-display text-[28px] font-semibold">Panel de {brand.name}</h1>
         <p className="mt-1 mb-6 text-[15px] text-ink-2">Administración y vendedores. Usa tu cuenta del marketplace.</p>

@@ -7,7 +7,10 @@ import { kora } from './kora';
 // The day's gap the prices are built with (docs/PRECIOS.md). Previews in the panel use the shared core with these
 // rates; the database repeats the calculation and is what charges.
 
-export const inForce = (s: PricingSnapshot | null | undefined): boolean => !!s && new Date(s.valid_until).getTime() > Date.now();
+export const inForce = (s: PricingSnapshot | null | undefined): boolean => {
+  const now = Date.now();
+  return !!s && new Date(s.taken_at).getTime() <= now && new Date(s.valid_until).getTime() > now;
+};
 export const gapRates = (s: PricingSnapshot): GapSnapshot => ({ bcv: s.bcv_rate, usdt_ves: s.usdt_ves_rate, usd_usdt: s.usd_usdt_rate });
 export const pct = (v: string | number) => `${String(Number(Number(v).toFixed(2))).replace('.', ',')} %`;
 

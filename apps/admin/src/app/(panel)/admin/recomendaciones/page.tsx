@@ -197,7 +197,7 @@ function RankingEditor() {
       }
     >
       {saved.isPending ? <Loading rows={3} /> : saved.isError ? <ErrorBox error={saved.error} onRetry={() => saved.refetch()} /> : (
-        <form
+        <form method="post"
           className="flex flex-col gap-5"
           data-testid="ranking-form"
           onSubmit={(e) => {

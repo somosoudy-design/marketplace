@@ -200,7 +200,7 @@ export function ErrorBox({ error, onRetry }: { error: unknown; onRetry?: () => v
     <div className="p-5">
       <Notice tone="danger" title="No pudimos cargar esta información">
         <p>{error instanceof Error ? error.message : 'Intenta de nuevo.'}</p>
-        {onRetry ? <button onClick={onRetry} className="mt-2 font-bold underline">Reintentar</button> : null}
+        {onRetry ? <button type="button" onClick={onRetry} className="mt-2 inline-flex min-h-[44px] items-center font-bold underline">Reintentar</button> : null}
       </Notice>
     </div>
   );
@@ -295,8 +295,9 @@ export function Td({ children, className, ...rest }: { children?: ReactNode; cla
 }
 
 // ---------- dialog ----------
-export function Dialog({ open, onClose, title, children, footer, wide }: { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode; wide?: boolean }) {
+export function Dialog({ open, onClose, title, children, footer, wide, busy = false }: { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode; wide?: boolean; busy?: boolean }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   useEffect(() => {
     const d = ref.current;
     if (!d) return;
@@ -306,18 +307,20 @@ export function Dialog({ open, onClose, title, children, footer, wide }: { open:
   return (
     <dialog
       ref={ref}
+      aria-labelledby={titleId}
+      aria-busy={busy || undefined}
       onClose={onClose}
-      onCancel={(e) => { e.preventDefault(); onClose(); }}
+      onCancel={(e) => { e.preventDefault(); if (!busy) onClose(); }}
       className={cx('m-auto w-[min(94vw,520px)] rounded-[24px] border border-line bg-surface p-0 text-ink shadow-2xl backdrop:bg-[var(--overlay)]', wide && 'w-[min(94vw,860px)]')}
     >
       {open ? (
         <div className="flex max-h-[86vh] flex-col">
-          <div className="flex items-center justify-between border-b border-line px-6 py-4">
-            <h2 className="font-display text-xl font-semibold">{title}</h2>
-            <button onClick={onClose} aria-label="Cerrar" className="rounded-full px-2 text-2xl leading-none text-ink-3 hover:text-ink">×</button>
+          <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-6 sm:py-4">
+            <h2 id={titleId} className="min-w-0 break-words font-display text-xl font-semibold">{title}</h2>
+            <button type="button" disabled={busy} onClick={onClose} aria-label="Cerrar" className="inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full text-2xl leading-none text-ink-3 hover:text-ink">×</button>
           </div>
-          <div className="overflow-y-auto px-6 py-5">{children}</div>
-          {footer ? <div className="flex justify-end gap-2 border-t border-line px-6 py-4">{footer}</div> : null}
+          <div className="min-h-0 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">{children}</div>
+          {footer ? <div className="flex shrink-0 flex-col gap-2 border-t border-line px-4 py-3 sm:flex-row sm:flex-wrap sm:justify-end sm:px-6 sm:py-4">{footer}</div> : null}
         </div>
       ) : null}
     </dialog>

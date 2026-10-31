@@ -323,6 +323,18 @@ export function createApi(client: KoraClient) {
     },
     notifications: (limit = 50) =>
       run<Notification[]>(from('notifications').select('*').order('created_at', { ascending: false }).limit(limit)),
+    /** Inbox is paginated and explicitly owned, even when a privileged account buys. Keep notifications() compatible. */
+    notificationPage: async (userId: string, offset = 0, limit = 50) => {
+      const size = Math.max(1, Math.min(100, Math.trunc(limit)));
+      const start = Math.max(0, Math.trunc(offset));
+      const rows = await run<Notification[]>(from('notifications').select('*').eq('user_id', userId)
+        .order('created_at', { ascending: false }).order('id', { ascending: false }).range(start, start + size));
+      return { items: rows.slice(0, size), hasMore: rows.length > size };
+    },
+    /** Exact unread total, independent of the currently loaded page. No message bodies downloaded. */
+    notificationUnreadCount: (userId: string) => run<number>(from('notifications')
+      .select('id', { count: 'exact', head: true }).eq('user_id', userId).is('read_at', null)
+      .then(({ count, error }: { count: number | null; error: unknown }) => ({ data: count ?? 0, error }))),
     markNotificationsRead: (ids?: string[]) => run<number>(rpc('mark_notifications_read', { p_ids: ids ?? null })),
     registerPushToken: (token: string, platform: 'ios' | 'android' | 'web') =>
       run<void>(rpc('register_push_token', { p_token: token, p_platform: platform })),

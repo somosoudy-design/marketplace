@@ -72,7 +72,7 @@ function Recovery() {
           </Link>
         </section>
       ) : (
-        <form
+        <form method="post"
           className="login-form"
           onSubmit={(e) => {
             e.preventDefault();

@@ -7,6 +7,7 @@ import { Badge, Button, Card, Dialog, ErrorBox, Field, Input, Loading, Notice, P
 import { ago, dateTime, money, RATE_SOURCE_LABEL } from '@/lib/format';
 import { apiPost, db, kora, rpc, run } from '@/lib/kora';
 import { inForce, pct, useGap } from '@/lib/pricing';
+import { ratePolicyPayload } from '@/lib/rate-policy';
 
 const PAIRS = ['USD/VES', 'USDT/VES', 'USD/USDT'] as const;
 type Pair = (typeof PAIRS)[number];
@@ -74,11 +75,11 @@ export default function RatesPage() {
             </div>
           ) : (
             <Notice tone="danger" title="Sin tasa válida">
-              Ninguna fuente tiene un valor más reciente que el máximo permitido. Los pagos en esta moneda quedan bloqueados hasta que una fuente responda o fijes una tasa manual. Nunca se usa en silencio una tasa vencida.
+              Ninguna fuente tiene un valor vigente para este par. Para BCV se comprueban la Fecha Valor y el calendario bancario; las otras fuentes usan su antigüedad máxima. Los pagos en esta moneda quedan bloqueados hasta que una fuente responda o fijes una tasa manual. Nunca se usa en silencio una tasa vencida.
             </Notice>
           )}
         </Card>
-        {policy.data ? <PolicyCard policy={policy.data} sources={sources.data ?? []} /> : <Card title="Política"><Loading rows={3} /></Card>}
+        {policy.data ? <PolicyCard key={policy.data.pair} policy={policy.data} sources={sources.data ?? []} /> : <Card title="Política"><Loading rows={3} /></Card>}
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         <Card title="Historial" padded={false}>
@@ -103,7 +104,7 @@ export default function RatesPage() {
           </Table>
         </Card>
       </div>
-      <ManualDialog open={manual} onClose={() => setManual(false)} pair={pair} current={policy.data} />
+      <ManualDialog key={pair} open={manual} onClose={() => setManual(false)} pair={pair} current={policy.data} />
     </>
   );
 }
@@ -115,12 +116,7 @@ function PolicyCard({ policy: p, sources }: { policy: Policy; sources: Source[] 
   const usable = sources.filter((s) => s.pair === p.pair || s.pair === '*');
   const save = useMutation({
     mutationFn: () => {
-      const fallbacks = f.fallbacks.split(',').map((x) => x.trim()).filter(Boolean);
-      const unknown = fallbacks.filter((x) => !usable.some((s) => s.code === x));
-      if (unknown.length) throw new Error(`Fuentes desconocidas: ${unknown.join(', ')}`);
-      const margin = Number(f.margin.replace(',', '.'));
-      if (!(margin >= 0 && margin <= 20)) throw new Error('El margen debe estar entre 0% y 20%.');
-      return run(db('rate_policies').update({ primary_source: f.primary, fallback_sources: fallbacks, margin_pct: margin, max_age_minutes: Number(f.maxAge), rounding_decimals: Number(f.rounding) }).eq('pair', p.pair));
+      return run(db('rate_policies').update(ratePolicyPayload(p.pair, f, sources)).eq('pair', p.pair));
     },
     onSuccess: () => { toast.ok('Política actualizada'); qc.invalidateQueries(); },
     onError: toast.error,
@@ -135,7 +131,7 @@ function PolicyCard({ policy: p, sources }: { policy: Policy; sources: Source[] 
         </Field>
         <Field label="Respaldo (en orden)" hint="Códigos separados por coma"><Input value={f.fallbacks} onChange={(e) => setF({ ...f, fallbacks: e.target.value })} /></Field>
         <Field label="Margen (%)" hint="Se suma a la tasa base al cotizar"><Input inputMode="decimal" value={f.margin} onChange={(e) => setF({ ...f, margin: e.target.value })} /></Field>
-        <Field label="Antigüedad máxima (min)" hint="Más vieja que esto no se usa"><Input type="number" min={5} value={f.maxAge} onChange={(e) => setF({ ...f, maxAge: e.target.value })} /></Field>
+        <Field label="Antigüedad máxima (min)" hint={p.pair === 'USD/VES' ? 'Las fuentes oficiales usan Fecha Valor y calendario bancario verificado. Este límite aplica a las demás fuentes.' : 'Una observación más antigua que este límite no se usa.'}><Input type="number" min={5} value={f.maxAge} onChange={(e) => setF({ ...f, maxAge: e.target.value })} /></Field>
         <Field label="Decimales"><Input type="number" min={0} max={8} value={f.rounding} onChange={(e) => setF({ ...f, rounding: e.target.value })} /></Field>
         {p.manual_rate ? <Field label="Tasa manual vigente"><p className="text-sm">{p.manual_rate} hasta {dateTime(p.manual_valid_until)} · {p.manual_note}</p></Field> : null}
       </div>

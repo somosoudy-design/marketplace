@@ -2,9 +2,11 @@ import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { Notification } from '@kora/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
-import { RefreshControl, SectionList, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { RefreshControl, SectionList, StyleSheet, View, type ViewToken } from 'react-native';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { useAuth } from '@/lib/auth';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -16,6 +18,8 @@ import { noticeTarget } from '@/lib/notice-target';
 import { qk } from '@/lib/query';
 import { api } from '@/lib/supabase';
 import { useTheme, type Theme } from '@/theme';
+
+const NOTICE_VIEWABILITY = { itemVisiblePercentThreshold: 60, minimumViewTime: 1500 };
 
 type Kind = 'good' | 'attention' | 'problem' | 'shipping' | 'neutral';
 const KIND: Record<string, { icon: IconName; kind: Kind }> = {
@@ -56,19 +60,38 @@ function dayBucket(iso: string): string {
 }
 
 export default function NotificationsScreen() {
+  const { ready, user } = useAuth();
+  if (!ready) return <Skeleton height={68} />;
+  if (!user) return <EmptyState icon="bell" title="Inicia sesión para ver tus avisos" action="Iniciar sesión" onAction={() => router.push('/sign-in')} />;
+  return <NotificationInbox key={user.id} />;
+}
+
+function NotificationInbox() {
   const t = useTheme();
   const qc = useQueryClient();
   const q = useNotifications();
-  const markAll = useMutation({ mutationFn: () => api.account.markNotificationsRead(), onSuccess: () => qc.invalidateQueries({ queryKey: qk.notifications }) });
-  // what was unread on arrival keeps its dot for this visit, even after it is marked as read on the server
-  const [fresh, setFresh] = useState<Set<string> | null>(null);
-  if (fresh === null && q.data) setFresh(new Set(q.data.filter((n) => !n.read_at).map((n) => n.id)));
-  const unread = (q.data ?? []).filter((n) => !n.read_at).length;
+  const [fresh, setFresh] = useState<Set<string>>(() => new Set());
+  const [visibleIds, setVisibleIds] = useState<string[]>([]);
+  const markAll = useMutation({
+    mutationFn: (ids: string[]) => api.account.markNotificationsRead(ids),
+    onSuccess: async (_count, ids) => {
+      setFresh((previous) => new Set([...previous, ...ids]));
+      await qc.invalidateQueries({ queryKey: qk.notifications });
+    },
+  });
+  // SectionList invokes this stable callback only after a row stays at least 60% visible for 1.5 seconds.
+  // Loaded pages are NOT assumed read. Off-screen notices remain unread until viewed or explicitly marked.
+  const onViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken<Notification>[] }) => {
+    setVisibleIds(viewableItems.filter((item) => item.isViewable && typeof item.item?.id === 'string').map((item) => item.item.id));
+  }, []);
+  const visible = new Set(visibleIds);
+  const unreadLoaded = (q.data ?? []).filter((n) => !n.read_at).map((n) => n.id);
+  const unreadVisible = unreadLoaded.filter((id) => visible.has(id)).join(',');
+  const { mutate: markViewed, isPending: marking, isError: markFailed } = markAll;
   useEffect(() => {
-    if (!unread) return;
-    const id = setTimeout(() => markAll.mutate(), 1500);
-    return () => clearTimeout(id);
-  }, [unread]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!unreadVisible || marking || markFailed) return;
+    markViewed(unreadVisible.split(','));
+  }, [unreadVisible, marking, markFailed, markViewed]);
 
   const sections = useMemo(() => {
     const out: { title: string; data: Notification[] }[] = [];
@@ -94,6 +117,8 @@ export default function NotificationsScreen() {
       style={{ backgroundColor: t.colors.background }}
       contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 40, width: '100%', maxWidth: 720, alignSelf: 'center', flexGrow: 1 }}
       stickySectionHeadersEnabled={false}
+      viewabilityConfig={NOTICE_VIEWABILITY}
+      onViewableItemsChanged={onViewableItemsChanged}
       refreshControl={<RefreshControl refreshing={q.isRefetching} onRefresh={() => q.refetch()} tintColor={t.colors.brand} />}
       ListEmptyComponent={
         q.isLoading ? (
@@ -102,18 +127,18 @@ export default function NotificationsScreen() {
           <EmptyState icon="bell" title="Todo al día" body="Aquí verás los avisos de tus pagos, envíos y reclamos." />
         )
       }
-      ListHeaderComponent={
-        allTest && !isPrivateCatalogPresentation ? (
-          <View style={{ marginTop: 16 }}>
-            <Banner tone="info" icon="info" body="Estos avisos vienen de pedidos de demostración. Son de prueba y nunca se envían como notificación a tu teléfono." />
-          </View>
-        ) : null
-      }
+      ListHeaderComponent={<View style={{ gap: 12, marginTop: 16 }}>
+        {unreadLoaded.length ? <Button testID="notifications-mark-loaded" title="Marcar cargadas como leídas" variant="ghost" loading={marking} onPress={() => markViewed(unreadLoaded)} /> : null}
+        {allTest && !isPrivateCatalogPresentation ? <Banner tone="info" icon="info" body="Estos avisos vienen de pedidos de demostración. Son de prueba y nunca se envían como notificación a tu teléfono." /> : null}
+        {q.isError && q.data ? <Banner tone="warning" body="No pudimos actualizar tus avisos."><Button title="Reintentar" variant="ghost" onPress={() => q.isFetchNextPageError ? q.fetchNextPage() : q.refetch()} /></Banner> : null}
+        {markAll.isError ? <Banner tone="warning" body="No pudimos marcar estos avisos como leídos."><Button title="Reintentar" variant="ghost" loading={markAll.isPending} onPress={() => markAll.variables && markViewed(markAll.variables)} /></Banner> : null}
+      </View>}
+      ListFooterComponent={q.hasNextPage ? <Button testID="notifications-more" title="Ver más notificaciones" variant="secondary" loading={q.isFetchingNextPage} disabled={q.isFetching} onPress={() => q.fetchNextPage()} style={{ marginTop: 20 }} /> : null}
       renderSectionHeader={({ section }) => (
         <Text variant="overline" color="textMuted" style={{ marginTop: 22, marginBottom: 8, marginLeft: 4 }}>{section.title}</Text>
       )}
       renderItem={({ item: n, index, section }) => (
-        <Row n={n} isNew={!!fresh?.has(n.id)} first={index === 0} last={index === section.data.length - 1} labelTest={!allTest && !isPrivateCatalogPresentation} />
+        <Row n={n} isNew={!n.read_at || fresh.has(n.id)} first={index === 0} last={index === section.data.length - 1} labelTest={!allTest && !isPrivateCatalogPresentation} />
       )}
     />
   );

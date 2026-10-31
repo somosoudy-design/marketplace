@@ -79,6 +79,14 @@ function Account() {
             </div>
             <ArrowRight />
           </Link>
+          <Link href="/notificaciones">
+            <ShoppingBag />
+            <div>
+              <h2>Notificaciones</h2>
+              <p>Novedades de tus pedidos y pagos.</p>
+            </div>
+            <ArrowRight />
+          </Link>
           <Link href="/favoritos">
             <Heart />
             <div>
@@ -129,6 +137,7 @@ function Account() {
         </Link>
       </section>
       <form
+        method="post"
         className="login-form"
         onSubmit={(e) => {
           e.preventDefault();

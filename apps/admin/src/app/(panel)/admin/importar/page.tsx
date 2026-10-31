@@ -131,7 +131,7 @@ export default function ImportPage() {
         description="Leemos solo la página que pegues y solo los datos que publica para vistas previas. Las tiendas que prohíben la extracción automática se cargan a mano. El precio de venta lo fijas tú y el producto entra a moderación."
       />
       <Card className="mb-5">
-        <form onSubmit={submit} className="flex flex-wrap items-end gap-3">
+        <form method="post" onSubmit={submit} className="flex flex-wrap items-end gap-3">
           <Field label="Enlace del producto" className="min-w-[280px] flex-1">
             <Input type="url" inputMode="url" required placeholder="https://…" value={url} onChange={(e) => setUrl(e.target.value)} aria-label="Enlace del producto" />
           </Field>

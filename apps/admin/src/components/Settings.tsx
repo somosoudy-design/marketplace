@@ -236,7 +236,7 @@ function SettingsGroup({ group, rows, preview }: { group: Group; rows: Map<strin
   const set = (id: string, v: string | boolean) => setDraft({ ...values, [id]: v });
   return (
     <Card title={group.title}>
-      <form
+      <form method="post"
         className="flex h-full flex-col gap-4"
         data-testid={`settings-${group.id}`}
         onSubmit={(e) => {

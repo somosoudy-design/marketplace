@@ -55,7 +55,7 @@ export default function Page() {
         </h1>
         <p>Una cuenta para comprar en la web y en la aplicación.</p>
       </section>
-      <form
+      <form method="post"
         className="login-form"
         onSubmit={(e) => {
           e.preventDefault();

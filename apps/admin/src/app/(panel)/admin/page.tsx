@@ -76,16 +76,16 @@ function PushCard() {
         <div data-testid="push-health" className="space-y-3">
           <div>
             <p className="tabular font-display text-4xl font-semibold">{h.devices}</p>
-            <p className="mt-1 text-sm text-ink-2">{h.devices === 1 ? 'teléfono recibe avisos' : 'teléfonos reciben avisos'}</p>
+            <p className="mt-1 text-sm text-ink-2">{h.devices === 1 ? 'dispositivo registrado' : 'dispositivos registrados'}</p>
           </div>
           <dl className="divide-y divide-line border-t border-line text-sm">
             <PushFigure label="Enviados en 24 horas" value={h.sent_24h} />
-            <PushFigure label="Entregas confirmadas por Apple o Google" value={h.confirmed_24h} />
+            <PushFigure label="Aceptados por Apple o Google" value={h.confirmed_24h} />
             <PushFigure label="Sin entregar" value={h.failed_24h} danger={h.failed_24h > 0} />
           </dl>
           {h.credentials_error ? (
             <Notice tone="danger" title="Credenciales de avisos rechazadas">
-              Expo, Apple o Google rechazaron las credenciales (último rechazo: {ago(h.credentials_error)}). Ningún teléfono recibe avisos hasta corregirlas en Expo (EXPO_ACCESS_TOKEN y credenciales FCM/APNs).
+              Hay envíos rechazados por credenciales (último rechazo: {ago(h.credentials_error)}). Revisa Expo y las credenciales FCM/APNs antes de dar el canal por operativo.
             </Notice>
           ) : null}
           {h.stuck ? (

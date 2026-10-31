@@ -75,6 +75,7 @@ export function AddressEditor({
   ] as const;
   return (
     <form
+      method="post"
       className="commerce-form"
       onSubmit={(e) => {
         e.preventDefault();
@@ -158,7 +159,10 @@ export function AddressEditor({
   );
 }
 export function Addresses({ buyerId }: { buyerId: string }) {
-  const data = useQuery({ queryKey: ['addresses', buyerId], queryFn: () => browser().api.account.addressesForBuyer(buyerId) });
+  const data = useQuery({
+    queryKey: ['addresses', buyerId],
+    queryFn: () => browser().api.account.addressesForBuyer(buyerId),
+  });
   const qc = useQueryClient();
   const [editor, setEditor] = useState<Address | 'new' | null>(null);
   const remove = useMutation({
@@ -220,7 +224,20 @@ export function Addresses({ buyerId }: { buyerId: string }) {
           ))}
         </div>
       )}
-      {remove.isError && <QueryError error={remove.error} retry={() => remove.reset()} />}
+      {remove.isError && (
+        <QueryError
+          error={remove.error}
+          retry={() => {
+            const address = data.data?.find((a) => a.id === remove.variables);
+            if (address && !remove.isPending && window.confirm(`¿Eliminar la dirección ${address.label}?`))
+              remove.mutate(address.id);
+            else if (!address) {
+              remove.reset();
+              void data.refetch();
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

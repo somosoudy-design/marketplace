@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { brand } from '@/lib/format';
 import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
+import { NotificationLink } from './notifications';
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
@@ -34,11 +35,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </button>
           </form>
           <nav className="account-nav" aria-label="Tu cuenta">
-            <Link href="/favoritos" aria-label="Favoritos">
+            <Link href="/favoritos" aria-label="Favoritos" className="header-favorites">
               <Heart size={21} />
               <span>Favoritos</span>
             </Link>
-            <Link href="/cuenta">
+            <NotificationLink />
+            <Link href="/cuenta" aria-label={session ? 'Mi cuenta' : 'Ingresar'}>
               <UserRound size={21} />
               <span>{session ? 'Mi cuenta' : 'Ingresar'}</span>
             </Link>

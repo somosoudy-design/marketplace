@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './purchase.css';
 * {
   box-sizing: border-box;
 }
@@ -2024,3 +2025,31 @@ legend {
   align-items: center;
   min-height: 44px;
 }
+
+.notifications-page { max-width: 920px; }
+.notification-link { position: relative; }
+.inbox-tools { display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--border);padding-bottom:16px; }
+.inbox-tools button { min-height:44px; }
+.inbox-list { border-bottom:1px solid var(--border); }
+.inbox-row { display:flex;gap:16px;padding:24px 16px;border-bottom:1px solid var(--border); }
+.inbox-row:last-child { border-bottom:0; }
+.inbox-unread { background:var(--surface);border-left:3px solid var(--brand);padding-left:13px; }
+.inbox-icon { background:var(--brand-soft);color:var(--brand);border-radius:10px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.inbox-copy { min-width:0;flex:1; }
+.inbox-copy h2 { font-size:15px;line-height:1.5;margin:4px 0; }
+.inbox-copy p { margin:0;line-height:1.65;overflow-wrap:anywhere; }
+.inbox-meta { display:flex;gap:12px;flex-wrap:wrap;color:var(--text-muted);font-size:11px; }
+.inbox-new { color:var(--brand);font-weight:650; }
+.inbox-action { min-height:44px;margin-top:4px; }
+.inbox-more { margin-top:24px; }
+@media (max-width: 600px) {
+  .notifications-page .section-heading { align-items:flex-start;gap:12px; }
+  .notifications-page .section-heading button { padding:10px; }
+  .notifications-page .section-heading button span { display:none; }
+  .inbox-row { gap:10px;padding:18px 0; }
+  .inbox-unread { padding-left:8px; }
+  .inbox-icon { width:30px;height:30px;border-radius:8px; }
+  .inbox-tools { font-size:12px;gap:8px; }
+}
+
+.inbox-tools button, .inbox-action { background: transparent; border: 0; padding: 8px 0; }

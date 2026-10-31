@@ -1,7 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
 import pg from 'pg';
 import { databaseUrl, newBuyer, asOn } from '../tests/support/db';
-import { testUnpaidOrder } from './fixtures';
+import { testUnpaidOrder, testCartProduct, cleanupCartFixtures } from './fixtures';
+test.afterEach(cleanupCartFixtures);
 test.beforeEach(async ({ context }) => {
   await context.route('https://mimnotafmfasvwrclxan.supabase.co/**', (route) => route.abort('blockedbyclient'));
 });
@@ -13,9 +14,9 @@ async function login(page: Page, buyer: { email: string; password: string }) {
   await expect(page.getByRole('heading', { name: 'Mi cuenta' })).toBeVisible();
 }
 async function review(page: Page) {
-  const buyer = await newBuyer('web-purchase');
+  const buyer = await testCartProduct('web-purchase');
   await login(page, buyer);
-  await page.goto('/p/ugreen-cable-usb-c-100w');
+  await page.goto('/p/' + buyer.slug);
   await page.getByRole('button', { name: 'Agregar al carrito' }).click();
   await expect(page.getByText('Agregado al carrito', { exact: false })).toBeVisible();
   await page.goto('/carrito');
@@ -97,9 +98,9 @@ test('respuesta perdida recupera mismo pedido incluso después de recargar', asy
   }
 });
 test('preview fallido bloquea avance y permite reintentar', async ({ page }) => {
-  const buyer = await newBuyer('web-preview');
+  const buyer = await testCartProduct('web-preview');
   await login(page, buyer);
-  await page.goto('/p/ugreen-cable-usb-c-100w');
+  await page.goto('/p/' + buyer.slug);
   await page.getByRole('button', { name: 'Agregar al carrito' }).click();
   await expect(page.getByText('Agregado al carrito', { exact: false })).toBeVisible();
   await page.route('**/rpc/checkout_preview', (r) => r.abort('failed'));
@@ -195,14 +196,8 @@ test('dos tiendas, volver conserva selección y cambiar dirección reinicia entr
   await db.connect();
   try {
     const as = asOn(db);
-    for (const slug of ['ugreen-cable-usb-c-100w', 'correa-reflectiva']) {
-      const v = (
-        await db.query(
-          'select v.id from product_variants v join products p on p.id=v.product_id where p.slug=$1 and v.active limit 1',
-          [slug],
-        )
-      ).rows[0].id;
-      await as(buyer.id, 'select public.cart_set_quantity($1,1)', [v]);
+    for (const sourceSlug of ['ugreen-cable-usb-c-100w', 'correa-reflectiva']) {
+      await testCartProduct('web-multiple', { buyer, sourceSlug, addToCart: true });
     }
     await as(
       buyer.id,

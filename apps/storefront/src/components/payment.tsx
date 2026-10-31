@@ -49,7 +49,7 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
   const pending = o.payments.filter((p) => p.status === 'pending_verification' || p.status === 'processing');
   const next = o.payment_obligations.find((p) => p.status === 'pending' || p.status === 'partially_paid');
   return (
-    <div className="wrap commerce-page">
+    <div className="wrap commerce-page payment-page">
       <Link href={`/pedidos/${id}`} className="text-link">
         ← Ver mi pedido
       </Link>
@@ -59,6 +59,18 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
           {pending.length ? 'Estado del pago' : quote ? 'Completa tu pago' : 'Elige cómo pagar'}
         </h1>
         <p>Tu pedido está guardado. El pago se confirma después de su revisión.</p>
+        {next && !pending.length && !quote && (
+          <div className="payment-due">
+            <span>
+              {next.kind === 'down_payment'
+                ? 'Anticipo'
+                : next.kind === 'installment'
+                  ? 'Próxima cuota'
+                  : 'Pago pendiente'}
+            </span>
+            <strong>{money(D(next.amount_usd).minus(next.paid_usd).minus(next.waived_usd).toNumber())}</strong>
+          </div>
+        )}
       </div>
       <div className="purchase-layout">
         <section className="purchase-content">
@@ -148,7 +160,15 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
                   />
                 </label>
               ))}
-              {create.isError && <QueryError error={create.error} retry={() => create.reset()} />}
+              {create.isError && (
+                <QueryError
+                  error={create.error}
+                  retry={() => {
+                    if (!create.isPending && !order.isFetching && methods.data?.some((m) => m.code === method))
+                      create.mutate();
+                  }}
+                />
+              )}
               <button
                 className="button"
                 disabled={!methods.data?.some((m) => m.code === method) || create.isPending || order.isFetching}
@@ -158,7 +178,26 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
               </button>
             </>
           )}
-          {cancel.isError && <QueryError error={cancel.error} retry={() => cancel.reset()} />}
+          {cancel.isError && (
+            <QueryError
+              error={cancel.error}
+              retry={() => {
+                const payment = pending.find(
+                  (p) => p.id === cancel.variables && p.status === 'processing' && p.provider,
+                );
+                if (
+                  payment &&
+                  !cancel.isPending &&
+                  window.confirm('Cancela este intento sólo si no completaste el pago. ¿Deseas continuar?')
+                )
+                  cancel.mutate(payment.id);
+                else if (!payment) {
+                  cancel.reset();
+                  void order.refetch();
+                }
+              }}
+            />
+          )}
         </section>
         <aside className="purchase-summary">
           <h2>Resumen</h2>
@@ -220,6 +259,7 @@ function PaymentForm({
   const [file, setFile] = useState<File | null>(null);
   const [proof, setProof] = useState<string | null>(null);
   const [problem, setProblem] = useState('');
+  const [copyFeedback, setCopyFeedback] = useState('');
   const [unknown, setUnknown] = useState(false);
   const [now, setNow] = useState(() => Date.now());
   const [online, setOnline] = useState<string | null>(null);
@@ -328,6 +368,7 @@ function PaymentForm({
   const busy = submit.isPending || check.isPending;
   return (
     <form
+      method="post"
       className="commerce-form"
       onSubmit={(e) => {
         e.preventDefault();
@@ -372,39 +413,74 @@ function PaymentForm({
           El importe venció. Actualízalo antes de realizar el pago.
         </p>
       )}
-      <dl className="payment-instructions">
-        {Object.entries(q.method.instructions)
-          .filter(([k, v]) => k !== 'nota' && typeof v === 'string')
-          .map(([k, v]) => (
-            <div key={k}>
-              <dt>{instructionLabels[k] ?? k}</dt>
-              <dd>{String(v)}</dd>
-            </div>
-          ))}
-      </dl>
+      {Object.entries(q.method.instructions).some(([k, v]) => k !== 'nota' && typeof v === 'string') && (
+        <section className="payment-bank">
+          <div className="section-heading">
+            <h2>Datos para pagar</h2>
+            <button
+              type="button"
+              className="text-button"
+              onClick={async () => {
+                const text = Object.entries(q.method.instructions)
+                  .filter(([k, v]) => k !== 'nota' && typeof v === 'string')
+                  .map(([k, v]) => `${instructionLabels[k] ?? k}: ${v}`)
+                  .join('\n');
+                try {
+                  await navigator.clipboard.writeText(text);
+                  setCopyFeedback('Datos copiados.');
+                } catch {
+                  setCopyFeedback('No se pudo copiar. Puedes seleccionar los datos.');
+                }
+              }}
+            >
+              Copiar datos
+            </button>
+          </div>
+          <p className="copy-feedback" role="status">
+            {copyFeedback}
+          </p>
+          <dl className="payment-instructions">
+            {Object.entries(q.method.instructions)
+              .filter(([k, v]) => k !== 'nota' && typeof v === 'string')
+              .map(([k, v]) => (
+                <div key={k}>
+                  <dt>{instructionLabels[k] ?? k}</dt>
+                  <dd>{String(v)}</dd>
+                </div>
+              ))}
+          </dl>
+        </section>
+      )}
       {typeof q.method.instructions.nota === 'string' && <p>{q.method.instructions.nota}</p>}
       {q.method.kind === 'manual' && (
-        <>
-          <label>
-            Referencia del pago
-            <input
-              name="reference"
-              autoComplete="off"
-              required={q.method.requires_reference}
-              disabled={busy || unknown}
-              value={reference}
-              onChange={(e) => setReference(e.target.value)}
-              maxLength={120}
-            />
-          </label>
-          <label>
-            Banco de origen (opcional)
-            <input value={bank} disabled={busy || unknown} maxLength={80} onChange={(e) => setBank(e.target.value)} />
-          </label>
-          <label>
-            Comprobante{!q.method.requires_proof ? ' (opcional)' : ''}
+        <section className="payment-report">
+          <h2>Reportar pago</h2>
+          <div className="form-grid">
+            <label>
+              Referencia del pago
+              <input
+                name="reference"
+                autoComplete="off"
+                required={q.method.requires_reference}
+                disabled={busy || unknown}
+                value={reference}
+                onChange={(e) => setReference(e.target.value)}
+                maxLength={120}
+              />
+            </label>
+            <label>
+              Banco de origen (opcional)
+              <input value={bank} disabled={busy || unknown} maxLength={80} onChange={(e) => setBank(e.target.value)} />
+            </label>
+          </div>
+          <label className="proof-picker">
+            <span>Comprobante{!q.method.requires_proof ? ' (opcional)' : ''}</span>
+            <span className="proof-filename">{file ? file.name : 'Seleccionar archivo'}</span>
             <input
               type="file"
+              className="proof-input"
+              aria-label={`Comprobante${!q.method.requires_proof ? ' (opcional)' : ''}`}
+
               accept="image/jpeg,image/png,image/webp,application/pdf"
               disabled={busy || unknown}
               onChange={(e) => {
@@ -417,7 +493,7 @@ function PaymentForm({
             />
           </label>
           <p className="muted">JPG, PNG, WebP o PDF. Máximo 5 MB.</p>
-        </>
+        </section>
       )}
       {(problem || submit.isError) && (
         <p className="error" role="alert">

@@ -10,7 +10,7 @@ import {
   type ShippingSelection,
   type PlaceOrderResult,
 } from '@kora/api';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Plus, Truck } from 'lucide-react';
 import { describeEtaDates } from '@kora/core';
 import { browser } from '@/lib/browser';
 import { money } from '@/lib/format';
@@ -315,6 +315,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     setStep(0);
     setEdit(false);
   };
+  const quantity = s?.groups.reduce((n, g) => n + g.lines.reduce((q, l) => q + l.quantity, 0), 0) ?? 0;
   const enabled =
     step === 0
       ? !!address
@@ -324,21 +325,27 @@ export function Checkout({ buyerId }: { buyerId: string }) {
           ? !!preview.data?.code
           : !!s?.can_place;
   return (
-    <div className="wrap commerce-page">
+    <div className="wrap commerce-page checkout-page">
       <Link className="text-link" href="/carrito">
         <ArrowLeft size={16} />
         Volver al carrito
       </Link>
       <div className="commerce-heading">
-        <span className="eyebrow">PASO {step + 1} DE 4</span>
         <h1 id="checkout-heading" tabIndex={-1}>
           {['Dirección de entrega', 'Tus entregas', 'Plan de pago', 'Revisa tu pedido'][step]}
         </h1>
         <ol className="checkout-progress" aria-label="Pasos de compra">
           {steps.map((title, i) => (
             <li key={title} aria-current={i === step ? 'step' : undefined}>
-              <span>{i < step ? <Check size={13} /> : i + 1}</span>
-              {title}
+              <button
+                type="button"
+                disabled={i >= step || locked || edit}
+                onClick={() => move(i)}
+                aria-label={i < step ? `Volver a ${title.toLowerCase()}` : title}
+              >
+                <span>{i < step ? <Check size={14} /> : i + 1}</span>
+                <span>{i === 2 ? 'Plan' : title}</span>
+              </button>
             </li>
           ))}
         </ol>
@@ -350,11 +357,9 @@ export function Checkout({ buyerId }: { buyerId: string }) {
           {place.error.message}
         </p>
       )}
-      {preview.isFetching && (
-        <p role="status" className="muted">
-          Actualizando importes y opciones…
-        </p>
-      )}
+      <p role="status" className="purchase-status">
+        {preview.isFetching ? 'Actualizando importes y opciones…' : ''}
+      </p>
       {notice && (
         <p className="notice" role="status">
           {notice}
@@ -362,194 +367,264 @@ export function Checkout({ buyerId }: { buyerId: string }) {
       )}
       <div className="purchase-layout">
         <section className="purchase-content" aria-label={steps[step]}>
-          {step === 0 &&
-            (edit ? (
-              <AddressEditor
-                buyerId={buyerId}
-                first={!addresses.data?.length}
-                onDone={changeAddress}
-                onCancel={() => setEdit(false)}
-              />
-            ) : (
-              <>
-                <div className="address-list">
-                  {addresses.data?.map((a) => (
-                    <label className="option-row" key={a.id}>
-                      <input
-                        type="radio"
-                        name="address"
-                        checked={address?.id === a.id}
-                        onChange={() => changeAddress(a)}
-                      />
-                      <span>
-                        <strong>
-                          {a.label}
-                          {a.is_default ? ' · Principal' : ''}
-                        </strong>
-                        <span>
-                          {a.recipient} · {a.phone}
-                        </span>
-                        <span>
-                          {a.line1}, {a.city}
-                        </span>
-                      </span>
-                    </label>
-                  ))}
-                </div>
-                <button className="button secondary" onClick={() => setEdit(true)}>
-                  Agregar dirección
-                </button>
-              </>
-            ))}
-          {step === 1 &&
-            s?.groups.map((g, index) => (
-              <section className="delivery-block" key={g.key}>
-                <div className="section-heading">
-                  <h2>Entrega {index + 1}</h2>
-                  <span className="muted">{g.store.name}</span>
-                </div>
-                {g.lines.map((l) => (
-                  <ReviewLine key={l.variant_id} line={l} />
-                ))}
-                {g.shipping_options?.length ? (
-                  g.shipping_options.map((o) => (
-                    <label className="option-row" key={o.method_id}>
-                      <input
-                        type="radio"
-                        name={g.key}
-                        checked={(shipping[g.key] ?? g.selected_shipping?.method_id) === o.method_id}
-                        disabled={!fresh}
-                        onChange={() => setShipping({ ...shipping, [g.key]: o.method_id })}
-                      />
-                      <span>
-                        <strong>{o.name}</strong>
-                        <span>
-                          {o.carrier} · {describeEtaDates(o.eta_min_date, o.eta_max_date)}
-                        </span>
-                      </span>
-                      <strong>{money(o.cost_usd)}</strong>
-                    </label>
-                  ))
-                ) : (
-                  <p className="notice">
-                    No hay opciones de entrega para esta dirección. Prueba otra dirección o revisa el carrito.
-                  </p>
-                )}
-              </section>
-            ))}
-          {step === 2 &&
-            s?.plans.map((p) => (
-              <label className="option-row" key={p.code}>
-                <input
-                  type="radio"
-                  name="plan"
-                  checked={plan === p.code}
-                  disabled={!fresh}
-                  onChange={() => setPlan(p.code)}
+          <div className="checkout-phase" key={step}>
+            {step === 0 &&
+              (edit ? (
+                <AddressEditor
+                  buyerId={buyerId}
+                  first={!addresses.data?.length}
+                  onDone={changeAddress}
+                  onCancel={() => setEdit(false)}
                 />
-                <span>
-                  <strong>{p.name}</strong>
-                  <span>{p.description}</span>
-                </span>
-              </label>
-            ))}
-          {step === 2 && !!s?.schedule.length && (
-            <div className="payment-schedule">
-              <h2>Calendario de pagos</h2>
-              {s.schedule.map((p) => (
-                <div key={p.seq}>
-                  <span>
-                    {p.kind === 'down_payment'
-                      ? 'Anticipo'
-                      : p.kind === 'installment'
-                        ? `Cuota ${p.seq}`
-                        : 'Pago total'}{' '}
-                    · {p.due_in_days === 0 ? 'Ahora' : `En ${p.due_in_days} días`}
-                  </span>
-                  <strong>{money(p.amount_usd)}</strong>
-                </div>
+              ) : (
+                <>
+                  <div className="address-list">
+                    {addresses.data?.map((a) => (
+                      <label className="option-row" key={a.id}>
+                        <input
+                          type="radio"
+                          name="address"
+                          checked={address?.id === a.id}
+                          onChange={() => changeAddress(a)}
+                        />
+                        <span>
+                          <strong>
+                            {a.label}
+                            {a.is_default ? ' · Principal' : ''}
+                          </strong>
+                          <span>
+                            {a.recipient} · {a.phone}
+                          </span>
+                          <span>
+                            {a.line1}, {a.city}
+                          </span>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                  <button className="text-button add-address" onClick={() => setEdit(true)}>
+                    <Plus size={18} /> Agregar dirección
+                  </button>
+                </>
               ))}
-            </div>
-          )}
-          {step === 3 && s && (
-            <>
-              <div className="review-address">
-                <h2>Entrega en {address?.label}</h2>
-                <p>
-                  {address?.recipient} · {address?.line1}, {address?.city}
-                </p>
-                <button className="text-button" onClick={() => move(0)}>
-                  Cambiar dirección
-                </button>
-              </div>
-              {s.groups.map((g) => (
+            {step === 1 &&
+              s?.groups.map((g, index) => (
                 <section className="delivery-block" key={g.key}>
-                  <h2>{g.store.name}</h2>
+                  <div className="section-heading">
+                    <div>
+                      <span className="step-caption">
+                        Entrega {index + 1} de {s.groups.length}
+                      </span>
+                      <h2>{g.store.name}</h2>
+                    </div>
+                  </div>
                   {g.lines.map((l) => (
                     <ReviewLine key={l.variant_id} line={l} />
                   ))}
-                  <p className="muted">
-                    {g.selected_shipping?.name} · {money(g.selected_shipping?.cost_usd ?? 0)}
-                  </p>
+                  {g.shipping_options?.length ? (
+                    g.shipping_options.map((o) => (
+                      <label className="option-row" key={o.method_id}>
+                        <input
+                          type="radio"
+                          name={g.key}
+                          checked={(shipping[g.key] ?? g.selected_shipping?.method_id) === o.method_id}
+                          disabled={!fresh}
+                          onChange={() => setShipping({ ...shipping, [g.key]: o.method_id })}
+                        />
+                        <span>
+                          <strong>{o.name}</strong>
+                          <span>
+                            {o.kind === 'home_delivery' ? o.carrier : 'Retiras tú'} ·{' '}
+                            {describeEtaDates(o.eta_min_date, o.eta_max_date)}
+                          </span>
+                        </span>
+                        <strong>{o.cost_usd === 0 ? 'Gratis' : money(o.cost_usd)}</strong>
+                      </label>
+                    ))
+                  ) : (
+                    <p className="notice">
+                      No hay opciones de entrega para esta dirección. Prueba otra dirección o revisa el carrito.
+                    </p>
+                  )}
                 </section>
               ))}
-              <div className="review-address">
-                <h2>{s.plan?.name}</h2>
-                <p>Al confirmar se crea tu pedido. A continuación eliges el método de pago.</p>
-              </div>
-              {s.issues > 0 && (
-                <p className="notice error">
-                  Hay productos que requieren revisión. Vuelve al carrito antes de confirmar.
-                </p>
-              )}
-            </>
-          )}
+            {step === 2 &&
+              s?.plans.map((p) => (
+                <label className="option-row" key={p.code}>
+                  <input
+                    type="radio"
+                    name="plan"
+                    checked={plan === p.code}
+                    disabled={!fresh}
+                    onChange={() => setPlan(p.code)}
+                  />
+                  <span>
+                    <strong>{p.name}</strong>
+                    <span>{p.description}</span>
+                  </span>
+                </label>
+              ))}
+            {step === 2 && s && <PaymentSchedule summary={s} />}
+            {step === 3 && s && (
+              <>
+                {s.groups.map((g, index) => (
+                  <section className="delivery-block" key={g.key}>
+                    <div className="section-heading">
+                      <div>
+                        <span className="step-caption">
+                          Entrega {index + 1} de {s.groups.length}
+                        </span>
+                        <h2>{g.store.name}</h2>
+                      </div>
+                      <button
+                        className="text-button"
+                        onClick={() => move(1)}
+                        aria-label={`Cambiar entrega ${index + 1}`}
+                      >
+                        Cambiar
+                      </button>
+                    </div>
+                    {g.lines.map((l) => (
+                      <ReviewLine key={l.variant_id} line={l} />
+                    ))}
+                    {g.selected_shipping && (
+                      <div className="delivery-choice">
+                        <Truck size={19} aria-hidden="true" />
+                        <div>
+                          <strong>{g.selected_shipping.name}</strong>
+                          <p>
+                            {describeEtaDates(g.selected_shipping.eta_min_date, g.selected_shipping.eta_max_date)} ·{' '}
+                            {g.selected_shipping.cost_usd === 0 ? 'Gratis' : money(g.selected_shipping.cost_usd)}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                ))}
+                <div className="review-address">
+                  <div className="section-heading">
+                    <h2>Dirección de entrega</h2>
+                    <button className="text-button" onClick={() => move(0)} aria-label="Cambiar dirección">
+                      Cambiar
+                    </button>
+                  </div>
+                  <strong>{address?.recipient}</strong>
+                  <p>
+                    {address?.line1}, {address?.city}
+                  </p>
+                  <p>{address?.phone}</p>
+                </div>
+                <div className="review-address review-plan">
+                  <div className="section-heading">
+                    <h2>{s.plan?.name}</h2>
+                    <button className="text-button" onClick={() => move(2)} aria-label="Cambiar plan de pago">
+                      Cambiar
+                    </button>
+                  </div>
+                  <PaymentSchedule summary={s} />
+                  {s.schedule.length <= 1 && <p>Elige el método de pago después de confirmar.</p>}
+                </div>
+                {s.issues > 0 && (
+                  <p className="notice error">
+                    Hay productos que requieren revisión. Vuelve al carrito antes de confirmar.
+                  </p>
+                )}
+              </>
+            )}
+          </div>
         </section>
-        <aside className="purchase-summary">
-          <h2>Tu compra</h2>
+        <aside className="purchase-summary" aria-label="Resumen de compra">
+          <h2>Tu pedido</h2>
           {s && (
             <>
-              <div>
-                <span>Productos</span>
-                <strong>{money(s.items_usd)}</strong>
-              </div>
-              <div>
-                <span>Envío{!address ? ' por calcular' : ''}</span>
-                <strong>{address ? money(s.shipping_usd) : '—'}</strong>
-              </div>
-              {s.financing_usd > 0 && (
+              <details className="summary-products">
+                <summary>
+                  {quantity} {quantity === 1 ? 'producto' : 'productos'} · Ver detalle
+                </summary>
+                {s.groups
+                  .flatMap((g) => g.lines)
+                  .map((l) => (
+                    <ReviewLine key={l.variant_id} line={l} />
+                  ))}
+              </details>
+              <dl className="purchase-totals">
                 <div>
-                  <span>Financiamiento</span>
-                  <strong>{money(s.financing_usd)}</strong>
+                  <dt>Productos</dt>
+                  <dd>{money(s.items_usd)}</dd>
                 </div>
-              )}
-              <div className="summary-total">
-                <span>Total</span>
-                <strong>{money(s.total_usd)}</strong>
-              </div>
+                <div>
+                  <dt>Envío{!address || s.needs_shipping ? ' por calcular' : ''}</dt>
+                  <dd>
+                    {!address || s.needs_shipping ? '—' : s.shipping_usd === 0 ? 'Gratis' : money(s.shipping_usd)}
+                  </dd>
+                </div>
+                {s.financing_usd > 0 && (
+                  <div>
+                    <dt>Financiamiento</dt>
+                    <dd>{money(s.financing_usd)}</dd>
+                  </div>
+                )}
+                <div className="summary-total">
+                  <dt>Total del pedido</dt>
+                  <dd>{money(s.total_usd)}</dd>
+                </div>
+                {s.schedule.length > 1 && (
+                  <div className="summary-now">
+                    <dt>Pagas hoy</dt>
+                    <dd>{money(s.schedule[0]!.amount_usd)}</dd>
+                  </div>
+                )}
+              </dl>
             </>
           )}
-          <button
-            className="button"
-            data-testid="checkout-next"
-            disabled={!fresh || !enabled || edit || locked}
-            onClick={() => (step === 3 ? confirm() : move(step + 1))}
-          >
-            {step === 3 ? 'Confirmar pedido' : 'Continuar'}
-            <ArrowRight size={17} />
-          </button>
+          {!edit && (
+            <div className="checkout-actions">
+              {s && (
+                <div className="action-amount">
+                  <span>{s.schedule.length > 1 ? 'Pagas hoy' : 'Total del pedido'}</span>
+                  <strong>{money(s.schedule[0]?.amount_usd ?? s.total_usd)}</strong>
+                </div>
+              )}
+              <button
+                className="button"
+                data-testid="checkout-next"
+                disabled={!fresh || !enabled || locked}
+                onClick={() => (step === 3 ? confirm() : move(step + 1))}
+              >
+                {['Continuar a entregas', 'Elegir plan de pago', 'Revisar pedido', 'Confirmar pedido'][step]}
+                <ArrowRight size={17} />
+              </button>
+              {step === 3 && (
+                <p className="confirmation-note">Confirmar crea tu pedido. El pago se realiza a continuación.</p>
+              )}
+            </div>
+          )}
           {step > 0 && (
-            <button className="text-button" disabled={locked} onClick={() => move(step - 1)}>
-              Volver al paso anterior
+            <button className="text-button previous-step" disabled={locked} onClick={() => move(step - 1)}>
+              <ArrowLeft size={15} /> Volver al paso anterior
             </button>
           )}
-          <p className="muted">
-            {step === 3
-              ? 'El pago se realiza después de confirmar el pedido.'
-              : 'Los importes se actualizan con tus selecciones.'}
-          </p>
         </aside>
       </div>
+    </div>
+  );
+}
+
+function PaymentSchedule({ summary: s }: { summary: CheckoutSummary }) {
+  if (s.schedule.length <= 1) return null;
+  return (
+    <div className="payment-schedule">
+      <h2>Calendario de pagos</h2>
+      {s.schedule.map((p) => (
+        <div key={p.seq}>
+          <span>
+            {p.kind === 'down_payment' ? 'Anticipo' : p.kind === 'installment' ? `Cuota ${p.seq}` : 'Pago total'} ·{' '}
+            {p.due_in_days === 0 ? 'Al pagar' : `En ${p.due_in_days} días`}
+          </span>
+          <strong>{money(p.amount_usd)}</strong>
+        </div>
+      ))}
+      <p>Tu saldo queda en dólares. Si pagas en bolívares, se cotiza con la tasa vigente de cada pago.</p>
     </div>
   );
 }

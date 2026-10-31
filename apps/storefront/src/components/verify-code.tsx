@@ -28,7 +28,7 @@ export function VerifyCode({
   });
   const again = useMutation({ mutationFn: resend, onSuccess: () => setCooldown(30) });
   return (
-    <form
+    <form method="post"
       className="login-form"
       onSubmit={(e) => {
         e.preventDefault();

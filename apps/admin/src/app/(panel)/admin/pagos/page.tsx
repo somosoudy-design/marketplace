@@ -3,7 +3,7 @@ import { PAYMENT_RECORD_LABEL } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FileImage, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Table, Tabs, Td, Textarea } from '@/components/ui';
 import { ago, dateTime, money, paymentTone, RATE_SOURCE_LABEL } from '@/lib/format';
@@ -86,6 +86,15 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
   const [received, setReceived] = useState('');
   const [proofUrl, setProofUrl] = useState<string | null>(null);
   const [proofError, setProofError] = useState(false);
+  const [proofFormat, setProofFormat] = useState<'image' | 'pdf' | 'file'>('file');
+  const [imageError, setImageError] = useState(false);
+  const [proofAttempt, setProofAttempt] = useState(0);
+  const retryProof = () => {
+    setProofError(false);
+    setImageError(false);
+    setProofUrl(null);
+    setProofAttempt((attempt) => attempt + 1);
+  };
 
   useEffect(() => {
     // the dialog is keyed by payment, so its form state starts fresh for each one
@@ -95,17 +104,20 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
     kora().client.storage.from('payment-proofs').download(p.proof_path).then(({ data, error }) => {
       if (cancelled) return;
       if (error || !data) return setProofError(true);
+      const mime = data.type.toLowerCase().split(';')[0] ?? '';
+      setProofFormat(mime === 'application/pdf' ? 'pdf' : /^image\/(png|jpeg|webp)$/.test(mime) ? 'image' : 'file');
       url = URL.createObjectURL(data);
       setProofUrl(url);
-    });
+    }).catch(() => { if (!cancelled) setProofError(true); });
     return () => { cancelled = true; if (url) URL.revokeObjectURL(url); };
-  }, [p?.id, p?.proof_path]);
+  }, [p?.id, p?.proof_path, proofAttempt]);
 
+  const reviewBusy = useRef(false);
   const review = useMutation({
-    mutationFn: (approve: boolean) =>
-      kora().api.admin.reviewPayment(p!.id, approve, {
-        amountReceived: approve && mode === 'partial' && received ? Number(received.replace(',', '.')) : undefined,
-        reason: reason.trim() || undefined,
+    mutationFn: (action: { approve: boolean; mode: string; received: string; reason: string }) =>
+      kora().api.admin.reviewPayment(p!.id, action.approve, {
+        amountReceived: action.approve && action.mode === 'partial' && action.received ? Number(action.received.replace(',', '.')) : undefined,
+        reason: action.reason.trim() || undefined,
       }),
     onSuccess: (r) => {
       toast.ok(r.status === 'confirmed' ? `Pago ${p!.number} confirmado` : `Pago ${p!.number} rechazado`);
@@ -114,7 +126,13 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
       onClose();
     },
     onError: toast.error,
+    onSettled: () => { reviewBusy.current = false; },
   });
+  const decide = (approve: boolean) => {
+    if (reviewBusy.current) return;
+    reviewBusy.current = true;
+    review.mutate({ approve, mode, received, reason });
+  };
   if (!p) return <Dialog open={false} onClose={onClose} title="">{null}</Dialog>;
   const pending = p.status === 'pending_verification' || p.status === 'processing';
   const isProvider = p.payment_methods?.kind === 'automated';
@@ -122,26 +140,27 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
   return (
     <Dialog
       open={!!p}
-      onClose={onClose}
+      onClose={() => { if (!reviewBusy.current) onClose(); }}
+      busy={review.isPending}
       wide
       title={`Pago ${p.number}`}
       footer={
         pending ? (
           mode === 'view' ? (
             <>
-              <Button variant="ghost" onClick={() => setMode('reject')}>Rechazar</Button>
-              <Button variant="secondary" onClick={() => setMode('partial')}>Llegó un monto distinto</Button>
-              <Button icon={ShieldCheck} loading={review.isPending} onClick={() => review.mutate(true)}>Confirmar recibido</Button>
+              <Button variant="ghost" disabled={review.isPending} onClick={() => setMode('reject')}>Rechazar</Button>
+              <Button variant="secondary" disabled={review.isPending} onClick={() => setMode('partial')}>Llegó un monto distinto</Button>
+              <Button icon={ShieldCheck} loading={review.isPending} onClick={() => decide(true)}>Confirmar recibido</Button>
             </>
           ) : mode === 'reject' ? (
             <>
-              <Button variant="ghost" onClick={() => setMode('view')}>Volver</Button>
-              <Button variant="danger" disabled={!reason.trim()} loading={review.isPending} onClick={() => review.mutate(false)}>Rechazar pago</Button>
+              <Button variant="ghost" disabled={review.isPending} onClick={() => setMode('view')}>Volver</Button>
+              <Button variant="danger" disabled={!reason.trim()} loading={review.isPending} onClick={() => decide(false)}>Rechazar pago</Button>
             </>
           ) : (
             <>
-              <Button variant="ghost" onClick={() => setMode('view')}>Volver</Button>
-              <Button disabled={!received || !reason.trim()} loading={review.isPending} onClick={() => review.mutate(true)}>Confirmar monto parcial</Button>
+              <Button variant="ghost" disabled={review.isPending} onClick={() => setMode('view')}>Volver</Button>
+              <Button disabled={!received || !reason.trim()} loading={review.isPending} onClick={() => decide(true)}>Confirmar monto parcial</Button>
             </>
           )
         ) : undefined
@@ -170,16 +189,16 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
           ) : null}
           {mode === 'reject' ? (
             <Field label="Motivo del rechazo (lo verá el cliente)">
-              <Textarea autoFocus value={reason} onChange={(e) => setReason(e.target.value)} placeholder="No encontramos un pago con esa referencia en la fecha indicada." />
+              <Textarea disabled={review.isPending} autoFocus value={reason} onChange={(e) => setReason(e.target.value)} placeholder="No encontramos un pago con esa referencia en la fecha indicada." />
             </Field>
           ) : null}
           {mode === 'partial' ? (
             <>
               <Field label={`Monto recibido en ${p.currency}`} hint={`Máximo ${money(p.amount, p.currency)}. El pedido abona la parte proporcional en USD.`}>
-                <Input autoFocus inputMode="decimal" value={received} onChange={(e) => setReceived(e.target.value)} />
+                <Input disabled={review.isPending} autoFocus inputMode="decimal" value={received} onChange={(e) => setReceived(e.target.value)} />
               </Field>
               <Field label="Nota interna">
-                <Textarea value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Llegó un monto menor por comisión bancaria." />
+                <Textarea disabled={review.isPending} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Llegó un monto menor por comisión bancaria." />
               </Field>
             </>
           ) : null}
@@ -189,11 +208,27 @@ function ReviewDialog({ payment: p, buyerName, onClose }: { payment: Row | null;
           {!p.proof_path ? (
             <div className="grid h-64 place-items-center rounded-[16px] border border-dashed border-line-strong text-center text-sm text-ink-3"><span><FileImage className="mx-auto mb-2" />Sin comprobante adjunto</span></div>
           ) : proofError ? (
-            <Notice tone="danger">No pudimos abrir el comprobante.</Notice>
+            <Notice tone="danger">
+              <p>No pudimos abrir el comprobante.</p>
+              <Button variant="ghost" size="sm" onClick={retryProof}>Reintentar comprobante</Button>
+            </Notice>
           ) : proofUrl ? (
-            <a href={proofUrl} target="_blank" rel="noreferrer">
-              <img src={proofUrl} alt={`Comprobante del pago ${p.number}`} className="max-h-[420px] w-full rounded-[16px] border border-line object-contain" />
-            </a>
+            <div className="flex flex-col gap-3">
+              {proofFormat === 'image' && !imageError ? (
+                <a href={proofUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir comprobante en otra pestaña">
+                  <img src={proofUrl} alt={`Comprobante del pago ${p.number}`} onError={() => setImageError(true)} className="max-h-[420px] w-full rounded-[16px] border border-line object-contain" />
+                </a>
+              ) : (
+                <div className="rounded-[14px] border border-line bg-sunken p-4 text-sm text-ink-2">
+                  <FileImage aria-hidden="true" className="mb-2 text-brand" />
+                  <p className="font-semibold text-ink">{proofFormat === 'pdf' ? 'Comprobante PDF' : 'Comprobante adjunto'}</p>
+                  <p className="mt-1">{imageError ? 'La vista previa no está disponible. Puedes abrir el archivo original.' : proofFormat === 'file' ? 'Este formato se descarga sin abrirlo dentro del panel.' : 'Abre el documento para revisar el comprobante completo.'}</p>
+                </div>
+              )}
+              <a href={proofUrl} target={proofFormat === 'file' ? undefined : '_blank'} rel={proofFormat === 'file' ? undefined : 'noopener noreferrer'} download={proofFormat === 'file' ? `comprobante-${p.number}.bin` : undefined} className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-line-strong px-4 py-2 text-sm font-semibold text-brand">
+                {proofFormat === 'pdf' ? 'Abrir comprobante PDF' : proofFormat === 'file' ? 'Descargar archivo adjunto' : 'Abrir archivo original'}
+              </a>
+            </div>
           ) : (
             <div className="h-64 animate-pulse rounded-[16px] bg-sunken" />
           )}

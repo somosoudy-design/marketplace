@@ -11,26 +11,26 @@ export interface StoreRow {
 }
 
 const KEY = 'kora.panel.store';
-const Ctx = createContext<{ store: StoreRow | null; stores: StoreRow[]; setStoreId: (id: string) => void; loading: boolean } | null>(null);
+const Ctx = createContext<{ store: StoreRow | null; stores: StoreRow[]; setStoreId: (id: string) => void; loading: boolean; error: unknown; retry: () => void } | null>(null);
 
 /** The store a seller is working on. Membership comes from the token; the database re-checks it on every call. */
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const { storeIds } = useAuth();
+  const { userId, storeIds } = useAuth();
   const [selected, setSelected] = useState<string | null>(() => {
     try { return typeof window === 'undefined' ? null : localStorage.getItem(KEY); } catch { return null; /* storage unavailable */ }
   });
   const q = useQuery({
-    queryKey: ['my-stores', storeIds],
+    queryKey: ['my-stores', userId, storeIds],
     queryFn: () => run<StoreRow[]>(db('stores').select('*').in('id', storeIds).order('name')),
     enabled: storeIds.length > 0,
   });
-  const stores = q.data ?? [];
+  const stores = q.isError ? [] : q.data ?? [];
   const store = stores.find((s) => s.id === selected) ?? stores[0] ?? null;
   const setStoreId = (id: string) => {
     setSelected(id);
     try { localStorage.setItem(KEY, id); } catch { /* storage unavailable */ }
   };
-  return <Ctx.Provider value={{ store, stores, setStoreId, loading: q.isPending && storeIds.length > 0 }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ store, stores, setStoreId, loading: q.isPending && storeIds.length > 0, error: q.error, retry: () => { void q.refetch(); } }}>{children}</Ctx.Provider>;
 }
 
 export function useStore() {

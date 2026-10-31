@@ -156,19 +156,40 @@ export function useFavorites() {
 // ---------- account ----------
 export const useAddresses = () => {
   const { user } = useAuth();
-  return useQuery({ queryKey: qk.addresses, queryFn: api.account.addresses, enabled: !!user });
+  return useQuery({ queryKey: [...qk.addresses, user?.id], queryFn: () => api.account.addressesForBuyer(user!.id), enabled: !!user });
 };
 export const useOrders = () => {
   const { user } = useAuth();
   return useQuery({ queryKey: [...qk.orders, user?.id], queryFn: () => api.orders.list(user!.id), enabled: !!user });
 };
-export const useOrder = (id: string, freshOnMount = false) => useQuery({ queryKey: qk.order(id), queryFn: () => api.orders.detail(id), refetchInterval: 30_000, refetchOnMount: freshOnMount ? 'always' : true });
+export const useOrder = (id: string, freshOnMount = false) => {
+  const { user } = useAuth();
+  return useQuery({ queryKey: [...qk.order(id), user?.id], queryFn: () => api.orders.detail(id, user!.id), enabled: !!user && !!id, refetchInterval: 30_000, refetchOnMount: freshOnMount ? 'always' : true });
+};
 export const useFulfillmentSteps = () => useQuery({ queryKey: qk.steps, queryFn: api.orders.steps, staleTime: 30 * 60_000 });
 export const useNotifications = () => {
   const { user } = useAuth();
-  return useQuery({ queryKey: qk.notifications, queryFn: () => api.account.notifications(), enabled: !!user, refetchInterval: 60_000 });
+  const q = useInfiniteQuery({
+    queryKey: [...qk.notifications, user?.id, 'pages'],
+    queryFn: ({ pageParam }) => api.account.notificationPage(user!.id, pageParam, 50),
+    initialPageParam: 0,
+    getNextPageParam: (last, _pages, offset) => last.hasMore ? offset + 50 : undefined,
+    enabled: !!user,
+    refetchInterval: 60_000,
+  });
+  const data = useMemo(() => q.data ? Array.from(new Map(q.data.pages.flatMap((page) => page.items).map(n => [n.id, n])).values()) : undefined, [q.data]);
+  return { ...q, data };
 };
-export const useUnreadCount = () => (useNotifications().data ?? []).filter((n) => !n.read_at).length;
+export const useUnreadCount = () => {
+  const { user } = useAuth();
+  const q = useQuery({
+    queryKey: [...qk.notifications, user?.id, 'unread'],
+    queryFn: () => api.account.notificationUnreadCount(user!.id),
+    enabled: !!user,
+    refetchInterval: 60_000,
+  });
+  return user && !q.isError ? q.data ?? 0 : 0;
+};
 export const usePaymentMethods = () => useQuery({ queryKey: qk.methods, queryFn: api.payments.methods, staleTime: 10 * 60_000 });
 export const useProfile = () => {
   const { user } = useAuth();

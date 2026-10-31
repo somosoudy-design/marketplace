@@ -6,9 +6,11 @@
 
 ## Trabajo en curso · calidad integral, 31 de octubre
 
-Oliver solicita auditoría y mejoras de estructura, seguridad, compra web/app, notificaciones y administración. Root es único integrador; seis especialistas trabajan en lectura/propuestas/tests aislados. Se capturaron las cuatro fases actuales del checkout en320/412/1440 claro/oscuro antes de cambiarlo. Primer checkpoint: parche puntual del panel Next/eslint16.4.1 y undici7.30.1; validación completa en curso, sin desplegar.
+Oliver solicita estructura, seguridad, compra web/app, notificaciones y administración. Root único integrador y seis especialistas de lectura/propuestas/pruebas. Checkpoint dependencias `287ff66` (Next/eslint16.4.1,undici7.30.1). Integrados checkout web con hoja continua, acción móvil accesible, ETA/edición por fase/calendario; pago con importe previo, copia y comprobante; inbox web y paginación/lectura visible móvil, scope comprador direcciones/pedidos y ciclo push. Panel recupera tiendas/error, PDF seguro, modales320, busy de revisión, formularios sensiblesPOST. Tasas separadas por par y snapshots futuros excluidos de presentación, sin fórmulas/SQL/remoto.
 
-**Siguiente inmediato:** integrar checkout con resumen/acción accesibles, corregir configuración por par de tasas y fallos reales de avisos/reintentos/panel. Gatewaylocal54321 y web3200; ninguna prueba mutadora remota. Evidencia temporal `.local/premium-20261031/`. Se preservan reglas financieras, runtimeAPK5 y datos remotos. No afirmar cierre de auditoría, recepción móvil ni publicación web. El alojamiento web continúa pendiente.
+**Validación en curso:** tipos/lint monorepo aprobados;52core+47panel+17helpers;25SQLBCV/permisos y8adaptadores en clonlocal por especialista. Web38/39dev: único fallo selector de test que coincidió con anunciadorNext, acotado a main; se repetirá en build. Panel8UI+2tasas, inbox5UI y auditor independiente7casos puntuales; no sumarlos como suites únicas. Capturas actuales antes/después y fuente200% en `.local/premium-20261031/`. EspecialistaUX exige feedback visible al copiar, ya corregido.
+
+**Próxima acción exacta:** compilar storefront, export móvilweb/Hermes y panelrelease; ejecutar39UIweb,4móvilnotificaciones/aislamiento yregresión local afectada; cerrar revisión independiente, archivar capturas originales y documentación. Falta validarAPK5/recepciónnativa; no afirmar notificaciones físicasperfectas. Hostingweb continúa pendiente. Ninguna migración, tasa/dato remoto/pago real, APK o iOS modificado. Auditoría restante de dependencias requiere clasificar exposición; no afirmar monorepo sin avisos.
 
 ## Web comprador · compra completa operativa, 30 de octubre
 
