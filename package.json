@@ -22,7 +22,8 @@
     "edge:sync": "node tools/sync-edge-shared.mjs",
     "functions:serve": "bash tools/local-stack/functions.sh serve",
     "test:functions": "bash tools/local-stack/functions.sh test",
-    "test:remote-catalog": "bash tools/local-stack/remote-catalog-check.sh"
+    "test:remote-catalog": "bash tools/local-stack/remote-catalog-check.sh",
+    "test:storefront": "pnpm --filter @kora/app-e2e exec playwright test -c playwright.storefront.config.ts"
   },
   "engines": {
     "node": ">=20"

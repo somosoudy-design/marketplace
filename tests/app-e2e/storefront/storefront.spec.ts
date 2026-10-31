@@ -56,7 +56,9 @@ test('búsqueda, filtros, orden y paginación mantienen URL compartible', async 
   expect(nums).toEqual([...nums].sort((a, b) => a - b));
   await page.goto('/buscar?availability=on_order');
   await expect(page.getByTestId('product-card').first()).toBeVisible();
-  expect((await page.locator('.availability:visible').allTextContents()).every((t) => t === 'Por encargo')).toBe(true);
+  await expect(page.locator('.product-card:visible .availability').filter({ hasText: /^Por encargo$/ })).toHaveCount(
+    await page.locator('.product-card:visible').count(),
+  );
   await page.goto('/buscar');
   await page.getByRole('link', { name: 'Siguiente' }).click();
   await expect(page).toHaveURL(/page=2/);

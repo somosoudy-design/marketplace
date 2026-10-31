@@ -100,6 +100,10 @@ desde `.local/ios-personal`. Supabase de pruebas existente, APNs/Associated Doma
 Sin EAS Build iOS, TestFlight, ad hoc o Expo Go; firma gratis 7 días. La nube Linux solo verificó configuración,
 prebuild sin Pods y exportación iOS; compilación/firma/simulador/iPhone pendientes del Mac.
 
+## 4 ter. Web de compradores
+
+Nueva aplicación `apps/storefront`, puerto3200. Comparte backend/cuentas con la app, sesión independiente por navegador. `pnpm --filter @kora/storefront dev`; configurar `.env.local` desde `.env.example` con URL+anon pública, sin service role. Build: `pnpm --filter @kora/storefront build && pnpm --filter @kora/storefront verify:release`. No mezclar su despliegue con el panel. Guía, pruebas locales, política de fotos/SSR y límites: [WEB_COMPRADOR.md](WEB_COMPRADOR.md). No hay hosting público en esta entrega.
+
 ## 5. Panel web (administración y vendedores)
 
 ```bash

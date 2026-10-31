@@ -1516,3 +1516,11 @@ legend {
     padding-block: 26px;
   }
 }
+/* Photo actions keep a quiet, light backing in both themes, rather than a dark disc over the product. */
+.product-card .favorite {
+  background: rgba(255, 255, 255, 0.94);
+  color: #55516a;
+}
+.product-card .favorite[aria-pressed='true'] {
+  color: #6d42e8;
+}

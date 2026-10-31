@@ -1,5 +1,13 @@
 # Pendientes de Kora
 
+## WEB-COMPRADOR · primer incremento y siguiente bloque, 30oct2026
+
+**Primera base desarrollada** en `apps/storefront`, backend/API/core/tokens compartidos, separada de Android/panel. Inicio/Buscar/ficha SSR, login real, favoritos y carrito persistidos por RPC; pruebas de mutación sólo local y capturas Marketplace sólo lectura. Ver [WEB_COMPRADOR.md](WEB_COMPRADOR.md). No repetir creación de proyecto ni traslado de datos. Sin hosting público ni OTA de este bloque.
+
+**Próxima tarea exacta:** checkout web progresivo (dirección/entrega → plan → revisión, orden conforme reglasUX ya aplicadas), `checkout_preview`/`place_order` y recuperación/idempotencia de confirmación existente; después Pago y Mis pedidos. Mantener estados de anticipo/cuotas y precios/tasas calculados sólo por servidor. Registro/recuperación, SEO de lanzamiento y alojamiento HTTPS con acceso protegido son dependencias de publicación pública. No confundir `noindex` con privacidad; recursos de exhibición no van al buildrelease.
+
+**Seguridad acotada:** storefront ya usa Next/eslint-config-next16.4.1 para tres avisos sobre16.4.0. Auditoría posterior sigue señalando `apps__admin>next`; parche del panel anterior requiere su bloque separado/pruebas antes de volver a desplegar ese panel. No cambiarlo automáticamente en esta entrega web.
+
 ## Compra · 29oct2026
 
 - Reporte de blanco al finalizar en Samsung: se corrigió la pérdida de continuidad por respuesta perdida y la navegación con resultado incompleto. 42 UI finales/11 unitarias/52 core, tipos/lint/Hermes y auditoría independiente aprobados; OTA preview EAS40999854509 publicada con guard APK5; ID `01a18af2-bd5c-7ec1-9e59-9b458a7e11f0`. Observación EAS41000103125 confirma última compatible; validación Samsung pendiente. [Detalle](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md). No afirmar reproducción literal o recepción nativa.

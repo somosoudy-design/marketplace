@@ -392,6 +392,15 @@ Publicación real: EAS40051620927 Success/fuente7f4c556; guardAPK5 Success01:51:
 - Último commit: `<hash>`.
 ```
 
+## 30 de octubre de 2026 · Web comprador, primera implementación
+
+- Oliver autorizó comenzar web en el mismo entorno. Rama sincronizada, raíz único integrador; especialista de arquitectura y auditor independiente sólo lectura/pruebas ignoradas.
+- `apps/storefront` Next separado: InicioC adaptado web, Buscar URL/filtros/contexto, fichas, Supabase login/cierre, favoritos y carrito reales. Comparte API/core/tokens; SSR público anónimo por petición y caché/controles privados aislados por comprador. Sin checkout web ficticio: continuación en app explícita.
+- Checkpoints `444a516` y `55c3d3a` con push. Auditor ronda1 CAMBIOS OBLIGATORIOS (release sin exclusión explícita, imágenes con fixtures de identidad distinta, categorías/altura); corregidos. Ronda2 APROBADO para incremento local,12capturas/12recorridos y cierre320claro/oscuro.14PNG originales finales conSHA en `docs/capturas/web-comprador-2026-10-30`.
+- Lectura de catálogo Marketplace real sólo anónima; mutaciones de prueba sólo local.12UI dev y12UI del buildproducción final,52core, tipos/lint monorepo y build aprobados; release sinregistro/archivos/referencias y bloqueo de start ante restos de desarrollo comprobados. Favorito discreto sobre foto en ambos temas. Primer intento de producción11/12 por assertion que confundía disponibilidad con badge de muestra; se corrigió el selector conservando el badge.
+- Next16.4.0 mostró tres avisos críticos/alto; parche preciso a16.4.1 sólo storefront, sin upgrade general. Auditoría posterior los conserva sólo en panel anterior. Buildrelease verifica ausencia de archivos/metadata/referencias de exhibición. Tipos dejaron de regenerar assets para evitar contaminar una compilación concurrente; build se repitió en secuencia.
+- Sin cambios en Android/OTA, nativo/iOS, backend remoto, SQL o reglas financieras. Sin hosting público. Próximo: checkout web progresivo con RPC/idempotencia/recuperación existentes, después Pago/Mis pedidos y preparación de despliegue protegido. [Guía](WEB_COMPRADOR.md).
+
 ## Relevos
 
 ### 2026-10-11 18:51Z · Codex cloud · Oliver · preview publicado y checkpoint validación Android

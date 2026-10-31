@@ -7,9 +7,11 @@
     "prepare:assets": "node ../../tools/storefront/prepare-assets.mjs",
     "dev": "pnpm prepare:assets && next dev --hostname 127.0.0.1 -p 3200",
     "build": "node ../../tools/storefront/prepare-assets.mjs --release && next build",
-    "start": "next start --hostname 0.0.0.0 -p 3200",
-    "typecheck": "pnpm prepare:assets && next typegen && tsc --noEmit",
-    "lint": "eslint ."
+    "start": "pnpm verify:release && next start --hostname 0.0.0.0 -p 3200",
+    "typecheck": "node ../../tools/storefront/prepare-assets.mjs --types-only && next typegen && tsc --noEmit",
+    "lint": "eslint .",
+    "tokens": "node --experimental-strip-types ../../packages/design-tokens/scripts/css.ts src/app/tokens.css",
+    "verify:release": "node ../../tools/storefront/check-release.mjs"
   },
   "dependencies": {
     "@kora/api": "workspace:*",

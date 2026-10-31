@@ -6,6 +6,7 @@
 |---|---|---|
 | Monorepo | pnpm 10.28, Node 22, TypeScript 5.9 (la app, 6.0), vitest 3 | raíz (`apps/*`, `packages/*`, `tests/*`, `tools/*`) |
 | App móvil (compradores + Mi tienda) | Expo SDK 57, React Native 0.86, expo-router, React Query 5, Reanimated 4 | `apps/mobile` (también exporta a web para las pruebas) |
+| Web de compradores | Next.js16.4.1, SSR público y sesión cliente, API/core/tokens compartidos | `apps/storefront` (puerto3200; Inicio, Buscar, ficha, Cuenta, Favoritos y Carrito). [Alcance](WEB_COMPRADOR.md) |
 | Panel web (admin + vendedor) | Next.js 16 (App Router), Tailwind v4, React Query | `apps/admin` (puerto 3100; `/admin` y `/vendedor`) |
 | Backend | Supabase: Postgres, Auth (GoTrue), PostgREST, Storage, Edge Functions (Deno) | `supabase/migrations`, `supabase/functions` |
 | Lógica compartida | dinero exacto, planes, tasas, pagos, sesión, errores en español, importador | `packages/core` |

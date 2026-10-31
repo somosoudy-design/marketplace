@@ -1,6 +1,6 @@
 // Reuse the existing mobile exhibition registry without importing React Native into Next.
 // Private loopback development ONLY. Release builds contain no exhibition files or metadata.
-import { readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, rmSync, copyFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, basename } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -14,6 +14,13 @@ try {
   if (e.code !== 'ENOENT') throw e;
 }
 const out = resolve(app, 'public/_exhibition');
+// Type checking must never rewrite an active dev server or a release artifact.
+if (process.argv.includes('--types-only')) {
+  mkdirSync(resolve(app, '.generated'), { recursive: true });
+  const manifest = resolve(app, '.generated/catalog.json');
+  if (!existsSync(manifest)) writeFileSync(manifest, '[]');
+  process.exit(0);
+}
 rmSync(out, { recursive: true, force: true });
 mkdirSync(resolve(app, '.generated'), { recursive: true });
 let photos = [];
