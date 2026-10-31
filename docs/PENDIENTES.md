@@ -1,12 +1,14 @@
 # Pendientes de Kora
 
-## WEB-COMPRADOR · primer incremento y siguiente bloque, 30oct2026
+## WEB-COMPRADOR · compra operativa, 30oct2026
 
-**Primera base desarrollada** en `apps/storefront`, backend/API/core/tokens compartidos, separada de Android/panel. Inicio/Buscar/ficha SSR, login real, favoritos y carrito persistidos por RPC; pruebas de mutación sólo local y capturas Marketplace sólo lectura. Ver [WEB_COMPRADOR.md](WEB_COMPRADOR.md). No repetir creación de proyecto ni traslado de datos. Sin hosting público ni OTA de este bloque.
+Base y recorrido principal implementados: Inicio/Buscar/ficha, cuenta, favoritos/carrito, direcciones, checkout4fases, pago/cotización/comprobante/recuperación y pedidos/seguimiento/cancelación permitida, registro y recuperación porOTP.27UI producción local,52core+11helper, tipos/lint/build y revisión independiente2rondas aprobados. [Detalle/evidencia](WEB_COMPRA_COMPLETA.md). Sin hosting ni OTA, datos remotos, SQL o finanzas modificados.
 
-**Próxima tarea exacta:** checkout web progresivo (dirección/entrega → plan → revisión, orden conforme reglasUX ya aplicadas), `checkout_preview`/`place_order` y recuperación/idempotencia de confirmación existente; después Pago y Mis pedidos. Mantener estados de anticipo/cuotas y precios/tasas calculados sólo por servidor. Registro/recuperación, SEO de lanzamiento y alojamiento HTTPS con acceso protegido son dependencias de publicación pública. No confundir `noindex` con privacidad; recursos de exhibición no van al buildrelease.
+**Siguiente exacto:** alojamiento Next de evaluación con HTTPS y control de acceso, dominio/configuración correspondiente y revisión de Oliver en navegador real. No hay URL pública configurada en este entorno: no inventarla ni usar despliegue del panel para el storefront. Proveedores automáticos necesitan retorno web configurado antes de habilitarse; no activar ni realizar pagos reales. Registro/recuperación por código funcionan sin modificar templates existentes. Opiniones/reclamos/paridad de herramientas avanzadas quedan como ampliaciones posteriores, sin afirmar app/web totalmente equivalentes.
 
-**Seguridad acotada:** storefront ya usa Next/eslint-config-next16.4.1 para tres avisos sobre16.4.0. Auditoría posterior sigue señalando `apps__admin>next`; parche del panel anterior requiere su bloque separado/pruebas antes de volver a desplegar ese panel. No cambiarlo automáticamente en esta entrega web.
+**Seguimiento móvil separado:** `useAddresses` nativo aún consume el callback histórico sin filtro explícito; para el modo comprador de una cuenta administradora revisar migración a `addressesForBuyer(user.id)` con prueba propia. Esta entrega conserva compatibilidad y no publica Android; no afirmar validación física de ese caso.
+
+**Seguridad acotada:** storefront16.4.1; los tres advisories previos16.4.0 continúan en el panel anterior, que requiere parche y pruebas en bloque separado antes de desplegarlo otra vez. No cambiarlo automáticamente en este alcance.
 
 ## Compra · 29oct2026
 

@@ -4,6 +4,8 @@
 
 ## Qué funciona
 
+**Actualización:** el recorrido completo de compra ya está implementado y probado. [Compra, pagos, pedidos, registro y recuperación](WEB_COMPRA_COMPLETA.md). Los resultados12/12 de este documento corresponden al primer incremento; el cierre posterior tiene27/27 UI.
+
 - **Inicio:** editorial Electric Violet, producto con foto/precio/destino real, categorías, comparación inicial, colecciones y tiendas de `home_feed`. Portada finita; muestra acotada de tiendas. No inventa promociones o testimonios.
 - **Buscar:** búsqueda, categoría, colección, tienda, disponibilidad, rango de precios, orden y paginación. Parámetros en URL, enlaces compartibles y regreso con contexto. Escritorio con filtros laterales; móvil los pliega y muestra cuántos están activos. El backend usa **slugs** para categoría/tienda/colección.
 - **Ficha `/p/[slug]`:** fotografías, variantes activas, precio por variante, cantidad, disponibilidad, descripción, vendedor, relacionados y agregar al carrito. Selecciona inicialmente una variante con existencias; diferencia opción agotada. El servidor valida existencias/importe al agregar.
@@ -12,7 +14,7 @@
 - **Carrito:** carga por RPC, cantidades, eliminación confirmada, errores recuperables e importe de líneas/subtotal calculados por servidor. Persiste al recargar y en otro navegador. No calcula precios o tasas en el cliente.
 - Carga de consultas privadas, vacío, error/reintento,404 real para ficha inexistente, teclado/foco, movimiento reducido y adaptación320/412/escritorio. Catálogo y ficha públicos llegan en HTML aun sin JS.
 
-**No es todavía la web comercial completa.** Checkout/pago/pedidos web, direcciones, registro/recuperación y herramientas de vendedor siguen siendo incrementos posteriores. El carrito explica que se puede continuar la compra en la app con la misma cuenta; no hay botón que finja finalizar la compra web. Esta entrega no modifica ni publica Android.
+**Compra web operativa:** checkout progresivo, pago, pedidos, direcciones y registro/recuperación ahora se completan dentro de la web. El carrito ya no deriva la compra a la app. El lanzamiento público y la paridad de todas las herramientas avanzadas siguen fuera de esta validación local. [Alcance y límites actuales](WEB_COMPRA_COMPLETA.md).
 
 ## Arquitectura y aislamiento
 
@@ -93,4 +95,4 @@ Se detectaron tres avisos Next16.4.0 (GHSA-2464-fhr4-w9xw, GHSA-p3m5-59mp-jv5r, 
 
 Esta entrega no tiene hosting público ni dominio oficial. El entorno cloud sirve para desarrollar; el lanzamiento requiere alojamiento Next permanente y HTTPS, dominio, redirects de Auth, revisión de sesiones/políticas/CSP, contenido comercial/fotos con derechos y protección de cualquier URL privada de evaluación. No utilizar por accidente el workflow de despliegue del panel. `noindex` permanece activo; habilitar indexación/metadata canónica/sitemap sólo al preparar lanzamiento aprobado.
 
-**Próxima intervención exacta:** checkout web progresivo, reutilizando RPC `checkout_preview`/`place_order`, direcciones y opciones reales, idempotencia y recuperación de la confirmación ya corregida en móvil. Luego Pago con cotización y estado de verificación reales y Mis pedidos; antes de la web pública cerrar registro/recuperación, SEO y despliegue protegido. Sin cálculos de cliente ni gastos/compras remotos de prueba.
+**Próxima intervención exacta:** preparar alojamiento de evaluación con HTTPS/acceso protegido y revisión del propietario en navegador real, según [cierre de compra](WEB_COMPRA_COMPLETA.md). No rehacer checkout, pagos/auth o la base de catálogo; están implementados.

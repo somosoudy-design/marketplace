@@ -392,6 +392,14 @@ Publicación real: EAS40051620927 Success/fuente7f4c556; guardAPK5 Success01:51:
 - Último commit: `<hash>`.
 ```
 
+## 30 de octubre de 2026 · Cierre del recorrido de compra web
+
+- Oliver pidió no detenerse con catálogo/carrito incompletos. Root único integrador; dos especialistas de contratos y auditor independiente sólo lectura/pruebas ignoradas. Fuente finalc579bc4, API9a03b9f; checkpoints934e32a/bf420b2 e1a14846 conpush.
+- Checkout Dirección→Entregas→Plan→Revisión; selección recuperada obliga revisar, intención exacta se conserva al recargar. Direcciones persistidas/errores, método/cotización/importe/comprobante privados, recuperación pago, pedidos/historial/cancelación permitida. Registro ycontraseña por código real6dígitos de templatesexistentes; sin backendnuevo ni redirección a compra móvil.
+- Auditor rechazó recuperación silenciosa de envío/plan, header grande en operación, ausencia miniaturas ystatuspago ambiguo; corregidos. Encontró upload415 conFile/multipart local, ArrayBuffer corregido y200+1pago pending/paid0 verificado. Segunda ronda APROBADO tras3pruebas propias y7PNG. Root añadió pruebas propuestas y validó27/27UI finales,52core+11helper, tipos/lint monorepo ybuild/release;4escenarioscaptura/26PNG+SHA. Expiry/saldo parcial incluyenpayloadsintético, sin fabricar pagos aceptados.
+- Fallos previos resueltos: etiqueta contraseña conayuda impedía selector exacto (nombre accesible separado); fixturede juguete agotada por pruebas (producto/variante propios, sin reponer global); parámetro opcional de addresses recibía contextoReactQuery móvil (firma antigua restaurada y método buyer explícito). Comprobaciones monorepo corregidas, no ignoradas.
+- Fuente/recursos/docs en [WEB_COMPRA_COMPLETA.md](WEB_COMPRA_COMPLETA.md). Operaciones sólo locales, cero finanzas/SQL/backend remoto/Android/OTA/panel/iOS cambiados.27UI soncasos distintos, no sumarepeticiones. Sin hostingpúblico ni prueba física de navegador Android. Próximo: alojamiento protegido/HTTPS y revisión del propietario, sin reconstruir compra ni rediagnosticar.
+
 ## 30 de octubre de 2026 · Web comprador, primera implementación
 
 - Oliver autorizó comenzar web en el mismo entorno. Rama sincronizada, raíz único integrador; especialista de arquitectura y auditor independiente sólo lectura/pruebas ignoradas.
