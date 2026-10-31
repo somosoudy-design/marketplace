@@ -78,7 +78,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   }, []);
   const addresses = useQuery({
     queryKey: ['addresses', buyerId],
-    queryFn: () => browser().api.account.addresses(buyerId),
+    queryFn: () => browser().api.account.addressesForBuyer(buyerId),
   });
   const address =
     addresses.data?.find((a) => a.id === chosen) ?? addresses.data?.find((a) => a.is_default) ?? addresses.data?.[0];

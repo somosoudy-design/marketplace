@@ -258,6 +258,12 @@ export function createApi(client: KoraClient) {
     cancel: (id: string, reason: string) => run<void>(rpc('cancel_order', { p_order_id: id, p_reason: reason })),
   };
 
+  const readAddresses = (buyerId?: string) => {
+    let query = from('addresses').select('*');
+    if (buyerId) query = query.eq('user_id', buyerId);
+    return run<Address[]>(query.order('is_default', { ascending: false }).order('created_at'));
+  };
+
   const account = {
     profile: (userId: string) => run<Profile | null>(from('profiles').select('*').eq('id', userId).maybeSingle()),
     updateProfile: (userId: string, patch: Partial<Pick<Profile, 'full_name' | 'phone' | 'preferences' | 'personalization_enabled' | 'marketing_opt_in'>>) =>
@@ -285,11 +291,9 @@ export function createApi(client: KoraClient) {
       if (error) throw new ApiError(toAppError(error));
       return data.signedUrl;
     },
-    addresses: (buyerId?: string) => {
-      let query = from('addresses').select('*');
-      if (buyerId) query = query.eq('user_id', buyerId);
-      return run<Address[]>(query.order('is_default', { ascending: false }).order('created_at'));
-    },
+    // Keep the no-argument callback compatible with existing React Query consumers.
+    addresses: () => readAddresses(),
+    addressesForBuyer: (buyerId: string) => readAddresses(buyerId),
     saveAddress: (a: Partial<Address> & { user_id: string }) =>
       a.id
         ? run<Address>(from('addresses').update(a).eq('id', a.id).select().single())

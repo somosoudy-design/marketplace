@@ -158,7 +158,7 @@ export function AddressEditor({
   );
 }
 export function Addresses({ buyerId }: { buyerId: string }) {
-  const data = useQuery({ queryKey: ['addresses', buyerId], queryFn: () => browser().api.account.addresses(buyerId) });
+  const data = useQuery({ queryKey: ['addresses', buyerId], queryFn: () => browser().api.account.addressesForBuyer(buyerId) });
   const qc = useQueryClient();
   const [editor, setEditor] = useState<Address | 'new' | null>(null);
   const remove = useMutation({
