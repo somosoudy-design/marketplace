@@ -2015,3 +2015,12 @@ legend {
     font-size: 13px;
   }
 }
+.account-nav a {
+  min-width: 44px;
+  justify-content: center;
+}
+.payment-pending > a:not(.button) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

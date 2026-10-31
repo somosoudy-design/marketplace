@@ -163,6 +163,15 @@ test('registro con código y recuperación real de contraseña', async ({ page }
   await page.getByLabel('Código de verificación').fill(await emailCode(email, since));
   await page.getByRole('button', { name: 'Verificar código' }).click();
   await expect(page.getByRole('heading', { name: 'Mi cuenta' })).toBeVisible();
+  const fixtureDb = new pg.Client({ connectionString: databaseUrl() });
+  await fixtureDb.connect();
+  try {
+    await fixtureDb.query('update profiles set is_demo=true where id=(select id from auth.users where email=$1)', [
+      email,
+    ]);
+  } finally {
+    await fixtureDb.end();
+  }
   await page.getByRole('button', { name: 'Cerrar sesión' }).click();
   await page.goto('/recuperar');
   await page.getByLabel('Correo electrónico').fill(email);

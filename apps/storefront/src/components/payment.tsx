@@ -354,8 +354,12 @@ function PaymentForm({
         </span>
       </div>
       <p className="muted">
-        Válido hasta {new Intl.DateTimeFormat('es-VE', { timeStyle: 'short' }).format(new Date(q.expires_at))} ·{' '}
-        {date(q.issued_at)}
+        Válido hasta{' '}
+        {new Intl.DateTimeFormat('es-VE', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+          timeZone: 'America/Caracas',
+        }).format(new Date(q.expires_at))}
       </p>
       {q.currency === 'VES' && (
         <p className="muted">
