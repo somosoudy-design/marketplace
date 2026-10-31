@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-10-31 · publicación Android y bloqueo preciso del panel
+
+Fuente final `45dca29`: recompilaciones,39 UI web y4 app exportada repetidos y aprobados; Sharp instalado conserva seis resultados y32 pruebas de herramientas de publicación/observación pasan. EAS41205629069 publicó solicitud `72b0b9f` en Android preview con runtime exacto APK5; ID `01a19226-40aa-7ce4-bd4c-0bdd0931385f`, grupo `6494951a-d30b-4d74-8edb-eea02adc7721`,13:29UTC. Observación41205938369 confirma última compatible, fuente limpia y sin rollback. No se comprobó recepción Samsung/emulador. No hay nueva publicación pendiente de Android.
+
+Panel: solicitud `f48af27` fija fuente `45dca29`; CI41205620181 pasó verificaciones/export, falló al publicar en intentos1 y2 y omitió comprobación del alias. Causa detallada aún desconocida: GitHub API devuelve exit1, descarga de logs bloqueada por red del entorno. Borrador guardado añade sólo `results-receiver.actions.githubusercontent.com`, con destinos previos/secretos intactos; requiere revisión y aplicación desde configuración. Próximo agente: leer intento2 al habilitar ese dominio, corregir causa y comprobar alias; no repetir intentos a ciegas ni OTA. El storefront continúa local, sin URL pública. [Evidencia](capturas/calidad-integral-2026-10-31/publicacion.json).
+
 ### 2026-10-31 · calidad integral, revisión y preparación de publicación
 
 Root único integrador, seis especialistas en UX, ecommerce, backend/tasas, notificaciones, build/admin y auditoría independiente. Checkpoints287ff66/49a5ac1. Checkout web integrado y progresivo, CTA móvil visible, ETA/edición por fase, pago legible/copia/archivo; avisos web y lectura visible/paginación móvil; credencialesPOST, aislamiento comprador administrador, configuración por par y vigencia futura; panel recupera tiendas/PDF/modal y bloquea acciones concurrentes. Contrato de confirmación compartido en API. Sin SQL, datos remotos, fórmulas, APK o iOS modificados.

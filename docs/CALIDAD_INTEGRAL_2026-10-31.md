@@ -103,14 +103,36 @@ Referencia externa verificable: portada pública de [Amazon](https://www.amazon.
 
 Todos los cambios de datos de prueba ocurrieron en el backend local. Los tests interceptan accesos al Marketplace remoto; los casos administrativos de aprobación/configuración retuvieron y abortaron las solicitudes. Log técnico y propuestas: `.local/premium-20261031/`. El caso de notificaciones que inicialmente coincidió con el anunciador de rutas de Next se acotó a `main`; la suite final completa pasó sin omitirlo.
 
+**Fuente final comprobada: `45dca29`.** Tras mover el contrato compartido y actualizar Sharp se repitieron build web, export móvil web/Android Hermes,39 UI web y4 UI móviles; todos aprobados. El smoke sobre Sharp realmente instalado conservó los seis resultados/hash esperados. Los32 tests de las herramientas de publicación/observación también pasaron. Ninguno de esos exports constituye una instalación Android.
+
+Comandos de regresión acotada, con `.env.local` apuntando al stack local activo:
+
+```bash
+PW_CHROMIUM_PATH=/usr/bin/chromium pnpm test:storefront
+PW_CHROMIUM_PATH=/usr/bin/chromium pnpm --filter @kora/app-e2e exec playwright test --project=app tests/65-notifications-quality.spec.ts
+PW_CHROMIUM_PATH=/usr/bin/chromium pnpm --filter @kora/app-e2e exec playwright test --project=panel panel/panel-quality.spec.ts panel/rate-policy.spec.ts
+pnpm typecheck && pnpm lint
+pnpm --filter @kora/core test && pnpm test:admin
+```
+
+No ejecutar `db:reset` sobre un stack compartido para repetir estas pruebas. Los fixtures nuevos aíslan sus productos, compradores y pedidos; no requieren restaurar existencias globales.
+
+## Publicación y bloqueo comprobados
+
+**Android preview publicado:** [CI41205629069](https://github.com/somosoudy-design/marketplace/actions/runs/41205629069), solicitud `72b0b9f`,31oct2026 a13:29UTC. ID **`01a19226-40aa-7ce4-bd4c-0bdd0931385f`**, grupo `6494951a-d30b-4d74-8edb-eea02adc7721`. Runtime exacto APK5: `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`. [Observación independiente del servidor41205938369](https://github.com/somosoudy-design/marketplace/actions/runs/41205938369) confirma última compatible en preview, fuente limpia y sin rollback. Son los cambios de avisos/privacidad/contrato de la app; la nueva composición del checkout corresponde a la web compradora. No se probó recepción física ni emulador y no se creó APK.
+
+**Panel sin publicación confirmada:** [CI41205620181](https://github.com/somosoudy-design/marketplace/actions/runs/41205620181), solicitud `f48af27`, fuente aprobada `45dca29`. Verificaciones y export pasan; Publicar en EAS Hosting falla en los intentos1 y2, y no se ejecuta la comprobación del alias. No se conoce la causa concreta aún: los metadatos disponibles sólo dicen exit1. La política de red deniega el servidor de logs `results-receiver.actions.githubusercontent.com`.
+
+Se guardó un borrador de entorno añadiendo **sólo ese dominio**, sin cambiar destinos anteriores, secretos, scripts ni repositorio configurado. Guardar el borrador no lo aplica al entorno: requiere revisión/aplicación desde configuración, según cloud-environment-runtime/setup. Tras aplicarlo, ejecutar `gh run view 41205620181 --attempt 2 --log-failed`, corregir el error específico y comprobar deployment/alias. No repetir despliegues a ciegas ni anunciar el panel como actualizado. El bloqueo afecta al diagnóstico del Hosting, no a la OTA publicada. [Metadatos comprobados](capturas/calidad-integral-2026-10-31/publicacion.json).
+
 ## Matriz de preparación: próximo trabajo exacto
 
 | Área | Estado comprobado | Siguiente incremento verificable |
 |---|---|---|
 | Compra web | Recorrido operativo y rediseño revisado localmente | Alojamiento Next HTTPS protegido, dominio/callbacks y revisión del propietario desde navegador real. No hay URL pública del storefront |
-| App Android | Código JavaScript/assets exporta; mantiene configuración nativa | Guard exacto APK5 antes de OTA; después comparar ID recibido en Samsung y realizar prueba física de avisos |
+| App Android | OTA publicada y metadatos compatibles con APK5 comprobados | Comparar ID recibido en Samsung y realizar prueba física de avisos; no republicar el mismo código |
 | Notificaciones | Inbox y ciclo lógico verificados | Prioridad: privacidad de logout sin red y destino correcto de avisos de vendedor; prueba física permiso/tap/arranque/reanudación |
-| Administración | Panel existente con correcciones operativas y seguridad | Siguiente bloque: colas por rol y acciones frecuentes en Mi tienda; la administración avanzada completa sigue en panel web, no se inventó una consola nativa |
+| Administración | Código/export revisados; publicación nueva bloqueada en EAS Hosting | Resolver el fallo con el log real y verificar alias. Después colas por rol/acciones frecuentes en Mi tienda; la administración avanzada completa sigue en panel web |
 | Tasas | Contrato local y configuración por par coherentes | Calendario 2027 con fuente verificada y monitorización operativa; no cambiar tasas para hacer pasar tests |
 | Dependencias | Next/undici corregidos; riesgos restantes clasificados | Compatibilidad de decodificación de enlaces; después migración de tooling Vitest y esquemas Zod por bloques con sus pruebas |
 | Lanzamiento comercial | Aún pendiente | Catálogo/modelos/derechos y datos de cobro definitivos, legales, copias/restauración, servicios habilitados y operación. No activar proveedores ni realizar pagos reales como prueba |
