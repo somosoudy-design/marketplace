@@ -24,12 +24,14 @@ export function Favorite({ id, title }: { id: string; title: string }) {
       <button
         type="button"
         className="favorite"
-        aria-label={`${active ? 'Quitar de' : 'Guardar en'} favoritos: ${title}`}
+        aria-label={`${favorites.isError ? 'Reintentar cargar' : active ? 'Quitar de' : 'Guardar en'} favoritos: ${title}`}
         aria-pressed={active}
-        disabled={!ready || mutation.isPending || (!!user && !favorites.isSuccess)}
+        disabled={!ready || mutation.isPending || (!!user && favorites.isPending)}
         onClick={() =>
           user
-            ? mutation.mutate()
+            ? favorites.isError
+              ? void favorites.refetch()
+              : mutation.mutate()
             : router.push(`/cuenta?volver=${encodeURIComponent(window.location.pathname + window.location.search)}`)
         }
       >

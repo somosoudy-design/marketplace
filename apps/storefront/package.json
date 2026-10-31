@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "prepare:assets": "node ../../tools/storefront/prepare-assets.mjs",
-    "dev": "pnpm prepare:assets && next dev --hostname 0.0.0.0 -p 3200",
-    "build": "pnpm prepare:assets && next build",
+    "dev": "pnpm prepare:assets && next dev --hostname 127.0.0.1 -p 3200",
+    "build": "node ../../tools/storefront/prepare-assets.mjs --release && next build",
     "start": "next start --hostname 0.0.0.0 -p 3200",
     "typecheck": "pnpm prepare:assets && next typegen && tsc --noEmit",
     "lint": "eslint ."
@@ -18,7 +18,7 @@
     "@supabase/supabase-js": "^2.117.3",
     "@tanstack/react-query": "^5.104.1",
     "lucide-react": "1.53.0",
-    "next": "16.4.0",
+    "next": "16.4.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
@@ -27,7 +27,7 @@
     "@types/react": "~19.2.2",
     "@types/react-dom": "~19.2.2",
     "eslint": "^9.39.5",
-    "eslint-config-next": "16.4.0",
+    "eslint-config-next": "16.4.1",
     "typescript": "~5.9.3"
   }
 }

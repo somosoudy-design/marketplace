@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: '#6D42E8' };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-VE" className={jakarta.variable}>
+    <html data-scroll-behavior="smooth" lang="es-VE" className={jakarta.variable}>
       <body>
         <Providers>
           <Shell>{children}</Shell>

@@ -30,8 +30,7 @@ export default async function Home() {
               Todos los días.
             </h1>
             <p>
-              Tecnología, belleza y mucho más.
-              <br />
+              Tecnología, belleza y mucho más. <br />
               Explora las tiendas y encuentra lo tuyo.
             </p>
             <Link className="button inverse" href="/buscar">

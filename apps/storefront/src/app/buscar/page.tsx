@@ -5,6 +5,7 @@ import type { Availability, SearchSort } from '@kora/api';
 import { publicApi } from '@/lib/server';
 import { ProductGrid } from '@/components/product-card';
 import { Failure, Empty } from '@/components/states';
+import { SearchFilters } from '@/components/search-filters';
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: 'Buscar productos' };
 const sorts = {
@@ -33,8 +34,10 @@ export default async function Search({
   const category = single(s.category);
   const store = single(s.store);
   const collection = single(s.collection);
-  const sort = single(s.sort) in sorts ? (single(s.sort) as SearchSort) : 'relevance';
-  const availability = single(s.availability) in availabilities ? (single(s.availability) as Availability) : undefined;
+  const sort = Object.hasOwn(sorts, single(s.sort)) ? (single(s.sort) as SearchSort) : 'relevance';
+  const availability = Object.hasOwn(availabilities, single(s.availability))
+    ? (single(s.availability) as Availability)
+    : undefined;
   const page = Math.max(1, Math.min(1000, Number.parseInt(single(s.page), 10) || 1));
   let products, categories;
   try {
@@ -82,7 +85,9 @@ export default async function Search({
         </span>
       </div>
       <div className="search-layout">
-        <aside className="search-sidebar">
+        <SearchFilters
+          active={[category, availability, single(s.min), single(s.max), store, collection].filter(Boolean).length}
+        >
           <form action="/buscar" className="filter-form">
             <h2>
               <SlidersHorizontal size={18} /> Filtrar y ordenar
@@ -163,7 +168,7 @@ export default async function Search({
               </Link>
             )}
           </form>
-        </aside>
+        </SearchFilters>
         <section aria-label="Resultados" className="search-results">
           {products.length ? (
             <>

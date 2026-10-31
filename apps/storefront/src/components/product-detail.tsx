@@ -13,12 +13,18 @@ import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 import { money } from '@/lib/format';
 import { catalogText, localExhibition, photo } from '@/lib/photos';
-export function ProductDetail({ product: p }: { product: Product }) {
+export function ProductDetail({ product }: { product: Product }) {
+  const { session } = useAccount();
+  return <DetailSession key={`${product.id}:${session?.user.id ?? 'guest'}`} product={product} />;
+}
+function DetailSession({ product: p }: { product: Product }) {
   const { session, ready } = useAccount();
   const router = useRouter();
   const qc = useQueryClient();
   const variants = p.variants.filter((v) => v.active);
-  const [selected, setSelected] = useState(variants[0]?.id ?? '');
+  const [selected, setSelected] = useState(
+    variants.find((v) => v.stock == null || v.stock > 0)?.id ?? variants[0]?.id ?? '',
+  );
   const [quantity, setQuantity] = useState(1);
   const [image, setImage] = useState(p.image_path);
   const variant = variants.find((v) => v.id === selected);
@@ -103,7 +109,7 @@ export function ProductDetail({ product: p }: { product: Product }) {
           </Link>
           <div className="detail-price">{money(variant?.price_usd ?? p.price_usd)}</div>
           <p className={`stock-status ${canBuy ? 'in-stock' : ''}`}>
-            {availability.label}
+            {variant?.stock != null && variant.stock <= 0 ? 'Esta opción está agotada' : availability.label}
             {p.lead_min_days != null &&
               p.lead_max_days != null &&
               ` · Estimado: ${p.lead_min_days}–${p.lead_max_days} días`}
@@ -119,6 +125,7 @@ export function ProductDetail({ product: p }: { product: Product }) {
                   type="button"
                   key={v.id}
                   aria-pressed={v.id === selected}
+                  disabled={add.isPending}
                   onClick={() => {
                     setSelected(v.id);
                     setQuantity(1);

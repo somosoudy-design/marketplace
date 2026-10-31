@@ -17,14 +17,18 @@ const out = resolve(app, 'public/_exhibition');
 rmSync(out, { recursive: true, force: true });
 mkdirSync(resolve(app, '.generated'), { recursive: true });
 let photos = [];
-if (process.env.STOREFRONT_PRIVATE_PREVIEW === '1' && process.env.NODE_ENV !== 'production') {
+if (
+  !process.argv.includes('--release') &&
+  process.env.STOREFRONT_PRIVATE_PREVIEW === '1' &&
+  process.env.NODE_ENV !== 'production'
+) {
   const backend = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL);
-  if (
-    !['localhost', '127.0.0.1', '[::1]'].includes(backend.hostname) ||
-    backend.port !== '54321' ||
-    backend.protocol !== 'http:'
-  )
-    throw new Error('Exhibition assets require the local test backend.');
+  const local =
+    ['localhost', '127.0.0.1', '[::1]'].includes(backend.hostname) &&
+    backend.port === '54321' &&
+    backend.protocol === 'http:';
+  if (!(local || backend.origin === 'https://mimnotafmfasvwrclxan.supabase.co'))
+    throw new Error('Exhibition assets require the approved test backend.');
   const registry = resolve(root, 'apps/mobile/src/lib/catalog-exhibition-assets.ts');
   const code = ts.transpileModule(readFileSync(registry, 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS },
