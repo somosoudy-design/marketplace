@@ -63,6 +63,22 @@ function Account() {
           <UserRound size={30} />
         </div>
         <div className="account-options">
+          <Link href="/pedidos">
+            <ShoppingBag />
+            <div>
+              <h2>Mis pedidos</h2>
+              <p>Pagos, entregas y seguimiento.</p>
+            </div>
+            <ArrowRight />
+          </Link>
+          <Link href="/direcciones">
+            <UserRound />
+            <div>
+              <h2>Mis direcciones</h2>
+              <p>Elige dónde recibir tus compras.</p>
+            </div>
+            <ArrowRight />
+          </Link>
           <Link href="/favoritos">
             <Heart />
             <div>
@@ -150,9 +166,10 @@ function Account() {
         <button className="button" disabled={login.isPending}>
           {login.isPending ? 'Ingresando…' : 'Ingresar'}
         </button>
-        <p className="muted">
-          Registro y recuperación de cuenta continúan disponibles en la app durante esta primera entrega web.
-        </p>
+        <div className="auth-links">
+          <Link href="/registro">Crear una cuenta</Link>
+          <Link href="/recuperar">¿Olvidaste tu contraseña?</Link>
+        </div>
       </form>
     </div>
   );

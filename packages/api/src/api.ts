@@ -243,16 +243,17 @@ export function createApi(client: KoraClient) {
         buyerId ? query.eq('buyer_id', buyerId) : query,
       );
     },
-    detail: (id: string) =>
-      run<OrderDetail | null>(
-        from('orders')
-          .select('*, order_items(*), fulfillments(*, fulfillment_events(*)), payment_obligations(*), payments(*)')
-          .eq('id', id)
-          .order('seq', { referencedTable: 'payment_obligations' })
-          .order('seq', { referencedTable: 'fulfillments' })
-          .order('created_at', { referencedTable: 'payments', ascending: false })
-          .maybeSingle(),
-      ),
+    /** Explicit buyer scope also protects the buyer UI of an administrator. */
+    detail: (id: string, buyerId?: string) => {
+      let query = from('orders')
+        .select('*, order_items(*), fulfillments(*, fulfillment_events(*)), payment_obligations(*), payments(*)')
+        .eq('id', id);
+      if (buyerId) query = query.eq('buyer_id', buyerId);
+      return run<OrderDetail | null>(query
+        .order('seq', { referencedTable: 'payment_obligations' })
+        .order('seq', { referencedTable: 'fulfillments' })
+        .order('created_at', { referencedTable: 'payments', ascending: false }).maybeSingle());
+    },
     steps: () => run<FulfillmentStep[]>(from('fulfillment_steps').select('*').order('flow').order('seq')),
     cancel: (id: string, reason: string) => run<void>(rpc('cancel_order', { p_order_id: id, p_reason: reason })),
   };
@@ -284,7 +285,11 @@ export function createApi(client: KoraClient) {
       if (error) throw new ApiError(toAppError(error));
       return data.signedUrl;
     },
-    addresses: () => run<Address[]>(from('addresses').select('*').order('is_default', { ascending: false }).order('created_at')),
+    addresses: (buyerId?: string) => {
+      let query = from('addresses').select('*');
+      if (buyerId) query = query.eq('user_id', buyerId);
+      return run<Address[]>(query.order('is_default', { ascending: false }).order('created_at'));
+    },
     saveAddress: (a: Partial<Address> & { user_id: string }) =>
       a.id
         ? run<Address>(from('addresses').update(a).eq('id', a.id).select().single())

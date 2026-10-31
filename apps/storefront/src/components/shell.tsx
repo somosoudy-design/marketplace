@@ -8,6 +8,7 @@ import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
   const { session } = useAccount();
   const cart = useQuery({
     queryKey: ['cart', session?.user.id],
@@ -19,13 +20,13 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <a className="skip" href="#contenido">
         Ir al contenido
       </a>
-      <header className="header">
+      <header className={`header ${focused ? 'header-focused' : ''}`}>
         <div className="header-inner">
           <Link href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
             {brand.name.toLowerCase()}
             <span />
           </Link>
-          <form action="/buscar" role="search" className="searchbox">
+          <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
             <input type="search" name="q" aria-label="Buscar productos" placeholder="¿Qué estás buscando?" />
             <button type="submit" aria-label="Buscar">
@@ -48,7 +49,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Link>
           </nav>
         </div>
-        <nav className="browse-nav wrap" aria-label="Explorar">
+        <nav hidden={focused} className="browse-nav wrap" aria-label="Explorar">
           <Link aria-current={pathname === '/' ? 'page' : undefined} href="/">
             Inicio
           </Link>

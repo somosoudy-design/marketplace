@@ -4,6 +4,12 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · completar compra web, 30 de octubre
+
+Oliver pidió continuar hasta que el recorrido web esté completo, sin detenerse en la base de catálogo. Implementados en `apps/storefront`: checkout4fases, direcciones crear/editar/eliminar, pago/cotización/comprobante y estado real, pedidos/lista/detalle/historial/cancelación, registro y recuperación por código6dígitos (templates existentes, sin depender de enlaces inexistentes). Recuperación exacta comprador+clave guardada por intención incluso recargando checkout. Consultas API de direcciones/detalle admiten filtro explícito por comprador; web lo usa también con admin. No SQL, backend remoto ni finanzas cambiados.
+
+Checkpoint: tipos/lint aprobados;6UI locales de compra/recuperación/preview/aislamiento/direcciones aprobadas en la segunda corrida. Caso registro+recuperación de correo aún en curso. Auditor independiente rechazó recuperación silenciosa de envío/plan, encabezado de descubrimiento en compra y falta de miniaturas: corregidos; segunda revisión pendiente. **Siguiente inmediato:** terminar pruebaOTP, ampliar errores pago/expiración/plan-envío, corregir lo detectado y revisar capturas finales; luego buildrelease, suite web completa, commit/push y continuidad. Servidor3200 apunta a stackLOCAL54321; no usar suite mutadora con Marketplace.
+
 ## Web comprador · primera entrega terminada, 30 de octubre
 
 Oliver autorizó comenzar la web integrada. `apps/storefront` Next16.4.1, puerto3200, separada de panel/Expo; comparte API/core/tokens/backend. InicioC web, Buscar con URL/filtros/paginación, fichas/variantes, login de misma cuenta, favoritos y carrito por RPC persistidos. Sesión por dispositivo/origen independiente; SSR público anónimo por petición y caché privada aislada por comprador. [Guía y límites](WEB_COMPRADOR.md).

@@ -140,12 +140,13 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
             <strong>{money(cart.data.items_usd)}</strong>
           </div>
           <p>Entrega y opciones de pago se calculan al continuar con la compra.</p>
-          <div className="notice">
-            <strong>Continúa la compra en la app</strong>
-            <p>
-              Tu carrito ya está disponible allí con esta misma cuenta. El checkout web será el siguiente incremento.
-            </p>
-          </div>
+          {cart.data.issues > 0 ? (
+            <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
+          ) : (
+            <Link className="button" data-testid="cart-checkout" href="/checkout">
+              Continuar con la compra
+            </Link>
+          )}
           <Link className="text-link" href="/buscar">
             Seguir explorando <ArrowRight size={16} />
           </Link>
