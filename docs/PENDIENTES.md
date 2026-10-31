@@ -1,14 +1,25 @@
 # Pendientes de Kora
 
+## Calidad integral ·31oct2026
+
+Compra web rediseñada y revisada, notificaciones web/app, aislamiento de comprador administrador, recuperación de tiendas y revisión segura del panel implementados.39 UI web/11 panel/4 app exportada,116 unitarias,25 SQL+8 adaptadores y revisión visual independiente aprobados. [Decisiones, comparativas y límites](CALIDAD_INTEGRAL_2026-10-31.md). Sin SQL ni datos remotos modificados.
+
+1. Cerrar publicación autorizada del panel y Android preview: guard exacto APK5, resultado de CI, ID OTA y observación sólo lectura. Recepción Samsung/push físico aún sin comprobar; no confundir aceptación del proveedor con entrega al teléfono.
+2. Seguridad runtime: sustituir decodificación vulnerable de enlaces mediante solución compatible con query-string/Metro/Hermes, con pruebas y guard APK5. Override directo0.5.1 rechazado por cambio ESM. Audit residual25:2críticos en runner de tests,8altos/11moderados/4bajos; después migración Vitest/Zod por bloques. No afirmar cero vulnerabilidades.
+3. Notificaciones: desvinculación segura al cerrar sesión sin conexión y navegación de avisos vendedor hacia la tienda correcta. Mantener inbox por propietario y no marcar avisos no cargados.
+4. Web compradora: alojamiento Next HTTPS protegido y revisión real del propietario; todavía sin proveedor/URL pública. No publicar el storefront mediante el workflow del panel.
+5. Operación BCV: calendario bancario2027 con fuente comprobable antes del último día bancario2026. Si falta tasa válida, bloquear VES; no usar tasas futuras/vencidas ni modificar reglas como arreglo visual.
+6. Administración móvil: priorizar colas por rol y acciones frecuentes de Mi tienda reutilizando RPC reales; la consola administrativa completa sigue en el panel web. Inventario de lanzamiento, catálogo/derechos y contenidos legales en PUBLICACION.md.
+
 ## WEB-COMPRADOR · compra operativa, 30oct2026
 
 Base y recorrido principal implementados: Inicio/Buscar/ficha, cuenta, favoritos/carrito, direcciones, checkout4fases, pago/cotización/comprobante/recuperación y pedidos/seguimiento/cancelación permitida, registro y recuperación porOTP.27UI producción local,52core+11helper, tipos/lint/build y revisión independiente2rondas aprobados. [Detalle/evidencia](WEB_COMPRA_COMPLETA.md). Sin hosting ni OTA, datos remotos, SQL o finanzas modificados.
 
 **Siguiente exacto:** alojamiento Next de evaluación con HTTPS y control de acceso, dominio/configuración correspondiente y revisión de Oliver en navegador real. No hay URL pública configurada en este entorno: no inventarla ni usar despliegue del panel para el storefront. Proveedores automáticos necesitan retorno web configurado antes de habilitarse; no activar ni realizar pagos reales. Registro/recuperación por código funcionan sin modificar templates existentes. Opiniones/reclamos/paridad de herramientas avanzadas quedan como ampliaciones posteriores, sin afirmar app/web totalmente equivalentes.
 
-**Seguimiento móvil separado:** `useAddresses` nativo aún consume el callback histórico sin filtro explícito; para el modo comprador de una cuenta administradora revisar migración a `addressesForBuyer(user.id)` con prueba propia. Esta entrega conserva compatibilidad y no publica Android; no afirmar validación física de ese caso.
+**Cerrado el31oct:** direcciones y pedidos móviles ahora filtran explícitamente por comprador y separan caché por sesión. Probado en app exportada con administrador/cuentaA/cuentaB/sesión cerrada; recepción física pendiente.
 
-**Seguridad acotada:** storefront16.4.1; los tres advisories previos16.4.0 continúan en el panel anterior, que requiere parche y pruebas en bloque separado antes de desplegarlo otra vez. No cambiarlo automáticamente en este alcance.
+**Cerrado el31oct:** panel actualizado a Next/eslint16.4.1 y undici7.30.1; pruebas y build aprobados. Publicación y dependencias residuales se siguen en el bloque superior.
 
 ## Compra · 29oct2026
 

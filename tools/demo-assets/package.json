@@ -10,7 +10,7 @@
     "brand": "node generate-brand.mjs"
   },
   "dependencies": {
-    "sharp": "^0.34.4"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "lucide-static": "1.53.0"

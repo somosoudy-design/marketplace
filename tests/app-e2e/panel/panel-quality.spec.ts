@@ -128,3 +128,32 @@ test.describe('before hydration', () => {
     expect(new URL(page.url()).search).toBe('');
   });
 });
+
+test('admin review pending keeps destructive alternatives and dismissal locked',async({page})=>{
+ await page.goto('http://127.0.0.1:3100/login');
+ await page.getByLabel('Correo',{exact:true}).fill('admin@example.com');
+ await page.getByLabel('Contraseña',{exact:true}).fill('Demo-1234');
+ await page.getByRole('button',{name:'Entrar',exact:true}).click();
+ await expect(page).not.toHaveURL(/\/login/);
+ await page.goto('http://127.0.0.1:3100/admin/pagos');
+ await page.getByRole('button',{name:'Revisar',exact:true}).first().click();
+ const dialog=page.getByRole('dialog');
+ let requested=false;let release:()=>void=()=>{};
+ await page.route('**/rpc/review_payment',async r=>{
+   requested=true;
+   await new Promise<void>(resolve=>{release=resolve});
+   await r.abort('failed'); // never send this test's approval to any backend
+ });
+ try{
+  await dialog.getByRole('button',{name:'Confirmar recibido',exact:true}).click();
+  await expect.poll(()=>requested).toBe(true);
+  await expect(dialog.getByRole('button',{name:'Rechazar',exact:true})).toBeDisabled();
+  await expect(dialog.getByRole('button',{name:'Llegó un monto distinto',exact:true})).toBeDisabled();
+  await expect(dialog.getByRole('button',{name:'Cerrar',exact:true})).toBeDisabled();
+  await page.keyboard.press('Escape');await expect(dialog).toBeVisible();
+ }finally{release();}
+ await expect(dialog.getByRole('button',{name:'Cerrar',exact:true})).toBeEnabled();
+ await expect(dialog.getByRole('button',{name:'Rechazar',exact:true})).toBeEnabled();
+ await dialog.getByRole('button',{name:'Cerrar',exact:true}).click();
+ await expect(dialog).toHaveCount(0);
+});

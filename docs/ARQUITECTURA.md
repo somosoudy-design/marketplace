@@ -31,6 +31,8 @@ tools/supabase-remote        archivos SQL para el SQL Editor cuando el conector 
 
 ## Funcionalidades implementadas
 
+Actualización31oct2026: `packages/api/src/checkout-confirmation.ts` contiene el contrato único de confirmación/recuperación por intención; web y app lo consumen sin importar carpetas de otra aplicación. Las consultas de direcciones/detalle en modo comprador filtran por usuario incluso para administradores y sus claves de caché incluyen sesión. La API de avisos expone página con propietario y conteo exacto independiente; conserva la firma anterior de `notifications`. Push móvil separa suscripción del SDK y ciclo de eventos comprobable. [Revisión y límites](CALIDAD_INTEGRAL_2026-10-31.md).
+
 Verificadas = cubiertas por pruebas que se ejecutaron en verde en local (`docs/PRUEBAS.md`). En el APK real
 se ha probado menos; lo comprobado allí está en `docs/ESTADO_ACTUAL.md`.
 

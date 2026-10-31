@@ -1,7 +1,6 @@
 # Lista de verificación para publicar en tiendas
 
-Nada de esto se ha ejecutado: publicar, crear cuentas de desarrollador y contratar servicios requiere la
-autorización de Oliver y tiene costo.
+Esta lista corresponde al **lanzamiento comercial en tiendas**, no al estado de evaluación. Android APK5 ya existe y recibe EAS Update en `preview`; el panel está en https://kora-panel.expo.app. La web compradora está implementada y probada localmente, sin alojamiento público configurado. La autorización vigente permite actualizaciones incrementales de evaluación; no habilita compras reales, un APK nuevo, App Store/Google Play ni contratación. iOS sigue pospuesto. Estado concreto y bloqueos: [CALIDAD_INTEGRAL_2026-10-31.md](CALIDAD_INTEGRAL_2026-10-31.md).
 
 ## Antes de la primera build pública
 
@@ -21,15 +20,14 @@ autorización de Oliver y tiene costo.
 
 ## Cuentas y credenciales
 
-- [x] Proyecto Expo marketplacebrand/marketplace vinculado en `config/expo.json` (falta su `projectId`, que imprime
-      el workflow del APK al tener `EXPO_TOKEN`).
+- [x] Proyecto Expo marketplacebrand/marketplace vinculado con `projectId` en `config/expo.json`; workflows de preview/panel operativos.
 - [ ] Apple Developer Program (pago anual) y App Store Connect.
 - [ ] Google Play Console (pago único) y firma de apps de Play.
-- [ ] FCM v1 (Android) y APNs (iOS) cargados con `eas credentials` para push.
+- [ ] Validar push Android físicamente de extremo a extremo con las credenciales existentes; aceptación del proveedor no certifica recepción. APNs/iOS fuera del alcance vigente.
 
 ## Builds
 
-- [ ] `eas build --profile preview --platform android` e instalar el APK en teléfonos reales.
+- [x] APK5 preview Android instalado por Oliver. Mantener runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; **no generar otro APK** por esta lista.
 - [ ] Probar en Android e iOS reales: registro, compra, pago manual con comprobante, pago en línea si
       aplica, push, enlaces profundos, botón Atrás y gestos, modo oscuro, tamaños de pantalla, conexión lenta.
 - [ ] `eas build --profile production --platform all`.
@@ -54,7 +52,8 @@ autorización de Oliver y tiene costo.
 
 - [ ] `/.well-known/apple-app-site-association` con el Team ID y el bundle id.
 - [ ] `/.well-known/assetlinks.json` con el paquete y la huella SHA-256 del certificado de firma de Play.
-- [ ] Panel web desplegado con HTTPS y su URL en `site_url` de Supabase Auth.
+- [x] Panel web de evaluación desplegado con HTTPS en https://kora-panel.expo.app.
+- [ ] Alojamiento HTTPS del storefront comprador y dominios/callbacks de lanzamiento, configurados y comprobados antes de activar proveedores externos.
 
 ## Operación
 

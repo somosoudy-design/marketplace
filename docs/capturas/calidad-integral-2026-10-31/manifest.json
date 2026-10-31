@@ -1,0 +1,170 @@
+{
+  "date": "2026-10-31",
+  "sourceBase": "49a5ac1",
+  "capture": "Chromium / Playwright con backend local; no Android físico",
+  "editing": "Archivos originales, copiados sin modificar píxeles",
+  "images": [
+    {
+      "path": "ux/before-1-dirección-320-light.png",
+      "sha256": "155334110c7436e9afd6065eede3029af0b0247110e44f295176f97b6512a315",
+      "width": 320,
+      "height": 1036
+    },
+    {
+      "path": "ux/after-1-dirección-320-light.png",
+      "sha256": "d7ae4df01e1da7b8f5a03552eef50f5d1d3d63cdcf4763599fe6efb2ef3fdaf9",
+      "width": 320,
+      "height": 960
+    },
+    {
+      "path": "ux/before-2-entregas-320-dark.png",
+      "sha256": "c62021c2d6339e78b87bbf29eeb7a0fa9bac8092eb0943a28f4a4771fb42c370",
+      "width": 320,
+      "height": 1432
+    },
+    {
+      "path": "ux/after-2-entregas-320-dark.png",
+      "sha256": "0db000cc7096914652d3d28b6d3fcf07a129dd333eda4301180bda1e282fdebf",
+      "width": 320,
+      "height": 1327
+    },
+    {
+      "path": "ux/before-4-revisión-412-dark.png",
+      "sha256": "4077abfcd1dc5115b09f6654f6b112ef32f0e875238c0bb6b95c81e7ec0f9e50",
+      "width": 412,
+      "height": 1375
+    },
+    {
+      "path": "ux/after-4-revisión-412-dark.png",
+      "sha256": "bc6360f8c31cbf8bf713c394ebc34364e21235dcb74a4be9495986497a45a115",
+      "width": 412,
+      "height": 1262
+    },
+    {
+      "path": "ux/after-viewport-4-revisión-412-dark.png",
+      "sha256": "4fa592ac1876a7e513f9e368deb95df48d6054d04ffbb172a739efa11b7ffc95",
+      "width": 412,
+      "height": 960
+    },
+    {
+      "path": "ux/before-4-revisión-1440-light.png",
+      "sha256": "89073654a558e123f1a0635a0d2d3ff2662786dd934060b4fd7f79f5b17b1146",
+      "width": 1440,
+      "height": 965
+    },
+    {
+      "path": "ux/after-4-revisión-1440-light.png",
+      "sha256": "225956f2dec7f8178aab9dd66872aea4a97ac691ec2cb1993a8b1050942bce44",
+      "width": 1440,
+      "height": 1009
+    },
+    {
+      "path": "ux/before-5-metodos-1440-dark.png",
+      "sha256": "48b263f5c30f54bdfe978bde7ed1b4bf0b648664b43742bc9dca66f65c4da7dd",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "path": "ux/after-5-metodos-1440-dark.png",
+      "sha256": "3b898ffca5d200c1e529601c2507f269ee97d11682f8100381b3675211a32b30",
+      "width": 1440,
+      "height": 986
+    },
+    {
+      "path": "ux/before-6-reporte-320-light.png",
+      "sha256": "3050a196306fbae6ad97726def3f0d7b1fd98d0d1ffdfbacd1914e1c70156f3c",
+      "width": 320,
+      "height": 1745
+    },
+    {
+      "path": "ux/after-6-reporte-320-light.png",
+      "sha256": "7f94fe369304907607954989109527a7d20cbcfe5f2604c62815cecbfad03016",
+      "width": 320,
+      "height": 1826
+    },
+    {
+      "path": "ux/after-6-reporte-1440-dark.png",
+      "sha256": "507b2f203e8eec7cb4aa0ddf60367b2a6828ca3dd9407f7785c596e184948014",
+      "width": 1440,
+      "height": 1470
+    },
+    {
+      "path": "ux/keyboard-copy-error-proof.png",
+      "sha256": "8e1b68c944a35f79ec667dea921371516f98e0faf5a04ccac7f1ae9431e87313",
+      "width": 412,
+      "height": 1771
+    },
+    {
+      "path": "ux/font200-320.png",
+      "sha256": "f834e7207482efd3bd03c10e98e56e7dd3998abf3a2e8632cb2962d4a4ca846b",
+      "width": 320,
+      "height": 2730
+    },
+    {
+      "path": "admin/before-pdf-320-light.png",
+      "sha256": "ecd336cfe0f87fe7175b9bb31c1b74b57945962f7b6c1842b96e590c06255bd5",
+      "width": 320,
+      "height": 900
+    },
+    {
+      "path": "admin/after-pdf-320-light.png",
+      "sha256": "214e663812117a2a0d575e6a6aad4b0b73a1183c4ed34543646270650beb9d2c",
+      "width": 320,
+      "height": 900
+    },
+    {
+      "path": "admin/before-store-error-320-light.png",
+      "sha256": "6a824b52d7b2b031d459e8ecef9c3e07144ab42a75f123eac7f71928f928b446",
+      "width": 320,
+      "height": 900
+    },
+    {
+      "path": "admin/after-store-error-320-light.png",
+      "sha256": "91dd38a893acc26247de6d557c4294f86f63c5078b93f2a11a1d563d0d79a1ff",
+      "width": 320,
+      "height": 900
+    },
+    {
+      "path": "admin/after-pdf-1360-dark.png",
+      "sha256": "f74f0f7cfc513e81cdecf8a62fe8725f62e011b04223db8166d3ba9c4e6fc926",
+      "width": 1360,
+      "height": 900
+    },
+    {
+      "path": "backend/pair-before.png",
+      "sha256": "ef353e3918a1998c95530efbf26b306684d1d21c8555fe2caae0a0a7bc5ea4b9",
+      "width": 1360,
+      "height": 1757
+    },
+    {
+      "path": "backend/pair-after.png",
+      "sha256": "3a4a515b786c2f0e014cffb61e47c440e58fbaf5904cd0758229b276ecffbeb9",
+      "width": 1360,
+      "height": 1813
+    },
+    {
+      "path": "notifications/viewport-320-dark.png",
+      "sha256": "04574bcb77df2561811678bdfaf3a7066d2411d6520ebb6076338284b123bf56",
+      "width": 320,
+      "height": 960
+    },
+    {
+      "path": "notifications/viewport-1440-light.png",
+      "sha256": "398aa5b8f8b0aa29b237b2d3d5116ed035e38b826e489e25854d1182cead9407",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "path": "notifications/mobile-412-light.png",
+      "sha256": "6e3232c33a89109531d5fb3df71ccf2fa97a40f788a40d8d22c8779901e6cbe9",
+      "width": 412,
+      "height": 915
+    },
+    {
+      "path": "notifications/mobile-412-dark.png",
+      "sha256": "33a388450c38c85c2505f22d9b73acbad47521ee80dee0717e7537bb5cd15edb",
+      "width": 412,
+      "height": 915
+    }
+  ]
+}

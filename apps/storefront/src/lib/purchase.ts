@@ -3,7 +3,7 @@ export {
   confirmCheckout,
   recoverCheckout,
   UnconfirmedCheckoutError,
-} from '../../../mobile/src/lib/checkout-confirmation';
+} from '@kora/api';
 export function safeExternal(url: string | null | undefined) {
   try {
     const parsed = new URL(url ?? '');

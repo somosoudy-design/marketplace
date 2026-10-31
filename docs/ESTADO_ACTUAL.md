@@ -4,13 +4,15 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## Trabajo en curso · calidad integral, 31 de octubre
+## Calidad integral revisada · 31 de octubre
 
 Oliver solicita estructura, seguridad, compra web/app, notificaciones y administración. Root único integrador y seis especialistas de lectura/propuestas/pruebas. Checkpoint dependencias `287ff66` (Next/eslint16.4.1,undici7.30.1). Integrados checkout web con hoja continua, acción móvil accesible, ETA/edición por fase/calendario; pago con importe previo, copia y comprobante; inbox web y paginación/lectura visible móvil, scope comprador direcciones/pedidos y ciclo push. Panel recupera tiendas/error, PDF seguro, modales320, busy de revisión, formularios sensiblesPOST. Tasas separadas por par y snapshots futuros excluidos de presentación, sin fórmulas/SQL/remoto.
 
-**Validación en curso:** tipos/lint monorepo aprobados;52core+47panel+17helpers;25SQLBCV/permisos y8adaptadores en clonlocal por especialista. Web38/39dev: único fallo selector de test que coincidió con anunciadorNext, acotado a main; se repetirá en build. Panel8UI+2tasas, inbox5UI y auditor independiente7casos puntuales; no sumarlos como suites únicas. Capturas actuales antes/después y fuente200% en `.local/premium-20261031/`. EspecialistaUX exige feedback visible al copiar, ya corregido.
+**Validación cerrada sobre `49a5ac1`:**39/39 UI web en build de producción,11/11 panel,4/4 app exportada;116 unitarias (52core+47panel+17helpers),25SQLBCV/permisos y8adaptadores en clon local exclusivo. Tipos/lint, builds web/panel y export móvilweb/Hermes aprobados. Auditor independiente:9 casos propios y15PNG inspeccionados, APROBADO; UX: ambos temas,320/412/1440 y texto200%. Se corrigieron feedback invisible al copiar, duplicación concurrente de avisos y acciones del panel durante revisión pendiente. [Informe y27capturas originales](CALIDAD_INTEGRAL_2026-10-31.md).
 
-**Próxima acción exacta:** compilar storefront, export móvilweb/Hermes y panelrelease; ejecutar39UIweb,4móvilnotificaciones/aislamiento yregresión local afectada; cerrar revisión independiente, archivar capturas originales y documentación. Falta validarAPK5/recepciónnativa; no afirmar notificaciones físicasperfectas. Hostingweb continúa pendiente. Ninguna migración, tasa/dato remoto/pago real, APK o iOS modificado. Auditoría restante de dependencias requiere clasificar exposición; no afirmar monorepo sin avisos.
+**Cierre de estructura:** confirmación compartida movida sin cambio de comportamiento a `packages/api/src/checkout-confirmation.ts`, eliminando importación web→carpeta móvil;17helpers y tipos pasan. Sharp0.35.5 sólo en herramientas; audit39→25 (2críticos/8altos/11moderados/4bajos), riesgos clasificados, sin regenerar activos. No forzar decode-uri-component ESM sobre query-stringCommonJS; siguiente bloque de seguridad acotado.
+
+**Próxima acción exacta:** repetir build web/export móvil tras ese traslado y smoke de Sharp integrado, regresión de compra/avisos; publicar panel existente y una OTA Android preview con guard exacto APK5 bajo autorización vigente. Registrar resultado real de CI y observación OTA, sin afirmar recepción física. Hosting del storefront, push nativo/logout sin red, calendarioBCV2027, licencias/SKU y preparación comercial permanecen pendientes. Ninguna migración, tasa/dato remoto/pago real, APK o iOS modificado.
 
 ## Web comprador · compra completa operativa, 30 de octubre
 

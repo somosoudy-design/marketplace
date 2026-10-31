@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-10-31 · calidad integral, revisión y preparación de publicación
+
+Root único integrador, seis especialistas en UX, ecommerce, backend/tasas, notificaciones, build/admin y auditoría independiente. Checkpoints287ff66/49a5ac1. Checkout web integrado y progresivo, CTA móvil visible, ETA/edición por fase, pago legible/copia/archivo; avisos web y lectura visible/paginación móvil; credencialesPOST, aislamiento comprador administrador, configuración por par y vigencia futura; panel recupera tiendas/PDF/modal y bloquea acciones concurrentes. Contrato de confirmación compartido en API. Sin SQL, datos remotos, fórmulas, APK o iOS modificados.
+
+39UIweb producción,11panel,4app exportada,116unitarias,25SQL+8adaptadores y tipos/lint/builds aprobados. Auditor9casos/15PNG, APROBADO tras correcciones;27PNG originales archivados,320/412/1440 claro/oscuro ytexto200%. Next/undici/Sharp puntuales:39→25avisos, no monorepo libre de vulnerabilidades. El override ESM de decodificación fue rechazado; riesgos y siguiente trabajo concretos documentados. [Informe](CALIDAD_INTEGRAL_2026-10-31.md). Siguiente: recompilar traslado compartido, gates y publicación autorizada panel/preview; recepción física y hosting comprador pendientes.
+
 ### 2026-10-29 · observación final de la corrección de compra
 
 EAS41000103125 Success confirmó `01a18af2-bd5c-7ec1-9e59-9b458a7e11f0` como última Android preview compatible con APK5, fuente limpia y sin rollback. Fuente móvil de HEAD coincide con solicitud publicada `f23ffdc`. Recepción/resultado del Samsung pendientes; no repetir OTA ni afirmar que fue observado el blanco nativo.

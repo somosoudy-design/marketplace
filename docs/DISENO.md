@@ -7,6 +7,8 @@ cambia los tres.
 
 ## Principios
 
+**Compra web revisada,31oct2026:** hoja continua de contenido+resumen hasta1120px, fases Dirección/Entregas/Plan/Revisión, una acción contextual e importe disponible en móvil. Productos/ETA/condiciones antes de confirmar; total y pago inicial diferenciados usando valores del backend. Texto de opciones14–15px y objetivos44px; selección Electric Violet, transición160ms con movimiento reducido y reflow200% sin altura rígida. Pago separa datos para pagar de reporte, con feedback visible al copiar y archivo identificado. La coherencia con la app está en la secuencia, condiciones y estados; no implica que las composiciones web/nativa sean idénticas. [Capturas comparables](CALIDAD_INTEGRAL_2026-10-31.md).
+
 - **Esto es una tienda.** Lo primero que se ve son productos: buscador grande, categorías compactas,
   colecciones con foto, recomendados, populares y tiendas destacadas. Nada de bloques institucionales, de
   pago o de tasa en el Inicio (la tasa vive en la cuenta, el carrito y el checkout, donde se decide).
