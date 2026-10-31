@@ -90,3 +90,25 @@ test('cotización vencida bloquea envío y permite actualizar importe', async ({
   await expect(page.getByText('El importe venció. Actualízalo antes de realizar el pago.')).toHaveCount(0);
   await page.screenshot({ path: info.outputPath('cotizacion-renovada-light.png'), fullPage: true });
 });
+
+test('saldo parcial se presenta descontando pagos y exoneraciones sin cambiar cotización', async ({ page }) => {
+  const b = await testUnpaidOrder('web-partial-display');
+  // Synthetic read-only DTO tests presentation; no payment is accepted or ledger modified.
+  await page.route('**/rest/v1/orders*', async (route) => {
+    if (new URL(route.request().url()).searchParams.get('id') === `eq.${b.orderId}`) {
+      const response = await route.fetch();
+      const data = await response.json();
+      const order = Array.isArray(data) ? data[0] : data;
+      order.payment_obligations[0] = {
+        ...order.payment_obligations[0],
+        amount_usd: 100,
+        paid_usd: 20,
+        waived_usd: 10,
+        status: 'partially_paid',
+      };
+      await route.fulfill({ response, json: data });
+    } else await route.continue();
+  });
+  await payLogin(page, b);
+  await expect(page.locator('.purchase-summary .summary-total strong')).toHaveText('$70,00');
+});

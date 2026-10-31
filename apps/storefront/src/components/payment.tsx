@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { newIdempotencyKey, type Payment, type PaymentQuote } from '@kora/api';
-import { validateUpload, normalizeReference, PAYMENT_RECORD_LABEL } from '@kora/core';
+import { D, validateUpload, normalizeReference, PAYMENT_RECORD_LABEL } from '@kora/core';
 import { CreditCard, Check, Clock3 } from 'lucide-react';
 import { browser } from '@/lib/browser';
 import { money } from '@/lib/format';
@@ -181,7 +181,7 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
                       ? 'Anticipo'
                       : 'Pago pendiente'}
               </span>
-              <strong>{money(next._outstanding ?? next.amount_usd)}</strong>
+              <strong>{money(D(next.amount_usd).minus(next.paid_usd).minus(next.waived_usd).toNumber())}</strong>
             </div>
           )}
           <button className="text-button" disabled={order.isFetching} onClick={() => order.refetch()}>
