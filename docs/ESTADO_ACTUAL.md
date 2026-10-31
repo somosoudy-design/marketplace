@@ -4,6 +4,12 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · web comprador, 30 de octubre
+
+Oliver autorizó construir la web integrada. Nueva pieza `apps/storefront` (Next16, puerto3200), separada del panel y de Expo, comparte `@kora/api`, `@kora/core` y tokens. Primera entrega: Inicio editorial, Buscar con URL/filtros/paginación, fichas por slug con variantes, login de la misma cuenta, favoritos y carrito por RPC reales. Catálogo público SSR anónimo por petición, privado sólo navegador/RLS. Checkout web/registro/recuperación aún fuera de este incremento; carrito explica continuación en app, sin CTA ficticia. No confundir web local con sitio publicado ni sesión compartida automáticamente entre dispositivos.
+
+Tipos/lint de storefront aprobados; pruebas de interfaz/revisión visual en curso. Adaptador local reutiliza manifest/recursos existentes con identidad/ruta/variante/is_demo y SHA; sólo backend localhost54321 y opt-in. Build producción retira fotos/metadata de exhibición. Nada de Android, OTA, panel, backend remoto, SQL o finanzas modificado. **Próxima acción:** terminar pruebas UI/aislamiento y capturas320/412/escritorio claro/oscuro, revisión independiente, build y documentación `WEB_COMPRADOR.md`. No publicar sitio público en este bloque.
+
 ## Corrección publicada · confirmación de compra, 29 de octubre
 
 Oliver reportó blanco total y precisó que ocurre al pulsar «Confirmar pedido» en Android. Root y dos especialistas revisaron navegación/Pago y reprodujeron dos veces un fallo local relacionado: el pedido se crea pero la respuesta se pierde; el preview vacío elimina la revisión y el acceso al pedido. Blanco literal Samsung no observado. Corrección integrada: lectura por comprador+intención exactos, snapshot/clave conservados, respuestas validadas, estados explícitos y check sólo lectura/reintento estable. El checkout se aísla por cuenta. [Informe y evidencia](CORRECCION_CONFIRMACION_COMPRA_2026-10-29.md).
