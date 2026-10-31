@@ -1,0 +1,38 @@
+Finalizar compra
+1
+Entrega en
+Casa · Ejemplo · Ana Ejemplo
+Av. Ejemplo, edificio de pruebas
+Chacao, Caracas · +58 412 000 0000
+Cambiar
+2
+2 entregas
+Tus productos salen de lugares distintos, así que llegan por separado. Cada entrega tiene su propio envío y seguimiento.
+Entrega 1 · Entrega 1
+HAYAZGO
+A domicilio
+Llega entre el 16 y el 19 oct (estimado)
+Tarifa de ejemplo
+$4,00
+Entrega 2 · Entrega 2
+Voltio
+A domicilio
+Llega entre el 16 y el 19 oct (estimado)
+Tarifa de ejemplo
+$4,00
+3
+Cómo quieres pagar
+Pago completo
+Al crear el pedido
+4
+Resumen
+Productos (2)
+$51,00
+Envío
+$8,00
+Total
+$59,00
+Total
+$59,00
+Confirmar pedido
+En el siguiente paso eliges el método de pago y ves el monto exacto.

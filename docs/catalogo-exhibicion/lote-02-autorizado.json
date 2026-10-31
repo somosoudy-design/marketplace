@@ -1,0 +1,240 @@
+{
+  "version": 1,
+  "scope": "private-preview",
+  "backendOrigin": "https://mimnotafmfasvwrclxan.supabase.co",
+  "readAt": "2026-10-14",
+  "bindingSource": "RPC público search_products, con anon existente; solo lectura, sin acceso administrativo",
+  "authorization": "Oliver2026-10-14: sustituir recursos sin permiso por alternativas autorizadas y publicar exclusivamente Android preview tras validar",
+  "products": [
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "slug": "ugreen-nexode-65w",
+      "title": "UGREEN Nexode cargador GaN 65 W",
+      "originalPath": "demo/ugreen-nexode-65w-1.webp",
+      "variantNames": [
+        "Blanco",
+        "Negro"
+      ],
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
+      "modelStatus": "confirmed",
+      "modelEvidence": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg — objeto/modelo indicado por el autor y cotejado visualmente; no se atribuye a la imagen el modelo UGREEN previo",
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": {
+        "file": ".local/catalog-exhibition/authorized/samsung45.webp",
+        "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/45/SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+        "author": "Dinkun Chen",
+        "sha256": "c3b0a254f1c943ef260fe9bc1f1861f667f9bc89d629560ee674fcff8ace5616",
+        "width": 1600,
+        "height": 985,
+        "transformation": "Reducción a máximo1600px y WebP85; sin cambiar el contenido de la fotografía"
+      },
+      "rights": {
+        "status": "confirmed",
+        "evidence": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "reviewedBy": "Codex — verificación de licencia y autoría declarada en Commons",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      },
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-nexode-65w-1.webp",
+        "demo/ugreen-nexode-65w-2.webp",
+        "demo/ugreen-nexode-65w-v1.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published",
+      "presentationTitle": "Samsung cargador USB-C 45 W · EP-T4510",
+      "presentationBrand": "Samsung",
+      "presentationColor": "Negro",
+      "replacesPreviousUnlicensedReference": true,
+      "additionalPhotos": [
+        {
+          "photo": {
+            "file": ".local/catalog-exhibition/authorized/samsung45-only.webp",
+            "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_(4).jpg",
+            "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%284%29.jpg",
+            "author": "Dinkun Chen",
+            "sha256": "c4883d905bde48ce449d819a41601e95df0eb7d47b0df98f659a4d51ba0de9a8",
+            "width": 966,
+            "height": 1600,
+            "transformation": "Reducción a máximo1600px y WebP85; sin cambiar el contenido de la fotografía"
+          },
+          "rights": {
+            "status": "confirmed",
+            "evidence": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_(4).jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+            "reviewedBy": "Codex — verificación de licencia y autoría declarada en Commons",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+          },
+          "originalPath": "demo/ugreen-nexode-65w-v1.webp"
+        }
+      ]
+    },
+    {
+      "productId": "01a43334-e485-41cc-a12a-c049e933665d",
+      "slug": "ugreen-power-bank-20000",
+      "title": "UGREEN Nexode power bank 20.000 mAh",
+      "originalPath": "demo/ugreen-power-bank-20000-1.webp",
+      "variantNames": [
+        "Gris"
+      ],
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
+      "modelStatus": "confirmed",
+      "modelEvidence": "https://commons.wikimedia.org/wiki/File:Anker_power_bank_and_cable.jpg — objeto/modelo indicado por el autor y cotejado visualmente; no se atribuye a la imagen el modelo UGREEN previo",
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": {
+        "file": ".local/catalog-exhibition/authorized/anker10000.webp",
+        "originUrl": "https://commons.wikimedia.org/wiki/File:Anker_power_bank_and_cable.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Anker_power_bank_and_cable.jpg",
+        "author": "Saucy",
+        "sha256": "fa4a0d962e8c5af0d65005664cce2cc0dcfb21b84d6b97dd5512a98f6099829b",
+        "width": 1600,
+        "height": 1200,
+        "transformation": "Reducción a máximo1600px y WebP85; sin cambiar el contenido de la fotografía"
+      },
+      "rights": {
+        "status": "confirmed",
+        "evidence": "https://commons.wikimedia.org/wiki/File:Anker_power_bank_and_cable.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "reviewedBy": "Codex — verificación de licencia y autoría declarada en Commons",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+      },
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-power-bank-20000-1.webp",
+        "demo/ugreen-power-bank-20000-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published",
+      "presentationTitle": "Anker PowerCore 10.000 mAh",
+      "presentationBrand": "Anker",
+      "presentationColor": "Negro",
+      "replacesPreviousUnlicensedReference": true
+    },
+    {
+      "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
+      "slug": "ugreen-cable-usb-c-100w",
+      "title": "UGREEN cable USB-C a USB-C",
+      "originalPath": "demo/ugreen-cable-usb-c-100w-1.webp",
+      "variantNames": [
+        "1 m",
+        "2 m"
+      ],
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
+      "modelStatus": "confirmed",
+      "modelEvidence": "https://commons.wikimedia.org/wiki/File:UGREEN_SD_Card_Reader.jpg — objeto/modelo indicado por el autor y cotejado visualmente; no se atribuye a la imagen el modelo UGREEN previo",
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": {
+        "file": ".local/catalog-exhibition/authorized/ugreen-reader.webp",
+        "originUrl": "https://commons.wikimedia.org/wiki/File:UGREEN_SD_Card_Reader.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/UGREEN_SD_Card_Reader.jpg",
+        "author": "Bejnamin",
+        "sha256": "8ba5db3923bb4df723e9cb5bd36ecd927e2249e3b4371f9c162fc8d856655dd5",
+        "width": 1600,
+        "height": 1200,
+        "transformation": "Reducción a máximo1600px y WebP85; sin cambiar el contenido de la fotografía"
+      },
+      "rights": {
+        "status": "confirmed",
+        "evidence": "https://commons.wikimedia.org/wiki/File:UGREEN_SD_Card_Reader.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "reviewedBy": "Codex — verificación de licencia y autoría declarada en Commons",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+      },
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-cable-usb-c-100w-1.webp",
+        "demo/ugreen-cable-usb-c-100w-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published",
+      "presentationTitle": "UGREEN lector SD · USB-A y USB-C",
+      "presentationBrand": "UGREEN",
+      "presentationColor": "Gris y negro",
+      "replacesPreviousUnlicensedReference": true
+    },
+    {
+      "productId": "910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "slug": "ugreen-revodok-hub-6-en-1",
+      "title": "UGREEN Revodok hub USB-C 6 en 1",
+      "originalPath": "demo/ugreen-revodok-hub-6-en-1-1.webp",
+      "variantNames": [
+        "Gris espacial"
+      ],
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
+      "modelStatus": "confirmed",
+      "modelEvidence": "https://commons.wikimedia.org/wiki/File:Powered_USB_hub_with_7_ports.jpg — objeto/modelo indicado por el autor y cotejado visualmente; no se atribuye a la imagen el modelo UGREEN previo",
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": {
+        "file": ".local/catalog-exhibition/authorized/usb-hub.webp",
+        "originUrl": "https://commons.wikimedia.org/wiki/File:Powered_USB_hub_with_7_ports.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/Powered_USB_hub_with_7_ports.jpg",
+        "author": "OnBeyondZebrax",
+        "sha256": "eceb731d809144d12890a8115d2f74a8ffecabf591517a963331bec24bf60ccb",
+        "width": 1600,
+        "height": 1200,
+        "transformation": "Reducción a máximo1600px y WebP85; sin cambiar el contenido de la fotografía"
+      },
+      "rights": {
+        "status": "confirmed",
+        "evidence": "https://commons.wikimedia.org/wiki/File:Powered_USB_hub_with_7_ports.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "reviewedBy": "Codex — verificación de licencia y autoría declarada en Commons",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      },
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-revodok-hub-6-en-1-1.webp",
+        "demo/ugreen-revodok-hub-6-en-1-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published",
+      "presentationTitle": "StarTech.com hub USB 3.0 de 7 puertos · ST7300U3M",
+      "presentationBrand": "StarTech.com",
+      "presentationColor": "Negro",
+      "replacesPreviousUnlicensedReference": true
+    },
+    {
+      "productId": "6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "slug": "ugreen-nexode-30w",
+      "title": "UGREEN Nexode cargador GaN 30 W",
+      "originalPath": "demo/ugreen-nexode-30w-1.webp",
+      "variantNames": [
+        "Blanco"
+      ],
+      "variantSource": "RPC público product_detail del mismo UUID, 2026-10-13; los nombres comerciales todavía no identifican tonos/modelos oficiales",
+      "modelStatus": "confirmed",
+      "modelEvidence": "https://commons.wikimedia.org/wiki/File:Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg — objeto/modelo indicado por el autor y cotejado visualmente; no se atribuye a la imagen el modelo UGREEN previo",
+      "missingModelInformation": "Número de modelo/SKU del fabricante y correspondencia de color y conector.",
+      "photo": {
+        "file": ".local/catalog-exhibition/authorized/ugreen-car30.webp",
+        "originUrl": "https://commons.wikimedia.org/wiki/File:Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/92/Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg",
+        "author": "Qurren",
+        "sha256": "42b760ebef0001af819f1f3f1d8c15f6201b389d1619f9c8786c34073c76cac9",
+        "width": 1600,
+        "height": 1066,
+        "transformation": "Reducción a máximo1600px y WebP85; sin cambiar el contenido de la fotografía"
+      },
+      "rights": {
+        "status": "confirmed",
+        "evidence": "https://commons.wikimedia.org/wiki/File:Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "reviewedBy": "Codex — verificación de licencia y autoría declarada en Commons",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      },
+      "referenceSite": "https://www.ugreen.com/",
+      "originalGalleryPaths": [
+        "demo/ugreen-nexode-30w-1.webp",
+        "demo/ugreen-nexode-30w-2.webp"
+      ],
+      "snapshotIsDemo": true,
+      "snapshotModerationStatus": "published",
+      "presentationTitle": "UGREEN cargador de carro 30 W · 25845",
+      "presentationBrand": "UGREEN",
+      "presentationColor": "Negro",
+      "replacesPreviousUnlicensedReference": true
+    }
+  ]
+}

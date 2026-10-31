@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-23",
+  "status": "published_and_received_in_emulator",
+  "platform": "android",
+  "channel": "preview",
+  "apk": "APK5 / build d1d10c28",
+  "functionalSource": "130d0413bb335f7d9a6c9dea0aad7c30f46d76ad",
+  "publicationSource": "aa9510ac4fb8300bb768a8367f64035b63eeb743",
+  "publicationRun": 39972699874,
+  "publicationResult": "success",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "exactRuntimeGuard": "passed",
+  "updateId": "01a1693d-60d9-7183-a309-92769e4ea219",
+  "publishedTimeFromDiagnostics": "2026-10-23 14:49 UTC",
+  "emulatorRun": 39973330513,
+  "emulatorSource": "b94540068d9036d552450782b2b0fc7eb20eaac4",
+  "emulator": "Android 15 / API 35 / Pixel 6",
+  "flow": "11-compra-revisada",
+  "results": {
+    "light": "passed_first_attempt",
+    "dark": "passed_first_attempt"
+  },
+  "nativeChecks": [
+    "Product detail",
+    "Native sheet and clipboard confirmation",
+    "Guest cart",
+    "Keep/remove confirmation and Android Back",
+    "Local cart emptied after removal",
+    "Cart login and return",
+    "Payment login requirement and return",
+    "Exact OTA/channel/runtime in both diagnostics"
+  ],
+  "localCoverage": {
+    "uniqueChecks": 36,
+    "source": "docs/calidad-marketplace-2026-10-23.json",
+    "authenticatedCheckout": "local browser and backend only"
+  },
+  "professionalOfficialPhotosAddedToUpdate": 0,
+  "existingLicensedPhotoRegistryAndSixWebP": "identical to source 69f1c45",
+  "newApk": false,
+  "nativeConfigChanged": false,
+  "remoteBackendChanged": false,
+  "financialRulesChanged": false,
+  "physicalSamsungReceipt": {
+    "status": "confirmed_by_owner_diagnostics_photo",
+    "observedDate": "2026-10-23",
+    "apiLevel": 36,
+    "channel": "preview",
+    "updateId": "01a1693d-60d9-7183-a309-92769e4ea219",
+    "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+    "publishedTime": "2026-10-23 14:49 UTC",
+    "backend": "Marketplace correct project; responds in 1266 ms",
+    "sessionEncrypted": true,
+    "signedIn": true,
+    "personalPhotoCommitted": false,
+    "scope": "Receipt/version confirmation only; not a full physical checkout test"
+  },
+  "independentNativeReview": "approved for visitor scope; 14 screenshots reviewed, no open P1/P2",
+  "screenshotOrigin": {
+    "branch": "ci/capturas",
+    "commit": "9c64c933f3d3dae70d84a3c07136ff6769844e0f",
+    "count": 14,
+    "modifiedAfterCi": false,
+    "files": [
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-01-ficha.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-01-ficha.jpg",
+        "sha256": "13a6921e5b317469df5fc18e5974ad74467f2db4887f4a9cef248d58ef18f14d"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-02-compartir.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-02-compartir.jpg",
+        "sha256": "de91d01e1ab05559e0168874084a1bc5b6f9eafbf05e458dbacaca2184f8d023"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-03-carrito.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-03-carrito.jpg",
+        "sha256": "d217391862fb1ad8b56f116d190392a8a7709a92b767c019f7fc4a3e3e3e5d2a"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-04-confirmar-retirada.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-04-confirmar-retirada.jpg",
+        "sha256": "84c7f35dfab702d94ccd88417c1423c6a6349a65c86cb4e099a03a9ca253a25f"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-05-carrito-vacio.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-05-carrito-vacio.jpg",
+        "sha256": "ae783be12fce8fa2e04f08b83362a2b615904dd1e0a60c5bec7f00282f8f5d2c"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-06-pago-visitante.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-06-pago-visitante.jpg",
+        "sha256": "5006bc58435961d5039675d6ed829bd1bafc6ccac08a3c8904b30061c67376e9"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/light/compra-07-recepcion.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145628_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-07-recepcion.jpg",
+        "sha256": "96a02364c1c2ba2f0ae667ed4490b4767e2c2e471e315dfc734e134c3dbff893"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-01-ficha.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-01-ficha.jpg",
+        "sha256": "dc1c2f18a5b1fad76feaade5a5d2e8a2e8c636ac18447e51b9991ab77399b2d4"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-02-compartir.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-02-compartir.jpg",
+        "sha256": "755b8a4946ffca5037d16bb39250f2cb7055a9ad3c8adbf32419742510312187"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-03-carrito.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-03-carrito.jpg",
+        "sha256": "d4564613e8820d0f46b96635f9b09887f63971b20fcda5566e064a0f4e4d3e34"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-04-confirmar-retirada.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-04-confirmar-retirada.jpg",
+        "sha256": "cef0f06c72270ec0ef4f0d9937411b9a66d4e1ff33dcaa9082c248cb2e2e635b"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-05-carrito-vacio.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-05-carrito-vacio.jpg",
+        "sha256": "03c718d130e6ec4db6b273f5c31ab9c9e97f6a956b4bd1a0796882f6186ec923"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-06-pago-visitante.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-06-pago-visitante.jpg",
+        "sha256": "bb5a9acfdfba963e84d02640614a0205140ac4a7c3ecf58f231ad6285e8b4145"
+      },
+      {
+        "file": "docs/capturas/calidad-2026-10-23/android/dark/compra-07-recepcion.jpg",
+        "sourceFile": "flujos_maestro_2026-10-23_145733_Compra_revisada_—_ficha,_compartir,_carrito_y_acceso_al_pago_takeScreenshot_compra-07-recepcion.jpg",
+        "sha256": "f07523b42d76e19acb2cb102882a417788c157580d29c2485b4de18f869f7b92"
+      }
+    ]
+  },
+  "limitations": [
+    "No authenticated Android checkout or remote purchase/payment executed",
+    "Initial installation screenshot had Pixel Launcher ANR; excluded from accepted flow screenshots; runner disables launcher before Maestro flows",
+    "Professional official packshot remains local pending redistribution permission"
+  ]
+}

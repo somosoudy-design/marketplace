@@ -1,0 +1,183 @@
+{
+  "date": "2026-10-13T01:19:45.892Z",
+  "scope": "Galería documental solamente; no tests de app ni accesibilidad de los conceptos",
+  "initialAttempt": "file:// bloqueado por política Chromium; comprobación repetida mediante servidor HTTP local normal",
+  "results": [
+    {
+      "width": 320,
+      "images": [
+        {
+          "src": "../../capturas/inicio-v2/after/light-412-inicio.png",
+          "loaded": true,
+          "alt": true,
+          "width": 412,
+          "height": 892
+        },
+        {
+          "src": "a-editorial-inmersiva.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "b-marketplace-modular.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "c-electric-violet-editorial.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        }
+      ],
+      "horizontalOverflow": false,
+      "links": [
+        "../../ALTERNATIVAS_EDITORIALES_INICIO_V2.md",
+        "../../capturas/inicio-v2/android/README.md",
+        "../../capturas/inicio-v2/after/light-412-inicio.png",
+        "a-editorial-inmersiva.png",
+        "b-marketplace-modular.png",
+        "c-electric-violet-editorial.png"
+      ],
+      "keyboardFirstLink": true,
+      "errors": []
+    },
+    {
+      "width": 412,
+      "images": [
+        {
+          "src": "../../capturas/inicio-v2/after/light-412-inicio.png",
+          "loaded": true,
+          "alt": true,
+          "width": 412,
+          "height": 892
+        },
+        {
+          "src": "a-editorial-inmersiva.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "b-marketplace-modular.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "c-electric-violet-editorial.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        }
+      ],
+      "horizontalOverflow": false,
+      "links": [
+        "../../ALTERNATIVAS_EDITORIALES_INICIO_V2.md",
+        "../../capturas/inicio-v2/android/README.md",
+        "../../capturas/inicio-v2/after/light-412-inicio.png",
+        "a-editorial-inmersiva.png",
+        "b-marketplace-modular.png",
+        "c-electric-violet-editorial.png"
+      ],
+      "keyboardFirstLink": true,
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "images": [
+        {
+          "src": "../../capturas/inicio-v2/after/light-412-inicio.png",
+          "loaded": true,
+          "alt": true,
+          "width": 412,
+          "height": 892
+        },
+        {
+          "src": "a-editorial-inmersiva.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "b-marketplace-modular.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "c-electric-violet-editorial.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        }
+      ],
+      "horizontalOverflow": false,
+      "links": [
+        "../../ALTERNATIVAS_EDITORIALES_INICIO_V2.md",
+        "../../capturas/inicio-v2/android/README.md",
+        "../../capturas/inicio-v2/after/light-412-inicio.png",
+        "a-editorial-inmersiva.png",
+        "b-marketplace-modular.png",
+        "c-electric-violet-editorial.png"
+      ],
+      "keyboardFirstLink": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "images": [
+        {
+          "src": "../../capturas/inicio-v2/after/light-412-inicio.png",
+          "loaded": true,
+          "alt": true,
+          "width": 412,
+          "height": 892
+        },
+        {
+          "src": "a-editorial-inmersiva.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "b-marketplace-modular.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        },
+        {
+          "src": "c-electric-violet-editorial.png",
+          "loaded": true,
+          "alt": true,
+          "width": 853,
+          "height": 1844
+        }
+      ],
+      "horizontalOverflow": false,
+      "links": [
+        "../../ALTERNATIVAS_EDITORIALES_INICIO_V2.md",
+        "../../capturas/inicio-v2/android/README.md",
+        "../../capturas/inicio-v2/after/light-412-inicio.png",
+        "a-editorial-inmersiva.png",
+        "b-marketplace-modular.png",
+        "c-electric-violet-editorial.png"
+      ],
+      "keyboardFirstLink": true,
+      "errors": []
+    }
+  ]
+}

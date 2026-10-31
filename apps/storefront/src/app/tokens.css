@@ -1,0 +1,79 @@
+/* generated from @kora/design-tokens — do not edit */
+:root {
+  --background: #f8f7fc;
+  --surface: #ffffff;
+  --surface-sunken: #f0eef6;
+  --surface-raised: #ffffff;
+  --border: rgba(28, 25, 40, 0.08);
+  --border-strong: rgba(28, 25, 40, 0.16);
+  --text: #1c1928;
+  --text-secondary: #55516a;
+  --text-muted: #6b6779;
+  --text-inverse: #ffffff;
+  --brand: #6d42e8;
+  --brand-pressed: #5b31d2;
+  --brand-soft: #ede6ff;
+  --on-brand: #ffffff;
+  --accent: #ff746b;
+  --accent-soft: #fff1ef;
+  --on-accent: #1c1928;
+  --danger: #c2362d;
+  --danger-soft: #fff1ef;
+  --success: #137a55;
+  --success-soft: #e7f6ef;
+  --warning: #9a5b00;
+  --warning-soft: #fff5e0;
+  --info: #2563cc;
+  --info-soft: #eaf1fe;
+  --editorial: #4826ab;
+  --editorial-soft: #f6f2ff;
+  --overlay: rgba(28, 25, 40, 0.48);
+  --skeleton: #ece9f3;
+  --skeleton-highlight: #f6f4fa;
+  --tab-bar: rgba(255, 255, 255, 0.96);
+  --chrome: #ffffff;
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+  --amber: #f5a524;
+  --coral: #ff746b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #110f18;
+    --surface: #1b1825;
+    --surface-sunken: #0b0a10;
+    --surface-raised: #252131;
+    --border: rgba(243, 241, 250, 0.09);
+    --border-strong: rgba(243, 241, 250, 0.18);
+    --text: #f3f1fa;
+    --text-secondary: #c4c0d3;
+    --text-muted: #9893aa;
+    --text-inverse: #1c1928;
+    --brand: #a98cff;
+    --brand-pressed: #c2aeff;
+    --brand-soft: rgba(169, 140, 255, 0.16);
+    --on-brand: #14101f;
+    --accent: #ff8a82;
+    --accent-soft: rgba(255, 116, 107, 0.16);
+    --on-accent: #14101f;
+    --danger: #ff8a82;
+    --danger-soft: rgba(255, 116, 107, 0.14);
+    --success: #5cc79a;
+    --success-soft: rgba(92, 199, 154, 0.14);
+    --warning: #f8c25c;
+    --warning-soft: rgba(248, 194, 92, 0.14);
+    --info: #8db4f5;
+    --info-soft: rgba(141, 180, 245, 0.14);
+    --editorial: #c2aeff;
+    --editorial-soft: rgba(169, 140, 255, 0.14);
+    --overlay: rgba(0, 0, 0, 0.6);
+    --skeleton: #252131;
+    --skeleton-highlight: #2c2839;
+    --tab-bar: rgba(27, 24, 37, 0.96);
+    --chrome: #1b1825;
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "source": "UI actual exportada; fixtures representativas interceptadas, sin conexión backend ni escrituras",
+  "unknown": [
+    "/rest/v1/notifications",
+    "/rest/v1/app_settings",
+    "/rest/v1/favorites"
+  ],
+  "ledger": [
+    {
+      "method": "POST",
+      "path": "/rest/v1/rpc/rate_status",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/store_members",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/user_roles",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/profiles",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/orders",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/notifications",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/app_settings",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "GET",
+      "path": "/rest/v1/favorites",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "POST",
+      "path": "/rest/v1/rpc/cart_summary",
+      "action": "intercepted; no network"
+    },
+    {
+      "method": "POST",
+      "path": "/rest/v1/rpc/pricing_today",
+      "action": "intercepted; no network"
+    }
+  ]
+}

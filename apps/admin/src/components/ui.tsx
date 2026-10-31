@@ -1,0 +1,336 @@
+'use client';
+import { LoaderCircle, type LucideIcon } from 'lucide-react';
+import Link from 'next/link';
+import { cloneElement, forwardRef, isValidElement, useEffect, useId, useRef, type ButtonHTMLAttributes, type ReactElement, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+
+export function cx(...c: (string | false | null | undefined)[]) {
+  return c.filter(Boolean).join(' ');
+}
+
+// ---------- layout ----------
+export function PageHeader({ title, description, actions, eyebrow }: { title: string; description?: ReactNode; actions?: ReactNode; eyebrow?: string }) {
+  return (
+    <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
+      <div className="min-w-0">
+        {eyebrow ? <p className="mb-1 text-xs font-bold uppercase tracking-[0.12em] text-brand">{eyebrow}</p> : null}
+        <h1 className="font-display text-[30px] leading-tight font-semibold text-ink">{title}</h1>
+        {description ? <p className="mt-1 max-w-2xl text-[15px] text-ink-2">{description}</p> : null}
+      </div>
+      {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+    </header>
+  );
+}
+
+export function Card({ children, className, title, actions, padded = true }: { children: ReactNode; className?: string; title?: ReactNode; actions?: ReactNode; padded?: boolean }) {
+  return (
+    <section className={cx('rounded-[20px] border border-line bg-surface', className)}>
+      {title || actions ? (
+        <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
+          <h2 className="text-[15px] font-bold text-ink">{title}</h2>
+          {actions}
+        </div>
+      ) : null}
+      <div className={padded ? 'p-5' : ''}>{children}</div>
+    </section>
+  );
+}
+
+export function Stat({ label, value, hint, tone = 'default', href }: { label: string; value: ReactNode; hint?: ReactNode; tone?: 'default' | 'warning' | 'danger' | 'brand'; href?: string }) {
+  // Fit primitive values within the available card width, preserving every character on one line.
+  const text = typeof value === 'string' || typeof value === 'number' ? String(value) : null;
+  const widthEm = text ? Array.from(text).reduce((sum, char) => sum + (/\d/.test(char) ? 0.66 : /[.,\s]/.test(char) ? 0.32 : 0.8), 0) : 0;
+  const inner = (
+    <div className={cx('@container h-full rounded-[20px] border border-line bg-surface p-5 transition-colors', href && 'hover:border-line-strong')}>
+      <p className="text-[13px] font-semibold text-ink-3">{label}</p>
+      <p className={cx('tabular mt-1 text-[28px] font-bold leading-tight', tone === 'warning' ? 'text-warning' : tone === 'danger' ? 'text-danger' : tone === 'brand' ? 'text-brand' : 'text-ink')} style={widthEm ? { fontSize: `max(16px, min(28px, calc(100cqw / ${widthEm.toFixed(2)})))`, whiteSpace: 'nowrap' } : undefined}>{value}</p>
+      {hint ? <p className="mt-1 text-[13px] text-ink-3">{hint}</p> : null}
+    </div>
+  );
+  return href ? <Link href={href} className="block h-full">{inner}</Link> : inner;
+}
+
+// ---------- controls ----------
+type BtnVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: BtnVariant; size?: 'sm' | 'md'; loading?: boolean; icon?: LucideIcon };
+const buttonClass = (variant: BtnVariant, size: 'sm' | 'md', className?: string) => cx(
+  'inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full font-semibold transition-[background,box-shadow,transform] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 disabled:cursor-not-allowed disabled:opacity-50',
+  size === 'sm' ? 'h-8 px-3.5 text-[13px]' : 'h-10 px-5 text-sm',
+  variant === 'primary' && 'bg-brand text-on-brand hover:bg-brand-pressed',
+  variant === 'secondary' && 'border border-line-strong bg-surface text-ink hover:bg-sunken',
+  variant === 'ghost' && 'text-ink-2 hover:bg-sunken',
+  variant === 'danger' && 'bg-danger text-white hover:opacity-90',
+  className,
+);
+export const Button = forwardRef<HTMLButtonElement, BtnProps>(function Button({ variant = 'primary', size = 'md', loading, icon: I, className, children, disabled, ...rest }, ref) {
+  return (
+    <button ref={ref} {...rest} disabled={disabled || loading} aria-busy={loading || undefined} className={buttonClass(variant, size, className)}>
+      {loading ? <LoaderCircle size={16} className="animate-spin motion-reduce:animate-none" /> : I ? <I size={16} /> : null}
+      {children}
+    </button>
+  );
+});
+
+/** A navigation link that looks like a button (never a button inside a link). */
+export function LinkButton({ href, variant = 'primary', size = 'md', icon: I, className, children }: { href: string; variant?: BtnVariant; size?: 'sm' | 'md'; icon?: LucideIcon; className?: string; children: ReactNode }) {
+  return (
+    <Link href={href} className={buttonClass(variant, size, className)}>
+      {I ? <I size={16} /> : null}
+      {children}
+    </Link>
+  );
+}
+
+const fieldBase = 'w-full rounded-[14px] border border-line-strong bg-surface px-3.5 text-[15px] text-ink placeholder:text-ink-3 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 disabled:opacity-60';
+
+export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input({ className, ...rest }, ref) {
+  return <input ref={ref} {...rest} className={cx(fieldBase, 'h-10 min-h-[44px]', className)} />;
+});
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(function Textarea({ className, ...rest }, ref) {
+  return <textarea ref={ref} {...rest} className={cx(fieldBase, 'min-h-24 py-2.5', className)} />;
+});
+export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(function Select({ className, children, ...rest }, ref) {
+  return (
+    <select ref={ref} {...rest} className={cx(fieldBase, 'h-10 min-h-[44px] pr-8', className)}>
+      {children}
+    </select>
+  );
+});
+
+export function Field({ label, hint, error, children, className }: { label: string; hint?: ReactNode; error?: string | null; children: ReactNode; className?: string }) {
+  // The label names the control; hint and error describe it (kept out of the accessible name).
+  const msgId = `${useId()}-msg`;
+  const message = error || hint;
+  const control = isValidElement(children) && message
+    ? cloneElement(children as ReactElement<{ 'aria-describedby'?: string; 'aria-invalid'?: boolean }>, { 'aria-describedby': msgId, 'aria-invalid': error ? true : undefined })
+    : children;
+  return (
+    <div className={cx('flex flex-col gap-1.5', className)}>
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[13px] font-semibold text-ink-2">{label}</span>
+        {control}
+      </label>
+      {error ? <span id={msgId} className="text-[12.5px] font-medium text-danger">{error}</span> : hint ? <span id={msgId} className="text-[12.5px] text-ink-3">{hint}</span> : null}
+    </div>
+  );
+}
+
+export function Toggle({ checked, onChange, label, disabled }: { checked: boolean; onChange: (v: boolean) => void; label: string; disabled?: boolean }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      disabled={disabled}
+      onClick={() => onChange(!checked)}
+      className="inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:opacity-50"
+    >
+      <span aria-hidden="true" className={cx('inline-flex h-[24px] w-[44px] items-center rounded-full transition-colors motion-reduce:transition-none', checked ? 'bg-brand' : 'bg-line-strong')}>
+        <span className={cx('inline-block size-[20px] rounded-full bg-white shadow transition-transform motion-reduce:transition-none', checked ? 'translate-x-[22px]' : 'translate-x-[2px]')} />
+      </span>
+    </button>
+  );
+}
+
+export function Tabs<T extends string>({ value, onChange, items, flush }: { value: T; onChange: (v: T) => void; items: { value: T; label: string; count?: number }[]; flush?: boolean }) {
+  return (
+    <div role="tablist" className={cx('flex flex-wrap gap-1.5', !flush && 'mb-5')}>
+      {items.map((i) => (
+        <button
+          key={i.value}
+          role="tab"
+          aria-selected={value === i.value}
+          onClick={() => onChange(i.value)}
+          className={cx('inline-flex h-9 min-h-[44px] min-w-[44px] items-center gap-2 rounded-full border px-4 text-[13.5px] font-semibold transition-colors motion-reduce:transition-none', value === i.value ? 'border-ink bg-ink text-surface' : 'border-line-strong bg-surface text-ink hover:bg-sunken')}
+        >
+          {i.label}
+          {i.count != null ? <span className={cx('tabular rounded-full px-1.5 text-[12px]', value === i.value ? 'bg-surface/20' : 'bg-sunken')}>{i.count}</span> : null}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ---------- feedback ----------
+export type Tone = 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info' | 'editorial';
+const toneClass: Record<Tone, string> = {
+  neutral: 'bg-sunken text-ink-2',
+  brand: 'bg-brand-soft text-brand',
+  success: 'bg-success-soft text-success',
+  warning: 'bg-warning-soft text-warning',
+  danger: 'bg-danger-soft text-danger',
+  info: 'bg-info-soft text-info',
+  editorial: 'bg-editorial-soft text-editorial',
+};
+export function Badge({ children, tone = 'neutral', className }: { children: ReactNode; tone?: Tone; className?: string }) {
+  return <span className={cx('inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-[12px] font-bold', toneClass[tone], className)}>{children}</span>;
+}
+
+export function Notice({ tone = 'info', title, children }: { tone?: Tone; title?: string; children?: ReactNode }) {
+  return (
+    <div role={tone === 'danger' ? 'alert' : undefined} className={cx('rounded-[14px] px-4 py-3 text-sm', toneClass[tone])}>
+      {title ? <p className="font-bold">{title}</p> : null}
+      {children ? <div className={cx(title && 'mt-0.5', 'opacity-90')}>{children}</div> : null}
+    </div>
+  );
+}
+
+export function Empty({ title, body, action }: { title: string; body?: string; action?: ReactNode }) {
+  return (
+    <div className="flex flex-col items-center gap-2 px-6 py-14 text-center">
+      <p className="font-display text-xl font-semibold text-ink">{title}</p>
+      {body ? <p className="max-w-md text-sm text-ink-2">{body}</p> : null}
+      {action ? <div className="mt-2">{action}</div> : null}
+    </div>
+  );
+}
+
+export function Loading({ rows = 4 }: { rows?: number }) {
+  return (
+    <div className="flex flex-col gap-2 p-5" aria-busy="true" aria-label="Cargando">
+      {Array.from({ length: rows }).map((_, i) => (
+        <div key={i} className="h-10 animate-pulse rounded-[10px] bg-sunken" />
+      ))}
+    </div>
+  );
+}
+
+export function ErrorBox({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
+  return (
+    <div className="p-5">
+      <Notice tone="danger" title="No pudimos cargar esta información">
+        <p>{error instanceof Error ? error.message : 'Intenta de nuevo.'}</p>
+        {onRetry ? <button type="button" onClick={onRetry} className="mt-2 inline-flex min-h-[44px] items-center font-bold underline">Reintentar</button> : null}
+      </Notice>
+    </div>
+  );
+}
+
+// ---------- table ----------
+export function Table({ head, children, className }: { head: ReactNode[]; children: ReactNode; className?: string }) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLParagraphElement>(null);
+  const previousRef = useRef<HTMLSpanElement>(null);
+  const nextRef = useRef<HTMLSpanElement>(null);
+  const hintId = useId();
+  const columns = head.filter((cell): cell is string => typeof cell === 'string' && !!cell.trim()).slice(0, 2).join(', ');
+  const regionLabel = columns ? `Tabla: ${columns}` : 'Tabla de datos';
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const hint = hintRef.current;
+    const previous = previousRef.current;
+    const next = nextRef.current;
+    const table = scroller?.querySelector('table');
+    if (!scroller || !hint || !previous || !next || !table) return;
+
+    let frame = 0;
+    let last = '';
+    const update = () => {
+      frame = 0;
+      const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+      const overflowing = maxScroll > 1;
+      const canGoBack = overflowing && scroller.scrollLeft > 1;
+      const canGoForward = overflowing && scroller.scrollLeft < maxScroll - 1;
+      const state = `${overflowing}-${canGoBack}-${canGoForward}`;
+      if (state === last) return;
+      last = state;
+      hint.hidden = !overflowing;
+      previous.hidden = !canGoBack;
+      next.hidden = !canGoForward;
+      if (overflowing) {
+        scroller.setAttribute('role', 'region');
+        scroller.setAttribute('aria-label', regionLabel);
+        scroller.setAttribute('aria-describedby', hintId);
+        scroller.tabIndex = 0;
+      } else {
+        scroller.removeAttribute('role');
+        scroller.removeAttribute('aria-label');
+        scroller.removeAttribute('aria-describedby');
+        scroller.removeAttribute('tabindex');
+      }
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
+    resize?.observe(scroller);
+    resize?.observe(table);
+    const mutation = !resize && typeof MutationObserver !== 'undefined' ? new MutationObserver(schedule) : null;
+    mutation?.observe(table, { childList: true, characterData: true, subtree: true });
+    scroller.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    schedule();
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      resize?.disconnect();
+      mutation?.disconnect();
+      scroller.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [hintId, regionLabel]);
+
+  return (
+    <div className="min-w-0">
+      <p ref={hintRef} id={hintId} hidden className="border-b border-line px-5 py-2 text-right text-xs text-ink-2">
+        <span ref={previousRef} hidden aria-hidden="true" className="mr-1 text-brand">←</span>
+        Desliza o usa las flechas para ver las columnas
+        <span ref={nextRef} hidden aria-hidden="true" className="ml-1 text-brand">→</span>
+      </p>
+      <div ref={scrollerRef} className={cx('overflow-x-auto', className)}>
+        <table className="w-full border-collapse text-left text-sm">
+          <thead>
+            <tr className="border-b border-line text-[12px] uppercase tracking-wide text-ink-3">
+              {head.map((h, i) => (
+                <th key={i} className="whitespace-nowrap px-4 py-2.5 font-bold first:pl-5 last:pr-5">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="[&>tr]:border-b [&>tr]:border-line [&>tr:last-child]:border-0">{children}</tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+export function Td({ children, className, ...rest }: { children?: ReactNode; className?: string } & React.TdHTMLAttributes<HTMLTableCellElement>) {
+  return <td {...rest} className={cx('px-4 py-3 align-middle first:pl-5 last:pr-5', className)}>{children}</td>;
+}
+
+// ---------- dialog ----------
+export function Dialog({ open, onClose, title, children, footer, wide, busy = false }: { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode; wide?: boolean; busy?: boolean }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
+  useEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    if (!open && d.open) d.close();
+  }, [open]);
+  return (
+    <dialog
+      ref={ref}
+      aria-labelledby={titleId}
+      aria-busy={busy || undefined}
+      onClose={onClose}
+      onCancel={(e) => { e.preventDefault(); if (!busy) onClose(); }}
+      className={cx('m-auto w-[min(94vw,520px)] rounded-[24px] border border-line bg-surface p-0 text-ink shadow-2xl backdrop:bg-[var(--overlay)]', wide && 'w-[min(94vw,860px)]')}
+    >
+      {open ? (
+        <div className="flex max-h-[86vh] flex-col">
+          <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-6 sm:py-4">
+            <h2 id={titleId} className="min-w-0 break-words font-display text-xl font-semibold">{title}</h2>
+            <button type="button" disabled={busy} onClick={onClose} aria-label="Cerrar" className="inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full text-2xl leading-none text-ink-3 hover:text-ink">×</button>
+          </div>
+          <div className="min-h-0 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">{children}</div>
+          {footer ? <div className="flex shrink-0 flex-col gap-2 border-t border-line px-4 py-3 sm:flex-row sm:flex-wrap sm:justify-end sm:px-6 sm:py-4">{footer}</div> : null}
+        </div>
+      ) : null}
+    </dialog>
+  );
+}
+
+export function Thumb({ src, alt, size = 44 }: { src: string | null | undefined; alt: string; size?: number }) {
+  return src ? (
+    <img src={src} alt={alt} width={size} height={size * 1.25} className="shrink-0 rounded-[10px] bg-sunken object-cover" style={{ width: size, height: size * 1.25 }} />
+  ) : (
+    <div className="shrink-0 rounded-[10px] bg-sunken" style={{ width: size, height: size * 1.25 }} />
+  );
+}

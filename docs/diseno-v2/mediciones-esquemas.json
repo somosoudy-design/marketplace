@@ -1,0 +1,286 @@
+{
+  "label": "Solo geometría de esquemas documentales, no aplicación nativa",
+  "viewportHeight": 892,
+  "results": [
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "01",
+      "height": 892,
+      "firstProductTop": 435,
+      "completeProducts": 2,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "02",
+      "height": 892,
+      "firstProductTop": 187,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "03",
+      "height": 892,
+      "firstProductTop": 143,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "04",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "05",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "06",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 412,
+      "screen": "07",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "01",
+      "height": 892,
+      "firstProductTop": 491,
+      "completeProducts": 2,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "02",
+      "height": 892,
+      "firstProductTop": 187,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "03",
+      "height": 892,
+      "firstProductTop": 143,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "04",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "05",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "06",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "screen": "07",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "01",
+      "height": 892,
+      "firstProductTop": 435,
+      "completeProducts": 2,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "02",
+      "height": 892,
+      "firstProductTop": 187,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "03",
+      "height": 892,
+      "firstProductTop": 143,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "04",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "05",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "06",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 412,
+      "screen": "07",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "01",
+      "height": 892,
+      "firstProductTop": 491,
+      "completeProducts": 2,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "02",
+      "height": 892,
+      "firstProductTop": 187,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "03",
+      "height": 892,
+      "firstProductTop": 143,
+      "completeProducts": 4,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "04",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "05",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "06",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "screen": "07",
+      "height": 892,
+      "firstProductTop": null,
+      "completeProducts": 0,
+      "overflowX": false,
+      "brokenImages": 0
+    }
+  ]
+}

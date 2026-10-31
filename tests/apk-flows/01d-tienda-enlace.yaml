@@ -1,0 +1,57 @@
+# Enlace de una tienda: abre esa tienda con su catálogo (no el Inicio) y se puede compartir o copiar. Sin dominio web
+# propio todavía, el enlace es kora://tienda/<slug>. La insignia dorada solo la tiene la tienda de la plataforma.
+# No crea ni cambia nada, así que el segundo intento empieza igual que el primero.
+appId: com.example.kora.preview
+name: Enlace y compartir de una tienda
+---
+- launchApp
+- runFlow:
+    # a slow emulator can show a system "isn't responding" dialog over the app
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- openLink: kora://tienda/patitas
+- extendedWaitUntil:
+    visible:
+      id: store-name
+      text: Patitas & Co.
+    timeout: 30000
+- assertNotVisible:
+    id: store-badge-official
+- tapOn:
+    id: store-share
+- extendedWaitUntil:
+    visible:
+      id: store-share-link
+      text: kora://tienda/patitas
+    timeout: 10000
+- tapOn:
+    id: store-share-copy
+- extendedWaitUntil:
+    visible: Enlace copiado
+    timeout: 10000
+- takeScreenshot: tienda-01-compartir
+# el menú de compartir de Android; «atrás» lo cierra
+- tapOn:
+    id: store-share-native
+- waitForAnimationToEnd:
+    timeout: 5000
+- takeScreenshot: tienda-02-menu-compartir
+- pressKey: back
+- openLink: kora://tienda/kora
+- extendedWaitUntil:
+    visible:
+      id: store-name
+      text: Kora
+    timeout: 30000
+- tapOn:
+    id: store-badge-official
+- extendedWaitUntil:
+    visible: .*La opera directamente.*
+    timeout: 10000
+- takeScreenshot: tienda-03-insignia-oficial

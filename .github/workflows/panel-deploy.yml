@@ -1,0 +1,102 @@
+# Publishes only the approved source named by a separate request-only commit.
+# The panel uses the Marketplace test backend and the existing EXPO_TOKEN.
+name: Panel web (EAS Hosting)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/panel-deploy-request']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: panel-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - name: Validar solicitud y fuente aprobada
+        id: release
+        run: node tools/panel/release-request.mjs >> "$GITHUB_OUTPUT"
+
+      - name: Compilar sólo el commit aprobado
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.release.outputs.source }}
+          fetch-depth: 1
+
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificación previa sin backend remoto
+        run: |
+          node --test tools/panel/release.test.mjs
+          pnpm --filter @kora/admin typecheck
+          pnpm --filter @kora/admin lint
+          pnpm test:admin
+          pnpm --filter @kora/core test
+
+      # Same backend/public key as APK5; authorization stays in Marketplace RLS.
+      - name: Variables públicas del panel
+        run: |
+          url=$(node -p "require('./apps/mobile/eas.json').build.preview.env.EXPO_PUBLIC_SUPABASE_URL")
+          key=$(node -p "require('./apps/mobile/eas.json').build.preview.env.EXPO_PUBLIC_SUPABASE_ANON_KEY")
+          {
+            echo "NEXT_PUBLIC_SUPABASE_URL=$url"
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$key"
+            echo "NEXT_PUBLIC_PANEL_API=$url/functions/v1/panel-api"
+          } >> "$GITHUB_ENV"
+
+      - name: Exportar el panel aprobado
+        env:
+          KORA_PANEL_EXPORT: '1'
+          NEXT_TELEMETRY_DISABLED: '1'
+          PANEL_SOURCE_SHA: ${{ steps.release.outputs.source }}
+          PANEL_BUILD_VERSION: ${{ github.run_id }}.${{ github.run_attempt }}
+        run: |
+          pnpm --filter @kora/admin build
+          node tools/panel/eas-routes.mjs apps/admin/out
+          node tools/panel/release-marker.mjs apps/admin/out "$PANEL_SOURCE_SHA" "$PANEL_BUILD_VERSION"
+          node tools/panel/check-export.mjs apps/admin/out
+
+      - name: Publicar en EAS Hosting
+        id: deploy
+        working-directory: apps/mobile
+        env:
+          APP_VARIANT: preview
+        run: |
+          npx --yes eas-cli@24.12.1 deploy --prod --export-dir ../admin/out --dev-domain kora-panel --non-interactive --json > "$GITHUB_WORKSPACE/panel-deploy.json"
+          cat "$GITHUB_WORKSPACE/panel-deploy.json"
+          node -e "
+            const d = require(process.env.GITHUB_WORKSPACE + '/panel-deploy.json');
+            console.log('deployment=' + (d?.url ?? ''));
+          " >> "$GITHUB_OUTPUT"
+
+      - name: Comprobar recepción exacta en deployment y alias
+        shell: bash
+        env:
+          PANEL_URL: https://kora-panel.expo.app
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment }}
+        run: |
+          set -o pipefail
+          node tools/panel/check-deploy.mjs "$DEPLOYMENT_URL" "$PANEL_URL" apps/admin/out/release.json | tee -a "$GITHUB_STEP_SUMMARY"

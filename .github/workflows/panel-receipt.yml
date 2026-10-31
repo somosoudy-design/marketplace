@@ -1,0 +1,33 @@
+# Read-only diagnosis of the already published panel. No export/upload/alias mutation.
+name: Panel receipt (read-only)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/panel-receipt-request']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: panel-receipt
+  cancel-in-progress: false
+
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Test request parsing and public diagnostic output
+        run: node --test tools/panel/receipt.test.mjs
+      - name: Read Hosting metadata and public release markers
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: node tools/panel/receipt.mjs

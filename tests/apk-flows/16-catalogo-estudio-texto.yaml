@@ -1,0 +1,5 @@
+# font-scale: 1.6
+appId: com.example.kora.preview
+name: Catálogo — estudio con fuente Android ampliada
+---
+- runFlow: 15-catalogo-estudio.yaml

@@ -1,0 +1,8 @@
+{
+  "name": "@kora/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": { "typecheck": "tsc --noEmit", "build:css": "node --experimental-strip-types scripts/css.ts" }
+}

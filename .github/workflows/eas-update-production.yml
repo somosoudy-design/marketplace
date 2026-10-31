@@ -1,0 +1,48 @@
+# Promotes the immutable Android bundle already published to preview and tested on APK 5.
+# No bundling, native build, environment switch or change to either channel's existing mapping.
+name: Publicar versión validada (EAS production)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/eas-production-update-request']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: eas-update-production
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      GITHUB_TOKEN: ${{ github.token }}
+      # Only evaluates the existing project's config. The published bundle is reused, not rebuilt.
+      APP_VARIANT: preview
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Verificar pruebas y promover el mismo bundle
+        run: node tools/eas/promote-update.mjs
+      - name: Evidencia de publicación
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eas-production-release
+          path: eas-production-release.json
+          if-no-files-found: ignore

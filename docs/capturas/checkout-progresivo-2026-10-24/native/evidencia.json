@@ -1,0 +1,108 @@
+{
+  "workflow": 40057284410,
+  "workflow_source": "dacf455ab491682801c2e1d5a299a9253290326c",
+  "captures_branch_commit": "40bcebb20c1010fba4e459f0597ddb2054288a62",
+  "eas_workflow": 40057075911,
+  "published_source": "0ca76990f1fb7cde0a2dc346e00b820a17c52911",
+  "update_id": "01a16be3-4827-77bc-bcf4-0f28d5895325",
+  "channel": "preview",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "published_utc": "2026-10-24 03:10 UTC",
+  "flows": [
+    "17-checkout-progresivo-acceso",
+    "18-checkout-progresivo-texto"
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "system_font_scales": [
+    1,
+    1.6
+  ],
+  "result": "4/4 sin reintentos",
+  "environment": "APK5 existente, emulador Android15/API35; visitante; no compras/pagos remotos",
+  "image_provenance": "16 JPEG derivados por publish-shots.sh en CI (resize540, calidad72), copiados byte a byte sin más edición; cuatro de instalación excluidos",
+  "files": [
+    {
+      "path": "flujos_maestro_2026-10-24_031508_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-01-acceso-protegido.jpg",
+      "sha256": "5c9f3ea16c3515098dbaf4e925801916379c696f9d4675ad1ac10c2007c5a944",
+      "bytes": 13419
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031508_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-02-carrito.jpg",
+      "sha256": "311c43edb019bc67b34298ee07dbe4b6fc92140f152991fa5f7eba933713dc25",
+      "bytes": 37400
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031508_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-03-sesion-requerida.jpg",
+      "sha256": "13e179e1ea4bb8b982183b457801d995b835ef33f37be71ac1796489fe11125e",
+      "bytes": 25869
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031508_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-04-recepcion.jpg",
+      "sha256": "10a9262dc7de8d6050dd37c65c8d0821bfd3aa1c04f1ee573e743598503c398d",
+      "bytes": 38252
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031537_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-01-acceso-protegido.jpg",
+      "sha256": "6781aa064ffea36cc396dc19f94d3cc5f06aa2478e8a03b20bad00c95f2b04c6",
+      "bytes": 18916
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031537_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-02-carrito.jpg",
+      "sha256": "13f75d2fdf6eb8ecc8433b91ac5a585492635d076c98e39b5e0c1505b842d900",
+      "bytes": 51312
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031537_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-03-sesion-requerida.jpg",
+      "sha256": "d6418e12d5a93f9765928557563d82a669e46b8a585a77529d34bb70473cdb03",
+      "bytes": 36579
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031537_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-04-recepcion.jpg",
+      "sha256": "193858e06963ceea5192b80c80889be8058b5c3fb7d66f9dae746475036305e4",
+      "bytes": 60607
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031607_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-01-acceso-protegido.jpg",
+      "sha256": "08a449a44233a2f3dbd751e416d9c9c5e474947a1a63d930bde3bbdaf0e5428d",
+      "bytes": 13643
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031607_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-02-carrito.jpg",
+      "sha256": "a3339e55036372ed7593e18afb4b5a22402f05dbd894a9b89d3d7a2bca7d5245",
+      "bytes": 38106
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031607_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-03-sesion-requerida.jpg",
+      "sha256": "85f00e0f46fe9185a15fcdf0ee3ffd38f948516542580e3443e36a677a38ba74",
+      "bytes": 26494
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031607_Checkout_progresivo_—_acceso_protegido_y_recepción_takeScreenshot_checkout-progresivo-04-recepcion.jpg",
+      "sha256": "9db3fe3a3545b5b1230e07085b04e832a2cedb707661707cd14b765017f8bf64",
+      "bytes": 38908
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031636_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-01-acceso-protegido.jpg",
+      "sha256": "ed49c5ab1d8acf7e23573bcc569561c9ad23a53c72647388503bccbc52fac56e",
+      "bytes": 19066
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031636_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-02-carrito.jpg",
+      "sha256": "85351841957f4dcbbb3d4a45a2e6f7fbf851600ae4c7d22a31e2d967945b3053",
+      "bytes": 51899
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031636_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-03-sesion-requerida.jpg",
+      "sha256": "74d83e19f44a4e2880067f42e1c3c429c9c38e29a628963be9bd1863a305f9be",
+      "bytes": 37453
+    },
+    {
+      "path": "flujos_maestro_2026-10-24_031636_Checkout_progresivo_—_acceso_con_fuente_Android_ampliada_takeScreenshot_checkout-progresivo-04-recepcion.jpg",
+      "sha256": "f482425d0ae26b3c3e9e81be0829e08deec8f6cd87fa7d928177dc712712f3f0",
+      "bytes": 62901
+    }
+  ]
+}

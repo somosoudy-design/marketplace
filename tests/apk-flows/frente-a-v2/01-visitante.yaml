@@ -1,0 +1,94 @@
+# Visitor-only Front A V2 on the existing APK 5 + OTA: public catalog reads and device cart only.
+# No signup, order, payment, favorite write or push request against the remote backend.
+appId: com.example.kora.preview
+name: Frente A V2 — navegación, tarjetas y carrito de visitante
+---
+- launchApp
+- runFlow:
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-cart
+    timeout: 60000
+- assertNotVisible:
+    id: home-favorites
+- takeScreenshot: frente-a-v2-inicio
+- tapOn:
+    id: buyer-tab-explore
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 15000
+- takeScreenshot: frente-a-v2-buscar
+- tapOn:
+    id: catalog-search
+- inputText: ugreen
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: product-card-ugreen-cable-usb-c-100w
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: product-card-ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 15000
+- back
+- assertVisible:
+    id: catalog-search
+- assertVisible: ugreen
+- tapOn:
+    id: buyer-tab-account
+- assertVisible:
+    id: account-favorites
+- tapOn:
+    id: account-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+- back
+- assertVisible:
+    id: account-favorites
+- takeScreenshot: frente-a-v2-cuenta
+- tapOn:
+    id: buyer-tab-index
+- tapOn:
+    id: home-cart
+- assertVisible:
+    id: buyer-tab-cart
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: product-cta
+    timeout: 15000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-continue
+    timeout: 15000
+- takeScreenshot: frente-a-v2-carrito
+- tapOn:
+    id: buyer-tab-index
+- assertVisible:
+    id: home-cart
+    text: 'Carrito, [0-9]+ productos?'
+- takeScreenshot: frente-a-v2-inicio-contador
+- tapOn:
+    id: home-cart
+- tapOn:
+    id: cart-continue
+- extendedWaitUntil:
+    visible:
+      id: sign-in-email
+    timeout: 15000
+- back
+- assertVisible:
+    id: cart-continue
+- tapOn:
+    id: buyer-tab-index
