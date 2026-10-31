@@ -4,6 +4,12 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · calidad integral, 31 de octubre
+
+Oliver solicita auditoría y mejoras de estructura, seguridad, compra web/app, notificaciones y administración. Root es único integrador; seis especialistas trabajan en lectura/propuestas/tests aislados. Se capturaron las cuatro fases actuales del checkout en320/412/1440 claro/oscuro antes de cambiarlo. Primer checkpoint: parche puntual del panel Next/eslint16.4.1 y undici7.30.1; validación completa en curso, sin desplegar.
+
+**Siguiente inmediato:** integrar checkout con resumen/acción accesibles, corregir configuración por par de tasas y fallos reales de avisos/reintentos/panel. Gatewaylocal54321 y web3200; ninguna prueba mutadora remota. Evidencia temporal `.local/premium-20261031/`. Se preservan reglas financieras, runtimeAPK5 y datos remotos. No afirmar cierre de auditoría, recepción móvil ni publicación web. El alojamiento web continúa pendiente.
+
 ## Web comprador · compra completa operativa, 30 de octubre
 
 Oliver pidió continuar hasta cerrar el recorrido. Fuente final `c579bc4`, API compatible corregida en `9a03b9f`; checkpoints `934e32a`/`bf420b2`. Inicio/Buscar/ficha, cuenta/favoritos/carrito y ahora direcciones, checkout4fases, pago/cotización/comprobante, pedidos/seguimiento/cancelación permitida, registro y recuperación porOTP funcionan dentro de la web. No deriva la compra a la app. [Informe, comandos y límites](WEB_COMPRA_COMPLETA.md).
