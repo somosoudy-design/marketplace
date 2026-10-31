@@ -19,7 +19,11 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
   const [quote, setQuote] = useState<PaymentQuote | null>(null);
   const create = useMutation({
     mutationFn: () => browser().api.payments.quote(id, method),
-    onSuccess: (q) => setQuote(q),
+    onSuccess: (q) => {
+      setQuote(q);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.getElementById('payment-heading')?.focus();
+    },
   });
   const cancel = useMutation({
     mutationFn: (payment: string) => browser().api.payments.cancelOnline(payment),
@@ -51,7 +55,9 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
       </Link>
       <div className="commerce-heading">
         <span className="eyebrow">PEDIDO {o.number}</span>
-        <h1>{pending.length ? 'Estado del pago' : 'Elige cómo pagar'}</h1>
+        <h1 id="payment-heading" tabIndex={-1}>
+          {pending.length ? 'Estado del pago' : quote ? 'Completa tu pago' : 'Elige cómo pagar'}
+        </h1>
         <p>Tu pedido está guardado. El pago se confirma después de su revisión.</p>
       </div>
       <div className="purchase-layout">
@@ -167,11 +173,13 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
           {next && (
             <div className="summary-total">
               <span>
-                {next.kind === 'installment'
-                  ? 'Próxima cuota'
-                  : next.kind === 'down_payment'
-                    ? 'Anticipo'
-                    : 'Pago pendiente'}
+                {pending.length
+                  ? 'Pendiente de confirmación'
+                  : next.kind === 'installment'
+                    ? 'Próxima cuota'
+                    : next.kind === 'down_payment'
+                      ? 'Anticipo'
+                      : 'Pago pendiente'}
               </span>
               <strong>{money(next._outstanding ?? next.amount_usd)}</strong>
             </div>
@@ -243,7 +251,7 @@ function PaymentForm({
         if (error) throw new Error(error);
         path = await browser().api.payments.uploadProof(
           buyerId,
-          file,
+          await file.arrayBuffer(),
           file.type,
           file.type === 'application/pdf'
             ? 'pdf'

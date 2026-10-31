@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import pg from 'pg';
-import { databaseUrl, newBuyer, asOn, unpaidOrderFor } from '../tests/support/db';
+import { databaseUrl, newBuyer, asOn } from '../tests/support/db';
+import { testUnpaidOrder } from './fixtures';
 test.beforeEach(async ({ context }) => {
   await context.route('https://mimnotafmfasvwrclxan.supabase.co/**', (route) => route.abort('blockedbyclient'));
 });
@@ -28,44 +29,45 @@ async function review(page: Page) {
   return buyer;
 }
 for (const colorScheme of ['light', 'dark'] as const)
-  test(`compra progresiva y pago manual ${colorScheme}`, async ({ page }, info) => {
-    await page.emulateMedia({ colorScheme });
-    await page.setViewportSize({ width: 320, height: 900 });
-    const errors: string[] = [];
-    page.on('pageerror', (e) => errors.push(e.message));
-    const buyer = await review(page);
-    await expect(page.getByRole('radio', { name: /Principal/ })).toHaveCount(0);
-    await page.screenshot({ path: info.outputPath('revision.png'), fullPage: true });
-    await page.getByTestId('checkout-next').dblclick();
-    await expect(page).toHaveURL(/\/pagar\//);
-    await page.getByRole('radio', { name: /Pago Móvil/ }).check();
-    await page.getByRole('button', { name: 'Consultar importe a pagar' }).click();
-    await expect(page.getByRole('heading', { name: 'Pago Móvil', exact: true })).toBeVisible();
-    await expect(page.getByText('Importe a pagar', { exact: true })).toBeVisible();
-    await page.screenshot({ path: info.outputPath('pago.png'), fullPage: true });
-    await page.getByLabel('Referencia del pago').fill(String(Date.now()).slice(-10));
-    await page.getByRole('button', { name: 'Ya pagué, enviar para verificar' }).click();
-    await expect(page.getByRole('heading', { name: /En verificación|Estamos verificando/ })).toBeVisible();
-    await page.getByRole('link', { name: 'Ver mi pedido', exact: true }).last().click();
-    await expect(page).toHaveURL(/\/pedidos\//);
-    await expect(page.getByText('Tu pago está en revisión')).toBeVisible();
-    await page.screenshot({ path: info.outputPath('pedido.png'), fullPage: true });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    const db = new pg.Client({ connectionString: databaseUrl() });
-    await db.connect();
-    try {
-      const { rows } = await db.query(
-        'select o.id,o.payment_status,o.paid_usd,p.status from orders o join payments p on p.order_id=o.id where o.buyer_id=$1',
-        [buyer.id],
-      );
-      expect(rows).toHaveLength(1);
-      expect(rows[0].status).toBe('pending_verification');
-      expect(Number(rows[0].paid_usd)).toBe(0);
-    } finally {
-      await db.end();
-    }
-    expect(errors).toEqual([]);
-  });
+  for (const width of [320, 1440])
+    test(`compra progresiva y pago manual ${width} ${colorScheme}`, async ({ page }, info) => {
+      await page.emulateMedia({ colorScheme });
+      await page.setViewportSize({ width, height: 960 });
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      const buyer = await review(page);
+      await expect(page.getByRole('radio', { name: /Principal/ })).toHaveCount(0);
+      await page.screenshot({ path: info.outputPath('revision.png'), fullPage: true });
+      await page.getByTestId('checkout-next').dblclick();
+      await expect(page).toHaveURL(/\/pagar\//);
+      await page.getByRole('radio', { name: /Pago Móvil/ }).check();
+      await page.getByRole('button', { name: 'Consultar importe a pagar' }).click();
+      await expect(page.getByRole('heading', { name: 'Pago Móvil', exact: true })).toBeVisible();
+      await expect(page.getByText('Importe a pagar', { exact: true })).toBeVisible();
+      await page.screenshot({ path: info.outputPath('pago.png'), fullPage: true });
+      await page.getByLabel('Referencia del pago').fill(String(Date.now()).slice(-10));
+      await page.getByRole('button', { name: 'Ya pagué, enviar para verificar' }).click();
+      await expect(page.getByRole('heading', { name: /En verificación|Estamos verificando/ })).toBeVisible();
+      await page.getByRole('link', { name: 'Ver mi pedido', exact: true }).last().click();
+      await expect(page).toHaveURL(/\/pedidos\//);
+      await expect(page.getByText('Tu pago está en revisión')).toBeVisible();
+      await page.screenshot({ path: info.outputPath('pedido.png'), fullPage: true });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      const db = new pg.Client({ connectionString: databaseUrl() });
+      await db.connect();
+      try {
+        const { rows } = await db.query(
+          'select o.id,o.payment_status,o.paid_usd,p.status from orders o join payments p on p.order_id=o.id where o.buyer_id=$1',
+          [buyer.id],
+        );
+        expect(rows).toHaveLength(1);
+        expect(rows[0].status).toBe('pending_verification');
+        expect(Number(rows[0].paid_usd)).toBe(0);
+      } finally {
+        await db.end();
+      }
+      expect(errors).toEqual([]);
+    });
 test('respuesta perdida recupera mismo pedido incluso después de recargar', async ({ page }) => {
   const buyer = await review(page);
   let placed = '';
@@ -109,7 +111,7 @@ test('preview fallido bloquea avance y permite reintentar', async ({ page }) => 
   await expect(page.getByTestId('checkout-next')).toBeEnabled();
 });
 test('administrador comprador no consulta dirección o pedido ajeno', async ({ page }) => {
-  const foreign = await unpaidOrderFor('web-foreign');
+  const foreign = await testUnpaidOrder('web-foreign');
   await login(page, { email: 'admin@example.com', password: 'Demo-1234' });
   await page.goto('/pedidos/' + foreign.orderId);
   await expect(page.getByRole('heading', { name: 'Este pedido no está disponible' })).toBeVisible();
@@ -176,4 +178,82 @@ test('registro con código y recuperación real de contraseña', async ({ page }
   await page.goto('/cuenta');
   await page.getByRole('button', { name: 'Cerrar sesión' }).click();
   await login(page, { email, password: 'Nueva-prueba-2026' });
+});
+
+test('dos tiendas, volver conserva selección y cambiar dirección reinicia entrega', async ({ page }) => {
+  const buyer = await newBuyer('web-two-stores');
+  const db = new pg.Client({ connectionString: databaseUrl() });
+  await db.connect();
+  try {
+    const as = asOn(db);
+    for (const slug of ['ugreen-cable-usb-c-100w', 'correa-reflectiva']) {
+      const v = (
+        await db.query(
+          'select v.id from product_variants v join products p on p.id=v.product_id where p.slug=$1 and v.active limit 1',
+          [slug],
+        )
+      ).rows[0].id;
+      await as(buyer.id, 'select public.cart_set_quantity($1,1)', [v]);
+    }
+    await as(
+      buyer.id,
+      "insert into addresses(user_id,label,recipient,phone,region_code,city,line1) values(auth.uid(),'Oficina','Ana Prueba','0412 555 0101','A','Caracas','Avenida prueba oficina 5')",
+    );
+  } finally {
+    await db.end();
+  }
+  await login(page, buyer);
+  await page.goto('/checkout');
+  await page.getByTestId('checkout-next').click();
+  await expect(page.locator('.delivery-block')).toHaveCount(2);
+  const radio = page.locator('.delivery-block').first().getByRole('radio').last();
+  await radio.check();
+  await expect(page.getByTestId('checkout-next')).toBeEnabled();
+  await page.getByTestId('checkout-next').click();
+  await expect(page.getByRole('heading', { name: 'Plan de pago', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Volver al paso anterior' }).click();
+  await expect(radio).toBeChecked();
+  await page.getByRole('button', { name: 'Volver al paso anterior' }).click();
+  await page.getByRole('radio', { name: /Oficina/ }).check();
+  await expect(page.getByRole('heading', { name: 'Dirección de entrega', exact: true })).toBeVisible();
+  await page.getByTestId('checkout-next').click();
+  await expect(page.locator('.delivery-block')).toHaveCount(2);
+});
+test('plan que deja de ser válido exige volver a revisarlo', async ({ page }) => {
+  await review(page);
+  let intercepts = 0;
+  await page.route('**/rpc/checkout_preview', async (r) => {
+    if (intercepts++ === 0)
+      await r.fulfill({ status: 400, json: { code: 'P0001', message: 'Plan cambiado', hint: 'plan_invalid' } });
+    else await r.continue();
+  });
+  await page.evaluate(() => window.dispatchEvent(new Event('visibilitychange')));
+  await expect(page.getByRole('heading', { name: 'Plan de pago', exact: true })).toBeVisible();
+  await expect(
+    page.getByText('El plan de pago cambió. Revisa el plan y los importes antes de confirmar.'),
+  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Confirmar pedido', exact: true })).toHaveCount(0);
+});
+
+test('cambio de opciones de envío obliga a revisar la entrega', async ({ page }) => {
+  await review(page);
+  await page.getByRole('button', { name: 'Volver al paso anterior' }).click();
+  await page.getByRole('button', { name: 'Volver al paso anterior' }).click();
+  await page.locator('.delivery-block').first().getByRole('radio').last().check();
+  await expect(page.getByTestId('checkout-next')).toBeEnabled();
+  await page.getByTestId('checkout-next').click();
+  await page.getByTestId('checkout-next').click();
+  await expect(page.getByRole('heading', { name: 'Revisa tu pedido', exact: true })).toBeVisible();
+  let count = 0;
+  await page.route('**/rpc/checkout_preview', async (r) => {
+    if (count++ === 0)
+      await r.fulfill({ status: 400, json: { code: 'P0001', message: 'Envío cambiado', hint: 'shipping_invalid' } });
+    else await r.continue();
+  });
+  await page.evaluate(() => window.dispatchEvent(new Event('visibilitychange')));
+  await expect(page.getByRole('heading', { name: 'Tus entregas', exact: true })).toBeVisible();
+  await expect(page.getByText('Las opciones de entrega cambiaron. Revísalas antes de continuar.')).toBeVisible();
+  await expect(page.getByTestId('checkout-next')).toBeEnabled();
+  await page.getByTestId('checkout-next').click();
+  await expect(page.getByText('Las opciones de entrega cambiaron. Revísalas antes de continuar.')).toHaveCount(0);
 });

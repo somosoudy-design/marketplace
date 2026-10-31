@@ -223,6 +223,12 @@ export function Order({ buyerId, id }: { buyerId: string; id: string }) {
             <span>Envío</span>
             <strong>{money(o.shipping_usd)}</strong>
           </div>
+          {o.discount_usd > 0 && (
+            <div>
+              <span>Descuento</span>
+              <strong>{money(-o.discount_usd)}</strong>
+            </div>
+          )}
           {o.financing_usd > 0 && (
             <div>
               <span>Financiamiento</span>

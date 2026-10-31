@@ -1,3 +1,3 @@
-export const money = (value: number) =>
-  new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'USD' }).format(value);
+import { formatUSD } from '@kora/core';
+export const money = (value: number) => formatUSD(value);
 export { default as brand } from '../../../../config/brand.json';

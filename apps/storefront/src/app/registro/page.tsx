@@ -15,7 +15,7 @@ export default function Page() {
   const signup = useMutation({
     mutationFn: async () => {
       const p = signUpSchema.safeParse({ full_name: name, email, password });
-      if (!p.success) throw new Error(p.error.issues[0]?.message);
+      if (!p.success) throw Object.assign(new Error(p.error.issues[0]?.message), { name: 'ValidationError' });
       const { data, error } = await browser().client.auth.signUp({
         email: p.data.email,
         password: p.data.password,
@@ -90,6 +90,8 @@ export default function Page() {
           Contraseña
           <input
             type="password"
+            aria-label="Contraseña"
+            aria-describedby="signup-password-help"
             autoComplete="new-password"
             minLength={8}
             required
@@ -97,13 +99,13 @@ export default function Page() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <small className="muted">Mínimo 8 caracteres con letras y números.</small>
+          <small id="signup-password-help" className="muted">
+            Mínimo 8 caracteres con letras y números.
+          </small>
         </label>
         {signup.isError && (
           <p role="alert" className="error">
-            {signup.error.message.includes('Mínimo') || signup.error.message.includes('nombre')
-              ? signup.error.message
-              : toAppError(signup.error).message}
+            {signup.error.name === 'ValidationError' ? signup.error.message : toAppError(signup.error).message}
           </p>
         )}
         <button className="button" disabled={signup.isPending}>

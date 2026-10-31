@@ -11,6 +11,7 @@ import {
   type PlaceOrderResult,
 } from '@kora/api';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { describeEtaDates } from '@kora/core';
 import { browser } from '@/lib/browser';
 import { money } from '@/lib/format';
 import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/lib/purchase';
@@ -203,6 +204,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
         ),
       },
     };
+    window.scrollTo({ top: 0, behavior: 'instant' });
     setSnapshot(s);
     setIntent(i);
     setUncertain(true);
@@ -224,6 +226,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     return () => window.removeEventListener('beforeunload', warn);
   }, [uncertain]);
   const move = (n: number) => {
+    if (n > step) setNotice('');
     setStep(n);
     document.getElementById('checkout-heading')?.focus();
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -414,14 +417,14 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                       <input
                         type="radio"
                         name={g.key}
-                        checked={g.selected_shipping?.method_id === o.method_id}
+                        checked={(shipping[g.key] ?? g.selected_shipping?.method_id) === o.method_id}
                         disabled={!fresh}
                         onChange={() => setShipping({ ...shipping, [g.key]: o.method_id })}
                       />
                       <span>
                         <strong>{o.name}</strong>
                         <span>
-                          {o.carrier} · {o.min_days}–{o.max_days} días estimados
+                          {o.carrier} · {describeEtaDates(o.eta_min_date, o.eta_max_date)}
                         </span>
                       </span>
                       <strong>{money(o.cost_usd)}</strong>
@@ -440,7 +443,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                 <input
                   type="radio"
                   name="plan"
-                  checked={preview.data?.code === p.code}
+                  checked={plan === p.code}
                   disabled={!fresh}
                   onChange={() => setPlan(p.code)}
                 />

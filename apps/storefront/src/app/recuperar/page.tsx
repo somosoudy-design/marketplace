@@ -19,7 +19,7 @@ function Recovery() {
       if (change) {
         if (!session) throw new Error('Verifica el código que enviamos a tu correo.');
         const invalid = validatePassword(password);
-        if (invalid) throw new Error(invalid);
+        if (invalid) throw Object.assign(new Error(invalid), { name: 'ValidationError' });
         const { error } = await browser().client.auth.updateUser({ password });
         if (error) throw error;
       } else {
@@ -111,7 +111,7 @@ function Recovery() {
           )}
           {action.isError && (
             <p role="alert" className="error">
-              {toAppError(action.error).message}
+              {action.error.name === 'ValidationError' ? action.error.message : toAppError(action.error).message}
             </p>
           )}
           <button className="button" disabled={action.isPending || (change && !session)}>

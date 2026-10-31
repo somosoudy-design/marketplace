@@ -1,3 +1,4 @@
+import { formatMoney } from '@kora/core';
 export {
   confirmCheckout,
   recoverCheckout,
@@ -19,11 +20,6 @@ export function date(value: string | null | undefined) {
     : 'Por confirmar';
 }
 export function currency(value: number | string, code: string) {
-  return (
-    new Intl.NumberFormat('es-VE', {
-      style: 'currency',
-      currency: code === 'USDT' ? 'USD' : code,
-      maximumFractionDigits: 2,
-    }).format(Number(value)) + (code === 'USDT' ? ' USDT' : '')
-  );
+  if (code === 'USD' || code === 'VES' || code === 'USDT') return formatMoney(value, code);
+  return `${value} ${code}`;
 }
