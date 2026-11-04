@@ -1,0 +1,14 @@
+{
+  "requestCommit": "4df6e216bcc977c44ce74cfc2b386a10191ca83f",
+  "workflowRun": 41889930469,
+  "workflowUrl": "https://github.com/somosoudy-design/marketplace/actions/runs/41889930469",
+  "result": "success",
+  "channel": "preview",
+  "platform": "android",
+  "id": "01a1a7e1-45e8-7ef4-b236-499cb75abb3b",
+  "group": "53a055c8-cb2e-45e9-8fc0-15ff98101a67",
+  "runtimeVersion": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "nativeBuildGenerated": false,
+  "channelReceipt": "pending",
+  "deviceReceipt": "not observed"
+}

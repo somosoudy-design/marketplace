@@ -12,7 +12,9 @@ Implementados favoritos con pulso, guard/reintento real y aislamiento por compra
 
 **Límites:** video de X bloqueado por red, no se vio; se aplicaron los cinco criterios escritos y Product Design audit sobre la app real. Cupón CUP-01 pendiente de contrato/reglas del backend; no hay un campo ficticio ni se alteran importes. Pruebas históricas ahora usan copias propias de productos; tasas demo locales renovadas una vez con helper del seed, sin snapshots/políticas ni datos remotos.
 
-**Próximo exacto:** ejecutar la solicitud OTA Android preview de este cierre, comprobar guard runtime APK5 y resultado EAS; después observación de sólo lectura del canal fijada a la fuente publicada, guardar ID y dejar continuidad. No reconstruir APK ni repetir la investigación de tasas. Baseline8090, after8091, storefront3200 y backend54321 locales. Panel/hosting permanecen en su bloqueo anterior, fuera de este incremento.
+**Android publicado:** [CI41889930469](https://github.com/somosoudy-design/marketplace/actions/runs/41889930469), solicitud `4df6e21`; ID `01a1a7e1-45e8-7ef4-b236-499cb75abb3b`, grupo `53a055c8-cb2e-45e9-8fc0-15ff98101a67`. Canal preview, runtime exacto APK5 aprobado, sin APK nuevo. Observación del canal de sólo lectura pendiente en el siguiente workflow; no recepción física comprobada.
+
+**Próximo exacto:** cerrar observación del canal fijada a `4df6e21`, registrar resultado y luego evaluar recepción en Samsung/CUP-01. No republicar esta misma fuente ni reinvestigar tasas. Baseline8090, after8091, storefront3200 y backend54321 locales. Panel/hosting permanecen en su bloqueo anterior, fuera de este incremento.
 
 ## Calidad integral revisada · 31 de octubre
 
