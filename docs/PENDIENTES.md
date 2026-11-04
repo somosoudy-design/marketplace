@@ -1,5 +1,11 @@
 # Pendientes de Kora
 
+## Interacción y compra compacta ·4nov2026
+
+- En curso: favoritos confiables/interactivos, carrito compacto, cuadro único de productos en revisión y carga sin saltos. Capturas y pruebas independientes preparadas en `.local/reference-20261104`; no declarar aprobado/publicado antes de revisión final.
+- **CUP-01:** cupón comercial solicitado por Oliver. No hay API/RPC/DTO de canje; `orders.discount_usd` por sí solo no constituye soporte. Antes del bloque de backend definir quién financia el descuento, tiendas/productos elegibles, importe/porcentaje/tope, mínimo, vigencia/usos y efecto sobre cuotas/reembolsos. Preparar y probar localmente con aislamiento/concurrencia antes de cualquier activación remota; no simular aplicación ni tocar importes en cliente.
+- La referencia X `https://x.com/desdivj/status/2117922523082076329` no fue accesible por la política de red. Las decisiones actuales se basan en los cinco criterios escritos y la app real; no se afirma análisis del video.
+
 ## Calidad integral ·31oct2026
 
 Compra web rediseñada y revisada, notificaciones web/app, aislamiento de comprador administrador, recuperación de tiendas y revisión segura del panel implementados.39 UI web/11 panel/4 app exportada,116 unitarias,25 SQL+8 adaptadores y revisión visual independiente aprobados. [Decisiones, comparativas y límites](CALIDAD_INTEGRAL_2026-10-31.md). Sin SQL ni datos remotos modificados.

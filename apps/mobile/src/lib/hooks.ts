@@ -1,5 +1,5 @@
-import type { CheckoutSummary, ProductDetail, ProductVariant, SearchParams } from '@kora/api';
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { favoriteState, type FavoriteEntry, type CheckoutSummary, type ProductDetail, type ProductVariant, type SearchParams } from '@kora/api';
+import { useInfiniteQuery, useMutation, useMutationState, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from './auth';
 import { guestCart, type GuestLine } from './guest-cart';
@@ -133,24 +133,44 @@ export function useSetCartQuantity() {
 export function useFavorites() {
   const { user } = useAuth();
   const qc = useQueryClient();
-  const q = useQuery({ queryKey: qk.favorites, queryFn: api.account.favorites, enabled: !!user });
-  const ids = useMemo(() => new Set((q.data ?? []).map((f) => f.product_id)), [q.data]);
+  const key = [...qk.favorites, user?.id];
+  const mutationKey = ['favorite-write', user?.id];
+  const q = useQuery({ queryKey: key, queryFn: () => api.account.favoritesForBuyer(user!.id), enabled: !!user });
+  const ids = useMemo(() => new Set((user ? q.data ?? [] : []).map((f) => f.product_id)), [q.data, user]);
+  const pending = useMutationState({ filters: { mutationKey, status: 'pending' }, select: (mutation) => (mutation.state.variables as { productId: string }).productId });
   const toggle = useMutation({
-    mutationFn: ({ productId, on }: { productId: string; on: boolean }) => api.account.setFavorite(user!.id, productId, on),
-    onMutate: async ({ productId, on }) => {
-      await qc.cancelQueries({ queryKey: qk.favorites });
-      const prev = qc.getQueryData<{ product_id: string; created_at: string }[]>(qk.favorites) ?? [];
-      qc.setQueryData(qk.favorites, on ? [{ product_id: productId, created_at: new Date().toISOString() }, ...prev] : prev.filter((f) => f.product_id !== productId));
-      return { prev };
+    mutationKey,
+    mutationFn: ({ userId, productId, on }: { userId: string; productId: string; on: boolean }) => api.account.setFavorite(userId, productId, on),
+    onMutate: async ({ userId, productId, on }) => {
+      const queryKey = [...qk.favorites, userId];
+      await qc.cancelQueries({ queryKey, exact: true });
+      const previous = qc.getQueryData<FavoriteEntry[]>(queryKey)?.find((row) => row.product_id === productId) ?? null;
+      // A logout may have removed this query while cancellation was in flight.
+      if (qc.getQueryState(queryKey)) qc.setQueryData<FavoriteEntry[]>(queryKey, (rows = []) => favoriteState(rows, productId, on ? previous ?? { product_id: productId, created_at: new Date().toISOString() } : null));
+      return { previous, queryKey };
     },
-    onError: (_e, _v, ctx) => qc.setQueryData(qk.favorites, ctx?.prev),
+    onError: (_e, v, ctx) => {
+      if (ctx && qc.getQueryState(ctx.queryKey)) qc.setQueryData<FavoriteEntry[]>(ctx.queryKey, (rows = []) => favoriteState(rows, v.productId, ctx.previous));
+    },
     onSettled: (_d, _e, v) => {
-      qc.invalidateQueries({ queryKey: qk.favorites });
-      qc.invalidateQueries({ queryKey: ['favorite-products'] });
+      // Do not refetch over another product's optimistic update.
+      if (qc.isMutating({ mutationKey: ['favorite-write', v.userId] }) === 1) {
+        qc.invalidateQueries({ queryKey: [...qk.favorites, v.userId], exact: true });
+        qc.invalidateQueries({ queryKey: ['favorite-products', v.userId] });
+      }
       qc.invalidateQueries({ queryKey: qk.product(v.productId) });
     },
   });
-  return { ids, isFavorite: (id: string) => ids.has(id), toggle: toggle.mutate, enabled: !!user };
+  return {
+    ids, isFavorite: (id: string) => ids.has(id), enabled: !!user,
+    loading: !!user && q.isPending, refreshing: q.isFetching, error: q.error, retry: q.refetch,
+    isPending: (id: string) => pending.includes(id),
+    toggle: ({ productId, on }: { productId: string; on: boolean }, callbacks?: { onSuccess?: () => void; onError?: (error: unknown) => void }) => {
+      if (!user || qc.getQueryState([...qk.favorites, user.id])?.status !== 'success' || qc.getMutationCache().findAll({ mutationKey, status: 'pending' }).some((mutation) => (mutation.state.variables as { productId: string }).productId === productId)) return false;
+      toggle.mutate({ userId: user.id, productId, on }, callbacks);
+      return true;
+    },
+  };
 }
 
 // ---------- account ----------

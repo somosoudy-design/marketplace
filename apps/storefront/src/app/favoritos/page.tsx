@@ -7,8 +7,8 @@ import { Empty } from '@/components/states';
 export default function Favorites() {
   const { session, ready } = useAccount();
   const products = useQuery({
-    queryKey: ['favorites', session?.user.id, 'products'],
-    queryFn: () => browser().api.account.favoriteProducts(),
+    queryKey: ['favorite-products', session?.user.id],
+    queryFn: () => browser().api.account.favoriteProductsForBuyer(session!.user.id),
     enabled: !!session,
   });
   if (!ready || (!!session && products.isPending))

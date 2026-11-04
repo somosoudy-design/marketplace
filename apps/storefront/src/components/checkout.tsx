@@ -315,6 +315,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     setStep(0);
     setEdit(false);
   };
+  const productCount = s?.groups.flatMap((g) => g.lines).length ?? 0;
   const quantity = s?.groups.reduce((n, g) => n + g.lines.reduce((q, l) => q + l.quantity, 0), 0) ?? 0;
   const enabled =
     step === 0
@@ -467,6 +468,8 @@ export function Checkout({ buyerId }: { buyerId: string }) {
             {step === 2 && s && <PaymentSchedule summary={s} />}
             {step === 3 && s && (
               <>
+                <div className="checkout-products" data-testid="checkout-products">
+                <h2>{productCount} {productCount === 1 ? 'producto' : 'productos'} · {quantity} {quantity === 1 ? 'unidad' : 'unidades'}</h2>
                 {s.groups.map((g, index) => (
                   <section className="delivery-block" key={g.key}>
                     <div className="section-heading">
@@ -484,6 +487,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                         Cambiar
                       </button>
                     </div>
+                    <p className="delivery-mode">{g.label}</p>
                     {g.lines.map((l) => (
                       <ReviewLine key={l.variant_id} line={l} />
                     ))}
@@ -501,6 +505,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                     )}
                   </section>
                 ))}
+                </div>
                 <div className="review-address">
                   <div className="section-heading">
                     <h2>Dirección de entrega</h2>
@@ -537,16 +542,16 @@ export function Checkout({ buyerId }: { buyerId: string }) {
           <h2>Tu pedido</h2>
           {s && (
             <>
-              <details className="summary-products">
+              {step !== 3 && <details className="summary-products">
                 <summary>
-                  {quantity} {quantity === 1 ? 'producto' : 'productos'} · Ver detalle
+                  {productCount} {productCount === 1 ? 'producto' : 'productos'} · {quantity} {quantity === 1 ? 'unidad' : 'unidades'} · Ver detalle
                 </summary>
                 {s.groups
                   .flatMap((g) => g.lines)
                   .map((l) => (
                     <ReviewLine key={l.variant_id} line={l} />
                   ))}
-              </details>
+              </details>}
               <dl className="purchase-totals">
                 <div>
                   <dt>Productos</dt>

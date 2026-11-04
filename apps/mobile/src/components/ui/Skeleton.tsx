@@ -24,7 +24,7 @@ export function ProductCardSkeleton({ width }: { width: number }) {
   const { colors } = useTheme();
   return (
     <View testID="catalog-card-loading" style={{ width, borderRadius: 10, overflow: 'hidden', backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border }}>
-      <Skeleton height={(width - 2) * 1.25} radius={0} />
+      <View style={{ margin: 5 }}><Skeleton height={width - 12} radius={7} /></View>
       <View style={{ padding: 10, gap: 4 }}>
         <Skeleton width="90%" height={18} />
         <Skeleton width="45%" height={20} />

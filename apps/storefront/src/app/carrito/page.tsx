@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Minus, Plus, Trash2, ArrowRight } from 'lucide-react';
 import type { CartLine } from '@kora/api';
 import { useAccount } from '@/lib/providers';
@@ -17,11 +17,12 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
     queryFn: () => browser().api.catalog.product(line.product_id),
   });
   const update = useMutation({
+    mutationKey: ['cart-write', buyerId],
     mutationFn: (quantity: number) => browser().api.cart.setQuantity(line.variant_id, quantity),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['cart', buyerId] }),
   });
   return (
-    <article className="cart-line">
+    <article className="cart-line" data-testid={`cart-line-${line.variant_id}`}>
       <ProductPhoto
         id={line.product_id}
         path={line.image_path}
@@ -38,7 +39,7 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
           <h3>{line.title}</h3>
         )}
         {line.variant_title && <p>{line.variant_title}</p>}
-        <span className="muted">{money(line.unit_price_usd)} por unidad</span>
+        {line.quantity > 1 && <span className="muted">{money(line.unit_price_usd)} por unidad</span>}
         {line.issue && (
           <p className="error" role="alert">
             {
@@ -51,6 +52,9 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
             }
           </p>
         )}
+      </div>
+      <div className="cart-line-actions">
+        <strong className="cart-line-total">{money(line.line_total_usd)}</strong>
         <div className="quantity">
           <button
             aria-label={`Reducir cantidad de ${line.title}`}
@@ -93,11 +97,12 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
           </p>
         )}
       </div>
-      <strong className="cart-line-total">{money(line.line_total_usd)}</strong>
     </article>
   );
 }
 function BuyerCart({ buyerId }: { buyerId: string }) {
+  const qc = useQueryClient();
+  const updating = useIsMutating({ mutationKey: ['cart-write', buyerId] }) > 0;
   const cart = useQuery({ queryKey: ['cart', buyerId], queryFn: () => browser().api.cart.summary() });
   if (cart.isPending)
     return (
@@ -116,17 +121,19 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
     );
   if (!cart.data.line_count)
     return <Empty title="Tu próximo hallazgo te espera" text="Explora el catálogo y agrega lo que te guste." />;
+  const lines = cart.data.groups.flatMap((g) => g.lines);
+  const units = lines.reduce((n, l) => n + l.quantity, 0);
   return (
     <div className="wrap cart-page">
       <div className="section-heading">
         <h1>Mi carrito</h1>
-        <span className="muted">{cart.data.line_count} productos</span>
+        <span className="muted">{lines.length} {lines.length === 1 ? 'producto' : 'productos'} · {units} {units === 1 ? 'unidad' : 'unidades'}</span>
       </div>
       <div className="cart-layout">
-        <div>
+        <div className="cart-products">
           {cart.data.groups.map((g) => (
             <section className="cart-group" key={g.key}>
-              <h2>{g.store.name}</h2>
+              <header className="cart-group-heading"><h2>{g.store.name}</h2><p>{g.label}</p></header>
               {g.lines.map((l) => (
                 <Line key={l.variant_id} line={l} buyerId={buyerId} />
               ))}
@@ -143,7 +150,7 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
           {cart.data.issues > 0 ? (
             <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
           ) : (
-            <Link className="button" data-testid="cart-checkout" href="/checkout">
+            <Link className="button" data-testid="cart-checkout" href="/checkout" aria-disabled={updating || cart.isFetching} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching) event.preventDefault(); }}>
               Continuar con la compra
             </Link>
           )}

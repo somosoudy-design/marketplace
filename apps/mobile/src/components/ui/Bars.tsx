@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated, { Extrapolation, FadeIn, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, type SharedValue } from 'react-native-reanimated';
+import Animated, { Extrapolation, FadeIn, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useReducedMotion, useSharedValue, type SharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scheduleOnRN } from 'react-native-worklets';
 import { palette } from '@kora/design-tokens';
@@ -45,8 +45,9 @@ export function BottomBar({ children, maxWidth = 760, testID, safeArea = true, o
 
 /** Amount that cross-fades when it changes, so a recalculated total reads as an update rather than a glitch. */
 export function ChangingText({ value, children }: { value: string; children: ReactNode }) {
+  const reduced = useReducedMotion();
   return (
-    <Animated.View key={value} entering={FadeIn.duration(180)}>
+    <Animated.View key={value} entering={reduced ? undefined : FadeIn.duration(180)}>
       {children}
     </Animated.View>
   );

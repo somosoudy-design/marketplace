@@ -6,7 +6,8 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tansta
 import { router, Stack, useFocusEffect, useNavigation } from 'expo-router';
 import { usePreventRemove } from 'expo-router/react-navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, ActivityIndicator, findNodeHandle, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { AccessibilityInfo, ActivityIndicator, findNodeHandle, Platform, Pressable, ScrollView, View } from 'react-native';
+import Animated, { FadeIn, useReducedMotion } from 'react-native-reanimated';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { BottomBar, ChangingText } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -51,7 +52,7 @@ export default function CheckoutScreen() {
 
 function CheckoutSession({ buyerId }: { buyerId: string }) {
   const t = useTheme();
-  const { height: windowHeight, fontScale } = useWindowDimensions();
+  const reduced = useReducedMotion();
   const qc = useQueryClient();
   const navigation = useNavigation();
   const { cartSyncing } = useAuth();
@@ -268,7 +269,8 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const canContinue = editable && !blocking && (step === 0 ? addressReady : step === 1 ? groupReady : !s.needs_shipping && planReady);
   const canPlace = editable && !blocking && s.can_place && planReady;
   const firstPayment = s.schedule.find((x) => x.due_in_days === 0)?.amount_usd ?? s.schedule[0]?.amount_usd;
-  const compactReview = windowHeight < 720 || fontScale > 1.25;
+  const productCount = s.groups.flatMap((g) => g.lines).length;
+  const unitCount = s.groups.flatMap((g) => g.lines).reduce((sum, l) => sum + l.quantity, 0);
   const nextTitle = step === 0 ? 'Continuar a entregas' : step === 1 ? activeIndex < s.groups.length - 1 ? 'Siguiente entrega' : 'Continuar al plan de pago' : 'Revisar pedido';
   const advance = () => {
     if (!canContinue || submitting.current) return;
@@ -288,7 +290,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Stack.Screen options={{ headerLeft: () => <IconButton testID="checkout-back" icon="chevron-left" label={step > 0 ? 'Volver al paso anterior' : 'Volver al carrito'} disabled={busy} onPress={back} /> }} />
-      <ScrollView ref={scrollRef} testID="checkout-scroll" contentContainerStyle={{ padding: 16, gap: 20, paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
+      <ScrollView ref={scrollRef} testID="checkout-scroll" contentContainerStyle={{ padding: 16, gap: 16, paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
         <View style={{ gap: 14 }}>
           <View testID="checkout-progress" style={{ gap: 8 }}>
             <Text variant="caption" color="brand" accessibilityLiveRegion="polite">Paso {step + 1} de 4{step === 1 && s.groups.length > 1 ? ` · Entrega ${activeIndex + 1} de ${s.groups.length}` : ''}</Text>
@@ -298,12 +300,13 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
           </View>
           <View style={{ gap: 6 }}>
             <View ref={headingRef} focusable accessible accessibilityRole="header" accessibilityLabel={STEPS[step]!.title} testID="checkout-stage-heading"><Text variant="title" accessibilityRole="none">{STEPS[step]!.title}</Text></View>
-            <Text variant="bodySmall" color="textSecondary">{STEPS[step]!.body}</Text>
+            {step !== 3 ? <Text variant="bodySmall" color="textSecondary">{STEPS[step]!.body}</Text> : null}
           </View>
         </View>
         {preview.isError ? <View testID="checkout-refresh-error" style={{ gap: 8 }}><Banner tone="danger" body="No pudimos actualizar tu compra. Reintenta antes de continuar; tus selecciones siguen aquí." /><Button title="Reintentar actualización" variant="secondary" onPress={() => preview.refetch()} loading={preview.isFetching} /></View> : null}
         {place.error ? <Banner tone="danger" icon="circle-alert" body={place.error instanceof ApiError && place.error.code === 'plan_invalid' ? 'El plan cambió y no pudimos crear el pedido. Revisa las opciones disponibles.' : (place.error as Error).message} /> : null}
 
+        <Animated.View key={`${step}:${activeIndex}`} entering={reduced ? undefined : FadeIn.duration(160)} style={{ gap: 16 }}>
         {step === 0 ? <View testID="checkout-stage-address" style={{ gap: 12 }}>
           {address && !pickAddress ? <Card style={{ gap: 12 }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}>
@@ -346,18 +349,32 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
         </View> : null}
 
         {step === 3 ? <View testID="checkout-stage-review" style={{ gap: 16 }}>
-          {s.groups.map((g, i) => <ReviewSection key={g.key} title={`Entrega ${i + 1} de ${s.groups.length} · ${g.store.name}`} testID={`checkout-edit-delivery-${i}`} disabled={busy} onEdit={() => goTo(1, i)}>
-            <Text variant="caption" color="textSecondary">{g.label}</Text>
-            {g.lines.map((l) => <View key={l.variant_id} testID={`checkout-review-line-${l.variant_id}`} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 5 }}>
-              <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} fit="contain" radius={8} style={{ width: 56 }} />
-              <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
-                <Text variant="label">{l.title}</Text>
-                <Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>
-                <Text variant="label" tabular>{formatUSD(l.line_total_usd)}</Text>
+          <View testID="checkout-products" style={{ backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, borderRadius: 12, overflow: 'hidden' }}>
+            <View style={{ paddingHorizontal: 12, paddingTop: 12, paddingBottom: 4 }}>
+              <Text variant="subtitle">{productCount} {productCount === 1 ? 'producto' : 'productos'} · {unitCount} {unitCount === 1 ? 'unidad' : 'unidades'}</Text>
+            </View>
+            {s.groups.map((g, i) => <View key={g.key} testID={`checkout-product-group-${i}`} style={{ paddingHorizontal: 12, paddingBottom: 12, borderTopWidth: i > 0 ? 1 : 0, borderColor: t.colors.border, gap: 8 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <Text variant="bodySmall" color="textSecondary" style={{ flex: 1 }}>{s.groups.length > 1 ? `Entrega ${i + 1} · ` : ''}{g.store.name}</Text>
+                <ScalePressable testID={`checkout-edit-delivery-${i}`} disabled={busy} accessibilityRole="button" accessibilityLabel={`Cambiar entrega ${i + 1} de ${g.store.name}`} onPress={() => goTo(1, i)} style={{ minHeight: 44, minWidth: 44, justifyContent: 'center', opacity: busy ? 0.4 : 1 }}><Text variant="label" color="brand">Cambiar</Text></ScalePressable>
+              </View>
+              {g.lines.map((l) => <View key={l.variant_id} testID={`checkout-review-line-${l.variant_id}`} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingBottom: 4 }}>
+                <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} fit="contain" radius={6} style={{ width: 48 }} />
+                <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
+                  <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
+                  <Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>
+                  <Text variant="label" tabular>{formatUSD(l.line_total_usd)}</Text>
+                </View>
+              </View>)}
+              <View style={{ gap: 3, paddingTop: 4 }}>
+                <Text variant="caption" color="textSecondary">{g.label}</Text>
+                {g.selected_shipping ? <>
+                  <Text variant="bodySmall">{g.selected_shipping.name} · {Number(g.selected_shipping.cost_usd) === 0 ? 'Gratis' : formatUSD(g.selected_shipping.cost_usd)}</Text>
+                  <Text variant="caption" color="textSecondary">{describeEtaDates(g.selected_shipping.eta_min_date, g.selected_shipping.eta_max_date)}{g.selected_shipping.kind !== 'home_delivery' ? ' · retiras tú' : ''}{g.selected_shipping.is_demo && !isPrivateCatalogPresentation ? ' · tarifa de ejemplo' : ''}</Text>
+                </> : null}
               </View>
             </View>)}
-            {g.selected_shipping ? <View style={{ gap: 3 }}><Text variant="label">{g.selected_shipping.name} · {Number(g.selected_shipping.cost_usd) === 0 ? 'Gratis' : formatUSD(g.selected_shipping.cost_usd)}</Text><Text variant="caption" color="textSecondary">{describeEtaDates(g.selected_shipping.eta_min_date, g.selected_shipping.eta_max_date)}{g.selected_shipping.kind !== 'home_delivery' ? ' · retiras tú' : ''}{g.selected_shipping.is_demo && !isPrivateCatalogPresentation ? ' · tarifa de ejemplo' : ''}</Text></View> : null}
-          </ReviewSection>)}
+          </View>
           <ReviewSection title="Dirección de entrega" testID="checkout-edit-address" disabled={busy} onEdit={() => goTo(0)}>
             {address ? <View testID="checkout-review-address" style={{ gap: 3 }}><Text variant="label">{address.recipient}</Text><Text variant="bodySmall" color="textSecondary">{address.line1}</Text><Text variant="bodySmall" color="textSecondary">{[address.municipality, address.city].filter(Boolean).join(', ')} · {address.phone}</Text></View> : null}
           </ReviewSection>
@@ -365,35 +382,28 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
             <Text variant="label">{s.plan?.name}</Text>
             <PaymentSchedule summary={s} />
           </ReviewSection>
-          {compactReview ? <View testID="checkout-summary-detail" style={{ gap: 8 }}>
+          <View testID="checkout-summary-detail" style={{ gap: 8 }}>
             <SummaryRow label="Productos" value={formatUSD(s.items_usd)} />
             <SummaryRow label="Envío" value={s.needs_shipping ? 'Por definir' : Number(s.shipping_usd) === 0 ? 'Gratis' : formatUSD(s.shipping_usd)} />
             {Number(s.financing_usd) > 0 ? <SummaryRow label="Recargo por cuotas" value={formatUSD(s.financing_usd)} /> : null}
             <Text variant="caption" color="textSecondary">Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.</Text>
-          </View> : null}
+          </View>
         </View> : null}
+        </Animated.View>
         {s.issues > 0 ? <Button title="Revisar carrito" variant="secondary" disabled={busy} onPress={() => { leaving.current = true; router.replace('/cart'); }} /> : null}
       </ScrollView>
       <BottomBar testID="checkout-bottom-bar" maxWidth={MAX_W} onHeightChange={setBarHeight} tone={step === 3 ? 'brand' : 'default'}>
         {blocking ? <Text variant="caption" color="danger" style={step === 3 ? { color: palette.coral[100] } : undefined}>{blocking}</Text> : null}
-        {preview.isFetching ? <Text variant="caption" color="textSecondary" style={step === 3 ? { color: palette.violet[100] } : undefined} accessibilityLiveRegion="polite">Actualizando opciones…</Text> : null}
         {step === 3 ? <>
-          {!compactReview ? <>
-            <SummaryRow label="Productos" value={formatUSD(s.items_usd)} inverse />
-            <SummaryRow label="Envío" value={s.needs_shipping ? 'Por definir' : Number(s.shipping_usd) === 0 ? 'Gratis' : formatUSD(s.shipping_usd)} inverse />
-            {Number(s.financing_usd) > 0 ? <SummaryRow label="Recargo por cuotas" value={formatUSD(s.financing_usd)} inverse /> : null}
-            <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.25)', marginVertical: 2 }} />
-          </> : null}
           <SummaryRow label="Total del pedido" value={formatUSD(s.total_usd)} strong inverse testID="checkout-total" />
           {s.schedule.length > 1 ? <SummaryRow label="Pagas hoy" value={formatUSD(firstPayment ?? s.total_usd)} inverse /> : null}
-          <Button testID="checkout-place" title="Confirmar pedido" variant="inverse" size="lg" full loading={place.isPending} disabled={!canPlace} onPress={confirm} />
-          {!compactReview ? <Text variant="caption" align="center" style={{ color: palette.violet[100] }}>Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.</Text> : null}
+          <Button testID="checkout-place" title="Confirmar pedido" variant="inverse" size="lg" full loading={place.isPending || preview.isFetching} disabled={!canPlace} onPress={confirm} />
         </> : <>
           {step >= 2 ? <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
             <Text variant="subtitle">{s.schedule.length > 1 ? 'Pagas hoy' : 'Total'}</Text>
             <ChangingText value={formatUSD(firstPayment ?? s.total_usd)}><Text variant="priceLarge" style={{ fontSize: 22 }} tabular>{formatUSD(firstPayment ?? s.total_usd)}</Text></ChangingText>
           </View> : null}
-          <Button testID="checkout-next" title={nextTitle} size="lg" full disabled={!canContinue} onPress={advance} />
+          <Button testID="checkout-next" title={nextTitle} size="lg" full loading={preview.isFetching} disabled={!canContinue} onPress={advance} />
           <Text variant="caption" color="textMuted" align="center">Todavía no se crea el pedido ni se realiza ningún cobro.</Text>
         </>}
       </BottomBar>

@@ -4,6 +4,16 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · interacción y compra compacta, 4 de noviembre
+
+Oliver pide aplicar cinco ideas de una referencia de X: favorito interactivo, carrito ordenado, productos reunidos en checkout, cupón integrado y progresión fluida. X devolvió403 por política de red: no se vio el video ni se afirma copiar sus detalles. Se trabaja con los cinco criterios escritos y capturas actuales de app/web. Product Design audit + directrices de Oliver; root único escritor, especialistas UX, contrato comercial y auditor independiente.
+
+Antes:18 PNG actuales, carrito3referencias/4unidades/2entregas; barra revisión≈210px y342px con texto1,6×, skeleton45,5px más alto que tarjeta real, conteo web confundía grupos con productos. Auditor reprodujo POST+DELETE concurrentes fuera de orden al pulsar favorito dos veces. Cupones **no tienen contrato**: orders.discount_usd=0 no autoriza canje ni cálculo cliente. Requieren bloque comercial/backend independiente; no añadir un campo ficticio.
+
+Integración en curso: favorito compartido tarjeta/ficha con pulso breve, guard por cuenta/producto, rollback acotado, error/reintento real; caché por usuario y consultas de favoritos propias. Carrito en superficie continua y pie de cada fila a ancho completo; cuadro único de productos en revisión, desglose en cuerpo y barra compacta siempre. Coherencia web, conteos separados y bloqueo de continuar durante cambios de cantidad. Loader cuadrado y transición de fase respetando movimiento reducido.
+
+Próximo exacto: compilar fuente checkpoint; export privado app en `.local/reference-20261104/app-after`, servir8091; nuevo build storefront3200. Revisiones independientes y pruebas de concurrencia/reintento/compra y medidas320/412/1440 claro/oscuro/texto ampliado. No se ha publicado esta intervención. Baseline inmutable8090 y capturas `.local/reference-20261104/ux/before`; backend local54321 activo sin reset. Mantener bloqueos anteriores de panel/hosting separados de este alcance.
+
 ## Calidad integral revisada · 31 de octubre
 
 Oliver solicita estructura, seguridad, compra web/app, notificaciones y administración. Root único integrador y seis especialistas de lectura/propuestas/pruebas. Checkpoint dependencias `287ff66` (Next/eslint16.4.1,undici7.30.1). Integrados checkout web con hoja continua, acción móvil accesible, ETA/edición por fase/calendario; pago con importe previo, copia y comprobante; inbox web y paginación/lectura visible móvil, scope comprador direcciones/pedidos y ciclo push. Panel recupera tiendas/error, PDF seguro, modales320, busy de revisión, formularios sensiblesPOST. Tasas separadas por par y snapshots futuros excluidos de presentación, sin fórmulas/SQL/remoto.

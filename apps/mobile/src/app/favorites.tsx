@@ -18,7 +18,7 @@ export default function FavoritesScreen() {
   const grid = useGridColumns();
   const { user } = useAuth();
   const fav = useFavorites();
-  const products = useQuery({ queryKey: ['favorite-products', [...fav.ids].sort().join(',')], queryFn: api.account.favoriteProducts, enabled: !!user });
+  const products = useQuery({ queryKey: ['favorite-products', user?.id], queryFn: () => api.account.favoriteProductsForBuyer(user!.id), enabled: !!user });
 
   if (!user) {
     return (
@@ -27,7 +27,7 @@ export default function FavoritesScreen() {
       </View>
     );
   }
-  const items = (products.data ?? []).filter((p) => fav.ids.has(p.id));
+  const items = (products.data ?? []).filter((p) => fav.loading || fav.ids.has(p.id) || fav.isPending(p.id));
   const header = items.length ? (
     <Text variant="bodySmall" color="textMuted" style={{ paddingHorizontal: 16, paddingTop: 14, paddingBottom: 14 }} testID="favorites-count">
       {items.length === 1 ? '1 producto guardado' : `${items.length} productos guardados`}
@@ -47,10 +47,12 @@ export default function FavoritesScreen() {
       ListHeaderComponent={<View><View style={{ paddingHorizontal: 16 }}><ExhibitionNotice /></View>{header}</View>}
       renderItem={({ item }) => <ProductCard product={item} width={grid.cardWidth} />}
       ListEmptyComponent={
-        products.isLoading ? (
+        products.isLoading || fav.loading ? (
           <View style={{ flexDirection: 'row', gap: grid.gap, paddingHorizontal: 16 }}>{[0, 1].map((i) => <ProductCardSkeleton key={i} width={grid.cardWidth} />)}</View>
         ) : waitingForNetwork(products) ? (
           <OfflineState />
+        ) : fav.error ? (
+          <ErrorState error={fav.error} onRetry={() => fav.retry()} />
         ) : products.isError ? (
           <ErrorState error={products.error} onRetry={() => products.refetch()} />
         ) : (

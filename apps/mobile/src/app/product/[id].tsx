@@ -6,6 +6,7 @@ import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWi
 import Animated, { FadeIn, FadeInDown, FadeOut, useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductRail } from '@/components/catalog/ProductGrid';
+import { ProductFavorite } from '@/components/catalog/ProductFavorite';
 import { ProductImage } from '@/components/catalog/ProductImage';
 import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { ExhibitionPhotoCredit } from '@/components/catalog/ExhibitionPhotoCredit';
@@ -31,7 +32,7 @@ import { productLink } from '@/lib/links';
 import { isPrivateCatalogPresentation, productExhibitionGallery, productExhibitionPhoto } from '@/lib/catalog-exhibition';
 import { commercialCatalogText, exhibitionSourceKey } from '@/lib/catalog-exhibition-policy';
 import { haptics } from '@/lib/haptics';
-import { useAddToCart, useFavorites, usePaymentMethods, useProduct } from '@/lib/hooks';
+import { useAddToCart, usePaymentMethods, useProduct } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
@@ -91,7 +92,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const { width } = useWindowDimensions();
   const { user } = useAuth();
   const qc = useQueryClient();
-  const fav = useFavorites();
   const methods = usePaymentMethods();
   const addToCart = useAddToCart();
   const purchasableVariants = p.variants.filter((v) => v.active && (v.stock == null || v.stock > 0));
@@ -115,7 +115,6 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const leadShort = describeLeadTimeShort(p.lead_min_days, p.lead_max_days, p.availability);
   const eta = p.lead_min_days != null && p.lead_max_days != null && availability.purchasable ? etaFromToday(p.lead_min_days, p.lead_max_days) : null;
   const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
-  const isFav = fav.isFavorite(p.id) || p.is_favorite;
   const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }], p.is_demo);
   const currentImage = images[page]?.path;
   const referencePhoto = productExhibitionPhoto(p.id, currentImage, variant?.id, p.is_demo);
@@ -339,15 +338,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
         right={
           <View style={{ flexDirection: 'row', gap: 10 }}>
             <IconButton testID="product-share" icon="share-2" label="Compartir" tone="glass" onPress={() => setSharing(true)} />
-            <IconButton
-              testID="product-favorite"
-              icon="heart"
-              label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-              tone="glass"
-              filled={isFav}
-              color={isFav ? t.colors.danger : t.colors.text}
-              onPress={() => (user ? fav.toggle({ productId: p.id, on: !isFav }) : router.push('/sign-in'))}
-            />
+            <ProductFavorite id={p.id} slug={p.slug} onPhoto testID="product-favorite" />
           </View>
         }
       />

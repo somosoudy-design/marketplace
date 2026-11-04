@@ -16,6 +16,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
     queryFn: () => browser().api.cart.summary(),
     enabled: !!session,
   });
+  const cartUnits = cart.data?.groups.reduce((n, g) => n + g.lines.reduce((count, line) => count + line.quantity, 0), 0) ?? 0;
   return (
     <>
       <a className="skip" href="#contenido">
@@ -44,10 +45,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
               <UserRound size={21} />
               <span>{session ? 'Mi cuenta' : 'Ingresar'}</span>
             </Link>
-            <Link href="/carrito" aria-label={`Carrito${cart.data ? `, ${cart.data.line_count} productos` : ''}`}>
+            <Link href="/carrito" aria-label={`Carrito${cart.data ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}>
               <ShoppingBag size={21} />
               <span>Carrito</span>
-              {!!cart.data?.line_count && <b className="count">{cart.data.line_count}</b>}
+              {!!cartUnits && <b className="count">{cartUnits}</b>}
             </Link>
           </nav>
         </div>

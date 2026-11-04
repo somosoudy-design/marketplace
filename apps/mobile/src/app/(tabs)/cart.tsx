@@ -49,6 +49,8 @@ function AccountCart({ header }: { header: React.ReactNode }) {
   const setQty = useSetCartQuantity();
   const [removing, setRemoving] = useState<CartLine | null>(null);
   const [barHeight, setBarHeight] = useState(180);
+  const [refreshing, setRefreshing] = useState(false);
+  const refresh = async () => { setRefreshing(true); try { await cart.refetch(); } finally { setRefreshing(false); } };
   const s = cart.data;
 
   if (waitingForNetwork(cart)) return <View>{header}<OfflineState /></View>;
@@ -74,16 +76,18 @@ function AccountCart({ header }: { header: React.ReactNode }) {
       <ScrollView
         testID="cart-scroll"
         contentContainerStyle={{ paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}
-        refreshControl={<RefreshControl refreshing={cart.isRefetching} onRefresh={() => cart.refetch()} tintColor={t.colors.brand} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} tintColor={t.colors.brand} />}
       >
         {header}
         <View style={{ paddingHorizontal: 16, gap: 16 }}>
           {setQty.isError && setQty.variables?.quantity !== 0 ? <Banner tone="danger" icon="circle-alert" body="No pudimos actualizar la cantidad. Intenta de nuevo." /> : null}
           <Text variant="bodySmall" color="textSecondary" testID="cart-deliveries">{lines.length} {lines.length === 1 ? 'producto' : 'productos'} · {units} {units === 1 ? 'unidad' : 'unidades'}{groups.length > 1 ? ` · ${groups.length} entregas` : ''}</Text>
           {s.issues > 0 ? <Banner tone="warning" icon="circle-alert" title="Revisa tu carrito" body="Algunos productos cambiaron. Ajusta las cantidades marcadas para continuar." /> : null}
+          <View testID="cart-products" style={{ backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, borderRadius: 12, overflow: 'hidden' }}>
           {groups.map((g, i) => (
             <GroupCard key={g.key} group={g} index={i} total={groups.length} disabled={setQty.isPending} onRemove={setRemoving} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
           ))}
+          </View>
         </View>
       </ScrollView>
       <CartFooter
@@ -102,12 +106,12 @@ function AccountCart({ header }: { header: React.ReactNode }) {
 function GroupCard({ group: g, index, total, onQty, onRemove, disabled }: { group: DeliveryGroup; index: number; total: number; onQty: (variantId: string, q: number) => void; onRemove: (line: CartLine) => void; disabled?: boolean }) {
   const t = useTheme();
   return (
-    <View testID={`cart-group-${g.key}`} style={{ backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border, borderRadius: t.radii.sm, overflow: 'hidden' }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: t.colors.surfaceSunken, borderBottomWidth: 1, borderColor: t.colors.border }}>
+    <View testID={`cart-group-${g.key}`} style={{ borderTopWidth: index > 0 ? 1 : 0, borderColor: t.colors.border }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 8, borderBottomWidth: 1, borderColor: t.colors.border }}>
         <Icon name={g.flow === 'import_order' ? 'plane' : g.flow === 'seller_shipping' ? 'store' : 'package'} size={18} color={t.colors.textSecondary} />
         <View style={{ flex: 1 }}>
           <Text variant="label">{g.store.name}</Text>
-          <Text variant="caption" color="textSecondary">{total > 1 ? `Entrega ${index + 1} de ${total} · ` : ''}{g.label}{g.ready_max_days > 1 ? ` · ${g.ready_min_days}–${g.ready_max_days} días` : ''}</Text>
+          <Text variant="caption" color="textSecondary">{total > 1 ? `Entrega ${index + 1} · ` : ''}{g.label}{g.ready_max_days > 1 ? ` · ${g.ready_min_days}–${g.ready_max_days} días` : ''}</Text>
         </View>
       </View>
       {g.lines.map((l, i) => (
@@ -124,27 +128,26 @@ function LineRow({ line: l, onQty, onRemove, disabled }: { line: CartLine; onQty
   const { width } = useWindowDimensions();
   const a = presentAvailability(l.availability);
   return (
-    <View style={{ flexDirection: 'row', gap: 12, padding: 12 }} testID={`cart-line-${l.variant_id}`}>
-      <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id } })}>
-        <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={0.85} style={{ width: width < 360 ? 72 : 88 }} radius={6} />
-      </ScalePressable>
-      <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
-        <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
-        {l.variant_title ? <Text variant="caption" color="textMuted">{l.variant_title}</Text> : null}
-        <View style={{ gap: 2 }}>
+    <View style={{ gap: 8, padding: 12 }} testID={`cart-line-${l.variant_id}`}>
+      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id } })}>
+          <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} fit="contain" style={{ width: width < 360 ? 64 : 72 }} radius={6} />
+        </ScalePressable>
+        <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
+          <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
+          {l.variant_title ? <Text variant="caption" color="textSecondary">{l.variant_title}</Text> : null}
           {l.quantity > 1 ? <Text variant="caption" color="textSecondary" tabular testID={`cart-unit-${l.variant_id}`}>{formatUSD(l.unit_price_usd)} por unidad</Text> : null}
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 6 }}>
-            <Text variant="caption" color="textSecondary">Importe</Text>
-            <Text variant="price" tabular testID={`cart-item-total-${l.variant_id}`}>{formatUSD(l.line_total_usd)}</Text>
-          </View>
+          {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
         </View>
-        {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
-        {l.issue ? <Text variant="caption" color="danger">{ISSUE_TEXT[l.issue] ?? 'Revisa este producto.'}</Text> : null}
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
+      </View>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
+        <ChangingText value={formatUSD(l.line_total_usd)}><Text variant="price" tabular testID={`cart-item-total-${l.variant_id}`}>{formatUSD(l.line_total_usd)}</Text></ChangingText>
+        <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
           <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} disabled={disabled} onChange={(q) => q === 0 ? onRemove() : onQty(l.variant_id, q)} />
           <IconButton testID={`cart-remove-${l.variant_id}`} icon="trash" label={`Quitar ${l.title}`} disabled={disabled} onPress={onRemove} />
         </View>
       </View>
+      {l.issue ? <Text variant="caption" color="danger">{ISSUE_TEXT[l.issue] ?? 'Revisa este producto.'}</Text> : null}
     </View>
   );
 }

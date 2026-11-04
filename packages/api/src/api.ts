@@ -264,6 +264,13 @@ export function createApi(client: KoraClient) {
     return run<Address[]>(query.order('is_default', { ascending: false }).order('created_at'));
   };
 
+  async function favoriteCards(favs: { product_id: string; created_at: string }[]): Promise<ProductCard[]> {
+    if (!favs.length) return [];
+    const cards = await run<ProductCard[]>(from('product_cards').select('*').in('id', favs.map((f) => f.product_id)));
+    const order = new Map(favs.map((f, i) => [f.product_id, i]));
+    return cards.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
+  }
+
   const account = {
     profile: (userId: string) => run<Profile | null>(from('profiles').select('*').eq('id', userId).maybeSingle()),
     updateProfile: (userId: string, patch: Partial<Pick<Profile, 'full_name' | 'phone' | 'preferences' | 'personalization_enabled' | 'marketing_opt_in'>>) =>
@@ -305,13 +312,10 @@ export function createApi(client: KoraClient) {
       run<City[]>(from('cities').select('*').eq('country_code', country).eq('region_code', regionCode).order('is_capital', { ascending: false }).order('name')),
     favorites: () =>
       run<{ product_id: string; created_at: string }[]>(from('favorites').select('product_id, created_at').order('created_at', { ascending: false })),
-    favoriteProducts: async () => {
-      const favs = await account.favorites();
-      if (!favs.length) return [] as ProductCard[];
-      const cards = await run<ProductCard[]>(from('product_cards').select('*').in('id', favs.map((f) => f.product_id)));
-      const order = new Map(favs.map((f, i) => [f.product_id, i]));
-      return cards.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
-    },
+    favoritesForBuyer: (userId: string) =>
+      run<{ product_id: string; created_at: string }[]>(from('favorites').select('product_id, created_at').eq('user_id', userId).order('created_at', { ascending: false })),
+    favoriteProducts: async () => favoriteCards(await account.favorites()),
+    favoriteProductsForBuyer: async (userId: string) => favoriteCards(await account.favoritesForBuyer(userId)),
     setFavorite: async (userId: string, productId: string, on: boolean) => {
       if (on) await run(from('favorites').upsert({ user_id: userId, product_id: productId }, { ignoreDuplicates: true }));
       else await run(from('favorites').delete().eq('user_id', userId).eq('product_id', productId));
