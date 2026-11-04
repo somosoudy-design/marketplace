@@ -1,0 +1,14 @@
+{
+  "source": "6139009",
+  "methods": [
+    "POST",
+    "DELETE"
+  ],
+  "pendingState": {
+    "disabled": null,
+    "pressed": null,
+    "label": "Quitar de favoritos"
+  },
+  "finalFavoriteCount": 1,
+  "meaning": "Dos toques contrarios durante la primera escritura dejan guardado tras reordenar POST/DELETE."
+}

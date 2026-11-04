@@ -29,14 +29,14 @@ test('a buyer saves a product and finds it from Account with its saved count', a
   await page.getByTestId('account-favorites').click();
   await expect(page).toHaveURL(/\/favorites$/);
   await expect(page.getByTestId('favorites-count')).toHaveText('1 producto guardado');
-  await expect(page.getByTestId('favorites-list').getByText('UGREEN cable USB-C a USB-C')).toBeVisible();
+  await expect(page.getByTestId('favorites-list').getByRole('link', { name: /^UGREEN cable USB-C a USB-C,/ })).toBeVisible();
 
   // and from Account, which says how many are saved
   await page.goto('/account');
   await expect(page.getByTestId('account-favorites')).toContainText('1 producto guardado');
   await page.getByTestId('account-favorites').click();
   await expect(page).toHaveURL(/\/favorites$/);
-  await expect(page.getByTestId('favorites-list').getByText('UGREEN cable USB-C a USB-C')).toBeVisible();
+  await expect(page.getByTestId('favorites-list').getByRole('link', { name: /^UGREEN cable USB-C a USB-C,/ })).toBeVisible();
 });
 
 test('a visitor opening Favoritos is invited to sign in', async ({ page }) => {

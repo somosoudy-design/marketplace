@@ -1,0 +1,42 @@
+{
+  "after": {
+    "bar": {
+      "x": 0,
+      "y": 561,
+      "width": 320,
+      "height": 179,
+      "top": 561,
+      "right": 320,
+      "bottom": 740,
+      "left": 0
+    },
+    "bottom": {
+      "containsProducts": true,
+      "containsTotal": false,
+      "containsPlan": true,
+      "lastText": [
+        {
+          "text": "Productos",
+          "bottom": 408.859375
+        },
+        {
+          "text": "$101,00",
+          "bottom": 405.25
+        },
+        {
+          "text": "Envío",
+          "bottom": 452.0625
+        },
+        {
+          "text": "$5,30",
+          "bottom": 448.453125
+        },
+        {
+          "text": "Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.",
+          "bottom": 536.84375
+        }
+      ]
+    },
+    "orders": 0
+  }
+}

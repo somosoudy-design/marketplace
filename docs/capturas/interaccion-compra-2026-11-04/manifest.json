@@ -1,0 +1,378 @@
+{
+  "source_before": "6139009",
+  "source_app_after": "55e6aaa",
+  "source_web_dialog_after": "3f05e84",
+  "environment": "Chromium local; export React Native Web y build Next. No Android físico ni emulador.",
+  "files": [
+    {
+      "path": "REVISION_INDEPENDIENTE.md",
+      "sha256": "222d12fd2ef0eae18f773ffcc1674f957af96be5d36d117dfbf7e5f091aa92bb",
+      "bytes": 9197
+    },
+    {
+      "path": "REVISION_UX.md",
+      "sha256": "536ab5a29104d0f957b51aa6d48d0cd9b6bd6a0640662db1ea94810c5810dd06",
+      "bytes": 7930
+    },
+    {
+      "path": "after/01-cart-320-dark.png",
+      "sha256": "5acbb95c52dc22687a86c5643840c18c45ce7831fc080794be6342ad6d877b0b",
+      "bytes": 64914
+    },
+    {
+      "path": "after/01-cart-320-light.png",
+      "sha256": "6354f7ea8466d9c15dc54e61db58363df443df192497e3b716d946eafe19fed0",
+      "bytes": 62948
+    },
+    {
+      "path": "after/01-cart-412-dark.png",
+      "sha256": "867295b0beb967b829180ef1513d505501968aa7fa0a713934c49e08e97a1e0a",
+      "bytes": 66912
+    },
+    {
+      "path": "after/01-cart-412-light.png",
+      "sha256": "c6627eca8a32df11eb8074a726e9392f94589bb53797df46ec88bc15a726c706",
+      "bytes": 64890
+    },
+    {
+      "path": "after/02-review-320-dark.png",
+      "sha256": "fd20720b07992879927c7c2c93a24100ce5874107360412fc8dbbc380adfca8d",
+      "bytes": 65700
+    },
+    {
+      "path": "after/02-review-320-light.png",
+      "sha256": "f58bde6eafc0504a38cbfbfa830c5f28a420eecdc87a24f334f571ef2ad7bf0c",
+      "bytes": 64564
+    },
+    {
+      "path": "after/02-review-412-dark.png",
+      "sha256": "e14c1f9365170a146ddf2e9ed7320b0e1981a10c24bee69b2ac9492ffe64278b",
+      "bytes": 72309
+    },
+    {
+      "path": "after/02-review-412-light.png",
+      "sha256": "77dd7c80af39a99e1d63fb772e355b78650cd2665057874be4ef1bbb43ea1755",
+      "bytes": 71555
+    },
+    {
+      "path": "after/03-web-cart-1440-dark.png",
+      "sha256": "bc040a7ca3abcf8186fa2e205fbbddb1c6bb274ef29a1f3b06f34234977b8ce4",
+      "bytes": 93622
+    },
+    {
+      "path": "after/03-web-cart-1440-light.png",
+      "sha256": "7f8c1d089fff50e1d0aca231b4f901fba080ec1195f43b1265cc4daf09688efb",
+      "bytes": 92335
+    },
+    {
+      "path": "after/03-web-cart-320-dark.png",
+      "sha256": "cede00109731b685e3c92cbe95577256ae32a2d8fcd828153a317299b863f405",
+      "bytes": 73934
+    },
+    {
+      "path": "after/03-web-cart-320-light.png",
+      "sha256": "7701da995f4d90c1cd463d8533931a72b3f36ec1bf8a02d46ac492eee2235664",
+      "bytes": 72130
+    },
+    {
+      "path": "after/04-web-review-1440-dark.png",
+      "sha256": "5f80e37808e3ed61cb153cabe45fa65aa3c57eff0a86daf3803fbb959423d3bd",
+      "bytes": 132908
+    },
+    {
+      "path": "after/04-web-review-1440-light.png",
+      "sha256": "50b2d72e5ce32c98df5634fee1073874af843df73d841fa88d90308b95e2bf3d",
+      "bytes": 130987
+    },
+    {
+      "path": "after/04-web-review-320-dark.png",
+      "sha256": "ca90bb2ab8145906cc92866a949f48491ca745b6c12e582889ae8b23239bd141",
+      "bytes": 105508
+    },
+    {
+      "path": "after/04-web-review-320-light.png",
+      "sha256": "c3ec652afa0bb58b42d6d84503e002319175ae4c9368a29fa6ca870cefe9ccd4",
+      "bytes": 103551
+    },
+    {
+      "path": "after/05-app-cart-text160-320-dark.png",
+      "sha256": "e4e508ae4c08eb948770d6e04968987dcad331fc5cc4dcc7c994fb14ec5eb83c",
+      "bytes": 55703
+    },
+    {
+      "path": "after/06-app-review-text160-320-dark.png",
+      "sha256": "2908bdfb4027412015dbf1823092d3af865665718120d6a5ea99accc90dd5558",
+      "bytes": 55375
+    },
+    {
+      "path": "after/metrics-dark.json",
+      "sha256": "1a39031b36e135fbd8b2a071f715517f2284b7d0f36a58900d94c610c692eba0",
+      "bytes": 1474
+    },
+    {
+      "path": "after/metrics-light.json",
+      "sha256": "1a39031b36e135fbd8b2a071f715517f2284b7d0f36a58900d94c610c692eba0",
+      "bytes": 1474
+    },
+    {
+      "path": "after/metrics-text160.json",
+      "sha256": "7fec192cf8d85917b2391e975afee1dd350f646a426f681d4d3a0ceec6248473",
+      "bytes": 181
+    },
+    {
+      "path": "after/metrics-web-dark.json",
+      "sha256": "7ff4d151c0ee1d6b0e47f4bef411941182aab984c8cbda03acf27e837f9adab3",
+      "bytes": 1590
+    },
+    {
+      "path": "after/metrics-web-light.json",
+      "sha256": "7ff4d151c0ee1d6b0e47f4bef411941182aab984c8cbda03acf27e837f9adab3",
+      "bytes": 1590
+    },
+    {
+      "path": "bar-comparison.json",
+      "sha256": "ffcd3bb03d8dc6fd7c35bfd7d6694074569b19bea893044dcaeb717248c63a67",
+      "bytes": 1566
+    },
+    {
+      "path": "before/01-cart-320-dark.png",
+      "sha256": "f3b97b05fa41a96e2ba6d0746437d705b34196437a8ea4ddb27ee27a8af2bee1",
+      "bytes": 71104
+    },
+    {
+      "path": "before/01-cart-320-light.png",
+      "sha256": "99ec46df777b5a1de043040cacbe25d85a6153d3dbcf34109c61b025468eea55",
+      "bytes": 69474
+    },
+    {
+      "path": "before/01-cart-412-dark.png",
+      "sha256": "a70a64a269c29ea69d76699d0c8dd7554a3e3f434d278a100c313ba3c0952ed1",
+      "bytes": 78054
+    },
+    {
+      "path": "before/01-cart-412-light.png",
+      "sha256": "92555c295844dced3ff856f86ca289837e2106a4bcb9374a11e0412ff0e802b9",
+      "bytes": 76389
+    },
+    {
+      "path": "before/02-review-320-dark.png",
+      "sha256": "a30f72bb7140adcd807ca110c17d7ad2861c21540c1ab0d05a126aa829d1d6af",
+      "bytes": 69669
+    },
+    {
+      "path": "before/02-review-320-light.png",
+      "sha256": "7cd0562c1f857e17058ca526bc076e5ab3d40b3285590c5c932bb69899cd4d85",
+      "bytes": 69644
+    },
+    {
+      "path": "before/02-review-412-dark.png",
+      "sha256": "fb721cedb47b34a30df936f67f51b1a7a61bd308e70a76c83b99e1201daedbf5",
+      "bytes": 75879
+    },
+    {
+      "path": "before/02-review-412-light.png",
+      "sha256": "3dc7ff830a9493aed6dd8de8b99dba69a0f125e7dd040729be3e36373a77c92c",
+      "bytes": 76139
+    },
+    {
+      "path": "before/03-web-cart-1440-dark.png",
+      "sha256": "d1ceb4361f92c0a3876341cf2d807240c2c8665bee7704ca55ca63354c1e5cbb",
+      "bytes": 98325
+    },
+    {
+      "path": "before/03-web-cart-1440-light.png",
+      "sha256": "91e39be9a4f2f199ca7a01f0b429b00a7c969cb9084e33e3b78c9d7fe089bd61",
+      "bytes": 97491
+    },
+    {
+      "path": "before/03-web-cart-320-dark.png",
+      "sha256": "0017022e1a60a715d1334aa800c103591ed88c04567f0921509c5eb6e82bdd81",
+      "bytes": 72460
+    },
+    {
+      "path": "before/03-web-cart-320-light.png",
+      "sha256": "08dfb49ebcfef0c0f7e2c36775aa2bc321f1428e8cf96d854259ff8bccc1eb03",
+      "bytes": 71231
+    },
+    {
+      "path": "before/04-web-review-1440-dark.png",
+      "sha256": "86cfe880eb16b23abad1a54f11b55f6791dffa938de5af4e90f5a044e8b9cf35",
+      "bytes": 129893
+    },
+    {
+      "path": "before/04-web-review-1440-light.png",
+      "sha256": "7d4e93f6c553e3d67ecc761cb7abaadf07cff0b6c2be4d99971a15d4acefc8f4",
+      "bytes": 127928
+    },
+    {
+      "path": "before/04-web-review-320-dark.png",
+      "sha256": "af5d7f7a070889140a21ca2eef5dcda63daea4247942fe821eccfce7c3c73c55",
+      "bytes": 102518
+    },
+    {
+      "path": "before/04-web-review-320-light.png",
+      "sha256": "c014f4756a54937944b6b3010a40c942b3d2200ada4cde2e651f5c2c96f29fa4",
+      "bytes": 101682
+    },
+    {
+      "path": "before/05-app-cart-text160-320-dark.png",
+      "sha256": "cdbfb561bd1e04817d2994f76d04bbc075d5a599e6db499699f90972dce6138d",
+      "bytes": 58764
+    },
+    {
+      "path": "before/06-app-review-text160-320-dark.png",
+      "sha256": "f2b0ee72695a728a26880deb58c2ed44d28415130f221c175ebdcd85fa209727",
+      "bytes": 56098
+    },
+    {
+      "path": "before/metrics-dark.json",
+      "sha256": "fe4aa3d8b36345eebbd82a714d7ed72fcbc791e863fa721bdcc443f2ffa4b949",
+      "bytes": 1474
+    },
+    {
+      "path": "before/metrics-light.json",
+      "sha256": "fe4aa3d8b36345eebbd82a714d7ed72fcbc791e863fa721bdcc443f2ffa4b949",
+      "bytes": 1474
+    },
+    {
+      "path": "before/metrics-text160.json",
+      "sha256": "99e98f5f6fb0d1e665886878fb38bd6e507f30544268a83c4b12cf4f4a7c2571",
+      "bytes": 193
+    },
+    {
+      "path": "before/metrics-web-dark.json",
+      "sha256": "a70efc74192b28e37d7cceffb7b164a17d8904bb6c99106a3339363812772f56",
+      "bytes": 2237
+    },
+    {
+      "path": "before/metrics-web-light.json",
+      "sha256": "a70efc74192b28e37d7cceffb7b164a17d8904bb6c99106a3339363812772f56",
+      "bytes": 2237
+    },
+    {
+      "path": "complementary/after-07-review-bottom-320-dark.png",
+      "sha256": "7ad25a3c83b6bd167ca05c44226a31193d684a8cbfe5e2a0a48c9ada86664857",
+      "bytes": 65027
+    },
+    {
+      "path": "complementary/after-08-review-bottom-text160-320-dark.png",
+      "sha256": "c0229adfed37f3663eba0da61029a3a7c63470b3c87c983911874f81d6c8bb96",
+      "bytes": 57086
+    },
+    {
+      "path": "complementary/after-09-web-review-viewport-320-dark.png",
+      "sha256": "a9a1f87e337f1fb69522a98fdc7c8fb94ff6346046cd4dedf9a4a48ca552066f",
+      "bytes": 73932
+    },
+    {
+      "path": "complementary/before-07-review-bottom-320-dark.png",
+      "sha256": "69ec037822787790109e2a39dd5024da57e4a56573e64d89bf9bafa23e0d7a28",
+      "bytes": 67384
+    },
+    {
+      "path": "inspeccion-auditor.json",
+      "sha256": "3781e3b8b33229097f963c6c5b28b0aeeff81ad5b79628959cd150677f42d84e",
+      "bytes": 4398
+    },
+    {
+      "path": "interacciones/after-catalog-loaded-320.png",
+      "sha256": "4a933745323d3eba3cf3a4a52f9e1297e4f8508ec3d34f22a54d675bf898ee76",
+      "bytes": 84326
+    },
+    {
+      "path": "interacciones/after-catalog-loaded-412.png",
+      "sha256": "417052b5ffafa60b9054a62eb07c25604c25a67445eeb5592c1704b3a9edd979",
+      "bytes": 94547
+    },
+    {
+      "path": "interacciones/after-catalog-loading-320.png",
+      "sha256": "9b289ea2f482275ff6591d2d9fc89bcbc2352c1219952cc75d9d6327015bed60",
+      "bytes": 20263
+    },
+    {
+      "path": "interacciones/after-catalog-loading-412.png",
+      "sha256": "6c901db666c7e1025dbfef424080d16db2ac5781fb0c84a91c0084a02f1f91f0",
+      "bytes": 21458
+    },
+    {
+      "path": "interacciones/after-favorite-error-dark.png",
+      "sha256": "48e7e0ced3d9d5b8265c95d0cd8ba54bd3637cb21494ab1abc203f4e6216d6c7",
+      "bytes": 59617
+    },
+    {
+      "path": "interacciones/after-favorite-guard.png",
+      "sha256": "9d34a264fe66a4333c7bda6d2711816a26444504796c0dd0e3a67be131bf8919",
+      "bytes": 80228
+    },
+    {
+      "path": "interacciones/after-favorite-parallel.png",
+      "sha256": "2c8db51bc93dcdb0e2007f44086dfc70662841a7c78ae0b537ecbbb50dd79729",
+      "bytes": 67421
+    },
+    {
+      "path": "interacciones/after-favorite-session.png",
+      "sha256": "b59e01966bf80a7c410699277a0c0380d8125ac3e8003d73153e70bd9580d692",
+      "bytes": 74963
+    },
+    {
+      "path": "interacciones/after-favorites-remove-error.png",
+      "sha256": "90bbffad76f36357a880bfbe79636147145e90204e185b580f6bf1a169d214b4",
+      "bytes": 32441
+    },
+    {
+      "path": "interacciones/after-loading-geometry-320.json",
+      "sha256": "220206b25c231d7c692409fa43810e2aca1eb7e4fee27f48b3c63bc8ebc94eed",
+      "bytes": 213
+    },
+    {
+      "path": "interacciones/after-loading-geometry-412.json",
+      "sha256": "874820c978ba57b82a432dce6fae86f9637486f77c382eddb9fb4bfedc883508",
+      "bytes": 213
+    },
+    {
+      "path": "interacciones/after-web-favorite-remove-error.png",
+      "sha256": "bfe36e6302b44b7d294e9e23caac094eed3fb9f1fd9f3d17ea5321641a5b9842",
+      "bytes": 44202
+    },
+    {
+      "path": "interacciones/after-web-favorite-retry-dark.png",
+      "sha256": "89c0d0c7174303b809841ccc49033670e82569325f935897b07280111fdca6de",
+      "bytes": 61546
+    },
+    {
+      "path": "interacciones/before-catalog-loaded.png",
+      "sha256": "74aa500ab8aa04a34cf848fba8452329b0e4014855a3426abed5c276d1f828f9",
+      "bytes": 94469
+    },
+    {
+      "path": "interacciones/before-catalog-loading.png",
+      "sha256": "3db093d0b9e08f3df15af82d667d92a490d1bfc80e21f41b6363c06f2edcdb7d",
+      "bytes": 20976
+    },
+    {
+      "path": "interacciones/before-favorite-race.json",
+      "sha256": "624686169e08483d33e2f8606e96eeaa4a4aec0efffbee63d4a7db1d63f2b221",
+      "bytes": 310
+    },
+    {
+      "path": "interacciones/before-favorite-race.png",
+      "sha256": "482676443a8cb61234087ac9dcd52743ab58adc70e27474b062ba3c35ddc0a46",
+      "bytes": 80710
+    },
+    {
+      "path": "interacciones/before-loading-geometry.json",
+      "sha256": "827264459a21828d54a92654c8b5e48459955ab154c41e374064b9ad4df146fb",
+      "bytes": 221
+    },
+    {
+      "path": "text160-bottom.json",
+      "sha256": "94676774b3bbe34742f0eb0cdcc50b081788460bf22559f825292740ce43a3c3",
+      "bytes": 815
+    },
+    {
+      "path": "validacion.json",
+      "sha256": "5af0f8e6d2e43f08bdc0e7a2de4a52feacc8658c0db536fe2278c2df8f2d3ae6",
+      "bytes": 802
+    }
+  ]
+}

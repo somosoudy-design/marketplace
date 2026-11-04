@@ -1,5 +1,13 @@
 # Historial de agentes
 
+### 2026-11-04 · favoritos y compra compacta revisados
+
+Oliver pidió cinco patrones de una referencia X. No se pudo ver el video (CONNECT403); Product Design audit y directrices de Oliver se aplicaron a los criterios escritos y capturas reales. Root único escritor; UX captura/propone, ecommerce confirma contratos y auditor reproduce/revisa independientemente. Checkpoints `55e6aaa`/`3f05e84`.
+
+Implementados favorito unificado con pulso/guard/rollback por producto/retry y consultas por comprador; carrito continuo; revisión con un cuadro de productos conservando entregas/ETA/edición; barra compacta y transición respetando movimiento reducido; skeleton sin salto. Cupón no soportado por API/RPC: pendiente CUP-01, sin fingir aplicación. Sin reglas financieras, SQL, servicios remotos, native config ni iOS modificados.
+
+44 casos app y42 web distintos aprobados, incluyendo10 independientes;66 unitarias, tipos/lint/build web/export Android. Auditor APROBADO;36 comparativas originales más evidencia de interacción. Se corrigieron fixtures históricas (stock agotado, tasas demo vencidas), espera de transición y selector de favorito sin cambiar el producto para pasar pruebas. [Informe y límites](INTERACCION_COMPRA_2026-11-04.md). Siguiente inmediato: OTA Android preview autorizada, guard APK5 y registro de resultado/observación; no hay recepción física comprobada.
+
 ### 2026-10-31 · publicación Android y bloqueo preciso del panel
 
 Fuente final `45dca29`: recompilaciones,39 UI web y4 app exportada repetidos y aprobados; Sharp instalado conserva seis resultados y32 pruebas de herramientas de publicación/observación pasan. EAS41205629069 publicó solicitud `72b0b9f` en Android preview con runtime exacto APK5; ID `01a19226-40aa-7ce4-bd4c-0bdd0931385f`, grupo `6494951a-d30b-4d74-8edb-eea02adc7721`,13:29UTC. Observación41205938369 confirma última compatible, fuente limpia y sin rollback. No se comprobó recepción Samsung/emulador. No hay nueva publicación pendiente de Android.
