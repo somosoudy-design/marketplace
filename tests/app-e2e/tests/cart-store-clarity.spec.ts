@@ -2,6 +2,8 @@ import { expect, test, type Page } from '@playwright/test';
 import pg from 'pg';
 import { formatUSD } from '../../../packages/core/src/money';
 import { asOn, databaseUrl, newBuyer } from './support/db';
+import { testCartProduct, cleanupCartFixtures } from '../storefront/fixtures';
+test.afterEach(cleanupCartFixtures);
 
 // Proposed location: tests/app-e2e/tests/cart-store-clarity.spec.ts.
 // Own additive local buyers only; no seed stock changes, checkout or order creation.
@@ -12,7 +14,8 @@ async function ownCart(page: Page, multi: boolean) {
   const lines: { variant_id: string; price_usd: number; quantity: number }[] = [];
   try {
     for (const [i, slug] of ['ugreen-cable-usb-c-100w', multi ? 'lampara-mesa-lino' : 'ugreen-nexode-30w'].entries()) {
-      const { rows } = await c.query('select v.id as variant_id, v.price_usd from public.product_variants v join public.products p on p.id=v.product_id where p.slug=$1 and v.active order by v.sort, v.id limit 1', [slug]);
+      const fixture = await testCartProduct('app-cart', { buyer, sourceSlug: slug, stock: 5 });
+      const { rows } = await c.query('select id as variant_id, price_usd from public.product_variants where id=$1', [fixture.variantId]);
       const quantity = i === 0 ? 2 : 1;
       const line = rows[0];
       await asOn(c)(buyer.id, 'select public.cart_set_quantity($1, $2)', [line.variant_id, quantity]);

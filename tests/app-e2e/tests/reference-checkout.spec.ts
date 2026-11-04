@@ -6,6 +6,8 @@ import type { CheckoutSummary } from '../../../packages/api/src/types';
 import { formatUSD } from '../../../packages/core/src/money';
 import { asOn, databaseUrl, newBuyer } from './support/db';
 import { checkoutToPlan, checkoutToReview } from './support/checkout';
+import { testCartProduct, cleanupCartFixtures } from '../storefront/fixtures';
+test.afterEach(cleanupCartFixtures);
 
 // Real local backend only. The optional captures document both visual states without real purchases.
 const shots = process.env.DESIGN_SHOTS;
@@ -26,7 +28,8 @@ for (const theme of ['light', 'dark'] as const) {
     await page.getByTestId('sign-in-submit').click();
     await expect(page).not.toHaveURL(/sign-in/);
     for (const slug of ['ugreen-cable-usb-c-100w', 'lampara-mesa-lino']) {
-      await page.goto(`/p/${slug}`);
+      const fixture = await testCartProduct('app-review', { buyer, sourceSlug: slug });
+      await page.goto(`/p/${fixture.slug}`);
       await page.getByTestId('product-cta').click();
       await expect(page).toHaveURL(/\/cart$/);
     }
@@ -91,7 +94,8 @@ for (const theme of ['light', 'dark'] as const) test(`el resumen con cuotas deja
   await page.getByTestId('sign-in-password').fill(buyer.password);
   await page.getByTestId('sign-in-submit').click();
   await expect(page).not.toHaveURL(/sign-in/);
-  await page.goto('/p/ugreen-nexode-100w');
+  const fixture = await testCartProduct('app-review-large', { buyer, sourceSlug: 'ugreen-nexode-100w' });
+  await page.goto(`/p/${fixture.slug}`);
   await page.getByTestId('product-cta').click();
   await page.getByTestId('cart-continue').click();
   await checkoutToPlan(page);

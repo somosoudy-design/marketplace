@@ -2,6 +2,8 @@ import { expect, test, type Page } from '@playwright/test';
 import pg from 'pg';
 import { asOn, databaseUrl, newBuyer } from './support/db';
 import { checkoutToReview } from './support/checkout';
+import { testCartProduct, cleanupCartFixtures } from '../storefront/fixtures';
+test.afterEach(cleanupCartFixtures);
 
 const buyers: Awaited<ReturnType<typeof newBuyer>>[] = [];
 test.afterEach(async () => {
@@ -22,7 +24,8 @@ async function review(page: Page) {
   await page.getByTestId('sign-in-password').fill(buyer.password);
   await page.getByTestId('sign-in-submit').click();
   await expect(page).not.toHaveURL(/sign-in/);
-  await page.goto('/p/ugreen-cable-usb-c-100w');
+  const fixture = await testCartProduct('app-recovery', { buyer });
+  await page.goto(`/p/${fixture.slug}`);
   await page.getByTestId('product-cta').click();
   await page.getByTestId('cart-continue').click();
   await checkoutToReview(page);

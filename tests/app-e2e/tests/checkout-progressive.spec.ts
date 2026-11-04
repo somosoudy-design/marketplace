@@ -6,6 +6,8 @@ import type { CheckoutSummary } from '../../../packages/api/src/types';
 import { formatUSD } from '../../../packages/core/src/money';
 import { asOn, databaseUrl, newBuyer } from './support/db';
 import { checkoutToPlan, checkoutToReview } from './support/checkout';
+import { testCartProduct, cleanupCartFixtures } from '../storefront/fixtures';
+test.afterEach(cleanupCartFixtures);
 
 const root = process.env.CHECKOUT_EVIDENCE_DIR
   ? resolve(process.env.CHECKOUT_EVIDENCE_DIR)
@@ -19,7 +21,8 @@ async function filledCart(page: Page, slugs = ['ugreen-cable-usb-c-100w', 'lampa
   await page.getByTestId('sign-in-submit').click();
   await expect(page).not.toHaveURL(/sign-in/);
   for (const slug of slugs) {
-    await page.goto(`/p/${slug}`);
+    const fixture = await testCartProduct('app-progressive', { buyer, sourceSlug: slug });
+    await page.goto(`/p/${fixture.slug}`);
     await page.getByTestId('product-cta').click();
     await expect(page).toHaveURL(/\/cart$/);
   }

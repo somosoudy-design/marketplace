@@ -104,12 +104,14 @@ type BuyerFixture = Awaited<ReturnType<typeof newBuyer>>;
 /** Own copy of a safe seed product for a buyer's UI test. Root can move to storefront/fixtures.ts. */
 export async function testCartProduct(
   label: string,
-  options: { buyer?: BuyerFixture; sourceSlug?: string; addToCart?: boolean } = {},
+  options: { buyer?: BuyerFixture; sourceSlug?: string; addToCart?: boolean; stock?: number } = {},
 ) {
   const connectionString = databaseUrl();
   if (!['127.0.0.1', 'localhost', '[::1]'].includes(new URL(connectionString).hostname))
     throw new Error('Cart fixtures require an exact loopback database host.');
   const buyer = options.buyer ?? (await newBuyer(`${label}-${randomUUID().slice(0, 8)}`));
+  const stock = options.stock ?? 2;
+  if (!Number.isInteger(stock) || stock < 1 || stock > 10) throw new Error('Fixture stock must be 1–10 local units.');
   const db = new pg.Client({ connectionString });
   await db.connect();
   const productId = randomUUID(),
@@ -136,14 +138,14 @@ export async function testCartProduct(
           (id, store_id, category_id, brand_id, slug, title, subtitle, description, highlights, option_names,
            origin, availability, moderation_status, weight_kg, max_per_order, is_demo, published_at)
          select $1, store_id, category_id, brand_id, $2, title, subtitle, description, highlights, option_names,
-                origin, 'available', 'published', weight_kg, least(max_per_order, 2), true, published_at
+                origin, 'available', 'published', weight_kg, least(max_per_order, $4), true, published_at
            from public.products where id = $3`,
-        [productId, slug, source.id],
+        [productId, slug, source.id, stock],
       );
       await db.query(
         `insert into public.product_variants (id, product_id, sku, title, options, price_usd, stock, active, sort)
-         select $1, $2, $3, title, options, price_usd, 2, true, sort from public.product_variants where id = $4`,
-        [variantId, productId, `SFTEST-${variantId}`, source.variant_id],
+         select $1, $2, $3, title, options, price_usd, $5, true, sort from public.product_variants where id = $4`,
+        [variantId, productId, `SFTEST-${variantId}`, source.variant_id, stock],
       );
       await db.query(
         `insert into public.product_images (product_id, path, alt, sort, width, height, is_demo_asset)

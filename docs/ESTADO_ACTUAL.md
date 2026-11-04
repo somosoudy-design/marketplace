@@ -12,7 +12,9 @@ Antes:18 PNG actuales, carrito3referencias/4unidades/2entregas; barra revisión�
 
 Integración en curso: favorito compartido tarjeta/ficha con pulso breve, guard por cuenta/producto, rollback acotado, error/reintento real; caché por usuario y consultas de favoritos propias. Carrito en superficie continua y pie de cada fila a ancho completo; cuadro único de productos en revisión, desglose en cuerpo y barra compacta siempre. Coherencia web, conteos separados y bloqueo de continuar durante cambios de cantidad. Loader cuadrado y transición de fase respetando movimiento reducido.
 
-Próximo exacto: compilar fuente checkpoint; export privado app en `.local/reference-20261104/app-after`, servir8091; nuevo build storefront3200. Revisiones independientes y pruebas de concurrencia/reintento/compra y medidas320/412/1440 claro/oscuro/texto ampliado. No se ha publicado esta intervención. Baseline inmutable8090 y capturas `.local/reference-20261104/ux/before`; backend local54321 activo sin reset. Mantener bloqueos anteriores de panel/hosting separados de este alcance.
+Checkpoint validación: ocho pruebas independientes de favoritos/carga aprobadas;36PNG antes/después inspeccionados por UX,18porfase. Revisión mueve primerproducto290→248px; piecontexto1,6 pasa342→179px. No bloqueantes visuales detectados. Regresión web31/39 inicialmente: siete casos bloqueados correctamente por tasas demo locales vencidas yuno porselector que incluíaalertaoculta delnuevo diálogo; se corrigió montajecondicional yse renovaron lecturas demo únicamenteenbackendlocal mediante helperexistente, sin snapshots ni políticas. Regresiónnativa histórica dependía deSKUlocal agotado: se reutilizan copias propias delhelperdefixtures sin reponer stockcompartido. Fuenteapp55e6aaa; se conserva capturaoriginal8090.
+
+Próximo exacto: terminar36casosapp contra8091, rebuildstorefront3200 con correccióndialog y pruebasweb; integrar10pruebasindependientes ydocumentar. Validar exportHermesAndroid yguardruntimeAPK5 antesde OTAautorizada. No se ha publicado esta intervención. No reabrir panel/hosting en este alcance.
 
 ## Calidad integral revisada · 31 de octubre
 
