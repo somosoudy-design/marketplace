@@ -365,6 +365,11 @@
       "bytes": 221
     },
     {
+      "path": "publicacion.json",
+      "sha256": "8f93b27c1d77e47a283f8d062080947e85183ae8e3ca741da9c36b2f90cab8be",
+      "bytes": 826
+    },
+    {
       "path": "text160-bottom.json",
       "sha256": "94676774b3bbe34742f0eb0cdcc50b081788460bf22559f825292740ce43a3c3",
       "bytes": 815

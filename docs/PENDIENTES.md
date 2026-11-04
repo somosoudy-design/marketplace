@@ -2,7 +2,7 @@
 
 ## Interacción y compra compacta ·4nov2026
 
-- Implementados y aprobados: favoritos confiables/interactivos, carrito compacto, cuadro único de productos en revisión y carga sin saltos. 44 casos app,42 web,66 unitarias; [informe y evidencia](INTERACCION_COMPRA_2026-11-04.md). Siguiente: cerrar OTA autorizada preview con guard APK5, registrar ID y observación; recepción física sigue pendiente. No repetir este rediseño ni afirmar publicación web pública.
+- Implementados y aprobados: favoritos confiables/interactivos, carrito compacto, cuadro único de productos en revisión y carga sin saltos. 44 casos app,42 web,66 unitarias; [informe y evidencia](INTERACCION_COMPRA_2026-11-04.md). OTA `01a1a7e1-45e8-7ef4-b236-499cb75abb3b` publicada por CI41889930469, fuente4df6e21, preview compatible APK5. Observación41890346761 confirma última compatible/limpia/sin rollback; recepción física sigue pendiente. No republicar ni afirmar hosting público del storefront.
 - **CUP-01:** cupón comercial solicitado por Oliver. No hay API/RPC/DTO de canje; `orders.discount_usd` por sí solo no constituye soporte. Antes del bloque de backend definir quién financia el descuento, tiendas/productos elegibles, importe/porcentaje/tope, mínimo, vigencia/usos y efecto sobre cuotas/reembolsos. Preparar y probar localmente con aislamiento/concurrencia antes de cualquier activación remota; no simular aplicación ni tocar importes en cliente.
 - La referencia X `https://x.com/desdivj/status/2117922523082076329` no fue accesible por la política de red. Las decisiones actuales se basan en los cinco criterios escritos y la app real; no se afirma análisis del video.
 

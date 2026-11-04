@@ -9,6 +9,12 @@
   "group": "53a055c8-cb2e-45e9-8fc0-15ff98101a67",
   "runtimeVersion": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
   "nativeBuildGenerated": false,
-  "channelReceipt": "pending",
-  "deviceReceipt": "not observed"
+  "channelReceipt": "confirmed",
+  "deviceReceipt": "not observed; no emulator or connected Samsung",
+  "createdAt": "2026-11-04T18:45:21.000Z",
+  "receiptRun": 41890346761,
+  "receiptUrl": "https://github.com/somosoudy-design/marketplace/actions/runs/41890346761",
+  "latestCompatibleInBranch": true,
+  "isGitWorkingTreeDirty": false,
+  "isRollBackToEmbedded": false
 }
