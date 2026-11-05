@@ -7,6 +7,7 @@ import Animated, { Extrapolation, interpolate, useAnimatedReaction, useAnimatedS
 import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQueryClient } from '@tanstack/react-query';
+import { BrandMark } from '@/components/BrandMark';
 import { CategoryTiles } from '@/components/catalog/CategoryTiles';
 import { MiniProductCard } from '@/components/catalog/MiniProductCard';
 import { initialRecentVisibleCount, RECENT_RAIL_GAP, RECENT_RAIL_INSET } from '@/components/catalog/recent-visibility';
@@ -25,7 +26,6 @@ import { ProductCardSkeleton, Skeleton } from '@/components/ui/Skeleton';
 import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
-import { brand } from '@/lib/brand';
 import { isPrivateCatalogPresentation, prioritizeGeneratedProducts } from '@/lib/catalog-exhibition';
 import { selectHomeOpening, type HomeOpening } from '@/lib/home-opening';
 import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
@@ -191,7 +191,7 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
       <View testID="home-masthead" style={{ paddingTop: insets.top + 6, paddingBottom: 12, backgroundColor: palette.violet[600] }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 8, minHeight: 44 }}>
         <View style={{ flex: 1 }}>
-          <Wordmark inverse />
+          <BrandMark inverse />
           {firstName ? <Text variant="caption" style={{ color: palette.violet[200] }} numberOfLines={1}>Hola, {firstName}</Text> : null}
         </View>
         <View>
@@ -275,16 +275,6 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
   );
 }
 
-/** Neutral product name while the approved Work logo is being retrieved. Not a replacement logo. */
-function Wordmark({ inverse = false }: { inverse?: boolean }) {
-  const t = useTheme();
-  return (
-    <View accessible accessibilityRole="header" accessibilityLabel={brand.name}>
-      <Text variant="displayL" style={{ fontSize: 24, lineHeight: 30, letterSpacing: -0.6, color: inverse ? palette.ink[0] : t.colors.brand }}>{brand.name}</Text>
-    </View>
-  );
-}
-
 function SearchEntry({ editorial = false, onBottom }: { editorial?: boolean; onBottom?: (bottom: number) => void }) {
   const t = useTheme();
   return (
@@ -333,7 +323,7 @@ function StickySearch({ y, searchBottom }: { y: SharedValue<number>; searchBotto
         ]}
       >
         <View style={{ width: '100%', maxWidth: MAX_CONTENT - 32, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-          <Wordmark inverse />
+          <BrandMark inverse />
           <ScalePressable
             testID="home-search-sticky"
             scaleTo={0.99}

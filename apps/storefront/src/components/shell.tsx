@@ -7,6 +7,7 @@ import { brand } from '@/lib/format';
 import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 import { NotificationLink } from './notifications';
+import { BrandMark } from './brand-mark';
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
@@ -25,7 +26,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <header className={`header ${focused ? 'header-focused' : ''}`}>
         <div className="header-inner">
           <Link href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
-            {brand.name}
+            <BrandMark />
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
@@ -67,8 +68,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <footer className="footer wrap">
-        <Link className="wordmark" href="/">
-          {brand.name}
+        <Link className="wordmark" href="/" aria-label={`${brand.name}, inicio`}>
+          <BrandMark />
         </Link>
         <p>{brand.tagline}</p>
         <Link href="/buscar">

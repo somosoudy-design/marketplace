@@ -34,7 +34,7 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-dvh place-items-center px-4">
       <form method="post" onSubmit={submit} className="w-full max-w-[400px] rounded-[24px] border border-line bg-surface p-6 sm:p-8">
-        <span className="mb-6 block"><BrandMark /></span>
+        <span className="mb-6 block"><BrandMark access /></span>
         <h1 className="font-display text-[24px] font-semibold">Accede a tu panel</h1>
         <p className="mt-1 mb-6 text-[15px] text-ink-2">Administración y vendedores. Usa tu cuenta del marketplace.</p>
         {!isConfigured ? (

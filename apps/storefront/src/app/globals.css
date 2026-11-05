@@ -187,12 +187,16 @@ main:focus {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: 24px;
-  line-height: 1.25;
-  font-weight: 800;
-  letter-spacing: -0.6px;
-  color: var(--brand);
+  flex: 0 0 auto;
+  width: 176px;
 }
+.brand-artwork,
+.brand-artwork img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.footer .wordmark { width: 160px; }
 .searchbox {
   display: flex;
   align-items: center;
@@ -1144,14 +1148,16 @@ legend {
   .header-inner {
     min-height: 125px;
     flex-wrap: wrap;
-    column-gap: 15px;
+    column-gap: 12px;
     row-gap: 8px;
     padding-block: 16px;
   }
   .account-nav {
     order: 1;
-    gap: 20px;
+    gap: 0;
   }
+  .wordmark,
+  .footer .wordmark { width: 144px; }
   .searchbox {
     order: 2;
     flex-basis: 100%;

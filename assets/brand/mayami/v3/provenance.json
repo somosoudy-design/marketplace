@@ -1,0 +1,66 @@
+{
+  "source": "Original de Work suministrado por Oliver, descargado desde su enlace Drive",
+  "archive": "MAYAMI_Kit_Vectorial_v3.zip",
+  "archiveSha256": "22574beeae113122dfb669149b86e4729dcf87122674a3d54523bc09aae307d1",
+  "archiveBytes": 18578029,
+  "zipEntries": 65,
+  "crc": "65 archivos verificados sin errores",
+  "files": [
+    {
+      "file": "SVG/MAYAMI_Logotipo_Blanco.svg",
+      "sha256": "0a4bff2947a26bb32f3c7583685937d1762ac84721e73c91680bc388359c0e5d"
+    },
+    {
+      "file": "SVG/MAYAMI_Logotipo_Negro.svg",
+      "sha256": "35549f74cb6a9cf255e36298ccff2a389fd95f851952a90cee06dfc0def59e75"
+    },
+    {
+      "file": "SVG/MAYAMI_Logotipo_Tinta.svg",
+      "sha256": "e20ae5770113d81cef997a8483776e8040a3355d48b6761e3f8f2f4706e78100"
+    },
+    {
+      "file": "SVG/MAYAMI_Logotipo_Violeta.svg",
+      "sha256": "2659eca6c7be633d86998f45635adcbfc14cbf418fb0fdf3ef5791de4662074e"
+    },
+    {
+      "file": "SVG/MAYAMI_Simbolo_Blanco.svg",
+      "sha256": "95d8344569fb642bc76dee97ebb1a09ebbffc3c328c73ca8f0beed9bf9d3c3a2"
+    },
+    {
+      "file": "SVG/MAYAMI_Simbolo_Negro.svg",
+      "sha256": "0c5d37a95cbdf001337bcca7e03c6fdc50a0edc760d1c9e344f81f3b37eedb17"
+    },
+    {
+      "file": "SVG/MAYAMI_Simbolo_Optico_Blanco.svg",
+      "sha256": "268dcffc47062eeb9e4825e3ab055eba173ef5a1d14d7522003cba80dbf2c5b9"
+    },
+    {
+      "file": "SVG/MAYAMI_Simbolo_Optico_Tinta.svg",
+      "sha256": "334fb661cb43ea40322bbf275c6aee27d0ea8b2dda8a0fcb2f9f800a5bf44a8c"
+    },
+    {
+      "file": "SVG/MAYAMI_Simbolo_Tinta.svg",
+      "sha256": "4b45b97db12f4f0e41c2bdfdf593913d2bad81ce1edebe5681c04f54c78697e2"
+    },
+    {
+      "file": "SVG/MAYAMI_Simbolo_Violeta.svg",
+      "sha256": "ecb84a8466729708a35b70a7df18ad30fd4bfe4c294949c7d626d5ba6a5cb698"
+    },
+    {
+      "file": "App/MAYAMI_App.svg",
+      "sha256": "022eb73d1814b00696dcaca8a13462c0ceb65e3d87bf8a78f83bade80e1cf05b"
+    },
+    {
+      "file": "App/MAYAMI_App_Optico.svg",
+      "sha256": "56cb330b18da553047ae4a5016e06d3c1622c2192b225d86303d85c763dad6a1"
+    },
+    {
+      "file": "App/favicon.ico",
+      "sha256": "f4989ad3ec0b2fde2aef332256caca5ad20c38fe439a6830ec871c12239a9445"
+    },
+    {
+      "file": "LEEME.txt",
+      "sha256": "64790db787991416ac97b65db0d216521cbd95d1e1179c004df09e790c041b0e"
+    }
+  ]
+}

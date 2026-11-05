@@ -4,6 +4,14 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Logotipo original Work · integración en curso · 5 de noviembre
+
+Oliver aplicó la configuración del entorno; revisión9 vigente permite Drive/WeTransfer. Descargado desde Drive **MAYAMI_Kit_Vectorial_v3.zip**, 18.578.029 bytes, 65 entradas y CRC íntegro; SHA256 `22574beeae113122dfb669149b86e4729dcf87122674a3d54523bc09aae307d1`. Original completo y guía extraídos en `.local/logo-original-20261105`; maestros SVG/ICO necesarios preservados sin cambios en `assets/brand/mayami/v3`, con procedencia y hashes. No se obtuvo mediante Library ni se ejecutó el generador incluido.
+
+Implementación preparada: SVG original en Inicio y cabecera al desplazar; variantes violeta/blanco del kit en web/panel; favicons originales sólo en Next. Tipos/lint y7 verificaciones focalizadas pasan; revisores visual y auditor trabajan en carpetas ignoradas, root único escritor. Baseline nuevo de22 capturas antes de modificar, sin repetir auditoría general. Pendiente construir, comprobar proporciones/respeto/320px con sesión/fuente ampliada y publicar sólo Android preview tras guard APK5.
+
+Próximo exacto: servir builds posteriores locales; auditor verifica logo de144px mínimo, proporción1476:280, área de respeto62u y acciones de44px sin perder acceso. Conservar `config/brand.json`, app.config, icono/splash/paquetes nativos; no nuevo APK. mayami.app sigue sin activar. Última OTA aún es `01a1aabe-bbe5-71a4-9898-23a967d41a8f`; no afirmar integración publicada hasta confirmación EAS.
+
 ## mayami · coherencia revisada y Android publicado · 5 de noviembre
 
 Implementación `6ef6503`, correcciones `14d5680`/`21e6889`/`b8170cc`: nombre compartido app/web/panel, enlaces operativos separados de mayami.app, texto neutral sin K/punto coral antiguos; contraste hover y peligro oscuro, iconos semánticos, editor de contenido sin overflow y acciones de 44 px. [Informe, revisión independiente y 16 capturas comparables](MARCA_MAYAMI_2026-11-05.md).
