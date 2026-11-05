@@ -85,6 +85,34 @@
       "source": ".local/logo-original-20261105/review/after/07-panel-menu-320-dark.png",
       "surface": "Menú panel 320 px · oscuro",
       "stage": "after"
+    },
+    {
+      "file": "revision1-checkout-320-light.png",
+      "sha256": "85371be4cda1fd9807ec77147b83a38097d14fba75dd769c37ad94c2003f72ee",
+      "source": ".local/logo-original-20261105/review/after-extra/13-web-focused-320-light.png",
+      "surface": "Checkout320 rechazado por fila extra",
+      "stage": "review"
+    },
+    {
+      "file": "revision2-checkout-320-light.png",
+      "sha256": "bb83fd97b5e8f06e3eec211a364df28743669ee34fbf287e10cf891306a223ee",
+      "source": ".local/logo-original-20261105/review/after-r2/13-web-checkout-focused-320-light.png",
+      "surface": "Checkout320 corregido",
+      "stage": "review"
+    },
+    {
+      "file": "revision2-payment-320-dark.png",
+      "sha256": "7e2fc825e6ffcc6e0400a3488a1a15263082950dfce376aeb5e241129f43549e",
+      "source": ".local/logo-original-20261105/review/after-r2/13-web-payment-focused-320-dark.png",
+      "surface": "Pago320 corregido",
+      "stage": "review"
+    },
+    {
+      "file": "app-sticky-type160-320-dark.png",
+      "sha256": "4314a160b3ec5529f376b9409be35f902bb86986bd81bf4cc3dd3c91b4da82f7",
+      "source": ".local/logo-original-20261105/review/after-app/11-app-sticky-type160-320-dark.png",
+      "surface": "App búsqueda sticky texto160%",
+      "stage": "review"
     }
   ]
 }

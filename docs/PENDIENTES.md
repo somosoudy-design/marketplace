@@ -3,9 +3,9 @@
 ## Marca y coherencia universal · 5 de noviembre de 2026
 
 - Implementado y revisado: mayami compartido en app/web/panel, enlaces separados de dominio activo, contraste de controles, iconos de Cuenta y editor responsive. [Informe y 16 capturas comparables](MARCA_MAYAMI_2026-11-05.md). Auditor APROBADO tras corregir truncamiento y objetivos táctiles; no repetir el bloque.
-- Logo original Work recuperado de Drive y verificado: 65 entradas, CRC correcto, maestros originales preservados. Implementación `705da3d`, builds web/panel y export web/Android aprobados. Auditor revisando render posterior antes de OTA. No volver a pedir ZIP ni diagnosticar Library/Drive; detalle en [LOGOTIPO_MAYAMI_V3.md](LOGOTIPO_MAYAMI_V3.md).
+- Logo original Work recuperado de Drive y verificado: 65 entradas, CRC correcto, maestros originales preservados. Implementación `705da3d`, builds web/panel y export web/Android aprobados. Auditor APROBADO después de corregir cabecera checkout320;14 escenarios independientes y2 regresiones portátiles pasan. No volver a pedir ZIP ni diagnosticar Library/Drive; detalle en [LOGOTIPO_MAYAMI_V3.md](LOGOTIPO_MAYAMI_V3.md).
 - mayami.app elegido, aún sin hosting/HTTPS/rutas verificados. Identidad de instalación APK 5 preservada. No cambiar identificadores nativos por una OTA.
-- Android preview publicado: `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, fuente643dd2f, CI41991694643. Observación41992163529 confirma última compatible APK5, limpia y sin rollback. Recepción Samsung no observada. Web/panel en build local, su hosting no se resuelve mediante OTA móvil; no republicar la misma fuente.
+- Android preview publicado con logo original: `01a1ac97-6b93-78c5-b24c-e9a64731b476`, fuente478246b, CI42066926888, guard exacto APK5 aprobado. Observación de última compatible en curso. Recepción Samsung no observada. Web/panel en build local, su hosting no se resuelve mediante OTA móvil; no republicar la misma fuente.
 
 ## Interacción y compra compacta ·4nov2026
 

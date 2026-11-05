@@ -50,6 +50,8 @@ catálogo ni capturas de Android físico. Los PNG se conservan completos, sin re
 | Acceso panel 320 px · claro | [Captura](capturas/logo-mayami-v3-2026-11-05/before-05-panel-login-320-light.png) | [Captura](capturas/logo-mayami-v3-2026-11-05/after-05-panel-login-320-light.png) |
 | Menú panel 320 px · oscuro | [Captura](capturas/logo-mayami-v3-2026-11-05/before-07-panel-menu-320-dark.png) | [Captura](capturas/logo-mayami-v3-2026-11-05/after-07-panel-menu-320-dark.png) |
 
+Corrección exigida por el auditor: [checkout rechazado](capturas/logo-mayami-v3-2026-11-05/revision1-checkout-320-light.png) → [checkout corregido](capturas/logo-mayami-v3-2026-11-05/revision2-checkout-320-light.png). También [pago oscuro](capturas/logo-mayami-v3-2026-11-05/revision2-payment-320-dark.png) y [cabecera app con texto160%](capturas/logo-mayami-v3-2026-11-05/app-sticky-type160-320-dark.png).
+
 [Manifiesto de capturas intactas](capturas/logo-mayami-v3-2026-11-05/manifest.json).
 
 ## Control de calidad
@@ -59,6 +61,8 @@ catálogo ni capturas de Android físico. Los PNG se conservan completos, sin re
 - `pnpm typecheck` y `pnpm lint`; builds Next de web/panel y exportaciones Expo web/Android Hermes aprobados.
 - Fuente nativa: fingerprint relativo idéntico, 63 fuentes iguales, configuración y dependencias nativas
   intactas. Esta comparación local no sustituye el guard exacto APK 5 que ejecuta CI con Firebase original.
+-14 escenarios únicos de revisión independiente aprobados, más2 regresiones portátiles de cabecera.
+  Las22 capturas previas no se modificaron; se preservan16PNG seleccionados en Git.
 - Revisión visual independiente: CAMBIOS OBLIGATORIOS por la cabecera de checkout320. Una regla de
   `purchase.css` conservaba gap16 y forzaba una segunda fila: 144+16+132 superaba los288px disponibles.
   Corregida a12; regresión portable incorporada para checkout y pago. Segunda revisión focal aprobada en checkout y pago, ambos temas; logo y las tres acciones comparten centroY35. La regresión portable pasó2/2.
@@ -78,6 +82,13 @@ ni recepción en el teléfono de Oliver.
 
 Auditor independiente **APROBADO** después de corregir la segunda fila y volver a inspeccionar sus capturas. Se validaron marca normal/sticky, búsqueda con foco, web320/412/1440, acceso/sidebar del panel y texto160% en los puntos afectados. Sin discrepancias pendientes en este alcance.
 
-Publicación Android pendiente de guard exacto y resultado real de EAS. Sólo `preview`, nunca `production`, sin APK nuevo.
+Publicación confirmada por [CI42066926888](https://github.com/somosoudy-design/marketplace/actions/runs/42066926888), fuente `478246b09b0cba2df8901e426894eb12d85e2387`.
+
+- Android `preview`, ID `01a1ac97-6b93-78c5-b24c-e9a64731b476`.
+- Grupo `06e50097-a777-4714-bddb-44337f28ae48`.
+- Guard exacto aprobado: `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, APK5.
+- Observación del último compatible en curso; no recepción física/emulador comprobada.
+
+No se publicó en `production` ni se generó APK nuevo.
 El nombre/icono/splash instalados continúan siendo los compilados en APK 5. El hosting del panel y de la
 web compradora no se actualiza mediante una OTA; mayami.app sigue sin activar.
