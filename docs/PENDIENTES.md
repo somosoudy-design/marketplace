@@ -1,10 +1,11 @@
-# Pendientes de Kora
+# Pendientes de mayami
 
-## Marca y coherencia universal ·5nov2026
+## Marca y coherencia universal · 5 de noviembre de 2026
 
-- Nombre decidido: **mayami**, minúsculas; dominio elegido: **mayami.app**. Se cierra la elección de nombre, continúa la adopción técnica y visual.
-- En curso: auditar y corregir coherencia app/web/panel con capturas nuevas y revisión independiente. Fuente de presentación compartida, identidad nativa APK5 conservada. No renombrar registros comerciales ni identificadores internos por sustitución masiva.
-- Logo original de Work pendiente de localizar/recibir; no generar una marca alternativa. DNS, hosting, HTTPS y enlaces de mayami.app aún no comprobados/activados.
+- Implementado y revisado: mayami compartido en app/web/panel, enlaces separados de dominio activo, contraste de controles, iconos de Cuenta y editor responsive. [Informe y 16 capturas comparables](MARCA_MAYAMI_2026-11-05.md). Auditor APROBADO tras corregir truncamiento y objetivos táctiles; no repetir el bloque.
+- Logo original Work localizado por enlace Drive, todavía sin descargar por CONNECT403. Publicar borrador de red (drive.google.com y drive.usercontent.google.com) o recibir archivo adjunto; inspeccionar e integrar original, sin redibujar ni presentar texto provisional como logo.
+- mayami.app elegido, aún sin hosting/HTTPS/rutas verificados. Identidad de instalación APK 5 preservada. No cambiar identificadores nativos por una OTA.
+- Android preview preparado para publicación autorizada; registrar ID real y observación al finalizar. Web/panel en build local, su hosting no se resuelve mediante OTA móvil.
 
 ## Interacción y compra compacta ·4nov2026
 

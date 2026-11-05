@@ -4,21 +4,19 @@
 
 **Nombre definitivo inicial: mayami. Dominio oficial elegido: mayami.app.** Respetar la escritura en
 minúsculas. Esta decisión sustituye Kora y HAYAZGO como nombres de producto; la identidad Electric Violet,
-los recorridos y el modelo comercial continúan vigentes. No se ha encargado un nuevo logotipo ni definido
-una razón social o dirección de correo con esta decisión.
+los recorridos y el modelo comercial continúan vigentes. Oliver creó el logotipo en Work y aportó su enlace; falta obtener el archivo por el bloqueo de red documentado. No se ha definido una razón social ni un correo operativo nuevo.
 
-La adopción técnica queda pendiente y debe distinguir tres capas:
+La adopción distingue tres capas:
 
 1. **Presentación:** nombre visible, metadatos y textos de app, storefront y panel. Usar una fuente común
-   de marca; no hacer sustituciones masivas en identificadores, datos de tiendas o historial.
+   de marca: implementada en `config/brand-presentation.ts`. No hacer sustituciones masivas en identificadores, datos de tiendas o historial.
 2. **Instalación existente:** `config/brand.json` alimenta `apps/mobile/app.config.ts` (nombre nativo,
    scheme, paquetes, intent filters y origin). Cambiarlo directamente puede modificar el runtime y dejar
    fuera al APK 5. Separar y verificar la presentación antes de migrar la identidad nativa en una futura
    compilación expresamente autorizada. No generar otro APK por registrar este nombre.
 3. **Dominio y enlaces:** la elección no acredita registro, DNS, hosting, HTTPS o rutas funcionando.
    Comprobarlos antes de activar enlaces públicos, redirecciones de acceso y asociaciones de Android.
-   `apps/mobile/src/lib/links.ts` hoy infiere disponibilidad al dejar de usar example.com; sustituir esa
-   inferencia por un estado explícito de activación durante la migración, para no compartir enlaces rotos.
+   `publicWebOrigin` permanece explícitamente desactivado; los enlaces usan el origen web actual o el scheme instalado. Elegir mayami.app no genera enlaces a un destino sin publicar.
 
 El nombre anterior en la configuración y los identificadores internos `@kora/*` son compatibilidad
 técnica pendiente de transición, no una decisión de marca abierta. La documentación histórica conserva

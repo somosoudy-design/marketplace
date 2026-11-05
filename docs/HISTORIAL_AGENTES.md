@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-05 · coherencia mayami revisada y preparada para Android preview
+
+Root integrador único; Product Design audit + directrices Oliver, especialistas visual/runtime/auditor independientes. Fuentes6ef6503/14d5680/21e6889/b8170cc: identidad de presentación compartida y dominio inactivo explícito, contrastes y semántica corregidos, editor sin overflow y objetivos44px. Auditor rechazó primera solución del editor aunque17tests pasaban; corrección y segunda revisión3/3, APROBADO. 102unitarias,4regresiones portátiles,6favoritos, tipos/lint fresco, builds y exports aprobados. [Informe y evidencia](MARCA_MAYAMI_2026-11-05.md).
+
+Logo Work enlazado por Oliver pero bloqueado por red; borrador limitado guardado, no aplicado. No se inventa símbolo ni se afirma usar el original. Dominio elegido no activado, configuración nativa intacta. Publicación Android preview autorizada se inicia con guard exacto; registrar resultado real en siguiente checkpoint. Web/panel no publicados, sin iOS/APK/backend remoto/finanzas modificados.
+
 ### 2026-11-05 · decisión mayami y apertura de coherencia universal
 
 Propietario fija mayami/mayami.app y pide auditoría de marca con correcciones universales. Documentación rectora actualizada; no se confunde nombre elegido con DNS configurado ni razón social. El logotipo existe en Work según Oliver, pero no se encontró en los archivos disponibles; se pidió enlace. Root coordina especialistas visual/runtime/auditor como lectores y testers, único integrador. Se preparan capturas actuales antes de modificar fuente y se conserva compatibilidad APK5. Continuidad en ESTADO_ACTUAL; trabajo en curso, sin publicación nueva.
