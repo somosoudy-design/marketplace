@@ -1,0 +1,522 @@
+{
+  "source": "Android emulator captures and decoded original screenrecord frames; not web",
+  "run": "42089387629",
+  "attempt": "1",
+  "workflowCommit": "4f9b6d4daf78771e14332cdebe548ad4166e0a04",
+  "apk": {
+    "buildId": "df55b9b8-1ed5-42e6-b42f-8a09b9bce50f",
+    "source": "fc8368f598df3b90fb42b3863a221be47371a40c",
+    "runtime": "b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6",
+    "package": "com.example.kora.preview",
+    "versionCode": 5,
+    "channel": "preview",
+    "sha256": "c25bb730ef10c2b2fefa1d72a6ea97e38e9041d9f4da2b8aeb50ecb31ea3310a",
+    "certificateSha256": "86bf0698228dd380cb4d7efc454347023fa6392fe3d3780d06f9f278c244df7f",
+    "nativeArtifactVerified": true
+  },
+  "imageProcessing": "none; byte-for-byte copies",
+  "images": [
+    {
+      "sourceFile": "raw/dark/early-frames/frame-001.png",
+      "file": "raw/dark/early-frames/frame-001.png",
+      "sha256": "06e759211b1992c78f896a70260b5a5ae807263e6b69a3242527f59447dcde4c",
+      "bytes": 38663,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-002.png",
+      "file": "raw/dark/early-frames/frame-002.png",
+      "sha256": "0dc39b8d5faa2e66fb226aedc42edc80950b97392f90f8e27dd697a95f83d976",
+      "bytes": 38882,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-003.png",
+      "file": "raw/dark/early-frames/frame-003.png",
+      "sha256": "a15659eb7d9638b7e8331c45937373c9a6039305a0e9a35ac8bae8bcc7905e44",
+      "bytes": 39020,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-004.png",
+      "file": "raw/dark/early-frames/frame-004.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-005.png",
+      "file": "raw/dark/early-frames/frame-005.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-006.png",
+      "file": "raw/dark/early-frames/frame-006.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-007.png",
+      "file": "raw/dark/early-frames/frame-007.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-008.png",
+      "file": "raw/dark/early-frames/frame-008.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-009.png",
+      "file": "raw/dark/early-frames/frame-009.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-010.png",
+      "file": "raw/dark/early-frames/frame-010.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-011.png",
+      "file": "raw/dark/early-frames/frame-011.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-012.png",
+      "file": "raw/dark/early-frames/frame-012.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-013.png",
+      "file": "raw/dark/early-frames/frame-013.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-014.png",
+      "file": "raw/dark/early-frames/frame-014.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-015.png",
+      "file": "raw/dark/early-frames/frame-015.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-016.png",
+      "file": "raw/dark/early-frames/frame-016.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-017.png",
+      "file": "raw/dark/early-frames/frame-017.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-018.png",
+      "file": "raw/dark/early-frames/frame-018.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-019.png",
+      "file": "raw/dark/early-frames/frame-019.png",
+      "sha256": "351fff9547d1aa1be0d467f6d2a844d5c637700ae5f6106e6e352e77aa6c04d0",
+      "bytes": 39048,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-020.png",
+      "file": "raw/dark/early-frames/frame-020.png",
+      "sha256": "e97d6973afec39d6407b44044f52bb9dadb634a496009a107cd20c193a467593",
+      "bytes": 39146,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-021.png",
+      "file": "raw/dark/early-frames/frame-021.png",
+      "sha256": "e97d6973afec39d6407b44044f52bb9dadb634a496009a107cd20c193a467593",
+      "bytes": 39146,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-022.png",
+      "file": "raw/dark/early-frames/frame-022.png",
+      "sha256": "e97d6973afec39d6407b44044f52bb9dadb634a496009a107cd20c193a467593",
+      "bytes": 39146,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-023.png",
+      "file": "raw/dark/early-frames/frame-023.png",
+      "sha256": "e97d6973afec39d6407b44044f52bb9dadb634a496009a107cd20c193a467593",
+      "bytes": 39146,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-024.png",
+      "file": "raw/dark/early-frames/frame-024.png",
+      "sha256": "e97d6973afec39d6407b44044f52bb9dadb634a496009a107cd20c193a467593",
+      "bytes": 39146,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-025.png",
+      "file": "raw/dark/early-frames/frame-025.png",
+      "sha256": "894e558cc6a8e0419196c10e58dbe11126577feeaa80671371945f0ff07d44e8",
+      "bytes": 104614,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-026.png",
+      "file": "raw/dark/early-frames/frame-026.png",
+      "sha256": "f05af85dbc2a253190b9172425416c56e37cdbbded10cef1fc03db135e4f152c",
+      "bytes": 104972,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-027.png",
+      "file": "raw/dark/early-frames/frame-027.png",
+      "sha256": "da6c39e68eb83b09f160cd34619fd2454939396f47e97eac722a387bfd105af0",
+      "bytes": 104950,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-028.png",
+      "file": "raw/dark/early-frames/frame-028.png",
+      "sha256": "1e5e340a67e77fc95b0a28425ce00e7f4e4b132e7bd65524c0fa1be6af4e1375",
+      "bytes": 105063,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-029.png",
+      "file": "raw/dark/early-frames/frame-029.png",
+      "sha256": "db9558b472edfc5fa7c61af3c7dc204f9453f62bdd614a7ab42f1ab2107150bf",
+      "bytes": 104329,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/dark/early-frames/frame-030.png",
+      "file": "raw/dark/early-frames/frame-030.png",
+      "sha256": "99ac2232caf4216b9da879e9454ad9b89b9560566c0a985acb0e14dee65b9777",
+      "bytes": 104153,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-001.png",
+      "file": "raw/light/early-frames/frame-001.png",
+      "sha256": "b746740d1bcd9d365e0c23d5098eab28eab6733c344de95b20cca6ea7264e7a7",
+      "bytes": 346102,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-002.png",
+      "file": "raw/light/early-frames/frame-002.png",
+      "sha256": "e1842db763d9680f924bd206fb374f497021da2bcbeef8e697ee5a40bd23ae00",
+      "bytes": 346355,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-003.png",
+      "file": "raw/light/early-frames/frame-003.png",
+      "sha256": "9637242cf75be408a4b9a4e07d4f655865935df00b62d46b26d4457ebdd64e7a",
+      "bytes": 356603,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-004.png",
+      "file": "raw/light/early-frames/frame-004.png",
+      "sha256": "9637242cf75be408a4b9a4e07d4f655865935df00b62d46b26d4457ebdd64e7a",
+      "bytes": 356603,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-005.png",
+      "file": "raw/light/early-frames/frame-005.png",
+      "sha256": "02d4314f7390ca5c67c5cbc1b14c988ae52e3f69a739961e9265f797445dff33",
+      "bytes": 391707,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-006.png",
+      "file": "raw/light/early-frames/frame-006.png",
+      "sha256": "02d4314f7390ca5c67c5cbc1b14c988ae52e3f69a739961e9265f797445dff33",
+      "bytes": 391707,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-007.png",
+      "file": "raw/light/early-frames/frame-007.png",
+      "sha256": "02d4314f7390ca5c67c5cbc1b14c988ae52e3f69a739961e9265f797445dff33",
+      "bytes": 391707,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-008.png",
+      "file": "raw/light/early-frames/frame-008.png",
+      "sha256": "da9f6dc1c798235912eb6e4371f10efa6f4f37ac217336202555ea9d0dde2b3f",
+      "bytes": 395312,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-009.png",
+      "file": "raw/light/early-frames/frame-009.png",
+      "sha256": "583a2e16bb6789141b791af931e10758c81c89459ad5c9d1704928f7a84f78bd",
+      "bytes": 398939,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-010.png",
+      "file": "raw/light/early-frames/frame-010.png",
+      "sha256": "537efbacf2fbc6bf624ee5fcf325198863b25375d825027c8ae373ef0989ed36",
+      "bytes": 434798,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-011.png",
+      "file": "raw/light/early-frames/frame-011.png",
+      "sha256": "537efbacf2fbc6bf624ee5fcf325198863b25375d825027c8ae373ef0989ed36",
+      "bytes": 434798,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-012.png",
+      "file": "raw/light/early-frames/frame-012.png",
+      "sha256": "993de2940a8af287a94e2b82385fb90d5935827a663201e215847c015668459d",
+      "bytes": 440983,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-013.png",
+      "file": "raw/light/early-frames/frame-013.png",
+      "sha256": "644c7089a72b0eba3040583f6027d31dc6611e7d7744d859accfda12992eb919",
+      "bytes": 439162,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-014.png",
+      "file": "raw/light/early-frames/frame-014.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-015.png",
+      "file": "raw/light/early-frames/frame-015.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-016.png",
+      "file": "raw/light/early-frames/frame-016.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-017.png",
+      "file": "raw/light/early-frames/frame-017.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-018.png",
+      "file": "raw/light/early-frames/frame-018.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-019.png",
+      "file": "raw/light/early-frames/frame-019.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-020.png",
+      "file": "raw/light/early-frames/frame-020.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-021.png",
+      "file": "raw/light/early-frames/frame-021.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-022.png",
+      "file": "raw/light/early-frames/frame-022.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-023.png",
+      "file": "raw/light/early-frames/frame-023.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-024.png",
+      "file": "raw/light/early-frames/frame-024.png",
+      "sha256": "fd991b10269e9b9e98b044455b15ca5e122c08b1573d92f0b5d5052cb08fc15d",
+      "bytes": 439228,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-025.png",
+      "file": "raw/light/early-frames/frame-025.png",
+      "sha256": "a58d7523a6aa51fc66510babc7662f9c712ab2d06ce8522a2013a9184c16d86f",
+      "bytes": 38367,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-026.png",
+      "file": "raw/light/early-frames/frame-026.png",
+      "sha256": "a58d7523a6aa51fc66510babc7662f9c712ab2d06ce8522a2013a9184c16d86f",
+      "bytes": 38367,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-027.png",
+      "file": "raw/light/early-frames/frame-027.png",
+      "sha256": "a58d7523a6aa51fc66510babc7662f9c712ab2d06ce8522a2013a9184c16d86f",
+      "bytes": 38367,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-028.png",
+      "file": "raw/light/early-frames/frame-028.png",
+      "sha256": "a58d7523a6aa51fc66510babc7662f9c712ab2d06ce8522a2013a9184c16d86f",
+      "bytes": 38367,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-029.png",
+      "file": "raw/light/early-frames/frame-029.png",
+      "sha256": "a58d7523a6aa51fc66510babc7662f9c712ab2d06ce8522a2013a9184c16d86f",
+      "bytes": 38367,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/light/early-frames/frame-030.png",
+      "file": "raw/light/early-frames/frame-030.png",
+      "sha256": "a58d7523a6aa51fc66510babc7662f9c712ab2d06ce8522a2013a9184c16d86f",
+      "bytes": 38367,
+      "width": 1080,
+      "height": 2400
+    },
+    {
+      "sourceFile": "raw/preference-after-reinstall.png",
+      "file": "raw/preference-after-reinstall.png",
+      "sha256": "1f30ab65354162b46e081812d6f7b239c583a9b49dca0c804fd885bc29ce1adf",
+      "bytes": 269945,
+      "width": 1080,
+      "height": 2400
+    }
+  ],
+  "recordings": [
+    {
+      "file": "raw/dark/cold-start.mp4",
+      "bytes": 557882,
+      "sha256": "485218f545afd22ae5cdad7827ecefaa1851e0f3c94bdb4383db77034b6a69c5"
+    },
+    {
+      "file": "raw/light/cold-start.mp4",
+      "bytes": 284566,
+      "sha256": "2924adc788eb6e93e84122dcea2784b757911d64c953c8307ee1d3cd27bb7c8f"
+    }
+  ],
+  "skipped": [],
+  "executionComplete": true
+}
