@@ -90,3 +90,11 @@ test('supports apksigner 37 observed V2 certificate format and full Android name
   assert.throws(() => validateArtifact({ ...current, signature: current.signature.replace('certificate SHA-256', 'public key SHA-256') }, build), /readable signing certificate/);
   assert.throws(() => validateArtifact({ ...current, signature: current.signature.replace(certificate, 'd'.repeat(64)) }, build), /differs/);
 });
+
+test('resolves Expo Updates 57 assets/fingerprint exactly, without inventing or trimming runtime', () => {
+  const current = { ...artifact, resources: artifact.resources.replace(runtime, 'file:fingerprint'), fingerprintAsset: runtime };
+  assert.equal(validateArtifact(current, build).runtime, runtime);
+  for (const fingerprintAsset of [undefined, '', 'd'.repeat(40), runtime + '\n', JSON.stringify({ hash: runtime })])
+    assert.throws(() => validateArtifact({ ...current, fingerprintAsset }, build));
+  assert.throws(() => validateArtifact({ ...current, resources: current.resources.replace('file:fingerprint', 'file:unrelated') }, build));
+});

@@ -2,5 +2,5 @@
   "buildId": "df55b9b8-1ed5-42e6-b42f-8a09b9bce50f",
   "commit": "fc8368f598df3b90fb42b3863a221be47371a40c",
   "runtime": "b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6",
-  "reason": "Repetir validación del mismo APK terminado: admitir formato observado apksigner/AAPT2 37, sin recompilar la app"
+  "reason": "Validar mismo APK: resolver file:fingerprint según Expo Updates57 usando bytes exactos de assets/fingerprint; sin recompilar"
 }

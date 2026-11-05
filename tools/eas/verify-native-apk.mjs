@@ -102,7 +102,7 @@ export function parseMetaData(manifest, resources) {
   return metas;
 }
 
-export function validateArtifact({ badging, manifest, resources, signature, embeddedConfig }, build) {
+export function validateArtifact({ badging, manifest, resources, signature, embeddedConfig, fingerprintAsset }, build) {
   const pkg = badging.match(/^package: name='([^']+)' versionCode='(\d+)'/m);
   assert(pkg, 'Missing package/version in APK');
   assert.equal(pkg[1], EXPECTED.package, 'APK package mismatch');
@@ -121,7 +121,12 @@ export function validateArtifact({ badging, manifest, resources, signature, embe
   assert.equal(certificates.length, 1, 'Expected one readable signing certificate; inspect apksigner output format');
   assert.deepEqual(certificates, [build.certificate], 'APK signing certificate differs from the trusted signing reference');
   const metadata = parseMetaData(manifest, parseResources(resources));
-  assert.equal(metadata.get('expo.modules.updates.EXPO_RUNTIME_VERSION'), build.runtime, 'Embedded Android runtime mismatch');
+  const declaredRuntime = metadata.get('expo.modules.updates.EXPO_RUNTIME_VERSION');
+  // Expo Updates 57 reads assets/fingerprint verbatim for this exact sentinel (no trim/JSON fallback).
+  const nativeRuntime = declaredRuntime === 'file:fingerprint' ? fingerprintAsset : declaredRuntime;
+  if (declaredRuntime === 'file:fingerprint')
+    assert(typeof fingerprintAsset === 'string' && fingerprintAsset.length === 40 && SHA40.test(fingerprintAsset), 'Missing or invalid assets/fingerprint runtime');
+  assert.equal(nativeRuntime, build.runtime, 'Embedded Android runtime mismatch');
   assert.equal(metadata.get('expo.modules.updates.EXPO_UPDATE_URL'), `https://u.expo.dev/${EXPECTED.project}`, 'Wrong native update project URL');
   const headers = JSON.parse(metadata.get('expo.modules.updates.UPDATES_CONFIGURATION_REQUEST_HEADERS_KEY') ?? '{}');
   assert.equal(headers['expo-channel-name'], EXPECTED.channel, 'Native channel is not preview');
@@ -170,10 +175,13 @@ export async function main(argv) {
   // Each command must exit successfully; printing a failure is never sufficient.
   const signature = run(tool('apksigner'), ['verify', '--verbose', '--print-certs', apk]);
   run(tool('zipalign'), ['-c', '-P', '16', '4', apk]);
+  const manifest = run(tool('aapt2'), ['dump', 'xmltree', '--file', 'AndroidManifest.xml', apk]);
+  const resources = run(tool('aapt2'), ['dump', 'resources', apk]);
+  const fingerprintAsset = parseMetaData(manifest, parseResources(resources)).get('expo.modules.updates.EXPO_RUNTIME_VERSION') === 'file:fingerprint'
+    ? run('unzip', ['-p', apk, 'assets/fingerprint']) : undefined;
   const report = validateArtifact({
     badging: run(tool('aapt2'), ['dump', 'badging', apk]),
-    manifest: run(tool('aapt2'), ['dump', 'xmltree', '--file', 'AndroidManifest.xml', apk]),
-    resources: run(tool('aapt2'), ['dump', 'resources', apk]), signature,
+    manifest, resources, signature, fingerprintAsset,
     embeddedConfig: JSON.parse(run('unzip', ['-p', apk, 'assets/app.config'])),
   }, build);
   const receipt = { buildId: build.id, source: build.source, ...report,
