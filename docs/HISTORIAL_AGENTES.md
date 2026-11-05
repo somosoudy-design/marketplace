@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-05 · APK mayami cerrado y relevo de dominio al Mac
+
+CI42092018315 Success, fuente de verificación4868d7f, mismo APKdf55b9b8/sourcefc8368f.72PNG+2MP4 originales y hashes verificados, incluidas las11capturas de Maestro exigidas. Auditor independiente segunda ronda APROBADO para identidad nativa y navegación focal: M/splash claro y oscuro, launcher M/labelmayami, búsqueda y diagnóstico. Root inspecciona personalmente imágenes clave. Inicio de ambos temas capturado en skeleton y fotos de Buscar claro aún cargando se documentan como tales; Inicio oscuro cargado observado en video anterior. No repetir validación ni generar otroAPK para ese límite. Sin instalación física ni migración APK5 demostradas, sin nuevaOTA ni datos remotos escritos.
+
+Descarga exacta, SHA256, evidencia y pasos en APK_MAYAMI_2026-11-05.md. Entregar al propietario para instalar encima sin desinstalar. Continuidad de dominio en ACTIVAR_MAYAMI_APP.md: Oliver eligió abrir~/marketplace en CodexMac; esta nube no controla el Mac. Configurar Cloudflare/hosting desde allí; la autorización ya está dada. No declarar mayami.app activo ni ventas públicas listas antes de verificar DNS/HTTPS/origen y cerrar condiciones comerciales documentadas.
+
 ### 2026-11-05 · APK real comprobado; completar evidencia visual
 
 Builddf55b9b8 terminado, sourcefc8368f, versionCode5/runtime b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6. Root y especialista localizaron formatos reales apksigner37, AAPT2 y Expo57 runtime por archivo; corregidos parsers con16regresiones sin alterar APK ni relajar firma/identidad. CI42089387629 Success valida APK real y emulador Android15: arranque, launcher, navegación, diagnóstico invitado, preferencia/uid/primera instalación conservadas al reinstalar el mismo binario. APK retenido90d. Sin nuevaOTA, iOS ni datos remotos escritos.

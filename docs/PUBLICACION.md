@@ -9,7 +9,7 @@ Esta lista corresponde al lanzamiento comercial. Oliver autorizó preparar **may
 - [ ] Conectar dominio, alojamiento HTTPS y retornos; verificar su funcionamiento real.
 - [ ] Preparar identidad nativa definitiva para una build pública futura (esquema, `iosBundleId`, `androidPackage`, soporte). `config/brand.json` permanece compatible con APK 5; no renombrarlo por una OTA. El identificador de app no se puede cambiar después de publicar.
 - [x] Recursos nativos Android mayami originales preparados/aplicados tras autorización del propietario.
-- [x] Validación técnica del APK mayami, arranque/launcher/navegación y reinstalación del mismo APK en emulador Android15: CI42089387629 Success. Revisión visual detallada en APK_MAYAMI_2026-11-05.md.
+- [x] Validación técnica del APK mayami, arranque/launcher/navegación y reinstalación del mismo APK en emulador Android15: CI42092018315 Success. Revisión visual detallada en APK_MAYAMI_2026-11-05.md.
 - [ ] Migración desde APK5 e instalación física en Samsung; no confundirlas con la reinstalación del mismo binario en emulador.
 - [ ] Proyecto Supabase de producción dedicado, con migraciones aplicadas y **sin seed**.
 - [ ] Hook de token, SMTP, `pg_cron`/`pg_net` y secretos de Vault configurados ([ENTORNO.md](ENTORNO.md)).
@@ -31,7 +31,7 @@ Esta lista corresponde al lanzamiento comercial. Oliver autorizó preparar **may
 ## Builds
 
 - [x] APK5 preview Android instalado por Oliver, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
-- [x] Nuevo APK mayami autorizado, compilado y comprobado en emulador: df55b9b8, versionCode5, runtime b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6, CI42089387629 Success. No duplicarlo. La instalación física sigue pendiente.
+- [x] Nuevo APK mayami autorizado, compilado y comprobado en emulador: df55b9b8, versionCode5, runtime b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6, CI42092018315 Success. No duplicarlo. La instalación física sigue pendiente.
 - [ ] Probar en Android e iOS reales: registro, compra, pago manual con comprobante, pago en línea si
       aplica, push, enlaces profundos, botón Atrás y gestos, modo oscuro, tamaños de pantalla, conexión lenta.
 - [ ] `eas build --profile production --platform all`.

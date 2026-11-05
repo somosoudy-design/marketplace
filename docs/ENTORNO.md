@@ -242,9 +242,9 @@ procesadores):
 
 Build terminado `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f` (fuente fc8368f), CI42075794184 Success.
 versionCode5 (siguiente APK después del histórico APK5/versionCode4), runtime
-`b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, canal preview. **CI42089387629 Success** verifica el binario real y ejecuta el emulador Android15: arranque, launcher, navegación, diagnóstico y preferencias conservadas al reinstalar el mismo APK. No migración real desde APK5 ni instalación física comprobadas. [Estado, revisión visual y guía](APK_MAYAMI_2026-11-05.md).
+`b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, canal preview. **CI42092018315 Success** verifica el binario real y ejecuta el emulador Android15: arranque, launcher, navegación, diagnóstico y preferencias conservadas al reinstalar el mismo APK. No migración real desde APK5 ni instalación física comprobadas. [Estado, revisión visual y guía](APK_MAYAMI_2026-11-05.md).
 
-El verificador reconoce el formato observado de apksigner37, AAPT2 y `file:fingerprint` de Expo57;16pruebas de verificador/referencia de firma pasan. Conserva exigencia exacta de fuente/certificado/runtime/canal/paquete. No repetir builds por fallos históricos del parser ya resueltos. El artefacto `mayami-preview-apk` queda90d en Actions y las capturas originales en `ci/capturas/ultima/native-42089387629-1`.
+El verificador reconoce el formato observado de apksigner37, AAPT2 y `file:fingerprint` de Expo57;16pruebas de verificador/referencia de firma pasan. Conserva exigencia exacta de fuente/certificado/runtime/canal/paquete. No repetir builds por fallos históricos del parser ya resueltos. El artefacto `mayami-preview-apk` queda90d en Actions y las capturas originales en `ci/capturas/ultima/native-42092018315-1`.
 
 El canal se mantiene; el runtime cambia legítimamente por los recursos nativos. La última solicitud OTA
 sigue fijada al APK5 y sirve de histórico. No cambiarla sólo para documentación: dispara publicación.
