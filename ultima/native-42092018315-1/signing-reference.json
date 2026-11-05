@@ -1,0 +1,13 @@
+{
+  "projectId": "9f629f10-d679-4a99-9965-8a9e588afc85",
+  "package": "com.example.kora.preview",
+  "credentialId": "6d09d9f5-c9fb-41d7-a7e5-472711e7b604",
+  "keystoreId": "ecc427b0-291b-4555-848e-dc58bd5315a3",
+  "certificateSha256": "86bf0698228dd380cb4d7efc454347023fa6392fe3d3780d06f9f278c244df7f",
+  "keystoreCreatedAt": "2026-10-09T15:33:58.214Z",
+  "apk5BuildId": "d1d10c28-1d9e-4123-8487-602dc10b9710",
+  "apk5CreatedAt": "2026-10-10T04:08:34.435Z",
+  "basis": "Only configured EAS keystore, default credential, created before APK5",
+  "historicalBinaryComparison": false,
+  "privateKeyMaterialRequested": false
+}
