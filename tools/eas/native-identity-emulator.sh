@@ -18,6 +18,9 @@ record_failure() {
 trap 'record_failure $LINENO' ERR
 : "${ANDROID_HOME:?Android SDK required}"
 for tool in adb maestro ffmpeg python3; do command -v "$tool" >/dev/null || { echo "Missing tool: $tool" >&2; exit 1; }; done
+maestro --version > "$out/logs/maestro-version.txt"
+maestro test --help > "$out/logs/maestro-test-help.txt"
+grep -q -- '--test-output-dir' "$out/logs/maestro-test-help.txt"
 cp "$RECEIPT" "$out/receipt.json"
 # Binary metadata, signature and alignment were verified by verify-native-apk.mjs before starting Android.
 python3 - "$RECEIPT" "$APK" <<'PYVERIFY'
@@ -53,11 +56,36 @@ check_crash() {
   fi
   [ -n "$(adb shell pidof "$PKG" | tr -d '\r')" ] || { echo "App not running: $stem" >&2; exit 1; }
 }
+collect_flow_screenshots() {
+  local stem=$1 theme=$2
+  shift 2
+  # Maestro stores takeScreenshot in its test artifacts, not the shell's cwd.
+  # Preserve those originals and require every requested screenshot before accepting the run.
+  python3 - "$out/maestro/$stem" "$out/raw/$theme/$stem" "$stem" "$@" <<'PYSCREENS'
+import pathlib,shutil,sys
+source,destination=map(pathlib.Path,sys.argv[1:3]);stem=sys.argv[3]
+files=list(source.rglob('*.png'))
+for suffix in sys.argv[4:]:
+ expected=stem+'-'+suffix
+ assert any(expected in f.name for f in files), 'Missing Maestro screenshot: '+expected
+for f in files:
+ assert not f.is_symlink(), 'Unexpected screenshot symlink'
+ assert f.read_bytes()[:8]==b'\x89PNG\r\n\x1a\n', 'Invalid screenshot PNG'
+ target=destination/f.relative_to(source);target.parent.mkdir(parents=True,exist_ok=True)
+ shutil.copyfile(f,target)
+print('Preserved original Maestro screenshots:',stem,len(files))
+PYSCREENS
+}
 run_flow() {
   local file=$1 theme=$2 stem=$3
   mkdir -p "$out/raw/$theme"
   echo "Android flow: $file, $theme"
-  (cd "$out/raw/$theme" && maestro test -e MAYAMI_SHOT_PREFIX="$stem" --format junit --output "$out/logs/$stem.xml" "$repo_root/tests/apk-flows/$file.yaml") > "$out/logs/$stem-maestro.log" 2>&1
+  maestro test --test-output-dir "$out/maestro/$stem" -e MAYAMI_SHOT_PREFIX="$stem" --format junit --output "$out/logs/$stem.xml" "$repo_root/tests/apk-flows/$file.yaml" > "$out/logs/$stem-maestro.log" 2>&1
+  if [ "$file" = 21-native-identity ]; then
+    collect_flow_screenshots "$stem" "$theme" home search diagnostics guest
+  else
+    collect_flow_screenshots "$stem" "$theme" launcher
+  fi
 }
 for theme in light dark; do
   if [ "$theme" = light ]; then adb shell cmd uimode night no >/dev/null; else adb shell cmd uimode night yes >/dev/null; fi
@@ -105,7 +133,8 @@ PY
 
 # Same-APK reinstall: verifies local preference retention, NOT migration from unavailable APK5.
 adb shell cmd uimode night no >/dev/null
-(cd "$out/raw" && maestro test -e MAYAMI_PREFERENCE=Oscuro -e MAYAMI_SHOT_PREFIX=preinstall --format junit --output "$out/logs/preference-before.xml" "$repo_root/tests/apk-flows/23-native-preference.yaml") > "$out/logs/preference-before.log" 2>&1
+maestro test --test-output-dir "$out/maestro/preinstall" -e MAYAMI_PREFERENCE=Oscuro -e MAYAMI_SHOT_PREFIX=preinstall --format junit --output "$out/logs/preference-before.xml" "$repo_root/tests/apk-flows/23-native-preference.yaml" > "$out/logs/preference-before.log" 2>&1
+collect_flow_screenshots preinstall preferences appearance
 adb shell uiautomator dump /sdcard/mayami-preference.xml >/dev/null
 adb pull /sdcard/mayami-preference.xml "$out/logs/preference-before.xmltree" >/dev/null 2>&1
 adb shell dumpsys package "$PKG" | sed -n '/userId=/p;/firstInstallTime=/p' > "$out/logs/install-identity-before.txt"

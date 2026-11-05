@@ -2,5 +2,5 @@
   "buildId": "df55b9b8-1ed5-42e6-b42f-8a09b9bce50f",
   "commit": "fc8368f598df3b90fb42b3863a221be47371a40c",
   "runtime": "b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6",
-  "reason": "Validar mismo APK con parser ajustado a metadata real AAPT2 37: comillas internas sin escape y sufijo Raw; conservar todos los gates"
+  "reason": "Conservar PNG originales de Maestro en directorio expl\u00edcito y exigir las11capturas; mismaAPK ya verificada, sin build ni OTA adicionales"
 }

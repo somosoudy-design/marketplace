@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-05 · APK real comprobado; completar evidencia visual
+
+Builddf55b9b8 terminado, sourcefc8368f, versionCode5/runtime b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6. Root y especialista localizaron formatos reales apksigner37, AAPT2 y Expo57 runtime por archivo; corregidos parsers con16regresiones sin alterar APK ni relajar firma/identidad. CI42089387629 Success valida APK real y emulador Android15: arranque, launcher, navegación, diagnóstico invitado, preferencia/uid/primera instalación conservadas al reinstalar el mismo binario. APK retenido90d. Sin nuevaOTA, iOS ni datos remotos escritos.
+
+La revisión de originales detectó que takeScreenshot de Maestro no quedó recogido; sólo60frames+2videos+capturaadb. Root/auditor no equiparan Success con aprobación visual. M original sí visible en arranque claro/oscuro. Causa confirmada en Maestro cli2.12.1: takeScreenshot se dirige al bundle de artefactos, no a cwd. Root fija --test-output-dir porflow, conserva PNG originales y exige las11capturas por nombre; registra versión/soporteCLI y pasa bash-n. Se repite validación del mismo APK, sin recompilar. Próximo: revisión final y enlace de instalación; el dominio continúa en Mac según ACTIVAR_MAYAMI_APP.md.
+
 ### 2026-11-05 · preparación de mayami.app y relevo al Mac
 
 Oliver ofrece su Mac y autoriza configurar Cloudflare/dominio para negocio público; confirma que abrirá ~/marketplace en Codex local. Nube sin herramienta de controlMac; open_in_codex Cloudflare queued no demuestra acceso. Runtime y auditor leen alojamiento/lanzamiento; root único escritor. Detectados SSR requerido, ruta tienda faltante, falta de control de acceso, compra de muestras y contenido legal/retornos pendientes. Sin rediagnóstico remoto, DNS, pagos ni contratación.

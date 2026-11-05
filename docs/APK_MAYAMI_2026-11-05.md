@@ -17,9 +17,13 @@ Se conservan `com.example.kora.preview`, scheme `kora`, proyecto Expo y configur
 Fuente de aplicación: `fc8368f598df3b90fb42b3863a221be47371a40c`.
 [Compilación EAS desde GitHub](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184).
 
-**Build terminado:** CI42075794184 Success; `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview/source clean. La primera validación42081690956 falló porque el parser esperaba `Signer #1` y apksigner37 devuelve `V2 Signer:`. Logs del APK real confirman firma válida y huella coincidente `86bf0698228dd380cb4d7efc454347023fa6392fe3d3780d06f9f278c244df7f`. Parser corregido;14pruebas pasan. Se repite la validación del mismo binario, sin otro build. Arranque/launcher todavía pendientes.
+**Build terminado y validación técnica aprobada:** CI42075794184 y CI42089387629 Success; `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview. APK real:123.181.823 bytes; SHA256 `c25bb730ef10c2b2fefa1d72a6ea97e38e9041d9f4da2b8aeb50ecb31ea3310a`. Firma válida con huella `86bf0698228dd380cb4d7efc454347023fa6392fe3d3780d06f9f278c244df7f`.
 
-[Build y descarga en EAS](https://expo.dev/accounts/marketplacebrand/projects/marketplace/builds/df55b9b8-1ed5-42e6-b42f-8a09b9bce50f). No se presenta todavía como entrega validada en Android.
+Fallos de verificación resueltos con datos del APK real, sin reconstruirlo: apksigner37 usa `V2 Signer:`, Expo57 resuelve runtime `file:fingerprint` desde assets/fingerprint y AAPT2 imprime JSON con comillas interiores sin escapar.16pruebas del verificador/referencia de firma pasan; se mantienen coincidencias exactas de identidad y firma.
+
+Android15/API35 en emulador comprobó arranque frío claro/oscuro, launcher, Inicio→Buscar→Atrás, Diagnóstico como invitado y reinstalación del mismo APK conservando apariencia/uid/primera instalación. **La recogida de evidencia no conservó las capturas de Maestro:** sí hay60frames de arranque,2videos y una captura adb. M original observada en ambos arranques; falta cerrar revisión visual de launcher y pantallas. Se corrige el guardado y se repite sólo la validación del mismo APK; no generar otra build ni atribuir aprobación visual completa a un job técnico verde.
+
+[Build y descarga en EAS](https://expo.dev/accounts/marketplacebrand/projects/marketplace/builds/df55b9b8-1ed5-42e6-b42f-8a09b9bce50f). Evidencia parcial intacta en `ci/capturas/ultima/native-42089387629-1`. El artefacto `mayami-preview-apk` quedó retenido90d en Actions; su ZIP ocupa61.153.591bytes, no confundir con el tamaño del APK.
 
 Comprobado antes de compilar:
 
@@ -30,7 +34,7 @@ Comprobado antes de compilar:
 
 La comprobación del binario exige canal preview, versión superior a 4, paquete actual, runtime nuevo real, ABI ARM64/x86_64 y firma válida. El certificado se contrasta con el único keystore predeterminado de EAS, creado antes del APK5. No se solicita material de firma privado. **Esa referencia del proveedor no equivale a comparar contra el APK5 histórico**, cuyo archivo ha caducado.
 
-El emulador debe comprobar arranque en frío claro/oscuro, launcher real, Inicio→Buscar→Atrás, Diagnóstico y conservación de apariencia/identidad de instalación al reinstalar el mismo APK. Las capturas y videos son originales; una máscara ilustrada en navegador no se presenta como prueba Android. No se realizan pagos, pedidos ni escrituras en cuentas remotas.
+El emulador comprobó arranque en frío claro/oscuro, launcher real, Inicio→Buscar→Atrás, Diagnóstico y conservación de apariencia/identidad de instalación al reinstalar el mismo APK. Queda cerrar la revisión visual con evidencia completa. Las capturas y videos son originales; una máscara ilustrada en navegador no se presenta como prueba Android. No se realizan pagos, pedidos ni escrituras en cuentas remotas.
 
 ## Instalación para Oliver
 
@@ -44,4 +48,4 @@ Este APK recibe futuras OTA del mismo canal preview cuando su runtime coincida. 
 
 La solicitud `.github/eas-update-request` conserva el runtime del APK5 como registro de su última publicación. Antes de la siguiente OTA, fijar el runtime observado en el nuevo APK y verificarlo con el mismo archivo Firebase. Cambiar esa solicitud publica: no editarla sólo para documentar este build.
 
-El workflow focal está configurado para conservar el APK verificado durante 90 días en Actions (`mayami-preview-apk`) y la evidencia en `ci/capturas`. Así, una futura prueba de migración no depende únicamente de la caducidad del enlace EAS. La retención se comprobará al finalizar el job.
+El workflow focal está configurado para conservar el APK verificado durante 90 días en Actions (`mayami-preview-apk`) y la evidencia en `ci/capturas`. Así, una futura prueba de migración no depende únicamente de la caducidad del enlace EAS. La retención del APK y la evidencia se comprobó al finalizar CI42089387629; el fallo de recogida de capturas se documenta arriba.

@@ -72,7 +72,7 @@ En esta ejecución la inspección remota se detuvo antes de enviar solicitudes p
 
 ## APK anterior, independiente del dominio
 
-No reiniciar el trabajo nativo. Build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, CI42075794184; validación automática CI42081690956. El build terminó Success; la validación falló antes del emulador porque el parser de certificados devolvió una lista vacía. Investigar el formato real y repetir validación del mismo APK; no asumir firma distinta ni generar builds duplicados. [Guía del APK](APK_MAYAMI_2026-11-05.md).
+No reiniciar el trabajo nativo. Build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f` terminado; CI42089387629 **Success** valida binario y emulador Android15 del mismo APK. Corregidos los parsers con salida real, sin reconstruirlo. [Informe, revisión visual e instalación](APK_MAYAMI_2026-11-05.md). El dominio no requiere compilar otro APK, publicar OTA ni tocar iOS. Instalación física en Samsung todavía no comprobada.
 
 ## Validación de esta preparación
 
