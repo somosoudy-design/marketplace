@@ -1,8 +1,32 @@
-# Dirección de producto de Kora
+# Dirección de producto de mayami
 
-## Qué es Kora
+## Marca oficial · decisión del propietario, 5 de noviembre de 2026
 
-Kora no es un e-commerce genérico. Es un marketplace nativo premium para Venezuela con:
+**Nombre definitivo inicial: mayami. Dominio oficial elegido: mayami.app.** Respetar la escritura en
+minúsculas. Esta decisión sustituye Kora y HAYAZGO como nombres de producto; la identidad Electric Violet,
+los recorridos y el modelo comercial continúan vigentes. No se ha encargado un nuevo logotipo ni definido
+una razón social o dirección de correo con esta decisión.
+
+La adopción técnica queda pendiente y debe distinguir tres capas:
+
+1. **Presentación:** nombre visible, metadatos y textos de app, storefront y panel. Usar una fuente común
+   de marca; no hacer sustituciones masivas en identificadores, datos de tiendas o historial.
+2. **Instalación existente:** `config/brand.json` alimenta `apps/mobile/app.config.ts` (nombre nativo,
+   scheme, paquetes, intent filters y origin). Cambiarlo directamente puede modificar el runtime y dejar
+   fuera al APK 5. Separar y verificar la presentación antes de migrar la identidad nativa en una futura
+   compilación expresamente autorizada. No generar otro APK por registrar este nombre.
+3. **Dominio y enlaces:** la elección no acredita registro, DNS, hosting, HTTPS o rutas funcionando.
+   Comprobarlos antes de activar enlaces públicos, redirecciones de acceso y asociaciones de Android.
+   `apps/mobile/src/lib/links.ts` hoy infiere disponibilidad al dejar de usar example.com; sustituir esa
+   inferencia por un estado explícito de activación durante la migración, para no compartir enlaces rotos.
+
+El nombre anterior en la configuración y los identificadores internos `@kora/*` son compatibilidad
+técnica pendiente de transición, no una decisión de marca abierta. La documentación histórica conserva
+los nombres que correspondían a cada entrega.
+
+## Qué es mayami
+
+mayami es un marketplace nativo premium para Venezuela con:
 
 - identidad visual propia (Electric Violet, abierta a refinamiento);
 - navegación compacta y contextual, con la experiencia centrada en productos;
@@ -39,7 +63,7 @@ maestra 02). Tokens, componentes y reglas de fotografía: `docs/DISENO.md`.
 
 Oliver compartió cuatro capturas de apps de compras (una de zapatillas en violeta, «User App» en coral,
 «Shopink» en amarillo, «Shopmore» en violeta). Son referencias de **personalidad y calidad de experiencia**,
-no diseños para copiar: Kora tiene libertad para construir su identidad, igual o mejor. Las imágenes son de
+no diseños para copiar: mayami tiene libertad para construir su identidad, igual o mejor. Las imágenes son de
 terceros y no se suben al repositorio (están en los archivos del proyecto de Claude,
 `/mnt/project-files/marketplace/diseno/referencias-oliver/`).
 

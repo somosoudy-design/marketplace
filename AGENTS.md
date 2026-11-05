@@ -1,15 +1,22 @@
-# AGENTS.md: manual para cualquier agente que trabaje en Kora
+# AGENTS.md: manual para cualquier agente que trabaje en mayami
 
 Sirve para Claude, ChatGPT o cualquier otra IA, y también para una persona. No hace falta conocer las
 conversaciones anteriores: todo lo necesario está en este repositorio.
 
-## Qué es Kora
+## Qué es mayami
 
-Marketplace nativo premium para Venezuela (nombre provisional en `config/brand.json`). Tiene una app para
+Marketplace nativo premium para Venezuela. Oliver fijó el 5 de noviembre de 2026 **mayami** como nombre
+definitivo inicial y **mayami.app** como dominio oficial elegido. Tiene una app para
 compradores (Expo / React Native), un panel web para administración y vendedores (Next.js) y un backend en
 Supabase donde viven las reglas de precios, pagos, cuotas, tasas y permisos. Es multivendedor, vende productos
 propios y por encargo, tiene carrito unificado, pagos en varias monedas (bolívares, dólares, USDT), anticipos,
 cuotas, logística y seguimiento. La identidad visual es **Electric Violet**.
+
+La decisión de marca está en `docs/DIRECCION_PRODUCTO.md`. Kora y HAYAZGO son nombres anteriores;
+los identificadores técnicos y `config/brand.json` todavía conservan valores del APK instalado.
+No confundir esta deuda de implementación con una decisión de nombre pendiente. La migración debe
+preservar compatibilidad con APK 5 y activar enlaces al dominio sólo después de comprobar hosting,
+HTTPS y rutas. No asumir una razón social, correo operativo ni dominio ya conectado.
 
 Filosofía: **la complejidad pertenece al sistema; la claridad, al usuario.** Simplifica la experiencia, no las
 capacidades. Detalle en `docs/DIRECCION_PRODUCTO.md`.

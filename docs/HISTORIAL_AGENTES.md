@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-05 · decisión mayami y apertura de coherencia universal
+
+Propietario fija mayami/mayami.app y pide auditoría de marca con correcciones universales. Documentación rectora actualizada; no se confunde nombre elegido con DNS configurado ni razón social. El logotipo existe en Work según Oliver, pero no se encontró en los archivos disponibles; se pidió enlace. Root coordina especialistas visual/runtime/auditor como lectores y testers, único integrador. Se preparan capturas actuales antes de modificar fuente y se conserva compatibilidad APK5. Continuidad en ESTADO_ACTUAL; trabajo en curso, sin publicación nueva.
+
 ### 2026-11-04 · favoritos y compra compacta revisados
 
 Oliver pidió cinco patrones de una referencia X. No se pudo ver el video (CONNECT403); Product Design audit y directrices de Oliver se aplicaron a los criterios escritos y capturas reales. Root único escritor; UX captura/propone, ecommerce confirma contratos y auditor reproduce/revisa independientemente. Checkpoints `55e6aaa`/`3f05e84`.

@@ -1,8 +1,14 @@
-# Kora — marketplace nativo para Venezuela (nombre provisional)
+# mayami — marketplace para Venezuela
 
 E-commerce y marketplace multivendedor: app nativa (iOS/Android) para compradores, panel web para
 administración y vendedores, y un backend Supabase donde viven las reglas de precios, pagos, cuotas,
-tasas y permisos. El nombre "Kora" es provisional y se cambia en [`config/brand.json`](config/brand.json).
+tasas y permisos. **mayami** es el nombre definitivo inicial elegido por Oliver el 5 de noviembre de 2026;
+el dominio oficial elegido es **mayami.app**. La identidad visual continúa siendo Electric Violet.
+
+La aplicación instalada y su configuración técnica aún conservan el nombre anterior, Kora.
+La adopción en interfaces y la conexión del dominio quedan registradas en
+[`docs/DIRECCION_PRODUCTO.md`](docs/DIRECCION_PRODUCTO.md); elegir el dominio no implica que ya esté
+conectado al hosting. La transición debe conservar las actualizaciones del APK 5.
 
 **¿Vas a trabajar en el proyecto (persona o agente de IA)?** Empieza por [`AGENTS.md`](AGENTS.md) y luego
 [`docs/ESTADO_ACTUAL.md`](docs/ESTADO_ACTUAL.md). Rama compartida: `claude/marketplace-v1`.

@@ -4,6 +4,14 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Trabajo en curso · mayami y coherencia universal · 5 de noviembre
+
+Oliver eligió **mayami** como nombre definitivo inicial y **mayami.app** como dominio oficial. Amplió la tarea a auditoría y corrección de marca/universo gráfico en app, storefront y panel. El logotipo ya fue diseñado en Work: buscar y usar el activo original, no inventar un sustituto. No está en repositorio/adjuntos actuales y este entorno no accede a otros chats; se pidió enlace compartible mientras avanza el trabajo independiente.
+
+Root único escritor; especialistas de sistema visual, compatibilidad/runtime y auditor independiente trabajan con propuestas y pruebas ignoradas. Product Design audit y directrices Oliver. Se conserva Electric Violet, APK5, backend y reglas comerciales. `config/brand.json` controla también configuración nativa y enlaces; separar presentación antes de adoptarla para no activar URLs no desplegadas ni romper OTA.
+
+Próximo exacto: capturas nuevas del estado actual en app/web/panel, resolver incoherencias compartidas de marca, tipografía, estados y semántica de iconos. Integrar mayami en presentación con fuente común, dominio objetivo separado de dominio activo; incorporar logo si llega el archivo. Validar claro/oscuro y tamaños, revisión independiente, checkpoint/push y sólo OTA compatible usando autorización vigente. No afirmar que dominio o logo están instalados antes de comprobarlos. Última OTA válida sigue siendo la del4nov documentada abajo.
+
 ## Interacción y compra compacta · 4 de noviembre
 
 Implementados favoritos con pulso, guard/reintento real y aislamiento por comprador; carrito continuo con importe/cantidad integrados; cuadro único de productos en revisión con entregas/editables conservadas; barra de confirmación compacta, transición de fase y skeleton sin salto. Coherencia app/storefront, conteos de referencias/unidades corregidos. Fuentes `55e6aaa` y `3f05e84`; root único escritor, especialistas UX, ecommerce y auditor independiente. [Informe, decisiones, comparativas y límites](INTERACCION_COMPRA_2026-11-04.md).

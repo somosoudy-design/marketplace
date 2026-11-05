@@ -1,5 +1,11 @@
 # Pendientes de Kora
 
+## Marca y coherencia universal ·5nov2026
+
+- Nombre decidido: **mayami**, minúsculas; dominio elegido: **mayami.app**. Se cierra la elección de nombre, continúa la adopción técnica y visual.
+- En curso: auditar y corregir coherencia app/web/panel con capturas nuevas y revisión independiente. Fuente de presentación compartida, identidad nativa APK5 conservada. No renombrar registros comerciales ni identificadores internos por sustitución masiva.
+- Logo original de Work pendiente de localizar/recibir; no generar una marca alternativa. DNS, hosting, HTTPS y enlaces de mayami.app aún no comprobados/activados.
+
 ## Interacción y compra compacta ·4nov2026
 
 - Implementados y aprobados: favoritos confiables/interactivos, carrito compacto, cuadro único de productos en revisión y carga sin saltos. 44 casos app,42 web,66 unitarias; [informe y evidencia](INTERACCION_COMPRA_2026-11-04.md). OTA `01a1a7e1-45e8-7ef4-b236-499cb75abb3b` publicada por CI41889930469, fuente4df6e21, preview compatible APK5. Observación41890346761 confirma última compatible/limpia/sin rollback; recepción física sigue pendiente. No republicar ni afirmar hosting público del storefront.
