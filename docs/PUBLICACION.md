@@ -1,14 +1,15 @@
 # Lista de verificación para publicar en tiendas
 
-Esta lista corresponde al **lanzamiento comercial en tiendas**, no al estado de evaluación. Android APK5 ya existe y recibe EAS Update en `preview`; el panel está en https://kora-panel.expo.app. La web compradora está implementada y probada localmente, sin alojamiento público configurado. La autorización vigente permite actualizaciones incrementales de evaluación; no habilita compras reales, un APK nuevo, App Store/Google Play ni contratación. iOS sigue pospuesto. Estado concreto y bloqueos: [CALIDAD_INTEGRAL_2026-10-31.md](CALIDAD_INTEGRAL_2026-10-31.md).
+Esta lista corresponde al lanzamiento comercial. Oliver autorizó preparar **mayami.app** desde Cloudflare el5nov y eligió continuar desde su Mac. La web compradora existe y está probada localmente; alojamiento/dominio aún no configurados. [Relevo y condiciones reales](ACTIVAR_MAYAMI_APP.md). No confundir autorización de publicación con catálogo/operación ya listos. GooglePlay/AppStore e iOS siguen fuera de este incremento.
 
 ## Antes de la primera build pública
 
 - [x] Nombre inicial **mayami** y dominio **mayami.app** elegidos por Oliver (5 de noviembre). Presentación compartida en `config/brand-presentation.ts`.
-- [ ] Incorporar logotipo original de Work cuando sea accesible; conectar dominio, HTTPS y retornos. Nombre elegido no equivale a hosting activo.
+- [x] Logotipo original de Work incorporado y escala corregida.
+- [ ] Conectar dominio, alojamiento HTTPS y retornos; verificar su funcionamiento real.
 - [ ] Preparar identidad nativa definitiva para una build pública futura (esquema, `iosBundleId`, `androidPackage`, soporte). `config/brand.json` permanece compatible con APK 5; no renombrarlo por una OTA. El identificador de app no se puede cambiar después de publicar.
-- [ ] Iconos, icono adaptativo de Android, icono de notificación y splash definitivos
-      (`apps/mobile/assets/images`; los actuales son provisionales generados por `tools/demo-assets`).
+- [x] Recursos nativos Android mayami originales preparados/aplicados tras autorización del propietario.
+- [ ] Validar APK compilado, arranque/launcher y migración: CI42081690956 pendiente de resolver verificador; no afirmar instalación física.
 - [ ] Proyecto Supabase de producción dedicado, con migraciones aplicadas y **sin seed**.
 - [ ] Hook de token, SMTP, `pg_cron`/`pg_net` y secretos de Vault configurados ([ENTORNO.md](ENTORNO.md)).
 - [ ] Datos de cobro reales en los métodos manuales; métodos automáticos solo si sus credenciales existen.
@@ -28,7 +29,8 @@ Esta lista corresponde al **lanzamiento comercial en tiendas**, no al estado de 
 
 ## Builds
 
-- [x] APK5 preview Android instalado por Oliver. Mantener runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; **no generar otro APK** por esta lista.
+- [x] APK5 preview Android instalado por Oliver, runtime `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
+- [ ] Nuevo APK mayami autorizado y compilado: df55b9b8, versionCode5, runtime b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6; completar validación del mismo binario. No duplicarlo.
 - [ ] Probar en Android e iOS reales: registro, compra, pago manual con comprobante, pago en línea si
       aplica, push, enlaces profundos, botón Atrás y gestos, modo oscuro, tamaños de pantalla, conexión lenta.
 - [ ] `eas build --profile production --platform all`.

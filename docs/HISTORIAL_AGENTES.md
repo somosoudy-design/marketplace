@@ -1,5 +1,13 @@
 # Historial de agentes
 
+### 2026-11-05 · preparación de mayami.app y relevo al Mac
+
+Oliver ofrece su Mac y autoriza configurar Cloudflare/dominio para negocio público; confirma que abrirá ~/marketplace en Codex local. Nube sin herramienta de controlMac; open_in_codex Cloudflare queued no demuestra acceso. Runtime y auditor leen alojamiento/lanzamiento; root único escritor. Detectados SSR requerido, ruta tienda faltante, falta de control de acceso, compra de muestras y contenido legal/retornos pendientes. Sin rediagnóstico remoto, DNS, pagos ni contratación.
+
+Root corrige /tienda/[slug] con API anónima/RLS y prepara inspección Cloudflare GET restringida a mayami.app, sin secretos ni correo en salida.5unitarias+2UI reales pasan; build/tipos/lint/release guard aprobados. UI inicial usó buildanterior: se reconstruyó, no se alteraron aserciones. Revisión independiente APROBADA para cambios/relevo. Borrador nube opcionalguardado, noaplicado; Mac elegido no requiere ese secreto. Guía en ACTIVAR_MAYAMI_APP.md. Próximo: accesoCloudflare local, inventarioDNS/origen y alojamiento SSR, preparación comercial con datos reales.
+
+Durante esta sesión el APK df55b9b8 terminó (CI42075794184 Success); validación42081690956 falló en parser de certificados, lista vacía. Emulador no ejecutado. Investigar salida real y repetirvalidaciónmismoAPK; no atribuir firma errónea sin prueba ni recompilar.
+
 ### 2026-11-05 · APK mayami autorizado, integración nativa y build en curso
 
 Oliver autoriza expresamente el APK para retirar K nativa. Root integra propuesta auditada: M original en splash claro/oscuro, launcher, monocromo y notificaciones; etiqueta Android mayami. Conserva paquete/scheme/proyecto/Firebase e iOS. El perfil preview incluye el catálogo privado también en el bundle embebido. Diagnóstico muestra mayami. Fuentes733d500/fc8368f; build CI42075794184 en curso, no duplicar.

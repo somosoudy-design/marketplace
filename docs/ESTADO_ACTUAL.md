@@ -4,7 +4,17 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## APK Android mayami autorizado · esperando cola EAS · 5 de noviembre
+## Activación de mayami.app · relevo al Mac · 5 de noviembre
+
+Oliver autorizó configurar el dominio y preparar el negocio público; confirmó que abrirá `~/marketplace` en Codex de su Mac. Esta sesión sigue en Linux nube sin control del Mac/navegador. Apertura Cloudflare en panel Codex devuelve queued; no equivale a sesión accesible. [Pasos concretos y bloqueos reales](ACTIVAR_MAYAMI_APP.md). No pedir contraseñas, tokens ni códigos2FA por chat.
+
+Corregido enlace `/tienda/[slug]` de web hacia catálogo existente con filtro; consulta anónima/RLS,404 para tienda no visible y reintento ante fallo. **Build Next, verify:release, tipos/lint y2UI reales pasan.** Helper de inspección Cloudflare sóloGET/exacta zona mayami.app;5tests pasan. Auditor independiente aprueba cambios/relevo. No se publicaron web ni DNS. Primera ejecuciónUI encontró el servidor anterior sin la ruta nueva; tras rebuild pasó sin debilitar asserts.
+
+Borrador nube opcional guardado: dominios Cloudflare+mayami y requisito personal CLOUDFLARE_API_TOKEN (sóloapi.cloudflare.com); no aplicado, sin token. Oliver eligió Mac: no exigir este camino alternativo allí. Sin secretos en Git ni datos remotos alterados.
+
+**Próxima acción exacta en Mac:** leer AGENTS/ACTIVAR_MAYAMI_APP, preservar cambios y sincronizar rama, abrir Cloudflare con sesión local del propietario, verificar zona/nameservers/DNS existentes y alojamiento. Next requiere SSR; no usar workflow del panel ni inventarCNAME. Antes de compra pública cerrar catálogo vendible (is_demo actual aún permite comprar), fotos comerciales, operador/políticas y retornos de pago. No convertir noindex en supuesto control de acceso. La autorización pública está dada; faltan acceso y condiciones operativas comprobables, no permiso genérico nuevo.
+
+## APK Android mayami · compilado, validación pendiente · 5 de noviembre
 
 Oliver respondió «Sí» a generar un nuevo APK para completar arranque/iconos. La restricción anterior noAPK
 queda levantada para esta build Android preview; no implica iOS, tiendas públicas ni producción.
@@ -15,7 +25,7 @@ para ver las imágenes ya aprobadas. Diagnóstico usa el nombre visible mayami, 
 
 Root único integrador. Tipos/lint/config pública, prebuild Android y export Hermes aprobados. Seis pruebas de identidad pasan; manifiesto generado con etiqueta mayami, paquete correcto y recursos M. Scripts alterados automáticamente por prebuild restaurados; iOS no modificado.
 
-**Build en cola de EAS:** `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, [CI42075794184](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184). Consulta de sólo lectura CI42081150988 confirma IN_QUEUE, worker sin empezar, source clean, versionCode5, preview y runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. No duplicar el build ni tratar el enlace como descarga final todavía. Validación exacta activa en [CI42081690956](https://github.com/somosoudy-design/marketplace/actions/runs/42081690956), fuente e2c2ab8: espera a que termine ese mismo build (máx120min) y después valida APK/emulador automáticamente. La segunda observación CI42081150988/intento2 sigue IN_QUEUE, sin ETA ni worker iniciado. No es fallo de compilación ni recepción comprobada. [Informe e instalación](APK_MAYAMI_2026-11-05.md).
+**Build terminado:** `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, CI42075794184 Success. versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview. CI42081690956 descargó ese APK, pero el verificador devolvió lista vacía de certificados al analizar apksigner; no se llegó a ejecutar emulador. **No equivale a firma distinta demostrada ni APK validado.** Investigar salida real y corregir el verificador si corresponde; no recompilar la app. EAS confirmó un único keystore predeterminado anterior al APK5, huella `86bf0698228dd380cb4d7efc454347023fa6392fe3d3780d06f9f278c244df7f`. [Informe](APK_MAYAMI_2026-11-05.md).
 
 **Validación preparada:** verificador estricto de firma/paquete/versión/runtime/canal y referencia pública del único keystore EAS anterior al APK5; 13 pruebas pasan. Harness focal de emulador revisable, sin desinstalación ni datos remotos escritos. Falta ejecutar sobre el APK terminado y revisar videos/capturas reales. No afirmar conservación de sesión APK5: su binario caducó. La referencia de firma del proveedor no equivale a una comparación binaria histórica.
 
