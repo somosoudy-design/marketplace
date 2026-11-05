@@ -1,5 +1,8 @@
 # Logotipo original mayami · Work v3
 
+> Revisión posterior de Oliver: la escala144 en cabeceras resultó excesiva. [Ajuste contextual112/96 y
+> preparación del arranque nativo](ESCALA_MAYAMI_2026-11-05.md) sustituyen esas medidas en la interfaz.
+
 5 de noviembre de 2026. Implementación inicial `705da3d`; root único integrador. Este incremento incorpora
 el original elegido por Oliver en la interfaz existente. No redefine la marca ni cambia el catálogo.
 
