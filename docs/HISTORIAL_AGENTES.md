@@ -1,5 +1,24 @@
 # Historial de agentes
 
+### 2026-11-05 · escala rectificada y K nativa localizada
+
+Oliver rechaza tamaño144 y detectaK de introducción. Root coordina dirección visual/runtime/auditor;
+único escritor. Fuente5e096ce:112normal/96sticky, web112/144 y panel112/144, sin alterar original ni
+controles44.0c63322 retiraK de avatar vacío y prepara cinco activos nativos/patch fuera de configuración
+activa. No segunda introJS: el splash del APK5 y sus iconos son recursos compilados.
+
+AuditorAPROBADO para escala:10 escenarios,62PNG locales,10comparables preservados. Root2regresionesweb,
+1flujo foto con error/cancelación/persistencia/vacío,4integridad, tipos/lint/builds/exports aprobados.
+El buscador gana48px; no se afirma aumento de catálogo visible. [Informe](ESCALA_MAYAMI_2026-11-05.md).
+
+OTA42072938991/fuente2b2c1a4 publicada con guard exacto APK5: `01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b`,
+grupo `894906dc-cdb0-43b1-ac14-1377036f685f`. Observación42073374420 desdebe77d91 confirma última
+compatible/limpia/sinrollback,5nov17:17:48UTC.13 pruebas helper pasan. No recepción física ni despliegueweb/panel.
+
+Próximo: autorización para nuevo APK Android que elimineK nativa; restricción previa noAPK aún vigente.
+Preparación en docs/propuestas/marca-nativa-mayami con verificador/5PNG/patchsinaplicar; conservar firma,
+paquete/scheme/Firebase/canal y verificar nuevo runtime/arranque/máscaras/sesión. No iOS, backend ni finanzas.
+
 ### 2026-11-05 · original Work recuperado, integrado y publicado
 
 Tras aplicar Oliver revisión9, Drive entregó MAYAMI_Kit_Vectorial_v3.zip:65 entradas/18.578.029bytes,

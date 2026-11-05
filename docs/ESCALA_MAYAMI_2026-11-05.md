@@ -71,5 +71,6 @@ La siguiente acción requiere levantar esa restricción; el trabajo preparatorio
 Publicado por [CI42072938991](https://github.com/somosoudy-design/marketplace/actions/runs/42072938991),
 fuente2b2c1a4, guard exacto APK5 aprobado. ID `01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b`,
 grupo `894906dc-cdb0-43b1-ac14-1377036f685f`. Sólo Android preview; web/panel validados localmente, sin despliegue.
-Observación sólo lectura de última compatible en curso.
+[Observación42073374420](https://github.com/somosoudy-design/marketplace/actions/runs/42073374420) confirma última compatible, fuente limpia y sin rollback; creada5nov17:17:48UTC.
+[Resultado verificable](capturas/escala-mayami-2026-11-05/publicacion.json).13 pruebas del helper pasan.
 No afirmar recepción en Samsung ni desaparición de la K nativa con esta OTA.

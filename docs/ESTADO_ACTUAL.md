@@ -1,20 +1,39 @@
-# Estado actual de Kora
+# Estado actual de mayami
 
 > Documento vivo. Lo actualiza el agente que trabaja, en cada checkpoint (cada 20–30 minutos de trabajo, al
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## Ajuste óptico publicado · K nativa pendiente · 5 de noviembre
+## Escala mayami corregida y publicada · K nativa pendiente · 5 de noviembre
 
-Oliver considera excesivo el logo144 y señala la K al abrir. Se revisa la integración en contexto:
-112px normal,96px sticky; web112móvil/144desktop; panel112navegación/144acceso. Trazados originales
-intactos. Excepción de escala a la guía por feedback del propietario; no reducir controles44px.
-Tipos/lint y4 verificaciones de originales pasan. Builds/exports y2 regresiones web aprobados. Se corrige también K de avatar sin nombre a icono de persona; pendiente su regresión y export final. Propuesta nativa concreta en `docs/propuestas/marca-nativa-mayami`, cinco PNG preparados y patch sin aplicar. Auditor APROBADO:10 casos,2 regresiones web y1 de foto pasan; exportfinalweb/Hermes y tipos/lint aprobados. Publicado CI42072938991/fuente2b2c1a4 con guard exacto APK5; ID `01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b`, grupo `894906dc-cdb0-43b1-ac14-1377036f685f`. Observación compatible en curso. [Comparación y límite nativo](ESCALA_MAYAMI_2026-11-05.md).
+Oliver rechazó el logo144 por excesivo y señaló la K del arranque. Implementación `5e096ce`/`0c63322`:
+112px normal,96px sticky; web112 móvil/144 escritorio; panel112 navegación/144 acceso. Arte original
+intacto, controles44px. El avatar sin nombre usa persona en vez de K. El mínimo del kit no debe imponerse
+a todos los contextos; excepción óptica documentada según feedback del propietario.
+[Informe y10PNG comparables](ESCALA_MAYAMI_2026-11-05.md).
 
-La K pertenece a splash/icono nativos del APK5, no a una introducciónJS. No agregar una pantalla artificial
-para ocultarla. Especialista prepara patch nativo revisable fuera de configuración activa; eliminarla
-requiere un APK nuevo y levantar la restricción previa de no generarlo. Root único escritor; especialistas
-sólo lectura/pruebas en `.local/logo-refine-20261105`. No afirmar que OTA cambia el arranque compilado.
+**Validación:** auditor APROBADO para la interfaz tras10 escenarios propios;2 regresiones de cabecera web,
+1 flujo de foto con persistencia/error/cancelación/avatar vacío,4 comprobaciones de originales, tipos/lint,
+builds Next y exports web/Android Hermes aprobados. Fuente160% en navegador,320/412/1440 y ambos temas.
+El buscador fijo gana48px de ancho; los productos no suben. No afirmar recepción ni fontScale Android físico.
+
+**Publicado** [CI42072938991](https://github.com/somosoudy-design/marketplace/actions/runs/42072938991),
+fuente `2b2c1a4`, ID `01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b`, grupo
+`894906dc-cdb0-43b1-ac14-1377036f685f`, Android preview. Guard exacto APK5 aprobado.
+Observación42073374420 confirma última compatible, fuente limpia y sin rollback; creada5nov17:17:48UTC.
+13 pruebas del helper aprobadas. No republicar esta fuente. Web/panel sólo validados localmente.
+
+**Pendiente real:** K en splash/iconos compilados del APK5. No es una introducciónJS; no se añadió pantalla
+para disimularla. `docs/propuestas/marca-nativa-mayami` contiene cinco PNG preparados, originales/hash,
+receta portable, patch Android sin aplicar y verificador aprobado. No se modificó configuración nativa,
+no prebuild ni APK nuevo. Se conserva la restricción explícita anterior «No generar APK nuevo».
+
+**Próxima acción exacta:** obtener autorización para el nuevo APK Android necesaria para quitar la K.
+Después revisar/aplicar la propuesta, conservar firma y paquete `com.example.kora.preview`, aumentar
+versionCode y comprobar nuevo runtime, arranque frío/oscuro, iconos/máscaras/notificación y sesión en Android.
+No forzar runtime APK5 ni desinstalar la app para migrar. Preparación lista; la aprobación OTA actual no
+certifica el cambio nativo. No volver a recuperar ZIP, rehacer la escala ni abrir hosting antes de resolver
+esta decisión del propietario. Root único escritor; especialistas sólo lectura/pruebas.
 
 ## Logotipo original Work · integrado y publicado · 5 de noviembre
 

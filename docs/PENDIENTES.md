@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Prioridad de marca · escala cerrada, arranque pendiente · 5nov
+
+- Escala112/96 de app y equivalentes web/panel revisados; avatar sin nombre corregido. [Evidencia](ESCALA_MAYAMI_2026-11-05.md). OTA `01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b` publicada por42072938991, guardAPK5 aprobado. Observación42073374420: última compatible/limpia/sin rollback. Samsung no observado; no republicar fuente2b2c1a4.
+- **K del arranque:** recurso nativo, también iconos adaptativo/monocromo/notificaciones. Preparación concreta en `docs/propuestas/marca-nativa-mayami`: cincoPNG/patch/verificador listos, sin aplicación niAPK. Requiere autorización para levantar «No generar APK nuevo». Después instalar encima con firma/paquete existentes y versionCode mayor; comprobar nuevo runtime y recepción antes de migrar controlesOTA. No usar overlayJS para afirmar que desaparecióK.
+- Las medidas144 universales de la primera integración fueron rechazadas por el propietario. Reglas actuales en DISENO/config/brand-presentation; la guía original se conserva como fuente, no como tamaño obligatorio en toda cabecera.
+
 ## Marca y coherencia universal · 5 de noviembre de 2026
 
 - Implementado y revisado: mayami compartido en app/web/panel, enlaces separados de dominio activo, contraste de controles, iconos de Cuenta y editor responsive. [Informe y 16 capturas comparables](MARCA_MAYAMI_2026-11-05.md). Auditor APROBADO tras corregir truncamiento y objetivos táctiles; no repetir el bloque.
