@@ -61,7 +61,7 @@ catálogo ni capturas de Android físico. Los PNG se conservan completos, sin re
   intactas. Esta comparación local no sustituye el guard exacto APK 5 que ejecuta CI con Firebase original.
 - Revisión visual independiente: CAMBIOS OBLIGATORIOS por la cabecera de checkout320. Una regla de
   `purchase.css` conservaba gap16 y forzaba una segunda fila: 144+16+132 superaba los288px disponibles.
-  Corregida a12; regresión portable incorporada para checkout y pago. Segunda revisión focal pendiente.
+  Corregida a12; regresión portable incorporada para checkout y pago. Segunda revisión focal aprobada en checkout y pago, ambos temas; logo y las tres acciones comparten centroY35. La regresión portable pasó2/2.
 
 Recursos Product Design consultados: `index`, `audit` y `audit/references/design-audit-framework.md`.
 Se aplicaron comparación por captura, coherencia de superficies, nombre accesible, objetivos táctiles,
@@ -76,6 +76,8 @@ ni recepción en el teléfono de Oliver.
 
 ## Publicación y siguiente paso
 
-Pendiente de cierre de auditoría y guard exacto. Sólo Android `preview`, nunca `production`, sin APK nuevo.
+Auditor independiente **APROBADO** después de corregir la segunda fila y volver a inspeccionar sus capturas. Se validaron marca normal/sticky, búsqueda con foco, web320/412/1440, acceso/sidebar del panel y texto160% en los puntos afectados. Sin discrepancias pendientes en este alcance.
+
+Publicación Android pendiente de guard exacto y resultado real de EAS. Sólo `preview`, nunca `production`, sin APK nuevo.
 El nombre/icono/splash instalados continúan siendo los compilados en APK 5. El hosting del panel y de la
 web compradora no se actualiza mediante una OTA; mayami.app sigue sin activar.
