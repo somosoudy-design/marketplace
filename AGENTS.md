@@ -18,6 +18,11 @@ No confundir esta deuda de implementación con una decisión de nombre pendiente
 preservar compatibilidad con APK 5 y activar enlaces al dominio sólo después de comprobar hosting,
 HTTPS y rutas. No asumir una razón social, correo operativo ni dominio ya conectado.
 
+**Excepción autorizada el 5nov2026:** Oliver aprobó un nuevo APK Android preview para sustituir iconos,
+splash y nombre instalado por mayami. La fuente nueva tiene runtime propio; no forzar el del APK5.
+Conservar paquete/firma y consultar `docs/APK_MAYAMI_2026-11-05.md` y el estado vivo antes de publicar.
+Esta aprobación no incluye iOS, tiendas públicas ni canal production.
+
 Filosofía: **la complejidad pertenece al sistema; la claridad, al usuario.** Simplifica la experiencia, no las
 capacidades. Detalle en `docs/DIRECCION_PRODUCTO.md`.
 
