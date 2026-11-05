@@ -37,6 +37,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
+    // Native Android identity; apply only with an authorized new APK.
+    icon: './assets/images/mayami/android-icon.png',
     package: `${brand.androidPackage}${suffix}`,
     // Firebase Cloud Messaging (push on Android). EAS injects the file from an environment variable of type
     // "file" named GOOGLE_SERVICES_JSON (expo.dev › project › Environment variables); without it the key is absent and
@@ -44,9 +46,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ...(process.env.GOOGLE_SERVICES_JSON ? { googleServicesFile: process.env.GOOGLE_SERVICES_JSON } : {}),
     adaptiveIcon: {
       backgroundColor: native.brand,
-      foregroundImage: `${native.dir}/android-icon-foreground.png`,
-      backgroundImage: `${native.dir}/android-icon-background.png`,
-      monochromeImage: './assets/images/android-icon-monochrome.png',
+      foregroundImage: './assets/images/mayami/adaptive-foreground.png',
+      monochromeImage: './assets/images/mayami/adaptive-foreground.png',
     },
     // Off on purpose: with the opt-in, Android 13 to 15 hand «atrás» to the system (it closed the app) because React
     // Native 0.86 only listens for it on Android 16. Android 16 still goes through React Native either way.
@@ -71,6 +72,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     ['expo-router', { origin: `https://${brand.webDomain}` }],
+    ['./plugins/withMayamiAndroidLabel.cjs', { name: 'mayami' }],
     [
       'expo-splash-screen',
       {
@@ -78,6 +80,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         image: `${native.dir}/splash-icon.png`,
         imageWidth: 96,
         dark: { backgroundColor: native.splashDark, image: `${native.dir}/splash-icon-dark.png` },
+        android: {
+          image: './assets/images/mayami/splash-icon.png',
+          imageWidth: 96,
+          dark: { image: './assets/images/mayami/splash-icon-dark.png' },
+        },
       },
     ],
     [
@@ -88,7 +95,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         microphonePermission: false,
       },
     ],
-    ['expo-notifications', { icon: './assets/images/notification-icon.png', color: native.brand }],
+    ['expo-notifications', { icon: './assets/images/mayami/notification-icon.png', color: native.brand }],
     'expo-web-browser',
   ],
   // EAS Update: test builds pick up JavaScript and image changes without a new APK. The fingerprint changes

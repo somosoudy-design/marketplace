@@ -16,6 +16,13 @@ const lines = [];
 let ok = true;
 for (const b of builds) {
   const page = `https://expo.dev/accounts/${cfg.owner}/projects/${cfg.slug}/builds/${b.id}`;
+  if (b.status === 'FINISHED') {
+    const metadata = { id: b.id, status: b.status, platform: b.platform, profile: b.buildProfile,
+      version: b.appVersion, versionCode: b.appBuildVersion, commit: b.gitCommitHash,
+      runtime: b.runtimeVersion ?? b.runtime?.version, page, apk: b.artifacts?.buildUrl };
+    const escaped = JSON.stringify(metadata).replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A');
+    console.log(`::notice title=Android build finished::${escaped}`);
+  }
   lines.push(`### Android ${b.buildProfile ?? ''}: ${b.status}`, '', `- Página de la compilación (instalar): ${page}`);
   if (b.artifacts?.buildUrl) lines.push(`- APK: ${b.artifacts.buildUrl}`);
   if (b.appVersion) lines.push(`- Versión: ${b.appVersion} (${b.appBuildVersion ?? '?'})`);

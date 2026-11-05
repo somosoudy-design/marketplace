@@ -6,6 +6,7 @@ import { Platform, ScrollView, View } from 'react-native';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { env } from '@/lib/env';
+import { brand } from '@/lib/brand';
 import { sessionSealSelfTest } from '@/lib/session-storage';
 import { useTheme } from '@/theme';
 
@@ -26,7 +27,7 @@ export default function DiagnosticsScreen() {
   }, []);
 
   const rows: [string, string][] = [
-    ['App', `${Constants.expoConfig?.name ?? ''} ${Constants.expoConfig?.version ?? ''}`],
+    ['App', `${brand.name} ${Constants.expoConfig?.version ?? ''}`],
     ['Sistema', `${Platform.OS} ${String(Platform.Version)}`],
     ['Canal', Updates.channel ?? '—'],
     ['Runtime', Updates.runtimeVersion ?? '—'],

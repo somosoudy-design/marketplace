@@ -4,6 +4,22 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## APK Android mayami autorizado · en curso · 5 de noviembre
+
+Oliver respondió «Sí» a generar un nuevo APK para completar arranque/iconos. La restricción anterior noAPK
+queda levantada para esta build Android preview; no implica iOS, tiendas públicas ni producción.
+Aplicado el patch preparado y cinco PNG originales: labelAndroid mayami, splash claro/oscuro, iconos
+adaptativo/monocromo/notificación. Se mantienen paquete/scheme/proyecto/Firebase/firma existente e iOS.
+El catálogo privado ahora se incluye en el bundle embebido mediante envpreview; no depender de una OTA
+para ver las imágenes ya aprobadas. Diagnóstico usa el nombre visible mayami, preserva protocolo KoraDiag.
+
+Root único integrador. Tipos/lint/config pública pasan; pendiente prebuildAndroid y gates de APK real.
+El workflow de build guarda JSON fuera de fuente y exige árbol limpio. No publicar OTA con runtimeAPK5
+tras estos cambios nativos; el nuevo runtime se registrará desde el binario terminado, sin forzarlo.
+Siguiente exacto: prebuildAndroid sin instalar deps, exportHermes, buildEASpreview existente; inspeccionar
+firma/paquete/versionCode>4/backend/claves y revisar arranque/iconos en emulador. APK5 no disponible para
+prueba binaria de migración; no repetir su descarga caducada ni afirmar conservación probada físicamente.
+
 ## Escala mayami corregida y publicada · K nativa pendiente · 5 de noviembre
 
 Oliver rechazó el logo144 por excesivo y señaló la K del arranque. Implementación `5e096ce`/`0c63322`:
