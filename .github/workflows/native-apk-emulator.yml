@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22.22.0
+          package-manager-cache: false
       - name: Identidad explícita de la compilación terminada
         run: |
           node --input-type=module <<'JS'
@@ -42,6 +43,15 @@ jobs:
           certificate=$(node -p "JSON.parse(require('fs').readFileSync('shots/native/signing-reference.json','utf8')).certificateSha256")
           node tools/eas/verify-native-apk.mjs --build-json apks/native-build.json --source "$MAYAMI_BUILD_COMMIT" --runtime "$MAYAMI_RUNTIME" --certificate "$certificate" --apk apks/mayami-preview.apk --output apks
           cp apks/native-apk-receipt.json shots/native/
+      - name: Conservar APK verificado para próximas migraciones
+        uses: actions/upload-artifact@v4
+        with:
+          name: mayami-preview-apk
+          path: |
+            apks/mayami-preview.apk
+            apks/native-apk-receipt.json
+          retention-days: 90
+          if-no-files-found: error
       - name: Herramientas existentes y KVM
         env:
           MAESTRO_CLI_NO_ANALYTICS: '1'

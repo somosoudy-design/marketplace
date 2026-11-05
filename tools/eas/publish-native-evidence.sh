@@ -21,7 +21,7 @@ mkdir -p "$destination"
 python3 - "$source_dir" "$destination" <<'PY'
 from pathlib import Path
 import hashlib,html,json,os,shutil,struct,sys
-source,dest=map(Path,sys.argv[1:]);raw=source/'raw';copied=[];skipped=[];total=0
+source,dest=map(Path,sys.argv[1:]);raw=source/'raw';copied=[];recordings=[];skipped=[];total=0
 for f in sorted(raw.rglob('*.png')) if raw.exists() else []:
  if f.is_symlink(): skipped.append({'file':str(f.relative_to(source)),'reason':'symlink'});continue
  data=f.read_bytes()
@@ -36,6 +36,18 @@ for f in sorted(raw.rglob('*.png')) if raw.exists() else []:
  digest=hashlib.sha256(data).hexdigest()
  assert hashlib.sha256(target.read_bytes()).hexdigest()==digest
  copied.append({'sourceFile':str(relative),'file':str(relative),'sha256':digest,'bytes':len(data),'width':width,'height':height})
+# Preserve complete cold-start videos too, so review is not limited to selected early frames.
+for f in sorted(raw.glob('*/cold-start.mp4')) if raw.exists() else []:
+ if f.is_symlink(): continue
+ data=f.read_bytes()
+ if not 0<len(data)<=32*1024*1024: raise SystemExit('Unexpected recording size; inspect runner artifact.')
+ total+=len(data)
+ if total>96*1024*1024: raise SystemExit('Native evidence exceeds96MiB; keep original runner artifact.')
+ relative=f.relative_to(source);target=dest/relative;target.parent.mkdir(parents=True,exist_ok=True)
+ shutil.copyfile(f,target)
+ digest=hashlib.sha256(data).hexdigest()
+ assert hashlib.sha256(target.read_bytes()).hexdigest()==digest
+ recordings.append({'file':str(relative),'bytes':len(data),'sha256':digest})
 receipt={}
 receipt_path=source/'receipt.json'
 if not receipt_path.exists(): receipt_path=source/'native-apk-receipt.json'
@@ -53,12 +65,12 @@ for theme in ['light','dark']:
   (dest/p.name).write_text(json.dumps({k:original[k] for k in keys if k in original},ensure_ascii=False,indent=2)+'\n')
 manifest={'source':'Android emulator captures and decoded original screenrecord frames; not web',
  'run':os.environ['GITHUB_RUN_ID'],'attempt':os.environ.get('GITHUB_RUN_ATTEMPT','1'),'workflowCommit':os.environ['GITHUB_SHA'],
- 'apk':receipt,'imageProcessing':'none; byte-for-byte copies','images':copied,'skipped':skipped,
+ 'apk':receipt,'imageProcessing':'none; byte-for-byte copies','images':copied,'recordings':recordings,'skipped':skipped,
  'executionComplete':(source/'RESULTADO.md').exists()}
 (dest/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 readme='# Evidencia Android nativa · originales\n\n'
 readme+=f"Run {manifest['run']} · intento {manifest['attempt']} · fuente {manifest['workflowCommit']}.\n\n"
-readme+=f'{len(copied)} PNG copiados byte a byte; no se redimensionaron, convirtieron, recortaron ni retocaron. Los early-frames proceden del screenrecord real. MP4 completo y logs quedan en el artifact de esta misma ejecución.\n\n'
+readme+=f'{len(copied)} PNG y {len(recordings)} MP4 copiados byte a byte; no se redimensionaron, convirtieron, recortaron ni retocaron. Los early-frames proceden del screenrecord real. Los logs quedan en el artifact de esta misma ejecución.\n\n'
 readme+=('El script terminó y produjo RESULTADO.md; queda revisión visual independiente.\n' if manifest['executionComplete'] else '**Ejecución incompleta o fallida. Estas capturas no implican aprobación.** Consultar el job para la causa.\n')
 readme+='\nNo demuestra instalación en el teléfono de Oliver ni migración desde APK5. No confundir bundle embebido con recepción OTA.\n'
 (dest/'LEEME.md').write_text(readme)
