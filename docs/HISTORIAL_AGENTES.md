@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-05 · alternativa WeTransfer para el logo, acceso aún bloqueado
+
+Oliver aporta `https://we.tl/t-QmFRpZAj94yW27ST`. Rama sincronizada sin cambios previos. Comprobación única por HTTPS normal: CONNECT403/HTTP000; política restringida/enforced de revisión7 no permite `we.tl`. No se obtuvo, inspeccionó ni modificó ningún recurso. Borrador de configuración guardado mediante el flujo soportado, añadiendo sólo `we.tl` y `wetransfer.com` y conservando todos los destinos previos, scripts y secretos; `requires_publish:true`, todavía sin aplicación al runtime. Sin intentos de evasión, nuevas pruebas de aplicación ni nueva publicación OTA. Próximo: aplicar configuración o recibir ZIP adjunto y continuar integración original, sin repetir auditoría previa. Última OTA válida permanece `01a1aabe-bbe5-71a4-9898-23a967d41a8f`.
+
 ### 2026-11-05 · cierre de marca y OTA mayami
 
 Solicitud643dd2f publicada con éxito por CI41991694643: Android preview, ID `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, grupo `e7437246-60e9-4f44-a80a-59d404e2a570`, runtime exacto APK5. Observación41992163529 desdefbd9fc1 confirma última compatible, fuente limpia y sin rollback (08:06:29UTC). No recepción física/emulador comprobada. 13 pruebas del helper de observación pasan; no se descargó APK ni se generó uno nuevo. [Resultado y capturas](MARCA_MAYAMI_2026-11-05.md).
