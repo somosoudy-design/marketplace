@@ -60,7 +60,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
         return { logo: { right: logo.right, y: logo.y, width: logo.width }, actions, scrollWidth: document.documentElement.scrollWidth };
       });
       expect(fit.scrollWidth).toBe(320);
-      expect(fit.logo.width).toBeGreaterThanOrEqual(144);
+      expect(fit.logo.width).toBe(112);
       expect(fit.actions[0]!.x - fit.logo.right).toBeGreaterThanOrEqual(6);
       for (const action of fit.actions) {
         expect(Math.abs(action.y - fit.logo.y)).toBeLessThan(1);

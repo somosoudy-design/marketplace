@@ -4,6 +4,18 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
+## Ajuste óptico y arranque · en curso · 5 de noviembre
+
+Oliver considera excesivo el logo144 y señala la K al abrir. Se revisa la integración en contexto:
+112px normal,96px sticky; web112móvil/144desktop; panel112navegación/144acceso. Trazados originales
+intactos. Excepción de escala a la guía por feedback del propietario; no reducir controles44px.
+Tipos/lint y4 verificaciones de originales pasan. Pendiente capturas posteriores, auditor y OTApreview.
+
+La K pertenece a splash/icono nativos del APK5, no a una introducciónJS. No agregar una pantalla artificial
+para ocultarla. Especialista prepara patch nativo revisable fuera de configuración activa; eliminarla
+requiere un APK nuevo y levantar la restricción previa de no generarlo. Root único escritor; especialistas
+sólo lectura/pruebas en `.local/logo-refine-20261105`. No afirmar que OTA cambia el arranque compilado.
+
 ## Logotipo original Work · integrado y publicado · 5 de noviembre
 
 **Resuelto el acceso al archivo.** Revisión9 aplicada por Oliver; descargado de Drive

@@ -188,7 +188,7 @@ main:focus {
   align-items: center;
   min-height: 44px;
   flex: 0 0 auto;
-  width: 176px;
+  width: 144px;
 }
 .brand-artwork,
 .brand-artwork img {
@@ -196,7 +196,7 @@ main:focus {
   width: 100%;
   height: auto;
 }
-.footer .wordmark { width: 160px; }
+.footer .wordmark { width: 112px; }
 .searchbox {
   display: flex;
   align-items: center;
@@ -1154,10 +1154,10 @@ legend {
   }
   .account-nav {
     order: 1;
-    gap: 0;
+    gap: 8px;
   }
   .wordmark,
-  .footer .wordmark { width: 144px; }
+  .footer .wordmark { width: 112px; }
   .searchbox {
     order: 2;
     flex-basis: 100%;

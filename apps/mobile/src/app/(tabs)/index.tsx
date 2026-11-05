@@ -323,7 +323,7 @@ function StickySearch({ y, searchBottom }: { y: SharedValue<number>; searchBotto
         ]}
       >
         <View style={{ width: '100%', maxWidth: MAX_CONTENT - 32, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-          <BrandMark inverse />
+          <BrandMark inverse compact />
           <ScalePressable
             testID="home-search-sticky"
             scaleTo={0.99}

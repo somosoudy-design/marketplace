@@ -1,13 +1,13 @@
 import { View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import artwork from '../../../../config/brand-artwork.json';
-import { brand } from '@/lib/brand';
+import { brand, brandMarkWidths } from '@/lib/brand';
 import { useTheme } from '@/theme';
 
 /** Original Work SVG, unchanged. Surrounding header margins/gaps provide the kit's clear space. */
-export function BrandMark({ inverse = false }: { inverse?: boolean }) {
+export function BrandMark({ inverse = false, compact = false }: { inverse?: boolean; compact?: boolean }) {
   const t = useTheme();
-  const width = artwork.minimumScreenWidth;
+  const width = compact ? brandMarkWidths.compact : brandMarkWidths.navigation;
   return (
     <View testID="brand-mark" accessible accessibilityRole="header" accessibilityLabel={brand.name}
       style={{ width, minHeight: 44, flexShrink: 0, justifyContent: 'center' }}>

@@ -30,15 +30,21 @@ Reglas compartidas por función:
 - Notificaciones se identifica con campana; direcciones con pin; carrito con bolsa y favoritos con corazón.
   El significado debe conservarse al cambiar entre app y web.
 - La tipografía de interfaz continúa siendo Plus Jakarta Sans. La marca usa el SVG original, con etiqueta
-  accesible mayami y sin duplicarla en el gráfico interno. Proporción 1476:280, ancho mínimo 144 px
-  (alto proporcional 27,317 px); área libre de 62 unidades del maestro alrededor. Márgenes y separación
+  accesible mayami y sin duplicarla en el gráfico interno. Proporción 1476:280, tamaños ópticos según contexto
+  (112 px en cabecera, 96 al desplazar; alto proporcional 21,25/18,21 px); área libre de 62 unidades del maestro alrededor. Márgenes y separación
   del contenedor pueden aportar esa área: no sumar espacios vacíos por duplicado.
 - Variante blanca sobre Inicio editorial y fondos oscuros; violeta original `#6D42E8` sobre fondos claros.
-  No teñir el logo con el violeta claro de los controles nocturnos. App 144 px; web 144 en móvil y 176 en
-  escritorio; pie 144/160; panel 144 en navegación y 160 en acceso. Cabeceras con alto mínimo 44 px.
+  No teñir el logo con el violeta claro de los controles nocturnos. App 112 px normal y 96 al desplazar; web 112 móvil y 144 escritorio;
+  pie 112; panel 112 navegación y 144 acceso. Cabeceras con alto mínimo 44 px.
   El símbolo óptico del kit se reserva para favicon; no sustituir el nombre por una K o icono genérico.
 - Contenedores de gestión admiten `min-width: 0`, reflow y cabeceras que se distribuyen en varias líneas.
   No ocultar el desbordamiento para aparentar que acciones fuera de pantalla están disponibles.
+
+**Revisión del propietario,5nov:** el mínimo144 de la guía resultó demasiado dominante en la app.
+`brandMarkWidths` en `config/brand-presentation.ts` establece la excepción óptica112/96/144; el dato
+original de la guía permanece registrado en `brand-artwork.json`, pero no determina toda la interfaz.
+Tamaño físico del arte, altura de cabecera y objetivos táctiles son dimensiones distintas. La K del
+arranque es nativa: requiere otra compilación y no debe ocultarse con una segunda introducciónJS.
 
 Estas reglas no rediseñan Inicio C ni imponen la densidad del panel al comprador. La revisión visual debe
 comparar los mismos datos, tema y ancho, además de verificar contraste de estados y navegación con teclado.

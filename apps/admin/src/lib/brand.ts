@@ -1,1 +1,1 @@
-export { brand } from '../../../../config/brand-presentation';
+export { brand, brandMarkWidths } from '../../../../config/brand-presentation';

@@ -1,9 +1,9 @@
-import { brand } from '@/lib/brand';
+import { brand, brandMarkWidths } from '@/lib/brand';
 import artwork from '../../../../config/brand-artwork.json';
 
 /** Original Work artwork. Header/form spacing supplies its clear space; no CSS recoloring. */
 export function BrandMark({ access = false }: { access?: boolean }) {
-  const width = access ? 160 : artwork.minimumScreenWidth;
+  const width = access ? brandMarkWidths.access : brandMarkWidths.navigation;
   return (
     <span role="img" aria-label={brand.name} className="inline-flex min-h-[44px] shrink-0 items-center" style={{ width }}>
       <picture className="block w-full">
