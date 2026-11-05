@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-05 · cierre de marca y OTA mayami
+
+Solicitud643dd2f publicada con éxito por CI41991694643: Android preview, ID `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, grupo `e7437246-60e9-4f44-a80a-59d404e2a570`, runtime exacto APK5. Observación41992163529 desdefbd9fc1 confirma última compatible, fuente limpia y sin rollback (08:06:29UTC). No recepción física/emulador comprobada. 13 pruebas del helper de observación pasan; no se descargó APK ni se generó uno nuevo. [Resultado y capturas](MARCA_MAYAMI_2026-11-05.md).
+
+Logo Work sigue sin descargar por bloqueo de red; el permiso añadido sólo está en borrador, revisión actual del entorno sigue7. mayami aparece como nombre tipográfico, no como logo aprobado. Dominio no activo y hosting web/panel pendiente. Próximo exacto: obtener original de Drive al aplicar configuración o adjunto, inspeccionar y colocarlo coherentemente en app/web/panel; no repetir esta auditoría ni publicar la misma fuente móvil.
+
 ### 2026-11-05 · coherencia mayami revisada y preparada para Android preview
 
 Root integrador único; Product Design audit + directrices Oliver, especialistas visual/runtime/auditor independientes. Fuentes6ef6503/14d5680/21e6889/b8170cc: identidad de presentación compartida y dominio inactivo explícito, contrastes y semántica corregidos, editor sin overflow y objetivos44px. Auditor rechazó primera solución del editor aunque17tests pasaban; corrección y segunda revisión3/3, APROBADO. 102unitarias,4regresiones portátiles,6favoritos, tipos/lint fresco, builds y exports aprobados. [Informe y evidencia](MARCA_MAYAMI_2026-11-05.md).

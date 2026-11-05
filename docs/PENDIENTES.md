@@ -5,7 +5,7 @@
 - Implementado y revisado: mayami compartido en app/web/panel, enlaces separados de dominio activo, contraste de controles, iconos de Cuenta y editor responsive. [Informe y 16 capturas comparables](MARCA_MAYAMI_2026-11-05.md). Auditor APROBADO tras corregir truncamiento y objetivos táctiles; no repetir el bloque.
 - Logo original Work localizado por enlace Drive, todavía sin descargar por CONNECT403. Publicar borrador de red (drive.google.com y drive.usercontent.google.com) o recibir archivo adjunto; inspeccionar e integrar original, sin redibujar ni presentar texto provisional como logo.
 - mayami.app elegido, aún sin hosting/HTTPS/rutas verificados. Identidad de instalación APK 5 preservada. No cambiar identificadores nativos por una OTA.
-- Android preview preparado para publicación autorizada; registrar ID real y observación al finalizar. Web/panel en build local, su hosting no se resuelve mediante OTA móvil.
+- Android preview publicado: `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, fuente643dd2f, CI41991694643. Observación41992163529 confirma última compatible APK5, limpia y sin rollback. Recepción Samsung no observada. Web/panel en build local, su hosting no se resuelve mediante OTA móvil; no republicar la misma fuente.
 
 ## Interacción y compra compacta ·4nov2026
 
