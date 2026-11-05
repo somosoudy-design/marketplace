@@ -17,6 +17,7 @@ import { Banner, ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { useAuth } from '@/lib/auth';
+import { brand } from '@/lib/brand';
 import { haptics } from '@/lib/haptics';
 import { useCategories } from '@/lib/hooks';
 import { useSeller } from '@/lib/seller';
@@ -93,9 +94,9 @@ function Editor({ product: p, pricing }: { product: SellerEditableProduct | null
       <TextField testID="product-edit-highlights" label="Características destacadas" helper="Una por línea, máximo seis." value={f.highlights} multiline editable={!busy} onChangeText={(v)=>set('highlights',v)} />
       {categories.isError ? <ErrorState error={categories.error} onRetry={()=>categories.refetch()} /> : <SellerChoice label="Categoría" testID="product-category" value={f.category_id} items={categoryItems} disabled={busy||categories.isPending} onChange={(v)=>set('category_id',v)} />}
       <SellerChoice label="Disponibilidad" testID="product-availability" value={f.availability} items={choices.map((a)=>({value:a,label:AVAILABILITY[a].label}))} disabled={busy} onChange={(v)=>set('availability',v)} />
-      <Text variant="caption" color="textSecondary">No disponible pausa la venta. Agotado se ajusta al inventario. HAYAZGO revisa la publicación cuando corresponde.</Text>
+      <Text variant="caption" color="textSecondary">No disponible pausa la venta. Agotado se ajusta al inventario. {brand.name} revisa la publicación cuando corresponde.</Text>
     </Card>
-    <Card style={{ gap:16 }}><Text variant="subtitle">Precio e inventario</Text><Text variant="bodySmall" color="textSecondary">{auto ? 'Este precio sigue al costo. Actualiza costos abajo; HAYAZGO calcula el resultado con la regla vigente.' : 'El precio del producto corresponde a la variante activa más económica. El cobro se calcula al comprar.'}</Text>
+    <Card style={{ gap:16 }}><Text variant="subtitle">Precio e inventario</Text><Text variant="bodySmall" color="textSecondary">{auto ? `Este precio sigue al costo. Actualiza costos abajo; ${brand.name} calcula el resultado con la regla vigente.` : 'El precio del producto corresponde a la variante activa más económica. El cobro se calcula al comprar.'}</Text>
       {variants.map((v,i)=><View key={v.id} style={{ gap:12 }}><Text variant="label">Variante {i+1}</Text>
         <TextField testID={`variant-title-${i}`} label={`Nombre de variante ${i+1}`} value={v.title} editable={!busy} onChangeText={(value)=>variant(i,{ title:value })} />
         <TextField testID={`variant-price-${i}`} label={`Precio USD de variante ${i+1}`} value={v.price} keyboardType="decimal-pad" editable={!busy&&!auto} onChangeText={(value)=>variant(i,{ price:value })} />
@@ -109,7 +110,7 @@ function Editor({ product: p, pricing }: { product: SellerEditableProduct | null
       <TextField label="Máximo por pedido" value={f.max} keyboardType="number-pad" editable={!busy} onChangeText={(v)=>set('max',v)} />
       <TextField label="Precio anterior en USD" helper="Solo si realmente se vendió a ese precio." value={f.compare} keyboardType="decimal-pad" editable={!busy} onChangeText={(v)=>set('compare',v)} />
     </Card>
-    {auto ? <Card style={{ gap:16 }}><Text variant="subtitle">Costos y precio automático</Text>{(['freight','logistics','margin'] as const).map((k)=><TextField key={k} label={k==='freight'?'Flete por unidad (USD)':k==='logistics'?'Gastos por unidad (USD)':'Margen (%)'} helper="Vacío: usar regla general." value={costs[k]} keyboardType="decimal-pad" editable={!busy} onChangeText={(v)=>setCosts((old)=>({...old,[k]:v}))} />)}<Text color="textSecondary" variant="bodySmall">{pricing?.snapshot && new Date(pricing.snapshot.valid_until)>new Date()?'HAYAZGO calcula el precio con la regla vigente.':'Sin brecha vigente: se conserva el precio actual.'} Cambiar el modo de precio o ampliar variantes automáticas sigue disponible en el panel.</Text></Card> : null}
+    {auto ? <Card style={{ gap:16 }}><Text variant="subtitle">Costos y precio automático</Text>{(['freight','logistics','margin'] as const).map((k)=><TextField key={k} label={k==='freight'?'Flete por unidad (USD)':k==='logistics'?'Gastos por unidad (USD)':'Margen (%)'} helper="Vacío: usar regla general." value={costs[k]} keyboardType="decimal-pad" editable={!busy} onChangeText={(v)=>setCosts((old)=>({...old,[k]:v}))} />)}<Text color="textSecondary" variant="bodySmall">{pricing?.snapshot && new Date(pricing.snapshot.valid_until)>new Date()?`${brand.name} calcula el precio con la regla vigente.`:'Sin brecha vigente: se conserva el precio actual.'} Cambiar el modo de precio o ampliar variantes automáticas sigue disponible en el panel.</Text></Card> : null}
     <Card style={{ gap:12 }}><Text variant="subtitle">Fotografías ({images.length}/10)</Text><Text variant="bodySmall" color="textSecondary">Usa imágenes propias o autorizadas. La primera es la portada.</Text>
       {images.map((img,i)=><View key={img.id} style={{ gap:8 }}><Image source={{uri:img.picked?.uri??catalogImage(img.path??null)??undefined}} accessibilityLabel={`Foto ${i+1} del producto`} style={{ width:'100%',height:180,borderRadius:12 }} contentFit="cover" />
         {i>0 ? <Button title={`Hacer portada la foto ${i+1}`} variant="secondary" disabled={busy} onPress={()=>setImages((old)=>[old[i]!,...old.filter((_,index)=>index!==i)])} /> : null}

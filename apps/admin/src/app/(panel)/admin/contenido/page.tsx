@@ -89,7 +89,7 @@ export default function ContentPage() {
       {list.isPending ? <Loading /> : list.isError ? <ErrorBox error={list.error} onRetry={() => list.refetch()} /> : !list.data.length ? (
         <Card><Empty title="Sin colecciones" body="Crea la primera para darle forma al inicio de la app." action={<Button icon={Plus} onClick={() => setCreating(true)}>Nueva colección</Button>} /></Card>
       ) : (
-        <div className="grid items-start gap-5 lg:grid-cols-[360px_1fr]">
+        <div className="grid min-w-0 grid-cols-1 items-start gap-5 lg:grid-cols-[360px_minmax(0,1fr)]">
           <Card padded={false}>
             <ul className="divide-y divide-line">
               {list.data.map((c, i) => {
@@ -99,7 +99,7 @@ export default function ContentPage() {
                     <span className="size-9 shrink-0 rounded-[10px] border border-line" style={{ background: photoTones[c.tone]?.bg }} aria-hidden />
                     <button className="min-w-0 flex-1 text-left" onClick={() => setSelected(c.id)} aria-current={c.id === selected ? 'true' : undefined}>
                       <span className="block truncate font-semibold text-ink">{c.title}</span>
-                      <span className="flex items-center gap-2 text-[12.5px] text-ink-3">
+                      <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12.5px] text-ink-3">
                         <Badge tone={st.tone}>{st.label}</Badge>
                         {c.collection_products.length} productos{firstVisible?.id === c.id ? ' · destacada' : ''}
                       </span>
@@ -240,7 +240,7 @@ function CollectionEditor({ collection: c, onDeleted }: { collection: Collection
   const dirty = form.title !== c.title || form.subtitle !== (c.subtitle ?? '') || form.tone !== c.tone || form.starts !== toLocalInput(c.starts_at) || form.ends !== toLocalInput(c.ends_at);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex min-w-0 flex-col gap-5">
       <Card title="Datos de la colección" actions={<Button size="sm" variant="ghost" icon={Trash2} onClick={() => setConfirmDelete(true)}>Eliminar</Button>}>
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Título"><Input value={form.title} maxLength={80} onChange={(e) => setForm({ ...form, title: e.target.value })} /></Field>

@@ -1,9 +1,39 @@
-# Sistema de diseño "Electric Violet"
+# Sistema de diseño mayami · Electric Violet
 
 Fuente única: `packages/design-tokens/src/index.ts`. La app la usa directamente (`apps/mobile/src/theme`),
 el panel la recibe como variables CSS
 (`node --experimental-strip-types packages/design-tokens/scripts/css.ts apps/admin/src/app/tokens.css`) y el generador de imágenes demo usa los mismos tonos. Cambiar un token
 cambia los tres.
+
+## Identidad y coherencia universal · 5 de noviembre de 2026
+
+**mayami** es el nombre definitivo inicial; **mayami.app** es el dominio elegido, todavía sin activar.
+`config/brand-presentation.ts` gobierna la identidad visible de app, storefront y panel. `config/brand.json`
+conserva los valores de instalación de APK 5; no cambiarlo para renombrar textos. Los enlaces compartidos
+mantienen el origen web actual o `kora://` hasta verificar HTTPS, rutas y retornos de autenticación.
+
+Oliver suministró el enlace al logotipo creado en Work. La descarga está bloqueada por la política de red
+del entorno; no se ha inspeccionado ni incorporado. Mientras se recupera, se utiliza **el nombre en texto**,
+sin la antigua K ni punto coral, y sin inventar un símbolo alternativo. Este estado no es una aprobación
+del logotipo definitivo. Icono/splash/nombre de instalación requieren un futuro cambio nativo separado.
+
+Reglas compartidas por función:
+
+- Acciones de formulario: radio medio 14; compactas 10; objetivo mínimo 44 px. App admite acción principal
+  de 52 px, storefront 48 y panel mínimo 44, con crecimiento según contenido. Cápsulas para selección,
+  contadores o navegación cuando corresponda, no como forma universal de todos los botones.
+- Primario `brand/onBrand`; secundario `surface/text`, hover `surfaceSunken/text`; destructivo sólido
+  `danger/onDanger`. En oscuro `onDanger` es tinta, no blanco sobre coral claro. No reutilizar un color
+  sólo por coincidir en uno de los temas. Los avisos conservan `dangerSoft/danger`.
+- Notificaciones se identifica con campana; direcciones con pin; carrito con bolsa y favoritos con corazón.
+  El significado debe conservarse al cambiar entre app y web.
+- La tipografía de interfaz continúa siendo Plus Jakarta Sans. La marca en texto utiliza 24/30, peso 800
+  y tracking −0,6; su etiqueta accesible es mayami. El archivo original de Work decidirá su reemplazo.
+- Contenedores de gestión admiten `min-width: 0`, reflow y cabeceras que se distribuyen en varias líneas.
+  No ocultar el desbordamiento para aparentar que acciones fuera de pantalla están disponibles.
+
+Estas reglas no rediseñan Inicio C ni imponen la densidad del panel al comprador. La revisión visual debe
+comparar los mismos datos, tema y ancho, además de verificar contraste de estados y navegación con teclado.
 
 ## Principios
 
@@ -15,8 +45,7 @@ cambia los tres.
 - **La complejidad pertenece al sistema; la claridad, al usuario.** El comprador ve un monto exacto, un
   estado y una acción; las fórmulas, tasas y reglas quedan en el servidor y en el panel.
 - **El producto es protagonista.** Fotografía primero, luego nombre, precio y disponibilidad. El violeta marca
-  la acción y la selección, no rellena superficies; el coral solo señala descuentos, urgencia y el punto de la
-  marca. Sin degradados gratuitos ni sombras decorativas: la sombra es para lo que flota (hojas, barras fijas).
+  la acción y la selección, no rellena superficies; el coral solo señala descuentos, urgencia. Sin degradados gratuitos ni sombras decorativas: la sombra es para lo que flota (hojas, barras fijas).
 - **Una sola familia tipográfica.** Plus Jakarta Sans (400 a 800) en títulos, interfaz y precios, con
   tracking negativo en los tamaños grandes; las cifras van tabulares.
 - **Un universo.** Inicio, catálogo, ficha, carrito, checkout y perfil comparten tokens, componentes y ritmo.
@@ -42,7 +71,7 @@ Es una excepción editorial acotada al uso general de violeta: catálogo/fotogra
 | `radii` | xs 6, sm 10, md 14, lg 18, xl 24, pill |
 | `elevation` | none, low, high (sombras teñidas de tinta, solo para lo que flota) |
 | `motion` | duraciones 90/160/240/360 ms, resortes snappy/gentle/sheet, escala al presionar 0,97 |
-| `imagery` | producto 4:5, portada 16:9, logo 56 |
+| `imagery` | fallback histórico de producto 4:5; las tarjetas de comparación actuales pasan 1:1; portada 16:9 |
 | `layout` | margen 16, ancho máximo 720, objetivo táctil mínimo 44 |
 | `availabilityStyles` | etiqueta y tono de cada estado comercial |
 | `storeAccents` | paleta curada para que cada tienda se exprese sin romper la coherencia |
@@ -56,12 +85,12 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
 
 ## Fotografía
 
-- Una sola proporción en todo el catálogo (4:5 vertical).
+- Cuadrado 1:1 en tarjetas de comparación y miniaturas; la ficha conserva la proporción del recurso y evita recortes del producto. `ProductImage` conserva 4:5 como fallback histórico para otros contextos; no impone esa proporción a todas las tarjetas.
 - Cada producto se presenta sobre el tono de su categoría (`photoTones`): tecnología en niebla, belleza en
   rubor, odontología en salvia, hogar en arena, mascotas en arcilla. Así el catálogo mezcla productos sin
   mezclar estilos.
 - Carga progresiva con `expo-image` (caché en disco y memoria, transición suave, placeholder del tono).
-- Las imágenes demo son ilustraciones originales rotuladas "IMAGEN DEMO"; se reemplazan desde el panel.
+- La exhibición privada usa recursos locales según su registro de procedencia. No afirmar que una imagen generada es una fotografía oficial ni que tiene licencia verificada. El pipeline comercial remoto y sus identificadores se conservan.
 - Logos demo de tiendas: Kora, la tienda de la plataforma, lleva la marca de la app; las demás, su monograma en
   sans sobre su color de `storeAccents` (`tools/demo-assets/generate-images.mjs`).
 - Las etiquetas sobre una foto (por encargo, en camino, agotado) usan los colores del modo claro también en
@@ -80,7 +109,7 @@ Modo oscuro: automático según el sistema, con los mismos roles semánticos.
   `MiniProductCard` (misma estructura compacta), `ProductFavorite` (acción separada del enlace de la tarjeta,
   44 px), `ProductGrid` (virtualizada), `ProductImage`, `CategoryTiles`, `StoreCard`,
   `Catalog` (búsqueda, filtros y orden con `OptionsSheet`).
-  Las tarjetas demo muestran «Demo» y anuncian demostración; solo las reales muestran descuento/escasez.
+  En la evaluación privada, la directriz de Oliver del 26 de octubre retira etiquetas Demo y banners técnicos. La metadata `is_demo`/`is_test`, moderación y protecciones comerciales permanecen; el contexto se consulta en Diagnóstico. No inventar descuentos ni escasez.
   `ProductCardSkeleton` conserva la misma superficie para evitar saltos de composición al cargar.
 - **checkout/**: filas de opción y de resumen.
 - **Barras y hojas:** `Bars` (`useScrollY`, `CollapsingHeader` que aparece al pasar la foto, `BottomBar` fija
@@ -176,7 +205,7 @@ Informe/capturas/verificación y límites: REVISION_GLOBAL_UX.md.
 
 Buscar prioriza el catálogo: buscador rectangular48px, categorías de texto/indicador violeta con táctil44, Filtrar/Ordenar agrupados y conteo. Búsqueda/herramientas fijas; categoría seleccionada en conteo al desplazar, resto se desplaza. Precio/disponibilidad en hoja común con borrador/aplicar/cancelar/restablecer, sin eliminar filtros o contexto.
 
-Tarjeta comercial: fotografía4:5 intacta, superficie única con radio10/borde semántico sutil; corazón19 en superficie28 sin sombra, táctil44 separado del enlace. Nombre una línea13/18 semibold, precio16/20 extrabold tabular; tracking−0,1/−0,3 tokens. No estados reales simulados: demo identificada, oferta/escasez solo producto real, estados no normales discretos sobre foto. Skeleton igual altura; mini tarjeta/radios coherentes; movimiento reducido también en fade. No tokens globales/panel/identidad nativa cambiados. Decisiones/capturas comparables/mediciones: REDISENO_ENTREGA_01.md.
+Registro histórico de Entrega01 (12 de octubre; proporción posteriormente sustituida por 1:1 en comparación): fotografía4:5 intacta, superficie única con radio10/borde semántico sutil; corazón19 en superficie28 sin sombra, táctil44 separado del enlace. Nombre una línea13/18 semibold, precio16/20 extrabold tabular; tracking−0,1/−0,3 tokens. No estados reales simulados: demo identificada, oferta/escasez solo producto real, estados no normales discretos sobre foto. Skeleton igual altura; mini tarjeta/radios coherentes; movimiento reducido también en fade. No tokens globales/panel/identidad nativa cambiados. Decisiones/capturas comparables/mediciones: REDISENO_ENTREGA_01.md.
 
 ## Directriz de presentación comercial ·26oct2026
 

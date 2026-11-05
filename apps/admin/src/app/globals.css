@@ -18,6 +18,7 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-danger: var(--danger);
+  --color-on-danger: var(--on-danger);
   --color-danger-soft: var(--danger-soft);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);

@@ -1,5 +1,5 @@
 /**
- * Kora design tokens. Single source of truth for the native app, the admin/seller web panel and generated demo
+ * mayami design tokens. Single source of truth for the native app, the admin/seller web panel and generated demo
  * assets.
  *
  * Direction: "Electric Violet". Violet is the color of action (buttons, selection, links), never a background
@@ -53,6 +53,7 @@ export const colors = {
     accentSoft: palette.coral[50],
     onAccent: palette.ink[900],
     danger: palette.coral[600],
+    onDanger: '#FFFFFF',
     dangerSoft: palette.coral[50],
     success: palette.green[600],
     successSoft: palette.green[50],
@@ -88,6 +89,7 @@ export const colors = {
     accentSoft: 'rgba(255, 116, 107, 0.16)',
     onAccent: '#14101F',
     danger: '#FF8A82',
+    onDanger: palette.ink[900],
     dangerSoft: 'rgba(255, 116, 107, 0.14)',
     success: palette.green[300],
     successSoft: 'rgba(92, 199, 154, 0.14)',

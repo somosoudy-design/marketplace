@@ -275,13 +275,12 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
   );
 }
 
-/** The name in the brand color with a coral spark: the one flourish in the interface. */
+/** Neutral product name while the approved Work logo is being retrieved. Not a replacement logo. */
 function Wordmark({ inverse = false }: { inverse?: boolean }) {
   const t = useTheme();
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 3 }} accessible accessibilityRole="header" accessibilityLabel={brand.name}>
-      <Text variant="displayL" style={{ fontSize: 24, lineHeight: 28, letterSpacing: -1, color: inverse ? palette.ink[0] : t.colors.brand }}>{brand.name.toLowerCase()}</Text>
-      <View style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: t.colors.accent, marginBottom: 6 }} />
+    <View accessible accessibilityRole="header" accessibilityLabel={brand.name}>
+      <Text variant="displayL" style={{ fontSize: 24, lineHeight: 30, letterSpacing: -0.6, color: inverse ? palette.ink[0] : t.colors.brand }}>{brand.name}</Text>
     </View>
   );
 }

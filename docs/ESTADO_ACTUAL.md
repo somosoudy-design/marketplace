@@ -6,11 +6,13 @@
 
 ## Trabajo en curso · mayami y coherencia universal · 5 de noviembre
 
-Oliver eligió **mayami** como nombre definitivo inicial y **mayami.app** como dominio oficial. Amplió la tarea a auditoría y corrección de marca/universo gráfico en app, storefront y panel. El logotipo ya fue diseñado en Work: buscar y usar el activo original, no inventar un sustituto. No está en repositorio/adjuntos actuales y este entorno no accede a otros chats; se pidió enlace compartible mientras avanza el trabajo independiente.
+Nombre **mayami** y dominio elegido **mayami.app** registrados. Implementación preparada: fuente común de presentación para app/web/panel, enlaces operativos separados del dominio pendiente, eliminación de K/punto antiguo de UI y textos HAYAZGO fijos; nombre tipográfico neutral mientras se recupera el logo original. Contraste hover secundario web y peligro oscuro del panel corregidos; controles compartidos, semántica campana/pin y reflow del editor de contenido.
 
-Root único escritor; especialistas de sistema visual, compatibilidad/runtime y auditor independiente trabajan con propuestas y pruebas ignoradas. Product Design audit y directrices Oliver. Se conserva Electric Violet, APK5, backend y reglas comerciales. `config/brand.json` controla también configuración nativa y enlaces; separar presentación antes de adoptarla para no activar URLs no desplegadas ni romper OTA.
+Logo Work: Oliver aportó Drive `150rcWyhjqi4LoXnhs3R33ZD1YZEjTrBB`; descarga bloqueada por política de red (CONNECT403). Borrador del entorno agrega sólo `drive.google.com` y `drive.usercontent.google.com`, conservando configuración previa; guardado pero requiere publicación desde configuración. También puede adjuntar el original. No evadir el bloqueo ni presentar el nombre tipográfico como el logo recibido.
 
-Próximo exacto: capturas nuevas del estado actual en app/web/panel, resolver incoherencias compartidas de marca, tipografía, estados y semántica de iconos. Integrar mayami en presentación con fuente común, dominio objetivo separado de dominio activo; incorporar logo si llega el archivo. Validar claro/oscuro y tamaños, revisión independiente, checkpoint/push y sólo OTA compatible usando autorización vigente. No afirmar que dominio o logo están instalados antes de comprobarlos. Última OTA válida sigue siendo la del4nov documentada abajo.
+Root único escritor; especialistas visual/runtime/auditor leen y prueban en `.local/brand-20261105`. Baseline nuevo capturado en app exportada/web/panel, claro/oscuro y 320/412/1440 según canal. Confirmados contraste secundario hover 2,31/1,74, peligro oscuro 2,28 y editor de contenido scrollWidth504 a320. Pruebas iniciales: 3 de marca/enlaces, typecheck y lint pasan. Pendientes build/capturas posteriores y revisión independiente; no declarar listo o publicado aún.
+
+Próximo exacto: compilar fuente actual, servir export app en8091 y web3200/panel3100 locales, repetir pruebas focalizadas del auditor, comprobar fingerprint relativo y guard APK5. Integrar logo sólo si se obtiene el archivo original. Publicar únicamente preview compatible cuando pase; última OTA válida sigue siendo la del4nov documentada abajo. No nuevo APK, iOS, migraciones, finanzas, datos remotos ni activación de dominio.
 
 ## Interacción y compra compacta · 4 de noviembre
 

@@ -79,7 +79,7 @@ export default function AccountScreen() {
             <Text variant="overline" color="textSecondary" testID="account-business-heading">Tu negocio</Text>
             <Card padded={false}>
               {hasStores ? (
-                <ListRow testID="account-my-store" icon="store" title="Mi tienda" subtitle="Tu negocio dentro de HAYAZGO" onPress={() => router.push('/my-store')} />
+                <ListRow testID="account-my-store" icon="store" title="Mi tienda" subtitle={`Tu negocio dentro de ${brand.name}`} onPress={() => router.push('/my-store')} />
               ) : null}
               {hasStores && isAdmin ? <Divider inset={68} /> : null}
               {isAdmin ? <ListRow testID="account-admin" icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
@@ -103,7 +103,7 @@ export default function AccountScreen() {
       <RatePill testID="account-rate" />
       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}
       <Text variant="caption" color="textMuted" align="center" onPress={() => router.push('/diagnostico')} testID="app-version">
-        {brand.legalName} · versión {Constants.expoConfig?.version ?? '0.1.0'}
+        {brand.name} · versión {Constants.expoConfig?.version ?? '0.1.0'}
         {/* which EAS Update is running, so a tester can tell whether the latest one arrived */}
         {Updates.isEnabled && !Updates.isEmbeddedLaunch && Updates.updateId
           ? ` · actualización ${Updates.updateId.slice(0, 8)}${Updates.createdAt ? ` del ${Updates.createdAt.toLocaleDateString('es-VE', { day: 'numeric', month: 'short' })}` : ''}`

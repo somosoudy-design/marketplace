@@ -13,6 +13,7 @@ import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { haptics } from '@/lib/haptics';
 import { useAuth } from '@/lib/auth';
+import { brand } from '@/lib/brand';
 import { useSeller } from '@/lib/seller';
 import { api, storeImage } from '@/lib/supabase';
 
@@ -75,7 +76,7 @@ function Settings() {
       <TextField testID="store-warranty" label="Garantía" value={f.warranty} multiline editable={!busy} onChangeText={(v) => change('warranty', v)} />
     </Card>
     <Card style={{ gap: 12 }}><Text variant="subtitle">Color de acento</Text>{(Object.keys(storeAccents) as (keyof typeof accents)[]).map((a) => <Button key={a} title={accents[a]} variant={f.accent === a ? 'primary' : 'secondary'} disabled={busy} onPress={() => change('accent', a)} />)}</Card>
-    <Text variant="bodySmall" color="textSecondary">Estado: {STORE_STATUS_LABEL[s.status]}. La dirección y la aprobación las administra HAYAZGO.</Text>
+    <Text variant="bodySmall" color="textSecondary">Estado: {STORE_STATUS_LABEL[s.status]}. La dirección y la aprobación las administra {brand.name}.</Text>
     {dirty ? <Text testID="store-dirty" color="textSecondary">Cambios sin guardar</Text> : null}
     {error ? <Banner tone="danger" body={error} /> : null}
     {saved ? <Banner tone="success" body="Perfil guardado. Los datos de tu tienda quedaron actualizados." /> : null}

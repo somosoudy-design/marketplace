@@ -9,7 +9,6 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useAuth } from '@/lib/auth';
 import { cx } from './ui';
 import { StorePicker } from './StorePicker';
-import { brand } from '@/lib/brand';
 import { BrandMark } from './BrandMark';
 
 type Item = { href: string; label: string; icon: LucideIcon };
@@ -192,9 +191,8 @@ export function Shell({ area, children }: { area: 'admin' | 'seller'; children: 
       <aside ref={sidebar} id="panel-navigation" role={open ? 'dialog' : undefined} aria-modal={open || undefined} aria-label={open ? 'Menú de navegación' : undefined} className={cx('fixed inset-y-0 left-0 z-40 flex w-[min(272px,calc(100vw_-_44px))] flex-col border-r border-line bg-surface px-3 py-5 transition-transform motion-reduce:transition-none lg:visible lg:sticky lg:top-0 lg:h-dvh lg:w-[264px] lg:translate-x-0', open ? 'translate-x-0' : 'invisible -translate-x-full')}>
         <div className="mb-6 flex items-center justify-between gap-1">
           <Link href="/" onClick={() => { if (open) closeMenu(); }} className="flex min-h-[44px] min-w-0 items-center gap-2.5 px-3">
-            <BrandMark size={36} radius={12} />
             <span>
-              <span className="block font-display text-lg leading-none font-semibold">{brand.name}</span>
+              <BrandMark />
               <span className="text-[12px] font-semibold text-ink-3">{area === 'admin' ? 'Administración' : 'Panel de vendedor'}</span>
             </span>
           </Link>
@@ -224,7 +222,7 @@ export function Shell({ area, children }: { area: 'admin' | 'seller'; children: 
       <div className="min-w-0" inert={open}>
         <div className="sticky top-0 z-20 flex items-center gap-3 border-b border-line bg-surface/90 px-4 py-3 backdrop-blur lg:hidden">
           <button ref={menuButton} type="button" aria-expanded={open} aria-controls="panel-navigation" onClick={() => setOpen(true)} className="min-h-[44px] min-w-[44px] rounded-[10px] border border-line-strong px-3 py-1.5 text-sm font-semibold">Menú</button>
-          <span className="font-display text-lg font-semibold">{brand.name}</span>
+          <BrandMark />
         </div>
         <main className="mx-auto w-full max-w-[1240px] px-4 py-7 sm:px-8">{children}</main>
       </div>

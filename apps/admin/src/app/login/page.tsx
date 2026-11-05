@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Button, Field, Input, Notice } from '@/components/ui';
 import { authErrorMessage, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/env';
-import { brand } from '@/lib/brand';
 import { BrandMark } from '@/components/BrandMark';
 
 export default function LoginPage() {
@@ -34,9 +33,9 @@ export default function LoginPage() {
 
   return (
     <div className="grid min-h-dvh place-items-center px-4">
-      <form method="post" onSubmit={submit} className="w-full max-w-[400px] rounded-[28px] border border-line bg-surface p-8 shadow-sm">
-        <span className="mb-6 block"><BrandMark size={44} radius={14} /></span>
-        <h1 className="font-display text-[28px] font-semibold">Panel de {brand.name}</h1>
+      <form method="post" onSubmit={submit} className="w-full max-w-[400px] rounded-[24px] border border-line bg-surface p-6 sm:p-8">
+        <span className="mb-6 block"><BrandMark /></span>
+        <h1 className="font-display text-[24px] font-semibold">Accede a tu panel</h1>
         <p className="mt-1 mb-6 text-[15px] text-ink-2">Administración y vendedores. Usa tu cuenta del marketplace.</p>
         {!isConfigured ? (
           <Notice tone="warning" title="Falta configuración">Define NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY en apps/admin/.env.local.</Notice>
@@ -49,7 +48,7 @@ export default function LoginPage() {
           <Field label="Contraseña">
             <Input name="password" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           </Field>
-          <Button type="submit" loading={busy} className="mt-2 h-11">Entrar</Button>
+          <Button type="submit" loading={busy} className="mt-2">Entrar</Button>
         </div>
       </form>
     </div>

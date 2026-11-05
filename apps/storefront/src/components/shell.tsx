@@ -25,8 +25,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <header className={`header ${focused ? 'header-focused' : ''}`}>
         <div className="header-inner">
           <Link href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
-            {brand.name.toLowerCase()}
-            <span />
+            {brand.name}
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
@@ -69,8 +68,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       </main>
       <footer className="footer wrap">
         <Link className="wordmark" href="/">
-          {brand.name.toLowerCase()}
-          <span />
+          {brand.name}
         </Link>
         <p>{brand.tagline}</p>
         <Link href="/buscar">

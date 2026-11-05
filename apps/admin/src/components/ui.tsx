@@ -23,9 +23,9 @@ export function PageHeader({ title, description, actions, eyebrow }: { title: st
 
 export function Card({ children, className, title, actions, padded = true }: { children: ReactNode; className?: string; title?: ReactNode; actions?: ReactNode; padded?: boolean }) {
   return (
-    <section className={cx('rounded-[20px] border border-line bg-surface', className)}>
+    <section className={cx('min-w-0 rounded-[20px] border border-line bg-surface', className)}>
       {title || actions ? (
-        <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5">
           <h2 className="text-[15px] font-bold text-ink">{title}</h2>
           {actions}
         </div>
@@ -53,12 +53,12 @@ export function Stat({ label, value, hint, tone = 'default', href }: { label: st
 type BtnVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: BtnVariant; size?: 'sm' | 'md'; loading?: boolean; icon?: LucideIcon };
 const buttonClass = (variant: BtnVariant, size: 'sm' | 'md', className?: string) => cx(
-  'inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full font-semibold transition-[background,box-shadow,transform] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 disabled:cursor-not-allowed disabled:opacity-50',
-  size === 'sm' ? 'h-8 px-3.5 text-[13px]' : 'h-10 px-5 text-sm',
+  'inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 font-semibold transition-[background,box-shadow,transform] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 disabled:cursor-not-allowed disabled:opacity-50',
+  size === 'sm' ? 'rounded-[var(--radius-sm)] px-3.5 py-2 text-[13px]' : 'rounded-[var(--radius-md)] px-5 py-2.5 text-sm',
   variant === 'primary' && 'bg-brand text-on-brand hover:bg-brand-pressed',
   variant === 'secondary' && 'border border-line-strong bg-surface text-ink hover:bg-sunken',
   variant === 'ghost' && 'text-ink-2 hover:bg-sunken',
-  variant === 'danger' && 'bg-danger text-white hover:opacity-90',
+  variant === 'danger' && 'bg-danger text-on-danger hover:opacity-90',
   className,
 );
 export const Button = forwardRef<HTMLButtonElement, BtnProps>(function Button({ variant = 'primary', size = 'md', loading, icon: I, className, children, disabled, ...rest }, ref) {

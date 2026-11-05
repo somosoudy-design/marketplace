@@ -2,7 +2,7 @@
 import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Heart, ShoppingBag, LogOut, ArrowRight, UserRound } from 'lucide-react';
+import { Heart, ShoppingBag, LogOut, ArrowRight, UserRound, Bell, MapPin } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { browser } from '@/lib/browser';
 import { configured } from '@/lib/env';
@@ -72,7 +72,7 @@ function Account() {
             <ArrowRight />
           </Link>
           <Link href="/direcciones">
-            <UserRound />
+            <MapPin />
             <div>
               <h2>Mis direcciones</h2>
               <p>Elige dónde recibir tus compras.</p>
@@ -80,7 +80,7 @@ function Account() {
             <ArrowRight />
           </Link>
           <Link href="/notificaciones">
-            <ShoppingBag />
+            <Bell />
             <div>
               <h2>Notificaciones</h2>
               <p>Novedades de tus pedidos y pagos.</p>

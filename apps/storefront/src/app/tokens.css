@@ -18,6 +18,7 @@
   --accent-soft: #fff1ef;
   --on-accent: #1c1928;
   --danger: #c2362d;
+  --on-danger: #ffffff;
   --danger-soft: #fff1ef;
   --success: #137a55;
   --success-soft: #e7f6ef;
@@ -61,6 +62,7 @@
     --accent-soft: rgba(255, 116, 107, 0.16);
     --on-accent: #14101f;
     --danger: #ff8a82;
+    --on-danger: #1c1928;
     --danger-soft: rgba(255, 116, 107, 0.14);
     --success: #5cc79a;
     --success-soft: rgba(92, 199, 154, 0.14);
