@@ -5,3 +5,7 @@
 #    Android sin el gesto predictivo, icono y splash violeta, dirección del panel en eas.json. Mismo paquete y firma.
 #    Reintento: el primer intento (build 54b2be4f) se detuvo antes de compilar porque eas-cli calculó el runtime sin
 #    google-services.json; ahora el workflow le pasa el mismo archivo que usa EAS.
+
+# 7: APK6 mayami, autorizado expresamente por Oliver el5nov2026: label Android, splash claro/oscuro,
+#    iconos adaptativo/monocromo/notificación originales Work; mismo paquete/firma/canal preview.
+#    Incluye catálogo privado en bundle embebido y toda la UI112/96 revisada. No iOS ni Play Store.

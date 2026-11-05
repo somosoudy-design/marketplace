@@ -13,7 +13,7 @@ adaptativo/monocromo/notificación. Se mantienen paquete/scheme/proyecto/Firebas
 El catálogo privado ahora se incluye en el bundle embebido mediante envpreview; no depender de una OTA
 para ver las imágenes ya aprobadas. Diagnóstico usa el nombre visible mayami, preserva protocolo KoraDiag.
 
-Root único integrador. Tipos/lint/config pública pasan; pendiente prebuildAndroid y gates de APK real.
+Root único integrador. Tipos/lint/config pública, prebuildAndroid y exportHermes pasan.6 pruebas de identidad aprobadas; manifiesto generado etiqueta mayami, paquete correcto y recursosM. Los scripts que Expo cambió automáticamente se restauraron; no se modificó configuración iOS. Pendiente gates de APK real y emulador.
 El workflow de build guarda JSON fuera de fuente y exige árbol limpio. No publicar OTA con runtimeAPK5
 tras estos cambios nativos; el nuevo runtime se registrará desde el binario terminado, sin forzarlo.
 Siguiente exacto: prebuildAndroid sin instalar deps, exportHermes, buildEASpreview existente; inspeccionar
