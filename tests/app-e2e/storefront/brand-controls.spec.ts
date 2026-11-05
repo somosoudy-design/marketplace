@@ -44,5 +44,30 @@ for (const colorScheme of ['light', 'dark'] as const) {
     expect(await controlContrast(secondary)).toBeGreaterThanOrEqual(4.5);
     await secondary.hover();
     expect(await controlContrast(secondary)).toBeGreaterThanOrEqual(4.5);
+
+    // Purchase CSS must keep the original wordmark and all three account actions on one row.
+    // The nonexistent local payment exercises its shell without creating an order or a payment.
+    for (const path of ['/checkout', '/pagar/00000000-0000-0000-0000-000000000000']) {
+      await page.goto(path);
+      const header = page.locator('header.header-focused');
+      await expect(header).toBeVisible();
+      await expect(header.locator('.account-nav a:visible')).toHaveCount(3);
+      const fit = await header.evaluate((node) => {
+        const logo = node.querySelector('.wordmark')!.getBoundingClientRect();
+        const actions = [...node.querySelectorAll<HTMLElement>('.account-nav a')]
+          .filter((link) => getComputedStyle(link).display !== 'none')
+          .map((link) => { const r = link.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; });
+        return { logo: { right: logo.right, y: logo.y, width: logo.width }, actions, scrollWidth: document.documentElement.scrollWidth };
+      });
+      expect(fit.scrollWidth).toBe(320);
+      expect(fit.logo.width).toBeGreaterThanOrEqual(144);
+      expect(fit.actions[0]!.x - fit.logo.right).toBeGreaterThanOrEqual(6);
+      for (const action of fit.actions) {
+        expect(Math.abs(action.y - fit.logo.y)).toBeLessThan(1);
+        expect(action.width).toBeGreaterThanOrEqual(44);
+        expect(action.height).toBeGreaterThanOrEqual(44);
+        expect(action.x + action.width).toBeLessThanOrEqual(320);
+      }
+    }
   });
 }

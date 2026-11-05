@@ -1,5 +1,9 @@
 # mayami · primer incremento de coherencia universal
 
+> Actualización posterior: el bloqueo de acceso al original quedó resuelto. La integración de los vectores
+> Work y su validación se documentan en [LOGOTIPO_MAYAMI_V3.md](LOGOTIPO_MAYAMI_V3.md). Lo siguiente
+> conserva la evidencia del incremento anterior, cuando todavía se utilizaba el nombre en texto.
+
 Oliver fijó **mayami** y **mayami.app**. Esta entrega hace coherente la identidad de presentación en app,
 storefront y panel y corrige errores comprobados de controles y adaptación. Conserva Inicio C, catálogo,
 checkout y operaciones existentes. No se presenta como un rediseño integral terminado.

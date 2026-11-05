@@ -12,10 +12,12 @@ cambia los tres.
 conserva los valores de instalación de APK 5; no cambiarlo para renombrar textos. Los enlaces compartidos
 mantienen el origen web actual o `kora://` hasta verificar HTTPS, rutas y retornos de autenticación.
 
-Oliver suministró el enlace al logotipo creado en Work. La descarga está bloqueada por la política de red
-del entorno; no se ha inspeccionado ni incorporado. Mientras se recupera, se utiliza **el nombre en texto**,
-sin la antigua K ni punto coral, y sin inventar un símbolo alternativo. Este estado no es una aprobación
-del logotipo definitivo. Icono/splash/nombre de instalación requieren un futuro cambio nativo separado.
+El original de Work **MAYAMI_Kit_Vectorial_v3.zip** se recuperó y verificó el 5 de noviembre.
+Los maestros sin modificar están en `assets/brand/mayami/v3`, con procedencia y SHA256. El lettering
+vectorial dice MAYAMI; el nombre escrito en la interfaz continúa siendo mayami. No recrear el lettering
+con una fuente ni deformar los trazados. [Integración y evidencia](LOGOTIPO_MAYAMI_V3.md).
+Icono/splash/nombre de instalación requieren un futuro cambio nativo separado; los favicons de Next
+sí utilizan los originales del kit sin afectar APK 5.
 
 Reglas compartidas por función:
 
@@ -27,8 +29,14 @@ Reglas compartidas por función:
   sólo por coincidir en uno de los temas. Los avisos conservan `dangerSoft/danger`.
 - Notificaciones se identifica con campana; direcciones con pin; carrito con bolsa y favoritos con corazón.
   El significado debe conservarse al cambiar entre app y web.
-- La tipografía de interfaz continúa siendo Plus Jakarta Sans. La marca en texto utiliza 24/30, peso 800
-  y tracking −0,6; su etiqueta accesible es mayami. El archivo original de Work decidirá su reemplazo.
+- La tipografía de interfaz continúa siendo Plus Jakarta Sans. La marca usa el SVG original, con etiqueta
+  accesible mayami y sin duplicarla en el gráfico interno. Proporción 1476:280, ancho mínimo 144 px
+  (alto proporcional 27,317 px); área libre de 62 unidades del maestro alrededor. Márgenes y separación
+  del contenedor pueden aportar esa área: no sumar espacios vacíos por duplicado.
+- Variante blanca sobre Inicio editorial y fondos oscuros; violeta original `#6D42E8` sobre fondos claros.
+  No teñir el logo con el violeta claro de los controles nocturnos. App 144 px; web 144 en móvil y 176 en
+  escritorio; pie 144/160; panel 144 en navegación y 160 en acceso. Cabeceras con alto mínimo 44 px.
+  El símbolo óptico del kit se reserva para favicon; no sustituir el nombre por una K o icono genérico.
 - Contenedores de gestión admiten `min-width: 0`, reflow y cabeceras que se distribuyen en varias líneas.
   No ocultar el desbordamiento para aparentar que acciones fuera de pantalla están disponibles.
 

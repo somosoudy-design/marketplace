@@ -4,7 +4,7 @@
 
 **Nombre definitivo inicial: mayami. Dominio oficial elegido: mayami.app.** Respetar la escritura en
 minúsculas. Esta decisión sustituye Kora y HAYAZGO como nombres de producto; la identidad Electric Violet,
-los recorridos y el modelo comercial continúan vigentes. Oliver creó el logotipo en Work y aportó su enlace; falta obtener el archivo por el bloqueo de red documentado. No se ha definido una razón social ni un correo operativo nuevo.
+los recorridos y el modelo comercial continúan vigentes. Oliver creó el logotipo en Work: el kit v3 original fue recuperado, verificado e integrado en app/web/panel. Su lettering vectorial en mayúsculas se conserva intacto; la escritura textual de la marca sigue en minúsculas. Ver `LOGOTIPO_MAYAMI_V3.md`. No se ha definido una razón social ni un correo operativo nuevo.
 
 La adopción distingue tres capas:
 
