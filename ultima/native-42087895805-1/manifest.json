@@ -1,0 +1,12 @@
+{
+  "source": "Android emulator captures and decoded original screenrecord frames; not web",
+  "run": "42087895805",
+  "attempt": "1",
+  "workflowCommit": "58fdc53f08a78fcf04a2ae0d11dac0aa97876abf",
+  "apk": {},
+  "imageProcessing": "none; byte-for-byte copies",
+  "images": [],
+  "recordings": [],
+  "skipped": [],
+  "executionComplete": false
+}
