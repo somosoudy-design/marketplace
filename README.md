@@ -5,7 +5,7 @@ administración y vendedores, y un backend Supabase donde viven las reglas de pr
 tasas y permisos. **mayami** es el nombre definitivo inicial elegido por Oliver el 5 de noviembre de 2026;
 el dominio oficial elegido es **mayami.app**. La identidad visual continúa siendo Electric Violet.
 
-La aplicación instalada y su configuración técnica aún conservan el nombre anterior, Kora.
+La interfaz usa la identidad compartida mayami; el nombre de instalación, icono y configuración técnica del APK conservan Kora hasta una futura build nativa. El logotipo original de Work está pendiente de recuperar.
 La adopción en interfaces y la conexión del dominio quedan registradas en
 [`docs/DIRECCION_PRODUCTO.md`](docs/DIRECCION_PRODUCTO.md); elegir el dominio no implica que ya esté
 conectado al hosting. La transición debe conservar las actualizaciones del APK 5.

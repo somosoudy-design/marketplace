@@ -95,20 +95,22 @@ export default function ContentPage() {
               {list.data.map((c, i) => {
                 const st = live(c);
                 return (
-                  <li key={c.id} className={cx('flex items-center gap-3 px-4 py-3', c.id === selected && 'bg-brand-soft/60')}>
-                    <span className="size-9 shrink-0 rounded-[10px] border border-line" style={{ background: photoTones[c.tone]?.bg }} aria-hidden />
-                    <button className="min-w-0 flex-1 text-left" onClick={() => setSelected(c.id)} aria-current={c.id === selected ? 'true' : undefined}>
-                      <span className="block truncate font-semibold text-ink">{c.title}</span>
-                      <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12.5px] text-ink-3">
-                        <Badge tone={st.tone}>{st.label}</Badge>
-                        {c.collection_products.length} productos{firstVisible?.id === c.id ? ' · destacada' : ''}
-                      </span>
+                  <li key={c.id} className={cx('grid min-w-0 gap-1 px-4 py-3 first:rounded-t-[20px] last:rounded-b-[20px]', c.id === selected && 'bg-brand-soft/60')}>
+                    <button className="flex min-h-[44px] min-w-0 items-center gap-3 text-left" onClick={() => setSelected(c.id)} aria-current={c.id === selected ? 'true' : undefined}>
+                      <span className="size-9 shrink-0 rounded-[10px] border border-line" style={{ background: photoTones[c.tone]?.bg }} aria-hidden />
+                      <span className="min-w-0 break-words font-semibold text-ink">{c.title}</span>
                     </button>
-                    <div className="flex flex-col">
-                      <button aria-label={`Subir ${c.title}`} disabled={i === 0 || reorder.isPending} onClick={() => reorder.mutate({ from: i, to: i - 1 })} className="rounded p-0.5 text-ink-3 hover:text-ink disabled:opacity-30"><ArrowUp size={15} /></button>
-                      <button aria-label={`Bajar ${c.title}`} disabled={i === list.data.length - 1 || reorder.isPending} onClick={() => reorder.mutate({ from: i, to: i + 1 })} className="rounded p-0.5 text-ink-3 hover:text-ink disabled:opacity-30"><ArrowDown size={15} /></button>
+                    <div className="flex flex-wrap items-center justify-between gap-x-2">
+                      <span className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1 text-[12.5px] text-ink-3">
+                        <Badge tone={st.tone}>{st.label}</Badge>
+                        <span>{c.collection_products.length} productos{firstVisible?.id === c.id ? ' · destacada' : ''}</span>
+                      </span>
+                      <div className="flex shrink-0 items-center">
+                        <button aria-label={`Subir ${c.title}`} disabled={i === 0 || reorder.isPending} onClick={() => reorder.mutate({ from: i, to: i - 1 })} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] text-ink-3 hover:bg-sunken hover:text-ink disabled:opacity-30"><ArrowUp size={18} /></button>
+                        <button aria-label={`Bajar ${c.title}`} disabled={i === list.data.length - 1 || reorder.isPending} onClick={() => reorder.mutate({ from: i, to: i + 1 })} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] text-ink-3 hover:bg-sunken hover:text-ink disabled:opacity-30"><ArrowDown size={18} /></button>
+                        <Toggle checked={c.active} label={`Mostrar ${c.title}`} onChange={() => toggle.mutate(c)} />
+                      </div>
                     </div>
-                    <Toggle checked={c.active} label={`Mostrar ${c.title}`} onChange={() => toggle.mutate(c)} />
                   </li>
                 );
               })}
@@ -263,9 +265,9 @@ function CollectionEditor({ collection: c, onDeleted }: { collection: Collection
         {q.trim().length >= 2 ? (
           <ul className="mb-5 divide-y divide-line rounded-[14px] border border-line">
             {search.isPending ? <li className="px-4 py-3 text-sm text-ink-3">Buscando…</li> : !search.data?.length ? <li className="px-4 py-3 text-sm text-ink-3">Sin resultados.</li> : search.data.map((p) => (
-              <li key={p.id} className="flex items-center gap-3 px-3 py-2">
+              <li key={p.id} className="flex flex-wrap items-center gap-3 px-3 py-2">
                 <Thumb src={catalogImage(p.image_path)} alt={p.title} size={32} />
-                <div className="min-w-0 flex-1">
+                <div className="min-w-[min(100%,120px)] flex-1">
                   <p className="truncate text-sm font-semibold">{p.title}</p>
                   <p className="text-[12px] text-ink-3">{p.store_name} · {money(p.price_usd, 'USD')}{p.moderation_status !== 'published' ? ` · ${MODERATION_LABEL[p.moderation_status as keyof typeof MODERATION_LABEL] ?? p.moderation_status}` : ''}</p>
                 </div>
@@ -277,18 +279,18 @@ function CollectionEditor({ collection: c, onDeleted }: { collection: Collection
         {!ids.length ? <p className="py-6 text-center text-sm text-ink-3">Busca productos para agregarlos a esta colección.</p> : products.isPending ? <Loading rows={3} /> : (
           <ol className="divide-y divide-line">
             {ordered.map((p, i) => (
-              <li key={p.id} className="flex items-center gap-3 py-2.5">
+              <li key={p.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2.5">
                 <span className="w-5 text-right text-[12px] font-bold text-ink-3 tabular">{i + 1}</span>
                 <Thumb src={catalogImage(p.image_path)} alt={p.title} size={36} />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold">{p.title}</p>
+                <div className="min-w-[min(100%,120px)] flex-1">
+                  <p className="break-words text-sm font-semibold">{p.title}</p>
                   <p className="text-[12px] text-ink-3">{p.store_name} · {money(p.price_usd, 'USD')}</p>
                 </div>
                 {p.moderation_status !== 'published' || p.store_status !== 'active' ? <Badge tone="warning">No visible</Badge> : null}
-                <div className="flex">
-                  <button aria-label={`Subir ${p.title}`} disabled={i === 0 || move.isPending} onClick={() => move.mutate({ from: i, to: i - 1 })} className="rounded p-1 text-ink-3 hover:text-ink disabled:opacity-30"><ArrowUp size={15} /></button>
-                  <button aria-label={`Bajar ${p.title}`} disabled={i === ordered.length - 1 || move.isPending} onClick={() => move.mutate({ from: i, to: i + 1 })} className="rounded p-1 text-ink-3 hover:text-ink disabled:opacity-30"><ArrowDown size={15} /></button>
-                  <button aria-label={`Quitar ${p.title}`} onClick={() => remove.mutate(p.id)} className="rounded p-1 text-ink-3 hover:text-danger"><Trash2 size={15} /></button>
+                <div className="ml-auto flex shrink-0">
+                  <button aria-label={`Subir ${p.title}`} disabled={i === 0 || move.isPending} onClick={() => move.mutate({ from: i, to: i - 1 })} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] text-ink-3 hover:bg-sunken hover:text-ink disabled:opacity-30"><ArrowUp size={18} /></button>
+                  <button aria-label={`Bajar ${p.title}`} disabled={i === ordered.length - 1 || move.isPending} onClick={() => move.mutate({ from: i, to: i + 1 })} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] text-ink-3 hover:bg-sunken hover:text-ink disabled:opacity-30"><ArrowDown size={18} /></button>
+                  <button aria-label={`Quitar ${p.title}`} onClick={() => remove.mutate(p.id)} className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] text-ink-3 hover:bg-sunken hover:text-danger"><Trash2 size={18} /></button>
                 </div>
               </li>
             ))}

@@ -4,8 +4,9 @@ Esta lista corresponde al **lanzamiento comercial en tiendas**, no al estado de 
 
 ## Antes de la primera build pública
 
-- [ ] Nombre y marca definitivos en `config/brand.json` (nombre, esquema, `iosBundleId`, `androidPackage`,
-      dominio, correo de soporte). El identificador de app no se puede cambiar después de publicar.
+- [x] Nombre inicial **mayami** y dominio **mayami.app** elegidos por Oliver (5 de noviembre). Presentación compartida en `config/brand-presentation.ts`.
+- [ ] Incorporar logotipo original de Work cuando sea accesible; conectar dominio, HTTPS y retornos. Nombre elegido no equivale a hosting activo.
+- [ ] Preparar identidad nativa definitiva para una build pública futura (esquema, `iosBundleId`, `androidPackage`, soporte). `config/brand.json` permanece compatible con APK 5; no renombrarlo por una OTA. El identificador de app no se puede cambiar después de publicar.
 - [ ] Iconos, icono adaptativo de Android, icono de notificación y splash definitivos
       (`apps/mobile/assets/images`; los actuales son provisionales generados por `tools/demo-assets`).
 - [ ] Proyecto Supabase de producción dedicado, con migraciones aplicadas y **sin seed**.
