@@ -1,6 +1,6 @@
-# Propuesta nativa Android mayami — pendiente de autorización
+# Recursos nativos Android mayami — autorizados y aplicados
 
-Esta carpeta contiene una preparación revisable. **No se ha aplicado el parche, ejecutado prebuild, construido APK ni publicado.** La preparación de PNG en la carpeta de propuesta está autorizada; no activa los recursos en la app. El código actual sigue siendo compatible con APK 5.
+Oliver autorizó el nuevo APK el 5 de noviembre. Parche y cinco recursos aplicados en `733d500`; prebuild Android/export Hermes aprobados. Build EAS `42075794184` desde `fc8368f` en curso. Este documento conserva la receta y el diagnóstico anterior; el estado vigente está en [ESTADO_ACTUAL](../../ESTADO_ACTUAL.md). La fuente nativa nueva necesita su propio runtime, no es una OTA compatible con APK5.
 
 ## Causa comprobada de la K al abrir
 
@@ -27,7 +27,7 @@ Ocho archivos originales se copiaron byte a byte a `originales/`. Origen exacto,
 
 Se usa la M del kit para estas superficies compactas, no una palabra MAYAMI sobredimensionada. Adaptive: figura 450 × 420 dentro de lienzo 1024²; semidiagonal 307,77 px, menor al radio seguro Android 312,89 px (66 dp dentro de 108 dp). Preserva trazados, proporción y margen para máscaras. El fondo adaptativo usa el violeta existente; no conserva una segunda imagen de fondo K. La variante óptica de notificación corresponde al uso pequeño recomendado en LEEME del kit. El tamaño definitivo todavía debe comprobarse en launcher, máscaras y arranque de Android real/emulado antes de entregar el APK.
 
-## Parche concreto, sin aplicar
+## Parche concreto aplicado
 
 `android-native-identity.patch` modifica únicamente:
 
@@ -46,7 +46,7 @@ Desde la raíz del repositorio, tras activar sus herramientas existentes:
 node RUTA_DE_ESTA_CARPETA/verify-proposal.cjs
 ```
 
-La prueba verifica los ocho hashes originales, sintaxis de la receta, aplicación limpia del parche **sin aplicarlo** y callback del plugin Android aislado: cambia la etiqueta, preserva paquete/scheme e iOS. No es prebuild ni compilación nativa.
+La prueba verifica los ocho hashes originales, sintaxis de la receta, aplicación limpia del parche pendiente o comprobación inversa cuando ya está integrado, **sin modificar archivos** y callback del plugin Android aislado: cambia la etiqueta, preserva paquete/scheme e iOS. No es prebuild ni compilación nativa.
 
 Preparación permitida de recursos para revisar, sin tocar la app activa:
 
@@ -54,11 +54,11 @@ Preparación permitida de recursos para revisar, sin tocar la app activa:
 node RUTA_DE_ESTA_CARPETA/prepare-assets.mjs --output .local/logo-refine-20261105/native-proposal/prepared-assets
 ```
 
-La receta produce cinco archivos y un manifiesto de hashes en el directorio indicado por `--output`; si se omite, usa `prepared-assets/` junto a la receta. Rechaza destinos dentro de `apps/`, no instala dependencias, no modifica fuente ni compila APK. Usa sharp ya disponible, copias de PNG originales y posicionamiento uniforme de SVG originales. Después de la autorización explícita para sustituir la identidad nativa, el integrador debe revisar esos resultados, copiar los cinco PNG a `apps/mobile/assets/images/mayami/` y aplicar el parche. **No se ha copiado ningún recurso a la app activa ni aplicado el parche.**
+La receta produce cinco archivos y un manifiesto de hashes en el directorio indicado por `--output`; si se omite, usa `prepared-assets/` junto a la receta. Rechaza destinos dentro de `apps/`, no instala dependencias, no modifica fuente ni compila APK. Usa sharp ya disponible, copias de PNG originales y posicionamiento uniforme de SVG originales. Después de la autorización explícita para sustituir la identidad nativa, el integrador debe revisar esos resultados, copiar los cinco PNG a `apps/mobile/assets/images/mayami/` y aplicar el parche. **Los recursos se copiaron y el parche se aplicó tras la autorización; no repetirlos.**
 
 ## Runtime y publicación
 
-La fuente actual `5e096ce` conserva el fingerprint relativo `da033dbf2e656078bbc76aa353ad3ed3088134d1`, las mismas 63 fuentes y hashes de configuración nativa sin cambios. Evidencia: `fingerprint-comparison.json`. Este cálculo no tiene Firebase local; CI sigue verificando el runtime APK 5 exacto.
+La fuente histórica `5e096ce` conserva el fingerprint relativo `da033dbf2e656078bbc76aa353ad3ed3088134d1`, las mismas 63 fuentes y hashes de configuración nativa sin cambios. Evidencia: `fingerprint-comparison.json`. Este cálculo no tiene Firebase local; CI sigue verificando el runtime APK 5 exacto.
 
 Aplicar la propuesta cambiará legítimamente el fingerprint: se necesita un APK nuevo. No forzar el runtime viejo ni añadir exclusiones. El workflow OTA actual exige APK 5, por lo que la nueva identidad requiere actualizar el control de publicación para el nuevo runtime una vez construido y comprobado. Conservar `preview` es posible: EAS selecciona por runtime; una OTA nueva no actualizará recursos del APK 5. No renombrar el paquete, no cambiar firma y no desinstalar para migrar; el nuevo APK debe instalarse encima con versionCode mayor y la firma actual para conservar datos.
 

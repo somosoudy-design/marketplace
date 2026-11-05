@@ -1,0 +1,47 @@
+# Read-only guest flow. No auth, cart mutations, order, quote, payment or remote preference writes.
+appId: com.example.kora.preview
+name: mayami native identity and public navigation
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-home
+- tapOn:
+    id: home-search
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 15000
+- tapOn:
+    id: catalog-search
+- inputText: UGREEN
+- hideKeyboard
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-search
+- back
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Runtime
+    timeout: 15000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-diagnostics
+- scrollUntilVisible:
+    element:
+      id: diag-Cuenta
+    direction: DOWN
+    timeout: 15000
+- assertVisible: sin sesión
+- scrollUntilVisible:
+    element:
+      id: diag-Conexión
+    direction: UP
+    timeout: 15000
+- extendedWaitUntil:
+    visible: responde en .*
+    timeout: 30000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-guest

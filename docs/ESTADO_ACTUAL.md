@@ -13,12 +13,13 @@ adaptativo/monocromo/notificación. Se mantienen paquete/scheme/proyecto/Firebas
 El catálogo privado ahora se incluye en el bundle embebido mediante envpreview; no depender de una OTA
 para ver las imágenes ya aprobadas. Diagnóstico usa el nombre visible mayami, preserva protocolo KoraDiag.
 
-Root único integrador. Tipos/lint/config pública, prebuildAndroid y exportHermes pasan.6 pruebas de identidad aprobadas; manifiesto generado etiqueta mayami, paquete correcto y recursosM. Los scripts que Expo cambió automáticamente se restauraron; no se modificó configuración iOS. Pendiente gates de APK real y emulador.
-El workflow de build guarda JSON fuera de fuente y exige árbol limpio. No publicar OTA con runtimeAPK5
-tras estos cambios nativos; el nuevo runtime se registrará desde el binario terminado, sin forzarlo.
-Siguiente exacto: prebuildAndroid sin instalar deps, exportHermes, buildEASpreview existente; inspeccionar
-firma/paquete/versionCode>4/backend/claves y revisar arranque/iconos en emulador. APK5 no disponible para
-prueba binaria de migración; no repetir su descarga caducada ni afirmar conservación probada físicamente.
+Root único integrador. Tipos/lint/config pública, prebuild Android y export Hermes aprobados. Seis pruebas de identidad pasan; manifiesto generado con etiqueta mayami, paquete correcto y recursos M. Scripts alterados automáticamente por prebuild restaurados; iOS no modificado.
+
+**Build en curso:** fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, [CI42075794184](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184). No lanzar otro build mientras éste trabaja. El workflow guarda su JSON fuera de fuente y exige árbol limpio.
+
+**Validación preparada:** verificador estricto de firma/paquete/versión/runtime/canal y referencia pública del único keystore EAS anterior al APK5; 13 pruebas pasan. Harness focal de emulador revisable, sin desinstalación ni datos remotos escritos. Falta ejecutar sobre el APK terminado y revisar videos/capturas reales. No afirmar conservación de sesión APK5: su binario caducó. La referencia de firma del proveedor no equivale a una comparación binaria histórica.
+
+**Siguiente exacto:** consultar CI42075794184, registrar ID/runtime/versionCode/enlace, verificar APK y ejecutar `.github/workflows/native-apk-emulator.yml` con esa identidad exacta. Revisar arranque claro/oscuro, launcher, Inicio→Buscar→Atrás y preferencia conservada al reinstalar. Entregar enlace sólo después de revisar resultados. No publicar OTA con runtime APK5 tras estos cambios nativos ni forzar el fingerprint antiguo.
 
 ## Escala mayami corregida y publicada · K nativa pendiente · 5 de noviembre
 
@@ -39,17 +40,7 @@ fuente `2b2c1a4`, ID `01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b`, grupo
 Observación42073374420 confirma última compatible, fuente limpia y sin rollback; creada5nov17:17:48UTC.
 13 pruebas del helper aprobadas. No republicar esta fuente. Web/panel sólo validados localmente.
 
-**Pendiente real:** K en splash/iconos compilados del APK5. No es una introducciónJS; no se añadió pantalla
-para disimularla. `docs/propuestas/marca-nativa-mayami` contiene cinco PNG preparados, originales/hash,
-receta portable, patch Android sin aplicar y verificador aprobado. No se modificó configuración nativa,
-no prebuild ni APK nuevo. Se conserva la restricción explícita anterior «No generar APK nuevo».
-
-**Próxima acción exacta:** obtener autorización para el nuevo APK Android necesaria para quitar la K.
-Después revisar/aplicar la propuesta, conservar firma y paquete `com.example.kora.preview`, aumentar
-versionCode y comprobar nuevo runtime, arranque frío/oscuro, iconos/máscaras/notificación y sesión en Android.
-No forzar runtime APK5 ni desinstalar la app para migrar. Preparación lista; la aprobación OTA actual no
-certifica el cambio nativo. No volver a recuperar ZIP, rehacer la escala ni abrir hosting antes de resolver
-esta decisión del propietario. Root único escritor; especialistas sólo lectura/pruebas.
+**Estado histórico de esta OTA:** todavía conservaba K en splash/iconos compilados del APK5. La propuesta de `docs/propuestas/marca-nativa-mayami` quedó posteriormente autorizada y aplicada; ver el bloque superior. No pedir de nuevo el permiso, recuperar el ZIP ni repetir el ajuste de escala.
 
 ## Logotipo original Work · integrado y publicado · 5 de noviembre
 

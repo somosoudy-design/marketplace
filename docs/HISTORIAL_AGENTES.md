@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-05 · APK mayami autorizado, integración nativa y build en curso
+
+Oliver autoriza expresamente el APK para retirar K nativa. Root integra propuesta auditada: M original en splash claro/oscuro, launcher, monocromo y notificaciones; etiqueta Android mayami. Conserva paquete/scheme/proyecto/Firebase e iOS. El perfil preview incluye el catálogo privado también en el bundle embebido. Diagnóstico muestra mayami. Fuentes733d500/fc8368f; build CI42075794184 en curso, no duplicar.
+
+Prebuild Android, export Hermes, tipos/lint y seis pruebas de identidad aprobados. Runtime/auditor trabajan sólo lectura y propuestas ignoradas; root integra verificador de binario/firma y harness Android focal. Trece pruebas de verificadores pasan. La firma se contrasta con el único keystore existente anterior al APK5, sin descargar claves privadas. APK5 caducado impide comparación binaria/migración real; no se declara probada. Próximo: resultado EAS, validación de APK terminado y capturas/videos reales en emulador antes del enlace final.
+
 ### 2026-11-05 · escala rectificada y K nativa localizada
 
 Oliver rechaza tamaño144 y detectaK de introducción. Root coordina dirección visual/runtime/auditor;

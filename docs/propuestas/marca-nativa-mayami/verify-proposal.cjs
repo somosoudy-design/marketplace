@@ -14,7 +14,14 @@ for (const item of manifest) {
   if (hash !== item.sha256 || bytes.length !== item.bytes) throw new Error(`Source changed: ${item.localFile}`);
 }
 const patch = path.join(here, 'android-native-identity.patch');
-execFileSync('git', ['apply', '--check', patch], { cwd: root });
+let patchState = 'pending';
+try {
+  execFileSync('git', ['apply', '--check', patch], { cwd: root, stdio: 'pipe' });
+} catch {
+  // After owner approval the prepared patch is already integrated. Reverse check never reverts it.
+  execFileSync('git', ['apply', '--reverse', '--check', patch], { cwd: root, stdio: 'pipe' });
+  patchState = 'applied';
+}
 execFileSync(process.execPath, ['--check', path.join(here, 'prepare-assets.mjs')]);
 const source = fs.readFileSync(path.join(here, 'withMayamiAndroidLabel.cjs'), 'utf8');
 const pluginModule = { exports: {} };
@@ -36,7 +43,7 @@ if (Object.keys(configured.mods).join(',') !== 'android') throw new Error('Non-A
   if (result.modResults.manifest.application[0].$['android:label'] !== 'mayami') throw new Error('Wrong Android label');
   if (JSON.stringify(result.ios) !== JSON.stringify(original.ios)) throw new Error('iOS changed');
   if (result.android.package !== original.android.package || result.scheme !== original.scheme) throw new Error('Identifier changed');
-  console.log(JSON.stringify({ sourceHashes: manifest.length, patchCheck: true, recipeSyntax: true,
+  console.log(JSON.stringify({ sourceHashes: manifest.length, patchCheck: true, patchState, recipeSyntax: true,
     onlyAndroid: true, label: 'mayami', iosUnchanged: true, androidPackageUnchanged: true,
     schemeUnchanged: true, modifiesNativeFiles: false, prebuildExecuted: false }, null, 2));
 })().catch(error => { console.error(error.message); process.exitCode = 1; });
