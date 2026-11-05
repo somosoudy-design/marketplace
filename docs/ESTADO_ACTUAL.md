@@ -15,7 +15,7 @@ para ver las imágenes ya aprobadas. Diagnóstico usa el nombre visible mayami, 
 
 Root único integrador. Tipos/lint/config pública, prebuild Android y export Hermes aprobados. Seis pruebas de identidad pasan; manifiesto generado con etiqueta mayami, paquete correcto y recursos M. Scripts alterados automáticamente por prebuild restaurados; iOS no modificado.
 
-**Build en curso:** fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, [CI42075794184](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184). No lanzar otro build mientras éste trabaja. El workflow guarda su JSON fuera de fuente y exige árbol limpio.
+**Build en cola de EAS:** `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, [CI42075794184](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184). Consulta de sólo lectura CI42081150988 confirma IN_QUEUE, worker sin empezar, source clean, versionCode5, preview y runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. No duplicar el build ni tratar el enlace como descarga final todavía. Solicitud nativa exacta preparada: el workflow espera a que termine ese mismo build (máx120min) y después valida APK/emulador automáticamente. [Informe e instalación](APK_MAYAMI_2026-11-05.md).
 
 **Validación preparada:** verificador estricto de firma/paquete/versión/runtime/canal y referencia pública del único keystore EAS anterior al APK5; 13 pruebas pasan. Harness focal de emulador revisable, sin desinstalación ni datos remotos escritos. Falta ejecutar sobre el APK terminado y revisar videos/capturas reales. No afirmar conservación de sesión APK5: su binario caducó. La referencia de firma del proveedor no equivale a una comparación binaria histórica.
 

@@ -17,7 +17,7 @@ Se conservan `com.example.kora.preview`, scheme `kora`, proyecto Expo y configur
 Fuente de aplicación: `fc8368f598df3b90fb42b3863a221be47371a40c`.
 [Compilación EAS desde GitHub](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184).
 
-**Estado de este checkpoint: compilación en curso; el APK todavía no se declara validado.** Se completará aquí el ID, runtime, versión, enlace y resultado del emulador cuando existan.
+**Estado de este checkpoint: en cola de EAS, sin worker iniciado.** Observación CI42081150988 confirma build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview y fuente limpia. No equivale a APK terminado. Se activa una espera acotada para validar automáticamente ese binario al finalizar; no crea otro build.
 
 Comprobado antes de compilar:
 

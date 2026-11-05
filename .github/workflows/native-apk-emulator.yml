@@ -12,7 +12,7 @@ concurrency:
 jobs:
   emulator:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 155
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -27,6 +27,10 @@ jobs:
           const fields={MAYAMI_BUILD_ID:[r.buildId,/^[a-f0-9-]{36}$/],MAYAMI_BUILD_COMMIT:[r.commit,/^[a-f0-9]{40}$/],MAYAMI_RUNTIME:[r.runtime,/^[a-f0-9]{40}$/]};
           for(const [k,[v,re]] of Object.entries(fields)){if(!re.test(v??''))throw new Error('Invalid expected identity: '+k);appendFileSync(process.env.GITHUB_ENV,`${k}=${v}\n`);}
           JS
+      - name: Esperar a que EAS termine el build existente
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: node tools/eas/wait-native-build.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
