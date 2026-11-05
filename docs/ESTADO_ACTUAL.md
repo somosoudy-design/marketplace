@@ -6,11 +6,36 @@
 
 ## Logotipo original Work · integrado y publicado · 5 de noviembre
 
-Oliver aplicó la configuración del entorno; revisión9 vigente permite Drive/WeTransfer. Descargado desde Drive **MAYAMI_Kit_Vectorial_v3.zip**, 18.578.029 bytes, 65 entradas y CRC íntegro; SHA256 `22574beeae113122dfb669149b86e4729dcf87122674a3d54523bc09aae307d1`. Original completo y guía extraídos en `.local/logo-original-20261105`; maestros SVG/ICO necesarios preservados sin cambios en `assets/brand/mayami/v3`, con procedencia y hashes. No se obtuvo mediante Library ni se ejecutó el generador incluido.
+**Resuelto el acceso al archivo.** Revisión9 aplicada por Oliver; descargado de Drive
+**MAYAMI_Kit_Vectorial_v3.zip**, 18.578.029 bytes, 65 entradas, CRC íntegro. SHA256
+`22574beeae113122dfb669149b86e4729dcf87122674a3d54523bc09aae307d1`. ZIP/guía en
+`.local/logo-original-20261105`; maestros exactos en `assets/brand/mayami/v3`, con procedencia y hashes.
+No se usó Library ni se ejecutó el generador. No volver a solicitar archivo o diagnosticar acceso.
 
-Implementación preparada: SVG original en Inicio y cabecera al desplazar; variantes violeta/blanco del kit en web/panel; favicons originales sólo en Next. Tipos/lint y7 verificaciones focalizadas pasan; revisores visual y auditor trabajan en carpetas ignoradas, root único escritor. Baseline nuevo de22 capturas antes de modificar, sin repetir auditoría general. Builds web/panel y export web/Android Hermes pasan. Auditor detectó que purchase.css conservaba gap16 y separaba logo/acciones en checkout320; corregido a12 y agregada regresión de checkout/pago. Segunda revisión focal aprobada: checkout y pago conservan logo/tres acciones en una fila; regresión portable2/2. Auditor APROBADO para este incremento. Publicado por CI42066926888, fuente478246b: ID `01a1ac97-6b93-78c5-b24c-e9a64731b476`, grupo `06e50097-a777-4714-bddb-44337f28ae48`, Android preview, guard exacto APK5 aprobado.
+**Implementación** `705da3d` y corrección `8727aa1`: SVG original en Inicio y cabecera al desplazar;
+variantes blanco/violeta en web/panel; favicon original sólo en Next. Logo mínimo144px, proporción1476:280,
+respeto62u, acciones44px. Auditor exigió corregir el gap de checkout320 que forzaba otra fila;
+segunda revisión **APROBADO**. Root único escritor, tres especialistas de lectura/pruebas.
+[Informe, decisiones y16PNG originales](LOGOTIPO_MAYAMI_V3.md).
 
-Próximo exacto: cerrar observación EAS sólo lectura para confirmar última compatible; guardar resultado y relevo. Logo de144px mínimo, proporción1476:280, área de respeto62u y acciones44px comprobados en navegador, no teléfono. Conservar `config/brand.json`, app.config, icono/splash/paquetes nativos; no nuevo APK. mayami.app sigue sin activar. Nueva OTA `01a1ac97-6b93-78c5-b24c-e9a64731b476` sustituye la anterior de nombre en texto. No afirmar recepción Samsung sin evidencia. [Informe, fuentes y capturas](LOGOTIPO_MAYAMI_V3.md).
+**Pruebas:**14 escenarios visuales independientes y2 regresiones portátiles;4 integridad/recursos y3
+identidad, tipos/lint, builds Next y exports Expo web/Android Hermes aprobados. Texto160% en navegador,
+claro/oscuro,320/412/1440. Fingerprint relativo igual en63 fuentes y guard exacto APK5 aprobado en CI.
+13 pruebas del helper de observación pasan. Sin recepción Android física/emulador comprobada.
+
+**Publicado** por [CI42066926888](https://github.com/somosoudy-design/marketplace/actions/runs/42066926888),
+fuente `478246b`: Android preview, ID `01a1ac97-6b93-78c5-b24c-e9a64731b476`, grupo
+`06e50097-a777-4714-bddb-44337f28ae48`, runtime APK5 `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`.
+Observación sólo lectura [CI42067593386](https://github.com/somosoudy-design/marketplace/actions/runs/42067593386)
+confirma última compatible, fuente limpia y sin rollback, creada **5nov16:42:47UTC**.
+No republicar la misma fuente ni afirmar recepción Samsung sin evidencia.
+
+**Próxima acción exacta:** contraste del ID anterior en Diagnóstico del Samsung cuando Oliver lo revise.
+Para continuar desarrollo: retomar el fallo real del hosting del panel con
+`gh run view 41205620181 --attempt 2 --log-failed` usando los permisos actuales; corregir antes de otro
+despliegue. La web compradora necesita hosting Next protegido y verificación HTTPS/rutas antes de activar
+mayami.app. No usar una OTA para declarar esos sitios publicados. Icono/splash/nombre de instalación y
+configuración nativa conservados; sin APK nuevo, iOS, backend remoto, finanzas ni datos comerciales alterados.
 
 ## mayami · coherencia revisada y Android publicado · 5 de noviembre
 
@@ -20,7 +45,7 @@ Auditor real: 17 escenarios iniciales y tres de segunda ronda; CAMBIOS OBLIGATOR
 
 El bloqueo del logo Work descrito al cerrar este incremento quedó resuelto el 5nov tras aplicar revisión9 del entorno. Integración posterior y próxima acción en el bloque superior; no volver a solicitar el archivo ni repetir el diagnóstico de acceso. Esta OTA anterior sólo contenía el nombre en texto.
 
-Publicado por CI41991694643, fuente643dd2f: actualización `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, grupo `e7437246-60e9-4f44-a80a-59d404e2a570`, Android preview. Guard exacto APK5 aprobado. Observación sólo lectura CI41992163529 confirma última compatible, fuente limpia y sin rollback, creada el5nov a08:06:29UTC. No republicar esta fuente; recepción física todavía no comprobada. Próximo exacto: recuperar el original Work tras publicar el permiso de red o recibir archivo adjunto; inspeccionar e integrar en las tres fachadas, comparar fondos/tamaños y validar APK5 antes de una nueva OTA. No publicar panel ni storefront por ese workflow; sus bloqueos de hosting siguen abajo. Después recuperar e integrar el logotipo original, sin repetir auditoría ni modificar datos remotos, finanzas, iOS o APK.
+Publicado por CI41991694643, fuente643dd2f: actualización `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, grupo `e7437246-60e9-4f44-a80a-59d404e2a570`, Android preview. Guard exacto APK5 aprobado. Observación sólo lectura CI41992163529 confirma última compatible, fuente limpia y sin rollback, creada el5nov a08:06:29UTC. No republicar esta fuente; recepción física todavía no comprobada. El paso de recuperar/integrar Work quedó completado en el incremento superior. No repetir esta OTA ni la auditoría anterior. Hosting de panel/storefront se gestiona por separado.
 
 ## Interacción y compra compacta · 4 de noviembre
 

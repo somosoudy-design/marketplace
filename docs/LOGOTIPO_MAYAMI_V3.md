@@ -87,8 +87,14 @@ Publicación confirmada por [CI42066926888](https://github.com/somosoudy-design/
 - Android `preview`, ID `01a1ac97-6b93-78c5-b24c-e9a64731b476`.
 - Grupo `06e50097-a777-4714-bddb-44337f28ae48`.
 - Guard exacto aprobado: `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`, APK5.
-- Observación del último compatible en curso; no recepción física/emulador comprobada.
+- [Observación42067593386](https://github.com/somosoudy-design/marketplace/actions/runs/42067593386) confirma
+  última compatible, fuente limpia y sin rollback; creada5nov16:42:47UTC.
+- [Resultado de publicación](capturas/logo-mayami-v3-2026-11-05/publicacion.json). No recepción física/emulador comprobada.
 
 No se publicó en `production` ni se generó APK nuevo.
 El nombre/icono/splash instalados continúan siendo los compilados en APK 5. El hosting del panel y de la
 web compradora no se actualiza mediante una OTA; mayami.app sigue sin activar.
+
+Siguiente: comprobar el ID en Diagnóstico cuando Oliver revise su Samsung; no republicar esta fuente.
+Retomar después el diagnóstico del fallo de EAS Hosting del panel y preparar hosting Next protegido para
+la web compradora. No repetir la recuperación del logo ni migrar la identidad nativa por una OTA.

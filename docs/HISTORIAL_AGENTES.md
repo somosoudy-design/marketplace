@@ -1,5 +1,28 @@
 # Historial de agentes
 
+### 2026-11-05 · original Work recuperado, integrado y publicado
+
+Tras aplicar Oliver revisión9, Drive entregó MAYAMI_Kit_Vectorial_v3.zip:65 entradas/18.578.029bytes,
+CRC íntegro y SHA256 registrado. MaestrosSVG/ICO conservados byte por byte; no Library, generador ni
+lettering sustitutivo. Implementación705da3d: marca original app/web/panel y faviconNext; configuración
+nativa intacta. Root único integrador, dirección visual/runtime/auditor como lectores y testers.
+
+Product Design audit/framework y guía original aplicados a proporción, respeto, contraste por fondo,
+reflow, foco y objetivos44px. Auditor detectó segunda fila en checkout320; corrección8727aa1 cambia
+gap16→12 y añade regresión de checkout/pago. Segunda revisión APROBADO.14 escenarios independientes,
+2 regresiones portátiles,7 pruebas de identidad/recursos, tipos/lint, builds y exports aprobados.
+16 PNG originales seleccionados, incluido rechazo y corrección. [Informe](LOGOTIPO_MAYAMI_V3.md).
+
+Fuente478246b publicada por CI42066926888 en Android preview: ID `01a1ac97-6b93-78c5-b24c-e9a64731b476`,
+grupo `06e50097-a777-4714-bddb-44337f28ae48`, guard runtime APK5 aprobado. Observación42067593386
+desde b0a76fb confirma última compatible, limpia y sin rollback,5nov16:42:47UTC.13 pruebas del helper
+pasan. No recepción física/emulador, APK nuevo, iOS ni modificaciones de backend/finanzas. Web/panel
+validados localmente; no publicados por esta OTA. Dominio mayami.app continúa inactivo.
+
+Próximo exacto: comprobar ID en Diagnóstico cuando Oliver revise; después leer fallo41205620181/intento2
+con permisos actuales y resolver hosting del panel. Preparar alojamiento Next protegido para comprador
+antes de activar dominio. No volver a pedir el archivo ni republicar la misma fuente.
+
 ### 2026-11-05 · alternativa WeTransfer para el logo, acceso aún bloqueado
 
 Oliver aporta `https://we.tl/t-QmFRpZAj94yW27ST`. Rama sincronizada sin cambios previos. Comprobación única por HTTPS normal: CONNECT403/HTTP000; política restringida/enforced de revisión7 no permite `we.tl`. No se obtuvo, inspeccionó ni modificó ningún recurso. Borrador de configuración guardado mediante el flujo soportado, añadiendo sólo `we.tl` y `wetransfer.com` y conservando todos los destinos previos, scripts y secretos; `requires_publish:true`, todavía sin aplicación al runtime. Sin intentos de evasión, nuevas pruebas de aplicación ni nueva publicación OTA. Próximo: aplicar configuración o recibir ZIP adjunto y continuar integración original, sin repetir auditoría previa. Última OTA válida permanece `01a1aabe-bbe5-71a4-9898-23a967d41a8f`.
