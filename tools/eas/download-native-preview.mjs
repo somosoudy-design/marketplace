@@ -7,7 +7,8 @@ const [buildId, commit, runtime, referencePath] = process.argv.slice(2);
 try {
   if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(buildId ?? '')) throw new ReceiptError('invalid_build_id');
   const reference = JSON.parse(await readFile(referencePath, 'utf8'));
-  const data = await graphql(ARCHIVE_QUERY, { buildId }, { token: process.env.EXPO_TOKEN });
+  const query = ARCHIVE_QUERY.replace('gitCommitHash runtime', 'gitCommitHash isGitWorkingTreeDirty runtime');
+  const data = await graphql(query, { buildId }, { token: process.env.EXPO_TOKEN });
   const build = data?.builds?.byId;
   if (build?.id !== buildId || build?.app?.id !== EXPECTED.project || build?.app?.fullName !== '@marketplacebrand/marketplace') throw new ReceiptError('wrong_build_or_project');
   validateBuild(build, { source: commit, runtime, certificate: reference.certificateSha256 });
