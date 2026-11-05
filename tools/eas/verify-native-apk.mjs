@@ -37,8 +37,18 @@ export function validateBuild(build, { source, runtime, certificate }) {
 }
 
 function quotedAttribute(line) {
-  const match = line.match(/=\s*("(?:\\.|[^"\\])*")/);
-  return match ? JSON.parse(match[1]) : null;
+  const equals = line.indexOf('=');
+  if (equals < 0) return null;
+  const serialized = line.slice(equals + 1).trim();
+  const end = serialized.indexOf(' (Raw: ');
+  const quoted = (end < 0 ? serialized : serialized.slice(0, end)).trimEnd();
+  if (!quoted.startsWith('"') || !quoted.endsWith('"')) return null;
+  try { return JSON.parse(quoted); }
+  catch {
+    // AAPT2 37 wraps strings in quotes without escaping JSON's inner quotes.
+    // The observed Raw suffix delimits the full attribute; do not truncate at its first inner quote.
+    return quoted.slice(1, -1);
+  }
 }
 
 export function parseResources(text) {

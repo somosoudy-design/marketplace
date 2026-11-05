@@ -98,3 +98,11 @@ test('resolves Expo Updates 57 assets/fingerprint exactly, without inventing or 
     assert.throws(() => validateArtifact({ ...current, fingerprintAsset }, build));
   assert.throws(() => validateArtifact({ ...current, resources: current.resources.replace('file:fingerprint', 'file:unrelated') }, build));
 });
+
+test('reads complete AAPT2 37 JSON header string with observed unescaped inner quotes and Raw suffix', () => {
+  const encoded = JSON.stringify(JSON.stringify({ 'expo-channel-name': 'preview' }));
+  const raw = '"{"expo-channel-name":"preview"}" (Raw: "{"expo-channel-name":"preview"}")';
+  const observed = { ...artifact, manifest: artifact.manifest.replace(encoded, raw) };
+  assert.equal(validateArtifact(observed, build).channel, 'preview');
+  assert.throws(() => validateArtifact({ ...observed, manifest: observed.manifest.replaceAll('preview', 'production') }, build), /channel/);
+});
