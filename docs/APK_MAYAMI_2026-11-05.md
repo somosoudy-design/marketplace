@@ -17,7 +17,7 @@ Se conservan `com.example.kora.preview`, scheme `kora`, proyecto Expo y configur
 Fuente de aplicación: `fc8368f598df3b90fb42b3863a221be47371a40c`.
 [Compilación EAS desde GitHub](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184).
 
-**Estado de este checkpoint: en cola de EAS, sin worker iniciado.** Observación CI42081150988 confirma build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview y fuente limpia. No equivale a APK terminado. Se activa una espera acotada para validar automáticamente ese binario al finalizar; no crea otro build.
+**Estado de este checkpoint: en cola de EAS, sin worker iniciado.** Observación CI42081150988 confirma build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview y fuente limpia. No equivale a APK terminado. [Validación CI42081690956](https://github.com/somosoudy-design/marketplace/actions/runs/42081690956) activa: espera acotada para validar automáticamente ese binario al finalizar; no crea otro build. Segunda observación de EAS (intento2) mantiene cola, sin ETA ni worker. El auditor todavía debe revisar los PNG/MP4 reales cuando estén disponibles.
 
 Comprobado antes de compilar:
 
@@ -42,4 +42,4 @@ Este APK recibe futuras OTA del mismo canal preview cuando su runtime coincida. 
 
 La solicitud `.github/eas-update-request` conserva el runtime del APK5 como registro de su última publicación. Antes de la siguiente OTA, fijar el runtime observado en el nuevo APK y verificarlo con el mismo archivo Firebase. Cambiar esa solicitud publica: no editarla sólo para documentar este build.
 
-El workflow focal conserva el APK verificado durante 90 días en Actions (`mayami-preview-apk`) y la evidencia en `ci/capturas`. Así, una futura prueba de migración no depende únicamente de la caducidad del enlace EAS. La retención se comprobará al finalizar el job.
+El workflow focal está configurado para conservar el APK verificado durante 90 días en Actions (`mayami-preview-apk`) y la evidencia en `ci/capturas`. Así, una futura prueba de migración no depende únicamente de la caducidad del enlace EAS. La retención se comprobará al finalizar el job.

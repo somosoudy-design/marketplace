@@ -6,6 +6,8 @@ Oliver autoriza expresamente el APK para retirar K nativa. Root integra propuest
 
 Prebuild Android, export Hermes, tipos/lint y seis pruebas de identidad aprobados. Runtime/auditor trabajan sólo lectura y propuestas ignoradas; root integra verificador de binario/firma y harness Android focal. Trece pruebas de verificadores pasan. La firma se contrasta con el único keystore existente anterior al APK5, sin descargar claves privadas. APK5 caducado impide comparación binaria/migración real; no se declara probada. Próximo: resultado EAS, validación de APK terminado y capturas/videos reales en emulador antes del enlace final.
 
+Checkpoints c89d7a9/597fc74/dd0d3de/e2c2ab8/363a80e conservan verificadores, evidencia original y guía de instalación. CI42081150988 (intentos1 y2) confirma build df55b9b8-1ed5-42e6-b42f-8a09b9bce50f en cola EAS, source clean, versionCode5, preview, runtime b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6; sin worker ni ETA. No es build terminado. CI42081690956 espera automáticamente ese UUID antes de verificar e instalar en emulador; conserva APK90d y PNG/MP4 originales en ci/capturas. Auditor aprueba recursos/prebuild/harness revisado, no arranque Android aún. No se entrega un enlace antiguo ni se declara instalado en Samsung. Consultar ambos jobs y revisar evidencia antes de cerrar; no duplicar builds ni republicar OTA. La autorización Android está registrada en AGENTS; iOS y servicios remotos intactos.
+
 ### 2026-11-05 · escala rectificada y K nativa localizada
 
 Oliver rechaza tamaño144 y detectaK de introducción. Root coordina dirección visual/runtime/auditor;

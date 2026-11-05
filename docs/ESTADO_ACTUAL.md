@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## APK Android mayami autorizado · en curso · 5 de noviembre
+## APK Android mayami autorizado · esperando cola EAS · 5 de noviembre
 
 Oliver respondió «Sí» a generar un nuevo APK para completar arranque/iconos. La restricción anterior noAPK
 queda levantada para esta build Android preview; no implica iOS, tiendas públicas ni producción.
@@ -15,11 +15,11 @@ para ver las imágenes ya aprobadas. Diagnóstico usa el nombre visible mayami, 
 
 Root único integrador. Tipos/lint/config pública, prebuild Android y export Hermes aprobados. Seis pruebas de identidad pasan; manifiesto generado con etiqueta mayami, paquete correcto y recursos M. Scripts alterados automáticamente por prebuild restaurados; iOS no modificado.
 
-**Build en cola de EAS:** `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, [CI42075794184](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184). Consulta de sólo lectura CI42081150988 confirma IN_QUEUE, worker sin empezar, source clean, versionCode5, preview y runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. No duplicar el build ni tratar el enlace como descarga final todavía. Solicitud nativa exacta preparada: el workflow espera a que termine ese mismo build (máx120min) y después valida APK/emulador automáticamente. [Informe e instalación](APK_MAYAMI_2026-11-05.md).
+**Build en cola de EAS:** `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, fuente `fc8368f598df3b90fb42b3863a221be47371a40c`, [CI42075794184](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184). Consulta de sólo lectura CI42081150988 confirma IN_QUEUE, worker sin empezar, source clean, versionCode5, preview y runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. No duplicar el build ni tratar el enlace como descarga final todavía. Validación exacta activa en [CI42081690956](https://github.com/somosoudy-design/marketplace/actions/runs/42081690956), fuente e2c2ab8: espera a que termine ese mismo build (máx120min) y después valida APK/emulador automáticamente. La segunda observación CI42081150988/intento2 sigue IN_QUEUE, sin ETA ni worker iniciado. No es fallo de compilación ni recepción comprobada. [Informe e instalación](APK_MAYAMI_2026-11-05.md).
 
 **Validación preparada:** verificador estricto de firma/paquete/versión/runtime/canal y referencia pública del único keystore EAS anterior al APK5; 13 pruebas pasan. Harness focal de emulador revisable, sin desinstalación ni datos remotos escritos. Falta ejecutar sobre el APK terminado y revisar videos/capturas reales. No afirmar conservación de sesión APK5: su binario caducó. La referencia de firma del proveedor no equivale a una comparación binaria histórica.
 
-**Siguiente exacto:** consultar CI42075794184, registrar ID/runtime/versionCode/enlace, verificar APK y ejecutar `.github/workflows/native-apk-emulator.yml` con esa identidad exacta. Revisar arranque claro/oscuro, launcher, Inicio→Buscar→Atrás y preferencia conservada al reinstalar. Entregar enlace sólo después de revisar resultados. No publicar OTA con runtime APK5 tras estos cambios nativos ni forzar el fingerprint antiguo.
+**Siguiente exacto:** consultar CI42075794184 (build) y CI42081690956 (validación). Si siguen activos, no volver a compilar ni lanzar otra validación. Al terminar, leer anotaciones de firma/binario y resultado del emulador; traer `ci/capturas/ultima/native-42081690956-1`, revisar PNG/videos originales con auditor y registrar resultado en APK_MAYAMI_2026-11-05.md. Si falla sólo el harness, corregir y repetir la validación del mismo APK, sin reconstruirlo. Si EAS agota la espera, volver a consultar metadata del UUID antes de cualquier otra acción. Entregar enlace de instalación únicamente con el estado real de validación. No publicar OTA con runtime APK5 ni forzar el fingerprint antiguo. Root mantiene escritura/commits; subagentes sólo investigan y revisan.
 
 ## Escala mayami corregida y publicada · K nativa pendiente · 5 de noviembre
 

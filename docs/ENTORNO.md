@@ -238,10 +238,22 @@ procesadores):
 | 4 | `5ee104fe` (versionCode 2, commit `3509547`) | Instalado en el Samsung de Oliver (2026-10-09 ~20:40Z). Primero con `expo-updates`. Runtime `a4682c83…`: ya no recibe actualizaciones nuevas |
 | 5 | `d1d10c28` (versionCode 4, commit `cc5b101`) | Firebase (push), «atrás» de Android corregido, icono y splash violeta, panel en `eas.json`. Misma firma que el 4 (se instala encima). Runtime `eb5ed117…`. El intento `54b2be4f` (versionCode 3) se detuvo antes de compilar |
 
+### APK mayami autorizado · 5nov2026
+
+Nuevo build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f` (fuente fc8368f), **en cola, no validado aún**.
+versionCode5 (siguiente APK después del histórico APK5/versionCode4), runtime
+`b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, canal preview. CI42075794184 compila y CI42081690956 espera
+ese mismo build para comprobar binario/emulador. No duplicarlos. [Estado y guía](APK_MAYAMI_2026-11-05.md).
+
+El canal se mantiene; el runtime cambia legítimamente por los recursos nativos. La última solicitud OTA
+sigue fijada al APK5 y sirve de histórico. No cambiarla sólo para documentación: dispara publicación.
+El próximo incremento móvil debe fijar y comprobar el runtime del nuevo APK ya validado. No forzar ni
+excluir fuentes del fingerprint. La recepción física en Samsung requiere instalar encima, sin desinstalar.
+
 ## 10. Actualizaciones de JavaScript sin reinstalar (EAS Update)
 
 Los APK con `expo-updates` (del APK 4 en adelante) reciben el JavaScript nuevo del canal `preview` si tienen el
-mismo **runtime** (huella de la parte nativa). Hoy (APK 5): `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; el APK 4
+mismo **runtime** (huella de la parte nativa). APK 5 instalado: `eb5ed1179b9c76c9c3cf27333aa48306728eb4ba`; el APK 4
 tenía `a4682c83c1bb738fc74c73153838ded0656f1912`.
 
 1. Calcula la huella **desde `apps/mobile`** (desde la raíz da otra):
@@ -256,8 +268,7 @@ tenía `a4682c83c1bb738fc74c73153838ded0656f1912`.
 
 **`apps/mobile/eas.json` es parte de la huella.** Agregarle una variable cambia el runtime aunque solo sea un valor
 público de JavaScript. Las variables `EXPO_PUBLIC_*` que una actualización necesita y el APK instalado no traía van en
-`UPDATE_ONLY_ENV` del paso «Variables del perfil preview» de `eas-update-preview.yml` (hoy vacío: desde el APK 5,
-`EXPO_PUBLIC_PANEL_URL` está en `eas.json`). Al compilar el próximo APK, pásalas a `build.preview.env` de `eas.json`
+`UPDATE_ONLY_ENV` del paso «Variables del perfil preview» de `eas-update-preview.yml` (catálogo privado para APK5; la fuente del nuevo APK mayami ya lo incluye también en `eas.json`). Al compilar el próximo APK, pásalas a `build.preview.env` de `eas.json`
 (allí ganan) y vacía `UPDATE_ONLY_ENV`.
 
 **`google-services.json` también es parte de la huella desde el APK 5** (su contenido, no su ruta). El archivo está en
@@ -268,7 +279,7 @@ actualización y de compilación lo bajan con `eas env:pull preview` antes de ca
 expo.dev, cambia el runtime y hace falta un APK nuevo.
 
 El icono, el splash y el color de notificación siguen la constante `NATIVE_IDENTITY` de
-`apps/mobile/app.config.ts`: `'original'` en el APK 4; `'violet'` desde el APK 5.
+`apps/mobile/app.config.ts`: `'original'` en el APK 4; `'violet'` desde el APK 5. El APK mayami añade overrides Android de M original y mantiene la configuración iOS anterior.
 
 ## 11. Workflows de GitHub
 
