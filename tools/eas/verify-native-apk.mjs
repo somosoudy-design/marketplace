@@ -128,7 +128,14 @@ export function validateArtifact({ badging, manifest, resources, signature, embe
     assert(typeof fingerprintAsset === 'string' && fingerprintAsset.length === 40 && SHA40.test(fingerprintAsset), 'Missing or invalid assets/fingerprint runtime');
   assert.equal(nativeRuntime, build.runtime, 'Embedded Android runtime mismatch');
   assert.equal(metadata.get('expo.modules.updates.EXPO_UPDATE_URL'), `https://u.expo.dev/${EXPECTED.project}`, 'Wrong native update project URL');
-  const headers = JSON.parse(metadata.get('expo.modules.updates.UPDATES_CONFIGURATION_REQUEST_HEADERS_KEY') ?? '{}');
+  const rawHeaders = metadata.get('expo.modules.updates.UPDATES_CONFIGURATION_REQUEST_HEADERS_KEY') ?? '{}';
+  let headers;
+  try { headers = JSON.parse(rawHeaders); }
+  catch {
+    // Reveal quoting/escaping structure only; never dump native header values or arbitrary resource strings.
+    const line = manifest.split('\n').find(value => value.includes('expo-channel-name'));
+    throw new Error(`Native header parser: ${JSON.stringify({ parsedLength: rawHeaders.length, shape: line?.replace(/[A-Za-z0-9]/g, 'x') })}`);
+  }
   assert.equal(headers['expo-channel-name'], EXPECTED.channel, 'Native channel is not preview');
   assert.equal(embeddedConfig.extra?.eas?.projectId, EXPECTED.project, 'Wrong embedded Expo project');
   assert.equal(embeddedConfig.extra?.variant, 'preview', 'Wrong embedded app variant');
