@@ -76,3 +76,17 @@ test('accepts equivalent nested EAS metadata fields without weakening constraint
   const nested = { ...metadata, runtimeVersion: undefined, channel: undefined, runtime: { version: runtime }, updateChannel: { name: 'preview' } };
   assert.equal(validateBuild(nested, options).runtime, runtime);
 });
+
+test('supports apksigner 37 observed V2 certificate format and full Android namespace', () => {
+  const current = { ...artifact,
+    signature: `Verifies\nVerified using v2 scheme (APK Signature Scheme v2): true\nNumber of signers: 1\nV2 Signer: certificate SHA-256 digest: ${certificate}\nV2 Signer: public key SHA-256 digest: ${'e'.repeat(64)}\n`,
+    manifest: artifact.manifest.replaceAll('android:', 'http://schemas.android.com/apk/res/android:'),
+    badging: artifact.badging.replace('sdkVersion:', 'minSdkVersion:'),
+  };
+  const result = validateArtifact(current, build);
+  assert.equal(result.certificateSha256, certificate);
+  assert.equal(result.minSdk, '24');
+  assert.throws(() => validateArtifact({ ...current, signature: current.signature.replace('Number of signers: 1', 'Number of signers: 2') }, build));
+  assert.throws(() => validateArtifact({ ...current, signature: current.signature.replace('certificate SHA-256', 'public key SHA-256') }, build), /readable signing certificate/);
+  assert.throws(() => validateArtifact({ ...current, signature: current.signature.replace(certificate, 'd'.repeat(64)) }, build), /differs/);
+});

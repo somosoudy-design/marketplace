@@ -17,7 +17,9 @@ Se conservan `com.example.kora.preview`, scheme `kora`, proyecto Expo y configur
 Fuente de aplicación: `fc8368f598df3b90fb42b3863a221be47371a40c`.
 [Compilación EAS desde GitHub](https://github.com/somosoudy-design/marketplace/actions/runs/42075794184).
 
-**Estado de este checkpoint: en cola de EAS, sin worker iniciado.** Observación CI42081150988 confirma build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview y fuente limpia. No equivale a APK terminado. [Validación CI42081690956](https://github.com/somosoudy-design/marketplace/actions/runs/42081690956) activa: espera acotada para validar automáticamente ese binario al finalizar; no crea otro build. Segunda observación de EAS (intento2) mantiene cola, sin ETA ni worker. El auditor todavía debe revisar los PNG/MP4 reales cuando estén disponibles.
+**Build terminado:** CI42075794184 Success; `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, versionCode5, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, preview/source clean. La primera validación42081690956 falló porque el parser esperaba `Signer #1` y apksigner37 devuelve `V2 Signer:`. Logs del APK real confirman firma válida y huella coincidente `86bf0698228dd380cb4d7efc454347023fa6392fe3d3780d06f9f278c244df7f`. Parser corregido;14pruebas pasan. Se repite la validación del mismo binario, sin otro build. Arranque/launcher todavía pendientes.
+
+[Build y descarga en EAS](https://expo.dev/accounts/marketplacebrand/projects/marketplace/builds/df55b9b8-1ed5-42e6-b42f-8a09b9bce50f). No se presenta todavía como entrega validada en Android.
 
 Comprobado antes de compilar:
 

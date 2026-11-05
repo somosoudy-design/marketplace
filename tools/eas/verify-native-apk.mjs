@@ -62,6 +62,8 @@ export function parseResources(text) {
 }
 
 export function parseMetaData(manifest, resources) {
+  // AAPT2 37 prints the full Android namespace URI; earlier releases use its android alias.
+  manifest = manifest.replaceAll('http://schemas.android.com/apk/res/android:', 'android:');
   const metas = new Map();
   const elements = [];
   let applicationCount = 0;
@@ -112,7 +114,11 @@ export function validateArtifact({ badging, manifest, resources, signature, embe
   const abis = badging.match(/^native-code:(.*)$/m)?.[1] ?? '';
   assert(abis.includes("'arm64-v8a'"), 'Missing Samsung ARM64 ABI');
   assert(abis.includes("'x86_64'"), 'Missing emulator x86_64 ABI');
-  const certificates = [...signature.matchAll(/Signer #\d+ certificate SHA-256 digest:\s*([a-f0-9:]+)/gi)].map(m => normalizeCert(m[1]));
+  const certificates = [...signature.matchAll(/^\s*(?:Signer #\d+ certificate|V2 Signer: certificate) SHA-256 digest:\s*([a-f0-9:]+)\s*$/gim)].map(m => normalizeCert(m[1]));
+  const signerCount = signature.match(/^\s*Number of signers:\s*(\d+)\s*$/mi)?.[1];
+  if (signerCount !== undefined || /^\s*V2 Signer:/mi.test(signature))
+    assert.equal(signerCount, '1', 'Expected exactly one reported APK signer');
+  assert.equal(certificates.length, 1, 'Expected one readable signing certificate; inspect apksigner output format');
   assert.deepEqual(certificates, [build.certificate], 'APK signing certificate differs from the trusted signing reference');
   const metadata = parseMetaData(manifest, parseResources(resources));
   assert.equal(metadata.get('expo.modules.updates.EXPO_RUNTIME_VERSION'), build.runtime, 'Embedded Android runtime mismatch');
@@ -125,7 +131,7 @@ export function validateArtifact({ badging, manifest, resources, signature, embe
   assert.equal(embeddedConfig.scheme, 'kora', 'Installed deep-link scheme changed');
   return { package: pkg[1], label: EXPECTED.label, versionCode: Number(pkg[2]),
     runtime: build.runtime, channel: EXPECTED.channel, certificateSha256: certificates[0],
-    abis: abis.trim(), minSdk: badging.match(/^sdkVersion:'(\d+)'/m)?.[1] ?? null,
+    abis: abis.trim(), minSdk: badging.match(/^(?:minSdkVersion|sdkVersion):'(\d+)'/m)?.[1] ?? null,
     targetSdk: badging.match(/^targetSdkVersion:'(\d+)'/m)?.[1] ?? null };
 }
 
