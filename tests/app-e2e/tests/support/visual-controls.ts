@@ -9,7 +9,7 @@ export async function guardLocalVisualRead(page: Page) {
     if (['DELETE', 'PATCH', 'PUT'].includes(request.method())) return route.abort();
     if (request.method() === 'POST') {
       const auth = url.pathname === '/auth/v1/token';
-      const readRpc = ['/rest/v1/rpc/admin_dashboard', '/rest/v1/rpc/seller_dashboard', '/rest/v1/rpc/push_health'].includes(url.pathname);
+      const readRpc = ['/rest/v1/rpc/admin_dashboard', '/rest/v1/rpc/seller_dashboard', '/rest/v1/rpc/push_health', '/rest/v1/rpc/cart_summary'].includes(url.pathname);
       if (!auth && !readRpc) return route.abort();
     }
     return route.continue();

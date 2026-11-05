@@ -48,8 +48,8 @@ function FavoriteControl({ id, slug, onPhoto = false, testID }: Props) {
     setFailed(false);
     haptics.select();
     if (!reduced) {
-      scale.value = withSequence(withTiming(on ? 1.23 : 0.85, { duration: 90 }), withTiming(1, { duration: 150 }));
-      if (on) { ring.value = 0; ring.value = withTiming(1, { duration: 260 }); }
+      scale.set(withSequence(withTiming(on ? 1.23 : 0.85, { duration: 90 }), withTiming(1, { duration: 150 })));
+      if (on) { ring.set(0); ring.set(withTiming(1, { duration: 260 })); }
     }
   };
   return <>
