@@ -4,7 +4,7 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## mayami · coherencia revisada; publicación en curso · 5 de noviembre
+## mayami · coherencia revisada y Android publicado · 5 de noviembre
 
 Implementación `6ef6503`, correcciones `14d5680`/`21e6889`/`b8170cc`: nombre compartido app/web/panel, enlaces operativos separados de mayami.app, texto neutral sin K/punto coral antiguos; contraste hover y peligro oscuro, iconos semánticos, editor de contenido sin overflow y acciones de 44 px. [Informe, revisión independiente y 16 capturas comparables](MARCA_MAYAMI_2026-11-05.md).
 
@@ -12,7 +12,7 @@ Auditor real: 17 escenarios iniciales y tres de segunda ronda; CAMBIOS OBLIGATOR
 
 Logo Work: Oliver aportó Drive `150rcWyhjqi4LoXnhs3R33ZD1YZEjTrBB`; descarga bloqueada por política de red. Borrador del entorno agrega drive.google.com/drive.usercontent.google.com y conserva configuración previa; requiere publicarlo desde configuración, o adjuntar el original. No se ha inspeccionado ni integrado el archivo. El texto mayami no se presenta como el logo. mayami.app tampoco está activo; icono/splash/nombre nativo del APK siguen siendo los anteriores.
 
-Próximo inmediato: observar una sola solicitud EAS Update Android preview de este bloque; guardar ID, grupo, fuente y guard exacto. Luego observación de metadatos en sólo lectura. No publicar panel ni storefront por ese workflow; sus bloqueos de hosting siguen abajo. Después recuperar e integrar el logotipo original, sin repetir auditoría ni modificar datos remotos, finanzas, iOS o APK.
+Publicado por CI41991694643, fuente643dd2f: actualización `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, grupo `e7437246-60e9-4f44-a80a-59d404e2a570`, Android preview. Guard exacto APK5 aprobado. Próximo inmediato: cerrar observación de metadatos en sólo lectura; no republicar esta fuente. No publicar panel ni storefront por ese workflow; sus bloqueos de hosting siguen abajo. Después recuperar e integrar el logotipo original, sin repetir auditoría ni modificar datos remotos, finanzas, iOS o APK.
 
 ## Interacción y compra compacta · 4 de noviembre
 

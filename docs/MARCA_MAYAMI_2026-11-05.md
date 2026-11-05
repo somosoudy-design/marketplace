@@ -94,7 +94,7 @@ en código/build local y su publicación conserva el bloqueo anterior. No confun
 ## Publicación y siguiente paso
 
 Fuentes: `6ef6503`, `14d5680`, `21e6889`, `b8170cc`. Preparado para una sola actualización Android preview
-con autorización vigente, sujeta al guard exacto y al resultado real de EAS. El resultado se agregará aquí.
+con autorización vigente. Publicada por [CI41991694643](https://github.com/somosoudy-design/marketplace/actions/runs/41991694643), solicitud `643dd2f`, con guard APK5 y fuente limpia aprobados. ID `01a1aabe-bbe5-71a4-9898-23a967d41a8f`, grupo `e7437246-60e9-4f44-a80a-59d404e2a570`. [Resultado](capturas/marca-2026-11-05/publicacion.json). Observación de última compatible en curso; sin recepción física comprobada.
 
 Siguiente tarea concreta: recuperar el archivo original de Work, integrarlo sin recrearlo y revisar sus
 variantes de fondo/tamaño. Después activar mayami.app únicamente con hosting/HTTPS/rutas verificados y
