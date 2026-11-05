@@ -1,0 +1,50 @@
+[
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/App/MAYAMI_App_1024.png",
+    "localFile": "originales/App/MAYAMI_App_1024.png",
+    "bytes": 22919,
+    "sha256": "17544ac89cfcfa1dbd07cf9c132d1a0bc2daeb88c5251d19db4b677539bd5e2e"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/App/MAYAMI_App.svg",
+    "localFile": "originales/App/MAYAMI_App.svg",
+    "bytes": 450,
+    "sha256": "022eb73d1814b00696dcaca8a13462c0ceb65e3d87bf8a78f83bade80e1cf05b"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/SVG/MAYAMI_Simbolo_Blanco.svg",
+    "localFile": "originales/SVG/MAYAMI_Simbolo_Blanco.svg",
+    "bytes": 350,
+    "sha256": "95d8344569fb642bc76dee97ebb1a09ebbffc3c328c73ca8f0beed9bf9d3c3a2"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/SVG/MAYAMI_Simbolo_Optico_Blanco.svg",
+    "localFile": "originales/SVG/MAYAMI_Simbolo_Optico_Blanco.svg",
+    "bytes": 356,
+    "sha256": "268dcffc47062eeb9e4825e3ab055eba173ef5a1d14d7522003cba80dbf2c5b9"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/SVG/MAYAMI_Simbolo_Violeta.svg",
+    "localFile": "originales/SVG/MAYAMI_Simbolo_Violeta.svg",
+    "bytes": 350,
+    "sha256": "ecb84a8466729708a35b70a7df18ad30fd4bfe4c294949c7d626d5ba6a5cb698"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/PNG/MAYAMI_Simbolo_Blanco_1200.png",
+    "localFile": "originales/PNG/MAYAMI_Simbolo_Blanco_1200.png",
+    "bytes": 29269,
+    "sha256": "d242ab2d07100190cc5b11a6414d7001defb0ba2c96b7d70b3dc890235862b7f"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/PNG/MAYAMI_Simbolo_Violeta_1200.png",
+    "localFile": "originales/PNG/MAYAMI_Simbolo_Violeta_1200.png",
+    "bytes": 37335,
+    "sha256": "0b025cd16f7359fc82c670b5cddb3b76985b9c8f715371f3273845510a44545b"
+  },
+  {
+    "sourceInArchive": "MAYAMI_Kit_v3/LEEME.txt",
+    "localFile": "originales/LEEME.txt",
+    "bytes": 2083,
+    "sha256": "64790db787991416ac97b65db0d216521cbd95d1e1179c004df09e790c041b0e"
+  }
+]

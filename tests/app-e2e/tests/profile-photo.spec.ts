@@ -46,4 +46,15 @@ test('a buyer adds a photo, sees a preview, keeps it after reopening and removes
   await expect(page.getByTestId('photo-sheet')).toBeHidden();
   await expect(page.getByTestId('account-photo').getByTestId('avatar-photo')).toHaveCount(0);
   await expect(page.getByTestId('account-photo')).toHaveAttribute('aria-label', 'Agregar foto de perfil');
+  // An existing account with no display name uses a person icon, never an inherited brand initial.
+  await page.route('**/rest/v1/profiles?*', async (route) => {
+    if (route.request().method() !== 'GET') return route.continue();
+    const response = await route.fetch();
+    const profile = await response.json();
+    await route.fulfill({ response, json: Array.isArray(profile)
+      ? profile.map((item) => ({ ...item, full_name: '' })) : { ...profile, full_name: '' } });
+  });
+  await page.reload();
+  await expect(page.getByTestId('account-photo').getByTestId('avatar-placeholder')).toBeVisible();
+  await expect(page.getByTestId('account-photo')).not.toContainText('K');
 });

@@ -9,7 +9,7 @@
 Oliver considera excesivo el logo144 y señala la K al abrir. Se revisa la integración en contexto:
 112px normal,96px sticky; web112móvil/144desktop; panel112navegación/144acceso. Trazados originales
 intactos. Excepción de escala a la guía por feedback del propietario; no reducir controles44px.
-Tipos/lint y4 verificaciones de originales pasan. Pendiente capturas posteriores, auditor y OTApreview.
+Tipos/lint y4 verificaciones de originales pasan. Builds/exports y2 regresiones web aprobados. Se corrige también K de avatar sin nombre a icono de persona; pendiente su regresión y export final. Propuesta nativa concreta en `docs/propuestas/marca-nativa-mayami`, cinco PNG preparados y patch sin aplicar. Pendiente auditor y OTApreview.
 
 La K pertenece a splash/icono nativos del APK5, no a una introducciónJS. No agregar una pantalla artificial
 para ocultarla. Especialista prepara patch nativo revisable fuera de configuración activa; eliminarla

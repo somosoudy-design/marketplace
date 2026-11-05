@@ -1,0 +1,12 @@
+{
+  "sourceHashes": 8,
+  "patchCheck": true,
+  "recipeSyntax": true,
+  "onlyAndroid": true,
+  "label": "mayami",
+  "iosUnchanged": true,
+  "androidPackageUnchanged": true,
+  "schemeUnchanged": true,
+  "modifiesNativeFiles": false,
+  "prebuildExecuted": false
+}

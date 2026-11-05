@@ -22,7 +22,7 @@ const TOO_BIG = 'La foto pesa más de 3 MB. Elige otra o recórtala más.';
 
 export function initials(s: string) {
   const parts = s.replace(/@.*/, '').split(/[\s._-]+/).filter(Boolean);
-  return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase() || 'K';
+  return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase();
 }
 
 /** The user's photo, or their initials when there is none. `uri` previews a photo that isn't saved yet. */
@@ -30,12 +30,14 @@ export function Avatar({ path, uri, name, size = 56 }: { path: string | null; ur
   const t = useTheme();
   const signed = useAvatarUrl(uri ? null : path);
   const src = uri ?? signed.data;
+  const letters = initials(name);
   return (
     <View style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', backgroundColor: path || uri ? t.colors.surfaceSunken : t.colors.brand, alignItems: 'center', justifyContent: 'center' }}>
       {src ? (
         <Image testID="avatar-photo" source={uri ? { uri } : { uri: src, cacheKey: path ?? undefined }} style={{ width: size, height: size }} contentFit="cover" transition={150} />
       ) : !path ? (
-        <Text variant={size >= 96 ? 'displayL' : 'title'} style={{ color: t.colors.onBrand }}>{initials(name)}</Text>
+        letters ? <Text variant={size >= 96 ? 'displayL' : 'title'} style={{ color: t.colors.onBrand }}>{letters}</Text>
+          : <View testID="avatar-placeholder"><Icon name="user" size={Math.round(size * 0.45)} color={t.colors.onBrand} /></View>
       ) : null}
     </View>
   );

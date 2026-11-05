@@ -1,0 +1,32 @@
+[
+  {
+    "file": "android-icon.png",
+    "source": "App/MAYAMI_App_1024.png",
+    "operation": "byte-for-byte copy",
+    "sha256": "17544ac89cfcfa1dbd07cf9c132d1a0bc2daeb88c5251d19db4b677539bd5e2e"
+  },
+  {
+    "file": "splash-icon.png",
+    "source": "PNG/MAYAMI_Simbolo_Violeta_1200.png",
+    "operation": "byte-for-byte copy",
+    "sha256": "0b025cd16f7359fc82c670b5cddb3b76985b9c8f715371f3273845510a44545b"
+  },
+  {
+    "file": "splash-icon-dark.png",
+    "source": "PNG/MAYAMI_Simbolo_Blanco_1200.png",
+    "operation": "byte-for-byte copy",
+    "sha256": "d242ab2d07100190cc5b11a6414d7001defb0ba2c96b7d70b3dc890235862b7f"
+  },
+  {
+    "file": "adaptive-foreground.png",
+    "source": "SVG/MAYAMI_Simbolo_Blanco.svg",
+    "operation": "original paths; uniform placement translate(287 302) scale(1.5); raster 1024px",
+    "sha256": "74774e4ce8f62e0d5b7a26f34ac5da86624bd47d2dfee1f69255caf707102ce0"
+  },
+  {
+    "file": "notification-icon.png",
+    "source": "SVG/MAYAMI_Simbolo_Optico_Blanco.svg",
+    "operation": "original paths; uniform placement translate(10.5 13) scale(0.25); raster 96px",
+    "sha256": "7c83cb9f1c2095d21f5046ae4d92ec60940471f10c591fac892429efae6c246f"
+  }
+]
