@@ -4,7 +4,7 @@
 
 Oliver proporcionó los datos reales de recepción y confirmó transferencias internas manuales de Binance. Se preparan dos métodos manuales, preservando la verificación administrativa y las políticas financieras existentes. El snapshot fresco muestra siete métodos deshabilitados y una tasa vigente; aún no se aplicó ninguna mutación de cobro en esta continuación. No habilitar Binance Pay automático ni USDT TRC-20.
 
-Primer CI42229560165:57 UI/24 Node/3 marca PASS. Ensayo atómico con rollback PASS y snapshot independiente sin cambios en7métodos ni4tablas financieras. Se repiten capturas tras normalizar scroll/foco del test: el enlace accesible fijo quedó dentro de la imagen larga; no es un cambio de producto.
+Primer CI42229560165:57 UI/24 Node/3 marca PASS. Segundo CI42230347095:55 pasan/2 pruebas nuevas fallan sólo por esperar alerta custom ante input required vacío; el navegador bloqueó nativamente. Se corrige la aserción de foco/valueMissing y se añade referencia corta para la alerta custom, sin cambiar producto. Ensayo atómico con rollback PASS y snapshot independiente sin cambios en7métodos ni4tablas financieras. Se repiten capturas tras normalizar scroll/foco del test: el enlace accesible fijo quedó dentro de la imagen larga; no es un cambio de producto.
 
 Checkpoint previo a CI: dos regresiones aisladas para Zelle USD y Binance interna USDT, con contactos example.com, comprobante obligatorio y saldo sin acreditar. Próxima acción: ejecutar la suite en stack local de CI, revisar capturas independientes, ensayar transacción atómica con rollback y activar sólo los canales autorizados. Sin pagos/fixtures remotos ni servicios de pago; no requiere redeploy del Worker.
 

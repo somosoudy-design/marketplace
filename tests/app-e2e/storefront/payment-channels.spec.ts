@@ -218,6 +218,14 @@ async function finishManual(
   screenshot: string,
 ) {
   if (channel.requiresReference) {
+    const reference = page.getByLabel('Referencia del pago', { exact: true });
+    await expect(reference).toHaveAttribute('required', '');
+    await page.getByRole('button', { name: 'Ya pagué, enviar para verificar', exact: true }).click();
+    await expect(reference).toBeFocused();
+    expect(await reference.evaluate((e) => (e as HTMLInputElement).validity.valueMissing)).toBe(true);
+    expect(calls.submit).toEqual([]);
+    expect(calls.uploads).toEqual([]);
+    await reference.fill('123');
     await page.getByRole('button', { name: 'Ya pagué, enviar para verificar', exact: true }).click();
     await expect(page.getByRole('alert').filter({ hasText: 'Escribe la referencia del pago.' })).toBeVisible();
     expect(calls.submit).toEqual([]);

@@ -2,3 +2,4 @@
 57 UI esperadas: dos regresiones nuevas con contactos example.com y base divisas, comprobante obligatorio, verificación pendiente y ningún saldo acreditado.
 Stack local aislado; ambos proyectos alojados bloqueados. Sin pagos reales, fixtures remotos, APK/OTA ni servicio de pago.
 Segunda captura: scroll inicial y foco normalizados; prueba negativa de referencia vacía y aserción divisas. No cambia código del producto.
+Tercera pasada: referencia vacía comprueba validación HTML nativa/foco; referencia de 3 caracteres comprueba alerta de la app. Cero uploads/submit en ambos rechazos.
