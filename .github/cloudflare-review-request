@@ -1,3 +1,3 @@
-2026-11-06 publicación oficial: catálogo comercial autorizado, páginas legales, SEO, SSR y compra aislada y guardia ante métodos de pago no disponibles.
-Workers Free único; 55 UI, 24 Node y 3 pruebas de marca en stack local. Sin pedidos/pagos remotos, OTA ni servicios de pago.
-Verifica rechazo antes del RPC frente a intento incierto ya enviado; conserva clave/recovery en reintento sin métodos.
+2026-11-06 canales manuales autorizados: Zelle USD y Binance interna USDT.
+57 UI esperadas: dos regresiones nuevas con contactos example.com y base divisas, comprobante obligatorio, verificación pendiente y ningún saldo acreditado.
+Stack local aislado; ambos proyectos alojados bloqueados. Sin pagos reales, fixtures remotos, APK/OTA ni servicio de pago.
