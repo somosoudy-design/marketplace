@@ -2,10 +2,10 @@ import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { ModerationStatus } from '@kora/api';
 import { MODERATION_LABEL, STORE_STATUS_LABEL } from '@kora/core';
 import { useQuery } from '@tanstack/react-query';
-import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { View } from 'react-native';
 import { AdvancedPanel, SellerLoading, SellerScreen, SellerScroll } from '@/components/seller/SellerScreen';
+import { StoreLogo } from '@/components/catalog/StoreLogo';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -15,7 +15,7 @@ import { ErrorState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { useSeller } from '@/lib/seller';
-import { api, storeImage } from '@/lib/supabase';
+import { api } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 
 export default function MyStoreScreen() { return <SellerScreen><Dashboard /></SellerScreen>; }
@@ -36,7 +36,7 @@ function Dashboard() {
     </View> : null}
     <Card style={{ gap: 14, padding: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
-        {s.logo_path ? <Image accessibilityLabel={`Logotipo de ${s.name}`} source={{ uri: storeImage(s.logo_path) ?? undefined }} style={{ width: 64, height: 64, borderRadius: 16 }} contentFit="contain" /> : <View style={{ width: 64, height: 64, borderRadius: 16, backgroundColor: t.colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}><Icon name="store" size={28} color={t.colors.brand} /></View>}
+        {s.logo_path ? <StoreLogo id={s.id} path={s.logo_path} label={`Logotipo de ${s.name}`} fit="contain" style={{ width: 64, height: 64, borderRadius: 16 }} /> : <View style={{ width: 64, height: 64, borderRadius: 16, backgroundColor: t.colors.brandSoft, alignItems: 'center', justifyContent: 'center' }}><Icon name="store" size={28} color={t.colors.brand} /></View>}
         <View style={{ flex: 1, gap: 6 }}><Text variant="overline" color="textMuted">Tu negocio</Text><Text variant="displayM" testID="seller-store-name">{s.name}</Text></View>
       </View>
       {s.tagline ? <Text color="textSecondary">{s.tagline}</Text> : null}
