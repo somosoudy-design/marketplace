@@ -48,6 +48,7 @@ for (const colorScheme of ['light', 'dark'] as const)
 
 test('búsqueda, filtros, orden y paginación mantienen URL compartible', async ({ page }) => {
   await page.goto('/buscar');
+  await expect(page.locator('.search-page > .section-heading .muted')).toContainText('productos en esta página');
   if (await page.getByRole('button', { name: 'Filtrar y ordenar' }).isVisible())
     await page.getByRole('button', { name: 'Filtrar y ordenar' }).click();
   await page.locator('.filter-form input[name=q]').fill('UGREEN');

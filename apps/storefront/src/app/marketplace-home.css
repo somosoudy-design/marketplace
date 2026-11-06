@@ -88,3 +88,7 @@
   .product-page .product-gallery > .product-photo { aspect-ratio: 4 / 3; max-height: 300px; }
   .product-page .detail-policies { gap: 4px 16px; }
 }
+@media (max-width: 700px) {
+  /* The toggle already labels this panel; keep its heading for assistive technology. */
+  .search-sidebar .filter-form h2 { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+}
