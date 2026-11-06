@@ -11,6 +11,7 @@ import { Text } from '@/components/ui/Text';
 import { brand } from '@/lib/brand';
 import { storeImage } from '@/lib/supabase';
 import { useTheme } from '@/theme';
+import { StoreLogo } from './StoreLogo';
 
 const storeLabel = (store: StoreSummary) => {
   const tier = storeTier(store);
@@ -34,7 +35,7 @@ export function StoreCard({ store, width }: { store: StoreSummary; width: number
       <View style={{ padding: 12, paddingTop: 30, gap: 4 }}>
         <View style={{ position: 'absolute', top: -26, left: 12, width: 52, height: 52, borderRadius: 16, backgroundColor: t.colors.surface, padding: 3, ...t.elevation.low }}>
           {store.logo_path ? (
-            <Image source={{ uri: storeImage(store.logo_path) ?? undefined }} style={{ flex: 1, borderRadius: 13 }} contentFit="cover" />
+            <StoreLogo id={store.id} path={store.logo_path} style={{ flex: 1, borderRadius: 13 }} />
           ) : (
             <View style={{ flex: 1, borderRadius: 13, backgroundColor: accent }} />
           )}
@@ -70,7 +71,7 @@ export function StoreChip({ store, width, overline }: { store: StoreSummary; wid
       style={{ width, flexDirection: 'row', alignItems: 'center', gap: 12, padding: 10, paddingRight: 12, backgroundColor: t.colors.surface, borderRadius: t.radii.lg, borderWidth: 1, borderColor: t.colors.border }}
     >
       <View style={{ width: 52, height: 52, borderRadius: t.radii.md, overflow: 'hidden', backgroundColor: accent }}>
-        {store.logo_path ? <Image source={{ uri: storeImage(store.logo_path) ?? undefined }} accessibilityLabel="" accessible={false} style={{ flex: 1 }} contentFit="cover" transition={150} /> : null}
+        {store.logo_path ? <StoreLogo id={store.id} path={store.logo_path} style={{ flex: 1 }} /> : null}
       </View>
       <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
         {overline ? <Text variant="caption" color="textMuted">{overline}</Text> : null}

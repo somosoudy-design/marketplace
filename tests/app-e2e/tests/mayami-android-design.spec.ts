@@ -31,3 +31,24 @@ for (const width of [320, 360, 390, 412]) {
     });
   }
 }
+
+test('the legacy Mayami store avatar uses the current mark', async ({ page }, info) => {
+  await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
+    const response = await route.fetch();
+    const feed = await response.json();
+    const store = feed.stores.find((item: { slug: string }) => item.slug === 'kora');
+    store.id = '5afbabbf-0678-40ee-a5d8-540f53efe114';
+    store.name = 'Mayami';
+    store.logo_path = 'demo/kora-logo.webp';
+    await route.fulfill({ json: feed });
+  });
+  await page.goto('/');
+  const logo = page.getByTestId('mayami-store-logo');
+  await expect(logo).toBeVisible();
+  await logo.scrollIntoViewIfNeeded();
+  await expect.poll(() => logo.evaluate((node) => {
+    const image = node instanceof HTMLImageElement ? node : node.querySelector('img');
+    return !!image && image.complete && image.naturalWidth > 0;
+  })).toBe(true);
+  await page.screenshot({ path: info.outputPath('tienda-mayami.png') });
+});

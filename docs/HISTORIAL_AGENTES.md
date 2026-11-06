@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 — primera etapa Android publicada y recibida en emulador
+
+Dirección web adaptada: apertura, categorías, títulos completos, navegación y fotos del catálogo. CI 42288014461 55 recorridos/12 política, revisión visual web independiente y export Android local. Consulta Expo 42283919634 Free/con cupo; fingerprint 42286410080 coincide con APK Mayami. OTA 42289145866 Success fuente `3267603`, grupo `4b5d95cb-7bd5-4f41-8ece-956c178434d0`, UUID Android `01a1b291-6267-77fe-8daf-42d6f099b488`. Emulador Android15 CI 42289637529 Success verificó UUID, runtime/canal/backend/invitado y recorridos; revisión nativa aprobó Inicio/Buscar y detectó avatar K antiguo, corrección en curso; no afirmar recepción en Samsung. Oliver confirmó que tarifas y transportistas actuales son reales pese a `is_demo`; sin mutar backend o datos.
+
 ### 2026-11-06 — rediseño publicado; catálogo en transición
 
 Worker `1eea5edb-7ecc-4a97-9a44-595fcdf12dff` al 100%, fuente ejecutable `e18d786`; CI 42276448900 65 UI y revisión independiente tablet. SSR y CSS público comprobados, 24 GET 200, www correcto, Zelle/Binance y seis tablas privadas verificados. Sin operación financiera. 21 invocaciones correlacionadas outcome ok, mediana 46 ms, 22–919 ms, todas >10 ms, 0 excepciones/error 1102 en muestra. Comparación anterior no causal.

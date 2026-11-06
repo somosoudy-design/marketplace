@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Catalog } from '@/components/catalog/Catalog';
 import { MAX_CONTENT } from '@/components/catalog/ProductGrid';
 import { StoreBadge, storeTier } from '@/components/catalog/StoreBadge';
+import { StoreLogo } from '@/components/catalog/StoreLogo';
 import { RatingInline, ReviewItem } from '@/components/reviews/Reviews';
 import { CollapsingHeader, useScrollY } from '@/components/ui/Bars';
 import { Button } from '@/components/ui/Button';
@@ -111,7 +112,7 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
       <View style={{ paddingHorizontal: 16, marginTop: -40, gap: 12 }}>
         <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 14 }}>
           <View style={{ width: 80, height: 80, borderRadius: 24, backgroundColor: t.colors.surface, padding: 4, ...t.elevation.low }}>
-            {s?.logo_path ? <Image source={{ uri: storeImage(s.logo_path) ?? undefined }} style={{ flex: 1, borderRadius: 20 }} /> : <View style={{ flex: 1, borderRadius: 20, backgroundColor: accent }} />}
+            {s?.logo_path ? <StoreLogo id={s.id} path={s.logo_path} style={{ flex: 1, borderRadius: 20 }} /> : <View style={{ flex: 1, borderRadius: 20, backgroundColor: accent }} />}
           </View>
         </View>
 

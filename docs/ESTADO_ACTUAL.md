@@ -4,7 +4,7 @@
 
 Oliver pidió llevar a la APK la opción 2 con cabecera de la 3. Plan `docs/REDISENO_APK_2026-11-06.md`. Primera etapa validada: apertura, categorías, tarjetas, navegación ampliada y fotos del catálogo sin sustituciones de exhibición Android; sin cambios de datos o cálculos. CI 42288014461 pasó 55 recorridos y 12 pruebas de política, tipos/lint y export web en stack local aislado; revisión independiente aprobó 320/412 claro/oscuro y texto ampliado. Expo Free y cuota disponible, consulta 42283919634; runtime calculado 42286410080 coincide con APK Mayami `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. Android export local aprobado.
 
-Actualización Android publicada por CI 42289145866 Success, fuente `3267603`, runtime verificado `b691ec2b...`, grupo `4b5d95cb-7bd5-4f41-8ece-956c178434d0`, UUID Android `01a1b291-6267-77fe-8daf-42d6f099b488`, canal preview. Solicitar comprobación de recepción exacta en emulador; aún no afirmar recepción ni instalación en Samsung. No publicar en tiendas, construir otro APK ni activar servicios con cargos.
+Actualización Android publicada por CI 42289145866 Success, fuente `3267603`, runtime verificado `b691ec2b...`, grupo `4b5d95cb-7bd5-4f41-8ece-956c178434d0`, UUID Android `01a1b291-6267-77fe-8daf-42d6f099b488`, canal preview. CI 42289637529 Success verificó la firma del APK y recepción del UUID Android exacto en emulador Android 15, además de navegación invitada en claro/oscuro. Revisión visual nativa aprobó Inicio y Buscar con catálogo real reducido; detectó la K heredada en avatar de la tienda Mayami. Corrección en curso solo para el ID y ruta antiguos; faltan pruebas y nueva OTA. Instalación en Samsung no está confirmada. No publicar en tiendas, construir otro APK ni activar servicios con cargos.
 
 ## Trabajo en curso: renovación web comercial · 6nov2026
 
@@ -15,6 +15,8 @@ Primera etapa publicada en mayami.app: cabecera, Inicio, catálogo y ficha sobre
 **Catálogo en transición:** a las 19:03 UTC, antes de este despliegue, la API pública entregaba 3 productos y home_feed un recomendado, frente a 41 visibles en el respaldo anónimo 06:46 UTC. Oliver aclaró que suspendió los demás para comenzar a subir productos reales. Conservar ese estado; no restaurar ni modificar productos por cuenta propia. Inicio muestra solo DJI en la lectura efectuada; la validación visual con fixtures no demuestra catálogo completo en producción.
 
 CPU tras despliegue: 24 solicitudes de lectura HTTP 200, 21 invocaciones correlacionadas (icono servido como estático), outcome ok y sin excepciones ni logs de error; mediana 46 ms, rango 22–919 ms, 21/21 superaron nominal 10 ms y ninguna presentó 1102. Muestra anterior 21 invocaciones, mediana 15 ms/rango 10–33; no es comparación causal, hay alto ruido y una ruta de ficha distinta. Seguir observando, no equiparar superar 10 ms con fallo, y no afirmar capacidad o necesidad de Paid por esta muestra. Workers Free; no activar servicios con cargos.
+
+Oliver confirmó el 6nov que las tarifas de envío y transportistas existentes son las condiciones reales actuales, pese a su marca interna `is_demo`; no modificar importes, opciones ni marcar como ficticios solo por esa metadata. No se realizó compra ni se cambiaron datos.
 
 Próxima acción: continuar la operación con los productos reales que Oliver vaya incorporando; revisar Inicio con el catálogo actualizado. No restaurar los productos suspendidos. Ver `apps/storefront/design-qa.md`.
 

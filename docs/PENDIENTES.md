@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Android Mayami · primera etapa publicada
+
+OTA Android `01a1b291-6267-77fe-8daf-42d6f099b488`, runtime `b691ec2b...`, canal preview, CI 42289145866. CI 42289637529 verificó recepción del UUID exacto en emulador Android 15; revisión visual nativa aprobó Inicio/Buscar y detectó la K antigua en el avatar de la tienda; corrección en curso, Samsung físico no observado. Plan y alcance en `REDISENO_APK_2026-11-06.md`. Oliver confirmó como reales las tarifas y transportistas actuales aun con marca histórica `is_demo`; no cambiar sus importes ni reactivar productos suspendidos.
+
 ## En curso: renovación web comercial
 
 Primera etapa publicada versión `1eea5edb` y CI 42276448900 aprobado. El catálogo público entrega 3 productos y Inicio muestra un destacado: Oliver confirmó que suspendió los demás para empezar a subir productos reales. Conservar ese estado y revisar Inicio cuando haya nuevas altas. Mantener Workers Free y consultar antes de cualquier servicio con cargos. Checkout y cuenta conservan experiencia anterior salvo cabecera compartida. Ver ESTADO_ACTUAL.md.
