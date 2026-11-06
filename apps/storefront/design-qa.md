@@ -1,6 +1,6 @@
 # Revisión visual del rediseño de Mayami
 
-Estado: **final result: blocked**. La vista final de los últimos ajustes todavía necesita una captura en tema claro desde la ejecución aislada y validación de la suite completa. No considerar este documento aprobación de publicación.
+Estado: **final result: blocked**. La revisión de CI 42265019549 detectó tarjetas de colección demasiado estrechas en 768 px; se ajustó la distribución y faltan CI y capturas del ajuste. No considerar este documento aprobación de publicación.
 
 Objetivo: propuesta combinada elegida por Oliver, opción 2 y cabecera de la 3, `exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png` bajo `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/`. La implementación usa fotos, nombres y precios reales, no imágenes comerciales ni precios generados; se conserva tema oscuro.
 

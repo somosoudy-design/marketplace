@@ -299,6 +299,9 @@ for (const width of [360, 390, 768, 1024]) {
       await expect(page.getByRole('search')).toBeVisible();
       await expect(page.getByTestId('product-card').first()).toBeVisible();
       if (width === 768) {
+        const collectionCards = page.locator('.market-collection [data-testid="product-card"]');
+        expect(await collectionCards.count()).toBeGreaterThan(0);
+        expect(await collectionCards.evaluateAll((nodes) => nodes.every((node) => node.getBoundingClientRect().width >= 130))).toBe(true);
         const headings = page.locator('.market-category-feature h2:visible');
         expect(
           await headings.evaluateAll((nodes) =>
