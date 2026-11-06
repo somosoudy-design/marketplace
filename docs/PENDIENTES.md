@@ -1,8 +1,10 @@
 # Pendientes de mayami
 
-## Dominio público · continuar desde Mac · 5nov
+## Dominio público · Mac sincronizado; permiso de Chrome pendiente · 5nov
 
-Oliver autorizó preparar mayami.app y eligió Codex en su Mac, `~/marketplace`. [Relevo exacto](ACTIVAR_MAYAMI_APP.md). Ruta tienda corregida y probada2/2; helper Cloudflare sólo lectura5/5; build/tipos/lint/release guard pasan; auditor APROBADO para estos cambios. No hay acceso local desde esta nube ni DNS/hosting configurados. Verificar zona y origen real antes de CNAME/publicWebOrigin. No abrir compra de muestras: faltan catálogo vendible/fotos comerciales, operador/políticas y retornos. No reauditar diseño ni rehacer checkout.
+Rama sincronizada por avance directo hasta `600e538`, sin cambios locales previos perdidos. Auditor independiente confirma fuente y recursos; copia local promisor/sparse aplaza sólo multimedia de docs (detalle y recuperación en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md)). Helper Cloudflare 5/5 en Mac con mocks. DNS público: delegación Cloudflare y raíz/www sin dirección web; cuenta/hosting no comprobados.
+
+**Bloqueo operativo:** macOS devuelve `-1743` al controlar Chrome. Habilitar Codex → Chrome en Privacidad y seguridad → Automatización; después usar la sesión/cuenta indicada y verificar zona, registros existentes y origen HTTPS real antes de CNAME/publicWebOrigin. No se modificaron servicios remotos. Autorización de dominio vigente; no pedir otro permiso genérico ni secretos por chat. Mantener pendientes catálogo comercial, fotos, operador/políticas y retornos antes de habilitar pedidos públicos.
 
 ## Prioridad de marca · APK comprobado, instalación física pendiente · 5nov
 
