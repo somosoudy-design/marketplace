@@ -4,15 +4,15 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## Activación de mayami.app · relevo al Mac · 5 de noviembre
+## Activación de mayami.app · Mac sincronizado, acceso a Chrome pendiente · 5 de noviembre
 
-Oliver autorizó configurar el dominio y preparar el negocio público; confirmó que abrirá `~/marketplace` en Codex de su Mac. Esta sesión sigue en Linux nube sin control del Mac/navegador. Apertura Cloudflare en panel Codex devuelve queued; no equivale a sesión accesible. [Pasos concretos y bloqueos reales](ACTIVAR_MAYAMI_APP.md). No pedir contraseñas, tokens ni códigos2FA por chat.
+Oliver mantiene autorizada la configuración del dominio y el acceso con su cuenta Google indicada. Ejecución real en macOS, `~/marketplace`; árbol original limpio, avance directo `9d22155`→`600e538` (233 commits). Revisión independiente aprobada: HEAD=origin, árbol/índice limpios y 375/375 archivos de app/marca presentes con hash Git correcto. Por fallos/lentitud de descarga se usa copia parcial con remoto promisor y sparse que aplaza sólo 1.191 archivos multimedia bajo docs; fuente y textos completos. Configuración y recuperación documentadas en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md).
 
-Corregido enlace `/tienda/[slug]` de web hacia catálogo existente con filtro; consulta anónima/RLS,404 para tienda no visible y reintento ante fallo. **Build Next, verify:release, tipos/lint y2UI reales pasan.** Helper de inspección Cloudflare sóloGET/exacta zona mayami.app;5tests pasan. Auditor independiente aprueba cambios/relevo. No se publicaron web ni DNS. Primera ejecuciónUI encontró el servidor anterior sin la ruta nueva; tras rebuild pasó sin debilitar asserts.
+DNS público comprobado a las 19:23 UTC / 15:23 Caracas: `morgan.ns.cloudflare.com`, `laylah.ns.cloudflare.com`; raíz sin A/AAAA/CNAME y www sin resolución. HTTPS no pudo resolverlos. No acredita propiedad de la cuenta. Evidencia ignorada sólo en este Mac: `.local/mayami-domain-20261105/public-dns-before.json`.
 
-Borrador nube opcional guardado: dominios Cloudflare+mayami y requisito personal CLOUDFLARE_API_TOKEN (sóloapi.cloudflare.com); no aplicado, sin token. Oliver eligió Mac: no exigir este camino alternativo allí. Sin secretos en Git ni datos remotos alterados.
+**Trabajo en curso / bloqueo:** macOS niega automatización de Chrome (`-1743`). Se solicitó abrir Cloudflare/Ajustes, sin acceso verificable al navegador. No se pudo usar la sesión ni iniciar Google. No se cambiaron DNS, TLS, hosting, backend o app. `publicWebOrigin=null`. Las cinco pruebas del helper GET pasan en este Mac con respuestas simuladas; no equivalen a inspección autenticada. Los builds/UI descritos en el relevo son validaciones de la preparación anterior, no nuevos despliegues.
 
-**Próxima acción exacta en Mac:** leer AGENTS/ACTIVAR_MAYAMI_APP, preservar cambios y sincronizar rama, abrir Cloudflare con sesión local del propietario, verificar zona/nameservers/DNS existentes y alojamiento. Next requiere SSR; no usar workflow del panel ni inventarCNAME. Antes de compra pública cerrar catálogo vendible (is_demo actual aún permite comprar), fotos comerciales, operador/políticas y retornos de pago. No convertir noindex en supuesto control de acceso. La autorización pública está dada; faltan acceso y condiciones operativas comprobables, no permiso genérico nuevo.
+**Próxima acción exacta:** habilitar Codex → Google Chrome en Privacidad y seguridad → Automatización; comprobar control real y sesión del propietario. Después inventariar zona/DNS y alojamiento SSR, verificar origen HTTPS/rutas y sólo entonces asociar el dominio. Sigue pendiente cerrar catálogo vendible/fotos comerciales, operador/políticas y retornos antes de abrir pedidos. La autorización ya está dada; no repetir build Android, diseño o checkout para resolver el acceso al navegador.
 
 ## APK Android mayami · binario y emulador aprobados · 5 de noviembre
 
