@@ -8,7 +8,7 @@ import { parseMarker, sameMarker } from './release-marker.mjs';
 import { DeploymentVerificationError, verifyDeployment } from './check-deploy.mjs';
 
 export const REQUEST_PATH = '.github/panel-receipt-request';
-export const APPROVED = { schemaVersion: 1, sourceSha: '14802742ef1dfe7d327cc60adcdbb14293107e36', buildVersion: '40410656172.1' };
+export const APPROVED = { schemaVersion: 1, sourceSha: '0eb9047d288f7119fe6d07d523b697bd62e72930', buildVersion: '42306772895.1' };
 export const PROJECT_ID = '9f629f10-d679-4a99-9965-8a9e588afc85';
 export const FULL_NAME = '@marketplacebrand/marketplace';
 export const CANONICAL = 'https://kora-panel.expo.app';

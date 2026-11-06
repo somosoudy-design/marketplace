@@ -1,7 +1,9 @@
 # Entorno: instalar, ejecutar, probar y operar los servicios
 
-Para cualquier agente o persona que continúe Kora. Las reglas de trabajo están en `AGENTS.md`; el estado vivo,
+Para cualquier agente o persona que continúe mayami. Las reglas de trabajo están en `AGENTS.md`; el estado vivo,
 en `docs/ESTADO_ACTUAL.md`. Aquí van los procedimientos.
+
+**Operación vigente desde el6nov2026:** Marketplace `mimnotafmfasvwrclxan` alimenta el negocio en funciones. Sus datos no son fixtures desechables. Las instrucciones históricas de demostración no autorizan seed, compras, altas automáticas ni resets remotos. Ejecutar pruebas destructivas o con usuarios de example.com sólo en el stack local o un entorno aislado autorizado; conservar metadata interna sin cambiar reglas por su nombre. El diseño se mantiene en el Mac; operaciones paralelas en `OPERACION_TIENDAS_2026-11-06.md`.
 
 ## 0. Local, GitHub y servicios no son lo mismo
 
@@ -11,14 +13,14 @@ estado y se comprueba por separado:
 | Pieza | Dónde está la fuente | Dónde está «en uso» | Cómo comprobarlo |
 |---|---|---|---|
 | Código y documentación | Rama `claude/marketplace-v1` en GitHub (fuente de verdad) | Tu copia local hasta que haces push | `git fetch origin && git status -sb` (sin «ahead» ni «behind») |
-| Migraciones de la base | `supabase/migrations/*.sql` | Proyecto Supabase de pruebas, solo las que alguien aplicó | Conector de Supabase `list_migrations`, o `npx supabase migration list` con el proyecto enlazado |
+| Migraciones de la base | `supabase/migrations/*.sql` | Marketplace operativo, sólo las aplicadas y verificadas | Conector de Supabase `list_migrations`, o `npx supabase migration list` con el proyecto enlazado |
 | Funciones del servidor | `supabase/functions/*` | Desplegadas: `rates-sync`, `push-dispatch` y `panel-api` | Conector `list_edge_functions` / `get_edge_function` (versión y código), o el panel de Supabase |
 | Datos | `supabase/seed.sql` (solo local); `supabase/remote-demo/*.sql` (catálogo demo remoto) | Lo cargado en cada base | Consultas de solo lectura (abajo) |
 | App en teléfonos | `apps/mobile` | Parte nativa: el APK instalado (cambia solo con un APK nuevo). JavaScript: la última actualización publicada en el canal `preview` | Pantalla `kora://diagnostico` en el teléfono; página del proyecto en expo.dev; resumen del workflow `eas-update-preview` |
 | Panel web | `apps/admin` | https://kora-panel.expo.app (EAS Hosting, exportación estática; lo publica `panel-deploy.yml` mediante solicitud explícita con fuente aprobada) | Resumen del workflow «Panel web (EAS Hosting)» |
-| Pruebas | `tests/`, `packages/*/src/**/*.test.ts`, `supabase/functions/tests` | Corren en local contra el stack local; no hay CI de pruebas en GitHub | Ejecutarlas (sección 7) |
+| Pruebas | `tests/`, `packages/*/src/**/*.test.ts`, `supabase/functions/tests` | Corren en local o CI contra stacks aislados; no usar el negocio operativo para fixtures | Ejecutarlas (sección 7) |
 
-Consultas de solo lectura útiles en el proyecto de pruebas (conector `execute_sql` o SQL Editor):
+Consultas de solo lectura útiles en Marketplace (conector `execute_sql` o SQL Editor):
 
 ```sql
 select count(*) from supabase_migrations.schema_migrations;               -- 26 comprobadas al 2026-10-14

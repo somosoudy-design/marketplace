@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 · panel publicado, comprobación de alias pendiente
+
+Integración0eb9047 pasa52core+50admin+2UI/tipos/lint; solicitud6f8ecf6 dispara42306772895. EASpublica/promociona qj86u6q1u9; markerinmutablecorrecto(source0eb9047/build42306772895.1), peroaliasmantienemarkeranterior36intentos. Root/agenterevisanantecedente20261026 y preparanúnicamentereceipt-only con expectednuevo, sinredeploy/otraDDL. Se preservan2PNG originalesconhashes enrepo; UIerrorinyectadose distingue de protecciónSQLreal. ENTORNO documentaMarketplaceoperativo paraevitarfixtures remotos.
+
 ### 2026-11-06 · RPC activado; integración de errores antes de publicación
 
 Después defcf5a32, root ensayaDDL remoto conROLLBACK/29huellas, aplicauna vez función+migración20261106000100 y verificaACL/401anónimo. Cero productos reales eliminados. Solicitudbf1311b/CI42306389893 falla ANTES de despliegue: testcore exige traducción de9hintsSQL nuevos. Se incorporan sólo esas claves en errors.ts y se elimina mapeo local duplicado;52core+50admin/tipos/lint y2UI finales pasan. Fuentesmobile/storefront/tokens intactas. Nueva publicación de panel pendiente; el fallo no se atribuye a EAS ni autoriza repetir migración.
