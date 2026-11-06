@@ -43,6 +43,19 @@ PY
   then received=1; break; fi
 done
 [ "$received" = 1 ] || { echo 'Update receipt not confirmed before deadline' >&2; exit 1; }
+verify_theme_process() {
+  local name=$1
+  adb logcat -d -s ReactNativeJS | grep -F 'KoraDiag ' > "$out/logs/$name-diagnostics.txt" || true
+  python3 - "$out/logs/$name-diagnostics.txt" "$MAYAMI_UPDATE_ID" "$MAYAMI_RUNTIME" <<'PY'
+import json,sys
+rows=[]
+for line in open(sys.argv[1],errors='replace'):
+ if 'KoraDiag ' in line:
+  try: rows.append(json.loads(line.split('KoraDiag ',1)[1]))
+  except json.JSONDecodeError: pass
+assert rows and rows[-1].get('Código') == 'actualización '+sys.argv[2] and rows[-1].get('Runtime') == sys.argv[3] and rows[-1].get('Canal') == 'preview' and rows[-1].get('Cuenta') == 'sin sesión' and rows[-1].get('Backend') == 'mimnotafmfasvwrclxan.supabase.co', 'Theme capture has no matching current update'
+PY
+}
 for theme in light dark; do
   if [ "$theme" = light ]; then adb shell cmd uimode night no >/dev/null; else adb shell cmd uimode night yes >/dev/null; fi
   adb shell am force-stop "$pkg"
@@ -51,15 +64,12 @@ for theme in light dark; do
   sleep 12
   mkdir -p "$out/raw/$theme"
   maestro test --test-output-dir "$out/raw/$theme" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme.xml" tests/apk-flows/21-native-identity.yaml > "$out/logs/$theme-maestro.log" 2>&1
-  adb logcat -d -s ReactNativeJS | grep -F 'KoraDiag ' > "$out/logs/$theme-diagnostics.txt" || true
-  python3 - "$out/logs/$theme-diagnostics.txt" "$MAYAMI_UPDATE_ID" "$MAYAMI_RUNTIME" <<'PY'
-import json,sys
-rows=[]
-for line in open(sys.argv[1],errors='replace'):
- if 'KoraDiag ' in line:
-  try: rows.append(json.loads(line.split('KoraDiag ',1)[1]))
-  except json.JSONDecodeError: pass
-assert rows and rows[-1].get('Código') == 'actualización '+sys.argv[2] and rows[-1].get('Runtime') == sys.argv[3] and rows[-1].get('Canal') == 'preview' and rows[-1].get('Cuenta') == 'sin sesión', 'Theme capture has no matching current update'
-PY
+  verify_theme_process "$theme"
+  adb shell am force-stop "$pkg"
+  adb logcat -c
+  adb shell am start -W -n "$component" >/dev/null
+  sleep 12
+  maestro test --test-output-dir "$out/raw/$theme-store" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme-store.xml" tests/apk-flows/24-mayami-store-mark.yaml > "$out/logs/$theme-store-maestro.log" 2>&1
+  verify_theme_process "$theme-store"
   if adb logcat -d -b crash | grep -Fq "Process: $pkg"; then echo "App crash: $theme" >&2; exit 1; fi
 done
