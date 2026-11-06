@@ -4,7 +4,7 @@
 
 Oliver pidió llevar a la APK la opción 2 con cabecera de la 3. Plan `docs/REDISENO_APK_2026-11-06.md`. Primera etapa validada: apertura, categorías, tarjetas, navegación ampliada y fotos del catálogo sin sustituciones de exhibición Android; sin cambios de datos o cálculos. CI 42288014461 pasó 55 recorridos y 12 pruebas de política, tipos/lint y export web en stack local aislado; revisión independiente aprobó 320/412 claro/oscuro y texto ampliado. Expo Free y cuota disponible, consulta 42283919634; runtime calculado 42286410080 coincide con APK Mayami `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. Android export local aprobado.
 
-En preparación: solicitud de actualización Android al canal preview del APK Mayami existente; el workflow comprueba otra vez runtime y fuente limpia. No afirmar publicación ni recepción hasta obtener resultado y comprobar UUID exacto en emulador. No publicar en tiendas, no construir otro APK ni activar servicios con cargos. Instalación en Samsung no está confirmada.
+Actualización Android publicada por CI 42289145866 Success, fuente `3267603`, runtime verificado `b691ec2b...`, grupo `4b5d95cb-7bd5-4f41-8ece-956c178434d0`, UUID Android `01a1b291-6267-77fe-8daf-42d6f099b488`, canal preview. Solicitar comprobación de recepción exacta en emulador; aún no afirmar recepción ni instalación en Samsung. No publicar en tiendas, construir otro APK ni activar servicios con cargos.
 
 ## Trabajo en curso: renovación web comercial · 6nov2026
 
