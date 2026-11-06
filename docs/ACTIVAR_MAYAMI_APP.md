@@ -1,162 +1,44 @@
-# Activar mayami.app · relevo al Mac · 5 de noviembre de 2026
+# Activar y mantener mayami.app
 
+## Mayami público en Workers Free · cierre del 6nov2026
 
-### Cierre de regresión de recuperación · 07:04UTC
+Verificado 2026-11-06 07:35 UTC. https://mayami.app está abierto **sin Access exclusivo del propietario**. Fuente ejecutable 116e569, Worker 897b0966-ade6-4799-ad8e-4b250d384ad2/100%; Workers Free $0 confirmado en UI. No Paid ni servicio con cargos. Los commits documentales posteriores no requieren redeploy.
 
-CI42177570967 terminó52/53: el único fallo era un locator ambiguo entre el aviso comercial y el anunciador vacío de Next; se acota al aviso esperado sin omitir la aserción. Revisión independiente detectó además incertidumbre falsa antes de enviar un RPC: se distingue newAttempt sólo en memoria (jamás persistido); un intento nuevo sin método recibe rechazo comercial sin lookup; uno restaurado conserva clave e incertidumbre incluso con lookup vacío. Dos nuevas regresiones elevan la suite a55; tipos/lint pasan, nueva ejecución pendiente.
+CI42178600179 Success:55 UI,24 Node,3 marca, tipos/lint/build/guards. Auditoría anónima:SSR con/sin JS,7 páginas 200,3 retirados404,53 fotos y15 CSS/JS por hash, TLS/www/HTTP301, seguridad/robots/noindex privado. Capturas públicas claro/oscuro y guardias revisadas independientemente. Sin compras/fixtures/pagos remotos.
 
-Los5métodos ficticios se deshabilitaron UNA VEZ tras ensayo con excepción de éxito/rollback y guardas completas; anónimoRLS ve0métodos. Las7filas conservan instrucciones y todo salvo5enabled; pedidos/obligaciones/quotes/pagos se compararon íntegros sin cambios;1pedido pendiente conservado,0quotes/pagos reales en curso. No reaplicar. Conteos Auth:24usuarios,23example.com sinprivilegios,1superadmin/ownerreal y0fixturesprivilegiados. No se borraron cuentas ni historia. SMTPcustomtrue/smtp.resend.com465/remitenteMayami no-reply@auth.mayami.app confirmado en UI sin leerpassword. SiteURL localhost3000→httpsmayami.app y2callbacksHTTPSexactos de registro/recuperación añadidos; confirmaciónpreexistente/autorizacionesintactas. Entrega real aún no verificada.
+CPU: original28 outcome=ok/18 sobre10 ms, no1102. Lote final24 HTTP 200 y21 invocaciones persistidas;19 pares completos25→14 ms (primera optimización25→17), no causalidad exclusiva. Hubo Inicio 772 ms/HTTP200 fuera del lote; el panel activo mostraba159,07 ms en su agregado.272 invocaciones/0 errores globales y70/0 final,0 Exceeded CPU/memoria/excepción. Mantener Free; no prometer14 ms uniforme ni capacidad futura garantizada. RSC 27→0, iconoStaticAssets, clienteBuscar compartido, lectura por petición y minify. [Informe y límites](WORKERS_FREE_MAYAMI_2026-11-06.md).
 
-## Estado verificado · 2026-11-06 06:54 UTC
+Catálogo aplicado UNA VEZ:41 publicados,3 suspendidos;40 aprobados con53 imágenes comerciales, DJI intacto. Mayami/contacto/políticas actualizados manteniendo slug; precios/stock/104 imágenes/63 variantes e historia preservados. is_demo conservado por APK/procedencia; tiene efectos en popularidad/avisos que requieren migración separada, no es sólo metadata. No reaplicarSQL aunque el editor muestre Running tras resultados vacíos; estado confirmado por lecturas externas y snapshots.
 
-Workers sigue Free y no se contrató ningún servicio de pago. Fuente89d2708 desplegada en versión923e2489-a867-4c35-84fb-26a35b0570b3; CI42174790119 Success49UI,24Node y3marca, tipos/lint/build/guards/dryrun aprobados. Auditor independiente aprueba8PNG legales y12escenarios Inicio/ficha/variantes320/1440clarooscuro. El deploy comercial aún espera retirar Access, no se declara acceso público comprobado.
+Contacto: soporte@mayami.app→Gmail verificado, Routing ready/synced. SMTP Resend Free sin tarjeta, auth.mayami.app Verified, remitenteMayami; una recuperación llegó a INBOX sin cambiar contraseña ni consumir token. Site URL y2 callbacks HTTPS exactos activados, sin alterar confirmación preexistente. No se declara cambio de contraseña/registro remoto completo ni envío humano como soporte desdeGmail.
 
-Catálogo remoto aplicado UNA VEZ por DO atómico tras ensayo que finaliza con excepción intencionada de éxito/rollback.41publicados/3suspendidos,40notas de autorización y DJI íntegro. Tienda Mayami/soporte@mayami.app/políticas de las páginas reales; slug y restantes campos conservados. Respaldo posterior SHA3835c67c181971037ad8acf2762aea1afdd20b84eb9bccd95b4234b63886e1b7; comparación íntegra44productos confirma sólo estado/nota/fecha cambiados,104imágenes y63variantes idénticas, precios/existencias intactos. AnónimoRLS ve41 y ninguno de los3retirados. NO REAPLICAR aunque el SQLeditor muestre Running tras un resultado vacío: la lectura independiente confirma el commit. BEGIN/ROLLBACK explícitos también dejaban ese estado visual; el ensayo con excepción y SELECT posterior resolvió la verificación sin repetir writes reales.
+**Pendiente exclusivo de cobro:**5 métodos ficticios deshabilitados sólo en enabled, con auditoría/ensayo;7 filas e historia financiera intactas,1 pedido pendiente preservado. La web conserva carrito/recuperación y no confirma sin método real. Falta elección de efectivoUSD coordinado o datos reales de recepción del propietario. No inventar cuentas/oficinas ni activar pagos/gastos para aparentar cierre. No volver a limitar la tienda al propietario.
 
-Comparación CPU persistida completa del lote posteriorf998:21invocaciones Worker emparejadas y3GETicono StaticAssets;24/24HTTP200 sin1102. Sólo19pares completos en ambos lados:mediana25→17ms(-32%descriptivo),máximo164→30ms. PrecargasInicio27→0. No atribuir CPU a red ni declarar cold/warm; no sumar tails parciales. Veyra tiene arquitectura distinta y no se obtuvo CPU/plan comparables. Detalle en WORKERS_FREE_MAYAMI_2026-11-06.md.
+Próxima acción: atender esa respuesta y configurar sólo el canal autorizado. No repetir publicación/mediciones cerradas sin cambios. APK/OTA/iOS y otros proyectos intactos.
 
-Correo: recepción CloudflareRouting Free configurada; auth.mayami.app Verified en Resend Free3000/mes/100día, sin tarjeta.3DNS públicos añadidos y comprobados, MX raíz intactos. Organización SupabaseMarketplace verificada con un único proyecto mimnotafmfasvwrclxan; integración gestionada configura remitente Mayami/no-reply@auth.mayami.app sin extraer claves. Resend informa Ready to send; falta verificar UI SMTP y entrega/retorno real. Ningún otro proyecto tocado.
+## Cuenta y configuración comprobadas
 
-Pagos: auditoría remota confirma datos ficticios en los5manuales (no sólo una nota),0quotes no-demo vigentes/0pagos pendientes y1pedido no-demo con saldo, que se conserva. Se prepara deshabilitar sólo esos5enabled con guardas y auditoría; no inventar cuentas ni activar efectivo sin respuesta del propietario. Fuente nueva añade bloqueo de confirmación cuando no hay métodos, revalidación antes de RPC y recuperación de pedidos/pagos ya enviados;4UI nuevas y recuperación reforzada pendientes de ejecución (53totales). No es una modificación del motor financiero ni garantía de clientes antiguos/API directa. Tipos/lint de fuente pasan; el primer lint incluyó por error un dryrun generado dentro de app/.local, movido fuera del árbol de lint sin omitir fuente.
+- Rama compartida:claude/marketplace-v1. Fuente desplegada 116e569; versión897b0966-ade6-4799-ad8e-4b250d384ad2.
+- Cuenta Cloudflare9ea83b61b8f2d27846eaacd60b7c7aa3; zona b772caa3b5334fee506b719f2e7ffbb7; Worker mayami-storefront/81c62893418a4ca384a3742b1ee831f7.
+- Custom Domains raíz/www; SSL Full, Always Use HTTPS, www301 conservando ruta/query; workers.dev/previewsfalse.
+- Workers Free $0. Sólo ASSETS y WORKER_SELF_REFERENCE; no R2, DO, Queues, Images ni Email Sending Paid activados.
+- Se retiró la appAccess cbcf7524-622c-4a2c-b42e-fc1e622476ec. La política del propietario/ZeroTrustFree del alta anterior no convierte esta web en una prueba privada; no reconstruir esa puerta por instrucciones históricas.
+- Contacto: soporte@mayami.app por Cloudflare Routing Free.10 DNS: 2 AAAA administrados + 3 MX + SPF/DKIM Cloudflare y 3 registros Resend del subdominioauth. No sustituirMXraíz.
+- Supabase únicamente mimnotafmfasvwrclxan. OrganizaciónMarketplace lspwtzxmraagilwwnqrl verificada con ese único proyecto. SMTP gestionado por Resend Free, nunca copiar credenciales aGit/chat.
+- Site URL https://mayami.app; redirects exactos https://mayami.app/auth/callback y https://mayami.app/auth/callback?tipo=recuperar. No borrar enlaces nativos existentes ni cambiar identificación APK/iOS.
 
-Conservar products.is_demo para compatibilidad con APK/boilerplate/procedencia. No controla pedidos/cobros/ledger/envíos, pero SÍ popularidad y avisos de producto: deuda explícita para migración separada sin convertir actividadfixture en ranking real. No afirmar que sea metadata inocua ni cambiar perfiles/pedidos/reviews históricos.
+## Si hay un cambio de código futuro
 
-Próxima acción: checkpoint fuente, build/53UI; ensayar/aplicar sólo disabled de métodos, revisar conteos de cuentasfixture privilegiadas, verificar SMTP. Desplegar guardia, retirar Access y comprobar público/SSR/TLS/SEO/53assets/3retirados404, medir misma carga final y documentar. Datos reales de cobro siguen pendientes del propietario; no son motivo para contratar WorkersPaid. Sin APK/OTA/iOS ni transacciones reales.
+1. Sincronizar claude/marketplace-v1 sin descartar cambios ni forzar historia; checkpoint antes de build/deploy.
+2. Usar sólo NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY públicas del proyecto correcto. El runner local ignorado .local/mayami-domain-20261106/run-storefront-public.py valida el perfil anon y evita heredar otras variables públicas. No leer keyring/cookies/service_role.
+3. Ejecutar tipos/lint,24 Node/3 marca y la suite afectada. build:cloudflare + verify:release/commercial/cloudflare; los guards impiden _exhibition/env ajenos. Dryrun fuera de apps/storefront para no lintar código generado.
+4. La revisiónCI aislada sólo se solicita con .github/cloudflare-review-request: usa Docker/fixtureslocales y bloquea los hosts alojados. No iniciar EAS/panel/APK por esta tarea.
+5. Desplegar con deploy:cloudflare --keep-vars; conservar los dominios declarados y WorkersFree. Verificar versión/HTTP público, SSR, seguridad, datos y medición necesaria. No reactivar Access del propietario ni serviciosPaid sin instrucción nueva.
 
-## Publicación oficial y Workers Free · instrucción vigente del 6nov
+## Evidencia y continuidad local
 
-Oliver decide mantener Workers Free y prohíbe activar Paid u otros servicios con cargos. Solicita optimizar y medir fallos reales, comparación verificable con Veyra y publicación oficial sin acceso limitado. Aprueba retirar del catálogo los productos sin fotografía profesional y oficializar el resto, con ajustes comerciales posteriores a su cargo. Confirma Mayami como nombre comercial y encarga correo @mayami.app y términos/privacidad/devoluciones. No volver a pedir autorización genérica de dominio/publicación ni de Paid: Paid está descartado.
+[Informe completo](WORKERS_FREE_MAYAMI_2026-11-06.md). Evidencia privada ignorada:.local/mayami-free-20261106/. Backups antes/después y ensayos/aplicaciones atómicas están ahí; **ya se aplicaron catálogo y deshabilitación de métodos, no repetir**. Respaldo posteriorcatálogo SHA3835c67c181971037ad8acf2762aea1afdd20b84eb9bccd95b4234b63886e1b7. Las guardas de versiones evitan sobreescribir ajustes posteriores o el cron de popularidad.
 
-Trabajo en curso: la captura anterior tiene28outcomeok,18sobre10ms nominales; no demuestra1102. Métricas persistidas reales del Worker:179invocaciones,0errores (incluidos0ExceededCPU/Memory/UncaughtException), P50CPU16,01ms en últimas24h desde su creación. Nueva base controlada:24GET secuenciales200 y27recursosRSC tras una visita a Inicio. Los RSC son precargas, no27acciones del comprador. Se prepara prefetch=false en57Links, icono en StaticAssets con mismos bytes, un cliente anónimo en Buscar y minifyWrangler experimental. MantenerSSR, no-store y controles de compra/sesión. Aún no hay medición después ni deploy de esta mejora.
+Chrome real se controla porPID57281/tab2055028886 con .local/mayami-domain-20261106/chrome-bridge.js. AppleScript por nombre apuntaba a otra instancia; no pedir de nuevo permisos ni cerrar Chrome ajeno. Cuando un resultadoSQLvacío deja UI Running, consultar el estado independiente; nunca repetir una mutación sólo por el spinner. Los ensayos con excepción intencionada confirman todas las aserciones y revierten las filas; las secuencias pueden conservar huecos normales.
 
-Catálogo consultado sin mutaciones:44visibles,43is_demo y1DJIreal; inventario de53packshots para40productos con hashes correctos,3sin recurso. La instrucción nueva permite su promoción comercial, conservando procedencia/disclosures y sin inventar licencias ni unidad/SKU auténticos. Se retirarán3por estado servidor, sin borrar historia. Preparar manifiesto comercial separado de _exhibition, que seguirá bloqueado en release. El conector Supabase deniega permiso incluso SELECT; se comprueba acceso normal al dashboard del proyecto correcto, sin extraer service_role. EmailRouting Free y contenido legal pendientes de implementación. Access aún protege la revisión del cambio; retirarlo al cerrar el catálogo y publicar, no convertirlo en solución permanente.
-
-Siguiente: terminar y probar mejoras CPU, publicar artefacto verificado, comparar misma carga por versión; completar catálogo/contacto/políticas y retirar Access según autorización oficial. No cambiar Veyra ni proyectos ajenos. Evidencia ignorada en .local/mayami-free-20261106; ver WORKERS_FREE_MAYAMI_2026-11-06.md.
-
-## Estado verificado · 6nov · dominio activo para revisión privada
-
-**mayami.app ya está conectado y funciona por HTTPS.** El propietario entró desde la sesión real de Chrome con el IdP Cloudflare existente, sin leer Gmail ni copiar cookies/tokens. Raíz y www son Custom Domains del Worker `mayami-storefront`; www redirige301 al dominio principal conservando ruta/query. Always Use HTTPS está activado y SSL de zona sigue Full. No se contrató ACM ni R2. DNS inicial era0; sólo se añadieron los dos registros AAAA100:: proxied que administra Cloudflare para estos dominios. No había correo/MX/TXT y no se modificó ningún otro subdominio.
-
-Cuenta `9ea83b61b8f2d27846eaacd60b7c7aa3`, zona `b772caa3b5334fee506b719f2e7ffbb7`, Worker inmutable `81c62893418a4ca384a3742b1ee831f7`, versión desplegada `6d377642-9baf-4bea-93ef-db1d3655b801`. Primero se desplegó con cero endpoints; luego se aplicó Access y finalmente los Custom Domains. `workers_dev=false`, `preview_urls=false`; GET anónimo al alias workers.dev404. La configuración versionada declara ahora ambos dominios para que un deploy posterior no los retire.
-
-**Protección:** Access de un solo Worker, destino `worker`, alcance All traffic, sesión24h. App `cbcf7524-622c-4a2c-b42e-fc1e622476ec`; política reutilizable `fc173fab-3a96-4c6a-a822-7ba1c89991dd` («Mayami - propietario»): Allow con un único Include Emails del correo exacto del propietario (verificarlo en su sesión de Cloudflare), require/exclude vacíos. Sólo existe el IdP Cloudflare `40482053-fd6b-47c4-bd54-bec5befadea7`, restringido a miembros de esta cuenta; no crear GoogleOAuth/IdP duplicado. allowed_idps vacío permite los proveedores disponibles, que actualmente sólo incluyen ése. La regla sigue exigiendo el correo exacto aunque cambien miembros. No añadir otro IdP o política amplia sin revisar este perímetro.
-
-**Zero Trust Free activo:** checkout confirmado0/mes/50usuarios. Oliver autorizó expresamente posibles cargos por exceder límites a la tarjeta guardada; no pedir de nuevo esa autorización. Organización `frosty-lab-a534.cloudflareaccess.com`. Wrangler OAuth con keyring funciona; nunca copiar sus credenciales. Workers permanece Free0 en la comprobación05:26UTC. Se planteó al propietario elegir Paid desde$5/mes+consumo por el margen de CPU; esa contratación sigue pendiente de respuesta, no está incluida en la aprobación de ZeroTrust.
-
-**CPU y alcance:** 28invocaciones observadas con tail sanitizado:4–433ms CPU, mediana22,5ms,18por encima de10ms nominales Free; todas outcomeok. Tras cerrar tail, Inicio/Buscar/ficha volvieron200 sin1102. Se acredita funcionamiento de esta muestra, no estabilidad prolongada/carga. Free tiene tolerancia ocasional; no presentar esa tolerancia como capacidad garantizada ni afirmar un fallo1102 inexistente. No se compró Workers Paid.
-
-**Artefacto:** Next/eslint16.4.5 sólo storefront, OpenNext1.20.16 y Wrangler4.148.0 fijados; Node22.23.3. SSR conservado, sin export estático/vinext ni caché R2/DO/Queues/Images. Fecha2026-10-13 coincide con workerd incluido; no omitir el check de versiones. Se preserva buildrelease y ambos guards. El adaptado rechaza exhibición/env/variables compiladas no aprobadas, sólo permite enlaces pnpm de directorios internos de dependencias bajo server-functions/default. `_headers` conserva seguridad estática. Dryrun final6451.46KiB/gzip1320.48KiB/49assets; no confundir el agregado standalone con bundle.
-
-Sólo las dos variables públicas NEXT_PUBLIC_SUPABASE_URL/NEXT_PUBLIC_SUPABASE_ANON_KEY del backend Marketplace `mimnotafmfasvwrclxan` se usaron en el proceso de build. Fuente local existente intacta, JWTanon/ref y healthGET verificados. Copia ignorada0600 en `.local/mayami-domain-20261106/storefront-public-config.json`; no subirla. Sin service role, SQL/Auth/redirects/SiteURL ni datos remotos modificados, compras/pagos/signup/uploads reales, nuevoAPK/OTA/iOS. El proyecto ajeno permanece intocable.
-
-**Pruebas completadas:**18Node, tipos/lint, build adaptado y guards locales aprobados. CI[42167460733](https://github.com/somosoudy-design/marketplace/actions/runs/42167460733) Success con46/46UI de compra contra workerd y stack/fixtures exclusivamente locales, hosts alojados bloqueados; no publica nada. ZIP13479059739 descargado y SHA2560943b6de368d0d1abcb7c35a6acaa57d1473143293fe254a01803361ce54e14b comprobado. Revisión independiente APROBADA para12capturas Inicio/Buscar/ficha390/1440claro/oscuro y14capturasCI compra/pago/pedido320/1440. No son prueba de compra remota real. Login se prueba funcionalmente en CI; no hay PNG específica del formulario. Revisión atenuada por animación permite revisar geometría, no contraste final.
-
-**Alojado:** propietario llega a Inicio con25/25imágenes cargadas, CSS y sin overflow/exhibición. GET con la sesión normal: Inicio/Buscar/ficha200, producto/tienda inexistentes404, tienda/kora conduce al catálogo, callback200, CSS200immutable. Dinámicas private/no-store y headers nosniff/DENY/noindex; callback es shell estático cliente con s-maxage, sin datos personales SSR. No afirmar no-store de todas las rutas. Anónimo: raíz/rutas/callback/CSS302Access, sin catálogo; TLS validado. www301 conserva ruta/query y aliasworkers.dev404. Revisión pública independiente aprobada para su muestra previa a la redirección; comprobación final local la incluye.
-
-**Evidencia sólo en este Mac:** `.local/mayami-domain-20261106/` contiene snapshots antes/después, owner-access-policy.json, worker-access-applied.json, cloudflare-zone-final.json, hosted-owner-verification.json, hosted-without-tail.json, public-final-verification.json, live-cpu-summary.json, visual/results.json y ci-42167460733. No se versionan respuestas de sesión/credenciales.
-
-**Continuidad:** ScriptingBridge por PID selecciona Chrome visible; AppleScript por nombre apuntaba a otra instancia headless. No repetir permisos ni cerrar procesos ajenos. `publicWebOrigin=null`: la web es revisión privada, no apertura comercial ni destino para compradores de APK/panel. No repetir despliegue/CI por trabajo ya validado. Si se cambia la fuente, construir con las variables públicas aprobadas y ejecutar `build:cloudflare`, guards y dryrun antes de `deploy:cloudflare`; conservar Access All traffic antes de exponer cualquier endpoint. El workflow nuevo sólo verifica en local, activado por `.github/cloudflare-review-request`.
-
-**Siguiente decisión:** elección de plan CPU del propietario. La activación técnica del dominio está completada para revisión privada. Apertura comercial sigue condicionada al catálogo vendible/fotos autorizadas, operador/políticas/contacto reales y retornos web de proveedores descritos abajo. Deuda preexistente no bloqueante: metadata de ficha deriva del slug y puede no coincidir con producto renombrado; las capturas muestran Samsung donde slug conserva UGREEN. No atribuirlo al adaptador ni a caché de sesiones.
-
-## Primera comprobación del 6nov · corregida por selección de instancia
-
-**Permiso de macOS resuelto.** Oliver confirmó que lo habilitó y AppleScript ya puede consultar ventanas, pestañas, URL y título de Chrome. La rama se revisó y sincronizó al retomar: `7d5b909`, árbol limpio y remoto al día. Se abrió una pestaña real en `https://dash.cloudflare.com/`; el título observado es «Un momento…». No demuestra sesión iniciada ni acceso a la cuenta.
-
-**Diagnóstico inicial de la instancia headless (resuelto):** al intentar consultar la página, Chrome devuelve el error 12: «La ejecución de JavaScript mediante AppleScript está desactivada». Su mensaje indica activar **Ver → Desarrollador → Permitir JavaScript para eventos de Apple**. Se solicitó esa acción al propietario. No repetir el permiso de Automatización de macOS ya resuelto, ni asumir acceso al contenido por poder leer el título/URL. Tras habilitarlo, verificar el control real y continuar con la sesión/cuenta indicada. No se inició Google ni se leyó Gmail en esta continuación.
-
-DNS público actualizado a las **04:12 UTC / 00:12 Caracas del 6nov**, resolutor 1.1.1.1: Morgan/Laylah siguen como NS; raíz sin A/AAAA/CNAME y www NXDOMAIN en A/CNAME. Evidencia local ignorada: `.local/mayami-domain-20261106/public-dns-before.json`. Sin cambios DNS, TLS, hosting, backend, app o configuración de enlaces. No se repitieron builds ni pruebas de compra para este bloqueo de acceso; los tests previos del helper siguen siendo pruebas simuladas.
-
-## Verificación en el Mac · 5 de noviembre de 2026
-
-Esta ejecución sí está en macOS, en `/Users/brandeastudio/marketplace`. Se leyó AGENTS y se conservó el árbol limpio original: avance directo de `9d22155` a `600e538` (233 commits), sin reset, limpieza ni reescritura. Revisión independiente: HEAD coincide con origin; índice/árbol limpios; 375/375 archivos versionados de `apps/` y `assets/` presentes con hash Git correcto.
-
-Las descargas normales fallaron o se interrumpieron por lentitud. La copia local usa ahora un remoto promisor (`remote.origin.promisor=true`, `partialclonefilter=blob:none`) y sparse checkout fuera del modo cone: incluye todo salvo `.png`, `.jpg`, `.jpeg`, `.webp`, `.mp4` y `.pdf` bajo `docs/`. Sólo se aplazaron 1.191 archivos multimedia de documentación; toda la fuente, los recursos de app/marca y los textos están presentes. No son borrados versionados. Para materializar esas capturas cuando haga falta: `git sparse-checkout disable` (descargará sus objetos). Conservar la configuración promisor mientras existan objetos históricos pendientes; consultar algunos archivos antiguos puede requerir red.
-
-**DNS público observado el 5nov a las 19:23 UTC / 15:23 Caracas:** nameservers `morgan.ns.cloudflare.com` y `laylah.ns.cloudflare.com`; raíz sin A/AAAA/CNAME y `www` sin resolución (NXDOMAIN en A/CNAME). La comprobación independiente con 1.1.1.1 y 8.8.8.8 coincide para raíz/www; HTTPS no pudo resolverlos. Esto acredita la delegación pública, no la propiedad de la zona ni el estado dentro de la cuenta. Evidencia de la consulta local a 1.1.1.1, sólo en este Mac: `.local/mayami-domain-20261105/public-dns-before.json`. El contraste con 8.8.8.8 procede del informe independiente de las 19:20 UTC.
-
-**Bloqueo del 5nov (resuelto el 6nov):** macOS denegaba el control de Chrome: `No tienes autorización para enviar eventos Apple a Google Chrome. (-1743)`. Se solicitó abrir Cloudflare y el panel de Automatización mediante `open`; no se pudo inspeccionar el navegador ni verificar su sesión. No se ha accedido a la cuenta de Cloudflare, iniciado sesión con Google ni leído Gmail. No hay token Cloudflare en las variables del proceso; no se solicitaron ni extrajeron secretos. DNS, TLS y alojamiento siguen sin modificar.
-
-**Acción indicada el 5nov:** habilitar Codex → Google Chrome en Ajustes del Sistema → Privacidad y seguridad → Automatización. Si Chrome lo exige para el control de la página, habilitar Ver → Desarrollador → Permitir JavaScript desde eventos de Apple. Después verificar el acceso real, usar la cuenta indicada por Oliver y continuar con el inventario de zona/DNS y alojamiento descrito abajo. Oliver ya autorizó configurar el dominio e iniciar sesión con su cuenta Google indicada; no pedir otra autorización genérica. Cualquier segundo factor se completa en el navegador, nunca por chat.
-
-Prueba ejecutada en este Mac: `node --test tools/storefront/inspect-cloudflare.test.mjs`, 5/5 aprobadas con respuestas simuladas. No valida la cuenta real. No se recompilaron web/app ni se hicieron nuevas pruebas de compra. `publicWebOrigin` permanece en `null`.
-
-## Antecedente del relevo desde la nube
-
-Oliver autorizó configurar el dominio y preparar la apertura pública del negocio. Eligió continuar desde **Codex en su Mac, proyecto `~/marketplace`**, para usar su sesión de Cloudflare. La sesión de nube no tiene control de ese Mac ni de su navegador. Se solicitó abrir `https://dash.cloudflare.com/` en el panel de Codex; la herramienta devolvió `queued`, no confirmación de navegador abierto ni autenticación.
-
-## Lo que ya está listo
-
-- Rama `claude/marketplace-v1` sincronizada; web compradora existente en `apps/storefront` con Next16.4.5 (parche de compatibilidad del6nov), SSR y los mismos contratos/backend de la app.
-- Marca original mayami integrada. No volver a pedir el ZIP ni cambiar identidad.
-- Corregida la ruta compartida `/tienda/[slug]`: consulta la tienda con el cliente anónimo y RLS existentes; redirige al catálogo ya implementado conservando el filtro. Tienda no visible/inexistente devuelve404; un error de conexión tiene reintento.
-- `tools/storefront/inspect-cloudflare.mjs` preparado para inspeccionar **sólo mayami.app** mediante GET: zona, estado, nameservers y A/AAAA/CNAME de raíz, www, preview y panel. No cambia DNS, correo, TLS ni hosting; no imprime token ni registros TXT/MX.
-- El helper requiere `CLOUDFLARE_API_TOKEN` únicamente si se usa API. No es requisito para gestionar la cuenta desde el navegador local autenticado. Nunca enviar contraseñas, códigos de segundo factor ni tokens por chat.
-
-## Primeros pasos en el Mac
-
-1. Confirmar que el agente está realmente en macOS y tiene acceso a `~/marketplace`; leer AGENTS y este documento. Revisar estado Git antes de sincronizar. Si hay cambios locales, conservarlos; no resetear, limpiar ni sobrescribir archivos.
-2. Con árbol limpio: `git fetch origin`, `git switch claude/marketplace-v1`, `git pull --ff-only`. Con cambios o divergencia, inspeccionar e integrar respetando el protocolo antes de continuar.
-3. Abrir Cloudflare desde las herramientas de navegador disponibles. Usar la cuenta indicada por Oliver en la conversación. Si se requiere login/2FA, Oliver lo completa en el navegador; el agente no solicita ni extrae secretos.
-4. Verificar que **mayami.app realmente existe en esa cuenta**, su estado y nameservers. Registrar los DNS actuales antes de tocar nada. No dar por comprado/activo el dominio sólo por su elección de nombre. No contratar un dominio o plan de pago sin decisión del propietario.
-5. Verificar el alojamiento ya disponible en esa cuenta. Cloudflare DNS y hosting son componentes distintos: DNS por sí solo no ejecuta la web. No publicar mediante el workflow del panel, que despliega otra aplicación.
-
-## Arquitectura de despliegue recomendada
-
-La web usa SSR en Inicio, Buscar, ficha y enlace de tienda. Requiere **un runtime Next/Node**, o un adaptador compatible verificado. No convertirla a export estático para hacerla caber en Pages o en el EAS Hosting estático del panel: perdería comportamiento existente.
-
-Camino mínimo: conservar Next y conectar Cloudflare DNS al origen HTTPS del hosting elegido. Node22 es el objetivo utilizado en CI; no hace falta trasladar el backend ni usar el Mac como servidor público permanente. Se preparó OpenNext1.20.16 con Next16.4.5 porque su peer actual exige ese parche. Build exacto, SSR workerd, bundle, dominio/TLS y acceso privado quedaron comprobados el6nov; la muestra CPU excede el límite nominal Free, según el estado superior. No se usa export estático ni se migra a vinext.
-
-Preparación actual de una release, desde la raíz:
-
-```sh
-pnpm install --frozen-lockfile
-pnpm --filter @kora/storefront build
-pnpm --filter @kora/storefront verify:release
-```
-
-El build necesita `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` del backend destinado al despliegue; sólo clave pública anon. No subir `.env.local`, tokens de gestión ni service role. Las variables públicas se incorporan al build: cambiar sólo el entorno del proceso después no basta.
-
-El script `start` existente usa3200. Un hosting que proporciona `PORT` debe ejecutar después del guard:
-
-```sh
-pnpm --filter @kora/storefront verify:release
-pnpm --filter @kora/storefront exec next start --hostname 0.0.0.0 --port "$PORT"
-```
-
-Configurar PORT en el proveedor; no inventar un origen, dirección IP o CNAME. Primero comprobar HTTPS y rutas del origen, después asociar el dominio con los registros que ese proveedor requiera. Preservar correo/MX/TXT y demás subdominios. No usar TLS Flexible. Tras conectar: comprobar certificado válido, redirección www→raíz, rutas compartidas,404, sesiones, registro/recuperación y ausencia de caché compartida para respuestas personales.
-
-`config/brand-presentation.ts` conserva `publicWebOrigin=null` hasta esa comprobación. No activarlo antes: afecta enlaces compartidos desde app y panel. La app nativa no se cambia ni publica por configurar DNS.
-
-## Apertura comercial: bloqueos concretos
-
-La autorización de Oliver para preparar la publicación está registrada. Lo pendiente son condiciones operativas reales, no otra autorización genérica:
-
-1. **Catálogo de evaluación comprable.** `is_demo` no se filtra en search/RLS/cart_set; una muestra published de tienda activa puede entrar en compra. Es el comportamiento actual de evaluación. Conectar el dominio no transforma existencias, precios o muestras en ofertas comerciales. Antes de abrir pedidos debe existir catálogo vendible autorizado y política de servidor que respete ese estado; no borrar ni falsear flags.
-2. **Fotos privadas.** `build --release` y `verify:release` eliminan el registro/archivos de exhibición. No retirarlos para que se vean las fotos de Android: quedan pendientes fotografías comerciales autorizadas en el catálogo definitivo.
-3. **Operador y condiciones.** Faltan rutas web de privacidad, términos, devoluciones y contacto con datos reales. Los datos legales/correo de `config/brand.json` son provisionales. El correo de acceso a Cloudflare no se convierte automáticamente en correo comercial público. Pedir al propietario los datos del comercio cuando se prepare ese contenido; no inventarlos.
-4. **Retornos de pago.** El fallback automático del backend es nativo (`kora://pay/result`). Validar el contrato web de los proveedores que se habiliten; DNS no lo corrige. No cambiar tasas, importes o conciliación ni hacer pagos reales para probar presentación.
-5. **Acceso de evaluación.** La web tiene noindex, pero no un control de acceso. Si se expone el storefront de revisión, proteger todo el origen y sus alias, no sólo el dominio principal. Una portada institucional propia puede ser pública sin exponer catálogo/registro/checkout antes de cerrar los puntos anteriores.
-
-No desplegar una simple bandera visual que oculte botones como sustituto de controles de servidor. El proyecto `bfuggvbgttvcygbexqyn` sigue fuera de alcance. No ejecutar seed remoto ni activar un entorno de ventas con cuentas de fixtures.
-
-## Si se retoma desde la nube
-
-Borrador de entorno guardado (no aplicado): acceso a `api.cloudflare.com`, `dash.cloudflare.com`, `developers.cloudflare.com`, `mayami.app`, `www.mayami.app`, `preview.mayami.app` y `panel.mayami.app`, preservando los destinos previos. Requisito opcional `CLOUDFLARE_API_TOKEN`, secreto personal dirigido sólo a `api.cloudflare.com`. Para inspección basta Zone Read y DNS Read; para configurar DNS posteriormente, DNS Edit limitado a la zona mayami.app. No usar Global API Key ni pedir el token en el chat.
-
-Ese camino exige guardar/publicar el borrador desde la configuración del entorno y comprobar su estado; no se ha realizado. **Oliver eligió el Mac**, así que no se le debe pedir aplicar este camino alternativo como condición para continuar allí.
-
-```sh
-# Sólo cuando la credencial esté vinculada de forma segura y la red habilitada.
-NODE_USE_ENV_PROXY=1 node tools/storefront/inspect-cloudflare.mjs
-```
-
-En la sesión de nube anterior, la inspección remota se detuvo antes de enviar solicitudes por ausencia del token. No se verificaron entonces propiedad del dominio, DNS, TLS ni hosting. No se cambiaron datos remotos ni se publicó web/OTA.
-
-## APK anterior, independiente del dominio
-
-No reiniciar el trabajo nativo. Build `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f` terminado; CI42092018315 **Success** valida binario y emulador Android15 del mismo APK. Corregidos los parsers con salida real, sin reconstruirlo. [Informe, revisión visual e instalación](APK_MAYAMI_2026-11-05.md). El dominio no requiere compilar otro APK, publicar OTA ni tocar iOS. Instalación física en Samsung todavía no comprobada.
-
-## Validación histórica de la preparación anterior al alojamiento
-
-Build Next16.4.1, verify:release, tipos y lint aprobados. Dos pruebas UI contra build real/local: tienda visible→catálogo con filtro persistente y tienda inexistente→404/salida. Cinco pruebas del helper Cloudflare aprobadas (sólo GET, zona exacta, cero solicitudes sin token, respuestas parciales/ajenas rechazadas y errores sin secretos). Auditor independiente APROBADO para estos cambios y el relevo. No son pruebas de dominio ni de operación comercial pública.
+El APK Android mayami y su runtime son una publicación separada; [estado del APK](APK_MAYAMI_2026-11-05.md). No publicar OTA/iOS por mantener el dominio.

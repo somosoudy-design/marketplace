@@ -110,7 +110,7 @@ Datos y servicios:
   comercial normal: sin etiquetas Demo, banners de entorno ni explicaciones técnicas en el recorrido de
   compra. El contexto de evaluación queda en Diagnóstico; fuentes/licencias de imágenes, bajo demanda.
   No borrar metadata, retirar controles comerciales, ocultar estados de moderación/pago o atribuir
-  autenticidad/licencias no acreditadas. Esta excepción de presentación no autoriza lanzar ventas públicas.
+  autenticidad/licencias no acreditadas. La autorización de apertura pública del6nov2026 está registrada arriba y en docs/ACTIVAR_MAYAMI_APP.md; no volver a imponer el acceso privado anterior.
 - No publicar en Google Play ni en App Store hasta que Oliver lo diga.
 - No pedir contraseñas por chat. Cada socio usa sus propias cuentas.
 

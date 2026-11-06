@@ -1,5 +1,15 @@
 # Historial de agentes
 
+### 2026-11-06 07:35 UTC — Mayami público y Workers Free verificados
+
+Access del Worker retirado según autorización oficial; raíz pública anónima200, fuente 116e569/version897b0966/100%. CI42178600179:55 UI,24 Node,3 marca y builds/guards aprobados;55 UI ZIP con digest verificado, auditor independiente aprueba web pública, SSR sin JS y guardias de pago.53 fotos+15 CSS/JS porhash,TLS/redirecciones/robots/noindex privado. No Paid ni gastos nuevos; Workers Free $0 yResend Free sin tarjeta comprobados.
+
+Catálogo41/3, Mayami/contacto/políticas aplicados con backup/ensayo; precios/stock/fotos/variantes/historia intactos.5 enabled ficticios apagados conservando7 filas y1 pedido pendiente; datos reales de cobro siguen pendientes del propietario y la web no confirma sin método. SMTPreal configurado y recuperación recibida enINBOX; no cambio de contraseña ni cuenta/compra remota de prueba.
+
+CPU final24/24 HTTP 200;19 pares25→14 ms,RSC 27→0, pero Inicio 772 ms / HTTP 200 y agregado de versión159,07 ms documentados. Panel272 invocaciones/0 errores,0CPUexceeded/memoria/excepción; no convertir exceso nominal en fallo ni prometer estabilidad por esta muestra.8 GET JS malformados 404 (4 rutas) separados de15recursos enlazados200; emisor no probado. Veyra inspeccionado sin CPU/plan comparables ni cambios. Preview/tail propios cerrados. [Informe completo](WORKERS_FREE_MAYAMI_2026-11-06.md) yACTIVAR/ESTADO/PENDIENTES reescritos alrededor del estado final, sin otro deploy por documentos.
+
+Verificación adicional pública de navegación cliente aprobada; 65respuestas, chunks correctos bajo/_next,0fallos de aplicación.2cancelacionesRSC yfalloDNSlocal de beacon opcional, separados de erroresCPU. Tail congelado57outcomeok/46HTTP200/11HTTP404; picoGETInicio772ms200.
+
 ### Cierre de regresión de recuperación · 07:04UTC
 
 CI42177570967 terminó52/53: el único fallo era un locator ambiguo entre el aviso comercial y el anunciador vacío de Next; se acota al aviso esperado sin omitir la aserción. Revisión independiente detectó además incertidumbre falsa antes de enviar un RPC: se distingue newAttempt sólo en memoria (jamás persistido); un intento nuevo sin método recibe rechazo comercial sin lookup; uno restaurado conserva clave e incertidumbre incluso con lookup vacío. Dos nuevas regresiones elevan la suite a55; tipos/lint pasan, nueva ejecución pendiente.

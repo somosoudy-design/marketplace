@@ -1,94 +1,98 @@
-# MAYAMI: Workers Free y publicación oficial · 6nov2026
+# Mayami público en Workers Free — 6 de noviembre de 2026
 
-Decisión del propietario: Workers Free; ningún Paid ni servicio con cargos. Publicación oficial autorizada, retirando el control exclusivo del propietario al cerrar el catálogo. Este checkpoint prepara optimizaciones; todavía no atribuye mejoras medidas.
+Estado verificado a 2026-11-06 07:35 UTC. https://mayami.app está abierto sin el acceso exclusivo del propietario. Workers conserva **Free, $0**; no se activó Paid ni otro servicio con cargos. La web publica el catálogo autorizado, pero confirmar nuevas compras está bloqueado mientras falten datos reales de recepción de pagos.
 
-## Fallo frente a exceso nominal
+## Publicación y alcance
 
-Captura original05:24:29–05:25:06UTC:28invocaciones,28outcomeok;18por encima10ms, mediana22,5ms, máximo433ms. No contiene estadoHTTP ni indicador de isolate/coldstart. La primera observación Inicio433ms y la segunda41ms no acreditan por sí solas arranque en frío/caliente. Panel persistido posterior:179invocaciones, errores0, ExceededCPU0, ExceededMemory0 y UncaughtException0; P50CPU16,01ms/P90130ms/P99356ms. No hay evidencia1102 en lo consultado. Los404 de rutas inexistentes y302deAccess no son fallosCPU.
+Fuente ejecutable `116e569ce25c1327ff3aff301337f5da1e066779`, Worker `mayami-storefront`, versión `897b0966-ade6-4799-ad8e-4b250d384ad2`, tráfico 100%. Los commits posteriores a esa fuente sólo documentan el cierre; no requieren otro deploy.
 
-Ruta | CPU original(ms)
----|---
-Inicio|433,41
-Buscar|119,20,43,51,5,10
-Cuenta|185
-Carrito|209
-Favoritos|97,60
-Icono|55
-Ficha65W|21,24
-Callback|34
-Tienda|39
+La aplicación Access del Worker se retiró por la autorización expresa de apertura oficial. GET anónimo devuelve200, sin cookie ni sesión. HTTPS raíz/www válido; HTTP y www redirigen301 conservando ruta y consulta. workers.dev y previews siguen desactivados. Los controles propios de cuenta, RLS y compra se conservan.
 
-Nueva base:24GET secuenciales (3vueltas por8rutas) terminaron200 sin1102 ni pantalla de error; tail guarda statusHTTP/CPU/intenciónRSC sólo donde capturó el evento. Visita de Inicio produjo27recursosRSC. No confundirlos con navegación deliberada ni mezclar esta carga con el coste de un solo HTML.
+## Exceso nominal y errores reales
 
-## Cambios preparados
+La captura original tenía28 invocaciones,18 sobre10 ms y28 outcome ok. No guardaba estadosHTTP: no se deben inventar28 HTTP 200 ni calificar como cold/warm. No contenía exceededCpu, excepciones ni prueba de1102. Los404 de productos inexistentes/retirados son respuestas funcionales; los302antiguos eran Access.
 
-- prefetch=false: evita renderizar rutas automáticamente al verse/rozarse links; conserva Link, navegación cliente y SSR.
-- SVG original en public/icon.svg y metadata explícita: StaticAssets lo sirve sin ejecutar Next; mismos bytes, securityheaders conservados.
-- Buscar reutiliza un único cliente anónimo para las dos lecturas concurrentes; sin sesión ni caché compartida.
-- minify:true en Wrangler, como experimento. OpenNext ya minifica parcialmente; no prometer mejora hasta medir.
-- ESLint ignora sólo .open-next/.wrangler generados, igual que .next; fuente y tests siguen revisados.
-- Prueba UI: HTMLSSR, sin solicitudes especulativas en viewport/hover/scroll, icono y click de ficha funcionales.
+Las tres series de24 GET (antes, optimizaciónf998 y publicación final) terminaron24/24 HTTP 200, sin1102 ni contenido de fallo. No se registraron pedidos, pagos, compradores ni comprobantes de prueba en Supabase alojado.
+
+Cloudflare documenta10 msCPU nominales en Free y tolerancia ocasional por isolate, sin una cuota de exceso garantizada. Superar10 ms no demuestra por sí solo un fallo. La evidencia de agotamiento real sería1102, outcomeexceededCpu o la métrica correspondiente. [Límites oficiales](https://developers.cloudflare.com/workers/platform/limits/#cpu-time), [errores oficiales](https://developers.cloudflare.com/workers/observability/errors/#error-pages-generated-by-workers).
+
+## CPU por ruta, con datos persistidos
+
+Tres vueltas por ocho rutas, GET secuenciales con cache:no-store, mismo navegador y sin efectuar compras. Base 05:37:20–26UTC; final 07:20:15–19UTC. La tabla muestra CPU enms por ronda, no latencia de red. «—» significa evidencia persistida ausente; no se rellenó con suposiciones.
+
+| Ruta | Antes, por ronda | Publicación final, por ronda |
+|---|---|---|
+| `/` | —, 47, 27 | 33, 25, 17 |
+| `/buscar` | —, 23, 18 | 23, 20, 21 |
+| `/p/ugreen-nexode-65w` | 29, 17, 135 | 14, 12, 13 |
+| `/cuenta` | 25, 164, 17 | 13, 15, 10 |
+| `/carrito` | 26, 16, 24 | 13, 12, 10 |
+| `/favoritos` | 81, 40, 51 | 19, 21, 11 |
+| `/auth/callback` | 24, 21, 20 | 18, 15, 11 |
+| `/icon.svg` | 45, 50, 5 | Static Asset; 3 GET 200 |
+
+Se recuperaron21/21 invocaciones Worker posteriores y los3 GETdelicono comoStaticAssets. La base sólo conserva22 de 24 filas por el límite de50 del panel; dos lecturas no tienen pareja. Sólo los **19 pares completos** de ruta+ronda se comparan: mediana25→14 ms, máximo164→25 ms. La primera mejora f998, con catálogo y Access anteriores, daba25→17 ms en esos19 pares. La publicación también cambia catálogo, metadata y acceso: no atribuir toda diferencia final a una única optimización.
+
+En las21 filas finales,19 superan10 ms; aun así sus respuestas son200. Latencia HTTP mediana215→162,5→147,5 ms en las tres series: incluye red, cachés y Access; no es CPU. No fue una prueba de carga ni se acreditó el estado frío/caliente de los isolates.
+
+## Picos y panel agregado: límite de la conclusión
+
+Fuera del lote hubo un GET a Inicio con 772 ms CPU que respondió200, outcome=ok, sin excepción. No se ocultó al calcular la serie pareada. El panel de últimas 24 h mostraba272 invocaciones / 0 errores,70 de la versión final/0 errores,0 Exceeded CPU,0 Exceeded Memory,0 Internal y0 Uncaught Exception. Su tabla de versión activa mostraba159,07 ms en «Median CPU time»; la leyendaP50delgráfico mostraba73,49 ms. Son agregaciones del panel sobre otro conjunto/ventana; no reconstruimos su cálculo interno ni equivalen a la mediana de19 pares. **No afirmar que toda la aplicación consume14 ms ni que los picos desaparecieron.**
+
+El tail final congelado a las 07:35 tiene 57 eventos: 57 outcome=ok, 0 excepciones y 0 logs de error. 46 HTTP 200 y 11 HTTP 404: 3 productos retirados y 8 peticiones a cuatro rutas `/static/chunks/*.js` sin el prefijo `/_next/`. Esas cuatro rutas mal formadas consumieron 28–475 ms; no se atribuyó su emisor. Los15 CSS/JS realmente enlazados por las páginas usan `/_next/`, responden200 y coinciden por hash con el artefacto. Los nombres relativos coinciden con otherChunks interno de Turbopack; una extracción textual con base errónea es una posibilidad, no una autoría probada.
+
+## Cambios aplicados y propósito
+
+- Se desactivaron las precargas especulativas de57 Links existentes. Conservan navegación de Next y SSR; una visita a Inicio pasó de27 recursos RSC a0, también0enla versión pública. Reduce renderizados de rutas que el comprador no abrió.
+- El icono SVG, con idénticos449 bytes y hash, pasó del handlerNext a StaticAssets. SusGET200 ya no producen invocaciones Worker.
+- Buscar reutiliza un único cliente anónimo en sus dos lecturas paralelas. Metadata y ficha comparten publicProduct con React.cache por petición, sin caché global de sesión/precio/stock.
+- Wrangler minifica el Worker. Bundle original6451,46KiB/gzip1320,48; tras optimización3976,01/1114,54; final comercial4158,74/1144,98. El manifiesto/páginas comerciales agregan código. Son tamaños del Worker, no CPU ni pesoHTML.
+- Se conservaron SSR dinámico, lecturas no-store, autoridad de precio/tasa/saldo en el servidor, RLS y verificación manual de pagos. No se sustituyó SSR por una SPA ni se trasladó confianza financiera al cliente.
+- La web revalida métodos antes de nuevas operaciones. Un intento nuevo rechazado antes delRPC no finge incertidumbre; un intento que pudo llegar al servidor conserva su clave y recuperación, incluso si los métodos desaparecen. No modifica el motorSQL; clientes anteriores/API directa conservan su comportamiento de creación de pedidos.
 
 ## Comparación real con Veyra
 
-Fuentes locales verificados y GETpúblico6nov05:36UTC: Veyra usa Vinext1.0.0-beta.5/Vite y backendD1/R2; Inicio devuelve AccessGate cliente, sin lectura de catálogo/tasasSSR. Navegación principal son tabs de estadoReact. MAYAMI conserva Next16.4.5/OpenNext1.20.16 y catálogoSSR. Veyra root200/TLSválido, TTFB758ms y /api/version2.9.3/Beta; esos tiempos incluyen red y no sonCPU. No se acreditó SHA de producción, CPU/request ni plan de Veyra; no compararlos inventando equivalencia ni migrar arquitectura. WorktreeVeyra limpiofcb9f2f y Downloads7467394 con cambios ajenos, intactos.
+Se revisó el checkout actual de Veyra y un GET público6nov 05:36 UTC: Vinext 1.0.0-beta.5 / Vite y backendD1/R2; Inicio entrega AccessGate cliente, sin lecturaSSR de catálogo/tasas, y tabs principales de estadoReact. Mayami usa Next 16.4.5 / OpenNext 1.20.16 y catálogoSSR. Veyra respondió200 y /api/version2.9.3/Beta; TTFB 758 ms incluye red y no esCPU. No se verificó CPU/request, plan ni SHA de producción de Veyra. No extrapolar su coste ni migrar Mayami por suponer equivalencia. No se modificó Veyra.
 
-## Validación y medición posterior
+## Catálogo y datos
 
-Pendientes en este checkpoint: build, UIlocal actualizada, despliegue y mismo muestreo después. Registrar n/CPU/status/outcomes por ruta/versión, separar visitasRSC y navegación, estáticos fueraWorker y fallos reales. Supabase alojado no recibe órdenes/registro/pagos de prueba. No recomendar pagar sólo por superar nominalmente10ms: justificar cualquier necesidad con fallos/capacidad observada y consultar al propietario.
+Por instrucción del propietario se conservaron40 productos con imágenes preparadas, másDJIMic3:41 publicados. Se suspendieron3 sin fotografía profesional preparada; no se borraron productos ni historial.40 notas registran la aprobación. Tienda de plataforma:Mayami,soporte@mayami.app y políticas coherentes con las páginas publicadas; slugkora conservado.
 
-Fuentes: [Cloudflare límites](https://developers.cloudflare.com/workers/platform/limits/), [Next Link](https://nextjs.org/docs/app/api-reference/components/link#prefetch), [OpenNext assets](https://opennext.js.org/cloudflare/howtos/assets), [OpenNext rendimiento](https://opennext.js.org/cloudflare/perf). Evidencia local ignorada: .local/mayami-free-20261106/.
+Ensayo transaccional con excepción intencionada de éxito/rollback y aplicación atómica única. Respaldo completo antes/después;104 imágenes y63 variantes idénticas. Precios, stock, importes y datos financieros intactos. Los53 archivos / 92 asociaciones comerciales mantienen hashes y procedencia; no se atribuyó autenticidad de unidad/SKU ni licencias no acreditadas. El manifiesto público es independiente de _exhibition, bloqueado por los guards.
 
-## Checkpoint de provisión CI
+Se conservan products.is_demo y perfiles/pedidos/reviews históricos para compatibilidad con APK y procedencia. El flag de producto no controla cobros/ledger/envíos, pero sí popularidad y ciertos avisos de producto. Esa alineación comercial necesita una migración separada que conserve APK/historia y no transforme eventosfixture en ranking real. No describirlo como metadata sin efectos.
 
-Build y guards adaptados pasan; nuevo test de navegación/SSR/icono pasa en Chrome local contra workerd. Bundle minificado3976,01KiB/gzip1114,54KiB frente6451,46/1320,48 anteriores. El CI42170567305 quedó esperando instalación de navegador; se usa el Chrome incluido por el runner Ubuntu24.04 (verificado en su inventario oficial), igual que el QA de este Mac, con fallback limitado5min. El nuevo CI sustituye sólo revisiones locales anteriores del mismo grupo; no cancela EAS/panel. No se omite ninguna prueba.
+## Cobros: pendiente real del propietario
 
-## Checkpoint oficial · 6nov2026 06:32UTC
+Los5 manuales tenían datos ficticios, incluidos números en cero, titularDEMO y correoexample.com. Se cambiaron sólo5 enabled a false, con snapshot exacto de las7 filas, auditoría before/after por código y ensayo previo. Instrucciones/restantes campos intactos; los2 automáticos ya estaban deshabilitados.0 cotizaciones no-demo vigentes y0 pagos pendientes/processing al cambiar;1 pedido con saldo conservado. Órdenes, obligaciones, cotizaciones y pagos se compararon íntegros sin cambios.
 
-Optimización desplegada en Workers Free, versión f9980894-124b-4cca-9642-bada20ed1294, fuente8faeea6. CI42171539369 Success47UI contra stack local. Misma serie24GET:24/24HTTP200 antes y después, sin1102 ni contenido de fallo. Inicio pasó de27precargasRSC a0; latencia mediana215→162,5ms (red/caché no controladas). No equiparar latencia a CPU; tabla persistida posterior pendiente de recuperar. Bundle3976,01KiB/gzip1114,54 frente6451,46/1320,48. No hubo contratación Paid.
+La web conserva carrito y recuperación, y bloquea confirmar sin método disponible. Falta que el propietario elija efectivoUSD coordinado o aporte datos reales de recepción para los canales que desee. No se inventaron cuentas ni puntos de retiro. No habilitar un método sólo para aparentar cierre del lanzamiento.
 
-Fuente preparada para apertura oficial: manifiesto40productos/92asociaciones/53archivos exactos con procedencia, separado de _exhibition; páginas Términos/Privacidad/Devoluciones/Contacto, SEO público y noindex privado, nombre/contacto Mayami, enlaces oficiales conservando identidad nativa. Metadata y ficha comparten lectura React.cache por petición, sin caché de sesión. Pasan24Node, tipos/lint y3pruebas de marca. Nuevo build/49UI y auditoría visual pendientes; este checkpoint no está desplegado.
+## Contacto y autenticación
 
-EmailRouting Free está enabled=true/statusready con regla soporte@mayami.app al Gmail del propietario verificado; sólo se configuró recepción, no se afirma entrega de una prueba ni SMTP saliente. Supabase SMTPcustom=false; configuración pública actual mailer_autoconfirm=true preexistente (no se relajó). Recuperación de contraseña necesita SMTP real; no declarar correo transaccional resuelto. Cinco métodos manuales contienen placeholders; se pidió elegir efectivo coordinado o aportar datos reales. No publicar cuentas ficticias.
+soporte@mayami.app tiene reenvío Cloudflare Email Routing Free al Gmail verificado del propietario; enabledtrue,statusready,syncedtrue. MX/SPF/DKIM de recepción conservados. No se afirma una prueba de entrega entrante a soporte ni envío humano «Send as» desde Gmail.
 
-Catálogo remoto aún intacto: respaldo íntegro44productos/104imágenes/63variantes hash3d82b1f56cdbee206c55789a9dc2e75b80ac33bcb8f7755d123caf633b136983. Propuesta SQL transaccional10,7KB para suspender3, anotar aprobación40 y cambiar sólo nombre de tienda Kora→Mayami manteniendo slug; guardas exactas/versiones, imágenes/variantes/origen/precios intactos; terminaROLLBACK. Rehearsal y aplicación todavía pendientes. Access aún no retirado; debe quitarse al publicar la versión comercial, no conservar revisión limitada como resultado.
+ResendTransactionalFree, $0, sin tarjeta: 3000correos/mes,100/día; al agotar cuota se detiene, sin overages de un planPaid. auth.mayami.app estáVerified; tresDNSonly nuevos sin tocarMXraíz. La integración gestionada se limitó a Marketplace, organización verificada con un único proyecto mimnotafmfasvwrclxan; SMTPcustomtrue,smtp.resend.com465,Mayami/no-reply@auth.mayami.app. Clave cifrada por los servicios, nunca leída/copiada. [Cuotas de Resend](https://resend.com/docs/knowledge-base/account-quotas-and-limits).
 
-Próxima acción: compilar/probar versión oficial, revisar capturas independientemente; ensayar SQLROLLBACK/aplicarCOMMIT autorizado; desplegar y retirar Access, comprobar público/SSR/seguridad/CPU, cerrar pagos/SMTP sin cargos. No tocar otros proyectos, APK/OTA/iOS ni ejecutar pedidos reales.
+Site URL localhost:3000→https://mayami.app; se añadieron únicamente callbacks exactos `/auth/callback` y `/auth/callback?tipo=recuperar`. No se alteró la confirmación de correo preexistente. Se solicitó una recuperación a la cuenta real existente del propietario: API mostró envío correcto y el mensaje llegó a INBOX del Gmail; sólo se comprobaron IDs/metadatos, sin consumir código, cambiar contraseña ni crear cuenta remota. No se declara verificado un cambio real de contraseña/registro de otro comprador ni las plantillasOTP remotas de extremo a extremo.
 
-## Resultados medidos posteriores a la optimización
+Conteo Auth:24 usuarios,23 example.com sin privilegios y1 superadmin/owner real;0 fixtures privilegiados. No se borraron cuentas. Lecturas anónimas reales de profiles,orders,payments,addresses,notifications,cart_items yfavorites devuelven401/42501; no exponen filas. No se tocó el proyecto ajeno ni se extrajeron service_role/cookies/tokens de gestión.
 
-19pares completos ruta/ronda con timestamps emparejados:CPUmediana25→17ms, máximo164→30ms. Las21invocaciones posteriores del lote están recuperadas;3iconossonStaticAssets yrespondieron200,noCPU0inventado.24GET200antes/después;errores1102 y contenido de fallo0. Inicio27precargasRSC→0, no navegación suprimida. Red/cachés/isolate no controlados: la mejora es descriptiva, no causalidad exclusiva.
+## Pruebas y revisión
 
-Ruta | CPU después por ronda(ms)
----|---
-Inicio|26,30,21
-Buscar|27,17,17
-Ficha65W|24,11,14
-Cuenta|27,14,11
-Carrito|18,14,11
-Favoritos|17,12,17
-Callback|19,11,10
+[CI42178600179](https://github.com/somosoudy-design/marketplace/actions/runs/42178600179):**55/55 UI,24 Node,3 marca**, tipos/lint/build/guards. Compras/pagos sólo en Docker local, con ambos hostsSupabase alojados bloqueados. El fallo anterior52/53 era un selector ambiguo del aviso frente al anunciador de Next; se corrigió sin omitir la aserción. Dos regresiones adicionales cubren primer intento y recuperación sin duplicado.
 
-20de21siguenporencima10msnominales y todasrespondieron200. Cloudflaredocumentatoleranciaocasional, nocuotagarantizada: no hay1102realniobligacióndepagarobservada,peronosegarantizacarga/estabilidadfutura.
+Auditoría pública independiente:7 páginas200SSR,3 retirados404,53/53 fotos y15/15 CSS/JS con hashes exactos; TLS/redirecciones/headers/robots.12 rutas privadas conX-Robotsnoindex; su metarobots heredado aún diceindex,follow, de modo que no se promete indexación de buscadores. Navegador aislado sin sesión:4 vistas320claro/oscuro aprobadas y SSR sin JavaScript con nombre/precio/vendedor/enlaces. Revisadas8 legales,12 vistas locales/variantes y3 capturas de guardia de CI. La captura completa móvil tiene una superposición preexistente de barra fija/dirección; esa imagen no prueba el scroll. No hubo hallazgo visual bloqueante nuevo.
 
-## Estado verificado · 2026-11-06 06:54 UTC
+ZIP de55 UI recuperado con la sesión normalGitHub,9.596.797bytes,SHA256`0b53c5aa3df578065c4795a244770a941abd273edd8cb7c4da9e9b04b7e7b0a8`, coincide conActions. Capturas extraídas sin traces. El preview y tail propios se cerraron tras la verificación; producción sigue funcionando.
 
-Workers sigue Free y no se contrató ningún servicio de pago. Fuente89d2708 desplegada en versión923e2489-a867-4c35-84fb-26a35b0570b3; CI42174790119 Success49UI,24Node y3marca, tipos/lint/build/guards/dryrun aprobados. Auditor independiente aprueba8PNG legales y12escenarios Inicio/ficha/variantes320/1440clarooscuro. El deploy comercial aún espera retirar Access, no se declara acceso público comprobado.
 
-Catálogo remoto aplicado UNA VEZ por DO atómico tras ensayo que finaliza con excepción intencionada de éxito/rollback.41publicados/3suspendidos,40notas de autorización y DJI íntegro. Tienda Mayami/soporte@mayami.app/políticas de las páginas reales; slug y restantes campos conservados. Respaldo posterior SHA3835c67c181971037ad8acf2762aea1afdd20b84eb9bccd95b4234b63886e1b7; comparación íntegra44productos confirma sólo estado/nota/fecha cambiados,104imágenes y63variantes idénticas, precios/existencias intactos. AnónimoRLS ve41 y ninguno de los3retirados. NO REAPLICAR aunque el SQLeditor muestre Running tras un resultado vacío: la lectura independiente confirma el commit. BEGIN/ROLLBACK explícitos también dejaban ese estado visual; el ensayo con excepción y SELECT posterior resolvió la verificación sin repetir writes reales.
+Verificación adicional de navegación cliente pública: Inicio → clic NextLink a ficha → variante → logo Inicio → búsqueda GET → Ingresar, sin sesión ni enviar formularios de Auth. 65 respuestas correctas; 27 cargas de chunks sobre15rutas únicas, todas200bajo`/_next/`,0ChunkLoadError/HTTP>=400/pageerror y0mutaciones. Marcadorwindow conservado en ficha/logo/cuenta acredita navegación cliente, no sólo GET directos. Hubo2fetchRSCcancelados al recorrer rutas y2errores de consola por DNS de un beacon externo opcional, static.cloudflareinsights.com; no bloquearon el recorrido. El resolver de este Mac también falló con curl; en cambio1.1.1.1 devolvió direcciones válidas. No se atribuye una caída global al proveedor. No se cambiaron DNS del equipo ni funciones de analítica por ese síntoma. Evidencia:public-client-navigation/.
 
-Comparación CPU persistida completa del lote posteriorf998:21invocaciones Worker emparejadas y3GETicono StaticAssets;24/24HTTP200 sin1102. Sólo19pares completos en ambos lados:mediana25→17ms(-32%descriptivo),máximo164→30ms. PrecargasInicio27→0. No atribuir CPU a red ni declarar cold/warm; no sumar tails parciales. Veyra tiene arquitectura distinta y no se obtuvo CPU/plan comparables. Detalle en WORKERS_FREE_MAYAMI_2026-11-06.md.
+## Decisión sobre Paid y continuidad
 
-Correo: recepción CloudflareRouting Free configurada; auth.mayami.app Verified en Resend Free3000/mes/100día, sin tarjeta.3DNS públicos añadidos y comprobados, MX raíz intactos. Organización SupabaseMarketplace verificada con un único proyecto mimnotafmfasvwrclxan; integración gestionada configura remitente Mayami/no-reply@auth.mayami.app sin extraer claves. Resend informa Ready to send; falta verificar UI SMTP y entrega/retorno real. Ningún otro proyecto tocado.
+**Mantener Free.** No hay fallo1102, exceededCpu, error de memoria ni agotamiento de cuota probado que justifique contratarPaid ahora. Sí existen CPU nominal excedida y picos: la tolerancia no es una garantía de capacidad futura. Cualquier necesidad posterior debe justificarse con errores/tráfico reales y consultarse antes de generar cargos.
 
-Pagos: auditoría remota confirma datos ficticios en los5manuales (no sólo una nota),0quotes no-demo vigentes/0pagos pendientes y1pedido no-demo con saldo, que se conserva. Se prepara deshabilitar sólo esos5enabled con guardas y auditoría; no inventar cuentas ni activar efectivo sin respuesta del propietario. Fuente nueva añade bloqueo de confirmación cuando no hay métodos, revalidación antes de RPC y recuperación de pedidos/pagos ya enviados;4UI nuevas y recuperación reforzada pendientes de ejecución (53totales). No es una modificación del motor financiero ni garantía de clientes antiguos/API directa. Tipos/lint de fuente pasan; el primer lint incluyó por error un dryrun generado dentro de app/.local, movido fuera del árbol de lint sin omitir fuente.
+La publicación técnica está cerrada. La próxima acción depende sólo de los datos/elección real de cobro; no repetir autorización del dominio, volver a cerrar Access ni rehacer builds/CI/deploy sin cambios. APK/OTA/iOS y Veyra no se publicaron/modificaron en esta intervención.
 
-Conservar products.is_demo para compatibilidad con APK/boilerplate/procedencia. No controla pedidos/cobros/ledger/envíos, pero SÍ popularidad y avisos de producto: deuda explícita para migración separada sin convertir actividadfixture en ranking real. No afirmar que sea metadata inocua ni cambiar perfiles/pedidos/reviews históricos.
-
-Próxima acción: checkpoint fuente, build/53UI; ensayar/aplicar sólo disabled de métodos, revisar conteos de cuentasfixture privilegiadas, verificar SMTP. Desplegar guardia, retirar Access y comprobar público/SSR/TLS/SEO/53assets/3retirados404, medir misma carga final y documentar. Datos reales de cobro siguen pendientes del propietario; no son motivo para contratar WorkersPaid. Sin APK/OTA/iOS ni transacciones reales.
-
-### Cierre de regresión de recuperación · 07:04UTC
-
-CI42177570967 terminó52/53: el único fallo era un locator ambiguo entre el aviso comercial y el anunciador vacío de Next; se acota al aviso esperado sin omitir la aserción. Revisión independiente detectó además incertidumbre falsa antes de enviar un RPC: se distingue newAttempt sólo en memoria (jamás persistido); un intento nuevo sin método recibe rechazo comercial sin lookup; uno restaurado conserva clave e incertidumbre incluso con lookup vacío. Dos nuevas regresiones elevan la suite a55; tipos/lint pasan, nueva ejecución pendiente.
-
-Los5métodos ficticios se deshabilitaron UNA VEZ tras ensayo con excepción de éxito/rollback y guardas completas; anónimoRLS ve0métodos. Las7filas conservan instrucciones y todo salvo5enabled; pedidos/obligaciones/quotes/pagos se compararon íntegros sin cambios;1pedido pendiente conservado,0quotes/pagos reales en curso. No reaplicar. Conteos Auth:24usuarios,23example.com sinprivilegios,1superadmin/ownerreal y0fixturesprivilegiados. No se borraron cuentas ni historia. SMTPcustomtrue/smtp.resend.com465/remitenteMayami no-reply@auth.mayami.app confirmado en UI sin leerpassword. SiteURL localhost3000→httpsmayami.app y2callbacksHTTPSexactos de registro/recuperación añadidos; confirmaciónpreexistente/autorizacionesintactas. Entrega real aún no verificada.
+Evidencia local ignorada en `.local/mayami-free-20261106/`: before-reads.json,after-perf-reads.json,official-public-reads.json,persisted-cpu-comparison-independent.json,persisted-cpu-final-comparison.json,metrics-final-screen.json,workers-current-plan-proof.json,public-audit-independent/,public-anonymous-visual/,final-ci-guard-images/,smtp-configured-proof.json,mail-final-proof.json,anonymous-private-rls-proof.json y snapshots SQL antes/después. Los respaldos contienen datos de operación y no deben añadirse al repositorio público.
