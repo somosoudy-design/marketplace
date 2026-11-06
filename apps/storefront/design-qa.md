@@ -10,3 +10,5 @@ Se comparó la referencia 1487×1058 con captura CI a 1440×1024; las vistas mó
 - Nombres completos y enlaces existentes; precios y disponibilidad proceden del servidor. Ficha acerca entrega y devoluciones a la compra.
 - `ProductPhoto` conserva la política comercial; las fotos de pruebas son fixtures aislados. No se alteraron originales ni datos de cobro.
 - Contraste de textos puntuales revisado en oscuro, sin declarar una auditoría WCAG completa. Checkout y cuenta conservan su experiencia previa, salvo la cabecera compartida.
+
+Observación de producción: la API pública devuelve tres productos y la portada muestra un destacado. Oliver confirmó que suspendió los demás para comenzar a subir productos reales; conservar ese estado. La validación visual con fixtures no equivale a un catálogo completo en producción.

@@ -2,7 +2,7 @@
 
 ## En curso: renovación web comercial
 
-Oliver eligió la opción 2 con cabecera violeta de la 3. Primera etapa de Inicio, navegación, catálogo y ficha validada: CI 42276448900 pasó 65 recorridos y revisión visual final aprobada. Pendiente publicar en el Worker existente y verificar dominio, pagos y CPU. Mantener SSR, Workers Free, seguridad y funciones existentes. Checkout y cuenta conservan su experiencia previa; considerar extensión del rediseño en etapas posteriores. Ver ESTADO_ACTUAL.md.
+Primera etapa publicada versión `1eea5edb` y CI 42276448900 aprobado. El catálogo público entrega 3 productos y Inicio muestra un destacado: Oliver confirmó que suspendió los demás para empezar a subir productos reales. Conservar ese estado y revisar Inicio cuando haya nuevas altas. Mantener Workers Free y consultar antes de cualquier servicio con cargos. Checkout y cuenta conservan experiencia anterior salvo cabecera compartida. Ver ESTADO_ACTUAL.md.
 
 ## Cobros oficiales configurados · 6nov2026 14:12 UTC
 

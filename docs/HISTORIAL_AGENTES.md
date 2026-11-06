@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-06 — rediseño publicado; catálogo en transición
+
+Worker `1eea5edb-7ecc-4a97-9a44-595fcdf12dff` al 100%, fuente ejecutable `e18d786`; CI 42276448900 65 UI y revisión independiente tablet. SSR y CSS público comprobados, 24 GET 200, www correcto, Zelle/Binance y seis tablas privadas verificados. Sin operación financiera. 21 invocaciones correlacionadas outcome ok, mediana 46 ms, 22–919 ms, todas >10 ms, 0 excepciones/error 1102 en muestra. Comparación anterior no causal.
+
+API pública entregaba solo 3 productos a las 19:03 UTC antes del despliegue, frente a 41 en respaldo anónimo de 06:46; Inicio muestra un recomendado. Oliver confirmó que suspendió los demás para empezar a subir productos reales. No restaurar ni cambiar productos/RLS ni repetir despliegue por esta observación.
+
 ### 2026-11-06 — primera etapa web validada antes de publicación
 
 Oliver eligió opción 2 con cabecera 3. Fuente `e18d786`: CI 42276448900 aprobó 65 UI, 24 Node, tipos/lint, build y guardas con stack local aislado; revisión independiente aprobó el ajuste de colecciones en tablet claro/oscuro. Build Cloudflare de producción con guardas correcto. Aún no desplegado: producción versión `897b0966`. Próximo paso publicación autorizada, comprobaciones públicas y medición CPU. Workers Free; sin compras ni cambios de servicios o datos financieros.

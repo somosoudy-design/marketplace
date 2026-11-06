@@ -4,9 +4,13 @@
 
 Oliver seleccionó la propuesta 2 con cabecera violeta de la 3. El diseño combinado está en `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png`; los recursos generados son sólo referencia, no fotos ni precios de catálogo.
 
-Primera etapa implementada: cabecera, Inicio, catálogo y ficha sobre SSR y catálogo existente. CI 42276448900 de fuente `e18d786` pasó 65 recorridos, 24 pruebas Node, tipos/lint, build y guardas; fixture local aislado. Revisión independiente final aprobó tablet 768 claro/oscuro tras ajuste de ancho, además de revisiones previas en móvil y escritorio. Detalles y límites en `apps/storefront/design-qa.md`. La compilación Cloudflare de esa fuente pasó los controles comerciales y de seguridad.
+Primera etapa publicada en mayami.app: cabecera, Inicio, catálogo y ficha sobre SSR, fuente ejecutable `e18d786`, versión Worker `1eea5edb-7ecc-4a97-9a44-595fcdf12dff` al 100%, desplegada 2026-11-06 19:12 UTC. CI 42276448900 pasó 65 recorridos, 24 pruebas Node, tipos/lint, build y guardas; revisión independiente aprobó tablet final en claro/oscuro. Checkout y cuenta conservan experiencia previa salvo cabecera común. CSS público coincide por SHA256 con artefacto. 24 GET públicos HTTP 200, www redirige conservando ruta y consulta. Zelle y Binance interna habilitados con comprobante; seis tablas privadas siguen bloqueadas al anónimo. Sin compra ni modificación de pagos.
 
-Próxima acción: publicar esa compilación en el Worker existente y comprobar dominio, rutas, pagos y CPU sin operaciones financieras. Producción sigue en la versión `897b0966` hasta confirmar el despliegue. Mantener Workers Free; no activar servicios con cargos. Checkout y cuenta conservan su experiencia anterior salvo cabecera compartida.
+**Catálogo en transición:** a las 19:03 UTC, antes de este despliegue, la API pública entregaba 3 productos y home_feed un recomendado, frente a 41 visibles en el respaldo anónimo 06:46 UTC. Oliver aclaró que suspendió los demás para comenzar a subir productos reales. Conservar ese estado; no restaurar ni modificar productos por cuenta propia. Inicio muestra solo DJI en la lectura efectuada; la validación visual con fixtures no demuestra catálogo completo en producción.
+
+CPU tras despliegue: 24 solicitudes de lectura HTTP 200, 21 invocaciones correlacionadas (icono servido como estático), outcome ok y sin excepciones ni logs de error; mediana 46 ms, rango 22–919 ms, 21/21 superaron nominal 10 ms y ninguna presentó 1102. Muestra anterior 21 invocaciones, mediana 15 ms/rango 10–33; no es comparación causal, hay alto ruido y una ruta de ficha distinta. Seguir observando, no equiparar superar 10 ms con fallo, y no afirmar capacidad o necesidad de Paid por esta muestra. Workers Free; no activar servicios con cargos.
+
+Próxima acción: continuar la operación con los productos reales que Oliver vaya incorporando; revisar Inicio con el catálogo actualizado. No restaurar los productos suspendidos. Ver `apps/storefront/design-qa.md`.
 
 ## Cobros oficiales configurados · 6nov2026 14:12 UTC
 
