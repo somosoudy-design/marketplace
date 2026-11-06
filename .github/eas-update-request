@@ -1,6 +1,3 @@
-# Cambiar este archivo en la rama de trabajo publica una actualización en el canal preview (workflow eas-update-preview).
-# Llega a los APK que tienen expo-updates (APK 4 en adelante) con el mismo runtime. La primera línea sin # es el mensaje.
-# runtime: el de los APK instalados; el workflow se detiene si el de esta versión es otro (algo nativo cambió).
-# APK 4: a4682c83c1bb738fc74c73153838ded0656f1912 (ya no recibe actualizaciones nuevas). APK 5 (build d1d10c28):
-runtime: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
-mayami: escala contextual 112/96 y avatar coherente — compatible con APK 5
+# Una actualización solo llega a APK con el mismo runtime; el workflow verifica antes de publicar.
+runtime: b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6
+mayami Android: apertura violeta, categorías y nombres legibles
