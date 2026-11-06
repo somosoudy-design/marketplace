@@ -2,11 +2,11 @@
 import { MODERATION_LABEL, ORIGIN_LABEL, presentAvailability, RISK_LABEL } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useToast } from './toast';
 import { Badge, Button, Dialog, Field, Notice, Table, Td, Textarea, Thumb } from './ui';
 import { dateTime, money, moderationTone } from '@/lib/format';
-import { catalogImage, db, kora, run } from '@/lib/kora';
+import { catalogImage, db, kora, rpc, run } from '@/lib/kora';
 
 export type ProductRow = {
   id: string; slug: string; title: string; subtitle: string | null; description: string | null; highlights: string[] | null;
@@ -20,6 +20,9 @@ export function ProductReview({ product: p, storeName, category, onClose }: {
 }) {
   const qc = useQueryClient();
   const toast = useToast();
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+  const deleteLock = useRef(false);
   const [note, setNote] = useState('');
   const [needsNote, setNeedsNote] = useState<null | 'rejected' | 'suspended'>(null);
   const history = useQuery({
@@ -39,6 +42,37 @@ export function ProductReview({ product: p, storeName, category, onClose }: {
     },
     onError: toast.error,
   });
+  const erase = useMutation({
+    mutationFn: async (product: ProductRow) => {
+      const result = await rpc<{ deleted: boolean; product_id: string }>('admin_delete_suspended_product', {
+        p_product_id: product.id, p_expected_updated_at: product.updated_at,
+      });
+      if (result?.deleted !== true || result.product_id !== product.id) throw new Error('No pudimos confirmar la eliminación. Actualiza la lista antes de reintentar.');
+    },
+    onSuccess: (_, product) => {
+      toast.ok(`«${product.title}» se eliminó del catálogo`);
+      qc.invalidateQueries({ queryKey: ['admin-products'] });
+      qc.invalidateQueries({ queryKey: ['admin-dashboard'] });
+      setConfirmDelete(false); setDeleteError(''); setNeedsNote(null); setNote('');
+      onClose();
+    },
+    onError: (error) => {
+      const hint = (error as Error & { cause?: { hint?: string } }).cause?.hint;
+      const messages: Record<string, string> = {
+        product_has_orders: 'Este producto pertenece a pedidos. Se conserva suspendido para mantener su historial.',
+        product_in_carts: 'Este producto está en un carrito. Se conserva suspendido; intenta eliminarlo cuando ya no esté vinculado.',
+        product_has_reviews: 'Este producto tiene opiniones vinculadas. Se conserva suspendido para mantener su historial.',
+        product_changed: 'El producto cambió. Cierra esta ficha y vuelve a abrirla antes de eliminarlo.',
+        product_not_suspended: 'Sólo se pueden eliminar productos suspendidos. Actualiza la lista.',
+        product_not_found: 'El producto ya no existe. Cierra esta ficha y actualiza la lista.',
+        product_busy: 'El producto se está actualizando. Espera un momento y vuelve a intentarlo.',
+        admin_required: 'Necesitas permisos de administración para eliminar productos.',
+      };
+      setDeleteError((hint && messages[hint]) || error.message);
+      qc.invalidateQueries({ queryKey: ['admin-products'] });
+    },
+    onSettled: () => { deleteLock.current = false; },
+  });
   if (!p) return null;
   const images = [...p.product_images].sort((a, b) => a.sort - b.sort);
   const a = presentAvailability(p.availability as never);
@@ -46,11 +80,20 @@ export function ProductReview({ product: p, storeName, category, onClose }: {
   return (
     <Dialog
       open
-      wide
-      onClose={() => { setNeedsNote(null); setNote(''); onClose(); }}
+      wide={!confirmDelete}
+      busy={moderate.isPending || erase.isPending}
+      onClose={() => { setNeedsNote(null); setNote(''); setConfirmDelete(false); setDeleteError(''); onClose(); }}
       title={p.title}
       footer={
-        needsNote ? (
+        confirmDelete ? (
+          <>
+            <Button variant="ghost" disabled={erase.isPending} onClick={() => { setConfirmDelete(false); setDeleteError(''); }}>Volver</Button>
+            <Button variant="danger" loading={erase.isPending} onClick={() => {
+              if (deleteLock.current) return;
+              deleteLock.current = true; setDeleteError(''); erase.mutate(p);
+            }}>Eliminar definitivamente</Button>
+          </>
+        ) : needsNote ? (
           <>
             <Button variant="ghost" onClick={() => setNeedsNote(null)}>Volver</Button>
             <Button variant="danger" disabled={!note.trim()} loading={moderate.isPending} onClick={() => moderate.mutate(needsNote)}>
@@ -59,6 +102,7 @@ export function ProductReview({ product: p, storeName, category, onClose }: {
           </>
         ) : (
           <>
+            {p.moderation_status === 'suspended' ? <Button variant="danger" disabled={moderate.isPending} onClick={() => { setConfirmDelete(true); setDeleteError(''); }}>Eliminar producto</Button> : null}
             {p.moderation_status !== 'suspended' ? <Button variant="ghost" onClick={() => setNeedsNote('suspended')}>Suspender</Button> : null}
             {p.moderation_status !== 'rejected' ? <Button variant="ghost" onClick={() => setNeedsNote('rejected')}>Rechazar</Button> : null}
             {p.moderation_status !== 'in_review' ? <Button variant="secondary" loading={moderate.isPending && moderate.variables === 'in_review'} onClick={() => moderate.mutate('in_review')}>Marcar en revisión</Button> : null}
@@ -67,7 +111,15 @@ export function ProductReview({ product: p, storeName, category, onClose }: {
         )
       }
     >
-      <div className="grid gap-6 md:grid-cols-[220px_1fr]">
+      {confirmDelete ? (
+        <div className="flex flex-col gap-4 text-sm">
+          <Notice tone="warning" title="¿Eliminar este producto?">
+            Se eliminarán su ficha y sus variantes. Esta acción es permanente.
+          </Notice>
+          <p>Si está vinculado a pedidos, carritos u opiniones, se conservará suspendido.</p>
+          {deleteError ? <Notice tone="danger" title="No se pudo eliminar">{deleteError}</Notice> : null}
+        </div>
+      ) : <div className="grid gap-6 md:grid-cols-[220px_1fr]">
         <div className="flex flex-col gap-2">
           {images.length ? images.slice(0, 4).map((i) => <Thumb key={i.path} src={catalogImage(i.path)} alt={p.title} size={220} />) : <Thumb src={null} alt="" size={220} />}
         </div>
@@ -121,7 +173,7 @@ export function ProductReview({ product: p, storeName, category, onClose }: {
             </ol>
           </div>
         </div>
-      </div>
+      </div>}
     </Dialog>
   );
 }

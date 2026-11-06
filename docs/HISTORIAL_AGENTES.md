@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 · eliminación segura preparada y revisada
+
+Root integra propuesta backend aislada en RPCnuevo y ProductReview del panel; especialistas sólo lectura/propuestas ignoradas.11funcionalesDB+5privilegios+2UI localpasan, tipos/lint/build del panel comprobados. Auditor exige proteger costes/imágenes contra carreras: NOWAIT+timeout y snapshotampliado integrados; segunda revisión APROBADA,4PNG originales legibles. Primeros UI fallaron por gatewayapagado y luego alertduplicado, corregidos con pruebas intactas. No mobile/storefront/pagos/tasas ni productos reales borrados. Activaciónremota y recepciónpanel siguen pendientes; historial hostingfallido no se oculta.
+
 ### 2026-11-06 · tres tiendas aplicadas y verificadas
 
 Tras checkpoint5f863b5, root verificó rollback y aplicó una sola vez la copia privada con COMMIT. Resultado persistido7registros/3activas/4suspendidas,6auditorías,29huellasidénticas; Mayami íntegra. Anónimo stores/home_feed sóloMayami/Aroma'top/MilyeDent; perfiles retirados200/null, tresIDspublicados intactos. Dos nuevas vacías y sinmiembros; no inventar dueños. Sin despliegues ni restauración/borrado de productos. Siguiente bloque: eliminación individual de suspendidos desde panel/RPCadmin, con pruebas locales y sin tocar diseño Mac.
