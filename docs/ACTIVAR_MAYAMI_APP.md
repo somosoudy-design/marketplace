@@ -1,5 +1,21 @@
 # Activar mayami.app · relevo al Mac · 5 de noviembre de 2026
 
+## Verificación en el Mac · 5 de noviembre de 2026
+
+Esta ejecución sí está en macOS, en `/Users/brandeastudio/marketplace`. Se leyó AGENTS y se conservó el árbol limpio original: avance directo de `9d22155` a `600e538` (233 commits), sin reset, limpieza ni reescritura. Revisión independiente: HEAD coincide con origin; índice/árbol limpios; 375/375 archivos versionados de `apps/` y `assets/` presentes con hash Git correcto.
+
+Las descargas normales fallaron o se interrumpieron por lentitud. La copia local usa ahora un remoto promisor (`remote.origin.promisor=true`, `partialclonefilter=blob:none`) y sparse checkout fuera del modo cone: incluye todo salvo `.png`, `.jpg`, `.jpeg`, `.webp`, `.mp4` y `.pdf` bajo `docs/`. Sólo se aplazaron 1.191 archivos multimedia de documentación; toda la fuente, los recursos de app/marca y los textos están presentes. No son borrados versionados. Para materializar esas capturas cuando haga falta: `git sparse-checkout disable` (descargará sus objetos). Conservar la configuración promisor mientras existan objetos históricos pendientes; consultar algunos archivos antiguos puede requerir red.
+
+**DNS público observado el 5nov a las 19:23 UTC / 15:23 Caracas:** nameservers `morgan.ns.cloudflare.com` y `laylah.ns.cloudflare.com`; raíz sin A/AAAA/CNAME y `www` sin resolución (NXDOMAIN en A/CNAME). La comprobación independiente con 1.1.1.1 y 8.8.8.8 coincide para raíz/www; HTTPS no pudo resolverlos. Esto acredita la delegación pública, no la propiedad de la zona ni el estado dentro de la cuenta. Evidencia de la consulta local a 1.1.1.1, sólo en este Mac: `.local/mayami-domain-20261105/public-dns-before.json`. El contraste con 8.8.8.8 procede del informe independiente de las 19:20 UTC.
+
+**Bloqueo actual:** macOS deniega el control de Chrome: `No tienes autorización para enviar eventos Apple a Google Chrome. (-1743)`. Se solicitó abrir Cloudflare y el panel de Automatización mediante `open`; no se pudo inspeccionar el navegador ni verificar su sesión. No se ha accedido a la cuenta de Cloudflare, iniciado sesión con Google ni leído Gmail. No hay token Cloudflare en las variables del proceso; no se solicitaron ni extrajeron secretos. DNS, TLS y alojamiento siguen sin modificar.
+
+**Próxima acción concreta:** habilitar Codex → Google Chrome en Ajustes del Sistema → Privacidad y seguridad → Automatización. Si Chrome lo exige para el control de la página, habilitar Ver → Desarrollador → Permitir JavaScript desde eventos de Apple. Después verificar el acceso real, usar la cuenta indicada por Oliver y continuar con el inventario de zona/DNS y alojamiento descrito abajo. Oliver ya autorizó configurar el dominio e iniciar sesión con su cuenta Google indicada; no pedir otra autorización genérica. Cualquier segundo factor se completa en el navegador, nunca por chat.
+
+Prueba ejecutada en este Mac: `node --test tools/storefront/inspect-cloudflare.test.mjs`, 5/5 aprobadas con respuestas simuladas. No valida la cuenta real. No se recompilaron web/app ni se hicieron nuevas pruebas de compra. `publicWebOrigin` permanece en `null`.
+
+## Antecedente del relevo desde la nube
+
 Oliver autorizó configurar el dominio y preparar la apertura pública del negocio. Eligió continuar desde **Codex en su Mac, proyecto `~/marketplace`**, para usar su sesión de Cloudflare. La sesión de nube no tiene control de ese Mac ni de su navegador. Se solicitó abrir `https://dash.cloudflare.com/` en el panel de Codex; la herramienta devolvió `queued`, no confirmación de navegador abierto ni autenticación.
 
 ## Lo que ya está listo
@@ -68,7 +84,7 @@ Ese camino exige guardar/publicar el borrador desde la configuración del entorn
 NODE_USE_ENV_PROXY=1 node tools/storefront/inspect-cloudflare.mjs
 ```
 
-En esta ejecución la inspección remota se detuvo antes de enviar solicitudes por ausencia del token. No se verificó propiedad del dominio, DNS, TLS ni hosting. No se cambiaron datos remotos ni se publicó web/OTA.
+En la sesión de nube anterior, la inspección remota se detuvo antes de enviar solicitudes por ausencia del token. No se verificaron entonces propiedad del dominio, DNS, TLS ni hosting. No se cambiaron datos remotos ni se publicó web/OTA.
 
 ## APK anterior, independiente del dominio
 
