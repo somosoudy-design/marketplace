@@ -17,3 +17,7 @@ ios/
 test-results/
 playwright-report/
 next-env.d.ts
+.open-next/
+.wrangler/
+.dev.vars
+.dev.vars.*

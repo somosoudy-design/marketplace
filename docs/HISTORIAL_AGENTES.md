@@ -1,5 +1,13 @@
 # Historial de agentes
 
+### 2026-11-06 · sesión correcta, Zero Trust autorizado y preparación OpenNext
+
+Root detecta dos procesos Chrome: AppleScript por nombre resolvía headless de automatización. ScriptingBridge al PID visible permite usar la sesión real del propietario; ya no faltan permisos. Cuenta y zona activa Free/registrador Cloudflare verificadas; GET DNS0 y Workers0, snapshots ignorados. No cerrar procesos ajenos. Oliver autoriza explícitamente checkout ZeroTrustFree0/mes/50usuarios y posiblesoverages; UI confirma suscripción activa. Organización inicial frosty-lab-a534. Wrangler OAuth con scopes mínimos para Workers y keyring autorizado; login correcto, sin secretos en repo/chat.
+
+Root prepara Next/eslint16.4.5 + OpenNext1.20.16 y Wrangler4.148.0 sólo storefront, porque el peer actual requiere ese patch. Caché dummy sin servicios de almacenamiento; endpoints/rutas/previews desactivados. Buildrelease preservado, _headers para assets y nuevo guard del artefacto adaptado con15tests totales. Reviewer encuentra omisión de .dev.vars/symlinks y secretos de dotenv compilados; se corrige con whitelist estática de tres perfiles y errores sin valores. Tipos/lint y diffcheck pasan; fullbuild/workerd/UI aún pendientes. Sólo importer storefront cambia en lock.
+
+MCP no autoriza obtener config pública Supabase. Se reutiliza configuración pública accesible del build iOS local, original intacto: JWTanon/refmim y healthGET200 comprobados; copia ignorada aislada. Sin cambios SQL/Auth/redirects/backend, compras, APK/OTA ni DNS/TLS/hosting. Checkpoint antes de compilar. Próximo: build/guards/workerd/regresiones locales, Access Alltraffic de un solo Worker antes de asociar dominio. PublicWebOrigin sigue null; no se afirma apertura comercial ni servidor publicado.
+
 ### 2026-11-06 · Automatización del Mac resuelta; ajuste de Chrome pendiente
 
 Oliver confirma habilitar el permiso. Root verifica lectura real de ventanas/pestañas/URL/título mediante AppleScript; ya no aparece -1743. Revisa rama limpia y sincroniza al retomar7d5b909. Abre pestaña real dash.cloudflare.com, título «Un momento…», sin afirmar login ni acceso autenticado. Chrome deniega consultar el contenido con error12 y pide Ver→Desarrollador→Permitir JavaScript para eventos de Apple; se comunica al propietario. No se modifica ese control por otro mecanismo ni se extraen sesiones/secretos.

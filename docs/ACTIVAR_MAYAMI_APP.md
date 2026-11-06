@@ -1,10 +1,26 @@
 # Activar mayami.app · relevo al Mac · 5 de noviembre de 2026
 
-## Continuación en el Mac · 6 de noviembre de 2026
+## Estado verificado · 6nov · alojamiento en preparación
+
+**Acceso resuelto.** La sesión real de Cloudflare del propietario funciona. AppleScript por nombre apuntaba a otra instancia headless de Chrome, no al navegador visible. Se seleccionó la instancia correcta por PID mediante ScriptingBridge; no volver a pedir permisos de Automatización o JavaScript por errores de otra instancia. No terminar navegadores/procesos ajenos. El helper de esta sesión está sólo en `.local/mayami-domain-20261106/chrome-bridge.js`; los PID cambian entre sesiones.
+
+Cuenta correcta y zona `mayami.app` verificadas en el panel: activa, plan de zona Free, registrador Cloudflare, renovación6oct2027. Zone ID `b772caa3b5334fee506b719f2e7ffbb7`, account ID `9ea83b61b8f2d27846eaacd60b7c7aa3`. Inventario GET autenticado: cero DNS y cero Workers; snapshot `.local/mayami-domain-20261106/cloudflare-dns-before.json`. No se han cambiado DNS, correo, TLS ni enlazado una web.
+
+**Zero Trust Free activado y confirmado por el checkout:** $0/mes, hasta50 usuarios. Oliver autorizó expresamente el consentimiento de posibles cargos por exceder límites a la tarjeta guardada; no pedir de nuevo esa autorización. No se contrató Workers Paid ni almacenamiento R2. La organización inicial usa el nombre generado `frosty-lab-a534`. Wrangler OAuth se autorizó desde esa sesión con scopes de cuenta/usuario/Workers/rutas/tail/lectura de zona y `--use-keyring`; login correcto. No hay tokens ni claves privadas en Git.
+
+**Preparación de código:** Next y eslint-config-next16.4.5 sólo en storefront, OpenNext1.20.16 y Wrangler4.148.0 fijados. El adaptador actual exige Next>=16.4.5; no saltar su validación de versión ni usar el adaptador anterior para mantener16.4.1. Configuración SSR sin R2/DO/Queues/Images, `workers_dev=false`, `preview_urls=false`, `routes=[]` hasta comprobar protección. Se preserva `build --release`; guards de Next y del artefacto adaptado preceden preview/deploy. El segundo rechaza fotos privadas, dotenv, symlinks y variables no aprobadas en `.open-next/cloudflare/next-env.mjs`, sin ejecutar ese módulo ni revelar valores. Seguridad de archivos estáticos preservada en `_headers`.
+
+Configuración pública reutilizada del build iOS local existente, sin modificarlo: sólo URL de `mimnotafmfasvwrclxan` y JWT de rol anon/ref correctos. Copia ignorada en `.local/mayami-domain-20261106/storefront-public-config.json`; no usar service role ni subir ese archivo. Health remoto GET respondió200. La conexión MCP no autorizó leer esos parámetros; no se cambiaron permisos, tablas, Auth, SiteURL o redirects de Supabase. No se leyó Gmail ni se generó otro APK/OTA.
+
+**Validación de este checkpoint:**15 pruebas Node (10guard adaptado+5inspecciónGET), tipos/lint storefront y diff-check pasan. Build adaptado, workerd, pruebas locales del recorrido y publicación aún pendientes. `publicWebOrigin=null` mientras la web esté protegida para el propietario.
+
+**Siguiente:** construir `pnpm --filter @kora/storefront build:cloudflare` con las dos variables públicas aprobadas en el proceso; verificar ambos guards y dry-run Wrangler. Probar SSR/rutas/404/headers en workerd y regresiones de compra únicamente contra fixtures locales. Medir viabilidad de CPU Free (10ms), no asumir que compilar basta. Guardar checkpoint antes de desplegar sin endpoints; configurar Access de un solo Worker `mayami-storefront`, destino `worker`, alcance All traffic, identidad exacta del propietario/Cloudflare IdP. Sólo después asociar raíz/www con certificados y redirección. No abrir pedidos públicos antes de cerrar los requisitos comerciales del apartado correspondiente.
+
+## Primera comprobación del 6nov · corregida por selección de instancia
 
 **Permiso de macOS resuelto.** Oliver confirmó que lo habilitó y AppleScript ya puede consultar ventanas, pestañas, URL y título de Chrome. La rama se revisó y sincronizó al retomar: `7d5b909`, árbol limpio y remoto al día. Se abrió una pestaña real en `https://dash.cloudflare.com/`; el título observado es «Un momento…». No demuestra sesión iniciada ni acceso a la cuenta.
 
-**Requisito pendiente de Chrome:** al intentar consultar la página, Chrome devuelve el error 12: «La ejecución de JavaScript mediante AppleScript está desactivada». Su mensaje indica activar **Ver → Desarrollador → Permitir JavaScript para eventos de Apple**. Se solicitó esa acción al propietario. No repetir el permiso de Automatización de macOS ya resuelto, ni asumir acceso al contenido por poder leer el título/URL. Tras habilitarlo, verificar el control real y continuar con la sesión/cuenta indicada. No se inició Google ni se leyó Gmail en esta continuación.
+**Diagnóstico inicial de la instancia headless (resuelto):** al intentar consultar la página, Chrome devuelve el error 12: «La ejecución de JavaScript mediante AppleScript está desactivada». Su mensaje indica activar **Ver → Desarrollador → Permitir JavaScript para eventos de Apple**. Se solicitó esa acción al propietario. No repetir el permiso de Automatización de macOS ya resuelto, ni asumir acceso al contenido por poder leer el título/URL. Tras habilitarlo, verificar el control real y continuar con la sesión/cuenta indicada. No se inició Google ni se leyó Gmail en esta continuación.
 
 DNS público actualizado a las **04:12 UTC / 00:12 Caracas del 6nov**, resolutor 1.1.1.1: Morgan/Laylah siguen como NS; raíz sin A/AAAA/CNAME y www NXDOMAIN en A/CNAME. Evidencia local ignorada: `.local/mayami-domain-20261106/public-dns-before.json`. Sin cambios DNS, TLS, hosting, backend, app o configuración de enlaces. No se repitieron builds ni pruebas de compra para este bloqueo de acceso; los tests previos del helper siguen siendo pruebas simuladas.
 
@@ -28,7 +44,7 @@ Oliver autorizó configurar el dominio y preparar la apertura pública del negoc
 
 ## Lo que ya está listo
 
-- Rama `claude/marketplace-v1` sincronizada; web compradora existente en `apps/storefront` con Next16.4.1, SSR y los mismos contratos/backend de la app.
+- Rama `claude/marketplace-v1` sincronizada; web compradora existente en `apps/storefront` con Next16.4.5 (parche de compatibilidad del6nov), SSR y los mismos contratos/backend de la app.
 - Marca original mayami integrada. No volver a pedir el ZIP ni cambiar identidad.
 - Corregida la ruta compartida `/tienda/[slug]`: consulta la tienda con el cliente anónimo y RLS existentes; redirige al catálogo ya implementado conservando el filtro. Tienda no visible/inexistente devuelve404; un error de conexión tiene reintento.
 - `tools/storefront/inspect-cloudflare.mjs` preparado para inspeccionar **sólo mayami.app** mediante GET: zona, estado, nameservers y A/AAAA/CNAME de raíz, www, preview y panel. No cambia DNS, correo, TLS ni hosting; no imprime token ni registros TXT/MX.
@@ -46,7 +62,7 @@ Oliver autorizó configurar el dominio y preparar la apertura pública del negoc
 
 La web usa SSR en Inicio, Buscar, ficha y enlace de tienda. Requiere **un runtime Next/Node**, o un adaptador compatible verificado. No convertirla a export estático para hacerla caber en Pages o en el EAS Hosting estático del panel: perdería comportamiento existente.
 
-Camino mínimo: conservar Next y conectar Cloudflare DNS al origen HTTPS del hosting elegido. Node22 es el objetivo utilizado en CI; no hace falta trasladar el backend ni usar el Mac como servidor público permanente. Workers/OpenNext es una alternativa sólo después de comprobar soporte exacto de Next16.4.1, SSR, bundles y límites de la cuenta; no se instalaron adaptadores ni se asumió compatibilidad.
+Camino mínimo: conservar Next y conectar Cloudflare DNS al origen HTTPS del hosting elegido. Node22 es el objetivo utilizado en CI; no hace falta trasladar el backend ni usar el Mac como servidor público permanente. Se preparó OpenNext1.20.16 con Next16.4.5 porque su peer actual exige ese parche. Aún deben comprobarse el build exacto, SSR en workerd, bundle y CPU de la cuenta antes de dar el alojamiento por listo. No se usa export estático ni se migra a vinext.
 
 Preparación actual de una release, desde la raíz:
 
