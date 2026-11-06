@@ -2,7 +2,7 @@
 
 ## Operación de tiendas y eliminación segura · 6nov
 
-Tiendas cerradas: aplicación única, API anónima/home_feed y29huellas/auditoría aprobados; no repetir. Dos nuevas sinmiembros: asignar responsables sólo al identificar cuentas reales. RPC/panel preparado y aprobado para eliminar suspendidos individualmente sin pedidos/carritos/reseñas;16DB+2UI localpasan. Falta activar función y publicar/verificar el panel. [Detalle](ELIMINACION_PRODUCTOS_SUSPENDIDOS_2026-11-06.md). [Alcance y coordinación con Mac](OPERACION_TIENDAS_2026-11-06.md). No tocar diseño ni republicar Android.
+Tiendas cerradas: aplicación única, API anónima/home_feed y29huellas/auditoría aprobados; no repetir. Dos nuevas sinmiembros: asignar responsables sólo al identificar cuentas reales. RPC/panel preparado y aprobado para eliminar suspendidos individualmente sin pedidos/carritos/reseñas;16DB+2UI localpasan. Función/migración activada y verificada sin borrado real; no reaplicar. Falta publicar/verificar el panel tras corregir el gate de9hints;52core+50admin+2UI finales pasan. [Detalle](ELIMINACION_PRODUCTOS_SUSPENDIDOS_2026-11-06.md). [Alcance y coordinación con Mac](OPERACION_TIENDAS_2026-11-06.md). No tocar diseño ni republicar Android.
 
 ## Android Mayami · primera etapa publicada
 

@@ -2,7 +2,7 @@
 
 ## Eliminación de suspendidos · nube · 6nov2026
 
-RPCadmin y confirmación del panel listos, sin tocar mobile/storefront.16DB/privilegios+2UI real local320claro/390oscuro pasan; auditor APROBADO tras NOWAIT para costes/imágenes y guardas de concurrencia. Conserva pedidos/carritos/reseñas y snapshot auditable; no DELETE directo ni borrado de blobs. Activación/publicación pendientes; ningún producto real eliminado. [Detalle y próximos pasos](ELIMINACION_PRODUCTOS_SUSPENDIDOS_2026-11-06.md).
+RPCadmin y confirmación del panel listos, sin tocar mobile/storefront.16DB/privilegios+2UI real local320claro/390oscuro pasan; auditor APROBADO tras NOWAIT para costes/imágenes y guardas de concurrencia. Conserva pedidos/carritos/reseñas y snapshot auditable; no DELETE directo ni borrado de blobs. Función/migración20261106000100 activada con ensayoROLLBACK,29tablas intactas, ACL y rechazo anónimo401/42501 verificados; ningún producto real eliminado. Publicaciónpanel42306389893 se detuvo por9hints sin traducción. Corregidos en errors.ts compartido (sólo claves nuevas, sin UI/tokens del Mac);52core+50admin/tipos/lint+2UI finales pasan. Nueva solicitudpanel a continuación; recepción pendiente. [Detalle y próximos pasos](ELIMINACION_PRODUCTOS_SUSPENDIDOS_2026-11-06.md).
 
 ## Operación paralela de tiendas · nube · 6nov2026
 

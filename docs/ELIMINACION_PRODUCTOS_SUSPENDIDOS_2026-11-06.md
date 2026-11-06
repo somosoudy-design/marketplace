@@ -25,6 +25,8 @@ Los primeros intentos UI fallaron por servicios locales que terminaron al salir 
 
 ## Estado del checkpoint
 
-Código y pruebas listos. Activación remota y publicación del panel pendientes en este checkpoint. No se ha eliminado ningún producto real. La siguiente acción es aplicar exclusivamente esta función/registro de migración con ensayo rollback previo y publicar la fuente revisada mediante el workflow de panel; comprobar su recepción real antes de declarar el botón disponible en el panel alojado.
+Función activada una sola vez en Marketplace y migración20261106000100 registrada, después de ensayo remoto con ROLLBACK.29tablas protegidas idénticas antes/después; cero productos reales eliminados. Lectura nueva verifica función/registro y permisos: authenticated tiene EXECUTE con autorización interna; anon y service_role no. Llamada anónima real al RPC devuelve401/42501 sin ejecutar el borrado. No reaplicar migración ni modificar productos por esta activación.
+
+Publicación del panel pendiente de recepción. CI42306389893 sobre fuente fcf5a32 se detuvo en la comprobación previa: faltaban los9hints nuevos en ERROR_MESSAGES. Se añadieron exclusivamente esos mensajes al sistema compartido, retirando el mapeo duplicado del componente.52core+50admin, tipos/lint y2UI finales aprobados; no cambian mensajes existentes ni diseño del Mac. Se prepara una nueva solicitud sólo del panel; no desplegar Workers ni Android.
 
 El último despliegue de panel registrado es41205620181/intento2, fallo en EAS Hosting. Consulta actual de logs fallidos devolvió archivo vacío; no se atribuye causa inventada. Un despliegue nuevo debe revelar su resultado y conservar el error real si falla. No tocar el despliegue Workers de mayami.app ni publicar OTA para este bloque.

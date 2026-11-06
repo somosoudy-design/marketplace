@@ -3,6 +3,15 @@
  * Keep messages short, specific and actionable.
  */
 export const ERROR_MESSAGES: Record<string, string> = {
+  product_id_required: 'No encontramos el producto. Actualiza la lista.',
+  updated_at_required: 'Actualiza la ficha del producto antes de eliminarlo.',
+  product_not_found: 'El producto ya no existe. Cierra esta ficha y actualiza la lista.',
+  product_not_suspended: 'Sólo se pueden eliminar productos suspendidos. Actualiza la lista.',
+  product_changed: 'El producto cambió. Cierra esta ficha y vuelve a abrirla antes de eliminarlo.',
+  product_has_orders: 'Este producto pertenece a pedidos. Se conserva suspendido para mantener su historial.',
+  product_in_carts: 'Este producto está en un carrito. Se conserva suspendido; intenta eliminarlo cuando ya no esté vinculado.',
+  product_has_reviews: 'Este producto tiene opiniones vinculadas. Se conserva suspendido para mantener su historial.',
+  product_busy: 'El producto se está actualizando. Espera un momento y vuelve a intentarlo.',
   auth_required: 'Inicia sesión para continuar.',
   forbidden: 'No tienes permiso para hacer esto.',
   admin_required: 'Esta acción requiere permisos de administración.',

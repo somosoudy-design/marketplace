@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 · RPC activado; integración de errores antes de publicación
+
+Después defcf5a32, root ensayaDDL remoto conROLLBACK/29huellas, aplicauna vez función+migración20261106000100 y verificaACL/401anónimo. Cero productos reales eliminados. Solicitudbf1311b/CI42306389893 falla ANTES de despliegue: testcore exige traducción de9hintsSQL nuevos. Se incorporan sólo esas claves en errors.ts y se elimina mapeo local duplicado;52core+50admin/tipos/lint y2UI finales pasan. Fuentesmobile/storefront/tokens intactas. Nueva publicación de panel pendiente; el fallo no se atribuye a EAS ni autoriza repetir migración.
+
 ### 2026-11-06 · eliminación segura preparada y revisada
 
 Root integra propuesta backend aislada en RPCnuevo y ProductReview del panel; especialistas sólo lectura/propuestas ignoradas.11funcionalesDB+5privilegios+2UI localpasan, tipos/lint/build del panel comprobados. Auditor exige proteger costes/imágenes contra carreras: NOWAIT+timeout y snapshotampliado integrados; segunda revisión APROBADA,4PNG originales legibles. Primeros UI fallaron por gatewayapagado y luego alertduplicado, corregidos con pruebas intactas. No mobile/storefront/pagos/tasas ni productos reales borrados. Activaciónremota y recepciónpanel siguen pendientes; historial hostingfallido no se oculta.
