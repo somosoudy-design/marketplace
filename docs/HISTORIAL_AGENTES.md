@@ -1,5 +1,13 @@
 # Historial de agentes
 
+### 2026-11-05 · sincronización en el Mac y bloqueo de automatización de Chrome
+
+Root localiza `~/marketplace` en macOS; el cwd SUMMA del contexto ya no existe. Árbol original limpio, fetch y avance directo de 233 commits (`9d22155`→`600e538`), sin reescritura ni pérdida de cambios. Descarga normal falla/se interrumpe por lentitud: Git promisor/blob:none, sparse sólo para seis formatos multimedia de docs y recuperación de objetos con comprobación Git. No se modifican fuente, recursos de app ni marca. Auditor sólo lectura aprueba HEAD=origin, árbol/índice limpios y hashes 375/375 de apps/assets; exactamente 1.191 multimedia docs aplazados, textos completos. Recuperación local documentada en ACTIVAR_MAYAMI_APP.md.
+
+Comprobación pública a las 19:23UTC: NS Morgan/Laylah de Cloudflare; raíz sin A/AAAA/CNAME, www sin resolución; no prueba de TLS/HTTP. Cuenta/propiedad/hosting siguen sin inspección autenticada. macOS deniega Apple Events a Chrome con -1743; apertura solicitada por open no se presenta como sesión verificada. Oliver indicó su cuenta Google y reiteró continuar; falta permiso del sistema operativo. No se leyó Gmail ni se extrajeron secretos. DNS/hosting/backend/app intactos; publicWebOrigin sigue null.
+
+5/5 pruebas existentes del helper Cloudflare pasan en Node local con mocks; sin build ni nuevas UI. Root actualiza estado/pendientes/relevo. Siguiente: habilitar Automatización Codex→Chrome, verificar sesión real y luego inventariar zona/DNS y alojamiento SSR antes de asociar dominio. La autorización del dominio sigue vigente.
+
 ### 2026-11-05 · APK mayami cerrado y relevo de dominio al Mac
 
 CI42092018315 Success, fuente de verificación4868d7f, mismo APKdf55b9b8/sourcefc8368f.72PNG+2MP4 originales y hashes verificados, incluidas las11capturas de Maestro exigidas. Auditor independiente segunda ronda APROBADO para identidad nativa y navegación focal: M/splash claro y oscuro, launcher M/labelmayami, búsqueda y diagnóstico. Root inspecciona personalmente imágenes clave. Inicio de ambos temas capturado en skeleton y fotos de Buscar claro aún cargando se documentan como tales; Inicio oscuro cargado observado en video anterior. No repetir validación ni generar otroAPK para ese límite. Sin instalación física ni migración APK5 demostradas, sin nuevaOTA ni datos remotos escritos.
