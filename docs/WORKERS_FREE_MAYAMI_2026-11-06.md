@@ -38,3 +38,7 @@ Fuentes locales verificados y GETpúblico6nov05:36UTC: Veyra usa Vinext1.0.0-bet
 Pendientes en este checkpoint: build, UIlocal actualizada, despliegue y mismo muestreo después. Registrar n/CPU/status/outcomes por ruta/versión, separar visitasRSC y navegación, estáticos fueraWorker y fallos reales. Supabase alojado no recibe órdenes/registro/pagos de prueba. No recomendar pagar sólo por superar nominalmente10ms: justificar cualquier necesidad con fallos/capacidad observada y consultar al propietario.
 
 Fuentes: [Cloudflare límites](https://developers.cloudflare.com/workers/platform/limits/), [Next Link](https://nextjs.org/docs/app/api-reference/components/link#prefetch), [OpenNext assets](https://opennext.js.org/cloudflare/howtos/assets), [OpenNext rendimiento](https://opennext.js.org/cloudflare/perf). Evidencia local ignorada: .local/mayami-free-20261106/.
+
+## Checkpoint de provisión CI
+
+Build y guards adaptados pasan; nuevo test de navegación/SSR/icono pasa en Chrome local contra workerd. Bundle minificado3976,01KiB/gzip1114,54KiB frente6451,46/1320,48 anteriores. El CI42170567305 quedó esperando instalación de navegador; se usa el Chrome incluido por el runner Ubuntu24.04 (verificado en su inventario oficial), igual que el QA de este Mac, con fallback limitado5min. El nuevo CI sustituye sólo revisiones locales anteriores del mismo grupo; no cancela EAS/panel. No se omite ninguna prueba.

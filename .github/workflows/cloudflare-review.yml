@@ -10,7 +10,7 @@ permissions:
 
 concurrency:
   group: storefront-cloudflare-review
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   verify:
@@ -49,7 +49,15 @@ jobs:
           export STOREFRONT_PRIVATE_PREVIEW=0
           pnpm --filter @kora/storefront build:cloudflare
       - name: Navegador de pruebas
-        run: pnpm --filter @kora/app-e2e exec playwright install --with-deps chromium
+        timeout-minutes: 5
+        run: |
+          storefront_chrome_bin="$(command -v google-chrome || command -v google-chrome-stable || true)"
+          if [ -n "$storefront_chrome_bin" ]; then
+            "$storefront_chrome_bin" --version
+            printf 'PW_CHROMIUM_PATH=%s\n' "$storefront_chrome_bin" >> "$GITHUB_ENV"
+          else
+            pnpm --filter @kora/app-e2e exec playwright install --with-deps chromium
+          fi
       - name: Runtime local workerd
         run: |
           set -a
