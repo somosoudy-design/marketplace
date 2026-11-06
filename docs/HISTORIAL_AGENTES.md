@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 · Free definitivo, auditoría CPU y publicación oficial autorizada
+
+Oliver descarta Paid/servicios con cargos y exige publicar oficialmente sin acceso limitado. Autoriza retirar sólo productos sin foto profesional y oficializar restantes; nombre Mayami, correo del dominio y creación de textos legales. Root distingue28ok/18excesos nominales de fallos reales; panelpersistido179invocaciones/0erroresCPU/memoria/excepción. Baseline24GET200, Inicio27RSC. Veyra inspeccionado sólo lectura: Vinext/clienttabs, no OpenNext/catálogoSSR; no CPU comparable ni plan inferido. Se prepara reducción de precargas, SVG estático, cliente único Buscar y minify, con prueba de navegación/SSR. Lint descubre bundles OpenNext generados fuera de ignores; se excluyen sólo esos artefactos, no fuente. Inventario visual53packshots/40productos y3faltantes, hashes completos; registrocomercial independiente, sin aflojar guards. SupabaseMCPdeniegaSELECT; dashboardlogin normal en curso. Checkpoint previo a build, sin mutaciones SQL/catálogo/Access ni servicios pagos.
+
 ### 2026-11-06 · mayami.app alojado con Access propietario y TLS
 
 Root publica checkpoint23577b5; CI42167460733 Success, 46/46 UI contra stack y fixtures locales. ZIP descargado y hash comprobado. Auditor aprueba 12 capturas locales y 14 de compra/pago/pedido en CI, con límites: CTA móvil fuera del primer encuadre, sin PNG de login y revisión animada no apta para medir contraste. Worker desplegado primero sin targets (versión6d377642). Política de correo exacto creada por UI; el widget exige Enter para confirmar la dirección. Se aplica Access al Worker con All traffic y después los Custom Domains raíz/www. DNS inicial0→dos AAAA100:: proxied administrados; sin correo ni subdominios ajenos modificados. Regla301 www→raíz conserva ruta/query; Always Use HTTPS activo y SSL Full, sin ACM.

@@ -9,7 +9,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
   const availability = presentAvailability(product.availability);
   return (
     <article className="product-card" data-testid="product-card">
-      <Link href={`/p/${product.slug}`} className="product-link">
+      <Link prefetch={false} href={`/p/${product.slug}`} className="product-link">
         <ProductPhoto
           id={product.id}
           path={product.image_path}

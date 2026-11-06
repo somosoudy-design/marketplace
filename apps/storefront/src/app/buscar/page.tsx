@@ -41,8 +41,9 @@ export default async function Search({
   const page = Math.max(1, Math.min(1000, Number.parseInt(single(s.page), 10) || 1));
   let products, categories;
   try {
+    const api = publicApi();
     [products, categories] = await Promise.all([
-      publicApi().catalog.search({
+      api.catalog.search({
         query: q,
         category: category || null,
         store: store || null,
@@ -54,7 +55,7 @@ export default async function Search({
         limit: 24,
         offset: (page - 1) * 24,
       }),
-      publicApi().catalog.categories(),
+      api.catalog.categories(),
     ]);
   } catch {
     return <Failure href="/buscar" message="No pudimos cargar los productos." />;
@@ -71,7 +72,7 @@ export default async function Search({
   return (
     <div className="wrap search-page">
       <div className="breadcrumbs">
-        <Link href="/">Inicio</Link>
+        <Link prefetch={false} href="/">Inicio</Link>
         <span>/</span>
         <span>Buscar</span>
       </div>
@@ -162,7 +163,7 @@ export default async function Search({
               Aplicar filtros
             </button>
             {(category || q || availability || single(s.min) || single(s.max) || store || collection) && (
-              <Link className="text-link" href="/buscar">
+              <Link prefetch={false} className="text-link" href="/buscar">
                 <X size={15} />
                 Limpiar filtros
               </Link>
@@ -175,13 +176,13 @@ export default async function Search({
               <ProductGrid products={products} />
               <nav className="pagination" aria-label="Páginas de resultados">
                 {page > 1 && (
-                  <Link className="button secondary" href={pagination(page - 1)}>
+                  <Link prefetch={false} className="button secondary" href={pagination(page - 1)}>
                     Anterior
                   </Link>
                 )}
                 <span>Página {page}</span>
                 {products.length === 24 && (
-                  <Link className="button secondary" href={pagination(page + 1)}>
+                  <Link prefetch={false} className="button secondary" href={pagination(page + 1)}>
                     Siguiente <ArrowRight size={17} />
                   </Link>
                 )}

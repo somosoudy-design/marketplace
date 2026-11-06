@@ -44,10 +44,10 @@ export default function Callback() {
       {failed && (
         <>
           <p>El enlace puede haber vencido. Solicita uno nuevo para continuar.</p>
-          <Link className="button" href="/recuperar">
+          <Link prefetch={false} className="button" href="/recuperar">
             Recuperar acceso
           </Link>
-          <Link href="/cuenta">Iniciar sesión</Link>
+          <Link prefetch={false} href="/cuenta">Iniciar sesión</Link>
         </>
       )}
     </section>

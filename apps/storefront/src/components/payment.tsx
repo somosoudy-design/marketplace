@@ -50,7 +50,7 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
   const next = o.payment_obligations.find((p) => p.status === 'pending' || p.status === 'partially_paid');
   return (
     <div className="wrap commerce-page payment-page">
-      <Link href={`/pedidos/${id}`} className="text-link">
+      <Link prefetch={false} href={`/pedidos/${id}`} className="text-link">
         ← Ver mi pedido
       </Link>
       <div className="commerce-heading">
@@ -110,7 +110,7 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
                     Cancelar intento
                   </button>
                 )}
-                <Link className="button secondary" href={`/pedidos/${id}`}>
+                <Link prefetch={false} className="button secondary" href={`/pedidos/${id}`}>
                   Ver mi pedido
                 </Link>
               </div>
@@ -119,7 +119,7 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
             <div className="payment-pending">
               <Check />
               <h2>Este pedido no tiene pagos pendientes</h2>
-              <Link className="button" href={`/pedidos/${id}`}>
+              <Link prefetch={false} className="button" href={`/pedidos/${id}`}>
                 Ver mi pedido
               </Link>
             </div>
@@ -362,7 +362,7 @@ function PaymentForm({
         <button className="button" onClick={() => onSent()}>
           Consultar estado
         </button>
-        <Link href={`/pedidos/${orderId}`}>Ver mi pedido</Link>
+        <Link prefetch={false} href={`/pedidos/${orderId}`}>Ver mi pedido</Link>
       </div>
     );
   const busy = submit.isPending || check.isPending;

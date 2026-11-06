@@ -111,7 +111,7 @@ export default function Page() {
         <button className="button" disabled={signup.isPending}>
           {signup.isPending ? 'Creando cuenta…' : 'Crear cuenta'}
         </button>
-        <Link href="/cuenta" className="text-link">
+        <Link prefetch={false} href="/cuenta" className="text-link">
           Ya tengo cuenta
         </Link>
       </form>

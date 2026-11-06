@@ -1,5 +1,15 @@
 # Activar mayami.app · relevo al Mac · 5 de noviembre de 2026
 
+## Publicación oficial y Workers Free · instrucción vigente del 6nov
+
+Oliver decide mantener Workers Free y prohíbe activar Paid u otros servicios con cargos. Solicita optimizar y medir fallos reales, comparación verificable con Veyra y publicación oficial sin acceso limitado. Aprueba retirar del catálogo los productos sin fotografía profesional y oficializar el resto, con ajustes comerciales posteriores a su cargo. Confirma Mayami como nombre comercial y encarga correo @mayami.app y términos/privacidad/devoluciones. No volver a pedir autorización genérica de dominio/publicación ni de Paid: Paid está descartado.
+
+Trabajo en curso: la captura anterior tiene28outcomeok,18sobre10ms nominales; no demuestra1102. Métricas persistidas reales del Worker:179invocaciones,0errores (incluidos0ExceededCPU/Memory/UncaughtException), P50CPU16,01ms en últimas24h desde su creación. Nueva base controlada:24GET secuenciales200 y27recursosRSC tras una visita a Inicio. Los RSC son precargas, no27acciones del comprador. Se prepara prefetch=false en57Links, icono en StaticAssets con mismos bytes, un cliente anónimo en Buscar y minifyWrangler experimental. MantenerSSR, no-store y controles de compra/sesión. Aún no hay medición después ni deploy de esta mejora.
+
+Catálogo consultado sin mutaciones:44visibles,43is_demo y1DJIreal; inventario de53packshots para40productos con hashes correctos,3sin recurso. La instrucción nueva permite su promoción comercial, conservando procedencia/disclosures y sin inventar licencias ni unidad/SKU auténticos. Se retirarán3por estado servidor, sin borrar historia. Preparar manifiesto comercial separado de _exhibition, que seguirá bloqueado en release. El conector Supabase deniega permiso incluso SELECT; se comprueba acceso normal al dashboard del proyecto correcto, sin extraer service_role. EmailRouting Free y contenido legal pendientes de implementación. Access aún protege la revisión del cambio; retirarlo al cerrar el catálogo y publicar, no convertirlo en solución permanente.
+
+Siguiente: terminar y probar mejoras CPU, publicar artefacto verificado, comparar misma carga por versión; completar catálogo/contacto/políticas y retirar Access según autorización oficial. No cambiar Veyra ni proyectos ajenos. Evidencia ignorada en .local/mayami-free-20261106; ver WORKERS_FREE_MAYAMI_2026-11-06.md.
+
 ## Estado verificado · 6nov · dominio activo para revisión privada
 
 **mayami.app ya está conectado y funciona por HTTPS.** El propietario entró desde la sesión real de Chrome con el IdP Cloudflare existente, sin leer Gmail ni copiar cookies/tokens. Raíz y www son Custom Domains del Worker `mayami-storefront`; www redirige301 al dominio principal conservando ruta/query. Always Use HTTPS está activado y SSL de zona sigue Full. No se contrató ACM ni R2. DNS inicial era0; sólo se añadieron los dos registros AAAA100:: proxied que administra Cloudflare para estos dominios. No había correo/MX/TXT y no se modificó ningún otro subdominio.

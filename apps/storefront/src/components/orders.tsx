@@ -33,7 +33,7 @@ export function Orders({ buyerId }: { buyerId: string }) {
     <div className="wrap commerce-page">
       <div className="section-heading">
         <h1>Mis pedidos</h1>
-        <Link href="/buscar" className="text-link">
+        <Link prefetch={false} href="/buscar" className="text-link">
           Seguir comprando
         </Link>
       </div>
@@ -47,7 +47,7 @@ export function Orders({ buyerId }: { buyerId: string }) {
       )}
       <div className="order-list">
         {orders.data?.map((o) => (
-          <Link className="order-list-row" key={o.id} href={`/pedidos/${o.id}`}>
+          <Link prefetch={false} className="order-list-row" key={o.id} href={`/pedidos/${o.id}`}>
             <div>
               <h2>Pedido {o.number}</h2>
               <p>
@@ -101,7 +101,7 @@ export function Order({ buyerId, id }: { buyerId: string; id: string }) {
   const canCancel = o.status === 'placed' && Number(o.paid_usd) === 0 && !pending;
   return (
     <div className="wrap commerce-page">
-      <Link className="text-link" href="/pedidos">
+      <Link prefetch={false} className="text-link" href="/pedidos">
         ← Mis pedidos
       </Link>
       <div className="commerce-heading">
@@ -120,7 +120,7 @@ export function Order({ buyerId, id }: { buyerId: string; id: string }) {
             </div>
           )}
           {canPay && !pending && (
-            <Link className="button" href={`/pagar/${id}`}>
+            <Link prefetch={false} className="button" href={`/pagar/${id}`}>
               Continuar al pago
             </Link>
           )}

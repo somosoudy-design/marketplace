@@ -18,6 +18,7 @@ const jakarta = localFont({
 export const metadata: Metadata = {
   title: { default: `${brand.name} · Encuentra lo que buscas`, template: `%s · ${brand.name}` },
   description: brand.tagline,
+  icons: { icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' } },
   robots: { index: false, follow: false },
 };
 export const viewport: Viewport = { themeColor: '#6D42E8' };

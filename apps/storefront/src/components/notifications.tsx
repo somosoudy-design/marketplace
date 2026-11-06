@@ -29,7 +29,7 @@ export function NotificationLink() {
   if (!session) return null;
   const total = q.isError ? undefined : q.data;
   return (
-    <Link
+    <Link prefetch={false}
       href="/notificaciones"
       className="notification-link"
       aria-label={total ? `Notificaciones, ${total} sin leer` : 'Notificaciones'}
@@ -147,7 +147,7 @@ export function Notifications({ buyerId }: { buyerId: string }) {
       </p>
       {notices.length > 0 && (
         <div className="inbox-tools">
-          <Link className="text-link" href="/pedidos">
+          <Link prefetch={false} className="text-link" href="/pedidos">
             Mis pedidos
           </Link>
           <button

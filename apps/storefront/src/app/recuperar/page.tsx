@@ -67,7 +67,7 @@ function Recovery() {
               ? 'Ya puedes seguir comprando.'
               : 'Si existe una cuenta con ese correo, recibirás un enlace para restablecer tu contraseña.'}
           </p>
-          <Link className="button" href="/cuenta">
+          <Link prefetch={false} className="button" href="/cuenta">
             Volver a mi cuenta
           </Link>
         </section>
@@ -117,7 +117,7 @@ function Recovery() {
           <button className="button" disabled={action.isPending || (change && !session)}>
             {action.isPending ? 'Procesando…' : change ? 'Guardar contraseña' : 'Enviar código'}
           </button>
-          <Link className="text-link" href={change ? '/recuperar' : '/cuenta'}>
+          <Link prefetch={false} className="text-link" href={change ? '/recuperar' : '/cuenta'}>
             {change ? 'Solicitar otro código' : 'Volver a iniciar sesión'}
           </Link>
         </form>

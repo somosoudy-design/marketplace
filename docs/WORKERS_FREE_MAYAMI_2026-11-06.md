@@ -1,0 +1,40 @@
+# MAYAMI: Workers Free y publicación oficial · 6nov2026
+
+Decisión del propietario: Workers Free; ningún Paid ni servicio con cargos. Publicación oficial autorizada, retirando el control exclusivo del propietario al cerrar el catálogo. Este checkpoint prepara optimizaciones; todavía no atribuye mejoras medidas.
+
+## Fallo frente a exceso nominal
+
+Captura original05:24:29–05:25:06UTC:28invocaciones,28outcomeok;18por encima10ms, mediana22,5ms, máximo433ms. No contiene estadoHTTP ni indicador de isolate/coldstart. La primera observación Inicio433ms y la segunda41ms no acreditan por sí solas arranque en frío/caliente. Panel persistido posterior:179invocaciones, errores0, ExceededCPU0, ExceededMemory0 y UncaughtException0; P50CPU16,01ms/P90130ms/P99356ms. No hay evidencia1102 en lo consultado. Los404 de rutas inexistentes y302deAccess no son fallosCPU.
+
+Ruta | CPU original(ms)
+---|---
+Inicio|433,41
+Buscar|119,20,43,51,5,10
+Cuenta|185
+Carrito|209
+Favoritos|97,60
+Icono|55
+Ficha65W|21,24
+Callback|34
+Tienda|39
+
+Nueva base:24GET secuenciales (3vueltas por8rutas) terminaron200 sin1102 ni pantalla de error; tail guarda statusHTTP/CPU/intenciónRSC sólo donde capturó el evento. Visita de Inicio produjo27recursosRSC. No confundirlos con navegación deliberada ni mezclar esta carga con el coste de un solo HTML.
+
+## Cambios preparados
+
+- prefetch=false: evita renderizar rutas automáticamente al verse/rozarse links; conserva Link, navegación cliente y SSR.
+- SVG original en public/icon.svg y metadata explícita: StaticAssets lo sirve sin ejecutar Next; mismos bytes, securityheaders conservados.
+- Buscar reutiliza un único cliente anónimo para las dos lecturas concurrentes; sin sesión ni caché compartida.
+- minify:true en Wrangler, como experimento. OpenNext ya minifica parcialmente; no prometer mejora hasta medir.
+- ESLint ignora sólo .open-next/.wrangler generados, igual que .next; fuente y tests siguen revisados.
+- Prueba UI: HTMLSSR, sin solicitudes especulativas en viewport/hover/scroll, icono y click de ficha funcionales.
+
+## Comparación real con Veyra
+
+Fuentes locales verificados y GETpúblico6nov05:36UTC: Veyra usa Vinext1.0.0-beta.5/Vite y backendD1/R2; Inicio devuelve AccessGate cliente, sin lectura de catálogo/tasasSSR. Navegación principal son tabs de estadoReact. MAYAMI conserva Next16.4.5/OpenNext1.20.16 y catálogoSSR. Veyra root200/TLSválido, TTFB758ms y /api/version2.9.3/Beta; esos tiempos incluyen red y no sonCPU. No se acreditó SHA de producción, CPU/request ni plan de Veyra; no compararlos inventando equivalencia ni migrar arquitectura. WorktreeVeyra limpiofcb9f2f y Downloads7467394 con cambios ajenos, intactos.
+
+## Validación y medición posterior
+
+Pendientes en este checkpoint: build, UIlocal actualizada, despliegue y mismo muestreo después. Registrar n/CPU/status/outcomes por ruta/versión, separar visitasRSC y navegación, estáticos fueraWorker y fallos reales. Supabase alojado no recibe órdenes/registro/pagos de prueba. No recomendar pagar sólo por superar nominalmente10ms: justificar cualquier necesidad con fallos/capacidad observada y consultar al propietario.
+
+Fuentes: [Cloudflare límites](https://developers.cloudflare.com/workers/platform/limits/), [Next Link](https://nextjs.org/docs/app/api-reference/components/link#prefetch), [OpenNext assets](https://opennext.js.org/cloudflare/howtos/assets), [OpenNext rendimiento](https://opennext.js.org/cloudflare/perf). Evidencia local ignorada: .local/mayami-free-20261106/.

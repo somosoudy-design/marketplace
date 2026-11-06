@@ -63,7 +63,7 @@ function Account() {
           <UserRound size={30} />
         </div>
         <div className="account-options">
-          <Link href="/pedidos">
+          <Link prefetch={false} href="/pedidos">
             <ShoppingBag />
             <div>
               <h2>Mis pedidos</h2>
@@ -71,7 +71,7 @@ function Account() {
             </div>
             <ArrowRight />
           </Link>
-          <Link href="/direcciones">
+          <Link prefetch={false} href="/direcciones">
             <MapPin />
             <div>
               <h2>Mis direcciones</h2>
@@ -79,7 +79,7 @@ function Account() {
             </div>
             <ArrowRight />
           </Link>
-          <Link href="/notificaciones">
+          <Link prefetch={false} href="/notificaciones">
             <Bell />
             <div>
               <h2>Notificaciones</h2>
@@ -87,7 +87,7 @@ function Account() {
             </div>
             <ArrowRight />
           </Link>
-          <Link href="/favoritos">
+          <Link prefetch={false} href="/favoritos">
             <Heart />
             <div>
               <h2>Favoritos</h2>
@@ -95,7 +95,7 @@ function Account() {
             </div>
             <ArrowRight />
           </Link>
-          <Link href="/carrito">
+          <Link prefetch={false} href="/carrito">
             <ShoppingBag />
             <div>
               <h2>Mi carrito</h2>
@@ -132,7 +132,7 @@ function Account() {
           En un mismo lugar.
         </h1>
         <p>Entra con la misma cuenta que utilizas en la aplicación.</p>
-        <Link href="/buscar">
+        <Link prefetch={false} href="/buscar">
           Explorar sin iniciar sesión <ArrowRight size={17} />
         </Link>
       </section>
@@ -176,8 +176,8 @@ function Account() {
           {login.isPending ? 'Ingresando…' : 'Ingresar'}
         </button>
         <div className="auth-links">
-          <Link href="/registro">Crear una cuenta</Link>
-          <Link href="/recuperar">¿Olvidaste tu contraseña?</Link>
+          <Link prefetch={false} href="/registro">Crear una cuenta</Link>
+          <Link prefetch={false} href="/recuperar">¿Olvidaste tu contraseña?</Link>
         </div>
       </form>
     </div>

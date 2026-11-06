@@ -25,7 +25,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       </a>
       <header className={`header ${focused ? 'header-focused' : ''}`}>
         <div className="header-inner">
-          <Link href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
+          <Link prefetch={false} href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
             <BrandMark />
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
@@ -36,16 +36,16 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </button>
           </form>
           <nav className="account-nav" aria-label="Tu cuenta">
-            <Link href="/favoritos" aria-label="Favoritos" className="header-favorites">
+            <Link prefetch={false} href="/favoritos" aria-label="Favoritos" className="header-favorites">
               <Heart size={21} />
               <span>Favoritos</span>
             </Link>
             <NotificationLink />
-            <Link href="/cuenta" aria-label={session ? 'Mi cuenta' : 'Ingresar'}>
+            <Link prefetch={false} href="/cuenta" aria-label={session ? 'Mi cuenta' : 'Ingresar'}>
               <UserRound size={21} />
               <span>{session ? 'Mi cuenta' : 'Ingresar'}</span>
             </Link>
-            <Link href="/carrito" aria-label={`Carrito${cart.data ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}>
+            <Link prefetch={false} href="/carrito" aria-label={`Carrito${cart.data ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}>
               <ShoppingBag size={21} />
               <span>Carrito</span>
               {!!cartUnits && <b className="count">{cartUnits}</b>}
@@ -53,14 +53,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
         <nav hidden={focused} className="browse-nav wrap" aria-label="Explorar">
-          <Link aria-current={pathname === '/' ? 'page' : undefined} href="/">
+          <Link prefetch={false} aria-current={pathname === '/' ? 'page' : undefined} href="/">
             Inicio
           </Link>
-          <Link aria-current={pathname === '/buscar' ? 'page' : undefined} href="/buscar">
+          <Link prefetch={false} aria-current={pathname === '/buscar' ? 'page' : undefined} href="/buscar">
             Todo el catálogo
           </Link>
-          <Link href="/buscar?sort=newest">Novedades</Link>
-          <Link href="/buscar?availability=on_order">Por encargo</Link>
+          <Link prefetch={false} href="/buscar?sort=newest">Novedades</Link>
+          <Link prefetch={false} href="/buscar?availability=on_order">Por encargo</Link>
           <span className="nav-note">{brand.tagline}</span>
         </nav>
       </header>
@@ -68,11 +68,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <footer className="footer wrap">
-        <Link className="wordmark" href="/" aria-label={`${brand.name}, inicio`}>
+        <Link prefetch={false} className="wordmark" href="/" aria-label={`${brand.name}, inicio`}>
           <BrandMark />
         </Link>
         <p>{brand.tagline}</p>
-        <Link href="/buscar">
+        <Link prefetch={false} href="/buscar">
           Explorar el catálogo <ArrowUpRight size={16} />
         </Link>
       </footer>

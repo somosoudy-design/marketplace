@@ -39,9 +39,9 @@ function DetailSession({ product: p }: { product: Product }) {
   return (
     <div className="wrap product-page">
       <div className="breadcrumbs">
-        <Link href="/buscar">Catálogo</Link>
+        <Link prefetch={false} href="/buscar">Catálogo</Link>
         <span>/</span>
-        <Link href={`/buscar?category=${p.category_slug}`}>{p.category_name}</Link>
+        <Link prefetch={false} href={`/buscar?category=${p.category_slug}`}>{p.category_name}</Link>
         <span>/</span>
         <span>{p.brand_name || p.title}</span>
       </div>
@@ -102,7 +102,7 @@ function DetailSession({ product: p }: { product: Product }) {
             <h1>{catalogText(p.title, p.is_demo)}</h1>
             <Favorite id={p.id} title={p.title} />
           </div>
-          <Link className="seller-link" href={`/buscar?store=${p.store.slug}`}>
+          <Link prefetch={false} className="seller-link" href={`/buscar?store=${p.store.slug}`}>
             <Store size={16} />
             Vendido por {p.store.name}
             <ArrowRight size={15} />
@@ -174,7 +174,7 @@ function DetailSession({ product: p }: { product: Product }) {
             <p className="added" role="status">
               <Check size={18} />
               Agregado al carrito{' '}
-              <Link href="/carrito">
+              <Link prefetch={false} href="/carrito">
                 Ver carrito <ArrowRight size={16} />
               </Link>
             </p>

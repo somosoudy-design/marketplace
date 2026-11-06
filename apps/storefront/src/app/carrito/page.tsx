@@ -32,7 +32,7 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
       />
       <div className="cart-line-copy">
         {product.data ? (
-          <Link href={`/p/${product.data.slug}`}>
+          <Link prefetch={false} href={`/p/${product.data.slug}`}>
             <h3>{line.title}</h3>
           </Link>
         ) : (
@@ -150,11 +150,11 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
           {cart.data.issues > 0 ? (
             <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
           ) : (
-            <Link className="button" data-testid="cart-checkout" href="/checkout" aria-disabled={updating || cart.isFetching} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching) event.preventDefault(); }}>
+            <Link prefetch={false} className="button" data-testid="cart-checkout" href="/checkout" aria-disabled={updating || cart.isFetching} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching) event.preventDefault(); }}>
               Continuar con la compra
             </Link>
           )}
-          <Link className="text-link" href="/buscar">
+          <Link prefetch={false} className="text-link" href="/buscar">
             Seguir explorando <ArrowRight size={16} />
           </Link>
         </aside>

@@ -43,7 +43,7 @@ export function Empty({
       <SearchX size={30} />
       <h2>{title}</h2>
       <p>{text}</p>
-      <Link className="button" href={href}>
+      <Link prefetch={false} className="button" href={href}>
         {action}
       </Link>
     </section>

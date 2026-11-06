@@ -236,10 +236,10 @@ export function Checkout({ buyerId }: { buyerId: string }) {
       <section className="state" role="status">
         <Check />
         <h1>Pedido {created.number} creado</h1>
-        <Link className="button" href={`/pagar/${created.order_id}`}>
+        <Link prefetch={false} className="button" href={`/pagar/${created.order_id}`}>
           Continuar al pago
         </Link>
-        <Link href={`/pedidos/${created.order_id}`}>Ver mi pedido</Link>
+        <Link prefetch={false} href={`/pedidos/${created.order_id}`}>Ver mi pedido</Link>
       </section>
     );
   if (!restored)
@@ -283,7 +283,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
             </button>
           </>
         )}
-        <Link href="/pedidos">Ver mis pedidos</Link>
+        <Link prefetch={false} href="/pedidos">Ver mis pedidos</Link>
       </section>
     );
   const s = preview.data?.summary ?? snapshot;
@@ -304,7 +304,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     return (
       <section className="state">
         <h1>Tu carrito está vacío</h1>
-        <Link className="button" href="/buscar">
+        <Link prefetch={false} className="button" href="/buscar">
           Explorar productos
         </Link>
       </section>
@@ -327,7 +327,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
           : !!s?.can_place;
   return (
     <div className="wrap commerce-page checkout-page">
-      <Link className="text-link" href="/carrito">
+      <Link prefetch={false} className="text-link" href="/carrito">
         <ArrowLeft size={16} />
         Volver al carrito
       </Link>

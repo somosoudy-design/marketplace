@@ -1,2 +1,2 @@
-2026-11-06: verificar el storefront adaptado a workerd con backend y fixtures exclusivamente locales.
-No desplegar, publicar OTA, ejecutar SQL remoto ni cargar semillas en un proyecto remoto.
+2026-11-06 CPU Free fase1: verificar SSR y navegación sin precarga, icono estático y bundle minificado.
+Stack/fixtures sólo locales; sin deploy/OTA/SQL remoto ni servicios de pago.

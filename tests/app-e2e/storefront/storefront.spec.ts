@@ -199,3 +199,33 @@ test('redirección de login externa rechazada y SSR contiene catálogo sin JS', 
   await expect(page).toHaveURL(/\/cuenta$/);
   await expect(page.getByRole('heading', { name: 'Mi cuenta' })).toBeVisible();
 });
+
+
+test('navegación sin precargas especulativas conserva SSR y enlaces', async ({ page, baseURL }) => {
+  const speculative: string[] = [];
+  page.on('request', request => {
+    const url = new URL(request.url());
+    if (url.origin !== new URL(baseURL!).origin) return;
+    const headers = request.headers();
+    if (headers['next-router-prefetch'] === '1' || /prefetch/i.test(headers.purpose ?? headers['sec-purpose'] ?? ''))
+      speculative.push(url.pathname);
+  });
+  const response = await page.goto('/');
+  const html = await response!.text();
+  expect(html).toContain('Buenos hallazgos.');
+  expect(html).toMatch(/href="\/p\//);
+  await expect(page.getByTestId('product-card').first()).toBeVisible();
+  await page.waitForLoadState('networkidle');
+  await page.getByTestId('product-card').first().locator('a').first().hover();
+  await page.locator('footer').scrollIntoViewIfNeeded();
+  await page.waitForLoadState('networkidle');
+  expect(speculative).toEqual([]);
+  const icon = await page.request.get('/icon.svg');
+  expect(icon.status()).toBe(200);
+  expect(icon.headers()['content-type']).toContain('image/svg+xml');
+  expect(icon.headers()['x-content-type-options']).toBe('nosniff');
+  expect(await icon.text()).toContain('aria-label="MAYAMI"');
+  await page.getByTestId('product-card').first().locator('a').first().click();
+  await expect(page.getByRole('heading', { name: 'Sobre este producto' })).toBeVisible();
+  expect(speculative).toEqual([]);
+});
