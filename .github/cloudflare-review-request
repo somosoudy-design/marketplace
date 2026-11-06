@@ -1,2 +1,2 @@
-2026-11-06 Mayami: ajuste final de navegación y CTA en móvil a 320 px.
-Verificación de capturas, SSR, geometría, compra y pagos en stack local aislado; sin deploy ni servicios con cargos.
+2026-11-06 Mayami: revisión adaptativa 360, 390, 768 y 1024 en claro/oscuro, además de 57 recorridos base.
+Stack local aislado, SSR, compra y seguridad; sin deploy ni servicios con cargos.

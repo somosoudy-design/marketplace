@@ -286,3 +286,26 @@ for (const colorScheme of ['light', 'dark'] as const) {
     await context.close();
   });
 }
+
+for (const width of [360, 390, 768, 1024]) {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    test(`escaparate y catálogo intermedios ${width} ${colorScheme}`, async ({ browser }, info) => {
+      const context = await browser.newContext({ viewport: { width, height: 900 }, colorScheme });
+      const page = await context.newPage();
+      const errors: string[] = [];
+      page.on('pageerror', (error) => errors.push(error.message));
+      await page.goto('/');
+      await expect(page.getByRole('heading', { name: 'Encuentra lo que va contigo' })).toBeVisible();
+      await expect(page.getByRole('search')).toBeVisible();
+      await expect(page.getByTestId('product-card').first()).toBeVisible();
+      await noOverflow(page);
+      await page.screenshot({ path: info.outputPath('inicio-intermedio.png'), fullPage: true });
+      await page.goto('/buscar');
+      await expect(page.getByTestId('product-card').first()).toBeVisible();
+      await noOverflow(page);
+      await page.screenshot({ path: info.outputPath('catalogo-intermedio.png'), fullPage: true });
+      expect(errors).toEqual([]);
+      await context.close();
+    });
+  }
+}
