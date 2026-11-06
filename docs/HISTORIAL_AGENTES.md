@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 · tres tiendas aplicadas y verificadas
+
+Tras checkpoint5f863b5, root verificó rollback y aplicó una sola vez la copia privada con COMMIT. Resultado persistido7registros/3activas/4suspendidas,6auditorías,29huellasidénticas; Mayami íntegra. Anónimo stores/home_feed sóloMayami/Aroma'top/MilyeDent; perfiles retirados200/null, tresIDspublicados intactos. Dos nuevas vacías y sinmiembros; no inventar dueños. Sin despliegues ni restauración/borrado de productos. Siguiente bloque: eliminación individual de suspendidos desde panel/RPCadmin, con pruebas locales y sin tocar diseño Mac.
+
 ### 2026-11-06 · tiendas operativas y coordinación con Mac
 
 Root sincroniza4f9e58c, lee continuidad real y confirma trabajo de diseño activo en Mac. Backend/seguridad revisan por lectura, root único escritor. Inventario remoto cinco tiendas; Aroma'top/MilyeDent ausentes. SQL suspendecuatro, crea dosvacías, conservaMayami completa y29tablas por huellas, exige sesión/proyecto/versiones y auditoría. Ensayo local aislado y remotoROLLBACK aprobados; aplicación definitiva siguiente. Usuario añade capacidad de eliminar suspendidos: no se interpreta como borrado masivo, se prepara RPCadmin con protecciónhistórica. Sin UI Mac, pagos, tasas, permisos o productos remotos modificados en este checkpoint.

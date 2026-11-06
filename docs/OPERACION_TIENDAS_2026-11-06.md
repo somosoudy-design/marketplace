@@ -25,9 +25,17 @@ Proyecto exacto: Marketplace `mimnotafmfasvwrclxan`, confirmado ACTIVE_HEALTHY p
 - Los contratos existentes ocultan suspended en home/search/perfiles públicos y bloquean compra en checkout. Añadir un ID antiguo al carrito aún puede ser posible, pero el checkout lo identifica como no disponible; no se afirma lo contrario.
 - Suspender una tienda no borra fotografías públicas ya compartidas ni revoca acceso del propietario/admin a su historial.
 
-## Estado del checkpoint
+## Aplicación definitiva · cerrada
 
-Aplicación definitiva pendiente en este checkpoint. Próximo paso: comprobar que el ensayo revirtió, sustituir sólo el terminador por COMMIT en una copia privada, aplicar una vez y verificar tres tiendas públicas por API anónima, integridad y auditoría. Después actualizar este documento. No restaurar ni eliminar productos como parte de esa operación.
+Aplicada una sola vez después de verificar que el ensayo había revertido. Se sustituyó únicamente el terminador por COMMIT en una copia privada; el archivo versionado sigue en ROLLBACK y rechaza repetición por precondiciones. Persistencia comprobada en lectura nueva: siete registros, tres activos, cuatro suspendidos y seis eventos de auditoría; las29huellas dentro de la operación permanecen idénticas.
+
+Pruebas anónimas reales contra el backend:
+
+- Tabla stores y home_feed devuelven exactamente Mayami, Aroma'top y MilyeDent.
+- Los tres store_profile activos devuelven200 con perfil; los cuatro retirados devuelven200/null, sin perfil. No confundir este contrato con un404HTTP.
+- Products público conserva exactamente los mismos tresIDs actuales de Mayami. No se reactivó, movió ni eliminó ningún producto.
+
+Las dos altas no tienen miembros: sus responsables todavía no pueden administrarlas. La asignación requiere identificar sus cuentas reales y usar add_store_member con permisos administrativos; no se concedieron roles por el nombre de una tienda. No repetir esta operación ni desplegar web/OTA para un cambio ya persistido en el backend.
 
 ## Eliminación de suspendidos · siguiente bloque
 

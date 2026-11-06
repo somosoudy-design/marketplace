@@ -2,7 +2,7 @@
 
 ## Operación paralela de tiendas · nube · 6nov2026
 
-Oliver fija mayami, Aroma'top y MilyeDent como las tres tiendas operativas. Mac/Terra conserva el frente de diseño Android; nube sólo administra tiendas y prepara eliminación segura de suspendidos, sin modificar mobile/storefront ni publicar. Inventario real: Mayami y cuatro tiendas anteriores; las dos nuevas no existían. SQL con guardas, seis auditorías y29huellas pasó ensayo local aislado y remoto con ROLLBACK. Aplicación definitiva pendiente; [operación exacta y próximos pasos](OPERACION_TIENDAS_2026-11-06.md). No restaurar productos ni ejecutar el seed remoto.
+Oliver fija mayami, Aroma'top y MilyeDent como las tres tiendas operativas. Mac/Terra conserva el frente de diseño Android; nube sólo administra tiendas y prepara eliminación segura de suspendidos, sin modificar mobile/storefront ni publicar. Inventario real: Mayami y cuatro tiendas anteriores; las dos nuevas no existían. SQL con guardas, seis auditorías y29huellas pasó ensayo local aislado y remoto con ROLLBACK. Aplicación única completada: siete registros, tres activos y cuatro suspendidos; tabla pública/home_feed muestran sólo las tres elegidas y conservan los mismos tres productos publicados. Dos altas vacías/sinmiembros, falta identificar responsables reales. No repetir SQL. [Operación exacta y próximos pasos](OPERACION_TIENDAS_2026-11-06.md). No restaurar productos ni ejecutar el seed remoto.
 
 ## Trabajo en curso: dirección web en Android · 6nov2026
 
