@@ -167,6 +167,7 @@ async function showChannel(page: Page, buyer: Buyer, channel: Channel) {
       currency: channel.currency,
       rail: channel.rail,
       requires_proof: true,
+      price_basis: 'divisas',
     });
     await route.fulfill({ response, json: scoped });
   });
@@ -216,6 +217,12 @@ async function finishManual(
   info: TestInfo,
   screenshot: string,
 ) {
+  if (channel.requiresReference) {
+    await page.getByRole('button', { name: 'Ya pagué, enviar para verificar', exact: true }).click();
+    await expect(page.getByRole('alert').filter({ hasText: 'Escribe la referencia del pago.' })).toBeVisible();
+    expect(calls.submit).toEqual([]);
+    expect(calls.uploads).toEqual([]);
+  }
   if (ref) await page.getByLabel('Referencia del pago', { exact: true }).fill(ref);
   await page.getByRole('button', { name: 'Ya pagué, enviar para verificar', exact: true }).click();
   await expect(page.getByRole('alert').filter({ hasText: 'Adjunta el comprobante del pago.' })).toBeVisible();
@@ -224,7 +231,11 @@ async function finishManual(
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.evaluate(async () => {
     await document.fonts.ready;
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   });
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  expect(await page.locator('.skip').evaluate((e) => e.getBoundingClientRect().bottom)).toBeLessThanOrEqual(0);
   await page.screenshot({ path: info.outputPath(screenshot), fullPage: true });
   await page.getByLabel('Comprobante', { exact: true }).setInputFiles(receipt);
   await page.getByRole('button', { name: 'Ya pagué, enviar para verificar', exact: true }).click();
