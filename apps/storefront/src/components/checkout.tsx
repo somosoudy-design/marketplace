@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  ApiError,
   newIdempotencyKey,
   type Address,
   type CheckoutSummary,
@@ -80,6 +81,14 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     queryKey: ['addresses', buyerId],
     queryFn: () => browser().api.account.addressesForBuyer(buyerId),
   });
+  const methods = useQuery({
+    queryKey: ['payment-methods'],
+    queryFn: () => browser().api.payments.methods(),
+    staleTime: 0,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: 'always',
+  });
+  const methodsReady = methods.isSuccess && !methods.isFetching && methods.data.some((m) => m.enabled);
   const address =
     addresses.data?.find((a) => a.id === chosen) ?? addresses.data?.find((a) => a.is_default) ?? addresses.data?.[0];
   const signature = address ? JSON.stringify([address.id, address.region_code, address.city, address.line1]) : '';
@@ -155,7 +164,23 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   const place = useMutation({
     mutationFn: (i: Intent) =>
       confirmCheckout(
-        () => browser().api.checkout.placeOrder(i.selection.address, i.selection.shipping, i.selection.plan, i.key),
+        async () => {
+          const available = await methods.refetch();
+          if (!available.isSuccess || !available.data.some((m) => m.enabled)) {
+            // An existing order stays recoverable when methods become unavailable.
+            try {
+              const existing = await recoverCheckout(() => browser().api.checkout.placedOrder(buyerId, i.key));
+              if (existing) return existing;
+            } catch (cause) {
+              throw new UnconfirmedCheckoutError(cause);
+            }
+            throw new ApiError({
+              code: 'method_unavailable',
+              message: 'No podemos confirmar el pedido sin un método de pago disponible. Tu carrito se conserva.',
+            });
+          }
+          return browser().api.checkout.placeOrder(i.selection.address, i.selection.shipping, i.selection.plan, i.key);
+        },
         () => browser().api.checkout.placedOrder(buyerId, i.key),
       ),
     onSuccess: complete,
@@ -186,6 +211,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   const confirm = () => {
     if (
       submitting.current ||
+      !methodsReady ||
       !preview.data ||
       preview.isFetching ||
       preview.isError ||
@@ -593,12 +619,26 @@ export function Checkout({ buyerId }: { buyerId: string }) {
               <button
                 className="button"
                 data-testid="checkout-next"
-                disabled={!fresh || !enabled || locked}
+                disabled={!fresh || !enabled || locked || (step === 3 && !methodsReady)}
                 onClick={() => (step === 3 ? confirm() : move(step + 1))}
               >
                 {['Continuar a entregas', 'Elegir plan de pago', 'Revisar pedido', 'Confirmar pedido'][step]}
                 <ArrowRight size={17} />
               </button>
+              {step === 3 && !methodsReady && (
+                <div className="notice" data-testid="checkout-methods-unavailable">
+                  <p role="status">
+                    {methods.isFetching || methods.isPending
+                      ? 'Comprobando métodos de pago…'
+                      : methods.isError
+                        ? 'No pudimos comprobar los métodos de pago. Tu carrito se conserva.'
+                        : 'Los métodos de pago no están disponibles por ahora. Tu carrito se conserva; podrás confirmar cuando haya uno disponible.'}
+                  </p>
+                  <button className="text-button" disabled={methods.isFetching} onClick={() => methods.refetch()}>
+                    Actualizar métodos
+                  </button>
+                </div>
+              )}
               {step === 3 && (
                 <p className="confirmation-note">
                   Confirmar crea tu pedido. El pago se realiza a continuación. Consulta los{' '}

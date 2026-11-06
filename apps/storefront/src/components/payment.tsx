@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { newIdempotencyKey, type Payment, type PaymentQuote } from '@kora/api';
+import { ApiError, newIdempotencyKey, type Payment, type PaymentQuote } from '@kora/api';
 import { D, validateUpload, normalizeReference, PAYMENT_RECORD_LABEL } from '@kora/core';
 import { CreditCard, Check, Clock3 } from 'lucide-react';
 import { browser } from '@/lib/browser';
@@ -13,12 +13,29 @@ import { Empty } from './states';
 import { QueryError } from './buyer';
 export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
   const order = useOwnOrder(buyerId, id);
-  const methods = useQuery({ queryKey: ['payment-methods'], queryFn: () => browser().api.payments.methods() });
+  const methods = useQuery({
+    queryKey: ['payment-methods'],
+    queryFn: () => browser().api.payments.methods(),
+    staleTime: 0,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: 'always',
+  });
+  const verifyMethod = async (code: string) => {
+    const available = await methods.refetch();
+    if (!available.isSuccess || !available.data.some((m) => m.code === code && m.enabled))
+      throw new ApiError({
+        code: 'method_unavailable',
+        message: 'Este método de pago no está disponible por ahora. Tu pedido se conserva.',
+      });
+  };
   const qc = useQueryClient();
   const [method, setMethod] = useState('');
   const [quote, setQuote] = useState<PaymentQuote | null>(null);
   const create = useMutation({
-    mutationFn: () => browser().api.payments.quote(id, method),
+    mutationFn: async () => {
+      await verifyMethod(method);
+      return browser().api.payments.quote(id, method);
+    },
     onSuccess: (q) => {
       setQuote(q);
       window.scrollTo({ top: 0, behavior: 'instant' });
@@ -129,6 +146,10 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
               quote={quote}
               buyerId={buyerId}
               orderId={id}
+              methodAvailable={methods.isSuccess && !methods.isFetching && methods.data.some((m) => m.code === quote.method.code && m.enabled)}
+              checkingMethod={methods.isFetching || methods.isPending}
+              verifyMethod={() => verifyMethod(quote.method.code)}
+              refreshMethods={() => { void methods.refetch(); }}
               onBack={() => setQuote(null)}
               onSent={async () => {
                 setQuote(null);
@@ -164,14 +185,14 @@ export function PaymentPage({ buyerId, id }: { buyerId: string; id: string }) {
                 <QueryError
                   error={create.error}
                   retry={() => {
-                    if (!create.isPending && !order.isFetching && methods.data?.some((m) => m.code === method))
+                    if (!create.isPending && !order.isFetching && methods.isSuccess && !methods.isFetching && methods.data.some((m) => m.code === method && m.enabled))
                       create.mutate();
                   }}
                 />
               )}
               <button
                 className="button"
-                disabled={!methods.data?.some((m) => m.code === method) || create.isPending || order.isFetching}
+                disabled={!methods.isSuccess || methods.isFetching || !methods.data.some((m) => m.code === method && m.enabled) || create.isPending || order.isFetching}
                 onClick={() => create.mutate()}
               >
                 {create.isPending ? 'Consultando importe…' : 'Consultar importe a pagar'}
@@ -245,12 +266,20 @@ function PaymentForm({
   quote: q,
   buyerId,
   orderId,
+  methodAvailable,
+  checkingMethod,
+  verifyMethod,
+  refreshMethods,
   onBack,
   onSent,
 }: {
   quote: PaymentQuote;
   buyerId: string;
   orderId: string;
+  methodAvailable: boolean;
+  checkingMethod: boolean;
+  verifyMethod: () => Promise<void>;
+  refreshMethods: () => void;
   onBack: () => void;
   onSent: () => Promise<void>;
 }) {
@@ -277,6 +306,18 @@ function PaymentForm({
   };
   const submit = useMutation({
     mutationFn: async () => {
+      try {
+        await verifyMethod();
+      } catch (error) {
+        // Keep prior payments recoverable after the method has been disabled.
+        const existing = await recover();
+        if (existing) return existing;
+        throw error;
+      }
+      if (unknown) {
+        const existing = await recover();
+        if (existing) return existing;
+      }
       if (q.method.kind === 'automated') {
         const result = await browser().api.payments.startOnline(q.id, key);
         const url = safeExternal(result.checkout_url);
@@ -366,13 +407,36 @@ function PaymentForm({
       </div>
     );
   const busy = submit.isPending || check.isPending;
+  if (!methodAvailable)
+    return (
+      <div className="payment-pending" data-testid="payment-method-unavailable">
+        <p role="status">
+          {checkingMethod
+            ? 'Comprobando el método de pago…'
+            : 'Este método de pago no está disponible por ahora. Tu pedido se conserva.'}
+        </p>
+        {unknown && (
+          <>
+            <p>Comprueba el estado del pago que ya enviaste antes de continuar.</p>
+            <button type="button" className="button secondary" disabled={busy} onClick={() => check.mutate()}>
+              Comprobar pago
+            </button>
+            {(problem || check.isError) && <p className="error" role="alert">{problem || 'No pudimos comprobar el pago. Intenta de nuevo.'}</p>}
+          </>
+        )}
+        <button type="button" className="button secondary" disabled={busy || checkingMethod} onClick={refreshMethods}>
+          Actualizar métodos
+        </button>
+        {!unknown && <button type="button" className="text-button" disabled={busy} onClick={onBack}>Cambiar método</button>}
+      </div>
+    );
   return (
     <form
       method="post"
       className="commerce-form"
       onSubmit={(e) => {
         e.preventDefault();
-        if (locked.current || expired) return;
+        if (locked.current || expired || !methodAvailable) return;
         locked.current = true;
         setProblem('');
         submit.mutate();

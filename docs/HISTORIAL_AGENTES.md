@@ -1,5 +1,24 @@
 # Historial de agentes
 
+### 2026-11-06 06:54 UTC — catálogo comercial aplicado, correo Free y guardia de pagos
+
+## Estado verificado · 2026-11-06 06:54 UTC
+
+Workers sigue Free y no se contrató ningún servicio de pago. Fuente89d2708 desplegada en versión923e2489-a867-4c35-84fb-26a35b0570b3; CI42174790119 Success49UI,24Node y3marca, tipos/lint/build/guards/dryrun aprobados. Auditor independiente aprueba8PNG legales y12escenarios Inicio/ficha/variantes320/1440clarooscuro. El deploy comercial aún espera retirar Access, no se declara acceso público comprobado.
+
+Catálogo remoto aplicado UNA VEZ por DO atómico tras ensayo que finaliza con excepción intencionada de éxito/rollback.41publicados/3suspendidos,40notas de autorización y DJI íntegro. Tienda Mayami/soporte@mayami.app/políticas de las páginas reales; slug y restantes campos conservados. Respaldo posterior SHA3835c67c181971037ad8acf2762aea1afdd20b84eb9bccd95b4234b63886e1b7; comparación íntegra44productos confirma sólo estado/nota/fecha cambiados,104imágenes y63variantes idénticas, precios/existencias intactos. AnónimoRLS ve41 y ninguno de los3retirados. NO REAPLICAR aunque el SQLeditor muestre Running tras un resultado vacío: la lectura independiente confirma el commit. BEGIN/ROLLBACK explícitos también dejaban ese estado visual; el ensayo con excepción y SELECT posterior resolvió la verificación sin repetir writes reales.
+
+Comparación CPU persistida completa del lote posteriorf998:21invocaciones Worker emparejadas y3GETicono StaticAssets;24/24HTTP200 sin1102. Sólo19pares completos en ambos lados:mediana25→17ms(-32%descriptivo),máximo164→30ms. PrecargasInicio27→0. No atribuir CPU a red ni declarar cold/warm; no sumar tails parciales. Veyra tiene arquitectura distinta y no se obtuvo CPU/plan comparables. Detalle en WORKERS_FREE_MAYAMI_2026-11-06.md.
+
+Correo: recepción CloudflareRouting Free configurada; auth.mayami.app Verified en Resend Free3000/mes/100día, sin tarjeta.3DNS públicos añadidos y comprobados, MX raíz intactos. Organización SupabaseMarketplace verificada con un único proyecto mimnotafmfasvwrclxan; integración gestionada configura remitente Mayami/no-reply@auth.mayami.app sin extraer claves. Resend informa Ready to send; falta verificar UI SMTP y entrega/retorno real. Ningún otro proyecto tocado.
+
+Pagos: auditoría remota confirma datos ficticios en los5manuales (no sólo una nota),0quotes no-demo vigentes/0pagos pendientes y1pedido no-demo con saldo, que se conserva. Se prepara deshabilitar sólo esos5enabled con guardas y auditoría; no inventar cuentas ni activar efectivo sin respuesta del propietario. Fuente nueva añade bloqueo de confirmación cuando no hay métodos, revalidación antes de RPC y recuperación de pedidos/pagos ya enviados;4UI nuevas y recuperación reforzada pendientes de ejecución (53totales). No es una modificación del motor financiero ni garantía de clientes antiguos/API directa. Tipos/lint de fuente pasan; el primer lint incluyó por error un dryrun generado dentro de app/.local, movido fuera del árbol de lint sin omitir fuente.
+
+Conservar products.is_demo para compatibilidad con APK/boilerplate/procedencia. No controla pedidos/cobros/ledger/envíos, pero SÍ popularidad y avisos de producto: deuda explícita para migración separada sin convertir actividadfixture en ranking real. No afirmar que sea metadata inocua ni cambiar perfiles/pedidos/reviews históricos.
+
+Próxima acción: checkpoint fuente, build/53UI; ensayar/aplicar sólo disabled de métodos, revisar conteos de cuentasfixture privilegiadas, verificar SMTP. Desplegar guardia, retirar Access y comprobar público/SSR/TLS/SEO/53assets/3retirados404, medir misma carga final y documentar. Datos reales de cobro siguen pendientes del propietario; no son motivo para contratar WorkersPaid. Sin APK/OTA/iOS ni transacciones reales.
+
+
 ### 6nov2026 — checkpoint de apertura oficial en Free
 
 ## Checkpoint oficial · 6nov2026 06:32UTC

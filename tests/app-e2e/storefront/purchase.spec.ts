@@ -72,7 +72,9 @@ for (const colorScheme of ['light', 'dark'] as const)
 test('respuesta perdida recupera mismo pedido incluso después de recargar', async ({ page }) => {
   const buyer = await review(page);
   let placed = '';
+  let calls = 0;
   await page.route('**/rpc/place_order', async (r) => {
+    calls++;
     const response = await r.fetch();
     expect(response.ok()).toBe(true);
     placed = (await response.json()).order_id;
@@ -84,11 +86,18 @@ test('respuesta perdida recupera mismo pedido incluso después de recargar', asy
   });
   await page.getByTestId('checkout-next').click();
   await expect(page.getByRole('heading', { name: 'Comprobemos tu pedido' })).toBeVisible();
+  // Even if all methods disappear, the recorded order remains recoverable.
+  await page.route('**/rest/v1/payment_methods*', async (route) => {
+    const url = new URL(route.request().url());
+    if (!['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)) return route.abort('blockedbyclient');
+    await route.fulfill({ status: 200, json: [] });
+  });
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Comprobemos tu pedido' })).toBeVisible();
   await page.unroute('**/rest/v1/orders*');
   await page.getByRole('button', { name: 'Comprobar pedido', exact: true }).click();
   await expect(page).toHaveURL(new RegExp('/pagar/' + placed));
+  expect(calls).toBe(1);
   const db = new pg.Client({ connectionString: databaseUrl() });
   await db.connect();
   try {
