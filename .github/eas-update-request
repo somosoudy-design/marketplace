@@ -1,3 +1,3 @@
-# Una actualización solo llega a APK con el mismo runtime; el workflow verifica antes de publicar.
+# Solo APK Mayami con runtime compatible; el workflow comprueba antes de publicar.
 runtime: b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6
-mayami Android: apertura violeta, categorías y nombres legibles
+mayami Android: identidad correcta de la tienda
