@@ -1,10 +1,10 @@
 # Pendientes de mayami
 
-## Dominio público · Mac sincronizado; permiso de Chrome pendiente · 5nov
+## Dominio público · Automatización resuelta; ajuste de Chrome pendiente · 6nov
 
-Rama sincronizada por avance directo hasta `600e538`, sin cambios locales previos perdidos. Auditor independiente confirma fuente y recursos; copia local promisor/sparse aplaza sólo multimedia de docs (detalle y recuperación en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md)). Helper Cloudflare 5/5 en Mac con mocks. DNS público: delegación Cloudflare y raíz/www sin dirección web; cuenta/hosting no comprobados.
+Mac y rama revisados/sincronizados al retomar (`7d5b909`). El permiso macOS ya permite leer URL/título y abrir pestañas. Cloudflare abierto, título «Un momento…», sin sesión autenticada comprobada. **Chrome devuelve error12 porque JavaScript para eventos de Apple está desactivado**: activar Ver → Desarrollador → Permitir JavaScript para eventos de Apple y comprobar control real. No pedir otra vez el permiso macOS ya resuelto. [Relevo actualizado](ACTIVAR_MAYAMI_APP.md).
 
-**Bloqueo operativo:** macOS devuelve `-1743` al controlar Chrome. Habilitar Codex → Chrome en Privacidad y seguridad → Automatización; después usar la sesión/cuenta indicada y verificar zona, registros existentes y origen HTTPS real antes de CNAME/publicWebOrigin. No se modificaron servicios remotos. Autorización de dominio vigente; no pedir otro permiso genérico ni secretos por chat. Mantener pendientes catálogo comercial, fotos, operador/políticas y retornos antes de habilitar pedidos públicos.
+DNS a las 04:12UTC del 6nov: Morgan/Laylah, raíz sin A/AAAA/CNAME, www NXDOMAIN. Sin cambios remotos. Después del acceso: inventario de zona/DNS y hosting, origen HTTPS/rutas antes de CNAME/publicWebOrigin. Autorización vigente; no pedir secretos por chat. Catálogo comercial/fotos, operador/políticas y retornos siguen pendientes antes de abrir pedidos públicos.
 
 ## Prioridad de marca · APK comprobado, instalación física pendiente · 5nov
 
