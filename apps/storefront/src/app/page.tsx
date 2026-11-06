@@ -37,7 +37,7 @@ export default async function Home() {
               <h1>Encuentra lo que va contigo</h1>
               <p>Tecnología, belleza y mucho más, en un solo lugar.</p>
               <Link prefetch={false} className="button" href="/buscar">
-                Explorar el catálogo <ArrowRight size={18} />
+                Ver catálogo <ArrowRight size={18} />
               </Link>
             </div>
             {heroProducts.length > 0 && (

@@ -60,7 +60,8 @@
   .market-home .market-hero-copy { padding: 14px 5px 14px 16px; }
   .market-home .market-hero h1 { font-size: 23px; }
   .market-home .market-hero p { font-size: 13px; margin: 8px 0 12px; }
-  .market-home .market-hero .button { font-size: 12px; padding-inline: 12px; }
+  .market-home .market-hero .button { font-size: 12px; padding-inline: 12px; white-space: nowrap; }
+  .market-home .market-featured .section-heading h2 { font-size: 18px; }
   .market-home .market-hero-photos { padding: 8px; }
   .market-home .market-category-feature { display: flex; overflow-x: auto; gap: 8px; scrollbar-width: thin; scrollbar-color: var(--brand) transparent; }
   .market-home .market-category-feature::-webkit-scrollbar { height: 4px; }
@@ -117,3 +118,8 @@
 .market-home .market-collection .product-copy { display: flex; flex: 1; flex-direction: column; }
 .market-home .market-collection .product-copy h3 { display: block; -webkit-line-clamp: unset; overflow: visible; min-height: 0; overflow-wrap: anywhere; }
 .market-home .market-collection .product-price { margin-top: auto; padding-top: 9px; }
+@media (max-width: 700px) {
+  .header .browse-nav { scrollbar-width: thin; scrollbar-color: var(--brand) transparent; }
+  .header .browse-nav::-webkit-scrollbar { height: 4px; }
+  .header .browse-nav::-webkit-scrollbar-thumb { background: var(--brand); border-radius: 8px; }
+}

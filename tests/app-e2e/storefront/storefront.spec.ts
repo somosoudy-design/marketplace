@@ -20,6 +20,8 @@ for (const colorScheme of ['light', 'dark'] as const)
       await expect(page.getByRole('heading', { name: 'Encuentra lo que va contigo' })).toBeVisible();
       await expect(page.getByTestId('product-card').first()).toBeVisible();
       if (width === 320) {
+        const heroLink = page.getByRole('link', { name: 'Ver catálogo', exact: true });
+        expect((await heroLink.boundingBox())!.height).toBeLessThanOrEqual(52);
         const titles = page.getByTestId('product-card').locator('h3');
         expect(await titles.evaluateAll((nodes) => nodes.every((node) => node.scrollHeight <= node.clientHeight))).toBe(
           true,
