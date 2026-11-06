@@ -1,0 +1,38 @@
+name: Android Mayami - comprobar runtime sin publicar
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/android-fingerprint-readonly-request']
+permissions:
+  contents: read
+jobs:
+  fingerprint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      EXPO_NO_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Variables públicas del perfil del APK existente
+        working-directory: apps/mobile
+        run: node -e "for (const [k, v] of Object.entries(require('./eas.json').build.preview.env)) console.log(k + '=' + v)" >> "$GITHUB_ENV"
+      - name: Obtener Firebase del entorno preview
+        working-directory: apps/mobile
+        run: |
+          npx --yes eas-cli@24.12.1 env:pull preview --non-interactive --path "$RUNNER_TEMP/preview.env"
+          grep -E '^GOOGLE_SERVICES_JSON=' "$RUNNER_TEMP/preview.env" >> "$GITHUB_ENV"
+      - name: Comparar runtime con APK Mayami existente
+        working-directory: apps/mobile
+        run: |
+          actual="$(node_modules/.bin/expo-updates fingerprint:generate --platform android | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).hash))")"
+          expected="b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6"
+          echo "Runtime calculado: $actual"
+          if [ "$actual" != "$expected" ]; then echo '::error::El runtime no coincide; no distribuir a ese APK.'; exit 1; fi
+          echo 'Runtime compatible con el APK Mayami verificado.'
