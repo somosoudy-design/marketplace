@@ -32,7 +32,8 @@ for (const width of [320, 360, 390, 412]) {
   }
 }
 
-test('the legacy Mayami store avatar uses the current mark', async ({ page }, info) => {
+for (const colorScheme of ['light', 'dark'] as const) test(`the legacy Mayami store avatar uses the current mark ${colorScheme}`, async ({ page }, info) => {
+  await page.emulateMedia({ colorScheme });
   await page.route('**/rest/v1/rpc/home_feed*', async (route) => {
     const response = await route.fetch();
     const feed = await response.json();
@@ -50,5 +51,7 @@ test('the legacy Mayami store avatar uses the current mark', async ({ page }, in
     const image = node instanceof HTMLImageElement ? node : node.querySelector('img');
     return !!image && image.complete && image.naturalWidth > 0;
   })).toBe(true);
+  // Allow neighboring remote images to finish their 150 ms presentation transition.
+  await page.waitForTimeout(350);
   await page.screenshot({ path: info.outputPath('tienda-mayami.png') });
 });
