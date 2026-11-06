@@ -33,7 +33,8 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { name: string; icon:
     flexGrow: 1 + focus.value * (expandedGrow - 1),
     backgroundColor: interpolateColor(focus.value, [0, 1], [colors.surface, colors.brandSoft]),
   }));
-  const caption = useAnimatedStyle(() => ({ width: focus.value * (label.length * 7.5 * fontScale + 8), opacity: focus.value }));
+  // Reserve enough space for larger text even on web, where CSS scaling does not update fontScale.
+  const caption = useAnimatedStyle(() => ({ width: focus.value * (label.length * 8 * Math.max(fontScale, 1.6) + 12), opacity: focus.value }));
   const color = isFocused ? colors.brand : colors.textSecondary;
   const countLabel = badge > 0 ? `Carrito, ${badge} ${badge === 1 ? 'unidad' : 'unidades'}` : label;
   return (

@@ -21,6 +21,11 @@ export function exhibitionEnabled(context: ExhibitionContext): boolean {
   return context.platform === 'android' && context.channel === 'preview';
 }
 
+/** The Android storefront uses catalog images; exhibition overrides remain available to local web fixtures. */
+export function exhibitionImagesEnabled(presentationEnabled: boolean, platform: string): boolean {
+  return presentationEnabled && platform === 'web';
+}
+
 export interface ExhibitionPhoto {
   productId: string;
   /** Exact original storage path: changing a seller's image invalidates the override. */

@@ -17,6 +17,7 @@ for (const width of [320, 360, 390, 412]) {
       const titles = page.locator('[data-testid^="home-recommended"] [data-testid="card-title"]');
       expect(await titles.evaluateAll((nodes) => nodes.every((node) => node.scrollHeight <= node.clientHeight + 1))).toBe(true);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      await page.locator('img:visible').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => undefined))));
       await page.screenshot({ path: info.outputPath('inicio.png') });
       await page.getByTestId('home-search').click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();

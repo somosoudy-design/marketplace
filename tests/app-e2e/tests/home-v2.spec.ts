@@ -114,6 +114,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(hero.getByText('Ver colección', { exact: true })).toBeVisible();
       const limits = await hero.evaluate((root) => [...root.querySelectorAll<HTMLElement>('[dir="auto"]')].map((el) => ({ scroll: el.scrollHeight, height: el.clientHeight })));
       expect(limits.every((l) => l.scroll <= l.height + 1)).toBe(true);
+      await expect.poll(() => page.getByTestId('active-tab-label').evaluate((el) => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
       await page.screenshot({ path: testInfo.outputPath(`${colorScheme}-320-texto-ampliado.png`) });
     });
 

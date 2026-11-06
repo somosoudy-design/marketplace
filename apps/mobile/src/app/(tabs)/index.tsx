@@ -26,7 +26,7 @@ import { ProductCardSkeleton, Skeleton } from '@/components/ui/Skeleton';
 import { EmptyState, ErrorState, OfflineState, StaleNotice, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
-import { isPrivateCatalogPresentation, prioritizeGeneratedProducts } from '@/lib/catalog-exhibition';
+import { showExhibitionImages, prioritizeGeneratedProducts } from '@/lib/catalog-exhibition';
 import { selectHomeOpening, type HomeOpening } from '@/lib/home-opening';
 import { useCartCount, useHome, useProfile, useSearch, useUnreadCount } from '@/lib/hooks';
 import { ImpressionScope, recordImpressions, TrackedSection, useViewportTracking } from '@/lib/impressions';
@@ -65,7 +65,7 @@ export default function HomeScreen() {
   const opening = useMemo(() => selectHomeOpening(data, recent.isError ? [] : recent.data?.pages[0] ?? []), [data, recent.data, recent.isError]);
   const picks = useMemo(() => {
     if (!data) return [];
-    if (!isPrivateCatalogPresentation || data.personalized) return data.recommended;
+    if (!showExhibitionImages || data.personalized) return data.recommended;
     const candidates = [...data.recommended, ...(more.data?.pages.flat() ?? [])];
     const unique = candidates.filter((p, i) => candidates.findIndex((other) => other.id === p.id) === i);
     return prioritizeGeneratedProducts(unique).slice(0, Math.max(8, data.recommended.length));

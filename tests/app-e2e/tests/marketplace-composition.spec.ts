@@ -144,12 +144,20 @@ for (const colorScheme of ['light', 'dark'] as const) {
         }
       });
       const total = page.getByTestId('checkout-total');
-      await total.scrollIntoViewIfNeeded();
+      const button = page.getByTestId('checkout-place');
+      const lastDetail = page.getByText('Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.');
+      await page.getByTestId('checkout-scroll').evaluate((node) => { node.scrollTop = node.scrollHeight; });
       await expect.poll(async () => {
-        const box = await total.boundingBox();
+        const box = await lastDetail.boundingBox();
         const bar = await page.getByTestId('checkout-bottom-bar').boundingBox();
-        return box!.y + box!.height < bar!.y;
+        return !!box && !!bar && box.y >= 0 && box.y + box.height <= bar.y + 1;
       }).toBe(true);
+      const totalBox = (await total.boundingBox())!;
+      const buttonBox = (await button.boundingBox())!;
+      const barBox = (await page.getByTestId('checkout-bottom-bar').boundingBox())!;
+      expect(totalBox.y).toBeGreaterThanOrEqual(barBox.y);
+      expect(totalBox.y + totalBox.height).toBeLessThanOrEqual(buttonBox.y + 1);
+      expect(buttonBox.y + buttonBox.height).toBeLessThanOrEqual(892);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
       const folder = `${root}/${colorScheme}`;
       mkdirSync(folder, { recursive: true });
@@ -173,9 +181,11 @@ for (const colorScheme of ['light', 'dark'] as const) {
       try {
         await page.getByTestId('checkout-place').click();
         await expect.poll(() => requests).toBe(1);
+        await expect(page.getByTestId('checkout-confirming')).toBeVisible();
+        await expect(page.getByTestId('checkout-confirmation-status')).toContainText('Estamos confirmando');
         await expect(page.getByTestId('checkout-back')).toBeDisabled();
-        for (const edit of await page.locator('[data-testid^="checkout-edit-"]').all()) await expect(edit).toBeDisabled();
-        await expect(page.getByTestId('checkout-place')).toBeDisabled();
+        await expect(page.locator('[data-testid^="checkout-edit-"]:visible')).toHaveCount(0);
+        await expect(page.getByTestId('checkout-place')).toHaveCount(0);
         release();
         await expect(page.getByTestId('checkout-place')).toBeEnabled();
         await expect(page.getByTestId('checkout-edit-address')).toBeEnabled();

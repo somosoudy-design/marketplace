@@ -5,7 +5,7 @@ import { env } from './env';
 import { qk } from './query';
 import { api } from './supabase';
 import { exhibitionPhotos } from './catalog-exhibition-assets';
-import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionGallery, exhibitionPhoto, prioritizeExhibitionPhotos, prioritizeGeneratedExhibition } from './catalog-exhibition-policy';
+import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionGallery, exhibitionImagesEnabled, exhibitionPhoto, prioritizeExhibitionPhotos, prioritizeGeneratedExhibition } from './catalog-exhibition-policy';
 
 export const isPrivateCatalogPresentation = exhibitionEnabled({
   optIn: process.env.EXPO_PUBLIC_CATALOG_PRESENTATION,
@@ -14,12 +14,13 @@ export const isPrivateCatalogPresentation = exhibitionEnabled({
   backendUrl: env.supabaseUrl,
   webHostname: Platform.OS === 'web' && typeof window !== 'undefined' ? window.location?.hostname : undefined,
 });
+export const showExhibitionImages = exhibitionImagesEnabled(isPrivateCatalogPresentation, Platform.OS);
 
 export function productExhibitionPhoto(productId?: string, path?: string | null, variantId?: string, isDemo?: boolean) {
-  return exhibitionPhoto(isPrivateCatalogPresentation, exhibitionPhotos, productId, path, variantId, isDemo);
+  return exhibitionPhoto(showExhibitionImages, exhibitionPhotos, productId, path, variantId, isDemo);
 }
 
-export const categoryExhibitionPhoto = (path?: string | null) => exhibitionCategoryPhoto(isPrivateCatalogPresentation, exhibitionPhotos, path);
+export const categoryExhibitionPhoto = (path?: string | null) => exhibitionCategoryPhoto(showExhibitionImages, exhibitionPhotos, path);
 
 /** Snapshot-only DTOs cannot prove sample status. Verify before showing sample-only imagery. */
 export function useProductExhibitionPhoto(productId?: string, path?: string | null, variantId?: string, isDemo?: boolean) {
@@ -40,13 +41,13 @@ export function useProductExhibitionPhoto(productId?: string, path?: string | nu
 }
 
 export function prioritizeGeneratedProducts<T extends { id: string; image_path: string | null; is_demo: boolean }>(products: readonly T[]) {
-  return prioritizeGeneratedExhibition(isPrivateCatalogPresentation, exhibitionPhotos, products);
+  return prioritizeGeneratedExhibition(showExhibitionImages, exhibitionPhotos, products);
 }
 
 export function prioritizeExhibitionProducts<T extends { id: string; image_path: string | null }>(products: readonly T[]) {
-  return prioritizeExhibitionPhotos(isPrivateCatalogPresentation, exhibitionPhotos, products);
+  return prioritizeExhibitionPhotos(showExhibitionImages, exhibitionPhotos, products);
 }
 
 export function productExhibitionGallery<T extends { path: string }>(productId: string, images: T[], isDemo?: boolean): T[] {
-  return exhibitionGallery(isPrivateCatalogPresentation, exhibitionPhotos, productId, images, isDemo);
+  return exhibitionGallery(showExhibitionImages, exhibitionPhotos, productId, images, isDemo);
 }

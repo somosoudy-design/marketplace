@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionPhoto, prioritizeGeneratedExhibition, type ExhibitionContext, type ExhibitionPhoto } from '../../apps/mobile/src/lib/catalog-exhibition-policy';
+import { exhibitionCategoryPhoto, exhibitionEnabled, exhibitionGallery, exhibitionImagesEnabled, exhibitionPhoto, prioritizeExhibitionPhotos, prioritizeGeneratedExhibition, type ExhibitionContext, type ExhibitionPhoto } from '../../apps/mobile/src/lib/catalog-exhibition-policy';
 
 const preview: ExhibitionContext = {
   optIn: 'private-preview', platform: 'android', channel: 'preview',
@@ -7,6 +7,22 @@ const preview: ExhibitionContext = {
 };
 
 describe('private catalogue presentation is closed by default', () => {
+  it('keeps Android on catalog photos even when the preview profile is enabled', () => {
+    expect(exhibitionImagesEnabled(exhibitionEnabled(preview), 'android')).toBe(false);
+    expect(exhibitionImagesEnabled(true, 'web')).toBe(true);
+    expect(exhibitionImagesEnabled(false, 'web')).toBe(false);
+  });
+  it('preserves Android product, variant, category, gallery and order when an exhibition asset matches', () => {
+    const enabled = exhibitionImagesEnabled(exhibitionEnabled(preview), 'android');
+    const photo: ExhibitionPhoto = { productId: 'sample', originalPath: 'demo/sample.webp', variantId: 'blue', kind: 'generated-demo', source: 1, sha256: 'test', width: 100, height: 100 };
+    const items = [{ id: 'other', image_path: 'other.webp', is_demo: false }, { id: 'sample', image_path: photo.originalPath, is_demo: true }];
+    const gallery = [{ path: photo.originalPath }, { path: 'demo/another.webp' }];
+    expect(exhibitionPhoto(enabled, [photo], 'sample', photo.originalPath, 'blue', true)).toBeUndefined();
+    expect(exhibitionCategoryPhoto(enabled, [photo], photo.originalPath)).toBeUndefined();
+    expect(exhibitionGallery(enabled, [photo], 'sample', gallery, true)).toEqual(gallery);
+    expect(prioritizeGeneratedExhibition(enabled, [photo], items)).toEqual(items);
+    expect(prioritizeExhibitionPhotos(enabled, [photo], items)).toEqual(items);
+  });
   it('accepts only the explicit Android preview opt-in on the test backend', () => {
     expect(exhibitionEnabled(preview)).toBe(true);
     for (const bad of [
