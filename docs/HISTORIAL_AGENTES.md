@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 — primera etapa web validada antes de publicación
+
+Oliver eligió opción 2 con cabecera 3. Fuente `e18d786`: CI 42276448900 aprobó 65 UI, 24 Node, tipos/lint, build y guardas con stack local aislado; revisión independiente aprobó el ajuste de colecciones en tablet claro/oscuro. Build Cloudflare de producción con guardas correcto. Aún no desplegado: producción versión `897b0966`. Próximo paso publicación autorizada, comprobaciones públicas y medición CPU. Workers Free; sin compras ni cambios de servicios o datos financieros.
+
 ### 6nov2026 — WIP renovación web según dirección elegida
 
 Oliver eligió la propuesta 2 con cabecera de la 3. Propuesta combinada generada y mostrada; se implementa sobre catálogo real y recursos comerciales existentes. Primer checkpoint 638b2c0: cabecera, Inicio, categorías y productos, CI 42238943695 SUCCESS con 57 UI/24 Node. Revisión independiente detectó cabecera oscura por especificidad y categorías duplicadas en móvil; se corrigen y se ajustan catálogo y ficha. Segunda ejecución CI 42239738193 SUCCESS. Inicio, catálogo y ficha revisados independientemente en oscuro; se corrige título repetido en filtros móviles. CI 42240259113 también aprobó la iteración posterior. La revisión clara detectó colecciones vacías y nombres truncados: se agrupan colecciones, se muestran nombres completos y se acorta placeholder. CI 42241017186 SUCCESS y seis capturas claras revisadas. Se ajusta scrollbar de navegación móvil y CTA para evitar salto a 320; CI final y cierre visual pendientes, ver apps/storefront/design-qa.md. Mantener producción y pagos intactos, SSR y Workers Free.

@@ -2,7 +2,7 @@
 
 ## En curso: renovación web comercial
 
-Oliver eligió la opción 2 con cabecera violeta de la 3. Implementación en curso de Inicio, navegación, catálogo y ficha; el primer CI pasó 57 UI y las correcciones posteriores requieren nueva ejecución y revisión visual independiente. Mantener SSR, Workers Free, seguridad, medios de pago y funciones existentes. Ver ESTADO_ACTUAL.md.
+Oliver eligió la opción 2 con cabecera violeta de la 3. Primera etapa de Inicio, navegación, catálogo y ficha validada: CI 42276448900 pasó 65 recorridos y revisión visual final aprobada. Pendiente publicar en el Worker existente y verificar dominio, pagos y CPU. Mantener SSR, Workers Free, seguridad y funciones existentes. Checkout y cuenta conservan su experiencia previa; considerar extensión del rediseño en etapas posteriores. Ver ESTADO_ACTUAL.md.
 
 ## Cobros oficiales configurados · 6nov2026 14:12 UTC
 

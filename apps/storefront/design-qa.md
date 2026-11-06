@@ -1,15 +1,12 @@
 # Revisión visual del rediseño de Mayami
 
-Estado: **final result: blocked**. La revisión de CI 42265019549 detectó tarjetas de colección demasiado estrechas en 768 px; se ajustó la distribución y faltan CI y capturas del ajuste. No considerar este documento aprobación de publicación.
+Estado: **final result: passed** para la primera etapa de cabecera, Inicio, catálogo y ficha; no implica certificación integral de accesibilidad ni revisión de todas las pantallas de compra.
 
-Objetivo: propuesta combinada elegida por Oliver, opción 2 y cabecera de la 3, `exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png` bajo `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/`. La implementación usa fotos, nombres y precios reales, no imágenes comerciales ni precios generados; se conserva tema oscuro.
+Objetivo: propuesta elegida por Oliver, opción 2 con cabecera violeta de la 3, `exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png` bajo `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/`. La implementación emplea imágenes, nombres y precios reales y conserva tema oscuro; no introduce imágenes comerciales ni precios generados.
 
-Revisión: vista real local 1715 y 430 CSS px en oscuro y capturas CI con fixtures a 1440 y 320 en claro. Se comparó el objetivo visual de 1487×1058 con un recorte 1440×1024 de la captura CI de la cabecera e inicio, respetando la diferencia de datos de fixture. La imagen fuente no contiene vistas de catálogo, ficha ni móvil, que se evalúan como adaptación propia. Evidencia en `.local/mayami-redesign-20261106/`.
+Se comparó la referencia 1487×1058 con captura CI a 1440×1024; las vistas móvil, catálogo y ficha son adaptaciones propias. Revisión independiente local de Inicio, catálogo y ficha en oscuro a 320, 430 y 1715 CSS px y revisión clara por CI; correcciones de legibilidad revisadas. CI 42276448900 de fuente `e18d786` aprobó 65 recorridos, incluidos 320, 360, 390, 768, 1024 y escritorio en claro/oscuro. La última revisión independiente aprueba capturas 768 de ambos temas tras ampliar tarjetas de colección; el fixture corto deja espacios vacíos sin bloquear. Evidencia local en `.local/mayami-redesign-20261106/` y artefacto 13533521716 con digest y CRC comprobados.
 
-- Tipografía: Plus Jakarta Sans original; nombres de productos ahora completos en móvil y en colecciones. Revisión clara final pendiente.
-- Espaciado y jerarquía: cabecera violeta, mosaico y tarjetas; las colecciones cortas ahora comparten fila. Revisión clara final pendiente.
-- Colores: cabecera violeta, logo blanco original y roles de marca claros/oscuros. Contraste de dos textos en oscuro medido por revisor; no equivale a una certificación de accesibilidad.
-- Imágenes: `ProductPhoto` y política comercial existentes; fotos sintéticas de fixtures en CI, comerciales reales en vista local sólo lectura. No se alteran imágenes originales.
-- Contenido: precios y disponibilidad provienen del servidor; el número de resultados se identifica como número de la página. La ficha enlaza devoluciones y acerca entrega al botón.
-
-Hallazgos corregidos: cabecera oscura por especificidad; categorías repetidas en móvil; texto duplicado de filtros; dos problemas en tema claro anterior con colecciones demasiado vacías y nombres truncados. Los dos últimos se corrigieron y observaron en oscuro por revisor independiente; requiere confirmar tema claro tras CI final. Los anchos 360, 390, 768 y 1024 no cuentan aún con revisión visual completa.
+- Cabecera violeta, logo blanco original, búsqueda y accesos conservados; mosaico, categorías y tarjetas adaptadas.
+- Nombres completos y enlaces existentes; precios y disponibilidad proceden del servidor. Ficha acerca entrega y devoluciones a la compra.
+- `ProductPhoto` conserva la política comercial; las fotos de pruebas son fixtures aislados. No se alteraron originales ni datos de cobro.
+- Contraste de textos puntuales revisado en oscuro, sin declarar una auditoría WCAG completa. Checkout y cuenta conservan su experiencia previa, salvo la cabecera compartida.
