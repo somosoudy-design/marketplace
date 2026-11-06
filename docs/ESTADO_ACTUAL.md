@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## Trabajo en curso: dirección web en Android · 6nov2026
+
+Oliver pidió llevar a la APK la opción 2 con cabecera de la 3. Plan en `docs/REDISENO_APK_2026-11-06.md`. Revisadas la cabecera, Inicio, tarjetas y canal Android: conservar flujo de compra y catálogo suspendido; presentación `private-preview` y compatibilidad del APK requieren revisión antes de distribuir. Implementación y pruebas pendientes. No activar servicios con cargos ni publicar en tiendas.
+
 ## Trabajo en curso: renovación web comercial · 6nov2026
 
 Oliver seleccionó la propuesta 2 con cabecera violeta de la 3. El diseño combinado está en `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png`; los recursos generados son sólo referencia, no fotos ni precios de catálogo.
