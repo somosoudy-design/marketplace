@@ -11,7 +11,7 @@ import { categoryExhibitionPhoto, useProductExhibitionPhoto } from '@/lib/catalo
 import { useTheme } from '@/theme';
 
 const SIZE = 58;
-const COMPACT_SIZE = 48;
+const COMPACT_SIZE = 32;
 
 /** Compact category shelf: each category shows its most popular product on its tone, not an icon. */
 export function CategoryTiles({ categories, compact = false }: { categories: CategorySummary[]; compact?: boolean }) {
@@ -27,12 +27,12 @@ export function CategoryTiles({ categories, compact = false }: { categories: Cat
             accessibilityRole="link"
             accessibilityLabel={c.name}
             onPress={() => router.push({ pathname: '/catalog', params: { category: c.slug, title: c.name } })}
-            style={compact ? { minWidth: 68, maxWidth: 144, minHeight: 44, alignItems: 'center', gap: 5, paddingVertical: 6 } : { width: SIZE + 22, alignItems: 'center', gap: 6 }}
+            style={compact ? { minHeight: 48, maxWidth: 200, flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 8, paddingVertical: 6, borderRadius: 12, backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border } : { width: SIZE + 22, alignItems: 'center', gap: 6 }}
           >
             <View style={{ width: compact ? COMPACT_SIZE : SIZE, height: compact ? COMPACT_SIZE : SIZE, borderRadius: compact ? 12 : SIZE / 2, backgroundColor: tone.bg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
               <CategoryImage category={c} compact={compact} />
             </View>
-            <Text variant="caption" numberOfLines={compact ? 2 : 1} align="center" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{c.name}</Text>
+            <Text variant="caption" numberOfLines={compact ? undefined : 1} align="center" style={{ fontFamily: 'PlusJakartaSans_600SemiBold', flexShrink: compact ? 1 : 0 }}>{c.name}</Text>
           </ScalePressable>
         );
       })}

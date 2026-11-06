@@ -61,7 +61,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
           {p.availability !== 'available' ? <Badge onPhoto label={availability.label} tone={!availability.purchasable ? 'muted' : 'brand'} style={{ position: 'absolute', bottom: 8, left: 8, maxWidth: width - 18, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null}
         </View>
         <View style={{ padding: 10, gap: 4 }}>
-          <Text testID="card-title" variant="bodySmall" numberOfLines={1} style={{ fontFamily: 'PlusJakartaSans_600SemiBold', letterSpacing: -0.1 }}>
+          <Text testID="card-title" variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold', letterSpacing: -0.1 }}>
             {name}
           </Text>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline', columnGap: 6, rowGap: 2 }}>

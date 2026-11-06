@@ -107,7 +107,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       expect(box.width).toBe(44);
       expect(box.height).toBe(44);
       await expect(favorite.locator('svg')).toHaveAttribute('width', '19');
-      expect((await offer.getByTestId('card-title').boundingBox())!.height).toBeLessThanOrEqual(18);
+      expect(await offer.getByTestId('card-title').evaluate((node) => node.scrollHeight <= node.clientHeight + 1)).toBe(true);
       await favorite.click();
       await expect(page).toHaveURL(/sign-in/); // saving a visitor never opens the product
     });

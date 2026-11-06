@@ -24,15 +24,15 @@ export function ProductEditorialOpening({ product, width, onOpen }: { product: P
         scaleTo={0.99}
         style={{ backgroundColor: palette.violet[600], paddingHorizontal: 16, paddingTop: 4, paddingBottom: 14 }}
       >
-        <View style={{ backgroundColor: t.colors.surface, borderRadius: 16, padding: 10, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <View style={{ backgroundColor: t.scheme === 'dark' ? t.colors.surface : t.colors.editorialSoft, borderRadius: 16, padding: 10, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
           <ProductImage productId={product.id} productIsDemo={product.is_demo} path={product.image_path} tone={product.tone} alt={product.title} fit="contain" aspect={1} radius={10} priority="high" style={{ width: photoWidth }} />
           <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
-            <Text variant="caption" color="textSecondary">Del catálogo</Text>
+            <Text variant="overline" color="editorial">Descubre Mayami</Text>
             <Text testID="home-editorial-name" variant="subtitle" numberOfLines={3}>{product.title}</Text>
             <Text testID="home-editorial-price" variant="price" tabular>{formatUSD(product.price_usd)}</Text>
             {product.availability !== 'available' ? <Text variant="caption" color="textSecondary">{availability.label}</Text> : null}
-            <View style={{ minHeight: 40, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, backgroundColor: t.colors.text }}>
-              <Text variant="label" style={{ color: t.colors.surface, flexShrink: 1 }}>Ver producto</Text><Icon name="arrow-right" size={16} color={t.colors.surface} />
+            <View style={{ minHeight: 40, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, backgroundColor: t.colors.brand }}>
+              <Text variant="label" style={{ color: t.colors.onBrand, flexShrink: 1 }}>Ver producto</Text><Icon name="arrow-right" size={16} color={t.colors.onBrand} />
             </View>
           </View>
         </View>
