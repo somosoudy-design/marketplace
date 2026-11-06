@@ -1,0 +1,168 @@
+{
+  "marker": {
+    "schemaVersion": 1,
+    "sourceSha": "0eb9047d288f7119fe6d07d523b697bd62e72930",
+    "buildVersion": "42306772895.1"
+  },
+  "deployment": "https://kora-panel--qj86u6q1u9.expo.app",
+  "production": "https://kora-panel.expo.app",
+  "rows": [
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/vendedor",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/admin",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/admin/pedidos",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/login",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/vendedor/productos/nuevo",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/admin/tasas",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/no-existe-esta-pagina",
+      "status": 404,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/_next/static/chunks/0ebav8roylvqh.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin/pedidos",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/vendedor",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin/tasas",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/login",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/vendedor/productos/nuevo",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/no-existe-esta-pagina",
+      "status": 404,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/_next/static/chunks/0ebav8roylvqh.js",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "security": [
+    {
+      "base": "https://kora-panel--qj86u6q1u9.expo.app",
+      "path": "/login",
+      "headers": {
+        "x-frame-options": null,
+        "content-security-policy": "frame-ancestors 'none'",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-robots-tag": "noindex, nofollow"
+      }
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/login",
+      "headers": {
+        "x-frame-options": null,
+        "content-security-policy": "frame-ancestors 'none'",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-robots-tag": "noindex, nofollow"
+      }
+    }
+  ],
+  "verificationRun": "42307651197"
+}

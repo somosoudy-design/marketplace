@@ -37,6 +37,6 @@ Pruebas anónimas reales contra el backend:
 
 Las dos altas no tienen miembros: sus responsables todavía no pueden administrarlas. La asignación requiere identificar sus cuentas reales y usar add_store_member con permisos administrativos; no se concedieron roles por el nombre de una tienda. No repetir esta operación ni desplegar web/OTA para un cambio ya persistido en el backend.
 
-## Eliminación de suspendidos · siguiente bloque
+## Eliminación de suspendidos · cerrada en bloque separado
 
-No existe un DELETE operativo en API/panel; authenticated carece correctamente del permiso directo. Preparar un RPC exclusivo para administradores autenticados, con confirmación individual, estado suspended y versión vigente; proteger pedidos, carritos y reseñas, auditoría y concurrencia. No borrar productos reales masivamente. El cambio de panel debe quedar aislado de las pantallas que diseña el Mac y probarse antes de activarlo.
+Implementado y activado RPC exclusivo para administradores autenticados, con confirmación individual, estado suspended y versión vigente; conserva pedidos/carritos/reseñas y auditoría. No concede DELETE directo ni borra productos masivamente.16DB+2UI/52core/50admin y revisión independiente aprobados; panel recibido por42307651197 Success. [Detalle y evidencia](ELIMINACION_PRODUCTOS_SUSPENDIDOS_2026-11-06.md). No mobile/storefront/OTA/Worker modificados.

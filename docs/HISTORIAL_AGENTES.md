@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 · cierre: tres tiendas y eliminación disponible en panel
+
+Receipt-only42307651197 Success confirma qj86u6q1u9 como producción, source0eb9047/build42306772895.1, mismo marker en inmutable/alias y22/22rutas/JS/404/cabeceras. Se resolvió recepción después del primer check sin redeploy ni promoción extra. Root contrasta annotations y preserva recibo público más2PNG originales/hash enrepo.16DB+52core+50admin+2UI y auditor APROBADO; tres tiendas públicas verificadas,29tablas protegidas íntegras, ningún producto real eliminado. Función20261106000100 aplicada una vez; panel /admin/productos → Suspendidos disponible. No repetir bloque cerrado. Pendiente asignar responsables reales a Aroma'top/MilyeDent; Mac/Terra conserva diseño. ENTORNO actualizado para no confundir Marketplace operativo con fixtures.
+
 ### 2026-11-06 · panel publicado, comprobación de alias pendiente
 
 Integración0eb9047 pasa52core+50admin+2UI/tipos/lint; solicitud6f8ecf6 dispara42306772895. EASpublica/promociona qj86u6q1u9; markerinmutablecorrecto(source0eb9047/build42306772895.1), peroaliasmantienemarkeranterior36intentos. Root/agenterevisanantecedente20261026 y preparanúnicamentereceipt-only con expectednuevo, sinredeploy/otraDDL. Se preservan2PNG originalesconhashes enrepo; UIerrorinyectadose distingue de protecciónSQLreal. ENTORNO documentaMarketplaceoperativo paraevitarfixtures remotos.
