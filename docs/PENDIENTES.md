@@ -2,7 +2,7 @@
 
 ## Android Mayami · primera etapa publicada
 
-OTA Android `01a1b291-6267-77fe-8daf-42d6f099b488`, runtime `b691ec2b...`, canal preview, CI 42289145866. CI 42289637529 verificó recepción del UUID exacto en emulador Android 15; revisión visual nativa aprobó Inicio/Buscar y detectó la K antigua en el avatar de la tienda; corrección en curso, Samsung físico no observado. Plan y alcance en `REDISENO_APK_2026-11-06.md`. Oliver confirmó como reales las tarifas y transportistas actuales aun con marca histórica `is_demo`; no cambiar sus importes ni reactivar productos suspendidos.
+OTA Android final `01a1b2b6-b081-737c-a5d0-323778626f9e`, runtime `b691ec2b...`, canal preview, CI 42294811024. CI 42295303905 verificó recepción del UUID exacto en emulador Android 15; M verificada en Android claro/oscuro; Samsung físico no observado. Oliver considera insuficiente la renovación y pide referencias visuales móviles inspiradas en Amazon antes de seguir. Plan y alcance en `REDISENO_APK_2026-11-06.md`. Oliver confirmó como reales las tarifas y transportistas actuales aun con marca histórica `is_demo`; no cambiar sus importes ni reactivar productos suspendidos.
 
 ## En curso: renovación web comercial
 

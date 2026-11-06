@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 2026-11-06 — corrección de avatar Android recibida
+
+Revisión nativa anterior detectó la K antigua en el avatar de la tienda. Se reemplazó solo para el UUID Mayami y la ruta heredada; nueva ruta del propietario y otras tiendas prevalecen, sin mutar Storage. CI 42293770915 aprobó 57 recorridos y 13 unitarias; revisión independiente web aprobó la M clara/oscura. OTA correctiva 42294811024 Success, fuente `7b3b9c7`, grupo `a6bb44a9-97bb-4698-99f2-d6b19cc63271`, UUID `01a1b2b6-b081-737c-a5d0-323778626f9e`, runtime Mayami. Emulador 42295303905 Success recibió UUID exacto y completó recorridos; M nativa verificada por revisor en claro y oscuro. Oliver considera insuficiente el resultado visual y solicita referencias móviles inspiradas en Amazon; no confundir verificación técnica con aprobación del propietario. Samsung físico no observado. Oliver confirmó tarifas y transportistas actuales como reales pese a marca interna; no alterados.
+
 ### 2026-11-06 — primera etapa Android publicada y recibida en emulador
 
 Dirección web adaptada: apertura, categorías, títulos completos, navegación y fotos del catálogo. CI 42288014461 55 recorridos/12 política, revisión visual web independiente y export Android local. Consulta Expo 42283919634 Free/con cupo; fingerprint 42286410080 coincide con APK Mayami. OTA 42289145866 Success fuente `3267603`, grupo `4b5d95cb-7bd5-4f41-8ece-956c178434d0`, UUID Android `01a1b291-6267-77fe-8daf-42d6f099b488`. Emulador Android15 CI 42289637529 Success verificó UUID, runtime/canal/backend/invitado y recorridos; revisión nativa aprobó Inicio/Buscar y detectó avatar K antiguo, corrección en curso; no afirmar recepción en Samsung. Oliver confirmó que tarifas y transportistas actuales son reales pese a `is_demo`; sin mutar backend o datos.
