@@ -73,14 +73,14 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByRole('radio', { name: 'Menor precio', exact: true }).focus();
       await page.keyboard.press('Space');
       await expect(sort).toHaveAccessibleName('Ordenar: Menor precio');
-      await expect(page.getByText('Menor precio', { exact: true })).toBeVisible();
+      await expect(page.getByTestId('explore-list').getByText('Menor precio', { exact: true })).toBeVisible();
       await sort.click();
       await expect(page.getByRole('radio', { name: 'Menor precio', exact: true })).toHaveAttribute('aria-checked', 'true');
       await page.keyboard.press('Escape');
       await expect(sort).toHaveAccessibleName('Ordenar: Menor precio');
     });
 
-    test('commercial states stay visible, favourites are discreet and touchable, titles remain one line', async ({ page }) => {
+    test('commercial states stay visible, favourites are touchable and titles remain readable', async ({ page }) => {
       // Controlled visual fixtures only: no catalog, financial or remote data is changed.
       await page.route('**/rest/v1/rpc/search_products*', async (route) => {
         const response = await route.fetch();
