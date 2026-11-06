@@ -26,7 +26,7 @@ export function ProductCardSkeleton({ width }: { width: number }) {
     <View testID="catalog-card-loading" style={{ width, borderRadius: 10, overflow: 'hidden', backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border }}>
       <View style={{ margin: 5 }}><Skeleton height={width - 12} radius={7} /></View>
       <View style={{ padding: 10, gap: 4 }}>
-        <Skeleton width="90%" height={18} />
+        <Skeleton width="90%" height={36} />
         <Skeleton width="45%" height={20} />
       </View>
     </View>

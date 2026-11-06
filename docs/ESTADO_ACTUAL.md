@@ -2,7 +2,7 @@
 
 ## Trabajo en curso: dirección web en Android · 6nov2026
 
-Oliver pidió llevar a la APK la opción 2 con cabecera de la 3. Plan en `docs/REDISENO_APK_2026-11-06.md`. Revisadas la cabecera, Inicio, tarjetas y canal Android: conservar flujo de compra y catálogo suspendido; presentación `private-preview` y compatibilidad del APK requieren revisión antes de distribuir. Primer incremento en curso: apertura en tonos de marca con acciones violetas, categorías compactas y nombres de producto sin recorte en tarjetas compartidas. Falta validar, revisar capturas y resolver política de fotos/canal y coste de EAS. No activar servicios con cargos ni publicar en tiendas.
+Oliver pidió llevar a la APK la opción 2 con cabecera de la 3. Plan en `docs/REDISENO_APK_2026-11-06.md`. Revisadas la cabecera, Inicio, tarjetas y canal Android: conservar flujo de compra y catálogo suspendido; presentación `private-preview` y compatibilidad del APK requieren revisión antes de distribuir. Primer incremento en curso: apertura en tonos de marca con acciones violetas, categorías compactas y nombres de producto sin recorte en tarjetas compartidas. CI inicial 42283180958: 37 pruebas pasan y 18 fallan; se corrigen recorte de texto y geometría del esqueleto, y se compara checkout contra la fuente anterior. Consulta de solo lectura 42283919634 confirma Expo Free y cuota disponible. Falta nueva validación, revisar capturas y resolver política de fotos/canal. No activar servicios con cargos ni publicar en tiendas.
 
 ## Trabajo en curso: renovación web comercial · 6nov2026
 

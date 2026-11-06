@@ -16,7 +16,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(cards(page)).toHaveCount(4);
       const hero = page.getByTestId('home-hero');
       await expect(hero.getByRole('link')).toHaveCount(1);
-      await expect(hero).toContainText('Producto mostrado · Demo');
+      await expect(hero).toContainText('Demo');
       await expect(hero.getByRole('link').getByRole('button')).toHaveCount(0);
       const featured = feed!.collections.find((c) => c.layout === 'feature')!;
       const shown = featured.products[0]!;

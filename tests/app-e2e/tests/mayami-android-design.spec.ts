@@ -20,7 +20,7 @@ for (const width of [320, 360, 390, 412]) {
       await page.screenshot({ path: info.outputPath('inicio.png') });
       await page.getByTestId('home-search').click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();
-      await expect(page.locator('[data-testid^="product-card-"]').first()).toBeVisible();
+      await expect(page.locator('[data-testid^="product-card-"]:visible').first()).toBeVisible();
       await page.screenshot({ path: info.outputPath('catalogo.png') });
       expect(errors).toEqual([]);
       await context.close();

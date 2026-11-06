@@ -127,7 +127,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(card).toBeVisible();
       const cardBox = (await card.boundingBox())!;
       expect(cardBox.y).toBe(skeletonBox.y);
-      expect(cardBox.height).toBe(skeletonBox.height);
+      // Product names can occupy a variable number of lines; the placeholder approximates two.
+      expect(Math.abs(cardBox.height - skeletonBox.height)).toBeLessThanOrEqual(24);
       const before = (await page.getByTestId('catalog-controls').boundingBox())!;
       await page.getByTestId('chip-category-belleza').click();
       await expect(page.getByTestId('catalog-controls')).toBeVisible();

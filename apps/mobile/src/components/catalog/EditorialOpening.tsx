@@ -31,8 +31,8 @@ export function EditorialOpening({ block, product, width, onOpen }: {
           <ProductImage productId={product.id} productIsDemo={product.is_demo} aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={10} priority="high" style={{ width: photoWidth }} />
           <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
             <Text variant="overline" color="editorial">Colección Mayami</Text>
-            <Text variant="subtitle" numberOfLines={2}>{block.title}</Text>
-            <Text testID="home-editorial-name" variant="caption" color="textSecondary" numberOfLines={2}>{product.title}{product.is_demo && !isPrivateCatalogPresentation ? ' · Demo' : ''}</Text>
+            <Text variant="subtitle">{block.title}</Text>
+            <Text testID="home-editorial-name" variant="caption" color="textSecondary">{product.title}{product.is_demo && !isPrivateCatalogPresentation ? ' · Demo' : ''}</Text>
             <Text testID="home-editorial-price" variant="price" tabular>{formatUSD(product.price_usd)}</Text>
             {product.availability !== 'available' ? <Text variant="caption" color="textSecondary">{availability.label}</Text> : null}
             <View style={{ minHeight: 40, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, backgroundColor: t.colors.brand }}>

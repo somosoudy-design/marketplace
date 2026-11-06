@@ -53,3 +53,40 @@ jobs:
             tests/app-e2e/playwright-report
           if-no-files-found: ignore
           retention-days: 30
+  baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      EXPO_NO_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: 10212a4c856fcae5f8c4fb7c8691a9de16d9fdc4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.23.3
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Bloquear proyectos alojados
+        run: printf '127.0.0.1 mimnotafmfasvwrclxan.supabase.co bfuggvbgttvcygbexqyn.supabase.co\n' | sudo tee -a /etc/hosts > /dev/null
+      - name: Stack y exportación previos
+        run: |
+          pnpm stack:start
+          bash tools/local-stack/app-env.sh
+          pnpm --filter @kora/mobile export:web
+      - name: Navegador
+        run: |
+          chrome_bin="$(command -v google-chrome || command -v google-chrome-stable || true)"
+          if [ -n "$chrome_bin" ]; then printf 'PW_CHROMIUM_PATH=%s\n' "$chrome_bin" >> "$GITHUB_ENV"; else pnpm --filter @kora/app-e2e exec playwright install --with-deps chromium; fi
+      - name: Comparar fallos previos en checkout y apertura
+        working-directory: tests/app-e2e
+        run: pnpm exec playwright test -c playwright-app.config.ts home-v2.spec.ts marketplace-composition.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mayami-android-baseline-${{ github.run_id }}
+          path: tests/app-e2e/test-results
+          if-no-files-found: ignore
+          retention-days: 30

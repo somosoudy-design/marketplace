@@ -28,7 +28,7 @@ export function ProductEditorialOpening({ product, width, onOpen }: { product: P
           <ProductImage productId={product.id} productIsDemo={product.is_demo} path={product.image_path} tone={product.tone} alt={product.title} fit="contain" aspect={1} radius={10} priority="high" style={{ width: photoWidth }} />
           <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
             <Text variant="overline" color="editorial">Descubre Mayami</Text>
-            <Text testID="home-editorial-name" variant="subtitle" numberOfLines={3}>{product.title}</Text>
+            <Text testID="home-editorial-name" variant="subtitle">{product.title}</Text>
             <Text testID="home-editorial-price" variant="price" tabular>{formatUSD(product.price_usd)}</Text>
             {product.availability !== 'available' ? <Text variant="caption" color="textSecondary">{availability.label}</Text> : null}
             <View style={{ minHeight: 40, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8, backgroundColor: t.colors.brand }}>
