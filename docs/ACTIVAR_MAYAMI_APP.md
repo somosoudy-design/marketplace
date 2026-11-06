@@ -1,5 +1,15 @@
 # Activar y mantener mayami.app
 
+## Cobros oficiales configurados · 6nov2026 14:12 UTC
+
+Zelle USD y Binance interna USDT están habilitados con los datos de recepción proporcionados por Oliver. Ambos requieren referencia y comprobante; cada reporte queda en verificación hasta que Mayami comprueba el abono. Binance usa el canal manual nuevo `binance_internal`, con correo, alias, moneda e ID interno completo. Los datos reales viven en la configuración operativa y respaldos privados; las fixtures públicas usan example.com.
+
+Snapshot posterior: 8 métodos, sólo 2 habilitados. Zelle cambia únicamente instrucciones y activación; conserva sus políticas. Binance hereda los parámetros financieros USDT y base divisas. Los otros 6 métodos siguen deshabilitados e intactos. El contenido completo de 36 pedidos, 22 cotizaciones, 6 pagos y 39 obligaciones permanece idéntico. Ensayo con rollback, aplicación única y trigger de auditoría verificados, sin transferencias ni compras remotas.
+
+[CI 42231006870](https://github.com/somosoudy-design/marketplace/actions/runs/42231006870) SUCCESS, fuente `41b5e67`: 57 UI, 24 Node, 3 pruebas de marca, tipos, lint, build y guards. Dos capturas finales a 320 px aprobadas independientemente. Lectura pública real: 2 métodos correctos, 6 tablas privadas con 401/42501 y mayami.app con 200. La revisión de código confirma que API y panel admiten la revisión del nuevo canal manual. Sin APK/OTA ni prueba de pago con fondos reales.
+
+Este bloque está terminado. No repetir la activación ni desplegar el Worker por esta configuración; se conservan fuente ejecutable `116e569` y versión `897b0966`. Workers Free sigue vigente, sin servicios de pago contratados. La siguiente operación corresponde a Mayami: comprobar los abonos reales antes de confirmar cada pago. [Informe y límites](PAGOS_MANUALES_MAYAMI_2026-11-06.md).
+
 ## Mayami público en Workers Free · cierre del 6nov2026
 
 Verificado 2026-11-06 07:35 UTC. https://mayami.app está abierto **sin Access exclusivo del propietario**. Fuente ejecutable 116e569, Worker 897b0966-ade6-4799-ad8e-4b250d384ad2/100%; Workers Free $0 confirmado en UI. No Paid ni servicio con cargos. Los commits documentales posteriores no requieren redeploy.
@@ -12,9 +22,9 @@ Catálogo aplicado UNA VEZ:41 publicados,3 suspendidos;40 aprobados con53 imáge
 
 Contacto: soporte@mayami.app→Gmail verificado, Routing ready/synced. SMTP Resend Free sin tarjeta, auth.mayami.app Verified, remitenteMayami; una recuperación llegó a INBOX sin cambiar contraseña ni consumir token. Site URL y2 callbacks HTTPS exactos activados, sin alterar confirmación preexistente. No se declara cambio de contraseña/registro remoto completo ni envío humano como soporte desdeGmail.
 
-**Pendiente exclusivo de cobro:**5 métodos ficticios deshabilitados sólo en enabled, con auditoría/ensayo;7 filas e historia financiera intactas,1 pedido pendiente preservado. La web conserva carrito/recuperación y no confirma sin método real. Falta elección de efectivoUSD coordinado o datos reales de recepción del propietario. No inventar cuentas/oficinas ni activar pagos/gastos para aparentar cierre. No volver a limitar la tienda al propietario.
+**Cobro resuelto a las14:12 UTC:** Zelle y Binance interna manual están habilitados según el bloque superior y el informe de pagos. La deshabilitación anterior de los cinco métodos ficticios se conserva como antecedente; no volver a dejar cero métodos ni activar canales sin datos autorizados.
 
-Próxima acción: atender esa respuesta y configurar sólo el canal autorizado. No repetir publicación/mediciones cerradas sin cambios. APK/OTA/iOS y otros proyectos intactos.
+Próxima acción: operación oficial con los dos canales manuales configurados; comprobar cada abono antes de confirmar. No repetir publicación, activación ni mediciones cerradas sin cambios. APK/OTA/iOS y otros proyectos intactos.
 
 ## Cuenta y configuración comprobadas
 

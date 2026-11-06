@@ -1,5 +1,15 @@
 # Historial de agentes
 
+### 2026-11-06 14:12 UTC — Zelle y Binance interna oficiales, Workers Free
+
+Oliver proporcionó recepción Zelle y confirmó transferencias internas manuales Binance. Root integra; especialistas revisan esquema/DO, flujo/manual y capturas. Configuración aplicada UNA VEZ desde sesión autorizada del proyecto Marketplace:8 filas, sólo zelle/binance_internal habilitadas. Zelle conserva todo salvo instructions/enabled; nuevo Binance manual USDT hereda finanzas de USDT/divisas y exige referencia/comprobante. Seis filas restantes intactas/deshabilitadas. No pasarela automática ni dirección TRC-20 configuradas.
+
+Snapshot completo, ensayo atómico con excepción final/rollback y segunda lectura antes de aplicar. Trigger de auditoría comprobado. Después:36orders/22quotes/6payments/39obligations idénticos por huella completa; sólo configuración de métodos cambia. Lectura anónima2métodos200,6tablas privadas401/42501 y raíz pública200. Datos reales se conservan en configuración/respaldos ignorados; tests usan example.com. Sin dinero, pedidos/fixtures remotos, migración, redeploy Worker ni servicio con cargos.
+
+CI42229560165:57/57 UI; primera revisión visual detecta enlace fijo en captura larga por scroll. CI42230347095:55/57; dos nuevas aserciones esperaban alerta custom donde required actúa nativamente. Se corrigen las pruebas, sin tocar producto ni retirar validaciones. CI42231006870 SUCCESS sobre41b5e67:57 UI/24 Node/3 marca y tipos/lint/build/guards. Prueba vacío/required,123/alerta, referencia sin prueba/rechazo, comprobante/reporte pendiente con saldo0. Dos PNG finales320 claro/oscuro aprobados independientemente; ZIP9.749.458B/hash f70f80a8…/CRC verificados. Fuente de API/panel revisada para confirmación manual genérica; no confirmación con fondos ni teléfono físico.
+
+Trabajo de cobro cerrado. Workers Free vigente; fuente ejecutable116e569/versión897b0966 conservadas y auditoría CPU previa no requiere repetir por datos. [Informe de pagos](PAGOS_MANUALES_MAYAMI_2026-11-06.md). No repetir SQL ni imponer acceso privado; continuar operación comercial y ajustes que gestione Oliver.
+
 ### 2026-11-06 07:35 UTC — Mayami público y Workers Free verificados
 
 Access del Worker retirado según autorización oficial; raíz pública anónima200, fuente 116e569/version897b0966/100%. CI42178600179:55 UI,24 Node,3 marca y builds/guards aprobados;55 UI ZIP con digest verificado, auditor independiente aprueba web pública, SSR sin JS y guardias de pago.53 fotos+15 CSS/JS porhash,TLS/redirecciones/robots/noindex privado. No Paid ni gastos nuevos; Workers Free $0 yResend Free sin tarjeta comprobados.
