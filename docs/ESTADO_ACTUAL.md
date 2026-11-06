@@ -4,15 +4,15 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## Activación de mayami.app · Mac sincronizado, acceso a Chrome pendiente · 5 de noviembre
+## Activación de mayami.app · permiso macOS resuelto; ajuste Chrome pendiente · 6 de noviembre
 
-Oliver mantiene autorizada la configuración del dominio y el acceso con su cuenta Google indicada. Ejecución real en macOS, `~/marketplace`; árbol original limpio, avance directo `9d22155`→`600e538` (233 commits). Revisión independiente aprobada: HEAD=origin, árbol/índice limpios y 375/375 archivos de app/marca presentes con hash Git correcto. Por fallos/lentitud de descarga se usa copia parcial con remoto promisor y sparse que aplaza sólo 1.191 archivos multimedia bajo docs; fuente y textos completos. Configuración y recuperación documentadas en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md).
+Oliver confirmó habilitar Automatización. Comprobado: AppleScript ya consulta ventanas/pestañas/URL/título de Chrome. Rama revisada al retomar: `7d5b909`, árbol limpio y remoto sincronizado. Fuente y recursos conservados; detalles de la copia promisor/sparse y las comprobaciones del 5nov en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md).
 
-DNS público comprobado a las 19:23 UTC / 15:23 Caracas: `morgan.ns.cloudflare.com`, `laylah.ns.cloudflare.com`; raíz sin A/AAAA/CNAME y www sin resolución. HTTPS no pudo resolverlos. No acredita propiedad de la cuenta. Evidencia ignorada sólo en este Mac: `.local/mayami-domain-20261105/public-dns-before.json`.
+**Trabajo en curso / bloqueo:** Chrome devuelve error 12 al consultar el contenido de la página: JavaScript para eventos de Apple está desactivado. Se abrió una pestaña real de `https://dash.cloudflare.com/`, título «Un momento…»; no acredita login ni cuenta accesible. Se pidió habilitar **Ver → Desarrollador → Permitir JavaScript para eventos de Apple**. No volver a pedir Automatización de macOS, que ya funciona.
 
-**Trabajo en curso / bloqueo:** macOS niega automatización de Chrome (`-1743`). Se solicitó abrir Cloudflare/Ajustes, sin acceso verificable al navegador. No se pudo usar la sesión ni iniciar Google. No se cambiaron DNS, TLS, hosting, backend o app. `publicWebOrigin=null`. Las cinco pruebas del helper GET pasan en este Mac con respuestas simuladas; no equivalen a inspección autenticada. Los builds/UI descritos en el relevo son validaciones de la preparación anterior, no nuevos despliegues.
+DNS público actualizado a las 04:12 UTC / 00:12 Caracas del 6nov, 1.1.1.1: NS Morgan/Laylah, raíz sin A/AAAA/CNAME y www NXDOMAIN en A/CNAME. Evidencia ignorada: `.local/mayami-domain-20261106/public-dns-before.json`. Sin login Google, lectura de Gmail ni cambios remotos o de app. `publicWebOrigin=null`; sin nuevos builds ni pruebas de compra. Las cinco pruebas del helper descritas antes se ejecutaron el 5nov con mocks.
 
-**Próxima acción exacta:** habilitar Codex → Google Chrome en Privacidad y seguridad → Automatización; comprobar control real y sesión del propietario. Después inventariar zona/DNS y alojamiento SSR, verificar origen HTTPS/rutas y sólo entonces asociar el dominio. Sigue pendiente cerrar catálogo vendible/fotos comerciales, operador/políticas y retornos antes de abrir pedidos. La autorización ya está dada; no repetir build Android, diseño o checkout para resolver el acceso al navegador.
+**Próxima acción exacta:** habilitar el ajuste indicado por Chrome, comprobar acceso al contenido y sesión real. Después inventariar zona/registros y alojamiento SSR, verificar HTTPS/rutas del origen y asociar el dominio. La autorización de configuración y uso de la cuenta indicada sigue vigente. Antes de abrir pedidos continúan pendientes catálogo/fotos comerciales, operador/políticas y retornos de pago.
 
 ## APK Android mayami · binario y emulador aprobados · 5 de noviembre
 
