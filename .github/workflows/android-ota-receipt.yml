@@ -1,0 +1,71 @@
+name: Android Mayami - recepción OTA en emulador
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/android-ota-receipt-request.json']
+permissions:
+  contents: read
+concurrency:
+  group: mayami-ota-receipt
+  cancel-in-progress: false
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      MAESTRO_CLI_NO_ANALYTICS: '1'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Validar identidad esperada
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const r=JSON.parse(readFileSync('.github/android-ota-receipt-request.json','utf8'));
+          const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+          const f={MAYAMI_BUILD_ID:[r.buildId,uuid],MAYAMI_BUILD_COMMIT:[r.commit,/^[a-f0-9]{40}$/],MAYAMI_RUNTIME:[r.runtime,/^[a-f0-9]{40}$/],MAYAMI_UPDATE_ID:[r.updateId,uuid]};
+          for(const [k,[v,re]] of Object.entries(f)){if(!re.test(v??''))throw new Error('Invalid expected identity '+k);appendFileSync(process.env.GITHUB_ENV,`${k}=${v}\n`)}
+          JS
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verificar APK existente y firma
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          mkdir -p shots/native
+          node tools/eas/wait-native-build.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME"
+          node tools/eas/signing-reference.mjs --output shots/native/signing-reference.json
+          node tools/eas/download-native-preview.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME" shots/native/signing-reference.json
+          certificate=$(node -p "JSON.parse(require('fs').readFileSync('shots/native/signing-reference.json','utf8')).certificateSha256")
+          node tools/eas/verify-native-apk.mjs --build-json apks/native-build.json --source "$MAYAMI_BUILD_COMMIT" --runtime "$MAYAMI_RUNTIME" --certificate "$certificate" --apk apks/mayami-preview.apk --output apks
+      - name: Preparar Maestro y emulador
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          curl -fsSL --retry 3 https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Comprobar UUID exacto y navegación sin cuenta
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/eas/native-ota-receipt.sh
+      - name: Conservar evidencia original
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mayami-ota-receipt-${{ github.run_id }}
+          path: shots/ota/
+          if-no-files-found: warn
+          retention-days: 30
