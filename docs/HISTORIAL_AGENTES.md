@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-06 · Automatización del Mac resuelta; ajuste de Chrome pendiente
+
+Oliver confirma habilitar el permiso. Root verifica lectura real de ventanas/pestañas/URL/título mediante AppleScript; ya no aparece -1743. Revisa rama limpia y sincroniza al retomar7d5b909. Abre pestaña real dash.cloudflare.com, título «Un momento…», sin afirmar login ni acceso autenticado. Chrome deniega consultar el contenido con error12 y pide Ver→Desarrollador→Permitir JavaScript para eventos de Apple; se comunica al propietario. No se modifica ese control por otro mecanismo ni se extraen sesiones/secretos.
+
+Actualización DNS sólo lectura a04:12UTC/00:12Caracas: NSMorgan/Laylah, raíz sin A/AAAA/CNAME y wwwNXDOMAIN. JSON local ignorado en .local/mayami-domain-20261106/public-dns-before.json. Sin cambios DNS/TLS/hosting/backend/app, sin loginGoogle o lecturaGmail. No nuevos builds ni suites, porque sólo cambia el relevo del bloqueo. Próximo: habilitar el ajuste Chrome y verificar sesión real antes del inventario de cuenta/origen y configuración de dominio ya autorizada.
+
 ### 2026-11-05 · sincronización en el Mac y bloqueo de automatización de Chrome
 
 Root localiza `~/marketplace` en macOS; el cwd SUMMA del contexto ya no existe. Árbol original limpio, fetch y avance directo de 233 commits (`9d22155`→`600e538`), sin reescritura ni pérdida de cambios. Descarga normal falla/se interrumpe por lentitud: Git promisor/blob:none, sparse sólo para seis formatos multimedia de docs y recuperación de objetos con comprobación Git. No se modifican fuente, recursos de app ni marca. Auditor sólo lectura aprueba HEAD=origin, árbol/índice limpios y hashes 375/375 de apps/assets; exactamente 1.191 multimedia docs aplazados, textos completos. Recuperación local documentada en ACTIVAR_MAYAMI_APP.md.
