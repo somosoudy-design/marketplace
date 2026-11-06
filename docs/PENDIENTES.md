@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Operación de tiendas y eliminación segura · 6nov
+
+Cerrar aplicación única de tres tiendas después del ensayo ya aprobado; verificar API anónima,29huellas y auditoría. Después RPC/panel para eliminar suspendidos individualmente sin pedidos/carritos/reseñas. [Alcance y coordinación con Mac](OPERACION_TIENDAS_2026-11-06.md). No tocar diseño ni republicar Android.
+
 ## Android Mayami · primera etapa publicada
 
 OTA Android final `01a1b2b6-b081-737c-a5d0-323778626f9e`, runtime `b691ec2b...`, canal preview, CI 42294811024. CI 42295303905 verificó recepción del UUID exacto en emulador Android 15; M verificada en Android claro/oscuro; Samsung físico no observado. Oliver considera insuficiente la renovación y pide referencias visuales móviles inspiradas en Amazon antes de seguir. Plan y alcance en `REDISENO_APK_2026-11-06.md`. Oliver confirmó como reales las tarifas y transportistas actuales aun con marca histórica `is_demo`; no cambiar sus importes ni reactivar productos suspendidos.

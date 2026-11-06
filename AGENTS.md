@@ -29,6 +29,8 @@ capacidades. Detalle en `docs/DIRECCION_PRODUCTO.md`.
 
 **Publicación oficial autorizada el6nov2026:** Oliver ordenó abrir mayami.app sin acceso exclusivo del propietario, mantener Workers Free y no activar ningún servicio con cargos. Aprobó retirar los3productos sin imagen profesional y oficializar los40con recursos preparados más DJI; conservar metadata de origen y el historial. Mayami es el nombre comercial y soporte@mayami.app el contacto configurado. No volver a pedir permiso genérico de dominio/publicación. No inventar cuentas de cobro ni datos fiscales. Ver estado vigente en docs/ACTIVAR_MAYAMI_APP.md.
 
+**Operación y coordinación del6nov2026:** Oliver confirma marketplace en funciones; tratar datos remotos como reales y conservar su historial. El diseño/implementación Android sigue en el Mac con Terra; el frente de nube se limita a tiendas y eliminación segura de suspendidos. No modificar fuentes de UI móvil/storefront ni publicar desde este frente. Detalle en `docs/OPERACION_TIENDAS_2026-11-06.md`. Esta directriz no elimina metadata de origen, convierte muestras en ventas ni autoriza borrar pedidos.
+
 ## Personas
 
 - **Oliver**: dueño del producto. Decide producto, gastos, cuentas externas y publicación.
