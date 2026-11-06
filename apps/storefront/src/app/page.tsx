@@ -42,7 +42,7 @@ export default async function Home() {
               <ProductPhoto id={lead.id} path={lead.image_path} demo={lead.is_demo} title={lead.title} priority />
               <div>
                 <span>{lead.brand_name || lead.category_name}</span>
-                <h2>{catalogText(lead.title, lead.is_demo)}</h2>
+                <h2>{catalogText(lead.title, lead.is_demo, lead.id)}</h2>
                 <strong>{money(lead.price_usd)}</strong>
                 <ArrowUpRight size={22} />
               </div>

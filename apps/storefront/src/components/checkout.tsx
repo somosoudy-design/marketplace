@@ -600,7 +600,11 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                 <ArrowRight size={17} />
               </button>
               {step === 3 && (
-                <p className="confirmation-note">Confirmar crea tu pedido. El pago se realiza a continuación.</p>
+                <p className="confirmation-note">
+                  Confirmar crea tu pedido. El pago se realiza a continuación. Consulta los{' '}
+                  <Link prefetch={false} href="/terminos">términos</Link> y las{' '}
+                  <Link prefetch={false} href="/devoluciones">devoluciones</Link>.
+                </p>
               )}
             </div>
           )}

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /cuenta
+Disallow: /registro
+Disallow: /recuperar
+Disallow: /carrito
+Disallow: /favoritos
+Disallow: /checkout
+Disallow: /direcciones
+Disallow: /notificaciones
+Disallow: /pedidos
+Disallow: /pagar
+Disallow: /auth/

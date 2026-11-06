@@ -108,6 +108,10 @@ export default function Page() {
             {signup.error.name === 'ValidationError' ? signup.error.message : toAppError(signup.error).message}
           </p>
         )}
+        <p className="legal-note">
+          Consulta los <Link prefetch={false} href="/terminos">términos</Link> y la{' '}
+          <Link prefetch={false} href="/privacidad">política de privacidad</Link> antes de crear tu cuenta.
+        </p>
         <button className="button" disabled={signup.isPending}>
           {signup.isPending ? 'Creando cuenta…' : 'Crear cuenta'}
         </button>

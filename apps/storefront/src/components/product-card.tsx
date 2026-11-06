@@ -4,7 +4,7 @@ import { presentAvailability } from '@kora/core';
 import { ProductPhoto } from './photo';
 import { Favorite } from './favorite';
 import { money } from '@/lib/format';
-import { catalogText, localExhibition } from '@/lib/photos';
+import { catalogText, catalogSample, localExhibition } from '@/lib/photos';
 export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
   const availability = presentAvailability(product.availability);
   return (
@@ -19,7 +19,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
         />
         <div className="product-copy">
           <span className="product-brand">{product.brand_name || product.store_name}</span>
-          <h3>{catalogText(product.title, product.is_demo)}</h3>
+          <h3>{catalogText(product.title, product.is_demo, product.id)}</h3>
           <div className="product-price">
             <strong>{money(product.price_usd)}</strong>
             {!product.is_demo && product.compare_at_usd != null && product.compare_at_usd > product.price_usd && (
@@ -27,7 +27,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
             )}
           </div>
           {product.availability !== 'available' && <span className="availability">{availability.label}</span>}
-          {product.is_demo && !localExhibition && <span className="availability">Producto de muestra</span>}
+          {catalogSample(product.id, product.is_demo) && !localExhibition && <span className="availability">Producto de muestra</span>}
         </div>
       </Link>
       <Favorite id={product.id} title={product.title} />

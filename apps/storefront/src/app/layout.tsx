@@ -19,7 +19,8 @@ export const metadata: Metadata = {
   title: { default: `${brand.name} · Encuentra lo que buscas`, template: `%s · ${brand.name}` },
   description: brand.tagline,
   icons: { icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' } },
-  robots: { index: false, follow: false },
+  metadataBase: new URL('https://mayami.app'),
+  robots: { index: true, follow: true },
 };
 export const viewport: Viewport = { themeColor: '#6D42E8' };
 export default function Layout({ children }: { children: React.ReactNode }) {

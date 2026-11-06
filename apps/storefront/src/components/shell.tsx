@@ -72,6 +72,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <BrandMark />
         </Link>
         <p>{brand.tagline}</p>
+        <nav className="legal-links" aria-label="Información de Mayami">
+          <Link prefetch={false} href="/terminos">Términos</Link>
+          <Link prefetch={false} href="/privacidad">Privacidad</Link>
+          <Link prefetch={false} href="/devoluciones">Devoluciones</Link>
+          <Link prefetch={false} href="/contacto">Contacto</Link>
+        </nav>
         <Link prefetch={false} href="/buscar">
           Explorar el catálogo <ArrowUpRight size={16} />
         </Link>

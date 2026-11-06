@@ -12,7 +12,7 @@ import { ProductGrid } from './product-card';
 import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 import { money } from '@/lib/format';
-import { catalogText, localExhibition, photo } from '@/lib/photos';
+import { catalogText, catalogSample, catalogGallery, localExhibition, photo } from '@/lib/photos';
 export function ProductDetail({ product }: { product: Product }) {
   const { session } = useAccount();
   return <DetailSession key={`${product.id}:${session?.user.id ?? 'guest'}`} product={product} />;
@@ -31,6 +31,7 @@ function DetailSession({ product: p }: { product: Product }) {
   const availability = presentAvailability(p.availability);
   const max = Math.max(0, Math.min(p.max_per_order, variant?.stock ?? p.max_per_order));
   const reference = photo(p.id, image, p.is_demo, selected);
+  const gallery = catalogGallery(p.id, p.images, p.is_demo, selected);
   const add = useMutation({
     mutationFn: () => browser().api.cart.add(selected, quantity),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['cart', session?.user.id] }),
@@ -48,11 +49,9 @@ function DetailSession({ product: p }: { product: Product }) {
       <div className="product-detail">
         <section className="product-gallery" aria-label="Fotografías">
           <ProductPhoto id={p.id} path={image} demo={p.is_demo} title={p.title} variant={selected} priority />
-          {p.images.length > 1 && (
+          {gallery.length > 1 && (
             <div className="thumbnails">
-              {p.images
-                .filter((i) => !localExhibition || !reference || photo(p.id, i.path, p.is_demo, selected))
-                .map((i, index) => (
+              {gallery.map((i, index) => (
                   <button
                     key={i.path}
                     type="button"
@@ -88,6 +87,9 @@ function DetailSession({ product: p }: { product: Product }) {
                   )}
                 </p>
               )}
+              {reference.additionalSources?.map(source => (
+                <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label}</a>
+              ))}
               {reference.originUrl && (
                 <a href={reference.originUrl} target="_blank" rel="noreferrer">
                   Fuente original
@@ -99,7 +101,7 @@ function DetailSession({ product: p }: { product: Product }) {
         <section className="product-information">
           <span className="eyebrow">{p.brand_name || p.category_name}</span>
           <div className="detail-title">
-            <h1>{catalogText(p.title, p.is_demo)}</h1>
+            <h1>{catalogText(p.title, p.is_demo, p.id)}</h1>
             <Favorite id={p.id} title={p.title} />
           </div>
           <Link prefetch={false} className="seller-link" href={`/buscar?store=${p.store.slug}`}>
@@ -114,7 +116,7 @@ function DetailSession({ product: p }: { product: Product }) {
               p.lead_max_days != null &&
               ` · Estimado: ${p.lead_min_days}–${p.lead_max_days} días`}
           </p>
-          {p.is_demo && !localExhibition && (
+          {catalogSample(p.id, p.is_demo) && !localExhibition && (
             <p className="notice">Producto de muestra. No es una oferta comercial pública.</p>
           )}
           <div className="variant-picker">
@@ -188,7 +190,7 @@ function DetailSession({ product: p }: { product: Product }) {
                 ))}
               </ul>
             ) : null}
-            {p.description && <p>{catalogText(p.description, p.is_demo)}</p>}
+            {p.description && <p>{catalogText(p.description, p.is_demo, p.id)}</p>}
           </div>
           {p.store.shipping_info && (
             <details className="shipping-details">

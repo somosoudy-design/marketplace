@@ -227,5 +227,26 @@ test('navegación sin precargas especulativas conserva SSR y enlaces', async ({ 
   expect(await icon.text()).toContain('aria-label="MAYAMI"');
   await page.getByTestId('product-card').first().locator('a').first().click();
   await expect(page.getByRole('heading', { name: 'Sobre este producto' })).toBeVisible();
+  expect(await page.title()).toContain(await page.getByRole('heading', { level: 1 }).innerText());
   expect(speculative).toEqual([]);
 });
+
+
+for (const colorScheme of ['light', 'dark'] as const) {
+  test(`información comercial pública y enlaces de registro 320 ${colorScheme}`, async ({ browser }, info) => {
+    const context = await browser.newContext({ viewport: { width: 320, height: 844 }, colorScheme });
+    const page = await context.newPage();
+    for (const [path, title] of [['/terminos', 'Términos y condiciones'], ['/privacidad', 'Política de privacidad'], ['/devoluciones', 'Devoluciones, cancelaciones y garantías'], ['/contacto', 'Contacto y soporte']]) {
+      const r = await page.goto(path);
+      expect(r?.status()).toBe(200);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+      await noOverflow(page);
+      await page.screenshot({ path: info.outputPath(path.slice(1) + '.png'), fullPage: true });
+    }
+    await expect(page.getByRole('link', { name: 'soporte@mayami.app', exact: true }).first()).toHaveAttribute('href', 'mailto:soporte@mayami.app');
+    await page.goto('/registro');
+    await expect(page.locator('.legal-note a[href="/terminos"]')).toBeVisible();
+    await expect(page.locator('.legal-note a[href="/privacidad"]')).toBeVisible();
+    await context.close();
+  });
+}

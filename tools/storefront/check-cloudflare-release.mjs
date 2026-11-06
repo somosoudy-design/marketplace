@@ -1,5 +1,6 @@
 // Inspect the adapted artifact that is actually uploaded, after verify:release checks Next's output.
 import assert from 'node:assert/strict';
+import { verifyCommercialCatalog } from './check-commercial-catalog.mjs';
 import { existsSync, readFileSync, readdirSync, statSync, realpathSync } from 'node:fs';
 import { dirname, resolve, relative, basename, sep, isAbsolute } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -11,6 +12,7 @@ export function verifyCloudflareArtifact(app) {
   assert(existsSync(resolve(artifact, 'worker.js')), 'Build the Cloudflare worker first.');
   assert(existsSync(resolve(artifact, 'assets')), 'Cloudflare asset output is missing.');
   verifyCompiledEnvironments(resolve(artifact, 'cloudflare/next-env.mjs'));
+  if (existsSync(resolve(app, 'src/data/commercial-catalog.json'))) verifyCommercialCatalog(app, resolve(artifact, 'assets'));
   let files = 0;
   let bytes = 0;
   for (const entry of readdirSync(artifact, { recursive: true, withFileTypes: true })) {

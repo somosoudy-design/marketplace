@@ -31,9 +31,10 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Pruebas del artefacto y tipos
         run: |
-          node --test tools/storefront/check-cloudflare-release.test.mjs tools/storefront/inspect-cloudflare.test.mjs
+          node --test tools/storefront/check-cloudflare-release.test.mjs tools/storefront/inspect-cloudflare.test.mjs tools/storefront/commercial-catalog.test.mjs
           pnpm --filter @kora/storefront typecheck
           pnpm --filter @kora/storefront lint
+          pnpm --filter @kora/admin exec vitest run test/brand-presentation.test.ts
       - name: Aislar los proyectos alojados durante las pruebas
         run: |
           printf '127.0.0.1 mimnotafmfasvwrclxan.supabase.co bfuggvbgttvcygbexqyn.supabase.co\n' | sudo tee -a /etc/hosts > /dev/null

@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { createApi, createKoraClient } from '@kora/api';
 import { env, configured } from './env';
 /** New anonymous client per server read. No browser credentials or private response cache. */
@@ -14,3 +15,10 @@ export function publicApi() {
     }),
   );
 }
+
+/** React resets this memoization for each server request. No session or persistent catalog cache. */
+export const publicProduct = cache(async (slug: string) => {
+  const api = publicApi();
+  const id = await api.catalog.productIdBySlug(slug);
+  return id ? api.catalog.product(id) : null;
+});

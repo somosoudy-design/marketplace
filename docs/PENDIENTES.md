@@ -1,5 +1,18 @@
 # Pendientes de mayami
 
+## Checkpoint oficial · 6nov2026 06:32UTC
+
+Optimización desplegada en Workers Free, versión f9980894-124b-4cca-9642-bada20ed1294, fuente8faeea6. CI42171539369 Success47UI contra stack local. Misma serie24GET:24/24HTTP200 antes y después, sin1102 ni contenido de fallo. Inicio pasó de27precargasRSC a0; latencia mediana215→162,5ms (red/caché no controladas). No equiparar latencia a CPU; tabla persistida posterior pendiente de recuperar. Bundle3976,01KiB/gzip1114,54 frente6451,46/1320,48. No hubo contratación Paid.
+
+Fuente preparada para apertura oficial: manifiesto40productos/92asociaciones/53archivos exactos con procedencia, separado de _exhibition; páginas Términos/Privacidad/Devoluciones/Contacto, SEO público y noindex privado, nombre/contacto Mayami, enlaces oficiales conservando identidad nativa. Metadata y ficha comparten lectura React.cache por petición, sin caché de sesión. Pasan24Node, tipos/lint y3pruebas de marca. Nuevo build/49UI y auditoría visual pendientes; este checkpoint no está desplegado.
+
+EmailRouting Free está enabled=true/statusready con regla soporte@mayami.app al Gmail del propietario verificado; sólo se configuró recepción, no se afirma entrega de una prueba ni SMTP saliente. Supabase SMTPcustom=false; configuración pública actual mailer_autoconfirm=true preexistente (no se relajó). Recuperación de contraseña necesita SMTP real; no declarar correo transaccional resuelto. Cinco métodos manuales contienen placeholders; se pidió elegir efectivo coordinado o aportar datos reales. No publicar cuentas ficticias.
+
+Catálogo remoto aún intacto: respaldo íntegro44productos/104imágenes/63variantes hash3d82b1f56cdbee206c55789a9dc2e75b80ac33bcb8f7755d123caf633b136983. Propuesta SQL transaccional10,7KB para suspender3, anotar aprobación40 y cambiar sólo nombre de tienda Kora→Mayami manteniendo slug; guardas exactas/versiones, imágenes/variantes/origen/precios intactos; terminaROLLBACK. Rehearsal y aplicación todavía pendientes. Access aún no retirado; debe quitarse al publicar la versión comercial, no conservar revisión limitada como resultado.
+
+Próxima acción: compilar/probar versión oficial, revisar capturas independientemente; ensayar SQLROLLBACK/aplicarCOMMIT autorizado; desplegar y retirar Access, comprobar público/SSR/seguridad/CPU, cerrar pagos/SMTP sin cargos. No tocar otros proyectos, APK/OTA/iOS ni ejecutar pedidos reales.
+
+
 ## Publicación oficial y Workers Free · instrucción vigente del 6nov
 
 Oliver decide mantener Workers Free y prohíbe activar Paid u otros servicios con cargos. Solicita optimizar y medir fallos reales, comparación verificable con Veyra y publicación oficial sin acceso limitado. Aprueba retirar del catálogo los productos sin fotografía profesional y oficializar el resto, con ajustes comerciales posteriores a su cargo. Confirma Mayami como nombre comercial y encarga correo @mayami.app y términos/privacidad/devoluciones. No volver a pedir autorización genérica de dominio/publicación ni de Paid: Paid está descartado.

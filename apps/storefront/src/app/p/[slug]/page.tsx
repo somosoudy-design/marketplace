@@ -1,21 +1,20 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { publicApi } from '@/lib/server';
+import { publicProduct } from '@/lib/server';
 import { ProductDetail } from '@/components/product-detail';
 import { Failure } from '@/components/states';
+import { catalogText } from '@/lib/photos';
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  // Public metadata only; no auth/session state in this route.
   const { slug } = await params;
-  return { title: slug.replaceAll('-', ' ') };
+  try { const p = await publicProduct(slug); return { title: p ? catalogText(p.title, p.is_demo, p.id) : 'Producto no encontrado' }; }
+  catch { return { title: 'Producto' }; }
 }
 export default async function Product({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   let product;
   try {
-    const api = publicApi();
-    const id = await api.catalog.productIdBySlug(slug);
-    product = id ? await api.catalog.product(id) : null;
+    product = await publicProduct(slug);
   } catch {
     return <Failure href={`/p/${encodeURIComponent(slug)}`} message="No pudimos cargar el producto." />;
   }

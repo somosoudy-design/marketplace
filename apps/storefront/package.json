@@ -12,10 +12,11 @@
     "lint": "eslint .",
     "tokens": "node --experimental-strip-types ../../packages/design-tokens/scripts/css.ts src/app/tokens.css",
     "verify:release": "node ../../tools/storefront/check-release.mjs",
-    "build:cloudflare": "opennextjs-cloudflare build && pnpm verify:release && pnpm verify:cloudflare",
+    "build:cloudflare": "opennextjs-cloudflare build && pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare",
     "verify:cloudflare": "node ../../tools/storefront/check-cloudflare-release.mjs",
-    "preview:cloudflare": "pnpm verify:release && pnpm verify:cloudflare && opennextjs-cloudflare preview",
-    "deploy:cloudflare": "pnpm verify:release && pnpm verify:cloudflare && opennextjs-cloudflare deploy --keep-vars"
+    "preview:cloudflare": "pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare && opennextjs-cloudflare preview",
+    "deploy:cloudflare": "pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare && opennextjs-cloudflare deploy --keep-vars",
+    "verify:commercial": "node ../../tools/storefront/check-commercial-catalog.mjs"
   },
   "dependencies": {
     "@kora/api": "workspace:*",

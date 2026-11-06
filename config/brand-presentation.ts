@@ -9,8 +9,11 @@ export const brand = {
   name: 'mayami',
   shortName: 'mayami',
   officialDomain: 'mayami.app',
+  legalName: 'Mayami',
+  supportEmail: 'soporte@mayami.app',
+  webDomain: 'mayami.app',
   // Activate only after HTTPS, storefront routes and authentication returns have been verified.
-  publicWebOrigin: null as string | null,
+  publicWebOrigin: 'https://mayami.app' as string | null,
 };
 
 /** Keep shared catalog links usable until the chosen domain is actually serving the storefront. */

@@ -26,6 +26,9 @@ Esta aprobación no incluye iOS, tiendas públicas ni canal production.
 Filosofía: **la complejidad pertenece al sistema; la claridad, al usuario.** Simplifica la experiencia, no las
 capacidades. Detalle en `docs/DIRECCION_PRODUCTO.md`.
 
+
+**Publicación oficial autorizada el6nov2026:** Oliver ordenó abrir mayami.app sin acceso exclusivo del propietario, mantener Workers Free y no activar ningún servicio con cargos. Aprobó retirar los3productos sin imagen profesional y oficializar los40con recursos preparados más DJI; conservar metadata de origen y el historial. Mayami es el nombre comercial y soporte@mayami.app el contacto configurado. No volver a pedir permiso genérico de dominio/publicación. No inventar cuentas de cobro ni datos fiscales. Ver estado vigente en docs/ACTIVAR_MAYAMI_APP.md.
+
 ## Personas
 
 - **Oliver**: dueño del producto. Decide producto, gastos, cuentas externas y publicación.
@@ -98,7 +101,7 @@ Seguridad y dinero:
 Datos y servicios:
 
 - Supabase `bfuggvbgttvcygbexqyn` es de otros productos de Oliver: **no se toca nunca**. El de Kora es
-  `mimnotafmfasvwrclxan` («Marketplace»), que hoy es el entorno de pruebas.
+  `mimnotafmfasvwrclxan` («Marketplace»), autorizado para la publicación oficial del6nov2026. Nunca cargar fixtures remotos.
 - Nunca cargar `supabase/seed.sql` en un proyecto remoto (crea cuentas con clave conocida).
 - Nada destructivo sobre datos importantes (borrados, `DROP`, reinicios) sin autorización explícita.
 - Conservar los indicadores internos `is_demo`/`is_test` y correos de fixtures bajo `example.com`. No

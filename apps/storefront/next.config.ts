@@ -15,9 +15,13 @@ const config: NextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
           { key: 'Content-Security-Policy', value: "frame-ancestors 'none'; base-uri 'self'; object-src 'none'" },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
         ],
       },
+      ...['/cuenta', '/registro', '/recuperar', '/carrito', '/favoritos', '/checkout', '/direcciones',
+        '/notificaciones', '/pedidos/:path*', '/pagar/:path*', '/auth/:path*'].map(source => ({
+        source,
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      })),
     ];
   },
 };

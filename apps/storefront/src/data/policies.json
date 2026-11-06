@@ -1,0 +1,254 @@
+{
+  "updatedAt": "6 de noviembre de 2026",
+  "pages": [
+    {
+      "slug": "terminos",
+      "title": "Términos y condiciones",
+      "lead": "Conoce cómo funcionan tu cuenta, los pedidos, los pagos y las entregas en Mayami.",
+      "sections": [
+        {
+          "heading": "Mayami y las tiendas",
+          "paragraphs": [
+            "Mayami es el nombre comercial del servicio disponible en mayami.app. Puedes consultar productos y realizar pedidos con las opciones que estén disponibles para tu dirección en Venezuela.",
+            "Cada producto identifica la tienda que lo ofrece. Un mismo pedido puede contener productos de varias tiendas y tener entregas separadas. Mayami facilita la gestión del pedido, su seguimiento y la atención de consultas; esto no limita las responsabilidades que correspondan a Mayami o al vendedor conforme a la ley."
+          ]
+        },
+        {
+          "heading": "Tu cuenta",
+          "paragraphs": [
+            "Puedes explorar el catálogo sin crear una cuenta. Para guardar información personal y realizar compras debes identificarte. Las compras deben realizarlas personas con capacidad legal para contratar.",
+            "Proporciona datos veraces y una dirección de entrega completa. Mantén en privado tu contraseña y los códigos de acceso. Si detectas un acceso que no reconoces, cambia tu contraseña y escribe a soporte@mayami.app."
+          ]
+        },
+        {
+          "heading": "Productos, precios y disponibilidad",
+          "paragraphs": [
+            "Antes de comprar, revisa la descripción, la variante, la cantidad, la disponibilidad y las condiciones que aparecen en la ficha. Los productos por encargo tienen condiciones de preparación y entrega distintas de los productos disponibles.",
+            "La revisión de compra muestra los productos, el costo de entrega, el plan de pago y el total antes de confirmar. Cuando corresponda pagar en otra moneda, la cotización indica la moneda, el importe, la tasa aplicada y su vigencia. Una cotización vencida debe actualizarse antes de pagar.",
+            "Si surge una incidencia que impida cumplir lo confirmado, te informaremos para acordar una solución. No sustituiremos un producto ni añadiremos un cobro distinto sin tu aceptación. Los cambios futuros del catálogo no modifican por sí solos las condiciones de un pedido ya confirmado."
+          ]
+        },
+        {
+          "heading": "Confirmación del pedido",
+          "paragraphs": [
+            "La compra se revisa en cuatro pasos: dirección, entregas, plan de pago y revisión. Comprueba los datos y el total antes de confirmar.",
+            "Un pedido guardado tiene un número y puede consultarse en Mis pedidos. Si la conexión se interrumpe al confirmar, revisa el resultado y utiliza la opción de recuperación que ofrece el sitio antes de repetir la compra. Guardar un pedido no equivale a confirmar su pago."
+          ]
+        },
+        {
+          "heading": "Pagos, anticipos y cuotas",
+          "paragraphs": [
+            "Utiliza únicamente los métodos e instrucciones que se muestran para tu pedido. Si eliges un anticipo o un plan de cuotas, revisa sus importes y vencimientos antes de aceptarlo. Las opciones disponibles dependen del pedido.",
+            "En los pagos que requieren revisión, enviar una referencia o un comprobante deja el pago en verificación. La confirmación se muestra cuando termina la revisión correspondiente. No envíes el mismo pago varias veces mientras esté pendiente.",
+            "Un proveedor de pago externo solo se utiliza cuando el sitio lo ofrece y te dirige a su página de forma expresa. Las condiciones propias del proveedor también pueden aplicarse. No se considera pagado un pedido por regresar al sitio o cerrar la ventana del proveedor."
+          ]
+        },
+        {
+          "heading": "Entregas y seguimiento",
+          "paragraphs": [
+            "Las opciones, los costos y las fechas estimadas de entrega se muestran para la dirección y los productos elegidos. Si un pedido tiene varios grupos de entrega, cada uno puede avanzar por separado.",
+            "Las fechas estimadas orientan la compra; cualquier compromiso específico ofrecido para el pedido debe respetarse. Puedes consultar los estados, los eventos y la guía de transporte cuando estén disponibles. Si hay un retraso o no puedes recibir el pedido, contacta a soporte para revisar la situación."
+          ]
+        },
+        {
+          "heading": "Cancelaciones, devoluciones y garantías",
+          "paragraphs": [
+            "Mis pedidos ofrece la cancelación directa cuando el estado del pedido lo permite. Si esa opción no aparece, puedes solicitar asistencia en soporte@mayami.app. Que el botón no esté disponible no elimina tus derechos legales.",
+            "La política de devoluciones explica cómo comunicar errores, faltantes, daños, defectos o solicitudes de cambio. Se mantienen las garantías y los derechos que correspondan por ley y las condiciones adicionales ofrecidas para cada producto."
+          ],
+          "links": [
+            {
+              "label": "Consultar devoluciones y garantías",
+              "href": "/devoluciones"
+            }
+          ]
+        },
+        {
+          "heading": "Uso responsable",
+          "paragraphs": [
+            "No utilices el servicio para suplantar identidades, presentar comprobantes falsos, acceder a datos ajenos o interferir con el funcionamiento del sitio. Las medidas frente a usos indebidos deben respetar la legislación y los derechos aplicables.",
+            "La información de tu cuenta y tus operaciones se trata según la política de privacidad."
+          ],
+          "links": [
+            {
+              "label": "Consultar privacidad",
+              "href": "/privacidad"
+            }
+          ]
+        },
+        {
+          "heading": "Tus derechos y estas condiciones",
+          "paragraphs": [
+            "Estas condiciones se interpretan conforme a la legislación venezolana aplicable. No excluyen derechos del consumidor, garantías obligatorias ni el acceso a las autoridades competentes.",
+            "Publicaremos aquí las actualizaciones de estas condiciones y su fecha. Los cambios no eliminan derechos adquiridos ni modifican retroactivamente las condiciones de pedidos ya confirmados. Para consultas, escribe a soporte@mayami.app."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "privacidad",
+      "title": "Política de privacidad",
+      "lead": "Qué información utiliza Mayami, para qué se necesita y cómo puedes solicitar ayuda sobre tus datos.",
+      "sections": [
+        {
+          "heading": "A quién contactar",
+          "paragraphs": [
+            "Esta política describe el tratamiento de información al utilizar mayami.app y las funciones de tu cuenta Mayami. Puedes dirigir consultas y solicitudes sobre tus datos a soporte@mayami.app."
+          ]
+        },
+        {
+          "heading": "Información que proporcionas",
+          "paragraphs": [
+            "Para crear y utilizar tu cuenta se procesa tu nombre, correo electrónico y la información necesaria para autenticarte. Para una entrega se solicitan destinatario, teléfono, dirección, localidad y referencias. La cédula o el RIF se recoge cuando lo proporcionas en el campo correspondiente.",
+            "También se guarda la información de tu carrito, favoritos, pedidos, entregas, pagos y comunicaciones de soporte. Cuando un método de pago requiere referencia, datos del pagador o comprobante, se procesa la información que envías para verificarlo. Evita incluir en un comprobante datos que no sean necesarios para acreditar el pago."
+          ]
+        },
+        {
+          "heading": "Información técnica y almacenamiento del navegador",
+          "paragraphs": [
+            "Los servicios que entregan y protegen el sitio pueden procesar información técnica, como dirección IP, fecha de acceso, ruta solicitada y datos de conexión o del navegador, para atender solicitudes y detectar problemas o abusos.",
+            "El sitio utiliza almacenamiento del navegador para mantener tu sesión y recuperar un intento de compra si la conexión se interrumpe. Esta información permite continuar el servicio y evitar pedidos repetidos; no sustituye los controles de acceso del servidor. Puedes borrar el almacenamiento desde tu navegador, teniendo en cuenta que puede cerrar tu sesión o impedir recuperar un intento pendiente en ese dispositivo."
+          ]
+        },
+        {
+          "heading": "Para qué utilizamos los datos",
+          "bullets": [
+            "Crear y proteger tu cuenta, comprobar el acceso y recuperar el acceso cuando lo solicites.",
+            "Gestionar tu carrito, favoritos, pedidos, entregas y comunicaciones relacionadas con esas operaciones.",
+            "Verificar pagos, registrar su estado, atender incidencias y conservar los antecedentes necesarios de una operación.",
+            "Responder solicitudes, tramitar devoluciones y garantías, prevenir fraude y cumplir obligaciones legales aplicables."
+          ]
+        },
+        {
+          "heading": "Quién puede recibir información",
+          "paragraphs": [
+            "La tienda y los participantes necesarios para preparar y entregar tu pedido reciben la información que necesitan para esa gestión. El personal autorizado de Mayami puede tratar información para revisar pagos, resolver incidencias y atender solicitudes.",
+            "Utilizamos proveedores tecnológicos, incluidos Cloudflare para entregar y proteger el sitio y Supabase para cuentas, datos y archivos. Los mensajes enviados a soporte se procesan mediante servicios de correo. Estos proveedores pueden operar infraestructura en otros países.",
+            "Si utilizas un proveedor de pago que aparezca habilitado, la información necesaria para ese pago también puede tratarse conforme a su política. Podemos comunicar información a autoridades cuando exista una obligación o una solicitud legalmente procedente."
+          ]
+        },
+        {
+          "heading": "Conservación y protección",
+          "paragraphs": [
+            "Conservamos información mientras sea necesaria para mantener tu cuenta, cumplir las operaciones pendientes, atender reclamos, prevenir fraude y satisfacer las obligaciones legales aplicables. La eliminación de una cuenta no implica borrar de inmediato los registros que deban conservarse por una compra, un pago o una obligación legal.",
+            "Aplicamos controles de acceso para proteger cuentas y registros. Si compartes un dispositivo, cierra tu sesión al terminar. No envíes contraseñas, códigos de acceso ni claves bancarias a soporte."
+          ]
+        },
+        {
+          "heading": "Acceso, corrección y eliminación",
+          "paragraphs": [
+            "Puedes solicitar información sobre los datos asociados a tu cuenta, su uso y finalidad, así como su corrección o eliminación cuando corresponda. Escribe desde el correo asociado a tu cuenta a soporte@mayami.app e indica qué necesitas. Antes de entregar o modificar información comprobaremos que la solicitud procede de su titular.",
+            "Puedes solicitar el cierre de tu cuenta por ese mismo canal. Te informaremos del resultado y de los datos que deban conservarse y su motivo. Esta política no limita los derechos ni los medios de reclamación que reconozca la legislación aplicable."
+          ]
+        },
+        {
+          "heading": "Cambios de esta política",
+          "paragraphs": [
+            "Las actualizaciones se publican en esta página con su fecha. Si cambia de forma relevante el uso de la información, explicaremos el cambio antes de aplicar una finalidad distinta cuando sea necesario."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "devoluciones",
+      "title": "Devoluciones, cancelaciones y garantías",
+      "lead": "Si algo no coincide con tu compra o necesitas ayuda con un pedido, aquí puedes iniciar la gestión.",
+      "sections": [
+        {
+          "heading": "Cómo solicitar ayuda",
+          "paragraphs": [
+            "Escribe a soporte@mayami.app desde el correo de tu cuenta e incluye el número de pedido, el producto y una explicación del problema o de lo que solicitas. Si dispones de fotografías o documentos que ayuden a entender el caso, puedes aportarlos. No envíes contraseñas ni códigos de acceso.",
+            "Revisaremos la operación y coordinaremos contigo y con la tienda los pasos que correspondan. Conserva el producto y sus accesorios mientras se aclara el caso; si presenta un posible riesgo para tu seguridad, deja de utilizarlo."
+          ]
+        },
+        {
+          "heading": "Cancelar antes de la entrega",
+          "paragraphs": [
+            "Puedes cancelar directamente desde Mis pedidos cuando aparece esa opción. En la web se ofrece para pedidos recién registrados que no tienen un pago confirmado ni un pago en proceso o verificación.",
+            "Si ya pagaste, el pedido está avanzando o el botón no aparece, contacta a soporte para solicitar la revisión. La ausencia de cancelación automática no impide reclamar ni ejercer un derecho que te corresponda."
+          ]
+        },
+        {
+          "heading": "Producto incorrecto, incompleto, dañado o defectuoso",
+          "paragraphs": [
+            "Comunícanos el problema para revisar qué ocurrió y la solución que corresponda: completar la entrega, reparar, sustituir, devolver o reembolsar, según el caso y los derechos aplicables. No necesitas aceptar un producto distinto o un cobro adicional como condición para comunicar una incidencia.",
+            "Las condiciones particulares de una garantía ofrecida para un producto se suman a los derechos que correspondan legalmente; no los reemplazan ni los reducen. No establecemos aquí un plazo único de garantía para todos los productos."
+          ]
+        },
+        {
+          "heading": "Cambios de opinión y productos por encargo",
+          "paragraphs": [
+            "Si deseas cambiar o devolver un producto que coincide con tu pedido, contacta a soporte para revisar las condiciones aplicables a esa compra. Se tendrán en cuenta la naturaleza y el estado del producto, las condiciones informadas al comprar y los derechos legales que correspondan.",
+            "Un producto por encargo puede tener una preparación ya iniciada o un anticipo asociado. Revisaremos su situación concreta; el hecho de ser por encargo no elimina la responsabilidad por defectos, información incorrecta o incumplimientos."
+          ]
+        },
+        {
+          "heading": "Coordinación de una devolución o reembolso",
+          "paragraphs": [
+            "Antes de enviar un producto, solicita las instrucciones de devolución. Te indicaremos el destino, el procedimiento y cómo se resolverán los costos de transporte según el motivo y los derechos aplicables. No publiques ni envíes tu pedido a una dirección obtenida de una fuente no verificada.",
+            "Cuando corresponda un reembolso, te comunicaremos el importe, el concepto y el medio de devolución que se vaya a utilizar. Los estados y pagos registrados en el pedido permiten revisar lo que ya se confirmó. Un reclamo o una solicitud no se presenta como resuelto hasta completar la gestión correspondiente."
+          ]
+        },
+        {
+          "heading": "Se mantienen tus derechos",
+          "paragraphs": [
+            "Esta política no excluye garantías obligatorias ni limita el acceso a las autoridades competentes. Ninguna condición particular de una tienda puede reducir los derechos que te reconozca la legislación aplicable."
+          ],
+          "links": [
+            {
+              "label": "Ver términos y condiciones",
+              "href": "/terminos"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "contacto",
+      "title": "Contacto y soporte",
+      "lead": "Escríbenos a soporte@mayami.app para recibir ayuda con Mayami.",
+      "sections": [
+        {
+          "heading": "Consultas y pedidos",
+          "paragraphs": [
+            "Para una consulta sobre una compra, utiliza el correo asociado a tu cuenta e incluye el número de pedido y una explicación de lo que necesitas. También puedes consultar su estado, entregas y pagos en Mis pedidos.",
+            "Si aún no has comprado, indica el nombre o el enlace del producto sobre el que consultas."
+          ],
+          "links": [
+            {
+              "label": "Escribir a soporte",
+              "href": "mailto:soporte@mayami.app"
+            },
+            {
+              "label": "Consultar mis pedidos",
+              "href": "/pedidos"
+            }
+          ]
+        },
+        {
+          "heading": "Devoluciones y datos personales",
+          "paragraphs": [
+            "Este mismo correo atiende solicitudes de cancelación, devolución, garantía y privacidad. Indica el motivo para dirigir tu consulta a la gestión correspondiente."
+          ],
+          "links": [
+            {
+              "label": "Devoluciones y garantías",
+              "href": "/devoluciones"
+            },
+            {
+              "label": "Privacidad y solicitudes sobre tus datos",
+              "href": "/privacidad"
+            }
+          ]
+        },
+        {
+          "heading": "Protege tu información",
+          "paragraphs": [
+            "Mayami no necesita que envíes tu contraseña, códigos de acceso o claves bancarias para atender una consulta. Utiliza las instrucciones de pago que aparecen dentro de tu pedido y revisa que navegas en mayami.app.",
+            "La atención por correo no sustituye el registro de un pago o de su comprobante en el pedido cuando el sitio lo solicita."
+          ]
+        }
+      ]
+    }
+  ]
+}
