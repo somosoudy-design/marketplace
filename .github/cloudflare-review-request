@@ -1,2 +1,2 @@
-2026-11-06 Mayami: revisión adaptativa 360, 390, 768 y 1024 en claro/oscuro, además de 57 recorridos base.
-Stack local aislado, SSR, compra y seguridad; sin deploy ni servicios con cargos.
+2026-11-06 Mayami: texto completo en tablet y categorías legibles a 768 px.
+Verificar 65 recorridos, 320–1440 claro/oscuro, SSR y compra con stack local aislado. Sin deploy ni servicios con cargos.

@@ -123,3 +123,14 @@
   .header .browse-nav::-webkit-scrollbar { height: 4px; }
   .header .browse-nav::-webkit-scrollbar-thumb { background: var(--brand); border-radius: 8px; }
 }
+@media (max-width: 1100px) {
+  .market-home .product-copy h3, .search-results .product-copy h3 { display: block; -webkit-line-clamp: unset; overflow: visible; min-height: 0; overflow-wrap: anywhere; }
+  .market-home .product-link, .search-results .product-link { display: flex; flex-direction: column; }
+  .market-home .product-copy, .search-results .product-copy { display: flex; flex: 1; flex-direction: column; }
+  .market-home .product-price, .search-results .product-price { margin-top: auto; padding-top: 9px; }
+}
+@media (min-width: 701px) and (max-width: 900px) {
+  .market-home .market-category-tile { padding: 12px; gap: 6px; }
+  .market-home .market-category-tile h2 { font-size: 14px; }
+  .market-home .market-category-tile .product-photo { width: 30%; }
+}

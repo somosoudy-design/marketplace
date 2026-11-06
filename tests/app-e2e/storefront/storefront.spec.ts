@@ -298,10 +298,22 @@ for (const width of [360, 390, 768, 1024]) {
       await expect(page.getByRole('heading', { name: 'Encuentra lo que va contigo' })).toBeVisible();
       await expect(page.getByRole('search')).toBeVisible();
       await expect(page.getByTestId('product-card').first()).toBeVisible();
+      if (width === 768) {
+        const headings = page.locator('.market-category-feature h2:visible');
+        expect(
+          await headings.evaluateAll((nodes) =>
+            nodes.every((node) => node.scrollHeight <= parseFloat(getComputedStyle(node).lineHeight) * 1.4),
+          ),
+        ).toBe(true);
+      }
       await noOverflow(page);
       await page.screenshot({ path: info.outputPath('inicio-intermedio.png'), fullPage: true });
       await page.goto('/buscar');
       await expect(page.getByTestId('product-card').first()).toBeVisible();
+      const names = page.getByTestId('product-card').locator('h3');
+      expect(await names.evaluateAll((nodes) => nodes.every((node) => node.scrollHeight <= node.clientHeight))).toBe(
+        true,
+      );
       await noOverflow(page);
       await page.screenshot({ path: info.outputPath('catalogo-intermedio.png'), fullPage: true });
       expect(errors).toEqual([]);
