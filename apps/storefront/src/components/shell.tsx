@@ -31,7 +31,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
-            <input type="search" name="q" aria-label="Buscar productos" placeholder="¿Qué estás buscando?" />
+            <input type="search" name="q" aria-label="Buscar productos" placeholder="Buscar productos" />
             <button type="submit" aria-label="Buscar">
               <ArrowUpRight size={20} />
             </button>

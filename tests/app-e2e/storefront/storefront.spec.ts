@@ -19,6 +19,22 @@ for (const colorScheme of ['light', 'dark'] as const)
       await page.goto('/');
       await expect(page.getByRole('heading', { name: 'Encuentra lo que va contigo' })).toBeVisible();
       await expect(page.getByTestId('product-card').first()).toBeVisible();
+      if (width === 320) {
+        const titles = page.getByTestId('product-card').locator('h3');
+        expect(await titles.evaluateAll((nodes) => nodes.every((node) => node.scrollHeight <= node.clientHeight))).toBe(
+          true,
+        );
+        const tilesFit = await page.locator('.market-category-tile').evaluateAll((tiles) =>
+          tiles.every((tile) => {
+            const photo = tile.querySelector('.product-photo');
+            if (!photo) return true;
+            const outer = tile.getBoundingClientRect(),
+              inner = photo.getBoundingClientRect();
+            return inner.left >= outer.left && inner.right <= outer.right;
+          }),
+        );
+        expect(tilesFit).toBe(true);
+      }
       await noOverflow(page);
       await page.screenshot({ path: info.outputPath('inicio.png'), fullPage: true });
       const category = page.getByRole('navigation', { name: 'Categorías' }).getByRole('link').first();

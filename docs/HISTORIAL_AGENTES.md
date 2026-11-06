@@ -2,7 +2,7 @@
 
 ### 6nov2026 — WIP renovación web según dirección elegida
 
-Oliver eligió la propuesta 2 con cabecera de la 3. Propuesta combinada generada y mostrada; se implementa sobre catálogo real y recursos comerciales existentes. Primer checkpoint 638b2c0: cabecera, Inicio, categorías y productos, CI 42238943695 SUCCESS con 57 UI/24 Node. Revisión independiente detectó cabecera oscura por especificidad y categorías duplicadas en móvil; se corrigen y se ajustan catálogo y ficha. Segunda ejecución CI 42239738193 SUCCESS. Inicio, catálogo y ficha revisados independientemente en oscuro; se corrige título repetido en filtros móviles. CI de ese último ajuste y revisión clara pendientes. Mantener producción y pagos intactos, SSR y Workers Free.
+Oliver eligió la propuesta 2 con cabecera de la 3. Propuesta combinada generada y mostrada; se implementa sobre catálogo real y recursos comerciales existentes. Primer checkpoint 638b2c0: cabecera, Inicio, categorías y productos, CI 42238943695 SUCCESS con 57 UI/24 Node. Revisión independiente detectó cabecera oscura por especificidad y categorías duplicadas en móvil; se corrigen y se ajustan catálogo y ficha. Segunda ejecución CI 42239738193 SUCCESS. Inicio, catálogo y ficha revisados independientemente en oscuro; se corrige título repetido en filtros móviles. CI 42240259113 también aprobó la iteración posterior. La revisión clara detectó colecciones vacías y nombres truncados: se agrupan colecciones, se muestran nombres completos y se acorta placeholder. Validación final clara y CI pendientes; ver apps/storefront/design-qa.md. Mantener producción y pagos intactos, SSR y Workers Free.
 
 ### 2026-11-06 14:12 UTC — Zelle y Binance interna oficiales, Workers Free
 

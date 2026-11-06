@@ -1,2 +1,2 @@
-2026-11-06 Mayami web: validación final de filtros accesibles y conteo de página, cabecera violeta, Inicio, catálogo y ficha.
-Pruebas UI/SSR/compra y guards en stack local aislado; sin despliegue, transacciones, OTA ni servicios con cargos.
+2026-11-06 Mayami web: colecciones adaptables, nombres completos en móvil y placeholder legible.
+Ejecutar regresiones UI/SSR/compra, fotos y seguridad en stack local aislado; sin deploy ni servicios con cargos.

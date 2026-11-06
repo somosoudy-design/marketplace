@@ -89,20 +89,25 @@ export default async function Home() {
           </div>
           <ProductGrid products={featured} />
         </section>
-        {collections.map((c) => (
-          <section className="catalog-section" key={c.id}>
-            <div className="section-heading">
-              <div>
-                <h2>{catalogText(c.title, true)}</h2>
-                {c.subtitle && <p>{catalogText(c.subtitle, true)}</p>}
+        <div className="market-collections">
+          {collections.map((c) => (
+            <section
+              className={`catalog-section market-collection${c.unique.length > 3 ? ' market-collection-wide' : ''}`}
+              key={c.id}
+            >
+              <div className="section-heading">
+                <div>
+                  <h2>{catalogText(c.title, true)}</h2>
+                  {c.subtitle && <p>{catalogText(c.subtitle, true)}</p>}
+                </div>
+                <Link prefetch={false} href={`/buscar?collection=${encodeURIComponent(c.slug)}`}>
+                  Ver colección <ArrowRight size={17} />
+                </Link>
               </div>
-              <Link prefetch={false} href={`/buscar?collection=${encodeURIComponent(c.slug)}`}>
-                Ver colección <ArrowRight size={17} />
-              </Link>
-            </div>
-            {c.unique.length > 0 && <ProductGrid products={c.unique} />}
-          </section>
-        ))}
+              {c.unique.length > 0 && <ProductGrid products={c.unique} />}
+            </section>
+          ))}
+        </div>
         {home.stores.length > 0 && (
           <section className="catalog-section">
             <div className="section-heading">
