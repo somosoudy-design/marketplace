@@ -1,10 +1,10 @@
 # Pendientes de mayami
 
-## Dominio · acceso resuelto; compilar y proteger el alojamiento · 6nov
+## Dominio · artefacto y workerd local probados; proteger y alojar · 6nov
 
 Sesión real del propietario y zona activa comprobadas; inventario0DNS/0Workers. Resolver Chrome visible por PID, no la instancia headless; no repetir permisos. ZeroTrustFree ya activo tras autorización explícita del checkout0/mes y overages; WranglerOAuth con keyring correcto. Detalles y estado en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md).
 
-Next/eslint16.4.5 + OpenNext1.20.16/Wrangler4.148.0 preparados sólo para storefront, sin R2/DO ni endpoints públicos.15Node, tipos/lint pasan. Pendiente build exacto y guard de artefacto, workerd/SSR/404/headers y regresiones de compra sólo locales. Después: despliegue sin endpoints, Access de un Worker All traffic para propietario, Custom Domains raíz/www con TLS y redirección; comprobar alias/recursos también protegidos. CPU Free necesita medición; no se autorizaron Workers Paid. Mantener publicWebOrigin null hasta apertura real; cierre comercial aún requiere catálogo/fotos, operador/políticas y retornos.
+Next16.4.5/OpenNext1.20.16/Wrangler4.148.0: build,18Node, tipos/lint, guards y dry-run6451.46KiB pasan. Workerd loopback verifica SSR/rutas/404/redirección tienda/headers; no acredita todavía dominio/TLS/CPU Free. CI aislado Ubuntu24.04 prueba compras con stack/fixtures sólo locales; pendiente resultado y revisión visual. Después: despliegue sin endpoints, Access de un Worker All traffic para correo exacto del propietario, Custom Domains raíz/www con TLS/redirección; verificar alias/recursos protegidos. No Workers Paid autorizado. Mantener publicWebOrigin null; catálogo/fotos, operador/políticas y retornos aún pendientes para apertura comercial.
 
 ## Prioridad de marca · APK comprobado, instalación física pendiente · 5nov
 

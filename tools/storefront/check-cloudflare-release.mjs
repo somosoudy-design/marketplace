@@ -1,11 +1,13 @@
 // Inspect the adapted artifact that is actually uploaded, after verify:release checks Next's output.
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { dirname, resolve, relative, basename, sep } from 'node:path';
+import { existsSync, readFileSync, readdirSync, statSync, realpathSync } from 'node:fs';
+import { dirname, resolve, relative, basename, sep, isAbsolute } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 export function verifyCloudflareArtifact(app) {
-  const artifact = resolve(app, '.open-next');
+  const output = resolve(app, '.open-next');
+  assert(existsSync(output), 'Build the Cloudflare worker first.');
+  const artifact = realpathSync(output);
   assert(existsSync(resolve(artifact, 'worker.js')), 'Build the Cloudflare worker first.');
   assert(existsSync(resolve(artifact, 'assets')), 'Cloudflare asset output is missing.');
   verifyCompiledEnvironments(resolve(artifact, 'cloudflare/next-env.mjs'));
@@ -15,8 +17,11 @@ export function verifyCloudflareArtifact(app) {
     const file = resolve(entry.parentPath, entry.name);
     const name = relative(artifact, file);
     assert(!name.split(sep).includes('_exhibition'), `Private exhibition entry in Cloudflare artifact: ${name}`);
-    assert(!entry.isSymbolicLink(), `Symbolic link in Cloudflare artifact: ${name}`);
     assert(!basename(file).startsWith('.env') && !basename(file).startsWith('.dev.vars'), `Environment file in Cloudflare artifact: ${name}`);
+    if (entry.isSymbolicLink()) {
+      verifyServerDependencyLink(artifact, file, name);
+      continue;
+    }
     if (!entry.isFile()) continue;
     if (/\.(?:js|mjs|cjs|json|html|css|map|txt)$/.test(name)) {
       assert(!readFileSync(file, 'utf8').includes('/_exhibition/'), `Private exhibition reference in Cloudflare artifact: ${name}`);
@@ -25,6 +30,23 @@ export function verifyCloudflareArtifact(app) {
     bytes += statSync(file).size;
   }
   return { files, bytes };
+}
+
+function verifyServerDependencyLink(artifact, file, name) {
+  let target;
+  try { target = realpathSync(file); }
+  catch { throw new Error(`Unresolvable symbolic link in Cloudflare artifact: ${name}`); }
+  const inside = relative(artifact, target);
+  const server = `server-functions${sep}default${sep}`;
+  assert(
+    !isAbsolute(inside) && inside !== '..' && !inside.startsWith(`..${sep}`) &&
+    name.startsWith(server) && inside.startsWith(server) &&
+    name.split(sep).includes('node_modules') && inside.split(sep).includes('node_modules') &&
+    statSync(target).isDirectory(),
+    `Unsafe symbolic link in Cloudflare artifact: ${name}`,
+  );
+  assert(!inside.split(sep).includes('_exhibition'), `Private exhibition target in Cloudflare artifact: ${name}`);
+  assert(!inside.split(sep).some(p => p.startsWith('.env') || p.startsWith('.dev.vars')), `Environment target in Cloudflare artifact: ${name}`);
 }
 
 function verifyCompiledEnvironments(file) {

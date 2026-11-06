@@ -1,5 +1,11 @@
 # Historial de agentes
 
+### 2026-11-06 · artefacto adaptado y SSR local verificados
+
+Build exacto Next16.4.5/OpenNext1.20.16 aprobado. Primer guard detecta enlaces pnpm internos del standalone; se limita excepción a directorios de dependencias dentro de server-functions/default, con regresiones para escapes/assets/env. 18Node y ambos guards pasan. Fecha2026-10-13 alinea config con workerd del CLI4.148.0; noviembre fallaba arranque y no se omiten checks. Wrangler dryrun6451.46KiB/gzip1320.48KiB,49assets. Workerd loopback prueba SSR200,404, tienda307/filtro, no-store SSR y seguridad/cacheimmutable estática. Sin cambios DNS/TLS/Worker remoto todavía.
+
+Root prepara CI Ubuntu24.04/Node22 con stack Docker-free y fixtures sólo locales para suite existente de compra contra workerd. Hosts Supabase alojados bloqueados en runner, ningún deploy/OTA/SQL remoto; artefactos sólo resultados/log workerd. Auditor revisa guard, compatibilidad y workflow; cambia ubuntu-latest por24.04 para conservar PostgreSQL16 conocido. Próximo: resultados CI/revisión visual, despliegue sin endpoints, AccessAlltraffic propietario exacto y dominios, CPU real Free. PublicWebOrigin permanece null.
+
 ### 2026-11-06 · sesión correcta, Zero Trust autorizado y preparación OpenNext
 
 Root detecta dos procesos Chrome: AppleScript por nombre resolvía headless de automatización. ScriptingBridge al PID visible permite usar la sesión real del propietario; ya no faltan permisos. Cuenta y zona activa Free/registrador Cloudflare verificadas; GET DNS0 y Workers0, snapshots ignorados. No cerrar procesos ajenos. Oliver autoriza explícitamente checkout ZeroTrustFree0/mes/50usuarios y posiblesoverages; UI confirma suscripción activa. Organización inicial frosty-lab-a534. Wrangler OAuth con scopes mínimos para Workers y keyring autorizado; login correcto, sin secretos en repo/chat.

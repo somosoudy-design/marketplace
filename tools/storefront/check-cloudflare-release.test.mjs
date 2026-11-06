@@ -56,11 +56,11 @@ test('rejects Cloudflare development variable files', t => {
   }
 });
 
-test('rejects symbolic links before following environment files or private media', t => {
+test('rejects environment symbolic links before following their contents', t => {
   const app = fixture(t);
   writeFileSync(join(app, 'private.env'), 'PRIVATE_VALUE=must-not-ship');
   symlinkSync(join(app, 'private.env'), join(app, '.open-next/assets/.env.local'));
-  assert.throws(() => verifyCloudflareArtifact(app), /Symbolic link/);
+  assert.throws(() => verifyCloudflareArtifact(app), /Environment file/);
 });
 
 
@@ -80,4 +80,32 @@ test('rejects malformed compiled dotenv JSON without exposing its contents', t =
   const app = fixture(t);
   writeFileSync(join(app, '.open-next/cloudflare/next-env.mjs'), 'export const production = {"PRIVATE_VALUE":must-not-be-revealed};\nexport const development = {};\nexport const test = {};\n');
   assert.throws(() => verifyCloudflareArtifact(app), error => error.message === 'Invalid compiled environment JSON.');
+});
+
+
+test('accepts pnpm dependency directory links contained in the adapted standalone server', t => {
+  const app = fixture(t);
+  const target = join(app, '.open-next/server-functions/default/node_modules/.pnpm/next/node_modules/next');
+  const parent = join(app, '.open-next/server-functions/default/apps/storefront/node_modules');
+  mkdirSync(target, { recursive: true });
+  mkdirSync(parent, { recursive: true });
+  writeFileSync(join(target, 'index.js'), 'export const module = true;');
+  symlinkSync(target, join(parent, 'next'));
+  assert.doesNotThrow(() => verifyCloudflareArtifact(app));
+});
+
+test('rejects a server dependency link that escapes the deployment artifact', t => {
+  const app = fixture(t);
+  const target = join(app, 'private-files');
+  const parent = join(app, '.open-next/server-functions/default/node_modules');
+  mkdirSync(target);
+  mkdirSync(parent, { recursive: true });
+  symlinkSync(target, join(parent, 'next'));
+  assert.throws(() => verifyCloudflareArtifact(app), /Unsafe symbolic link/);
+});
+
+test('rejects public asset symlinks even when their target is inside the artifact', t => {
+  const app = fixture(t);
+  symlinkSync(join(app, '.open-next/assets/_next'), join(app, '.open-next/assets/alias'));
+  assert.throws(() => verifyCloudflareArtifact(app), /Unsafe symbolic link/);
 });

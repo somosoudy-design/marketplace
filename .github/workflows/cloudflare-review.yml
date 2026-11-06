@@ -1,0 +1,89 @@
+name: Storefront Cloudflare - revision local
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/cloudflare-review-request']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: storefront-cloudflare-review
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.23.3
+          cache: pnpm
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Pruebas del artefacto y tipos
+        run: |
+          node --test tools/storefront/check-cloudflare-release.test.mjs tools/storefront/inspect-cloudflare.test.mjs
+          pnpm --filter @kora/storefront typecheck
+          pnpm --filter @kora/storefront lint
+      - name: Aislar los proyectos alojados durante las pruebas
+        run: |
+          printf '127.0.0.1 mimnotafmfasvwrclxan.supabase.co bfuggvbgttvcygbexqyn.supabase.co\n' | sudo tee -a /etc/hosts > /dev/null
+      - name: Stack y fixtures exclusivamente locales
+        run: pnpm stack:start
+      - name: Build adaptado con las claves del stack local
+        run: |
+          set -a
+          source .local/keys.env
+          set +a
+          export NEXT_PUBLIC_SUPABASE_URL="$SUPABASE_URL"
+          export NEXT_PUBLIC_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
+          export STOREFRONT_PRIVATE_PREVIEW=0
+          pnpm --filter @kora/storefront build:cloudflare
+      - name: Navegador de pruebas
+        run: pnpm --filter @kora/app-e2e exec playwright install --with-deps chromium
+      - name: Runtime local workerd
+        run: |
+          set -a
+          source .local/keys.env
+          set +a
+          export NEXT_PUBLIC_SUPABASE_URL="$SUPABASE_URL"
+          export NEXT_PUBLIC_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
+          nohup pnpm --filter @kora/storefront preview:cloudflare --port 3200 --ip 127.0.0.1 > .local/storefront-workerd.log 2>&1 &
+          echo "$!" > .local/storefront-workerd.pid
+          ready=0
+          for attempt in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:3200/ -o /dev/null; then ready=1; break; fi
+            sleep 2
+          done
+          if [ "$ready" != "1" ]; then tail -n 100 .local/storefront-workerd.log; exit 1; fi
+      - name: Recorridos de compra con fixtures locales
+        run: |
+          set -a
+          source .local/keys.env
+          set +a
+          pnpm test:storefront
+      - name: Logs ante fallo
+        if: failure()
+        run: |
+          tail -n 100 .local/storefront-workerd.log 2>/dev/null || true
+          tail -n 60 .local/logs/auth.log 2>/dev/null || true
+          tail -n 60 .local/logs/postgrest.log 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: storefront-cloudflare-local-${{ github.run_id }}
+          path: |
+            .local/storefront-20261030/results
+            .local/storefront-workerd.log
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 30
