@@ -1,2 +1,3 @@
 2026-11-06 publicación oficial: catálogo comercial autorizado, páginas legales, SEO, SSR y compra aislada y guardia ante métodos de pago no disponibles.
-Workers Free único; 53 UI, 24 Node y 3 pruebas de marca en stack local. Sin pedidos/pagos remotos, OTA ni servicios de pago.
+Workers Free único; 55 UI, 24 Node y 3 pruebas de marca en stack local. Sin pedidos/pagos remotos, OTA ni servicios de pago.
+Verifica rechazo antes del RPC frente a intento incierto ya enviado; conserva clave/recovery en reintento sin métodos.

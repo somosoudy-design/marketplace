@@ -1,5 +1,12 @@
 # Pendientes de mayami
 
+
+### Cierre de regresión de recuperación · 07:04UTC
+
+CI42177570967 terminó52/53: el único fallo era un locator ambiguo entre el aviso comercial y el anunciador vacío de Next; se acota al aviso esperado sin omitir la aserción. Revisión independiente detectó además incertidumbre falsa antes de enviar un RPC: se distingue newAttempt sólo en memoria (jamás persistido); un intento nuevo sin método recibe rechazo comercial sin lookup; uno restaurado conserva clave e incertidumbre incluso con lookup vacío. Dos nuevas regresiones elevan la suite a55; tipos/lint pasan, nueva ejecución pendiente.
+
+Los5métodos ficticios se deshabilitaron UNA VEZ tras ensayo con excepción de éxito/rollback y guardas completas; anónimoRLS ve0métodos. Las7filas conservan instrucciones y todo salvo5enabled; pedidos/obligaciones/quotes/pagos se compararon íntegros sin cambios;1pedido pendiente conservado,0quotes/pagos reales en curso. No reaplicar. Conteos Auth:24usuarios,23example.com sinprivilegios,1superadmin/ownerreal y0fixturesprivilegiados. No se borraron cuentas ni historia. SMTPcustomtrue/smtp.resend.com465/remitenteMayami no-reply@auth.mayami.app confirmado en UI sin leerpassword. SiteURL localhost3000→httpsmayami.app y2callbacksHTTPSexactos de registro/recuperación añadidos; confirmaciónpreexistente/autorizacionesintactas. Entrega real aún no verificada.
+
 ## Estado verificado · 2026-11-06 06:54 UTC
 
 Workers sigue Free y no se contrató ningún servicio de pago. Fuente89d2708 desplegada en versión923e2489-a867-4c35-84fb-26a35b0570b3; CI42174790119 Success49UI,24Node y3marca, tipos/lint/build/guards/dryrun aprobados. Auditor independiente aprueba8PNG legales y12escenarios Inicio/ficha/variantes320/1440clarooscuro. El deploy comercial aún espera retirar Access, no se declara acceso público comprobado.

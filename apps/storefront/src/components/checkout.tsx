@@ -162,22 +162,28 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     if (alive.current) router.replace(`/pagar/${result.order_id}`);
   };
   const place = useMutation({
-    mutationFn: (i: Intent) =>
+    mutationFn: (i: Intent & { newAttempt?: boolean }) =>
       confirmCheckout(
         async () => {
           const available = await methods.refetch();
           if (!available.isSuccess || !available.data.some((m) => m.enabled)) {
-            // An existing order stays recoverable when methods become unavailable.
+            // This marker exists only in mutation variables, never in persisted intent.
+            // No RPC has been transmitted for a fresh attempt rejected here.
+            if (i.newAttempt) {
+              throw new ApiError({
+                code: 'method_unavailable',
+                message: 'No podemos confirmar el pedido sin un método de pago disponible. Tu carrito se conserva.',
+              });
+            }
+            // A restored/retried attempt may have reached the server earlier.
             try {
               const existing = await recoverCheckout(() => browser().api.checkout.placedOrder(buyerId, i.key));
               if (existing) return existing;
             } catch (cause) {
               throw new UnconfirmedCheckoutError(cause);
             }
-            throw new ApiError({
-              code: 'method_unavailable',
-              message: 'No podemos confirmar el pedido sin un método de pago disponible. Tu carrito se conserva.',
-            });
+            // A missing read is not proof that an earlier RPC cannot still commit.
+            throw new UnconfirmedCheckoutError();
           }
           return browser().api.checkout.placeOrder(i.selection.address, i.selection.shipping, i.selection.plan, i.key);
         },
@@ -239,7 +245,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     try {
       sessionStorage.setItem(storageKey, JSON.stringify(i));
     } catch {}
-    place.mutate(i);
+    place.mutate({ ...i, newAttempt: true });
   };
   const locked = place.isPending || check.isPending;
   useEffect(() => {
