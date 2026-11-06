@@ -4,7 +4,7 @@
 
 Oliver seleccionó la propuesta 2 con cabecera violeta de la 3. El diseño combinado está en `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png`; los recursos generados son sólo referencia, no fotos ni precios de catálogo.
 
-Primera implementación en curso: cabecera, portada, categorías y tarjetas sobre `home_feed` SSR, imágenes comerciales autorizadas y rutas existentes. Tipos/lint locales aprobados; CI aislada, revisión visual independiente y prueba del recorrido pendientes. No desplegar ni declarar terminado hasta pasar las comprobaciones. Mantener Workers Free, funciones y datos financieros; no activar servicios con cargos.
+Primera implementación en curso: cabecera, portada, categorías y tarjetas sobre `home_feed` SSR, imágenes comerciales autorizadas y rutas existentes. CI 42238943695 aprobó 57 UI, 24 Node, tipos/lint/build y guards para la primera versión. Revisión independiente oscura detectó cabecera y duplicados de categorías, corregidos; se ajustaron detalles móviles y se extendió la jerarquía al catálogo/ficha. Tipos/lint locales aprobados; CI final y revisión visual completa pendientes. No desplegar ni declarar terminado hasta pasar las comprobaciones. Mantener Workers Free, funciones y datos financieros; no activar servicios con cargos.
 
 Próxima acción: ejecutar CI de storefront con `.github/cloudflare-review-request`, revisar capturas claro/oscuro y adaptar catálogo, ficha y compra según plan; registrar cualquier límite antes de publicar.
 

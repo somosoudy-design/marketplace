@@ -1,5 +1,5 @@
 /* Storefront navigation and commercial discovery. Product content comes from the existing SSR feed. */
-.header { background: #5700d9; border-bottom: 0; }
+.header.header { background: #5700d9; border-bottom: 0; }
 .header .header-inner { min-height: 72px; gap: 32px; }
 .header .account-nav a { color: #fff; font-size: 12px; }
 .header .account-nav a:hover { color: #eee6ff; }
@@ -26,6 +26,7 @@
 .market-home .market-hero-photos .product-photo { background: #fff; border-radius: 10px; }
 .market-home .market-category-feature { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .market-home .market-category-tile { min-width: 0; min-height: 110px; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 14px 10px 14px 18px; border-radius: 12px; background: var(--brand-soft); }
+.market-home .market-category-tile:nth-child(n+5) { display: none; }
 .market-home .market-category-tile h2 { font-size: clamp(15px, 1.4vw, 19px); overflow-wrap: anywhere; }
 .market-home .market-category-tile span { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; color: var(--brand); font-weight: 700; font-size: 12px; }
 .market-home .market-category-tile .product-photo { width: 44%; max-width: 110px; flex: none; background: var(--surface); }
@@ -55,18 +56,35 @@
   .header .browse-nav { min-height: 44px; }
   .market-home { padding-top: 12px; }
   .market-home .market-discovery { grid-template-columns: 1fr; }
-  .market-home .market-hero { min-height: 180px; grid-template-columns: 1.2fr .8fr; }
-  .market-home .market-hero-copy { padding: 19px 5px 19px 18px; }
-  .market-home .market-hero h1 { font-size: 25px; }
+  .market-home .market-hero { min-height: 165px; grid-template-columns: 1.2fr .8fr; }
+  .market-home .market-hero-copy { padding: 14px 5px 14px 16px; }
+  .market-home .market-hero h1 { font-size: 23px; }
   .market-home .market-hero p { font-size: 13px; margin: 8px 0 12px; }
   .market-home .market-hero .button { font-size: 12px; padding-inline: 12px; }
   .market-home .market-hero-photos { padding: 8px; }
-  .market-home .market-category-feature { display: flex; overflow-x: auto; gap: 8px; }
-  .market-home .market-category-tile { flex: 0 0 46%; min-height: 84px; padding: 10px 8px 10px 12px; }
+  .market-home .market-category-feature { display: flex; overflow-x: auto; gap: 8px; scrollbar-width: thin; scrollbar-color: var(--brand) transparent; }
+  .market-home .market-category-feature::-webkit-scrollbar { height: 4px; }
+  .market-home .market-category-feature::-webkit-scrollbar-thumb { background: var(--brand); border-radius: 8px; }
+  .market-home .market-category-tile:nth-child(n+5) { display: flex; }
+  .market-home .market-category-nav { display: none; }
+  .market-home .market-category-tile { flex: 0 0 46%; min-height: 70px; padding: 10px 8px 10px 12px; }
   .market-home .market-category-tile h2 { font-size: 15px; }
-  .market-home .market-category-tile span { font-size: 11px; }
-  .market-home .market-category-tile .product-photo { width: 40%; }
+  .market-home .market-category-tile span { font-size: 11px; white-space: nowrap; }
+  .market-home .market-category-tile span svg { display: none; }
+  .market-home .market-category-tile .product-photo { width: 34%; }
   .market-home .market-category-icon { margin: 0 4px; }
   .market-home .market-category-nav { padding-block: 8px 16px; }
-  .market-home .product-copy h3 { font-size: 13px; min-height: 36px; }
+  .market-home .product-copy h3 { font-size: 14px; min-height: 38px; }
+}
+
+/* Catalog and product detail use the same commercial hierarchy. */
+.search-results .product-copy h3 { font-size: 14px; line-height: 1.35; font-weight: 600; min-height: 38px; }
+.search-results .product-brand { font-size: 11px; }
+.search-results .product-price strong { font-size: 18px; }
+.product-page .detail-policies { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 0; }
+.product-page .detail-policies a { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; color: var(--brand); font-size: 12px; font-weight: 650; }
+.product-page .shipping-details { margin-top: 12px; padding-block: 14px; }
+@media (max-width: 700px) {
+  .product-page .product-gallery > .product-photo { aspect-ratio: 4 / 3; max-height: 300px; }
+  .product-page .detail-policies { gap: 4px 16px; }
 }

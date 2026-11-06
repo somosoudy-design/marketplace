@@ -40,9 +40,13 @@ function DetailSession({ product: p }: { product: Product }) {
   return (
     <div className="wrap product-page">
       <div className="breadcrumbs">
-        <Link prefetch={false} href="/buscar">Catálogo</Link>
+        <Link prefetch={false} href="/buscar">
+          Catálogo
+        </Link>
         <span>/</span>
-        <Link prefetch={false} href={`/buscar?category=${p.category_slug}`}>{p.category_name}</Link>
+        <Link prefetch={false} href={`/buscar?category=${p.category_slug}`}>
+          {p.category_name}
+        </Link>
         <span>/</span>
         <span>{p.brand_name || p.title}</span>
       </div>
@@ -52,22 +56,16 @@ function DetailSession({ product: p }: { product: Product }) {
           {gallery.length > 1 && (
             <div className="thumbnails">
               {gallery.map((i, index) => (
-                  <button
-                    key={i.path}
-                    type="button"
-                    aria-label={`Ver imagen ${index + 1}`}
-                    aria-pressed={image === i.path}
-                    onClick={() => setImage(i.path)}
-                  >
-                    <ProductPhoto
-                      id={p.id}
-                      path={i.path}
-                      demo={p.is_demo}
-                      title={i.alt || p.title}
-                      variant={selected}
-                    />
-                  </button>
-                ))}
+                <button
+                  key={i.path}
+                  type="button"
+                  aria-label={`Ver imagen ${index + 1}`}
+                  aria-pressed={image === i.path}
+                  onClick={() => setImage(i.path)}
+                >
+                  <ProductPhoto id={p.id} path={i.path} demo={p.is_demo} title={i.alt || p.title} variant={selected} />
+                </button>
+              ))}
             </div>
           )}
           {reference && (
@@ -87,8 +85,10 @@ function DetailSession({ product: p }: { product: Product }) {
                   )}
                 </p>
               )}
-              {reference.additionalSources?.map(source => (
-                <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label}</a>
+              {reference.additionalSources?.map((source) => (
+                <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
+                  {source.label}
+                </a>
               ))}
               {reference.originUrl && (
                 <a href={reference.originUrl} target="_blank" rel="noreferrer">
@@ -181,6 +181,20 @@ function DetailSession({ product: p }: { product: Product }) {
               </Link>
             </p>
           )}
+          {p.store.shipping_info && (
+            <details className="shipping-details">
+              <summary>Información de entrega</summary>
+              <p>{p.store.shipping_info}</p>
+            </details>
+          )}
+          <div className="detail-policies">
+            <Link prefetch={false} href="/devoluciones">
+              Ver devoluciones y garantías <ArrowRight size={15} />
+            </Link>
+            <Link prefetch={false} href="/contacto">
+              ¿Necesitas ayuda? <ArrowRight size={15} />
+            </Link>
+          </div>
           <div className="detail-description">
             <h2>Sobre este producto</h2>
             {p.highlights?.length ? (
@@ -192,12 +206,6 @@ function DetailSession({ product: p }: { product: Product }) {
             ) : null}
             {p.description && <p>{catalogText(p.description, p.is_demo, p.id)}</p>}
           </div>
-          {p.store.shipping_info && (
-            <details className="shipping-details">
-              <summary>Información de entrega</summary>
-              <p>{p.store.shipping_info}</p>
-            </details>
-          )}
         </section>
       </div>
       {p.related.length > 0 && (

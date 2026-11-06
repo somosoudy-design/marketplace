@@ -1,5 +1,9 @@
 # Historial de agentes
 
+### 6nov2026 — WIP renovación web según dirección elegida
+
+Oliver eligió la propuesta 2 con cabecera de la 3. Propuesta combinada generada y mostrada; se implementa sobre catálogo real y recursos comerciales existentes. Primer checkpoint 638b2c0: cabecera, Inicio, categorías y productos, CI 42238943695 SUCCESS con 57 UI/24 Node. Revisión independiente detectó cabecera oscura por especificidad y categorías duplicadas en móvil; se corrigen y se ajustan catálogo y ficha. Segunda ejecución CI y revisión visual final pendientes. Mantener producción y pagos intactos, SSR y Workers Free.
+
 ### 2026-11-06 14:12 UTC — Zelle y Binance interna oficiales, Workers Free
 
 Oliver proporcionó recepción Zelle y confirmó transferencias internas manuales Binance. Root integra; especialistas revisan esquema/DO, flujo/manual y capturas. Configuración aplicada UNA VEZ desde sesión autorizada del proyecto Marketplace:8 filas, sólo zelle/binance_internal habilitadas. Zelle conserva todo salvo instructions/enabled; nuevo Binance manual USDT hereda finanzas de USDT/divisas y exige referencia/comprobante. Seis filas restantes intactas/deshabilitadas. No pasarela automática ni dirección TRC-20 configuradas.

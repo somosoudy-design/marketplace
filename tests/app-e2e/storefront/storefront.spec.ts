@@ -30,6 +30,10 @@ for (const colorScheme of ['light', 'dark'] as const)
       const searchUrl = page.url();
       await page.getByTestId('product-card').first().locator('a').first().click();
       await expect(page.getByRole('heading', { name: 'Sobre este producto' })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Ver devoluciones y garantías' })).toHaveAttribute(
+        'href',
+        '/devoluciones',
+      );
       await noOverflow(page);
       const images = page.locator('.product-gallery>.product-photo img');
       await expect(images).toBeVisible();

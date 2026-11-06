@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## En curso: renovación web comercial
+
+Oliver eligió la opción 2 con cabecera violeta de la 3. Implementación en curso de Inicio, navegación, catálogo y ficha; el primer CI pasó 57 UI y las correcciones posteriores requieren nueva ejecución y revisión visual independiente. Mantener SSR, Workers Free, seguridad, medios de pago y funciones existentes. Ver ESTADO_ACTUAL.md.
+
 ## Cobros oficiales configurados · 6nov2026 14:12 UTC
 
 Zelle USD y Binance interna USDT están habilitados con los datos de recepción proporcionados por Oliver. Ambos requieren referencia y comprobante; cada reporte queda en verificación hasta que Mayami comprueba el abono. Binance usa el canal manual nuevo `binance_internal`, con correo, alias, moneda e ID interno completo. Los datos reales viven en la configuración operativa y respaldos privados; las fixtures públicas usan example.com.

@@ -72,7 +72,9 @@ export default async function Search({
   return (
     <div className="wrap search-page">
       <div className="breadcrumbs">
-        <Link prefetch={false} href="/">Inicio</Link>
+        <Link prefetch={false} href="/">
+          Inicio
+        </Link>
         <span>/</span>
         <span>Buscar</span>
       </div>
@@ -82,7 +84,7 @@ export default async function Search({
           <h1>{title}</h1>
         </div>
         <span className="muted">
-          {products.length} productos{page > 1 ? ` · Página ${page}` : ''}
+          {products.length} productos en esta página{page > 1 ? ` · Página ${page}` : ''}
         </span>
       </div>
       <div className="search-layout">

@@ -48,8 +48,8 @@ export default async function Home() {
               </div>
             )}
           </div>
-          <div className="market-category-feature" aria-label="Categorías destacadas">
-            {home.categories.slice(0, 4).map((c) => {
+          <nav className="market-category-feature" aria-label="Categorías">
+            {home.categories.map((c) => {
               const product = c.image_path ? products.find((p) => p.image_path === c.image_path) : undefined;
               return (
                 <Link prefetch={false} key={c.id} className="market-category-tile" href={`/buscar?category=${c.slug}`}>
@@ -67,10 +67,10 @@ export default async function Home() {
                 </Link>
               );
             })}
-          </div>
+          </nav>
         </section>
-        <nav className="market-category-nav" aria-label="Categorías">
-          {home.categories.map((c) => (
+        <nav className="market-category-nav" aria-label="Más categorías">
+          {home.categories.slice(4).map((c) => (
             <Link prefetch={false} key={c.id} href={`/buscar?category=${c.slug}`}>
               {c.name}
               <ArrowUpRight size={15} />
