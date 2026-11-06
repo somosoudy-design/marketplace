@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ShoppingBag } from 'lucide-react';
 import { publicApi } from '@/lib/server';
 import { ProductGrid } from '@/components/product-card';
 import { ProductPhoto } from '@/components/photo';
 import { Failure } from '@/components/states';
-import { money } from '@/lib/format';
 import { catalogText } from '@/lib/photos';
 export const dynamic = 'force-dynamic';
 export default async function Home() {
@@ -15,80 +14,95 @@ export default async function Home() {
     return <Failure />;
   }
   const products = [
-    ...new Map([...home.collections.flatMap((c) => c.products), ...home.recommended].map((p) => [p.id, p])).values(),
+    ...new Map([...home.recommended, ...home.collections.flatMap((c) => c.products)].map((p) => [p.id, p])).values(),
   ];
-  const lead = products.find((p) => p.availability === 'available') ?? products[0];
+  const featured = products.slice(0, 6);
+  const seen = new Set(featured.map((p) => p.id));
+  const collections = home.collections
+    .filter((c) => c.products.length > 0)
+    .slice(0, 3)
+    .map((c) => {
+      const unique = c.products.filter((p) => !seen.has(p.id)).slice(0, 6);
+      unique.forEach((p) => seen.add(p.id));
+      return { ...c, unique };
+    });
+  const heroProducts = products.slice(0, 2);
   return (
     <>
-      <section className="editorial">
-        <div className="wrap editorial-inner">
-          <div className="editorial-copy">
-            <span className="eyebrow">ENCUENTRA TU PRÓXIMO FAVORITO</span>
-            <h1>
-              Buenos hallazgos.
-              <br />
-              Todos los días.
-            </h1>
-            <p>
-              Tecnología, belleza y mucho más. <br />
-              Explora las tiendas y encuentra lo tuyo.
-            </p>
-            <Link prefetch={false} className="button inverse" href="/buscar">
-              Explorar el catálogo <ArrowRight size={18} />
-            </Link>
-          </div>
-          {lead && (
-            <Link prefetch={false} href={`/p/${lead.slug}`} className="editorial-product">
-              <ProductPhoto id={lead.id} path={lead.image_path} demo={lead.is_demo} title={lead.title} priority />
-              <div>
-                <span>{lead.brand_name || lead.category_name}</span>
-                <h2>{catalogText(lead.title, lead.is_demo, lead.id)}</h2>
-                <strong>{money(lead.price_usd)}</strong>
-                <ArrowUpRight size={22} />
+      <div className="wrap market-home">
+        <section className="market-discovery" aria-label="Descubre Mayami">
+          <div className="market-hero">
+            <div className="market-hero-copy">
+              <span className="eyebrow">DESCUBRE MAYAMI</span>
+              <h1>Encuentra lo que va contigo</h1>
+              <p>Tecnología, belleza y mucho más, en un solo lugar.</p>
+              <Link prefetch={false} className="button" href="/buscar">
+                Explorar el catálogo <ArrowRight size={18} />
+              </Link>
+            </div>
+            {heroProducts.length > 0 && (
+              <div className="market-hero-photos" aria-hidden="true">
+                {heroProducts.map((p) => (
+                  <ProductPhoto key={p.id} id={p.id} path={p.image_path} demo={p.is_demo} title="" priority />
+                ))}
               </div>
-            </Link>
-          )}
-        </div>
-      </section>
-      <div className="wrap">
-        <nav className="category-strip" aria-label="Categorías">
-          {home.categories.map((c, i) => (
+            )}
+          </div>
+          <div className="market-category-feature" aria-label="Categorías destacadas">
+            {home.categories.slice(0, 4).map((c) => {
+              const product = c.image_path ? products.find((p) => p.image_path === c.image_path) : undefined;
+              return (
+                <Link prefetch={false} key={c.id} className="market-category-tile" href={`/buscar?category=${c.slug}`}>
+                  <div>
+                    <h2>{c.name}</h2>
+                    <span>
+                      Ver productos <ArrowRight size={16} />
+                    </span>
+                  </div>
+                  {product ? (
+                    <ProductPhoto id={product.id} path={product.image_path} demo={product.is_demo} title="" />
+                  ) : (
+                    <ShoppingBag className="market-category-icon" size={36} aria-hidden="true" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+        <nav className="market-category-nav" aria-label="Categorías">
+          {home.categories.map((c) => (
             <Link prefetch={false} key={c.id} href={`/buscar?category=${c.slug}`}>
-              <span className="category-number">{String(i + 1).padStart(2, '0')}</span>
-              <span>{c.name}</span>
-              <ArrowUpRight size={16} />
+              {c.name}
+              <ArrowUpRight size={15} />
             </Link>
           ))}
         </nav>
-        <section className="catalog-section">
+        <section className="catalog-section market-featured">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">EXPLORA EL CATÁLOGO</span>
-              <h2>Encuentra lo que va contigo</h2>
+              <span className="eyebrow">SELECCIÓN MAYAMI</span>
+              <h2>Productos destacados</h2>
             </div>
             <Link prefetch={false} href="/buscar">
               Ver todo <ArrowRight size={17} />
             </Link>
           </div>
-          <ProductGrid products={products.slice(0, 12)} />
+          <ProductGrid products={featured} />
         </section>
-        {home.collections
-          .filter((c) => c.products.length > 0)
-          .slice(0, 3)
-          .map((c) => (
-            <section className="catalog-section" key={c.id}>
-              <div className="section-heading">
-                <div>
-                  <h2>{catalogText(c.title, true)}</h2>
-                  {c.subtitle && <p>{catalogText(c.subtitle, true)}</p>}
-                </div>
-                <Link prefetch={false} href={`/buscar?collection=${encodeURIComponent(c.slug)}`}>
-                  Ver colección <ArrowRight size={17} />
-                </Link>
+        {collections.map((c) => (
+          <section className="catalog-section" key={c.id}>
+            <div className="section-heading">
+              <div>
+                <h2>{catalogText(c.title, true)}</h2>
+                {c.subtitle && <p>{catalogText(c.subtitle, true)}</p>}
               </div>
-              <ProductGrid products={c.products.slice(0, 6)} />
-            </section>
-          ))}
+              <Link prefetch={false} href={`/buscar?collection=${encodeURIComponent(c.slug)}`}>
+                Ver colección <ArrowRight size={17} />
+              </Link>
+            </div>
+            {c.unique.length > 0 && <ProductGrid products={c.unique} />}
+          </section>
+        ))}
         {home.stores.length > 0 && (
           <section className="catalog-section">
             <div className="section-heading">
@@ -102,7 +116,7 @@ export default async function Home() {
                     <h3>{s.name}</h3>
                     {s.tagline && <p>{s.tagline}</p>}
                   </div>
-                  <ArrowUpRight size={20} />
+                  <ArrowUpRight size={16} />
                 </Link>
               ))}
             </div>

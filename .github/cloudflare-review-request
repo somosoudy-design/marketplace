@@ -1,5 +1,3 @@
-2026-11-06 canales manuales autorizados: Zelle USD y Binance interna USDT.
-57 UI esperadas: dos regresiones nuevas con contactos example.com y base divisas, comprobante obligatorio, verificación pendiente y ningún saldo acreditado.
-Stack local aislado; ambos proyectos alojados bloqueados. Sin pagos reales, fixtures remotos, APK/OTA ni servicio de pago.
-Segunda captura: scroll inicial y foco normalizados; prueba negativa de referencia vacía y aserción divisas. No cambia código del producto.
-Tercera pasada: referencia vacía comprueba validación HTML nativa/foco; referencia de 3 caracteres comprueba alerta de la app. Cero uploads/submit en ambos rechazos.
+2026-11-06 renovación web comercial de Mayami: propuesta 2 con cabecera de 3.
+Verifica home SSR, fotos comerciales, categorías, precios reales, navegación, favoritos, compra y pagos; sin productos repetidos entre anaqueles.
+Stack local aislado, hosts Supabase bloqueados; sin deploy, OTA, operaciones reales ni servicios con cargo.

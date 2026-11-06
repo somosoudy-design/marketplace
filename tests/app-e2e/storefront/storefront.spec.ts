@@ -17,7 +17,7 @@ for (const colorScheme of ['light', 'dark'] as const)
       const errors: string[] = [];
       page.on('pageerror', (e) => errors.push(e.message));
       await page.goto('/');
-      await expect(page.getByRole('heading', { name: 'Buenos hallazgos. Todos los días.' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Encuentra lo que va contigo' })).toBeVisible();
       await expect(page.getByTestId('product-card').first()).toBeVisible();
       await noOverflow(page);
       await page.screenshot({ path: info.outputPath('inicio.png'), fullPage: true });
@@ -200,10 +200,9 @@ test('redirección de login externa rechazada y SSR contiene catálogo sin JS', 
   await expect(page.getByRole('heading', { name: 'Mi cuenta' })).toBeVisible();
 });
 
-
 test('navegación sin precargas especulativas conserva SSR y enlaces', async ({ page, baseURL }) => {
   const speculative: string[] = [];
-  page.on('request', request => {
+  page.on('request', (request) => {
     const url = new URL(request.url());
     if (url.origin !== new URL(baseURL!).origin) return;
     const headers = request.headers();
@@ -212,8 +211,15 @@ test('navegación sin precargas especulativas conserva SSR y enlaces', async ({ 
   });
   const response = await page.goto('/');
   const html = await response!.text();
-  expect(html).toContain('Buenos hallazgos.');
+  expect(html).toContain('Encuentra lo que va contigo');
   expect(html).toMatch(/href="\/p\//);
+  const homeCards = page.getByTestId('product-card');
+  const productLinks = await homeCards
+    .locator('a.product-link')
+    .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+  expect(productLinks.length).toBeGreaterThan(0);
+  expect(new Set(productLinks).size).toBe(productLinks.length);
+  await expect(homeCards.first().locator('.product-price strong')).not.toBeEmpty();
   await expect(page.getByTestId('product-card').first()).toBeVisible();
   await page.waitForLoadState('networkidle');
   await page.getByTestId('product-card').first().locator('a').first().hover();
@@ -231,19 +237,26 @@ test('navegación sin precargas especulativas conserva SSR y enlaces', async ({ 
   expect(speculative).toEqual([]);
 });
 
-
 for (const colorScheme of ['light', 'dark'] as const) {
   test(`información comercial pública y enlaces de registro 320 ${colorScheme}`, async ({ browser }, info) => {
     const context = await browser.newContext({ viewport: { width: 320, height: 844 }, colorScheme });
     const page = await context.newPage();
-    for (const [path, title] of [['/terminos', 'Términos y condiciones'], ['/privacidad', 'Política de privacidad'], ['/devoluciones', 'Devoluciones, cancelaciones y garantías'], ['/contacto', 'Contacto y soporte']]) {
+    for (const [path, title] of [
+      ['/terminos', 'Términos y condiciones'],
+      ['/privacidad', 'Política de privacidad'],
+      ['/devoluciones', 'Devoluciones, cancelaciones y garantías'],
+      ['/contacto', 'Contacto y soporte'],
+    ]) {
       const r = await page.goto(path);
       expect(r?.status()).toBe(200);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
       await noOverflow(page);
       await page.screenshot({ path: info.outputPath(path.slice(1) + '.png'), fullPage: true });
     }
-    await expect(page.getByRole('link', { name: 'soporte@mayami.app', exact: true }).first()).toHaveAttribute('href', 'mailto:soporte@mayami.app');
+    await expect(page.getByRole('link', { name: 'soporte@mayami.app', exact: true }).first()).toHaveAttribute(
+      'href',
+      'mailto:soporte@mayami.app',
+    );
     await page.goto('/registro');
     await expect(page.locator('.legal-note a[href="/terminos"]')).toBeVisible();
     await expect(page.locator('.legal-note a[href="/privacidad"]')).toBeVisible();

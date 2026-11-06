@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Trabajo en curso: renovación web comercial · 6nov2026
+
+Oliver seleccionó la propuesta 2 con cabecera violeta de la 3. El diseño combinado está en `.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/exec-d9a49d9a-49d1-466d-af0f-386af47ea41b.png`; los recursos generados son sólo referencia, no fotos ni precios de catálogo.
+
+Primera implementación en curso: cabecera, portada, categorías y tarjetas sobre `home_feed` SSR, imágenes comerciales autorizadas y rutas existentes. Tipos/lint locales aprobados; CI aislada, revisión visual independiente y prueba del recorrido pendientes. No desplegar ni declarar terminado hasta pasar las comprobaciones. Mantener Workers Free, funciones y datos financieros; no activar servicios con cargos.
+
+Próxima acción: ejecutar CI de storefront con `.github/cloudflare-review-request`, revisar capturas claro/oscuro y adaptar catálogo, ficha y compra según plan; registrar cualquier límite antes de publicar.
+
 ## Cobros oficiales configurados · 6nov2026 14:12 UTC
 
 Zelle USD y Binance interna USDT están habilitados con los datos de recepción proporcionados por Oliver. Ambos requieren referencia y comprobante; cada reporte queda en verificación hasta que Mayami comprueba el abono. Binance usa el canal manual nuevo `binance_internal`, con correo, alias, moneda e ID interno completo. Los datos reales viven en la configuración operativa y respaldos privados; las fixtures públicas usan example.com.

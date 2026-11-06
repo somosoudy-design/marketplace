@@ -1,5 +1,6 @@
 @import './tokens.css';
 @import './purchase.css';
+@import './marketplace-home.css';
 * {
   box-sizing: border-box;
 }

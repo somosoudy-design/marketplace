@@ -17,7 +17,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
     queryFn: () => browser().api.cart.summary(),
     enabled: !!session,
   });
-  const cartUnits = cart.data?.groups.reduce((n, g) => n + g.lines.reduce((count, line) => count + line.quantity, 0), 0) ?? 0;
+  const cartUnits =
+    cart.data?.groups.reduce((n, g) => n + g.lines.reduce((count, line) => count + line.quantity, 0), 0) ?? 0;
   return (
     <>
       <a className="skip" href="#contenido">
@@ -26,7 +27,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <header className={`header ${focused ? 'header-focused' : ''}`}>
         <div className="header-inner">
           <Link prefetch={false} href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
-            <BrandMark />
+            <BrandMark inverse />
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
@@ -45,24 +46,34 @@ export function Shell({ children }: { children: React.ReactNode }) {
               <UserRound size={21} />
               <span>{session ? 'Mi cuenta' : 'Ingresar'}</span>
             </Link>
-            <Link prefetch={false} href="/carrito" aria-label={`Carrito${cart.data ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}>
+            <Link
+              prefetch={false}
+              href="/carrito"
+              aria-label={`Carrito${cart.data ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}
+            >
               <ShoppingBag size={21} />
               <span>Carrito</span>
               {!!cartUnits && <b className="count">{cartUnits}</b>}
             </Link>
           </nav>
         </div>
-        <nav hidden={focused} className="browse-nav wrap" aria-label="Explorar">
-          <Link prefetch={false} aria-current={pathname === '/' ? 'page' : undefined} href="/">
-            Inicio
-          </Link>
-          <Link prefetch={false} aria-current={pathname === '/buscar' ? 'page' : undefined} href="/buscar">
-            Todo el catálogo
-          </Link>
-          <Link prefetch={false} href="/buscar?sort=newest">Novedades</Link>
-          <Link prefetch={false} href="/buscar?availability=on_order">Por encargo</Link>
-          <span className="nav-note">{brand.tagline}</span>
-        </nav>
+        <div hidden={focused} className="browse-row">
+          <nav className="browse-nav wrap" aria-label="Explorar">
+            <Link prefetch={false} aria-current={pathname === '/' ? 'page' : undefined} href="/">
+              Inicio
+            </Link>
+            <Link prefetch={false} aria-current={pathname === '/buscar' ? 'page' : undefined} href="/buscar">
+              Todo el catálogo
+            </Link>
+            <Link prefetch={false} href="/buscar?sort=newest">
+              Novedades
+            </Link>
+            <Link prefetch={false} href="/buscar?availability=on_order">
+              Por encargo
+            </Link>
+            <span className="nav-note">{brand.tagline}</span>
+          </nav>
+        </div>
       </header>
       <main id="contenido" tabIndex={-1}>
         {children}
@@ -73,10 +84,18 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </Link>
         <p>{brand.tagline}</p>
         <nav className="legal-links" aria-label="Información de Mayami">
-          <Link prefetch={false} href="/terminos">Términos</Link>
-          <Link prefetch={false} href="/privacidad">Privacidad</Link>
-          <Link prefetch={false} href="/devoluciones">Devoluciones</Link>
-          <Link prefetch={false} href="/contacto">Contacto</Link>
+          <Link prefetch={false} href="/terminos">
+            Términos
+          </Link>
+          <Link prefetch={false} href="/privacidad">
+            Privacidad
+          </Link>
+          <Link prefetch={false} href="/devoluciones">
+            Devoluciones
+          </Link>
+          <Link prefetch={false} href="/contacto">
+            Contacto
+          </Link>
         </nav>
         <Link prefetch={false} href="/buscar">
           Explorar el catálogo <ArrowUpRight size={16} />
