@@ -4,15 +4,13 @@
 > cerrar un módulo y antes de ceder el turno). Si algo de aquí no coincide con el repositorio o con los
 > servicios, gana lo que compruebes y corriges este archivo.
 
-## Activación de mayami.app · sesión real accesible, preparación SSR · 6nov
+## mayami.app activo para revisión privada · 6nov
 
-Resuelto el navegador: ScriptingBridge por PID selecciona Chrome visible; por nombre apuntaba a headless. Sesión real del propietario verificada; no pedir otra vez permisos por consultar la instancia equivocada. Zona activa Free, registrador Cloudflare, inventario autenticado0DNS/0Workers. Snapshot/local helper en `.local/mayami-domain-20261106`, explicación y próximos pasos en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md).
+**Dominio y alojamiento funcionando:** raíz/www Custom Domains del Worker mayami-storefront, HTTPS válido, www301 conserva ruta/query, HTTP→HTTPS y workers.dev/previews desactivados. AccessAlltraffic exige único correo exacto del propietario con IdPCloudflare restringido a miembros. Propietario entró con su sesión real y cargó25/25imágenes; Inicio/Buscar/ficha200, inexistentes404, tienda→catálogo y headers/caché comprobados. Anónimo302Access incluso CSS/callback, sin tienda. No se leyó Gmail ni copiaron cookies. [IDs, evidencia y despliegue](ACTIVAR_MAYAMI_APP.md).
 
-**Zero Trust Free activo:** checkout confirmado0/mes/50usuarios; Oliver autorizó explícitamente posibles cargos por exceder los límites. Wrangler OAuth con keyring autorizado y login correcto. Sin Workers Paid/R2. Sin nuevos DNS ni sitio publicado.
+**Validación cerrada:** Next16.4.5/OpenNext1.20.16/Wrangler4.148.0;18Node/tipos/lint/build/guards/dryrun6451.46KiB pasan. CI[42167460733](https://github.com/somosoudy-design/marketplace/actions/runs/42167460733) Success46/46UI sólo stack/fixtures locales, ZIP/hash recuperados. Auditor aprueba12capturas runtime local y14compra/pago/pedidoCI; no implica compra remota. _exhibition ausente; dinámicas no-store, callback shell estático con s-maxage. Sin SQL/Auth/backend/OTA/APK/iOS cambiados ni operaciones reales.
 
-**Trabajo en curso:** build Next16.4.5/OpenNext1.20.16, 18Node, tipos/lint, release y guard adaptado pasan. Guard admite sólo enlaces internos pnpm bajo server-functions/default/node_modules, sin assets/exteriores/env/exhibición. Workerd local8787 verifica Inicio/Buscar/ficha200, inexistentes404, tienda307 con filtro, headers SSR no-store y estáticos immutable. Dry-run6451.46KiB/gzip1320.48KiB/49assets. Fecha compatible2026-10-13 para Wrangler4.148.0, sin saltar checks. Config pública anon/refmim aislada, original intacto; sin SQL/Auth/backend remoto cambiado ni APK/OTA.
-
-**Próxima acción:** CI nuevo Ubuntu24.04/stack sólo local para recorridos existentes contra workerd3200 y revisión visual independiente. Publicar checkpoint antes del despliegue sin endpoints. Access All traffic propietario exacto con IdP Cloudflare existente, luego raíz/www/HTTPS/redirección y medición real CPU Free. `publicWebOrigin=null` durante revisión privada. Catálogo/fotos comerciales, operador/políticas y retornos pendientes antes de pedidos públicos. Workers Paid no autorizado.
+**Trabajo en curso / decisión de CPU:** ZeroTrustFree0/mes activo con autorización de checkout/overages ya registrada. Workers sigueFree0;28invocaciones4–433ms,18superan10ms nominales, todasok; tras cerrar tail3rutas200 sin1102. No afirmar estabilidad prolongada/carga. Elección Paiddesde$5/mes+consumo consultada y aún pendiente; no comprado. La activación privada del dominio está realizada. Mantener `publicWebOrigin=null`; catálogo/fotos, operador/políticas/contacto y retornos necesitan cierre antes de pedidos públicos. No repetir build/CI/deploy validados ni solicitar otra autorización genérica del dominio.
 
 ## APK Android mayami · binario y emulador aprobados · 5 de noviembre
 

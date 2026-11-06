@@ -1,10 +1,10 @@
 # Pendientes de mayami
 
-## Dominio · artefacto y workerd local probados; proteger y alojar · 6nov
+## Dominio privado activo; decisión de CPU y apertura comercial · 6nov
 
-Sesión real del propietario y zona activa comprobadas; inventario0DNS/0Workers. Resolver Chrome visible por PID, no la instancia headless; no repetir permisos. ZeroTrustFree ya activo tras autorización explícita del checkout0/mes y overages; WranglerOAuth con keyring correcto. Detalles y estado en [ACTIVAR_MAYAMI_APP.md](ACTIVAR_MAYAMI_APP.md).
+mayami.app/www alojados y HTTPS/Access comprobados con propietario y anónimo; www301 preserva ruta/query, HTTP→HTTPS, aliasworkers.dev/previews apagados. CI42167460733Success46UIlocales,18Node/build/guards/dryrun y revisión visual independiente aprobados. [Detalle](ACTIVAR_MAYAMI_APP.md). No repetir trabajo cerrado ni exigir permisos Chrome/dominio ya resueltos.
 
-Next16.4.5/OpenNext1.20.16/Wrangler4.148.0: build,18Node, tipos/lint, guards y dry-run6451.46KiB pasan. Workerd loopback verifica SSR/rutas/404/redirección tienda/headers; no acredita todavía dominio/TLS/CPU Free. CI aislado Ubuntu24.04 prueba compras con stack/fixtures sólo locales; pendiente resultado y revisión visual. Después: despliegue sin endpoints, Access de un Worker All traffic para correo exacto del propietario, Custom Domains raíz/www con TLS/redirección; verificar alias/recursos protegidos. No Workers Paid autorizado. Mantener publicWebOrigin null; catálogo/fotos, operador/políticas y retornos aún pendientes para apertura comercial.
+WorkersFree actual: muestra real4–433ms,18/28sobre10ms nominales aunque todasok y3GET posteriores sin tail200; no garantiza estabilidad/carga. Propietario tiene pendiente elegir mantenerFreepara revisión o autorizarelPaid desde$5/mes+consumo. ZeroTrustFreecheckout/overages ya autorizado y activo; no incluyeWorkersPaid. PublicWebOrigin sigue null. Antes de apertura comercial: catálogo vendible/fotos autorizadas, operador/términos/privacidad/devoluciones/contacto reales y retornos web de pagos; ninguna compra remota real realizada. Metadata de ficha basada en slug es deuda previa a revisar cuando se cierre catálogo, no caché del adaptador.
 
 ## Prioridad de marca · APK comprobado, instalación física pendiente · 5nov
 
