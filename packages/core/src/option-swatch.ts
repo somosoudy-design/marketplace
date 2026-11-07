@@ -11,8 +11,8 @@ export function optionSwatchTone(label: string): OptionSwatchTone | null {
 export function variantSwatchLabel(variant: { title?: string; options?: Record<string, string> }): string | null {
   const declared = new Set(Object.entries(variant.options ?? {})
     .filter(([name, value]) => name.trim().toLowerCase() === 'color' && typeof value === 'string' && value.trim())
-    .map(([, value]) => value.trim()));
-  if (declared.size) return declared.size === 1 ? [...declared][0]! : null;
+    .map(([, value]) => value));
+  if (declared.size) return declared.size === 1 ? [...declared][0]!.trim() : null;
   const title = variant.title?.trim();
   return title && optionSwatchTone(title) ? title : null;
 }

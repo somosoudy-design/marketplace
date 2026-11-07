@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 7nov2026 · Codex Mac · Preventa, fotos por color y selector
+
+Tanda acotada autorizada: etiqueta Preventa sólo para reservable, galería por variante y círculo con nombre accesible; misma estructura y reglas. Evidencia real de12originales y baseline16contextos/64PNG. Cuatro RPC existentes con sesión real devolvieron200;12enlaces verificados y0generales, sin cambiar opciones, precios, stock, estados ni imágenes. HiTune reservable, Nexode unavailable.104core/96unitarias móvil-storefront/30Node-marca, tipos/lint y20UI después aprobados. Carrito invitado Negro conserva UUID/cantidad1/foto/$39; sin checkout ni escrituras remotas de compra. Pendiente cierre independiente y publicación única Free sobre el APK existente. [Informe](PREVENTA_GALERIA_COLOR_2026-11-07.md).
+
+Suplemento anterior: coordinador confirmó42387846456 completo6/6, incluido oscuro160% y UUID exacto; original confirmado conservado, sin reabrir infraestructura ni borrar antecedenteANGLE5/6.
+
 ## 7nov2026 · Codex Mac · cierre de tres correcciones
 
 Por instrucción de Oliver, cierre acotado de banner app, banners web y texto del comprador. Fuenteab5b877/ejecutable0df5410; Worker8496d8a0 al100% y OTA01a1b669/grupoff072540/runtimeb691ec, una publicación cada plataforma.101core/85móvil/26UI/24Node/tres marca, diez Worker y seis públicos aprobados; UUID exacto recibido en Android15 y capturas focales revisadas. Clasificación de fotos conservada, aviso humano sólo ante varias opciones desconocidas, sin reasignación ni cambios financieros.

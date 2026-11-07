@@ -66,6 +66,10 @@ it('swiping never changes the commercial selection; selecting another variant re
   const b = reconcileProductSelection(p, a.state, { type: 'select', variantId: 'blue-64' });
   expect(b.state).toEqual({ selectedVariantId: 'blue-64', galleryIndex: 0 });
   expect(b.cover?.path).toBe('blue.webp');
+  expect(b.gallery.map(image => image.id)).toEqual(['blue-front', 'shared-spec']);
+  expect(b.variant?.id).toBe('blue-64');
+  expect(b.price_usd).toBe(30);
+  expect(b.stock).toBe(1);
 });
 it('a refresh derives current price/stock and keeps a now-sold-out colour selected', () => {
   const p = product();

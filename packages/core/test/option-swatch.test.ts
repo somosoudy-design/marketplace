@@ -19,5 +19,6 @@ it('preserves other attributes and never fabricates a shade for an unknown colou
   expect(variantSwatchLabel({ title: 'Edición especial', options: { Color: 'Arena' } })).toBe('Arena');
   expect(optionSwatchTone('Arena')).toBeNull();
   expect(variantSwatchLabel({ title: 'Negro', options: { Color: 'Negro', color: 'Blanco' } })).toBeNull();
+  expect(variantSwatchLabel({ title: 'Negro', options: { Color: 'Negro', color: ' Negro ' } })).toBeNull();
   expect(variantSwatchLabel({ title: 'Única', options: { Color: 123 } as unknown as Record<string, string> })).toBeNull();
 });
