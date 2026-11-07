@@ -1,5 +1,12 @@
 # Historial de agentes
 
+## 7nov2026 · Codex Mac · modo invitado publicado y recibido
+
+Carrito/favoritos sin registro en app/web, persistencia y unión idempotente por cuenta; variantes/cantidades conservadas, logout aislado y acceso sólo al continuar compra. Mismo diseño, precio/stock/totales del servidor. RPC favorita20261107171748 activada una vez: ocho defs, permisos y contadores comerciales intactos; anónimo401/42501.116core/139unitarias/12SQL/5APIlocales/13UIprincipales/2smokeoffline, tipos/lint/30Node y revisión de ambos temas aprobados.4Worker y4focos funcionales públicos; strict1/4 conserva3fallos por beaconGET bloqueado después de assertions.
+
+Worker8a9d859c/100%, BUILD_IDNqXBAA8hrtUae7IjMrgxw,13assetsSHA/www301 verificados. ÚnicaOTA desde d9cc8c1: UUID01a1b729-93e7-7854-8e9a-722261609de2/grupo10bb1190/runtimeb691ec, mismoAPK. [CI42398760657](https://github.com/somosoudy-design/marketplace/actions/runs/42398760657) SUCCESS: recibo exacto,10XML/36PNG yfuentes1/1.3/1.6 en ambos temas. ZIP original con digestGitHub,133archivos preservados. No APKnuevo/iOS/tiendas, compras/fixtures/pagos remotos ni servicios con cargos. Samsung físico no observado. Microajustes previos aplazados; sin otro ciclo. [Implementación, evidencia y límites](MODO_INVITADO_2026-11-07.md).
+
+
 ## 7nov2026 · Codex Mac · checkpoint de modo invitado integrado
 
 App/web integradas sin rediseño tras revisión independiente, usando stores compartidos, reservas por actor y recibos idempotentes. Recuperación de password ligada al actor y guardas de cancelación;116 core/139 móvil-web/13 crash independientes/12 SQL/5 API locales, tipos/lint completos aprobados. UI real en curso con Supabase Auth local y selección A/B no vacía; nuevas cuentas sólo locales, sin compras/pagos. Migration favorita preparada y probada en clon, todavía sin activación ni publicación remota. [Estado y siguiente acción](MODO_INVITADO_2026-11-07.md).

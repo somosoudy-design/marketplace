@@ -1,10 +1,10 @@
 # Estado actual de mayami
 
-## En curso: modo invitado para carrito y favoritos ·7nov2026
+## Modo invitado publicado y verificado ·7nov2026
 
 Nueva tanda autorizada por Oliver: agregar/quitar/consultar carrito y favoritos sin registro, persistir selección y combinarla de forma segura con cuenta tras identificación, sin duplicados ni cruces entre cuentas. Identificación sólo al proceder con compra; precios/stock/totales siguen en servidor. Reutilizar guest-cart móvil, contratos idempotentes y controles existentes. Sin rediseño, microajustes anteriores, OAuth, cuotas, dominio del panel, credenciales nuevas ni servicios de pago. Pruebas y cuentas sólo locales/aisladas. [Plan y estado](MODO_INVITADO_2026-11-07.md).
 
-Web y Android publicados una vez: Worker8a9d859c/100%, BUILD_ID NqXBAA8hrtUae7IjMrgxw; OTA01a1b729-93e7-7854-8e9a-722261609de2/grupo10bb1190, mismo APK/runtime. Backend20261107171748 activado/verificado, ocho defs/permisos/contadores intactos.116 core/139 móvil-web/12 SQL/5 API/13 UI principales/2 smoke offline, tipos/lint y30 Node/marca pasan; revisión independiente de ambos temas.4Worker y4focos funcionales públicos correctos; strict1/4 por beaconGET bloqueado al final, originales conservados. HTML200/13assetsSHA/www301 verificados. Próximo paso único: archivar observación nativa42398760657 ya en curso, sin otra OTA ni nuevos ciclos. Free conservado; sin fixtures/compras/pagos remotos. No recepción física observada.
+Web y Android publicados una vez: Worker8a9d859c/100%, BUILD_ID NqXBAA8hrtUae7IjMrgxw; OTA01a1b729-93e7-7854-8e9a-722261609de2/grupo10bb1190, mismo APK/runtime. Backend20261107171748 activado/verificado, ocho defs/permisos/contadores intactos.116 core/139 móvil-web/12 SQL/5 API/13 UI principales/2 smoke offline, tipos/lint y30 Node/marca pasan; revisión independiente de ambos temas.4Worker y4focos funcionales públicos correctos; strict1/4 por beaconGET bloqueado al final, originales conservados. HTML200/13assetsSHA/www301 verificados. CI42398760657 SUCCESS: UUID exacto recibido por mismaAPK,10XML aprobados/36PNG, claro-oscuro yfuentes1.0/1.3/1.6. Bloque cerrado; no repetir publicación ni pruebas sin incidencia nueva. Free conservado; sin fixtures/compras/pagos remotos. No recepción física observada.
 
 ## Preventa y galería por color · cerradas y confirmadas por Oliver ·7nov2026
 
