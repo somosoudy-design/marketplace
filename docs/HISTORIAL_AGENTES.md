@@ -1,8 +1,14 @@
 # Historial de agentes
 
-## Preparación Play: privacidad y eliminación · local en curso · 7 de noviembre de 2026
+## Preparación Play: privacidad y eliminación · entrega local con bloqueo comprobado · 7 de noviembre de 2026
 
-Tanda acotada sobre la fuente publicada 59e88a07, sin código de cuotas ni Google/correos. Enlaces de privacidad y términos en registro y Cuenta/Preferencias, recurso /eliminar-cuenta y textos honestos de solicitud preparados localmente. Tipos y lint de los dos clientes pasan. Revisión local de retención y pruebas UI focales pendientes; no se declara borrado completo. No producción, publicación, Console, AAB/APK, firma ni configuración de cuentas. Cuotas y Google/correos se conservan en sus fuentes previas. La sesión de navegador correcta de Supabase fue comprobada en sólo lectura; no hace falta reconexión para esta tanda. [Alcance](PLAY_PRIVACIDAD_ELIMINACION_2026-11-07.md).
+Tanda aislada desde la última fuente publicada 59e88a07. Enlaces HTTPS de privacidad/términos y eliminación accesibles desde Cuenta/Preferencias, también como invitado, y desde registro para los documentos de aceptación. Se añadió /eliminar-cuenta con soporte@mayami.app, verificación de titularidad, alcance y datos que permanecen; privacidad ampliada al uso móvil y copy de solicitud sin prometer borrado total. Los textos son propuestas locales para revisión.
+
+Verificación focal: 5 unitarias de enlaces; tipos y lint de los dos clientes; 12 casos UI en claro/oscuro, 320 px y texto 1,6 simulado en ExpoWeb/web. Un único export ExpoWeb, sin emulador o build APK/AAB. Dos pruebas existentes del flujo de eliminación y un diagnóstico SQL local confirman borrado parcial: identidades/archivos/textos permanecen y RLS con las mismas claims permite repoblar datos después de completed. No se probó un JWT real ni bytes de Storage. El diagnóstico no es aceptación de privacidad.
+
+Oliver delegó retención. Propuesta documentada: sin conservación adicional de datos de uso diario al completar cierre, 90 días para consultas no mercantiles resueltas, 10 años para archivo contable/correspondencia mercantil conforme a su clasificación; sin automatización o borrado aplicado. El siguiente arreglo mínimo debe cubrir finalización verificable, identidad/archivos y autorización previa en RPC, acceso directo y Storage; supera esta tanda y queda pendiente. No se declara listo para aceptación Play.
+
+No producción, publicación, Console, OTA, AAB/APK, firma o cambios de cuentas/configuración. Cuotas y Google/correos se conservan por separado. [Entrega y evidencia](PLAY_PRIVACIDAD_ELIMINACION_2026-11-07.md) · [Datos y retención propuesta](PLAY_DATOS_RETENCION_2026-11-07.md).
 
 ## Cuotas preventa y encargo · listas en local, activación pendiente · 7nov2026
 
