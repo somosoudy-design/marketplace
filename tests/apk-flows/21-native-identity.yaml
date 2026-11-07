@@ -8,8 +8,18 @@ name: mayami native identity and public navigation
       id: home-search
     timeout: 60000
 - takeScreenshot: ${MAYAMI_SHOT_PREFIX}-home
+- swipe:
+    start: 50%, 75%
+    end: 50%, 25%
+- extendedWaitUntil:
+    visible:
+      id: home-search-sticky
+    timeout: 15000
+- assertVisible:
+    id: brand-symbol
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-sticky
 - tapOn:
-    id: home-search
+    id: home-search-sticky
 - extendedWaitUntil:
     visible:
       id: catalog-search
@@ -20,6 +30,9 @@ name: mayami native identity and public navigation
 - hideKeyboard
 - takeScreenshot: ${MAYAMI_SHOT_PREFIX}-search
 - back
+- swipe:
+    start: 50%, 25%
+    end: 50%, 85%
 - extendedWaitUntil:
     visible:
       id: home-search
