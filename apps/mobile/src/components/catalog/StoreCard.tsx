@@ -8,7 +8,6 @@ import { STORE_TIERS, StoreBadge, storeTier } from './StoreBadge';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { Text } from '@/components/ui/Text';
-import { brand } from '@/lib/brand';
 import { storeImage } from '@/lib/supabase';
 import { useTheme } from '@/theme';
 import { StoreLogo } from './StoreLogo';
@@ -81,7 +80,7 @@ export function StoreChip({ store, width, overline }: { store: StoreSummary; wid
         </View>
         {store.tagline || !overline ? <Text variant="caption" color="textMuted" numberOfLines={1}>{store.tagline ?? ' '}</Text> : null}
         <View style={{ minHeight: 18, justifyContent: 'center' }}>
-          {store.rating_count ? <RatingInline avg={store.rating_avg ?? null} count={store.rating_count} /> : <Text variant="caption" color="textMuted">{overline ? 'Aún sin opiniones' : `Nueva en ${brand.name}`}</Text>}
+          {store.rating_count ? <RatingInline avg={store.rating_avg ?? null} count={store.rating_count} /> : <Text variant="caption" color="textMuted">Aún sin opiniones</Text>}
         </View>
       </View>
       {overline ? <Icon name="chevron-right" size={18} color={t.colors.textMuted} /> : null}

@@ -10,6 +10,7 @@ const originals = resolve(root, 'assets/brand/mayami/v3');
 const read = (file) => readFileSync(file, 'utf8');
 const provenance = JSON.parse(read(resolve(originals, 'provenance.json')));
 const artwork = JSON.parse(read(resolve(root, 'config/brand-artwork.json')));
+const symbol = JSON.parse(read(resolve(root, 'config/brand-symbol.json')));
 
 test('archived masters retain the bytes received from the owner', () => {
   for (const file of provenance.files) {
@@ -19,6 +20,7 @@ test('archived masters retain the bytes received from the owner', () => {
 });
 
 test('mobile embeds the original SVGs without redrawing or changing their proportions', () => {
+  assert.equal(symbol.white, read(resolve(originals, 'SVG/MAYAMI_Simbolo_Optico_Blanco.svg')));
   for (const [variant, name] of [['violet', 'Violeta'], ['white', 'Blanco']]) {
     const xml = read(resolve(originals, `SVG/MAYAMI_Logotipo_${name}.svg`));
     assert.equal(artwork.wordmark[variant], xml);
@@ -35,7 +37,8 @@ test('both web apps serve the original light/dark vectors and optical favicon', 
       const name = `MAYAMI_Logotipo_${color}.svg`;
       assert.equal(read(resolve(root, `apps/${app}/public/brand/mayami-v3/${name}`)), read(resolve(originals, `SVG/${name}`)));
     }
-    assert.equal(read(resolve(root, `apps/${app}/src/app/icon.svg`)), read(resolve(originals, 'App/MAYAMI_App_Optico.svg')));
+    const icon = app === 'storefront' ? 'public/icon.svg' : 'src/app/icon.svg';
+    assert.equal(read(resolve(root, `apps/${app}/${icon}`)), read(resolve(originals, 'App/MAYAMI_App_Optico.svg')));
     assert.deepEqual(readFileSync(resolve(root, `apps/${app}/src/app/favicon.ico`)), readFileSync(resolve(originals, 'App/favicon.ico')));
   }
 });

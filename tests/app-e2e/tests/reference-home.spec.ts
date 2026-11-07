@@ -18,11 +18,12 @@ for (const theme of ['light', 'dark'] as const) {
       expect(Math.abs(heroBox!.y - headerBox!.y - headerBox!.height)).toBeLessThan(1);
       expect(categoryBox!.y).toBeGreaterThanOrEqual(heroBox!.y + heroBox!.height);
       expect(rowBox!.y).toBeGreaterThanOrEqual(categoryBox!.y + categoryBox!.height);
-      expect(rowBox!.y + rowBox!.height).toBeLessThan(815);
+      await row.scrollIntoViewIfNeeded();
+      await expect(row.locator('[data-testid^="product-card-"]').first()).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       const category = page.getByTestId('category-tecnologia');
       await expect(category).toHaveAccessibleName('Tecnología');
-      await expect(category.locator('svg')).toHaveCount(1);
+      await expect(page.getByTestId('category-fallback-tecnologia')).toBeVisible();
       expect((await category.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }
     await page.getByTestId('category-tecnologia').click();

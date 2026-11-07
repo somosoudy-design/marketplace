@@ -50,13 +50,14 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.getByTestId('home-search').click(); await expect(page.getByTestId('catalog-search')).toBeFocused();
     });
 
-    test('320px keeps editorial text, price, categories and a complete comparison row visible', async ({ page }) => {
+    test('320px keeps editorial text, price, categories and comparison reachable by scrolling', async ({ page }) => {
       await page.setViewportSize({ width: 320, height: 892 }); await page.goto('/');
       await expect(cards(page)).toHaveCount(4);
       await expect(page.getByTestId('home-editorial-price')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-      const row = page.getByTestId('home-recommended'); const box = await row.boundingBox();
-      expect(box!.y + box!.height).toBeLessThan(815);
+      const row = page.getByTestId('home-recommended');
+      await row.scrollIntoViewIfNeeded();
+      await expect(row.locator('[data-testid^="product-card-"]').first()).toBeVisible();
       await expect(page.getByRole('tab')).toHaveCount(4);
     });
 
@@ -79,7 +80,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
       await page.goto('/'); await expect(cards(page)).toHaveCount(2);
       expect(await cards(page).evaluateAll((nodes) => nodes.map((n) => n.getAttribute('data-testid')!.replace('product-card-', '')))).toEqual(slugs);
-      await expect(page.getByRole('heading', { name: 'Para empezar', exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Productos destacados', exact: true })).toBeVisible();
       await expect(page.getByText('Elegidos para ti', { exact: true })).toHaveCount(0);
     });
 
@@ -118,7 +119,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await page.screenshot({ path: testInfo.outputPath(`${colorScheme}-320-texto-ampliado.png`) });
     });
 
-    test('C keeps masthead and editorial continuous, categories bridge to four products and search stays reachable', async ({ page }) => {
+    test('masthead, opening, categories and products retain their order and sticky search works', async ({ page }) => {
       for (const width of [320, 412]) {
         await page.setViewportSize({ width, height: 892 }); await page.goto('/');
         await expect(cards(page)).toHaveCount(4);
@@ -128,16 +129,23 @@ for (const colorScheme of ['light', 'dark'] as const) {
         const top = await masthead.boundingBox(); const band = await hero.boundingBox();
         expect(band!.x).toBe(0); expect(band!.width).toBe(width);
         expect(Math.abs(band!.y - top!.y - top!.height)).toBeLessThan(1);
-        const colors = await Promise.all([masthead, editorial].map((n) => n.evaluate((el) => getComputedStyle(el).backgroundColor)));
-        expect(colors[0]).toBe(colors[1]);
         await expect(editorial).toHaveCSS('border-top-left-radius', '0px');
-        expect(band!.y + band!.height).toBeLessThanOrEqual(width === 320 ? 355 : 335);
         const bridge = await page.getByTestId('home-category-bridge').boundingBox();
         expect(bridge!.y).toBeGreaterThanOrEqual(band!.y + band!.height);
         const row = await page.getByTestId('home-recommended').boundingBox();
         expect(row!.y).toBeGreaterThanOrEqual(bridge!.y + bridge!.height);
-        expect(row!.y).toBeLessThanOrEqual(width === 320 ? 470 : 450);
-        expect(row!.y + row!.height).toBeLessThan(815);
+        await expect(page.getByRole('heading', { name: 'Explora por categoría' })).toBeVisible();
+        await expect(page.getByTestId('category-tecnologia')).toHaveCount(1);
+        await expect(page.getByTestId('home-sticky-bar')).toHaveAttribute('aria-hidden', 'true');
+        await page.getByTestId('home-scroll').hover(); await page.mouse.wheel(0, 700);
+        await expect(page.getByTestId('home-search-sticky')).toHaveAttribute('tabindex', '0');
+        await expect(page.getByTestId('home-sticky-bar')).toHaveAttribute('aria-hidden', 'false');
+        await expect(page.getByTestId('home-sticky-bar').getByTestId('brand-symbol')).toBeVisible();
+        await expect(page.getByTestId('home-sticky-bar').getByTestId('brand-mark')).toHaveCount(0);
+        await page.getByTestId('home-scroll').evaluate((node) => { node.scrollTop = 0; });
+        await expect(page.getByTestId('home-sticky-bar')).toHaveAttribute('aria-hidden', 'true');
+        await expect(page.getByTestId('home-search-sticky')).toHaveAttribute('tabindex', '-1');
+        await expect(page.getByTestId('home-masthead').getByTestId('brand-mark')).toBeVisible();
         await page.getByTestId('home-scroll').hover(); await page.mouse.wheel(0, 700);
         await expect(page.getByTestId('home-search-sticky')).toHaveAttribute('tabindex', '0');
         await page.getByTestId('home-search-sticky').click();

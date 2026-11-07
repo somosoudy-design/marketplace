@@ -29,6 +29,7 @@ jobs:
           pnpm --filter @kora/mobile typecheck
           pnpm --filter @kora/mobile lint
           pnpm exec vitest run tests/mobile/catalog-exhibition.test.ts tests/mobile/store-logo.test.ts
+          node --test tools/brand/original-artwork.test.mjs
       - name: Bloquear proyectos alojados
         run: printf '127.0.0.1 mimnotafmfasvwrclxan.supabase.co bfuggvbgttvcygbexqyn.supabase.co\n' | sudo tee -a /etc/hosts > /dev/null
       - name: Stack aislado y configuración local
@@ -43,7 +44,7 @@ jobs:
           if [ -n "$chrome_bin" ]; then printf 'PW_CHROMIUM_PATH=%s\n' "$chrome_bin" >> "$GITHUB_ENV"; else pnpm --filter @kora/app-e2e exec playwright install --with-deps chromium; fi
       - name: Recorridos y capturas con fixtures locales
         working-directory: tests/app-e2e
-        run: pnpm exec playwright test -c playwright-app.config.ts home-v2.spec.ts design-delivery-01.spec.ts marketplace-composition.spec.ts browse.spec.ts mayami-android-design.spec.ts
+        run: pnpm exec playwright test -c playwright-app.config.ts home-v2.spec.ts reference-home.spec.ts design-delivery-01.spec.ts marketplace-composition.spec.ts browse.spec.ts mayami-android-design.spec.ts
       - name: Guardar resultados
         if: always()
         uses: actions/upload-artifact@v4

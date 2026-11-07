@@ -2,13 +2,14 @@ import type { CollectionBlock, ProductCard as Card } from '@kora/api';
 import { router, useFocusEffect } from 'expo-router';
 import { palette } from '@kora/design-tokens';
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Platform, RefreshControl, ScrollView, StatusBar, StyleSheet, View, useWindowDimensions, type ViewToken } from 'react-native';
+import { Platform, RefreshControl, ScrollView, StatusBar, View, useWindowDimensions, type ViewToken } from 'react-native';
 import Animated, { Extrapolation, interpolate, useAnimatedReaction, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useQueryClient } from '@tanstack/react-query';
 import { BrandMark } from '@/components/BrandMark';
-import { CategoryTiles } from '@/components/catalog/CategoryTiles';
+import { BrandSymbol } from '@/components/BrandSymbol';
+import { CategoryShowcase } from '@/components/catalog/CategoryShowcase';
 import { MiniProductCard } from '@/components/catalog/MiniProductCard';
 import { initialRecentVisibleCount, RECENT_RAIL_GAP, RECENT_RAIL_INSET } from '@/components/catalog/recent-visibility';
 import { MAX_CONTENT, ProductCard, ProductRail, useGridColumns } from '@/components/catalog/ProductGrid';
@@ -126,9 +127,9 @@ export default function HomeScreen() {
           contentContainerStyle={{ paddingBottom: 32, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}
           refreshControl={<RefreshControl refreshing={home.isRefetching} onRefresh={refresh} tintColor={t.colors.brand} progressViewOffset={insets.top} />}
           onEndReachedThreshold={0.6}
-          onEndReached={() => more.hasNextPage && !more.isFetchingNextPage && void more.fetchNextPage()}
+          onEndReached={() => more.hasNextPage && !more.isFetchingNextPage && !more.isError && void more.fetchNextPage()}
           ListHeaderComponent={<Header home={home} opening={opening} picks={picks} onSearchBottom={setSearchBottom} />}
-          ListFooterComponent={data && !empty && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
+          ListFooterComponent={data && more.isError ? <View testID="home-feed-error"><ErrorState error={more.error} onRetry={() => more.isFetchNextPageError ? void more.fetchNextPage() : void more.refetch()} /></View> : data && !empty && !more.hasNextPage && !more.isLoading ? <FeedEnd /> : null}
           renderItem={({ item }) => {
             if (item.kind === 'empty') return <CatalogOpening signedIn={!!user} />;
             if (item.kind === 'title') return <View style={{ marginTop: 24 }}><SectionHeader overline={item.overline} title={item.title} /></View>;
@@ -212,19 +213,20 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
 
       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 
-      <View testID="home-category-bridge" style={{ paddingVertical: 6, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: t.colors.border }}>
-        {data ? (
-          <CategoryTiles categories={data.categories} compact />
-        ) : (
-          <View style={{ flexDirection: 'row', gap: 16, paddingHorizontal: 16, minHeight: 44, alignItems: 'center' }}>
-            {[0, 1, 2, 3].map((i) => <Skeleton key={i} width={64} height={28} radius={6} />)}
-          </View>
-        )}
-      </View>
+      {data?.categories.length ? (
+        <View testID="home-category-bridge" style={{ paddingTop: 20, paddingBottom: 8 }}>
+          <SectionHeader title="Explora por categoría" action="Ver todas" stackAction={fontScale > 1.3 || contentWidth < 360} onAction={() => router.push('/catalog')} />
+          <CategoryShowcase categories={data.categories} />
+        </View>
+      ) : !data && home.isLoading ? (
+        <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 16, paddingVertical: 20 }}>
+          {[0, 1, 2].map((i) => <Skeleton key={i} width={96} height={136} radius={12} />)}
+        </View>
+      ) : null}
 
       <View style={{ marginHorizontal: 16 }}><StaleNotice q={home} /></View>
 
-      {comparison.length ? <View style={{ marginTop: 12 }}><SectionHeader title={personalized ? 'Elegidos para ti' : 'Para empezar'} /></View> : null}
+      {comparison.length ? <View style={{ marginTop: 12 }}><SectionHeader title={personalized ? 'Elegidos para ti' : 'Productos destacados'} action="Ver todo" stackAction={fontScale > 1.3 || contentWidth < 360} onAction={() => router.push('/catalog')} /></View> : null}
       {Array.from({ length: Math.ceil(comparison.length / comparisonColumns) }, (_, i) => {
         const row = comparison.slice(i * comparisonColumns, (i + 1) * comparisonColumns);
         return (
@@ -313,6 +315,7 @@ function StickySearch({ y, searchBottom }: { y: SharedValue<number>; searchBotto
       {/* status bar backing: content never shows through the clock and battery */}
       <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: insets.top, backgroundColor: palette.violet[900] }} />
       <Animated.View
+        testID="home-sticky-bar"
         accessibilityElementsHidden={!visible}
         importantForAccessibility={visible ? 'auto' : 'no-hide-descendants'}
         aria-hidden={!visible}
@@ -323,7 +326,7 @@ function StickySearch({ y, searchBottom }: { y: SharedValue<number>; searchBotto
         ]}
       >
         <View style={{ width: '100%', maxWidth: MAX_CONTENT - 32, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-          <BrandMark inverse compact />
+          <BrandSymbol />
           <ScalePressable
             testID="home-search-sticky"
             scaleTo={0.99}

@@ -1,6 +1,5 @@
 import type { CollectionBlock, ProductCard } from '@kora/api';
 import { formatUSD, presentAvailability } from '@kora/core';
-import { palette } from '@kora/design-tokens';
 import { View } from 'react-native';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -25,7 +24,7 @@ export function EditorialOpening({ block, product, width, onOpen }: {
         accessibilityLabel={`Colección ${block.title}. Producto mostrado: ${product.title}, ${formatUSD(product.price_usd)}, ${availability.label}${product.is_demo && !isPrivateCatalogPresentation ? ', demostración' : ''}. Ver colección`}
         onPress={onOpen}
         scaleTo={0.99}
-        style={{ backgroundColor: palette.violet[600], paddingHorizontal: 16, paddingTop: 4, paddingBottom: 14 }}
+        style={{ backgroundColor: t.colors.background, paddingHorizontal: 16, paddingTop: 14, paddingBottom: 8 }}
       >
         <View style={{ backgroundColor: t.scheme === 'dark' ? t.colors.surface : t.colors.editorialSoft, borderRadius: 16, padding: 10, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
           <ProductImage productId={product.id} productIsDemo={product.is_demo} aspect={1} fit="contain" path={product.image_path} tone={product.tone} radius={10} priority="high" style={{ width: photoWidth }} />
