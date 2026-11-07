@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Cuotas preventa/encargo · en curso ·7nov2026
+
+Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core ytiposcoreAPI pasan, UI/DB en progreso. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+
 ## Google y correo · preparación probada; acceso remoto pendiente
 
 Cuenta esperada confirmada por Oliver y navegador con login iniciado; falta capacidad Browser en este chat para verificar identidad/MIM sin usar CLI erróneo. No tokens nuevos ni retries de config por otra vía. Publicar/verificar PNG original y sólo después instalar dos HTML aprobados mediante delta revisado; Google sigueoff y su integración pendiente. Auditoría de recibos sin evidencia de mutación fuera de MIM. Tanda de cuotas preventa/encargo solicitada por coordinación se conserva aparte, aún sin implementación ni publicación.

@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## Cuotas preventa/encargo · en curso ·7nov2026
+
+Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core ytiposcoreAPI pasan, UI/DB en progreso. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+
 ## 7nov2026 · logo original en correos y auditoría de destinos
 
 CuentaSupabase esperada confirmada por Oliver; login navegador iniciado, sin controlBrowser expuesto para comprobarlo. CLI erróneo no reutilizado/ningún token nuevo. Recibos6/7nov apuntan a MIM, sin evidencia de escrituras Mayami en otro projectref; dueño actual sin confirmar. Dos cabeceras HTML ahora usan PNG fiel al logoWorkv3, original intacto;8renders320/390 ambos temas, Go2/2 y revisión independiente favorables. PNG aún no hospedado; checkerHTTP/MIME/SHA impide dar por listo el asset. Preparación sindeploy/instalacióntemplates/Googleoff. [Detalle](ACCESO_GOOGLE_2026-11-07.md).

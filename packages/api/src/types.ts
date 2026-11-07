@@ -81,6 +81,8 @@ export interface ProductVariant {
 }
 
 export interface ProductDetail extends ProductCard {
+  /** Server eligibility per variant/quantity. Amounts are product-only until checkout includes delivery. */
+  installment_options?: ProductInstallmentOffer[];
   /** Present in the reviewed endpoint; shares the detail's database snapshot. */
   catalog_metadata?: CatalogMetadata;
   /** Server-confirmed images not assigned to any variant, including hidden/inactive variants. */
@@ -222,6 +224,15 @@ export interface PlanOption {
   interval_days: number;
   surcharge_pct: number;
   down_payment_pct: number;
+}
+
+export interface ProductPaymentOption extends PlanOption { min_quantity: number; max_quantity: number }
+export interface ProductInstallmentOffer {
+  variant_id: string;
+  unit_price_usd: number;
+  max_quantity: number;
+  basis: 'products_only_excludes_shipping';
+  plans: ProductPaymentOption[];
 }
 
 export interface ScheduleItem {

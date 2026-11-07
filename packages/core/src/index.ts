@@ -1,5 +1,6 @@
 export * from './money';
 export * from './plans';
+export * from './payment-presentation';
 export * from './availability';
 export * from './eta';
 export * from './errors';
