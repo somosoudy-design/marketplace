@@ -1,7 +1,8 @@
 import type { CategorySummary } from '@kora/api';
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
-import { useState } from 'react';
+import { onlineManager } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { ScrollView, View, useWindowDimensions } from 'react-native';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -42,6 +43,14 @@ function CategoryTile({ category, width }: { category: CategorySummary; width: n
   const t = useTheme();
   const [failedPhoto, setFailedPhoto] = useState<string>();
   const [failedArt, setFailedArt] = useState<string>();
+  useEffect(() => {
+    if (!failedPhoto) return;
+    let wasOffline = !onlineManager.isOnline();
+    return onlineManager.subscribe(() => {
+      if (!onlineManager.isOnline()) wasOffline = true;
+      else if (wasOffline) setFailedPhoto(undefined);
+    });
+  }, [failedPhoto]);
   // Legacy sample files are not evidence of a current commercial photograph.
   const photo = category.image_path && !category.image_path.startsWith('demo/') && failedPhoto !== category.image_path ? category.image_path : null;
   const art = failedArt === category.slug ? undefined : categoryArtwork[category.slug];

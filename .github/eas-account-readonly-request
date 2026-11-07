@@ -1,1 +1,1 @@
-2026-11-06: consulta de solo lectura del plan y cuota; sin cache de gestor de paquetes.
+2026-11-07: consultar plan y cuota EAS antes de actualización Android, sin modificar cuenta.

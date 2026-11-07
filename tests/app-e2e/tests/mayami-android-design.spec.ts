@@ -58,7 +58,7 @@ test('category photos and missing photos use truthful destinations', async ({ pa
   await expect.poll(() => page.getByTestId('category-photo-tecnologia').locator('img').evaluateAll((images) => images.some((image) => image.complete && image.naturalWidth > 0))).toBe(true);
   await expect(page.getByTestId('category-art-audio')).toBeVisible();
   await expect(page.getByTestId('category-art-belleza')).toBeVisible();
-  await expect(page.getByText('Algunas imágenes son ilustrativas.')).toBeVisible();
+  await expect(page.getByText('Algunas imágenes pueden ser ilustrativas.')).toBeVisible();
   const rail = page.getByTestId('home-categories-scroll');
   await rail.scrollIntoViewIfNeeded();
   expect(await rail.evaluate((node) => node.scrollWidth > node.clientWidth)).toBe(true);
