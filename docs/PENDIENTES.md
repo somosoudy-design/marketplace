@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Cierre seguro de cuenta · implementación local en curso · 7 de noviembre de 2026
+
+Se retoma sólo la finalización del cierre, sin repetir enlaces, inventario Play o compilaciones de app. Fuente aislada 92f75a0d. Baseline real local confirmado: GoTrue emite JWT, Storage oficial guarda bytes, el procesador anterior marca completed y el mismo JWT todavía lee/modifica datos y descarga/sube archivos. Tres aserciones de aceptación fallan antes del arreglo, sin .fails/.skip. El clon exclusivo es mayami_account_close_20261107; no se alteró otra base ni producción.
+
+Primer módulo: worker de servidor acotado e idempotente preparado, aún sin conectar al panel ni activar; comprobación Deno pasa. Pendientes SQL de estados/bloqueo, finalización verificable y pruebas de aceptación verdes. Los casos comerciales sin clasificación explícita quedarán pendientes, sin purgar historia financiera. [Estado y límites](CIERRE_CUENTA_SEGURO_2026-11-07.md).
+
 ## Preparación Play: privacidad y eliminación · entrega local con bloqueo comprobado · 7 de noviembre de 2026
 
 Tanda aislada desde la última fuente publicada 59e88a07. Enlaces HTTPS de privacidad/términos y eliminación accesibles desde Cuenta/Preferencias, también como invitado, y desde registro para los documentos de aceptación. Se añadió /eliminar-cuenta con soporte@mayami.app, verificación de titularidad, alcance y datos que permanecen; privacidad ampliada al uso móvil y copy de solicitud sin prometer borrado total. Los textos son propuestas locales para revisión.
