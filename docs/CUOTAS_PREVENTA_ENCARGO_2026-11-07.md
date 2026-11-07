@@ -48,3 +48,7 @@ Evidencia privada: .local/installments-20261107 en checkoutprincipal.
 ## Checkpoint de integración de pantallas
 
 Web y móvil conservan la preferencia en navegación y acceso. Las opciones del carrito vienen de su resumen servidor; la ficha limita su cálculo al producto sin envío y el checkout presenta el calendario recibido. Una intención guardada conserva su plan original. Fallback sólo a pago completo si el servidor lo ofrece. Tipos y lint del monorepo pasan;22 pruebas SQL aisladas aprobadas. QA visual y recorridos locales pendientes antes de considerar publicación. El conector sigue sin permiso para MIM; no se ha aplicado esta migración remota.
+
+## Pruebas locales de integración
+
+124 core y175 pruebas móvil/web/SQL aprobadas (incluye22 SQL y14 de navegación nuevos versionados). Suite SQL portable sólo permite clonCI local o el clon explícito de esta tanda y verifica identidad antes de fixtures. Web:2 recorridos claro1440/oscuro390 y1 de envío pago/mixto. ExpoWeb:4 contextos guest320/390 claro/oscuro y2checkout autenticados320claro/390oscuro; no es comprobación Android nativo. Producto39→13×3 sin envío; envío3→total42→14×3 en checkout real de ambosclientes. Mixto39+19=58 no recibe excepción; vuelveafull ofrecido conaviso y permite elegirplanes anteriores. Cero llamadas financieras enUI, compras sólo de prueba encloneSQL. Fallos iniciales de fixtures/selectores de ensayo preservados y corregidos sin cambiarproducto. Revisión visual independiente enprogreso; buildNext producción local pendiente.
