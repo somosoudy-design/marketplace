@@ -107,6 +107,8 @@ export function createApi(client: KoraClient) {
       run<CatalogMetadata[]>(rpc('catalog_metadata', { p_ids: productIds, p_condition: condition ?? null })),
     productCommercial: (productId: string) =>
       run<ProductDetail | null>(rpc('product_detail_commercial', { p_id: productId })),
+    /** Public catalog cards for a device-local selection; visibility stays enforced by the existing view. */
+    cardsByIds: (productIds: string[]) => productCardsByIds(productIds),
     home: () => run<HomeFeed>(rpc('home_feed')),
     search: (p: SearchParams = {}) =>
       run<ProductCard[]>(
@@ -311,12 +313,14 @@ export function createApi(client: KoraClient) {
     return run<Address[]>(query.order('is_default', { ascending: false }).order('created_at'));
   };
 
-  async function favoriteCards(favs: { product_id: string; created_at: string }[]): Promise<ProductCard[]> {
-    if (!favs.length) return [];
-    const cards = await run<ProductCard[]>(from('product_cards').select('*').in('id', favs.map((f) => f.product_id)));
-    const order = new Map(favs.map((f, i) => [f.product_id, i]));
+  async function productCardsByIds(productIds: string[]): Promise<ProductCard[]> {
+    const ids = [...new Set(productIds)], cards: ProductCard[] = [];
+    for (let i = 0; i < ids.length; i += 100)
+      cards.push(...await run<ProductCard[]>(from('product_cards').select('*').in('id', ids.slice(i, i + 100))));
+    const order = new Map(ids.map((id, i) => [id, i]));
     return cards.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
   }
+  const favoriteCards = (favs: { product_id: string; created_at: string }[]) => productCardsByIds(favs.map(f => f.product_id));
 
   const account = {
     profile: (userId: string) => run<Profile | null>(from('profiles').select('*').eq('id', userId).maybeSingle()),
@@ -363,6 +367,9 @@ export function createApi(client: KoraClient) {
       run<{ product_id: string; created_at: string }[]>(from('favorites').select('product_id, created_at').eq('user_id', userId).order('created_at', { ascending: false })),
     favoriteProducts: async () => favoriteCards(await account.favorites()),
     favoriteProductsForBuyer: async (userId: string) => favoriteCards(await account.favoritesForBuyer(userId)),
+    /** A durable receipt prevents an uncertain guest import from reapplying after a later unfavorite. */
+    mergeFavoritesWithIntent: (productIds: string[], idempotencyKey: string) =>
+      run<unknown>(rpc('favorites_merge_intent', { p_product_ids: productIds, p_idempotency_key: idempotencyKey })),
     setFavorite: async (userId: string, productId: string, on: boolean) => {
       if (on) await run(from('favorites').upsert({ user_id: userId, product_id: productId }, { ignoreDuplicates: true }));
       else await run(from('favorites').delete().eq('user_id', userId).eq('product_id', productId));

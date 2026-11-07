@@ -12,3 +12,6 @@ export * from './seller-authoring';
 export * from './persistent-intent';
 export * from './catalog-presentation';
 export * from './option-swatch';
+
+export * from './guest-cart';
+export * from './guest-favorites';

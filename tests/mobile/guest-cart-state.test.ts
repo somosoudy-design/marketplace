@@ -9,7 +9,11 @@ it('replaces only a server-cancelled reservation, preserving new guest lines acr
   const next=await cart.replaceCancelledMerge(old,['a'],()=> 'replacement-intent',{state:'cancelled',operation:'merge'});
   const restart=createGuestCart(storage);expect(await restart.pendingMerge('actor-a')).toEqual(next);expect(await restart.read()).toEqual([line('new')]);
   expect(await restart.pendingMerge('actor-b')).toBeNull();
-  await expect(restart.reserveMerge('actor-b',()=> 'another-buyer-intent')).rejects.toMatchObject({code:'foreign_guest_merge'});
+  const buyerB = await restart.reserveMerge('actor-b',()=> 'another-buyer-intent');
+  expect(buyerB?.lines).toEqual([line('new')]);
+  expect(buyerB?.actorId).toBe('actor-b');
+  expect(await restart.read()).toEqual([]);
+  expect((await restart.pendingMerge('actor-a'))?.lines).toEqual([line('a')]);
   expect(await restart.pendingMerge('actor-a')).toEqual(next);
   await expect(restart.replaceCancelledMerge(old,[],()=> 'third-intent',{state:'cancelled',operation:'merge'})).rejects.toThrow();
 });
