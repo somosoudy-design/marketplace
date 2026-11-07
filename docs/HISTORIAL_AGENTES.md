@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-07 — preflight remoto de retención en sólo lectura
+
+Cuenta somosoudy, Marketplace/MIM/Free confirmados por UI. Dos SELECT dentro de BEGINREADONLY: guardas iniciales y dependencias coinciden; caller DML/TRIGGER metadata true, Authowner real no superusuario; Cron instalado pero módulo/ejecutor/versiones ausentes. Sin DDL/DML o activación, lectura de filas de usuarios, secretos, cambios de plan/Auth, fixtures, soporte o publicación. Metadata visible de backups/logs distinguida del borrado físico. Ruta mínima y dependencias de copy/pin/frontend documentadas; no otra implementación ni suites repetidas. [Informe](PREFLIGHT_REMOTO_RETENCION_2026-11-07.md).
+
 ## 2026-11-07 — retención mínima local del cierre
 
 Desde34ecd9ae; dos resultados: copia Authaudit minimizada/TTL90d y recibo90d sin revivirJWT/replay.501eventos/batch500,holdsespecíficos,fronteraexactasinhold,Authrole sinclaims (superuserlocal explícito), P1remap ymarkerindependiente/control pasan.1Deno/11DB;18tablas idénticas. Revisionesindependientes P1/P2 corregidas antesSQLlocal; sin matrices/pagos/UI ni remotos. Ejecutormanualrealclock200, Cronnoactivo; proveedor/logexterno/backups/permisoshosted se verifican antesactivaciónfutura. [Detalle](RETENCION_CIERRE_CUENTA_2026-11-07.md).

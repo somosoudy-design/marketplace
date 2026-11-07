@@ -1,5 +1,7 @@
 # Retención mínima del cierre · resultado local · 7 de noviembre de 2026
 
+Preflight remoto posterior completado en sólo lectura: [resultado y ruta de activación](PREFLIGHT_REMOTO_RETENCION_2026-11-07.md). Los permisos y dos guardas iniciales se comprobaron; no se activó el módulo.
+
 **Resueltos los dos resultados locales:** la copia Authaudit gestionada se minimiza y caduca; el recibo verificado vence a90×24h sin revivir acceso ni perder replay. El worker ya termina `completed` cuando sólo quedan registros de seguridad necesarios bajo política/hold específico. No se exige borrar absolutamente todo para completar el cierre. No se certifica aceptación Play ni borrado de logs externos/backups.
 
 Fuente aislada desde34ecd9ae; checkpoints1badf958 yb541520c. Ninguna activación de producción, cuenta real, publicación, UI/matriz/emulador/build, Google/correos/cuotas, cambio de importes o gasto. Se reutilizó el clon mayami_account_close_20261107 y sus cuatro servicios; PG compartido no se reinició.
