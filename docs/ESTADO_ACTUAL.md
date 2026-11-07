@@ -1,8 +1,8 @@
 # Estado actual de mayami
 
-## En curso: tres casos visuales del catálogo ·7nov2026
+## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 
-Dos ajustes publicados: superficie de fotos en oscuro y nombre Odontología completo; grilla, imágenes y funciones conservadas. Tecnología no tiene recorte adicional de UI: se mantiene el original con su límite identificado. Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N; Preview4/4 y público4/4 con20fotos/contextos,13assetsSHA yWWW301 correctos.147originales/9gates intactos;116core/139unitarias/30Node, tipos/lint y QA local final aprobados. OTA publicada una vez:01a1b758-773b-7a0f-82c5-a96d2bc2fb81, fuente73fc75ef, mismoAPK/runtime; CI42403068492 sigue en recibo nativo14XML/40PNG. Próximo paso único: archivar resultado y cerrar sin otros ciclos. Free conservado, sin mutaciones de negocio ni Chrome compartido. [Resultado, límite y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
+Dos ajustes publicados: superficie de fotos en oscuro y nombre Odontología completo; diseño, imágenes y funciones conservados. Tecnología conserva su original, sin recorte adicional de UI. Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N; Preview4/4 y público4/4 (20fotos en4contextos),13assetsSHA/WWW301 verificados.147originales/9gates intactos;116core/139unitarias/30Node, tipos/lint y QA local final aprobados. ÚnicaOTA01a1b758-773b-7a0f-82c5-a96d2bc2fb81 recibida por mismaAPK; CI42403068492 SUCCESS,14XML/40PNG. Cobertura visualcaption2/4:1.6legible ambos temas;1.0noencuadrado (0swipes), no se declara aprobado. Normal sí probado local/web. Bloque cerrado con estos límites, sin rerun ni nuevo ciclo. Free, sin mutaciones de negocio/Chrome compartido. [Resultado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
 
 
 ## Modo invitado publicado y verificado ·7nov2026

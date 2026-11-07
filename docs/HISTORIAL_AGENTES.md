@@ -1,5 +1,12 @@
 # Historial de agentes
 
+## 7nov2026 · Codex Mac · dos correcciones visuales y límite de Tecnología
+
+Fotos en tarjetas oscuras con superficie neutra/filete y originales intactos; Odontología completa sin recorte,390normal1línea y reflujo legible. Cuatro archivos UI, sin grilla nueva ni cambios en guest, Preventa, galería o banners. Tecnología muestra el bitmap completo: su recorte es intrínseco, identificado antes de actuar; no se genera/sustituye ni se atribuye un tercer fix.147SHA/9gates conservados,116core/139unitarias/30Node, tipos/lint y QA local aprobados. El candidato con última letra aislada fue retirado y corregido antes de publicar.
+
+Web Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N, fuente9916d3e: Preview4/4 y público4/4,20fotos actuales,13assetsSHA/www301; beacon abortado se registra aparte. ÚnicaOTA fuente73fc75ef/UUID01a1b758-773b-7a0f-82c5-a96d2bc2fb81/grupodb1d3f57/mismoAPK. [CI42403068492](https://github.com/somosoudy-design/marketplace/actions/runs/42403068492) SUCCESS:14XML/40PNG/14diag, ZIP169archivos con digestGitHub. Lectura visualcaption2/4: ambos1.6legibles; ambos1.0 sin encuadrar y0swipes, límite del oráculo preservado sin rerun. No se presenta14PASS como cuatro captions visuales aprobados. Android físico no observado. Sin otroAPK, servicios con cargos ni mutaciones de negocio en producción; Chrome compartido intacto. [Informe y antes/después](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
+
+
 ## 7nov2026 · Codex Mac · modo invitado publicado y recibido
 
 Carrito/favoritos sin registro en app/web, persistencia y unión idempotente por cuenta; variantes/cantidades conservadas, logout aislado y acceso sólo al continuar compra. Mismo diseño, precio/stock/totales del servidor. RPC favorita20261107171748 activada una vez: ocho defs, permisos y contadores comerciales intactos; anónimo401/42501.116core/139unitarias/12SQL/5APIlocales/13UIprincipales/2smokeoffline, tipos/lint/30Node y revisión de ambos temas aprobados.4Worker y4focos funcionales públicos; strict1/4 conserva3fallos por beaconGET bloqueado después de assertions.
