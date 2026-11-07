@@ -9,12 +9,16 @@ const EXPOSED = {
     'search_products', 'shipping_options', 'track_event', 'store_profile', 'product_reviews', 'track_recommendation',
     // used by RLS policies, so they must stay callable
     'has_role', 'is_admin', 'is_store_member', 'is_superadmin',
+    // Actor-scoped pre-request gate, also callable by PostgREST for anonymous catalog reads.
+    'account_request_guard',
   ],
   buyer: [
     'cart_add', 'cart_merge', 'cart_set_quantity', 'cart_summary', 'checkout_preview', 'place_order', 'cancel_order',
     'create_payment_quote', 'submit_payment', 'start_provider_payment', 'cancel_provider_payment', 'open_claim', 'post_claim_message', 'escalate_claim',
     'mark_notifications_read', 'register_push_token', 'request_account_deletion', 'recently_viewed', 'clear_my_activity',
     'submit_review',
+    // Existing guest merge migration: authenticated ownership, atomic replay protection.
+    'favorites_merge_intent',
   ],
   seller: ['seller_fulfillment_detail', 'seller_orders_ready', 'seller_save_product', 'seller_editor_ready', 'seller_dashboard', 'seller_balance', 'advance_fulfillment', 'seller_fulfillments', 'seller_sales', 'reply_review', 'product_pricing', 'set_product_costs'],
   admin: [
@@ -22,6 +26,7 @@ const EXPOSED = {
     'record_refund_payout', 'create_payout', 'cancel_payout', 'mark_payout_paid', 'post_adjustment', 'resolve_claim',
     'set_manual_rate', 'ingest_rate', 'admin_users', 'set_user_role', 'add_store_member', 'process_account_deletion', 'publish_import',
     'moderate_review', 'recommendation_metrics', 'push_health', 'take_pricing_snapshot',
+    'account_closure_capabilities',
   ],
 };
 
