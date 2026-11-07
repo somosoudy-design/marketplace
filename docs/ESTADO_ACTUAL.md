@@ -1,8 +1,8 @@
 # Estado actual de mayami
 
-## Acceso Google · preparación en curso ·7nov2026
+## Acceso Google y correo · preparación desactivada ·7nov2026
 
-Nueva tanda: registro Google, login Google y retorno seguro con selección invitada. Settings público MIM confirma Google=false; no activar ni mostrar botón operativo. Protocolo S256 sin conexión a pantallas; faltan adaptadores, pruebas/revisión y decisión de identidad/configuración. Sin cambios externos, credenciales nuevas, APK ni publicación. [Detalle y próxima acción](ACCESO_GOOGLE_2026-11-07.md).
+GateGooglefalse y sin UI/AuthProvider conectado; protocolo/adaptadores/guardas y destino email MIM canónico preparados.70API/139regresiones/116core pasan; dos correos Mayami HTML+TXT y8renders listos, pruebas Go/SMTP local en curso. Config privada denegada ConfigPullReadStatusError por permiso MIM; no eludir ni pedir autorización genérica. Sin activación/configuración externa ni web/OTA/APK. Faltan integración final y revisión de fronteras entre pestañas/crash además de decisiones OAuth/identidad. [Estado preciso y próxima acción](ACCESO_GOOGLE_2026-11-07.md).
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 

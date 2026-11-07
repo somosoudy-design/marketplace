@@ -37,11 +37,11 @@ otp_expiry = 3600
 max_frequency = "1m"
 
 [auth.email.template.confirmation]
-subject = "Tu código de Kora"
+subject = "Confirma tu correo en Mayami"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.recovery]
-subject = "Código para cambiar tu contraseña"
+subject = "Restablece tu contraseña de Mayami"
 content_path = "./supabase/templates/recovery.html"
 
 [auth.email.template.magic_link]

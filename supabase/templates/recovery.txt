@@ -1,0 +1,19 @@
+Mayami
+
+Recupera tu cuenta
+
+Recibimos una solicitud para cambiar tu contraseña. Escribe este código en la pantalla de recuperación de Mayami.
+
+Código de recuperación: {{ .Token }}
+
+El código y el enlace son de un solo uso. Si vencen, solicita un código nuevo.
+
+Crear una contraseña nueva:
+{{ .ConfirmationURL }}
+
+Si no solicitaste este cambio, ignora este correo. Tu contraseña no cambia hasta que guardes una nueva.
+
+No compartas este código por chat ni por teléfono.
+
+Ayuda: soporte@mayami.app
+https://mayami.app

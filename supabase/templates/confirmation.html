@@ -1,20 +1,79 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tu código de Kora</title></head>
-<body style="margin:0;padding:0;background:#F8F7FC;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1C1928;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F8F7FC;padding:32px 16px;">
-    <tr><td align="center">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:440px;background:#FFFFFF;border-radius:20px;padding:32px 28px;">
-        <tr><td style="font-size:15px;font-weight:700;letter-spacing:-0.2px;color:#6D42E8;padding-bottom:24px;">Kora</td></tr>
-        <tr><td style="font-size:22px;line-height:28px;font-weight:700;letter-spacing:-0.4px;padding-bottom:8px;">Confirma tu correo</td></tr>
-        <tr><td style="font-size:15px;line-height:22px;color:#5C586A;padding-bottom:24px;">Escribe este código en la app para activar tu cuenta.</td></tr>
-        <tr><td align="center" style="padding-bottom:24px;">
-          <div style="display:inline-block;background:#EDE6FF;border-radius:14px;padding:16px 24px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:32px;line-height:36px;font-weight:700;letter-spacing:10px;color:#1C1928;">{{ .Token }}</div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>Confirma tu correo en Mayami</title>
+  <style>
+    body,table,td,a{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+    table,td{mso-table-lspace:0pt;mso-table-rspace:0pt}
+    table{border-collapse:separate}
+    a:focus-visible{outline:3px solid #B9A2FA;outline-offset:3px}
+    @media(max-width:400px){.outer{padding:24px 12px!important}.content{padding-left:22px!important;padding-right:22px!important}.title{font-size:25px!important;line-height:32px!important}}
+    @media(prefers-color-scheme:dark){
+      body,.page{background-color:#110F18!important;color:#F3F1FA!important}
+      .panel{background-color:#1B1825!important;border-color:#2C2839!important}
+      .brand,.text-link{color:#A98CFF!important}
+      .title,.code{color:#F3F1FA!important}
+      .body-copy,.muted,.footer{color:#C4C0D3!important}
+      .code-box{background-color:#252131!important;border-color:#464050!important}
+      .rule{border-color:#2C2839!important}
+      .button,.button-cell{background-color:#A98CFF!important;color:#14101F!important}
+    }
+  </style>
+</head>
+<body class="page" style="margin:0;padding:0;background-color:#F8F7FC;color:#1C1928;font-family:Arial,Helvetica,sans-serif;">
+  <div style="display:none;font-size:1px;line-height:1px;color:#F8F7FC;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">Tu código para completar la verificación de tu correo en Mayami.</div>
+  <table class="page" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F8F7FC;">
+    <tr><td class="outer" align="center" style="padding:40px 16px;">
+      <!--[if mso]><table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+      <table class="panel" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background-color:#FFFFFF;border:1px solid #E4E1EC;border-radius:18px;">
+        <tr><td class="content" style="padding:30px 30px 24px;">
+          <p class="brand" style="margin:0;color:#6D42E8;font-size:20px;line-height:26px;font-weight:700;">Mayami</p>
         </td></tr>
-        <tr><td style="font-size:13px;line-height:20px;color:#777383;padding-bottom:4px;">El código vence en 1 hora y sirve una sola vez.</td></tr>
-        <tr><td style="font-size:13px;line-height:20px;color:#777383;">Si no creaste una cuenta en Kora, ignora este correo.</td></tr>
+        <tr><td class="content" style="padding:0 30px 22px;">
+          <h1 class="title" style="margin:0 0 14px;color:#1C1928;font-size:28px;line-height:35px;font-weight:700;letter-spacing:-0.5px;">Confirma tu correo</h1>
+          <p class="body-copy" style="margin:0;color:#55516A;font-size:16px;line-height:25px;">Te falta un paso para verificar tu cuenta en Mayami. Escribe este código en la pantalla donde comenzaste tu registro.</p>
+        </td></tr>
+        <tr><td class="content" style="padding:0 30px 18px;">
+          <table class="code-box" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F6F2FF;border:1px solid #DACDFF;border-radius:12px;">
+            <tr><td align="center" style="padding:18px 8px 6px;">
+              <p class="muted" style="margin:0;color:#55516A;font-size:12px;line-height:18px;">Código de verificación</p>
+            </td></tr>
+            <tr><td align="center" style="padding:0 8px 20px;">
+              <p class="code" dir="ltr" style="margin:0;color:#1C1928;font-family:Menlo,Consolas,'Courier New',monospace;font-size:32px;line-height:42px;font-weight:700;letter-spacing:4px;white-space:nowrap;">{{ .Token }}</p>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td class="content" style="padding:0 30px 24px;">
+          <p class="muted" style="margin:0;color:#55516A;font-size:13px;line-height:20px;">El código y el enlace son de un solo uso. Si vencen, solicita un código nuevo.</p>
+        </td></tr>
+        <tr><td class="content" style="padding:0 30px 12px;">
+          <p class="body-copy" style="margin:0;color:#55516A;font-size:14px;line-height:22px;">También puedes confirmar tu correo con este botón:</p>
+        </td></tr>
+        <tr><td class="content" style="padding:0 30px 28px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td class="button-cell" align="center" style="background-color:#6D42E8;border-radius:10px;">
+              <a class="button" href="{{ .ConfirmationURL }}" style="display:block;background-color:#6D42E8;border:1px solid transparent;border-radius:10px;padding:14px 12px;color:#FFFFFF;font-size:15px;line-height:22px;font-weight:700;text-align:center;text-decoration:none;">Confirmar mi correo</a>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td class="content" style="padding:0 30px 26px;">
+          <div class="rule" style="border-top:1px solid #E4E1EC;padding-top:22px;">
+            <p class="muted" style="margin:0 0 12px;color:#55516A;font-size:13px;line-height:20px;">Si no creaste una cuenta en Mayami, puedes ignorar este correo.</p>
+            <p class="muted" style="margin:0;color:#55516A;font-size:13px;line-height:20px;">No compartas este código por chat ni por teléfono.</p>
+          </div>
+        </td></tr>
       </table>
-      <p style="font-size:12px;line-height:18px;color:#9A96A6;margin:16px 0 0;">Nunca te pediremos este código por teléfono ni por chat.</p>
+      <!--[if mso]></td></tr></table><![endif]-->
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+        <tr><td class="footer" align="center" style="padding:20px 12px 0;color:#55516A;font-size:12px;line-height:20px;">
+          ¿Necesitas ayuda? <a class="text-link" href="mailto:soporte@mayami.app" style="color:#6D42E8;text-decoration:underline;">soporte@mayami.app</a><br>
+          <a class="text-link" href="https://mayami.app" style="color:#6D42E8;text-decoration:underline;">mayami.app</a>
+        </td></tr>
+      </table>
     </td></tr>
   </table>
 </body>

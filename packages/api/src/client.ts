@@ -9,7 +9,7 @@ export interface ClientOptions {
   anonKey: string;
   storage?: SupportedStorage;
   /** React Native needs detectSessionInUrl=false; the web admin keeps the default. */
-  detectSessionInUrl?: boolean;
+  detectSessionInUrl?: boolean | ((url: URL, params: { [parameter: string]: string }) => boolean);
   fetch?: typeof fetch;
   /**
    * Let supabase-js retry failed reads on its own (1 s, 2 s, 4 s). Off when the caller already retries, like

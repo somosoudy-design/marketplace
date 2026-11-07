@@ -2,6 +2,8 @@ import * as Linking from 'expo-linking';
 import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { supabase } from './supabase';
+import { emailWebCallbackUrl, productionNativeEmailCallback } from '@kora/api';
+import { env } from './env';
 
 /**
  * Links from Supabase Auth emails (confirm sign-up, reset password) come back to the app as
@@ -10,6 +12,7 @@ import { supabase } from './supabase';
  * allowed redirect URLs (docs/ENTORNO.md).
  */
 export interface AuthLinkParams {
+  google_flow?: string;
   code?: string;
   access_token?: string;
   refresh_token?: string;
@@ -31,7 +34,13 @@ export function parseAuthLink(url: string | null | undefined): AuthLinkParams {
 }
 
 /** Where an email link should send the user back to: `kora://<path>` in the app, the same origin on the web. */
-export const authRedirect = (path: string) => Linking.createURL(path);
+export const authRedirect = (path: string) => {
+  const production = productionNativeEmailCallback(env.supabaseUrl, path);
+  if (!production) return Linking.createURL(path);
+  if (Platform.OS !== 'web') return production;
+  const callback = path === '/reset-password' ? '/auth/callback?tipo=recuperar' : '/auth/callback';
+  return emailWebCallbackUrl(env.supabaseUrl, window.location.origin, callback);
+};
 
 export type AuthLinkState =
   | { status: 'working' }
@@ -58,6 +67,8 @@ export function useAuthLinkSession(): AuthLinkState {
     const done = (s: AuthLinkState) => !cancelled && setState(s);
     const p = parseAuthLink(url);
     (async () => {
+      // A prepared Google attempt is never an email link, even while its provider gate is closed.
+      if (p.google_flow !== undefined) return done({ status: 'invalid', reason: 'failed' });
       const failed = linkError(p);
       if (failed) return done(failed);
       try {

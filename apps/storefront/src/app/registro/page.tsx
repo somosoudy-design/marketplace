@@ -1,4 +1,6 @@
 'use client';
+import { emailWebCallbackUrl } from '@kora/api';
+import { env } from '@/lib/env';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -25,7 +27,7 @@ function Registration() {
       const { data, error } = await browser().client.auth.signUp({
         email: p.data.email,
         password: p.data.password,
-        options: { data: { full_name: p.data.full_name }, emailRedirectTo: window.location.origin + callbackPath(back) },
+        options: { data: { full_name: p.data.full_name }, emailRedirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back)) },
       });
       if (error) throw error;
       return data;
@@ -45,7 +47,7 @@ function Registration() {
           type="signup"
           onDone={() => router.replace(back)}
           resend={async () => {
-            const { error } = await browser().client.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: window.location.origin + callbackPath(back) } });
+            const { error } = await browser().client.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back)) } });
             if (error) throw error;
           }}
         />

@@ -1,5 +1,5 @@
 import 'react-native-url-polyfill/auto';
-import { createApi, createKoraClient, publicImageUrl } from '@kora/api';
+import { createApi, createKoraClient, isGoogleAuthCallback, publicImageUrl } from '@kora/api';
 import { AppState, Platform } from 'react-native';
 import { env } from './env';
 import { sessionStorage } from './session-storage';
@@ -11,7 +11,9 @@ export const supabase = createKoraClient({
   url: env.supabaseUrl || 'https://not-configured.invalid',
   anonKey: env.supabaseAnonKey || 'missing-anon-key',
   storage: sessionStorage,
-  detectSessionInUrl: Platform.OS === 'web',
+  // Reserved Google callbacks must be consumed only by the reviewed attempt controller.
+  // Email link handling retains the existing SDK behavior on web.
+  detectSessionInUrl: Platform.OS === 'web' ? url => !isGoogleAuthCallback(url.toString()) : false,
   // the query client (lib/query) owns retries and knows which errors are worth repeating
   retryReads: false,
 });

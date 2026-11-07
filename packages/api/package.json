@@ -10,7 +10,8 @@
     "./database.types": "./src/database.types.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@kora/core": "workspace:*",

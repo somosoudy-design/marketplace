@@ -1,8 +1,8 @@
 # Pendientes de mayami
 
-## Acceso Google · preparación y aprobación concreta pendientes
+## Acceso Google y correo · fuente preparada, activación bloqueada
 
-Completar protocolo/adaptadores y pruebas aisladas antes de pedir decisión de identidad y configuración OAuth existente. Google sigue desactivado; no publicar botón operativo. No autoenlazar cuentas ni modificar roles/propietarios. [Estado y bloqueo](ACCESO_GOOGLE_2026-11-07.md).
+Cerrar pruebas locales del mail y verificar cliente. Google permanece apagado, sin botón ni primaryboundary instalado. Resolver integración final y recuperar lectura autorizada MIM: ConfigPullReadStatusError/permiso de configuración denegado, reintento agotado. No configurar secretos/proveedor/URLs ni publicar templates sin diff conocido/aprobación delimitada. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 

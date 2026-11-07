@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · WIP correo y acceso Google
+
+ProtocoloS256/ports/guardas y URLs email canónicas integrados sin conectar Google a pantallas.70API/139regresiones/116core aprobados; dos HTML/TXT Mayami y8renders locales. Pruebas Go/SMTP local continúan. Boundary queda un propietario local, sin afirmar pestañas/crash. CLIconfigpull lectura MIM denegada por ACL, reintento confirmado y sin otra vía; ningún cambio remoto ni publicación. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
 ## 7nov2026 · WIP acceso Google
 
 Integrador: inspección SDK/metadata pública y documentación vigente; Google=false. Primer checkpoint del protocolo S256, aún sin importar en pantallas. Revisión independiente de enlace automático y carreras de SDK identifica límites; continúan adaptadores y pruebas aisladas. Sin configproveedor, consentimientos, cuentas/sesiones ni compras remotas. API typecheck aprobado. [Detalle](ACCESO_GOOGLE_2026-11-07.md).

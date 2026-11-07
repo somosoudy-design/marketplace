@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { isGoogleAuthCallback } from '@kora/api';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { browser } from '@/lib/browser';
@@ -20,6 +21,8 @@ export default function Callback() {
         // Remove credentials while this callback is still mounted, before the first await.
         history.replaceState(null, '', '/auth/callback');
         try {
+          // Google remains gated. Never exchange its code through the uncorrelated email callback.
+          if (isGoogleAuthCallback(url.toString())) throw new Error('Google no está activado');
           const auth = browser().client.auth; let error: unknown;
           if (url.searchParams.get('code')) ({ error } = await auth.exchangeCodeForSession(url.searchParams.get('code')!));
           else if (fragment.get('access_token') && fragment.get('refresh_token')) ({ error } = await auth.setSession({ access_token: fragment.get('access_token')!, refresh_token: fragment.get('refresh_token')! }));
