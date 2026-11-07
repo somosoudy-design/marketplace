@@ -1,8 +1,8 @@
 # Pendientes de mayami
 
-## Banners y texto · 7nov2026
+## Tres correcciones cerradas · 7nov2026
 
-Web `8496d8a0` al 100% y Android `01a1b669` publicados desde `0df5410`. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, diez casos del Worker y seis públicos; revisión visual web aprobada. CI42381647257 recibió el UUID exacto y guardó 17PNG; perdió el emulador después de fuente1.6 clara. El recibo42382733005 repitió la desconexión; se aísla cada tema/fuente en seis emuladores para completar las mismas36capturas/diez XML con diagnóstico del host. Matriz42383755747: cuatro casos correctos, dos1.6 fallan por dispositivo perdido. Se prepara host37.1.11 fijado para comparar sin cambiar la app. Run42384648761 mostró dependencia libpulse0 ausente y fallos de arranque/PixelLauncher; se corrige únicamente el entorno y se verifica la versión como requisito obligatorio. Run42385540940: oscuro1.6/claro1.3 completos; un fallo nuevo acredita segfault RenderThread del host. Se compara backend swangle_indirect con las mismas pruebas. ANGLE pasó cinco casos; oscuro1.6 y su retry quedaron bloqueados por PixelLauncher. Se contrasta inicio único de la app enflow26, sin cambiar aserciones. No otra publicación. [Detalle](AJUSTES_BANNERS_2026-11-07.md).
+Banner app, banners web y texto del comprador publicados desde0df5410; web8496d8a0/100% y OTA01a1b669. Local y web pública aprobadas, UUID Android exacto recibido y capturas revisadas. CIANGLE5/6: oscuro1.6 bloqueado por PixelLauncher incluso con retry; no recepción física comprobada. La ejecución42387846456 se conserva al terminar, sin más ajustes o repeticiones. Próximo trabajo: esperar el siguiente grupo acotado del usuario; no reabrir esta tanda ni otros pendientes por iniciativa propia. [Cierre](AJUSTES_BANNERS_2026-11-07.md).
 
 ## Cierre de actualización ·7nov2026
 

@@ -1,81 +1,46 @@
-# Mayami · banners y texto del comprador · 7 de noviembre de 2026
+# Mayami · cierre de tres correcciones · 7 de noviembre de 2026
 
-Oliver pidió tres correcciones: banner Android, banners web y texto técnico visible. Se conserva la referencia aprobada, las fotografías originales, la selección, los precios y los destinos. No se abre otro rediseño ni se cambian reglas de negocio.
+Tanda cerrada por instrucción de Oliver con la evidencia disponible. Alcance: banner de la app, banners web y texto del comprador. Son correcciones de lo existente; el siguiente grupo se recibe aparte.
 
-## Qué cambió
+## Los tres ajustes publicados
 
-- Se retira «Imagen general del producto» de banners, tarjetas y resúmenes. Esa frase describía una clasificación interna; la clasificación se conserva. BM88, AM8 y JUOVI tienen una opción activa en la lectura pública y ya no muestran un aviso innecesario sobre distintas elecciones.
-- HiTune S3 y Nexode Air tienen dos opciones activas con fotos sin asociar. Sus fichas muestran «Las fotos pueden variar según la opción elegida». Tras elegir explícitamente un color cuya foto se desconoce, la tarjeta móvil muestra «Imagen no disponible». No se asigna la foto de otro color ni se rellena un vacío explícito.
-- Los banners integran foto, fondo de estudio y base gráfica violeta. El título dispone de más espacio y cada cantidad permanece junto a su unidad, evitando una W aislada. En ancho estrecho o con texto ampliado, la app apila foto y contenido. Se conservan las fotografías, sin generar o recortar imágenes de producto.
-- La web conserva SSR. Una misma variante determina foto, precio y enlace del banner; sin un candidato válido aparece el acceso al catálogo. Las categorías conservan sus destinos y usan fotografías reales disponibles o un icono. No se inventan ofertas, existencias ni productos.
+1. **App:** fotografía integrada con el fondo y la base violeta, más espacio para título/precio/botón y adaptación a ancho estrecho o texto ampliado. Cantidad y unidad permanecen juntas para evitar una W aislada. Se conservan fotografía original, producto, precio y destino.
+2. **Web:** banner de producto y bloques de categorías ajustados en móvil/escritorio, conservando SSR. Una misma variante determina precio y enlace; no se inventan productos, ofertas ni existencias.
+3. **Texto:** se retira «Imagen general del producto» de banners, tarjetas y resúmenes. La clasificación interna se conserva. Una opción activa no muestra un aviso innecesario; ante varias opciones con fotos sin asociar, la ficha mantiene «Las fotos pueden variar según la opción elegida». No se asigna a un color la foto de otro ni se rellena un vacío explícito.
 
-La mezcla de la foto se aplica sobre papel casi blanco, incluso en tema oscuro, con respaldo blanco en versiones Android anteriores a 10. No se mezcla sobre el fondo oscuro de la aplicación.
+Fuente de implementación `ab5b877`; fuente ejecutable publicada `0df541008de9a7d7a5a38835d640821a63bb6477`. Las fuentes de app/web/core no han vuelto a cambiar desde esa publicación; los commits posteriores son documentación y comprobación nativa.
 
-## Verificación local
+## Publicación comprobada
 
-Tipos y lint de móvil/web, **101 pruebas core y 85 móviles**, aprobados. La corrida final Playwright pasó **26/26**: app a 320/360/390/412 y web a 320/360/390/412/768/1024/1440, ambos temas, más fichas y protección de fotografías ambiguas. Las fotografías se esperan cargadas antes de capturar. También pasan las 24 pruebas Node de publicación y las tres de marca.
+**Web:** una publicación en [mayami.app](https://mayami.app), Worker `8496d8a0-bead-4184-9325-77f40c999195` al100%, BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`. Guardas release/commercial/cloudflare aprobadas; sólo `ASSETS` y `WORKER_SELF_REFERENCE`. La versión anterior contrastada era `1eea5edb-7ecc-4a97-9a44-595fcdf12dff`.
 
-El marcador nativo opcional sólo aparece después de cargar la fuente actual; se reinicia al cargar o fallar y conserva callbacks. No añade texto visible. La revisión de píxeles sigue siendo necesaria para comprobar composición y transición.
+HTML público con SSR/BUILD_ID correctos. CSS `3dmqi9gjrzy_7.css`,62.100bytes, SHA256 `60f904f2dfcf4910e8e02c75c7cd843c8bf7e42c385111544d0d11d45f7ef77e`, idéntico al artefacto. Cuatro cabeceras configuradas y www301 conservando ruta/consulta verificadas. Este despliegue incluye la integración funcional previamente aprobada que ya estaba en la rama y usa el backend compatible activo; no repite SQL ni activa pagos/D3.
 
-Las variantes UGREEN tienen títulos de color, pero sus `options` están vacías. No se reconstruyen colores a partir del título ni se modifica el servidor. Para probar la tarjeta al elegir color se añade estructura `Color` únicamente a una respuesta del navegador local; las fotografías siguen sin clasificar. Las fichas se comprueban con los datos públicos intactos.
+**Android:** una OTA publicada por [42381647257](https://github.com/somosoudy-design/marketplace/actions/runs/42381647257), con plan Free/cuota/runtime/fuente limpia comprobados. UUID `01a1b669-c74b-773b-b68d-e24f246f0ce7`, grupo `ff072540-c0f4-481c-8eeb-3b53ebc773e3`, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. Manifest público HTTP200 y recepción de ese UUID exacto en Android15, backend Marketplace y cuenta invitada.
 
-Revisiones independientes favorables: presentación en ambos temas, cierre del ancho 320 y criterio de fotos. La nueva evidencia está en `ui-receipt`; las capturas anteriores al último ajuste no se presentan como prueba de ese ajuste.
+Mismo APK `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, paquete y firma; SHA256 `c25bb730ef10c2b2fefa1d72a6ea97e38e9041d9f4da2b8aeb50ecb31ea3310a`. Las comprobaciones posteriores no publicaron otra OTA ni construyeron un APK.
 
-## Publicación web
+## Validación aprobada y límites
 
-Fuente implementada `ab5b877`; solicitud y fuente ejecutable `0df541008de9a7d7a5a38835d640821a63bb6477`.
+- Tipos/lint móvil y web;101 pruebas core,85 móviles,24 Node y tres de marca.
+- 26/26 Playwright finales: app320/360/390/412 y web320/360/390/412/768/1024/1440, ambos temas, más fichas y protección de fotos ambiguas.
+- 10/10 del Worker compilado: SSR sin JavaScript, foto/título/precio/enlace coherentes y fichas.6/6 recorridos públicos posteriores, claro/oscuro. Cuatro capturas públicas revisadas independientemente.
+- Recepción nativa exacta y capturas originales revisadas de Inicio, scroll con M/Buscar, BM88, AM8, JUOVI y UGREEN. Se revisaron banners con fuentes1.0/1.3/1.6. Esto no certifica toda la accesibilidad o todos los recorridos de la aplicación.
 
-Publicada una vez el 7 de noviembre a las 14:31 UTC en Workers Free:
+La **matriz ANGLE42386261011 obtuvo cinco de seis casos**: ambos estándares, ambas fuentes1.3 y claro1.6. Son nueve XML aprobados y uno fallido;33 capturas solicitadas más un PNG automático del fallo. Oscuro1.6 quedó bloqueado por «Pixel Launcher isn't responding», con QEMU/ADB vivos y Mayami visible detrás. Un único retry dirigido, job128446336416, repitió ese diálogo. No se llama a esta matriz completa aprobada ni se atribuye ese ANR a Mayami.
 
-- Versión `8496d8a0-bead-4184-9325-77f40c999195`, al 100%.
-- BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`.
-- Versión previa contrastada inmediatamente antes: `1eea5edb-7ecc-4a97-9a44-595fcdf12dff`, conservada como referencia de recuperación.
-- Guardas release/commercial/cloudflare aprobadas. Sólo bindings `ASSETS` y `WORKER_SELF_REFERENCE`; mismo artefacto entre QA y deploy.
+Oscuro1.6 tuvo otra ejecución previa aprobada en42385540940: tres PNG, XML y recibo post-scroll válidos. **Ese resultado anterior no sustituye el resultado final de la matriz ANGLE. La recepción en el teléfono de Oliver no está comprobada.**
 
-**10/10** comprobaciones en el Worker local: SSR sin JavaScript a 320/390/768/1440, ambos temas; foto, título, precio y enlace coinciden con la ficha. **6/6** recorridos públicos posteriores: banners a 390/1440 y fichas BM88/AM8/JUOVI/UGREEN, ambos temas. Cuatro capturas públicas revisadas independientemente sin bloqueos.
+Al cerrar queda en curso [42387846456](https://github.com/somosoudy-design/marketplace/actions/runs/42387846456), fuente `3640d1e`, con un único ajuste de montaje: `stopApp:false` evita el segundo reinicio que Maestro hacía después del arranque ya realizado por el script. Todas las aserciones permanecen; no se ocultan ni cierran diálogos. Se conservará su resultado por separado cuando llegue, sin cancelarla ni abrir otra cadena de ajustes/repeticiones. El cierre de esta tanda no depende de convertir ese ensayo en una matriz aprobada.
 
-El HTML público contiene el BUILD_ID y el banner. El CSS `3dmqi9gjrzy_7.css`, de 62.100 bytes, coincide con el artefacto por SHA256: `60f904f2dfcf4910e8e02c75c7cd843c8bf7e42c385111544d0d11d45f7ef77e`. Se conservan las cuatro cabeceras configuradas y la redirección www301 con ruta y consulta. Estas lecturas no prueban capacidad ni CPU global.
+## Evidencia y continuidad
 
-El despliegue incluye la integración funcional ya aprobada que estaba en la rama y usa el backend compatible activo. No repite su SQL ni activa el bloque de pagos/D3.
+Evidencia ignorada en `.local/banners-20261107/`: `ui-receipt`, `cloudflare-ui-results`, `ui-live`, `data/live-web/receipt.json`, manifiesto público de OTA y ZIP originales con SHA verificados. Dictámenes independientes en `proposals/review-final.md`, `media-copy-independent-final.md` y `cloudflare-final-review.md`.
 
-## Publicación Android
+Los fallos de infraestructura y sus artefactos permanecen separados en `native-evidence`, `native-receipt-final`, `native-matrix`, `native-pinned`, `native-prepared`, `native-angle` y `native-angle-retry`; informes en `proposals/native-*-review*.md`. El ensayo que sigue en curso se archiva en `native-single-launch`. No se borran ni sustituyen fallos por resultados anteriores.
 
-[CI 42381647257](https://github.com/somosoudy-design/marketplace/actions/runs/42381647257), job `128430334946`. Plan Free, cuota disponible, runtime y fuente limpia verificados antes de publicar.
+Los fallos observados incluyen transporte ADB, dependencia Linux ausente, un segfault de un hilo del host llamado RenderThread y el diálogo de Pixel Launcher. La línea del kernel no identifica su binario; vincularla con QEMU/backend gráfico es una inferencia. Los ajustes del comprobador quedan documentados en los dictámenes, con [antecedente primario de Chromium](https://chromium.googlesource.com/chromium/src/tools/+/115b3f40ea52dea3dede0f705fa5aaf978562ff0) y [semántica de Maestro](https://docs.maestro.dev/reference/commands-available/launchapp), sin convertirlos en prueba causal de todos los fallos.
 
-- UUID `01a1b669-c74b-773b-b68d-e24f246f0ce7`.
-- Grupo `ff072540-c0f4-481c-8eeb-3b53ebc773e3`.
-- Runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`.
-- Manifest público HTTP200 con esa identidad.
-- APK existente `df55b9b8-1ed5-42e6-b42f-8a09b9bce50f`, misma firma y paquete. No se construye otro APK.
+El fixture local de colores sólo añade `Color` a una respuesta del navegador para probar una selección explícita con fotos desconocidas; no reconstruye colores ni modifica el servidor. Los SKU del flujo25 corresponden al catálogo de esta fecha: si cambia por decisión del propietario, revisar la muestra, nunca restaurar productos para satisfacer una prueba.
 
-El APK recibió el UUID exacto en Android15. La ejecución inicial terminó con fallo de conexión del emulador al abrir Diagnóstico después de capturar el banner y la M con fuente1.6. Los cuatro recorridos claros anteriores pasaron; no hubo una aserción visual fallida en ese punto. Se conservaron 17 PNG y cinco XML. ZIP SHA256 `c8f408bcc92ae57619b530644087d7d3f898b370d22e328c7584326b250834e2`. Root abrió los banners nativos 1.0/1.3/1.6: foto cargada, título completo, 65W unido, precio y CTA legibles.
-
-La comprobación independiente [42382733005](https://github.com/somosoudy-design/marketplace/actions/runs/42382733005), fuente `b09c24f`, recibió la misma OTA y perdió el dispositivo en el mismo punto. Conserva otros 17PNG/cinco XML, cuatro recorridos pasados y el fallo de transporte posterior; ZIP SHA256 `a731fde09704578ff02ff063b4e16bba266f6067362925ca2ce259655fec2066`. La causa raíz de la desaparición del emulador aún no está demostrada: no atribuirla a OOM ni a la app sin evidencia.
-
-Para aislar la acumulación entre casos se prepara una matriz de seis emuladores independientes: claro/oscuro × estándar/fuente1.3/fuente1.6. Conserva las mismas aserciones y verifica el mismo UUID en cada proceso; estándar conserva 21/24/25 y cada fuente ejecuta26. Se exigen 36PNG/diez XML en conjunto. Cada salida conserva memoria del host, lista de procesos sin argumentos, kernel y ADB con timeout; los archivos de crash sólo se inventarían por nombre/tamaño, sin volcar memoria a artefactos públicos. El diagnóstico de salida mantiene el código de error original.
-
-La matriz [42383755747](https://github.com/somosoudy-design/marketplace/actions/runs/42383755747), fuente `b87e65a`, completó estándar y fuente1.3 en ambos temas. Fuente1.6 pierde el emulador al abrir Diagnóstico en ambos temas, incluso aislada. Por tanto no se demuestra que la acumulación entre casos sea la causa. Las capturas1.6 de banner y M sí se guardaron. Kernel/host no muestran OOM; causa exacta aún sin stack del proceso del emulador.
-
-Se encontró un [reporte primario de Chromium](https://chromium.googlesource.com/chromium/src/tools/+/115b3f40ea52dea3dede0f705fa5aaf978562ff0) que retira37.2.13 por caída de ProcessCleanupThread/EglContext y vuelve a37.1.11. Se prepara la misma matriz con Android Emulator37.1.11 Stable/build15917651, obtenido del [archivo oficial de Android](https://developer.android.com/studio/emulator_archive). ArchivoLinux oficial:334378080bytes, SHA256publicado`95771e0ae431897b2a4bd2d97fa095f29a8b0624a7b216baf529f9306161c266`. El input `emulator-build` fija el host y el hook verifica versión/build antes de ejecutar; no cambia Android15/API35, APK, OTA, app ni aserciones. La coincidencia con ese reporte motiva la comparación, sin afirmar todavía la causa del fallo local.
-
-La comparación [42384648761](https://github.com/somosoudy-design/marketplace/actions/runs/42384648761), fuente `a711253`, no permite cerrar: el hook de versión encontró `libpulse.so.0` ausente y dejó el job fallido incluso donde la UI terminaba. En otros casos apareció transporte ADB transitorio (QEMU vivo y ADB recuperado), y una captura1.6 muestra «Pixel Launcher isn't responding» sobre Mayami cargado. No es evidencia de ANR de Mayami. Los artefactos se conservan y no se cuentan como una matriz aprobada.
-
-Se corrige sólo el entorno: instalar `libpulse0`, asignar cuatro CPU y4GB de RAM dentro del mismo runner estándar, desactivar snapshots y esperar transporte/boot estable antes de cada Maestro. La versión/build del emulador se comprueba ahora como comando obligatorio al principio del script; un fallo detiene el caso antes de probar la app. Las mismas diez pruebas/36 capturas siguen siendo obligatorias. Una solicitud nueva de recibo sustituye la comprobación anterior ya obsoleta; el bloqueo de publicación EAS no se cambia ni se publica otra OTA.
-
-El ensayo preparado [42385540940](https://github.com/somosoudy-design/marketplace/actions/runs/42385540940), fuente `fa877ee`, sí verifica host37.1.11/build15917651 y completa oscuro1.6 y claro1.3. Conserva fallos posteriores de transporte/emulador en otros casos, en puntos distintos. En claro1.6 el kernel del host registra `RenderThread: segfault` a15:20:23, antes de desaparecer QEMU; sin evidencia OOM. Este dato acredita un segfault de un proceso del host cuyo hilo se llama RenderThread. La relación con QEMU y el backend gráfico es una inferencia por la coincidencia temporal; el kernel preservado no identifica el binario ni el símbolo exacto. No se atribuye a Mayami.
-
-La [configuración primaria de Chromium37.1.11](https://chromium.googlesource.com/chromium/src/tools/+/115b3f40ea52dea3dede0f705fa5aaf978562ff0/android/avd/proto_creation/android_37_desktop_x64.textpb) también usa `swangle_indirect`. Se contrasta ese backend ANGLE con la misma matriz, sustituyendo el backend GLES `swiftshader_indirect` que registró el fallo. No se cambia la app, sus fotografías, el APK ni la OTA; tampoco se eliminan las aserciones que encontraron el problema.
-
-La comparación ANGLE [42386261011](https://github.com/somosoudy-design/marketplace/actions/runs/42386261011), fuente `9062155`, pasó ambos estándares, ambas fuentes1.3 y claro1.6. Se verificó el adaptador real ANGLE/Google/Vulkan/SwiftShader, además del input solicitado. Oscuro1.6 falló por un diálogo de Pixel Launcher; QEMU/ADB seguían vivos, sin crash de Mayami demostrado. Se conservan seis ZIP,33capturas solicitadas más un PNG de prueba del diálogo y diez XML, nueve correctos y uno fallido.
-
-Se solicitó una sola repetición dirigida de ese job (`128444205208`), aceptada por GitHub como intento2/job`128446336416`. Mismo código y aserciones, otra instancia limpia; no se cierran diálogos mediante la prueba ni se modifica la app. Los otros cinco casos no se volvieron a ejecutar. El retry terminó con el mismo diálogo de Pixel Launcher; ZIP SHA256 `fb1bfd10b112ded2dc77d4c083ee3b0bad1c7d9cddfc36d9d7dc63b2b8cd6eba`, preservado en `native-angle-retry` (un PNG automático y un XML fallido). No se cuentan seis casos aprobados.
-
-Se identifica una doble parada/arranque en el montaje: el script ya inicia Mayami después de aplicar la fuente; el `launchApp` inicial del flujo26 vuelve a detener el proceso. Se contrasta `launchApp: stopApp:false` ([documentación oficial de Maestro](https://docs.maestro.dev/reference/commands-available/launchapp)), que sólo lleva al frente ese proceso ya iniciado. No se cierran ni ocultan diálogos del sistema, y todas las aserciones/fotos/recibo permanecen. La relación causal con el ANR sigue siendo una hipótesis hasta ejecutar. **Pendiente:** contrastar ese montaje de inicio único y consolidar la matriz. La recepción física en el teléfono no se deduce del emulador.
-
-## Evidencia y límites
-
-Evidencia local ignorada: `.local/banners-20261107/`. Resultados `ui-receipt`, `cloudflare-ui-results`, `ui-live` y `data/live-web/receipt.json`; dictámenes en `proposals/review-final.md`, `media-copy-independent-final.md` y `cloudflare-final-review.md`. Referencia aprobada: `.local/comparacion-referencias-20261107/referencia-ancho390.png`.
-
-Dos errores del guion local quedaron corregidos sin cambiar el producto: medir categorías ocultas devolvía un rectángulo nulo; y una expectativa HSTS no correspondía a las cuatro cabeceras existentes. Se conservó la evidencia inicial, se ajustaron las comprobaciones a la configuración real y pasaron las corridas finales. No se cambió seguridad ni CSS para satisfacerlos.
-
-Sin SQL nuevo, compras, cotizaciones, pagos, fixtures remotos ni cambios en asociaciones de fotos. No servicios con cargos, APK nuevo, tiendas ni iOS. La recepción en el teléfono del propietario sigue sin observarse. Si falla únicamente el recibo, inspeccionar el artefacto y la identidad antes de repetir; no publicar otra OTA idéntica.
+Workers/Expo Free; sin servicios nuevos con cargos, SQL, compras, pagos, tiendas ni iOS. No se vuelve a modificar o publicar la app/web para resolver el emulador durante este cierre. Próxima acción de producto: recibir el siguiente grupo acotado de correcciones del usuario.

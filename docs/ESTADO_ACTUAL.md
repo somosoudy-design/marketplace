@@ -1,12 +1,12 @@
 # Estado actual de mayami
 
-## Banners y texto del comprador · 7nov2026 · cierre nativo en curso
+## Tres correcciones cerradas · 7nov2026
 
-Los tres ajustes de Oliver están publicados: fuente de app/web `0df5410`, Worker `8496d8a0-bead-4184-9325-77f40c999195` al100%, BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`; OTA Android `01a1b669-c74b-773b-b68d-e24f246f0ce7`, grupo `ff072540-c0f4-481c-8eeb-3b53ebc773e3`, runtime existente `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`. Se publicó una vez cada plataforma. Web pública y composición revisadas;101core/85móvil/26UI/24Node/tres marca, diez Worker y seis públicos aprobados. Sin SQL ni pagos.
+Por instrucción de Oliver se cierra esta tanda: banner app, banners web y texto del comprador, publicados desde `0df5410`. Worker `8496d8a0-bead-4184-9325-77f40c999195` al100%, BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`; OTA Android `01a1b669-c74b-773b-b68d-e24f246f0ce7`, grupo `ff072540-c0f4-481c-8eeb-3b53ebc773e3`, runtime `b691ec…`. Una publicación por plataforma, mismo APK.101core/85móvil/26UI/24Node/tres marca, diez Worker y seis públicos aprobados; recepción Android exacta y capturas revisadas.
 
-La comprobación nativa usa ahora host37.1.11/build15917651, libpulse0 y backend ANGLE, después de separar fallos de host/transporte/PixelLauncher de la app. Fuente del comprobador `9062155`. CI42386261011 pasó cinco de seis casos; oscuro1.6 quedó bloqueado por el diálogo «Pixel Launcher isn't responding», con QEMU/ADB vivos. Root pidió una sola repetición dirigida de ese caso, sin alterar la app ni las aserciones; intento2/job128446336416 volvió a encontrar el ANR de Pixel Launcher. Se contrasta el montaje de inicio único: flow26 usa stopApp:false porque el script ya arranca Mayami tras aplicar la fuente; no cambia ninguna aserción ni cierra diálogos. Los otros cinco resultados y seis ZIP originales se conservan.
+**Límite de CI separado:** ANGLE42386261011 obtuvo5/6; oscuro1.6 quedó bloqueado por Pixel Launcher incluso en el único retry. Su aprobación previa en otro ensayo no sustituye ese resultado. No se afirma recepción en el teléfono de Oliver. El ensayo42387846456 sigue en curso al cierre; sólo conservar su resultado cuando llegue, sin cancelarlo ni abrir más ciclos. [Cierre y pruebas](AJUSTES_BANNERS_2026-11-07.md).
 
-**Próxima acción:** leer la CI disparada por la solicitud actual, comprobar la matriz y consolidar sus36PNG/diez XML. No repetir publicación ni reconstruir APK. [Detalle y evidencia](AJUSTES_BANNERS_2026-11-07.md). Workers/Expo Free, sin servicios nuevos con cargos, tiendas ni iOS. La recepción física en el teléfono del propietario no se ha observado.
+**Próxima acción:** recibir el siguiente grupo puntual del usuario. No ampliar este cierre a otros pendientes, rediseñar superficies, repetir SQL, publicar otra app/web ni seguir ajustando infraestructura. Workers/Expo Free, sin servicios nuevos con cargos.
 
 ## Actualización de app y backend ·7nov2026 · publicada y verificada
 
