@@ -4,7 +4,7 @@
 
 Se retoma sólo la finalización del cierre, sin repetir enlaces, inventario Play o compilaciones de app. Fuente aislada 92f75a0d. Baseline real local confirmado: GoTrue emite JWT, Storage oficial guarda bytes, el procesador anterior marca completed y el mismo JWT todavía lee/modifica datos y descarga/sube archivos. Tres aserciones de aceptación fallan antes del arreglo, sin .fails/.skip. El clon exclusivo es mayami_account_close_20261107; no se alteró otra base ni producción.
 
-Primer módulo: worker de servidor acotado e idempotente preparado, aún sin conectar al panel ni activar; comprobación Deno pasa. Pendientes SQL de estados/bloqueo, finalización verificable y pruebas de aceptación verdes. Los casos comerciales sin clasificación explícita quedarán pendientes, sin purgar historia financiera. [Estado y límites](CIERRE_CUENTA_SEGURO_2026-11-07.md).
+Segundo checkpoint: worker y SQL de estados/bloqueo propuestos; aún sin aplicar al clon ni conectar al panel. Comprobación Deno pasa. La API Auth retira credenciales pero deja correo en su auditoría: se comprobará ese residuo y se mantendrá retention_pending, sin falsear completed. Próxima acción: aplicar transaccionalmente sólo al clon mayami_account_close_20261107 y ejecutar aceptación real JWT/Storage y fallos/reintentos. Los casos comerciales sin clasificación explícita quedarán pendientes, sin purgar historia financiera. [Estado y límites](CIERRE_CUENTA_SEGURO_2026-11-07.md).
 
 ## Preparación Play: privacidad y eliminación · entrega local con bloqueo comprobado · 7 de noviembre de 2026
 
