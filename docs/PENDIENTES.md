@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Preparación Play: privacidad y eliminación · local en curso · 7 de noviembre de 2026
+
+Tanda acotada sobre la fuente publicada 59e88a07, sin código de cuotas ni Google/correos. Enlaces de privacidad y términos en registro y Cuenta/Preferencias, recurso /eliminar-cuenta y textos honestos de solicitud preparados localmente. Tipos y lint de los dos clientes pasan. Revisión local de retención y pruebas UI focales pendientes; no se declara borrado completo. No producción, publicación, Console, AAB/APK, firma ni configuración de cuentas. Cuotas y Google/correos se conservan en sus fuentes previas. La sesión de navegador correcta de Supabase fue comprobada en sólo lectura; no hace falta reconexión para esta tanda. [Alcance](PLAY_PRIVACIDAD_ELIMINACION_2026-11-07.md).
+
 ## Cuotas preventa y encargo · listas en local, activación pendiente · 7nov2026
 
 Implementadas las ofertas por variante/cantidad, selección y retorno seguro entre ficha, carrito y checkout en app/web. Son tres pagos totales, incluida la inicial. La nueva excepción se limita a carritos compuestos por líneas válidas reservable/on_order; los mixtos conservan sus reglas anteriores. El calendario, los planes y la verificación de abonos permanecen intactos.

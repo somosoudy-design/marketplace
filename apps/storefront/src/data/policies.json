@@ -1,5 +1,5 @@
 {
-  "updatedAt": "6 de noviembre de 2026",
+  "updatedAt": "7 de noviembre de 2026",
   "pages": [
     {
       "slug": "terminos",
@@ -93,7 +93,7 @@
         {
           "heading": "A quién contactar",
           "paragraphs": [
-            "Esta política describe el tratamiento de información al utilizar mayami.app y las funciones de tu cuenta Mayami. Puedes dirigir consultas y solicitudes sobre tus datos a soporte@mayami.app."
+            "Esta política describe el tratamiento de información al utilizar mayami.app, la aplicación móvil Mayami y las funciones de tu cuenta. Puedes dirigir consultas y solicitudes sobre tus datos a soporte@mayami.app."
           ]
         },
         {
@@ -101,6 +101,15 @@
           "paragraphs": [
             "Para crear y utilizar tu cuenta se procesa tu nombre, correo electrónico y la información necesaria para autenticarte. Para una entrega se solicitan destinatario, teléfono, dirección, localidad y referencias. La cédula o el RIF se recoge cuando lo proporcionas en el campo correspondiente.",
             "También se guarda la información de tu carrito, favoritos, pedidos, entregas, pagos y comunicaciones de soporte. Cuando un método de pago requiere referencia, datos del pagador o comprobante, se procesa la información que envías para verificarlo. Evita incluir en un comprobante datos que no sean necesarios para acreditar el pago."
+          ]
+        },
+        {
+          "heading": "Uso de la aplicación móvil",
+          "paragraphs": [
+            "La app puede registrar interacciones como productos vistos, búsquedas, favoritos y acciones del carrito para sus funciones y recomendaciones. Puedes gestionar las recomendaciones y borrar tu historial de navegación desde Preferencias y privacidad.",
+            "Cuando eliges una imagen para tu perfil, un comprobante de pago o las imágenes de un producto de tu tienda, se procesa el archivo que seleccionas para esa función. La app utiliza el selector de imágenes del dispositivo; no necesita una grabación de audio para estas funciones.",
+            "Si autorizas las notificaciones, se registra un token de notificaciones vinculado a tu cuenta y al dispositivo para enviar avisos de pedidos, pagos y otras gestiones. Puedes controlar los avisos desde la app y desde los ajustes del dispositivo.",
+            "La app utiliza almacenamiento local para sesión, carrito y favoritos, también al navegar como invitado, y para recuperar intentos de compra. Borrar datos en el servidor no acredita por sí solo que se haya borrado toda copia almacenada en tus dispositivos."
           ]
         },
         {
@@ -123,7 +132,7 @@
           "heading": "Quién puede recibir información",
           "paragraphs": [
             "La tienda y los participantes necesarios para preparar y entregar tu pedido reciben la información que necesitan para esa gestión. El personal autorizado de Mayami puede tratar información para revisar pagos, resolver incidencias y atender solicitudes.",
-            "Utilizamos proveedores tecnológicos, incluidos Cloudflare para entregar y proteger el sitio y Supabase para cuentas, datos y archivos. Los mensajes enviados a soporte se procesan mediante servicios de correo. Estos proveedores pueden operar infraestructura en otros países.",
+            "Utilizamos proveedores tecnológicos, incluidos Cloudflare para entregar y proteger el sitio, Supabase para cuentas, datos y archivos, y Expo para actualizaciones y el servicio de notificaciones de la app. En Android, la integración de notificaciones utiliza Firebase Cloud Messaging cuando está configurada y autorizada. Los mensajes enviados a soporte se procesan mediante servicios de correo. Estos proveedores pueden operar infraestructura en otros países.",
             "Si utilizas un proveedor de pago que aparezca habilitado, la información necesaria para ese pago también puede tratarse conforme a su política. Podemos comunicar información a autoridades cuando exista una obligación o una solicitud legalmente procedente."
           ]
         },
@@ -139,6 +148,12 @@
           "paragraphs": [
             "Puedes solicitar información sobre los datos asociados a tu cuenta, su uso y finalidad, así como su corrección o eliminación cuando corresponda. Escribe desde el correo asociado a tu cuenta a soporte@mayami.app e indica qué necesitas. Antes de entregar o modificar información comprobaremos que la solicitud procede de su titular.",
             "Puedes solicitar el cierre de tu cuenta por ese mismo canal. Te informaremos del resultado y de los datos que deban conservarse y su motivo. Esta política no limita los derechos ni los medios de reclamación que reconozca la legislación aplicable."
+          ],
+          "links": [
+            {
+              "label": "Solicitar eliminación de cuenta y datos",
+              "href": "/eliminar-cuenta"
+            }
           ]
         },
         {
@@ -238,6 +253,10 @@
             {
               "label": "Privacidad y solicitudes sobre tus datos",
               "href": "/privacidad"
+            },
+            {
+              "label": "Eliminar cuenta y datos",
+              "href": "/eliminar-cuenta"
             }
           ]
         },
@@ -246,6 +265,69 @@
           "paragraphs": [
             "Mayami no necesita que envíes tu contraseña, códigos de acceso o claves bancarias para atender una consulta. Utiliza las instrucciones de pago que aparecen dentro de tu pedido y revisa que navegas en mayami.app.",
             "La atención por correo no sustituye el registro de un pago o de su comprobante en el pedido cuando el sitio lo solicita."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "eliminar-cuenta",
+      "title": "Eliminar tu cuenta y tus datos de Mayami",
+      "lead": "Puedes solicitar la eliminación por correo, sin instalar la app ni iniciar sesión en ella. La solicitud se revisa antes de procesarse.",
+      "sections": [
+        {
+          "heading": "Cómo enviar tu solicitud",
+          "paragraphs": [
+            "Escribe a soporte@mayami.app, preferiblemente desde el correo asociado a tu cuenta, con el asunto «Eliminar cuenta y datos». Indica que quieres eliminar tu cuenta de Mayami y los datos asociados. Si conoces una operación pendiente, puedes indicar su número de pedido para facilitar la revisión.",
+            "Si no puedes acceder al correo asociado, explica esa situación. Antes de ejecutar la solicitud necesitamos comprobar que eres titular de la cuenta. No envíes contraseñas, códigos de acceso, claves bancarias ni documentos de identidad que no te hayamos solicitado para una verificación necesaria.",
+            "Si el enlace no abre tu aplicación de correo, copia soporte@mayami.app y envía la solicitud desde el servicio de correo que utilices. Abrir el correo no envía la solicitud automáticamente."
+          ],
+          "links": [
+            {
+              "label": "Escribir a soporte",
+              "href": "mailto:soporte@mayami.app"
+            }
+          ]
+        },
+        {
+          "heading": "Revisión de titularidad y operaciones",
+          "paragraphs": [
+            "Mayami verifica la titularidad antes de eliminar o entregar datos. La solicitud enviada desde la app queda registrada para revisión; enviarla no borra la cuenta de inmediato.",
+            "El procedimiento actual impide aprobar una solicitud con pedidos en curso. Las cuentas con acceso de tienda o administración necesitan una revisión de esos accesos antes de procesar el cierre. Te informaremos si existe un impedimento y del resultado de la gestión."
+          ]
+        },
+        {
+          "heading": "Qué retira el procedimiento actual",
+          "bullets": [
+            "Nombre, teléfono, referencia de foto y preferencias del perfil.",
+            "Direcciones guardadas, favoritos, carrito, alertas de existencias e historial de actividad registrado en la cuenta.",
+            "Tokens de notificaciones, sesiones guardadas y tokens de renovación de acceso."
+          ],
+          "paragraphs": [
+            "Se configura el bloqueo de la cuenta y se sustituyen algunos datos de identificación. En pedidos y entregas se reduce la dirección a región y ciudad; en pagos se retiran el nombre y teléfono del pagador de sus campos principales. Esto es un cierre con borrado parcial y anonimización, no un borrado total acreditado."
+          ]
+        },
+        {
+          "heading": "Información que puede permanecer",
+          "paragraphs": [
+            "El proceso actual conserva registros de pedidos, entregas, pagos, obligaciones, reembolsos y auditoría. También pueden permanecer datos de identificación, detalles de pago, mensajes y archivos adjuntos que ese proceso no elimina automáticamente. Retirar la referencia de la foto del perfil no acredita que el archivo original haya sido borrado.",
+            "Estos registros y archivos necesitan una revisión adicional al tramitar la eliminación. Mayami debe informarte de los datos que conservará, su motivo y las condiciones de conservación aplicables a tu solicitud. No publicamos aquí un plazo general ni afirmamos que todo registro conservado deba mantenerse por una obligación legal.",
+            "Puedes indicar expresamente que tu solicitud incluye fotos, comprobantes, mensajes y demás datos asociados, además del cierre de acceso. No consideramos el bloqueo de acceso una confirmación de que todos esos datos se hayan eliminado."
+          ]
+        },
+        {
+          "heading": "Seguimiento y consultas",
+          "paragraphs": [
+            "Utiliza el mismo correo para consultar el estado de tu solicitud. Te comunicaremos el resultado y el alcance de la gestión; no damos la solicitud por ejecutada sólo porque hayas enviado un correo o pulsado el botón de la app."
+          ],
+          "links": [
+            {
+              "label": "Consultar la política de privacidad",
+              "href": "/privacidad"
+            },
+            {
+              "label": "Contacto y soporte",
+              "href": "/contacto"
+            }
           ]
         }
       ]

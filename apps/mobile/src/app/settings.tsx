@@ -1,3 +1,4 @@
+import { LegalLinks } from '@/components/account/LegalLinks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Platform, ScrollView, Switch, View } from 'react-native';
@@ -76,20 +77,22 @@ export default function SettingsScreen() {
         <Text variant="title">Privacidad</Text>
         <ToggleRow
           title="Recomendaciones personalizadas"
-          body="Usamos lo que ves y compras en esta tienda para ordenar sugerencias. No compartimos tu actividad con terceros."
+          body="Usamos lo que ves y compras en esta tienda para ordenar sugerencias. Puedes desactivar estas recomendaciones."
           value={p?.personalization_enabled !== false}
           onChange={(v) => update.mutate({ personalization_enabled: v })}
         />
         <Button title={clear.isSuccess ? 'Historial borrado' : 'Borrar mi historial de navegación'} variant="secondary" size="sm" disabled={clear.isSuccess} loading={clear.isPending} onPress={() => clear.mutate()} />
       </Card>
 
+      <LegalLinks />
+
       <Card style={{ gap: 12 }}>
         <Text variant="title">Eliminar cuenta</Text>
         {deletionRequested || del.isSuccess ? (
-          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Revisaremos que no tengas pedidos ni pagos pendientes y luego eliminaremos tus datos personales. Hasta entonces tu cuenta sigue funcionando." />
+          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Recibimos tu solicitud para revisión. Todavía no se ha completado la eliminación; tu cuenta sigue funcionando mientras se tramita. Consulta el alcance en Eliminar cuenta y datos." />
         ) : (
           <>
-            <Text variant="bodySmall" color="textSecondary">Puedes pedir que eliminemos tu cuenta y tus datos personales. Los registros de pedidos y pagos se conservan de forma anonimizada cuando la ley lo exige.</Text>
+            <Text variant="bodySmall" color="textSecondary">Puedes solicitar la eliminación de tu cuenta y sus datos. La solicitud se revisa antes de procesarse. Consulta Eliminar cuenta y datos para conocer el alcance y la información que permanece después del cierre.</Text>
             <TextField label="Motivo (opcional)" value={reason} onChangeText={setReason} />
             <Button testID="request-deletion" title="Solicitar eliminación" variant="danger" onPress={() => setConfirmDeletion(true)} />
           </>
@@ -99,7 +102,7 @@ export default function SettingsScreen() {
         visible={confirmDeletion && !del.isSuccess}
         testID="request-deletion-sheet"
         title="¿Solicitar la eliminación de tu cuenta?"
-        body="Revisaremos que no tengas pedidos o pagos pendientes y eliminaremos tus datos personales. Conservamos solo lo que la ley exige, sin datos que te identifiquen."
+        body="Esta acción envía una solicitud para revisión; no borra los datos de inmediato. Puede haber operaciones pendientes e información que permanezca tras el cierre. Consulta Eliminar cuenta y datos antes de continuar."
         confirm="Solicitar eliminación"
         cancel="Conservar mi cuenta"
         loading={del.isPending}

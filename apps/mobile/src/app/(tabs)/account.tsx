@@ -1,3 +1,4 @@
+import { LegalLinks } from '@/components/account/LegalLinks';
 import Constants from 'expo-constants';
 import * as Updates from 'expo-updates';
 import { router } from 'expo-router';
@@ -100,6 +101,7 @@ export default function AccountScreen() {
           onPress={() => Linking.openURL(`mailto:${support.data?.email ?? brand.supportEmail}`)}
         />
       </Card>
+      <LegalLinks />
       {/* the bolívar reference rate lives here and next to prices, not on the store front */}
       <RatePill testID="account-rate" />
       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}

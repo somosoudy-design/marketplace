@@ -1,3 +1,4 @@
+import { LegalLinks } from '@/components/account/LegalLinks';
 import { validatePassword } from '@kora/core';
 import { Link, router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
@@ -56,8 +57,9 @@ export default function SignUpScreen() {
         <TextField testID="sign-up-password" label="Contraseña" value={password} onChangeText={setPassword} secureToggle autoComplete="new-password" textContentType="newPassword" helper="Mínimo 8 caracteres, con letras y números." error={pwError} />
         <Button testID="sign-up-submit" title="Crear cuenta" size="lg" full loading={busy} onPress={submit} />
         <Text variant="caption" color="textMuted" align="center">
-          Al crear tu cuenta aceptas los términos y la política de privacidad. Puedes pedir la eliminación de tu cuenta cuando quieras.
+          Al crear tu cuenta aceptas los términos y la política de privacidad. Consulta los documentos antes de continuar. Puedes solicitar la eliminación de tu cuenta.
         </Text>
+        <LegalLinks compact />
         <Link href={authTarget('/sign-in', returnTo)} replace style={{ alignSelf: 'center', padding: 8 }}>
           <Text variant="label" color="brand">Ya tengo cuenta</Text>
         </Link>
