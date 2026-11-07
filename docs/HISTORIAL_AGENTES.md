@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · cierre confirmado y siguiente tanda de invitado
+
+Oliver confirma Preventa e imágenes por color. Comprobación ya iniciada42393131475 termina5/6; Negro seleccionado ySKU correctos enAndroid claro/oscuro con toque centrado, mismoUUID; oscuro1.6 bloqueado por ANR PixelLauncher. Se conserva fallo inicial/recibos/artifacts, sin más ciclos ni nueva publicación. Círculos grandes/texto redundante/botón se registran para otra tanda. Se abre sólo modo invitado para carrito/favoritos, reutilizando persistencia/merge ya existentes, pruebas mutadoras aisladas y diseño preservado. [Plan](MODO_INVITADO_2026-11-07.md).
+
 ## 7nov2026 · Codex Mac · Preventa, fotos por color y selector
 
 Tanda acotada autorizada: etiqueta Preventa sólo para reservable, galería por variante y círculo con nombre accesible; misma estructura y reglas. Evidencia real de12originales y baseline16contextos/64PNG. Cuatro RPC existentes con sesión real devolvieron200;12enlaces verificados y0generales, sin cambiar opciones, precios, stock, estados ni imágenes. HiTune reservable, Nexode unavailable.104core/96unitarias móvil-storefront/30Node-marca, tipos/lint y20UI después aprobados. Carrito invitado Negro conserva UUID/cantidad1/foto/$39; sin checkout ni escrituras remotas de compra. Cierre independiente favorable. Web644930a4/100%, BUILD_ID KsyknrLpMjpR67ufZz3yq y CSS porSHA verificados;4Worker+4SSR locales y4recorridos+4SSR públicos correctos. El beacon opcional registra DNS del Mac, conservado aparte de los checks funcionales. Android publicado una vez por42392010745/source8e771aa: UUID01a1b6de-cb54-7f8a-a80b-778c6b1ec2ce, grupo360d104a-62e3-49ea-935e-4ac3f911fb57 y mismo runtime/APK. ManifestHTTP200 confirma nuevaOTA; recibo nativo aún corriendo, sin segundo disparo ni cambios de infraestructura. Sin servicios de pago nuevos. [Informe](PREVENTA_GALERIA_COLOR_2026-11-07.md).

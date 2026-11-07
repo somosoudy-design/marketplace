@@ -1,14 +1,16 @@
 # Estado actual de mayami
 
-## Preventa y galería por color · publicación completada, recibo Android en curso · 7nov2026
+## En curso: modo invitado para carrito y favoritos ·7nov2026
 
-Tres ajustes autorizados: «Preventa» para reservable, tres fotos por color y círculo con nombre/selección accesibles. Diseño y reglas preservados. HiTune sigue reservable a$39; Nexode sigue unavailable, Gris$49/Blanco$52. Doce fotos verificadas asociadas por cuatro RPC realesHTTP200, sin modificar options, precios, existencias, estados ni imágenes originales. No repetir asociaciones.
+Nueva tanda autorizada por Oliver: agregar/quitar/consultar carrito y favoritos sin registro, persistir selección y combinarla de forma segura con cuenta tras identificación, sin duplicados ni cruces entre cuentas. Identificación sólo al proceder con compra; precios/stock/totales siguen en servidor. Reutilizar guest-cart móvil, contratos idempotentes y controles existentes. Sin rediseño, microajustes anteriores, OAuth, cuotas, dominio del panel, credenciales nuevas ni servicios de pago. Pruebas y cuentas sólo locales/aisladas. [Plan y estado](MODO_INVITADO_2026-11-07.md).
 
-104core,96unitarias móvil/storefront,30Node/marca, tipos/lint y20UI reales después aprobados, más carrito invitado Negro coherente sin checkout remoto. Revisión independiente favorable,4Worker y4SSR locales correctos. Web publicada una vez:644930a4-66d3-4a77-9312-1b6f0fcc0ba3 al100%, fuente1425db8, BUILD_ID KsyknrLpMjpR67ufZz3yq. CSS porSHA/HTML/redirecciónwww y4SSR públicos verificados. Los4recorridos públicos de selección/galería funcionan; el assert de consola estricta registra DNS del beacon opcional static.cloudflareinsights.com, conservado aparte de las funciones del producto.
+Próxima acción: cerrar auditorías de app/web/backend, compartir almacenamiento invitado existente, completar favoritos y conexión web, preservar retorno de autenticación y probar combinación/reintentos/cancelación/logout/cambio de cuenta. Activación remota nueva sólo si se identifica y se declara exactamente; no fixtures/compras/pagos remotos.
 
-Android publicado una vez por42392010745/fuente8e771aa; UUID01a1b6de-cb54-7f8a-a80b-778c6b1ec2ce, grupo360d104a-62e3-49ea-935e-4ac3f911fb57, runtimeb691ec2b61ee413fb1d6e7671a1a84446b4cd4f6 y mismo APKdf55b9b8. PlanFree/cuota/runtime/fuente limpia aprobados porCI; manifest públicoHTTP200 confirma nuevaOTA. El primer recibo confirmó UUID exacto a16:40:37UTC; después falló el assert Negro seleccionado porque el toque quedó sobre el resumen fijo Editar selección (bounds de jerarquía lo acreditan y provocó scroll, manteniendo Púrpura). Se centra sólo el objetivo de esa prueba con centerElement, conservando assertselected; una comprobación de lectura con el workflow existente verificará la mismaOTA. Sin cambios de app/datos/infraestructura ni nueva publicación. Próxima acción: conservar ese resultado acotado y cerrar con su alcance exacto; no construirAPK. Samsung físico no observado. Workers/ExpoFree y sin nuevos servicios de pago. [Detalle](PREVENTA_GALERIA_COLOR_2026-11-07.md).
+## Preventa y galería por color · cerradas y confirmadas por Oliver ·7nov2026
 
-Suplemento anterior: coordinador confirmó42387846456 completo6/6, incluido oscuro160% y UUID exacto. Original preservado; no reabrir infraestructura.
+Oliver confirma que Preventa y fotos por color funcionan. Web644930a4/100%, fuente1425db8, BUILD_ID KsyknrLpMjpR67ufZz3yq; OTA01a1b6de-cb54-7f8a-a80b-778c6b1ec2ce/grupo360d104a/runtimeb691ec y mismo APK.12asociaciones verificadas, datos comerciales preservados.104core/96unitarias/30Node-marca/20UI,4Worker y4SSR locales,4recorridos+4SSR públicos correctos; DNS del beacon opcional conservado aparte. Recibo Android exacto confirmado; comprobación42393131475 terminó5/6: selecciónNegro clara/oscura correcta, fuentes claro1.3/1.6 y oscuro1.3 correctas; oscuro1.6 bloqueado por ANR PixelLauncher, sin más ciclos. No recepción física observada. [Cierre y límites](PREVENTA_GALERIA_COLOR_2026-11-07.md).
+
+Para otra tanda, sin implementar ahora: círculos de color demasiado grandes, texto redundante y ajuste del botón. No mezclar con modo invitado. No repetir publicación ni comprobaciones del bloque cerrado.
 
 ## Tres correcciones cerradas · 7nov2026
 
