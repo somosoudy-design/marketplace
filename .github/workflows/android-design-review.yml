@@ -28,7 +28,7 @@ jobs:
         run: |
           pnpm --filter @kora/mobile typecheck
           pnpm --filter @kora/mobile lint
-          pnpm exec vitest run tests/mobile/catalog-exhibition.test.ts tests/mobile/store-logo.test.ts
+          pnpm exec vitest run tests/mobile/catalog-exhibition.test.ts tests/mobile/store-logo.test.ts tests/mobile/category-art.test.ts
           node --test tools/brand/original-artwork.test.mjs
       - name: Bloquear proyectos alojados
         run: printf '127.0.0.1 mimnotafmfasvwrclxan.supabase.co bfuggvbgttvcygbexqyn.supabase.co\n' | sudo tee -a /etc/hosts > /dev/null

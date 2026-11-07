@@ -56,11 +56,14 @@ test('category photos and missing photos use truthful destinations', async ({ pa
   await page.goto('/');
   await expect(page.getByTestId('category-photo-tecnologia')).toHaveCount(1);
   await expect.poll(() => page.getByTestId('category-photo-tecnologia').locator('img').evaluateAll((images) => images.some((image) => image.complete && image.naturalWidth > 0))).toBe(true);
-  await expect(page.getByTestId('category-fallback-audio')).toHaveCount(1);
-  await expect(page.getByTestId('category-photo-belleza').getByTestId('product-image-unavailable')).toBeVisible();
+  await expect(page.getByTestId('category-art-audio')).toBeVisible();
+  await expect(page.getByTestId('category-art-belleza')).toBeVisible();
+  await expect(page.getByText('Algunas imágenes son ilustrativas.')).toBeVisible();
   const rail = page.getByTestId('home-categories-scroll');
   await rail.scrollIntoViewIfNeeded();
   expect(await rail.evaluate((node) => node.scrollWidth > node.clientWidth)).toBe(true);
+  const labels = await rail.locator('[data-testid^="category-"]').evaluateAll((nodes) => nodes.filter((node) => node.getAttribute('role') === 'link').slice(0, 4).map((node) => node.getAttribute('aria-label')));
+  expect(labels).toEqual(['Tecnología', 'Audio', 'Belleza', 'Hogar']);
   await rail.hover(); await page.mouse.wheel(320, 0);
   await expect.poll(() => rail.evaluate((node) => node.scrollLeft)).toBeGreaterThan(0);
   await rail.evaluate((node) => { node.scrollLeft = 0; });

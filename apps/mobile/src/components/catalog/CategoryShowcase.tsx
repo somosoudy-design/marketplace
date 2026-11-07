@@ -1,5 +1,7 @@
 import type { CategorySummary } from '@kora/api';
 import { router } from 'expo-router';
+import { Image } from 'expo-image';
+import { useState } from 'react';
 import { ScrollView, View, useWindowDimensions } from 'react-native';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -8,28 +10,48 @@ import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
 import { MAX_CONTENT } from './ProductGrid';
 
-/** One truthful category destination per tile; images come only from the published catalog feed. */
+const categoryArtwork: Record<string, number> = {
+  tecnologia: require('../../../assets/category-art/tecnologia.webp'),
+  audio: require('../../../assets/category-art/audio.webp'),
+  belleza: require('../../../assets/category-art/belleza.webp'),
+  hogar: require('../../../assets/category-art/hogar.webp'),
+  odontologia: require('../../../assets/category-art/odontologia.webp'),
+  mascotas: require('../../../assets/category-art/mascotas.webp'),
+  accesorios: require('../../../assets/category-art/accesorios.webp'),
+};
+const featuredOrder = ['tecnologia', 'audio', 'belleza', 'hogar'];
+
+/** Category imagery is navigation only, never a product, price or stock claim. */
 export function CategoryShowcase({ categories }: { categories: CategorySummary[] }) {
-  const { width } = useWindowDimensions();
+  const { width, fontScale } = useWindowDimensions();
   const contentWidth = Math.min(width, MAX_CONTENT);
-  const tileWidth = Math.min(140, Math.max(106, Math.floor((contentWidth - 56) / 3.35)));
+  const tileWidth = contentWidth >= 390 && fontScale <= 1.25
+    ? Math.min(140, Math.floor((contentWidth - 56) / 4))
+    : Math.min(140, Math.max(100, Math.floor((contentWidth - 56) / 3.35)));
+  const rank = (slug: string) => { const index = featuredOrder.indexOf(slug); return index < 0 ? featuredOrder.length : index; };
+  const ordered = [...categories].sort((a, b) => rank(a.slug) - rank(b.slug));
   return (
-    <ScrollView testID="home-categories-scroll" horizontal showsHorizontalScrollIndicator={false}
+    <ScrollView testID="home-categories-scroll" horizontal showsHorizontalScrollIndicator
       contentContainerStyle={{ paddingHorizontal: 16, gap: 8 }}>
-      {categories.map((category) => <CategoryTile key={category.id} category={category} width={tileWidth} />)}
+      {ordered.map((category) => <CategoryTile key={category.id} category={category} width={tileWidth} />)}
     </ScrollView>
   );
 }
 
 function CategoryTile({ category, width }: { category: CategorySummary; width: number }) {
   const t = useTheme();
+  const [failedPhoto, setFailedPhoto] = useState<string>();
+  const [failedArt, setFailedArt] = useState<string>();
   // Legacy sample files are not evidence of a current commercial photograph.
-  const photo = category.image_path && !category.image_path.startsWith('demo/') ? category.image_path : null;
+  const photo = category.image_path && !category.image_path.startsWith('demo/') && failedPhoto !== category.image_path ? category.image_path : null;
+  const art = failedArt === category.slug ? undefined : categoryArtwork[category.slug];
   return (
     <ScalePressable testID={`category-${category.slug}`} accessibilityRole="link" accessibilityLabel={category.name}
       onPress={() => router.push({ pathname: '/catalog', params: { category: category.slug, title: category.name } })}
       style={{ width, minHeight: 44, borderRadius: 12, overflow: 'hidden', backgroundColor: t.colors.surface, borderWidth: 1, borderColor: t.colors.border }}>
-      {photo ? <View testID={`category-photo-${category.slug}`}><ProductImage path={photo} tone={category.tone} aspect={1} radius={0} style={{ width: '100%' }} /></View> : (
+      {photo ? <View testID={`category-photo-${category.slug}`}><ProductImage path={photo} tone={category.tone} aspect={1} radius={0} style={{ width: '100%' }} onRemoteError={() => setFailedPhoto(photo)} /></View> : art ? (
+        <Image testID={`category-art-${category.slug}`} source={art} style={{ width: '100%', aspectRatio: 1 }} contentFit="cover" accessible={false} onError={() => setFailedArt(category.slug)} />
+      ) : (
         <View testID={`category-fallback-${category.slug}`} style={{ width: '100%', aspectRatio: 1, backgroundColor: t.tone(category.tone).bg, alignItems: 'center', justifyContent: 'center' }}>
           <Icon name={category.icon ?? 'tag'} size={32} color={t.scheme === 'dark' ? t.colors.text : t.tone(category.tone).dark} />
         </View>

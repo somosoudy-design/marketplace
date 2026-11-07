@@ -217,6 +217,7 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
         <View testID="home-category-bridge" style={{ paddingTop: 20, paddingBottom: 8 }}>
           <SectionHeader title="Explora por categoría" action="Ver todas" stackAction={fontScale > 1.3 || contentWidth < 360} onAction={() => router.push('/catalog')} />
           <CategoryShowcase categories={data.categories} />
+          <Text variant="caption" color="textMuted" style={{ marginHorizontal: 16, marginTop: 6 }}>Algunas imágenes son ilustrativas.</Text>
         </View>
       ) : !data && home.isLoading ? (
         <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 16, paddingVertical: 20 }}>

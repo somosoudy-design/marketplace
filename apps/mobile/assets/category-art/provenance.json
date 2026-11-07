@@ -1,0 +1,75 @@
+{
+  "purpose": "Illustrative category navigation; not product photography or inventory",
+  "assets": [
+    {
+      "category": "tecnologia",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "8ccdca3078496ed89fadb4d6be77a2c634da87879273ab328401f0bdc62181aa",
+      "sha256": "a387649040c6acbca4a6eebe8c12ab8e1dbe69be100102af82c6a0d0a2184a97",
+      "bytes": 16922,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "category": "audio",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "073ff3dc4c5112356d6525e3430266f49eb004a496d8fe75d3a38efc75a95ac1",
+      "sha256": "5698c82c412181786ff880e896202174440d2b8050a23313ffe1c7c702bc5ae0",
+      "bytes": 9026,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "category": "belleza",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "3f02ab797f70c9c9331cf299246310f37801cb9e671b369b4bea4fcb7c3fa044",
+      "sha256": "0c1ede9f4c6c123933c12c6bede25a15ed5c835928effdafcde47ef3cc598705",
+      "bytes": 5968,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "category": "hogar",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "4fd8705ee6fe9b5cbc6b7d45e5a671380c1902582a5bdb242ca3247403fc9eb7",
+      "sha256": "deb4f897c8685d7674e3e41020a7d4317b057406d3d33f42b3eee6c50916f840",
+      "bytes": 5766,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "category": "odontologia",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "6f90fdb0353e71d5bfa41927abb342d5e0f05d668a7112f6d7a2d5f39d985c92",
+      "sha256": "7f547ce8a024b7a68e45b822063566fbde0f2c541323dcd10b952dc2647e995e",
+      "bytes": 15098,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "category": "mascotas",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "0e248e77abf6829224780840baee8d65b37dc90ef8d12b525f2b18ca036c9dbe",
+      "sha256": "f0509de7ccd6c49ac303753b47ddeab8bd968e445c11ca6288d42a79f5bb66b3",
+      "bytes": 15800,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "category": "accesorios",
+      "kind": "generated-illustration",
+      "usage": "category-navigation-only",
+      "sourceSha256": "d76cfc81787381240bf4f9376aec11fcd6eb43ae0d6bc5c1606e3ec0531cd7d8",
+      "sha256": "8f049706485e61bdd469c1d2713c7752087a4af434b6622a344547af8e9e9aa0",
+      "bytes": 13742,
+      "width": 448,
+      "height": 448
+    }
+  ]
+}

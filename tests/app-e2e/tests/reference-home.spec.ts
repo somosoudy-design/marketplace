@@ -23,7 +23,7 @@ for (const theme of ['light', 'dark'] as const) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       const category = page.getByTestId('category-tecnologia');
       await expect(category).toHaveAccessibleName('Tecnología');
-      await expect(page.getByTestId('category-fallback-tecnologia')).toBeVisible();
+      await expect(page.getByTestId('category-art-tecnologia')).toBeVisible();
       expect((await category.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }
     await page.getByTestId('category-tecnologia').click();

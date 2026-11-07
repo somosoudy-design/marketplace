@@ -26,6 +26,7 @@ interface Props {
   showUnavailableLabel?: boolean;
   onExhibitionError?: (key: string) => void;
   onExhibitionLoad?: (key: string) => void;
+  onRemoteError?: () => void;
 }
 
 /** Every product photo sits on its category tone at 4:5, so mixed sources still look like one catalog. */
@@ -35,7 +36,7 @@ export function ProductImage(props: Props) {
   return <ProductImageContent key={identity} {...props} />;
 }
 
-function ProductImageContent({ productId, variantId, productIsDemo, path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover', showUnavailableLabel = false, onExhibitionError, onExhibitionLoad }: Props) {
+function ProductImageContent({ productId, variantId, productIsDemo, path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover', showUnavailableLabel = false, onExhibitionError, onExhibitionLoad, onRemoteError }: Props) {
   const t = useTheme();
   const reduced = useReducedMotion();
   const bg = t.tone(tone);
@@ -67,7 +68,7 @@ function ProductImageContent({ productId, variantId, productIsDemo, path, tone, 
           transition={reduced ? 0 : 180}
           priority={priority}
           recyclingKey={localPhoto ? exhibitionKey : uri ?? undefined}
-          onError={localPhoto && exhibitionKey ? () => { setFailed(exhibitionKey); onExhibitionError?.(exhibitionKey); } : remotePhoto ? () => setFailedRemote(remotePhoto) : undefined}
+          onError={localPhoto && exhibitionKey ? () => { setFailed(exhibitionKey); onExhibitionError?.(exhibitionKey); } : remotePhoto ? () => { setFailedRemote(remotePhoto); onRemoteError?.(); } : undefined}
           onLoad={localPhoto && exhibitionKey ? () => onExhibitionLoad?.(exhibitionKey) : undefined}
           accessibilityLabel={alt ?? ''}
           accessible={!!alt}
