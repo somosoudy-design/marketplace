@@ -2,7 +2,7 @@
 
 ## Banners y texto · 7nov2026
 
-Web `8496d8a0` al 100% y Android `01a1b669` publicados desde `0df5410`. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, diez casos del Worker y seis públicos; revisión visual web aprobada. CI42381647257 recibió el UUID exacto y guardó 17PNG; perdió el emulador después de fuente1.6 clara. El recibo42382733005 repitió la desconexión; se aísla cada tema/fuente en seis emuladores para completar las mismas36capturas/diez XML con diagnóstico del host. Matriz42383755747: cuatro casos correctos, dos1.6 fallan por dispositivo perdido. Se prepara host37.1.11 fijado para comparar sin cambiar la app. No otra publicación. [Detalle](AJUSTES_BANNERS_2026-11-07.md).
+Web `8496d8a0` al 100% y Android `01a1b669` publicados desde `0df5410`. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, diez casos del Worker y seis públicos; revisión visual web aprobada. CI42381647257 recibió el UUID exacto y guardó 17PNG; perdió el emulador después de fuente1.6 clara. El recibo42382733005 repitió la desconexión; se aísla cada tema/fuente en seis emuladores para completar las mismas36capturas/diez XML con diagnóstico del host. Matriz42383755747: cuatro casos correctos, dos1.6 fallan por dispositivo perdido. Se prepara host37.1.11 fijado para comparar sin cambiar la app. Run42384648761 mostró dependencia libpulse0 ausente y fallos de arranque/PixelLauncher; se corrige únicamente el entorno y se verifica la versión como requisito obligatorio. No otra publicación. [Detalle](AJUSTES_BANNERS_2026-11-07.md).
 
 ## Cierre de actualización ·7nov2026
 

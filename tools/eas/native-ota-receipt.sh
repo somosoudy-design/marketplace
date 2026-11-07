@@ -32,6 +32,21 @@ trap capture_runner_state EXIT
 : "${MAYAMI_UPDATE_ID:?Expected Android update UUID}"
 : "${MAYAMI_RUNTIME:?Expected Android runtime}"
 : "${ANDROID_HOME:?Android SDK required}"
+# Required here, rather than in the action's pre-launch hook, so an invalid host stops every case.
+timeout 15s "$ANDROID_HOME/emulator/emulator" -version > "$out/logs/emulator-version.txt" 2>&1
+grep -E 'Android emulator version 37[.]1[.]11([.]0)? .*build_id 15917651' "$out/logs/emulator-version.txt"
+wait_android_transport() {
+  local attempt
+  for attempt in $(seq 1 12); do
+    if timeout 5s adb wait-for-device && [ "$(timeout 5s adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ]; then
+      sleep 2
+      if timeout 5s adb shell true; then return 0; fi
+    fi
+    sleep 2
+  done
+  echo 'Android transport did not become ready' >&2
+  return 1
+}
 python3 - "$MAYAMI_UPDATE_ID" apks/native-apk-receipt.json apks/mayami-preview.apk <<'PY'
 import hashlib,json,re,sys
 assert re.fullmatch(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',sys.argv[1]), 'Invalid Android update id'
@@ -91,18 +106,21 @@ for theme in "${receipt_themes[@]}"; do
   adb shell am start -W -n "$component" >/dev/null
   sleep 12
   mkdir -p "$out/raw/$theme"
+  wait_android_transport
   maestro test --test-output-dir "$out/raw/$theme" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme.xml" tests/apk-flows/21-native-identity.yaml > "$out/logs/$theme-maestro.log" 2>&1
   verify_theme_process "$theme"
   adb shell am force-stop "$pkg"
   adb logcat -c
   adb shell am start -W -n "$component" >/dev/null
   sleep 12
+  wait_android_transport
   maestro test --test-output-dir "$out/raw/$theme-store" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme-store.xml" tests/apk-flows/24-mayami-store-mark.yaml > "$out/logs/$theme-store-maestro.log" 2>&1
   verify_theme_process "$theme-store"
   adb shell am force-stop "$pkg"
   adb logcat -c
   adb shell am start -W -n "$component" >/dev/null
   sleep 10
+  wait_android_transport
   maestro test --test-output-dir "$out/raw/$theme-banners" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme-banners.xml" tests/apk-flows/25-banners-and-product-copy.yaml > "$out/logs/$theme-banners-maestro.log" 2>&1
   verify_theme_process "$theme-banners"
   fi
@@ -114,6 +132,7 @@ for theme in "${receipt_themes[@]}"; do
     adb logcat -c
     adb shell am start -W -n "$component" >/dev/null
     sleep 10
+    wait_android_transport
     maestro test --test-output-dir "$out/raw/$theme-font-$font" -e MAYAMI_SHOT_PREFIX="$theme-font-$font" --format junit --output "$out/logs/$theme-font-$font.xml" tests/apk-flows/26-banner-enlarged-text.yaml > "$out/logs/$theme-font-$font-maestro.log" 2>&1
     verify_theme_process "$theme-font-$font"
   done

@@ -58,7 +58,11 @@ La matriz [42383755747](https://github.com/somosoudy-design/marketplace/actions/
 
 Se encontró un [reporte primario de Chromium](https://chromium.googlesource.com/chromium/src/tools/+/115b3f40ea52dea3dede0f705fa5aaf978562ff0) que retira37.2.13 por caída de ProcessCleanupThread/EglContext y vuelve a37.1.11. Se prepara la misma matriz con Android Emulator37.1.11 Stable/build15917651, obtenido del [archivo oficial de Android](https://developer.android.com/studio/emulator_archive). ArchivoLinux oficial:334378080bytes, SHA256publicado`95771e0ae431897b2a4bd2d97fa095f29a8b0624a7b216baf529f9306161c266`. El input `emulator-build` fija el host y el hook verifica versión/build antes de ejecutar; no cambia Android15/API35, APK, OTA, app ni aserciones. La coincidencia con ese reporte motiva la comparación, sin afirmar todavía la causa del fallo local.
 
-Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar la matriz con el host fijado y revisar su evidencia. La recepción física en el teléfono no se deduce del emulador.
+La comparación [42384648761](https://github.com/somosoudy-design/marketplace/actions/runs/42384648761), fuente `a711253`, no permite cerrar: el hook de versión encontró `libpulse.so.0` ausente y dejó el job fallido incluso donde la UI terminaba. En otros casos apareció transporte ADB transitorio (QEMU vivo y ADB recuperado), y una captura1.6 muestra «Pixel Launcher isn't responding» sobre Mayami cargado. No es evidencia de ANR de Mayami. Los artefactos se conservan y no se cuentan como una matriz aprobada.
+
+Se corrige sólo el entorno: instalar `libpulse0`, asignar cuatro CPU y4GB de RAM dentro del mismo runner estándar, desactivar snapshots y esperar transporte/boot estable antes de cada Maestro. La versión/build del emulador se comprueba ahora como comando obligatorio al principio del script; un fallo detiene el caso antes de probar la app. Las mismas diez pruebas/36 capturas siguen siendo obligatorias. Una solicitud nueva de recibo sustituye la comprobación anterior ya obsoleta; el bloqueo de publicación EAS no se cambia ni se publica otra OTA.
+
+Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar la matriz con dependencias y preparación corregidas. La recepción física en el teléfono no se deduce del emulador.
 
 ## Evidencia y límites
 

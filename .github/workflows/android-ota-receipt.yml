@@ -7,7 +7,8 @@ permissions:
   contents: read
 concurrency:
   group: mayami-ota-receipt
-  cancel-in-progress: false
+  # A newer read-only receipt supersedes an obsolete verification; publication has its own lock.
+  cancel-in-progress: true
 jobs:
   emulator:
     name: ${{ matrix.theme }} / ${{ matrix.receipt_case }}
@@ -60,6 +61,10 @@ jobs:
           sudo udevadm trigger --name-match=kvm
           curl -fsSL --retry 3 https://get.maestro.mobile.dev | bash
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Dependencia Linux del emulador fijado
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libpulse0
       - name: Comprobar UUID exacto y navegación sin cuenta
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -70,13 +75,10 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_6
+          cores: 4
+          ram-size: 4096M
           disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          pre-emulator-launch-script: |
-            mkdir -p shots/ota/logs
-            "$ANDROID_HOME/emulator/emulator" -version > shots/ota/logs/emulator-version.txt 2>&1
-            grep -F '37.1.11' shots/ota/logs/emulator-version.txt
-            grep -F '15917651' shots/ota/logs/emulator-version.txt
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           script: bash tools/eas/native-ota-receipt.sh
       - name: Verificar recibo y matriz del caso
         run: |
