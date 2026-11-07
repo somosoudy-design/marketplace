@@ -25,6 +25,14 @@ for (const width of [320, 360, 390, 412]) {
         return box.bottom <= 0 || box.top >= innerHeight || box.right <= 0 || box.left >= innerWidth || !box.width || !box.height || (image.complete && image.naturalWidth > 0);
       }))).toBe(true);
       await page.screenshot({ path: info.outputPath('inicio.png') });
+      const scroll = page.getByTestId('home-scroll');
+      await scroll.evaluate((node) => { node.scrollTop = 100; });
+      await expect(page.getByTestId('home-search-sticky')).toBeVisible();
+      await expect(page.getByTestId('brand-symbol')).toBeVisible();
+      await page.screenshot({ path: info.outputPath('inicio-scroll.png') });
+      await scroll.evaluate((node) => { node.scrollTop = 0; });
+      await expect(page.getByTestId('home-search')).toBeVisible();
+      await expect(page.getByTestId('home-search-sticky')).toBeHidden();
       await page.getByTestId('home-search').click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();
       await expect(page.locator('[data-testid^="product-card-"]:visible').first()).toBeVisible();

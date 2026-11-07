@@ -302,14 +302,17 @@ function StickySearch({ y, searchBottom }: { y: SharedValue<number>; searchBotto
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const [visible, setVisible] = useState(false);
+  // Start before the inline field is clipped by the status area. Short feeds may not
+  // have enough scroll distance to move its entire bottom edge off screen.
+  const threshold = Math.max(0, searchBottom - insets.top - 64);
   useAnimatedReaction(
-    () => y.value >= searchBottom - 20,
+    () => y.value >= threshold,
     (shown, before) => { if (shown !== before) scheduleOnRN(setVisible, shown); },
   );
   const style = useAnimatedStyle(() => ({
-    opacity: interpolate(y.value, [searchBottom - 20, searchBottom + 10], [0, 1], Extrapolation.CLAMP),
+    opacity: interpolate(y.value, [threshold, threshold + 8], [0, 1], Extrapolation.CLAMP),
     // parked above the screen while hidden so it never intercepts touches
-    transform: [{ translateY: y.value < searchBottom - 20 ? -200 : interpolate(y.value, [searchBottom - 20, searchBottom + 10], [-10, 0], Extrapolation.CLAMP) }],
+    transform: [{ translateY: y.value < threshold ? -200 : interpolate(y.value, [threshold, threshold + 8], [-10, 0], Extrapolation.CLAMP) }],
   }));
   return (
     <>
