@@ -191,6 +191,8 @@
 .market-home .market-category-tile > div:first-child { flex: 1; min-width: 0; }
 .market-home .market-category-tile span { white-space: nowrap; }
 .market-home .market-category-tile span svg { flex-shrink: 0; }
+.market-home .market-category-tile[href="/buscar?category=odontologia"] h2 { overflow-wrap: anywhere; }
+.market-home .market-category-tile[href="/buscar?category=odontologia"] span { max-width: 100%; white-space: normal; }
 .market-home .market-category-tile .product-photo { width: 38%; max-width: 115px; }
 @media (min-width:701px) and (max-width:900px) {
   .market-home .market-category-feature { grid-template-columns: repeat(2,minmax(0,1fr)); }

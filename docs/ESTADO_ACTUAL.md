@@ -1,5 +1,10 @@
 # Estado actual de mayami
 
+## En curso: tres casos visuales del catálogo ·7nov2026
+
+Tanda nueva acotada: superficie de fotos blancas en oscuro, desborde Odontología y encuadre Tecnología. Dos fallos reproducidos y corregidos localmente sin cambiar diseño/grilla/imágenes: stage neutro sólo en tarjetas oscuras y wrap del nombre. Tecnología muestra el bitmap completo en ambas interfaces; su recorte es intrínseco al original y no se cambia por requerir otro asset fuera del alcance. Tipos/lint aprobados, QA antes/candidato conservada; falta export/QA móvil final, revisión y publicación exacta. Sin mutaciones de catálogo/cuentas/compras/pagos en producción ni Chrome compartido. [Estado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
+
+
 ## Modo invitado publicado y verificado ·7nov2026
 
 Nueva tanda autorizada por Oliver: agregar/quitar/consultar carrito y favoritos sin registro, persistir selección y combinarla de forma segura con cuenta tras identificación, sin duplicados ni cruces entre cuentas. Identificación sólo al proceder con compra; precios/stock/totales siguen en servidor. Reutilizar guest-cart móvil, contratos idempotentes y controles existentes. Sin rediseño, microajustes anteriores, OAuth, cuotas, dominio del panel, credenciales nuevas ni servicios de pago. Pruebas y cuentas sólo locales/aisladas. [Plan y estado](MODO_INVITADO_2026-11-07.md).

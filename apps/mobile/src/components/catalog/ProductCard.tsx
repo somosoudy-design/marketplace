@@ -26,7 +26,7 @@ interface Props {
 }
 
 export const ProductCard = memo(function ProductCard({ product: p, width, priority, slot }: Props) {
-  const { colors: colorsTheme } = useTheme();
+  const { colors: colorsTheme, scheme } = useTheme();
   const metadata = useCardMetadata(p.id);
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const variants = metadata.data?.variants.map(v => ({ ...v, id: v.variant_id })) ?? [];
@@ -64,8 +64,9 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
           router.push({ pathname: '/product/[id]', params: { id: p.id, ...(selection.selectedVariantId ? { variant: selection.selectedVariantId } : {}) } });
         }}
       >
-        <View style={{ margin: 5 }}>
-          <ProductImage productId={p.id} productIsDemo={false} variantId={chosen?.id} path={cover} tone={p.tone} priority={priority} aspect={1} fit="contain" radius={7} showUnavailableLabel={missingChoicePhoto} />
+        <View testID={`product-photo-stage-${p.slug}`} style={{ margin: 5 }}>
+          <ProductImage productId={p.id} productIsDemo={false} variantId={chosen?.id} path={cover} tone={p.tone} priority={priority} aspect={1} fit="contain" radius={7} showUnavailableLabel={missingChoicePhoto} style={scheme === 'dark' && cover ? { backgroundColor: '#fff' } : undefined} />
+          {scheme === 'dark' && cover ? <View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, borderRadius: 7, borderWidth: 1, borderColor: 'rgba(28,25,40,0.12)' }} /> : null}
           {/* Demo prices and stock never masquerade as a real promotion or scarcity claim. */}
           <View style={{ position: 'absolute', left: 8, top: 8, gap: 4, maxWidth: width - 58 }}>
             {p.is_demo ? (!isPrivateCatalogPresentation ? <Badge onPhoto label="Demo" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null) : <>

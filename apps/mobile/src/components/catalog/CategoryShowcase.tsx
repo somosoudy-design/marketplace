@@ -66,7 +66,7 @@ function CategoryTile({ category, width }: { category: CategorySummary; width: n
         </View>
       )}
       <View style={{ minHeight: 30, paddingHorizontal: 4, paddingVertical: 5, alignItems: 'center', justifyContent: 'center' }}>
-        <Text variant="caption" align="center" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{category.name}</Text>
+        <Text testID={`category-name-${category.slug}`} variant="caption" align="center" style={[{ fontFamily: 'PlusJakartaSans_600SemiBold' }, category.slug === 'odontologia' ? { alignSelf: 'stretch', minWidth: 0, maxWidth: '100%' } : undefined]}>{category.name}</Text>
       </View>
     </ScalePressable>
   );
