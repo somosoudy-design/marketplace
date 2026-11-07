@@ -32,7 +32,8 @@ for (const width of [320, 360, 390, 412]) {
       await page.screenshot({ path: info.outputPath('inicio-scroll.png') });
       await scroll.evaluate((node) => { node.scrollTop = 0; });
       await expect(page.getByTestId('home-search')).toBeVisible();
-      await expect(page.getByTestId('home-search-sticky')).toBeHidden();
+      await expect(page.getByTestId('home-sticky-bar')).toHaveAttribute('aria-hidden', 'true');
+      await expect(page.getByTestId('home-search-sticky')).toHaveAttribute('tabindex', '-1');
       await page.getByTestId('home-search').click();
       await expect(page.getByTestId('catalog-search')).toBeFocused();
       await expect(page.locator('[data-testid^="product-card-"]:visible').first()).toBeVisible();
