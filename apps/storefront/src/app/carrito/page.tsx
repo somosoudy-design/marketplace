@@ -9,6 +9,7 @@ import { browser } from '@/lib/browser';
 import { money } from '@/lib/format';
 import { ProductPhoto } from '@/components/photo';
 import { Empty } from '@/components/states';
+import { assertBuyerActor, captureBuyerApi } from '@/lib/actor-api';
 function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
   const qc = useQueryClient();
   const [remove, setRemove] = useState(false);
@@ -18,8 +19,17 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
   });
   const update = useMutation({
     mutationKey: ['cart-write', buyerId],
-    mutationFn: (quantity: number) => browser().api.cart.setQuantity(line.variant_id, quantity),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['cart', buyerId] }),
+    mutationFn: async (quantity: number) => {
+      const bound = await captureBuyerApi(buyerId);
+      await bound.assertCurrent();
+      // This remains an absolute legacy quantity assignment, not a new intent RPC.
+      const result = await bound.api.cart.setQuantity(line.variant_id, quantity);
+      await bound.assertCurrent(); return result;
+    },
+    onSettled: async () => {
+      try { await assertBuyerActor(buyerId); } catch { return; }
+      await qc.invalidateQueries({ queryKey: ['cart', buyerId] });
+    },
   });
   return (
     <article className="cart-line" data-testid={`cart-line-${line.variant_id}`}>
@@ -103,7 +113,9 @@ function Line({ line, buyerId }: { line: CartLine; buyerId: string }) {
 function BuyerCart({ buyerId }: { buyerId: string }) {
   const qc = useQueryClient();
   const updating = useIsMutating({ mutationKey: ['cart-write', buyerId] }) > 0;
-  const cart = useQuery({ queryKey: ['cart', buyerId], queryFn: () => browser().api.cart.summary() });
+  const cart = useQuery({ queryKey: ['cart', buyerId], queryFn: async () => {
+    const bound = await captureBuyerApi(buyerId); const result = await bound.api.cart.summaryReviewed(); await bound.assertCurrent(); return result;
+  } });
   if (cart.isPending)
     return (
       <section className="state" role="status">

@@ -6,6 +6,7 @@ import { Platform, RefreshControl, ScrollView, StatusBar, View, useWindowDimensi
 import Animated, { Extrapolation, interpolate, useAnimatedReaction, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useQueryClient } from '@tanstack/react-query';
 import { BrandMark } from '@/components/BrandMark';
 import { BrandSymbol } from '@/components/BrandSymbol';
@@ -189,11 +190,11 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
   return (
     <View>
       {/* Adjacent surfaces stay visually continuous; the tracked hero remains a direct scroll-content child. */}
-      <View testID="home-masthead" style={{ paddingTop: insets.top + 6, paddingBottom: 12, backgroundColor: palette.violet[600] }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 8, minHeight: 44 }}>
-        <View style={{ flex: 1 }}>
+      <LinearGradient testID="home-masthead" colors={[palette.violet[700],palette.violet[600],palette.violet[500]]} start={{x:0,y:0}} end={{x:1,y:1}} style={{ paddingTop: insets.top + 4, paddingBottom: 10 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 6, minHeight: 44 }}>
+        <View style={{ flex: 1,flexDirection:'row',alignItems:'center',gap:10,minWidth:0 }}>
           <BrandMark inverse />
-          {firstName ? <Text variant="caption" style={{ color: palette.violet[200] }} numberOfLines={1}>Hola, {firstName}</Text> : null}
+          {firstName&&contentWidth>=360&&fontScale<=1.25 ? <Text testID="home-greeting" variant="caption" style={{ color: palette.violet[100],flex:1,minWidth:0 }} numberOfLines={1}>Hola, {firstName}</Text> : null}
         </View>
         <View>
           <IconButton testID="home-bell" icon="bell" label={unread ? `Notificaciones, ${unread} sin leer` : 'Notificaciones'} color={palette.ink[0]} size={44} onPress={() => router.push(user ? '/notifications' : '/sign-in')} />
@@ -206,15 +207,15 @@ function Header({ home, opening, picks, onSearchBottom }: { home: ReturnType<typ
       </View>
 
       <SearchEntry editorial onBottom={onSearchBottom} />
-      </View>
+      </LinearGradient>
 
       {!data && home.isLoading ? <View style={{ paddingHorizontal: 16, paddingBottom: 16, backgroundColor: palette.violet[600] }}><Skeleton height={170} radius={6} /></View> : null}
-      {opening?.kind === 'product' ? <ProductEditorialOpening product={opening.product} width={contentWidth} onOpen={() => router.push({ pathname: '/product/[id]', params: { id: opening.product.id } })} /> : hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
+      {opening?.kind === 'product' ? <ProductEditorialOpening product={opening.product} width={contentWidth} onOpen={(variant) => router.push({ pathname: '/product/[id]', params: { id: opening.product.id, variant } })} /> : hero && heroProduct ? <EditorialOpening block={hero} product={heroProduct} width={contentWidth} onOpen={() => openCollection(hero)} /> : null}
 
       {home.isError && !data ? <ErrorState error={home.error} onRetry={() => home.refetch()} /> : waitingForNetwork(home) ? <OfflineState /> : null}
 
       {data?.categories.length ? (
-        <View testID="home-category-bridge" style={{ paddingTop: 20, paddingBottom: 8 }}>
+        <View testID="home-category-bridge" style={{ paddingTop: 16, paddingBottom: 6 }}>
           <SectionHeader title="Explora por categoría" action="Ver todas" stackAction={fontScale > 1.3 || contentWidth < 360} onAction={() => router.push('/catalog')} />
           <CategoryShowcase categories={data.categories} />
           <Text variant="caption" color="textMuted" style={{ marginHorizontal: 16, marginTop: 6 }}>Algunas imágenes pueden ser ilustrativas.</Text>
@@ -288,7 +289,7 @@ function SearchEntry({ editorial = false, onBottom }: { editorial?: boolean; onB
         accessibilityRole="button"
         accessibilityLabel="Buscar productos o marcas"
         onPress={() => router.navigate({ pathname: '/explore', params: { focus: String(Date.now()) } })}
-        style={{ flex: 1, minHeight: 48, borderRadius: t.radii.sm, backgroundColor: editorial ? palette.violet[50] : t.colors.surface, borderWidth: 1, borderColor: editorial ? palette.violet[200] : t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14, paddingVertical: 10 }}
+        style={{ flex: 1, minHeight: 44, borderRadius: t.radii.sm, backgroundColor: editorial ? palette.violet[50] : t.colors.surface, borderWidth: 1, borderColor: editorial ? palette.violet[200] : t.colors.border, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14, paddingVertical: 8 }}
       >
         <Icon name="search" size={20} color={editorial ? palette.ink[700] : t.colors.textSecondary} />
         <Text style={{ flex: 1, color: editorial ? palette.ink[700] : t.colors.textMuted }}>Buscar productos o marcas</Text>

@@ -28,13 +28,9 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { name: string; icon:
   useEffect(() => {
     focus.value = withTiming(isFocused ? 1 : 0, { duration: reduced ? 0 : 180, easing: Easing.out(Easing.quad) });
   }, [focus, isFocused, reduced]);
-  const expandedGrow = fontScale > 1.2 ? 2.8 : 2.2;
   const button = useAnimatedStyle(() => ({
-    flexGrow: 1 + focus.value * (expandedGrow - 1),
     backgroundColor: interpolateColor(focus.value, [0, 1], [colors.surface, colors.brandSoft]),
   }));
-  // Reserve enough space for larger text even on web, where CSS scaling does not update fontScale.
-  const caption = useAnimatedStyle(() => ({ width: focus.value * (label.length * 8 * Math.max(fontScale, 1.6) + 12), opacity: focus.value }));
   const color = isFocused ? colors.brand : colors.textSecondary;
   const countLabel = badge > 0 ? `Carrito, ${badge} ${badge === 1 ? 'unidad' : 'unidades'}` : label;
   return (
@@ -46,15 +42,15 @@ const TabButton = forwardRef<RNView, TabTriggerSlotProps & { name: string; icon:
       aria-selected={!!isFocused}
       accessibilityLabel={countLabel}
       onPress={(event) => { if (!isFocused) haptics.select(); onPress?.(event); }}
-      style={[{ flexBasis: 0, minWidth: 44, height: 48, borderRadius: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 6 }, button]}
+      style={[{ flexBasis: 0, flexGrow:1, minWidth: 44, minHeight: fontScale>1.3?70:52, borderRadius: 20, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap:2, paddingHorizontal: 4, paddingVertical:4 }, button]}
     >
       <View style={{ width: 24, height: 24, alignItems: 'center', justifyContent: 'center' }}>
         <Icon name={icon} size={23} color={color} strokeWidth={isFocused ? 2.2 : 1.8} />
         <CountBadge count={badge} testID="tab-cart-count" />
       </View>
-      <Animated.View style={[{ overflow: 'hidden', flexShrink: 1 }, caption]} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-        <Text testID={isFocused ? 'active-tab-label' : undefined} variant="caption" numberOfLines={1} style={{ marginLeft: 8, color, fontFamily: 'PlusJakartaSans_700Bold', fontSize: 12 }}>{label}</Text>
-      </Animated.View>
+      <View testID={`buyer-tab-caption-${name}`} style={{alignSelf:'stretch'}} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <Text testID={isFocused ? 'active-tab-label' : undefined} variant="caption" align="center" style={{ color, fontFamily: isFocused?'PlusJakartaSans_700Bold':'PlusJakartaSans_600SemiBold', fontSize: 12 }}>{label}</Text>
+      </View>
     </AnimatedPressable>
   );
 });

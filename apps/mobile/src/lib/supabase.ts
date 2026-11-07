@@ -18,6 +18,19 @@ export const supabase = createKoraClient({
 
 export const api = createApi(supabase);
 
+/** Keep in-flight operations on their original actor even if the global session changes. */
+export async function apiForActor(actorId: string) {
+  const { data, error } = await supabase.auth.getSession();
+  if (error || !data.session || data.session.user.id !== actorId) throw new Error('Tu sesión cambió. Vuelve a abrir esta pantalla.');
+  const token = data.session.access_token;
+  const client = createKoraClient({ url: env.supabaseUrl, anonKey: env.supabaseAnonKey, accessToken: token, retryReads: false });
+  const assertCurrent = async () => {
+    const next = await supabase.auth.getSession();
+    if (next.error || next.data.session?.user.id !== actorId) throw new Error('Tu sesión cambió. Vuelve a abrir esta pantalla.');
+  };
+  return { api: createApi(client), client, assertCurrent };
+}
+
 // Refresh tokens only while the app is in the foreground (recommended for React Native).
 if (Platform.OS !== 'web') {
   AppState.addEventListener('change', (state) => {

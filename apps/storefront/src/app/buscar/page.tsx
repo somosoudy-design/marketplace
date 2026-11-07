@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, SlidersHorizontal, X } from 'lucide-react';
 import type { Availability, SearchSort } from '@kora/api';
-import { publicApi } from '@/lib/server';
+import { publicApi, publicCatalogMetadata } from '@/lib/server';
 import { ProductGrid } from '@/components/product-card';
 import { Failure, Empty } from '@/components/states';
 import { SearchFilters } from '@/components/search-filters';
@@ -60,6 +60,8 @@ export default async function Search({
   } catch {
     return <Failure href="/buscar" message="No pudimos cargar los productos." />;
   }
+  let metadata;
+  try { metadata = await publicCatalogMetadata(products.map(p => p.id)); } catch { return <Failure href="/buscar" message="No pudimos cargar las opciones del catálogo." />; }
   const title = q
     ? `Resultados para “${q}”`
     : categories.find((c) => c.slug === category)?.name ||
@@ -175,7 +177,7 @@ export default async function Search({
         <section aria-label="Resultados" className="search-results">
           {products.length ? (
             <>
-              <ProductGrid products={products} />
+              <ProductGrid products={products} metadata={metadata} />
               <nav className="pagination" aria-label="Páginas de resultados">
                 {page > 1 && (
                   <Link prefetch={false} className="button secondary" href={pagination(page - 1)}>

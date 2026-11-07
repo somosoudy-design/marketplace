@@ -1,11 +1,13 @@
 import type { Session, User } from '@supabase/supabase-js';
 import { useQueryClient } from '@tanstack/react-query';
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { authRedirect } from './auth-link';
 import { guestCart } from './guest-cart';
 import { unregisterPush } from './push';
 import { clearAccountCache } from './query';
-import { api, supabase } from './supabase';
+import { supabase } from './supabase';
+import { captureActorApi } from './actor-api';
+import { intentKey } from './ids';
 
 interface AuthState {
   ready: boolean;
@@ -16,6 +18,8 @@ interface AuthState {
   storeIds: string[];
   /** True while a visitor cart is being merged into the account; account cart queries wait for it. */
   cartSyncing: boolean;
+  cartSyncError: string | null;
+  retryCartSync: () => void;
   signIn: (email: string, password: string) => Promise<void>;
   /** Creates the account. Unless the project skips confirmation, Supabase emails a six-digit code and there is no session yet. */
   signUp: (email: string, password: string, fullName: string) => Promise<{ needsConfirmation: boolean }>;
@@ -47,47 +51,78 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [ready, setReady] = useState(false);
   const [cartSyncing, setCartSyncing] = useState(false);
+  const [cartSyncError, setCartSyncError] = useState<string | null>(null);
+  const retrySync = useRef<() => void>(() => undefined);
 
   useEffect(() => {
-    // Brings the visitor cart into the account (the server re-validates every line). The local copy is
-    // kept if the merge fails, and retried on the next sign in or app start.
-    const syncGuestCart = async () => {
+    let active = true, syncRun = 0;
+    let owner: string | null | undefined;
+    const current = (actorId: string, run: number) => active && owner === actorId && run === syncRun;
+    const syncGuestCart = async (actorId: string, run: number) => {
       try {
-        const lines = await guestCart.mergeLines();
-        if (!lines.length) return;
-        await api.cart.merge(lines);
-        await guestCart.clear();
-        qc.invalidateQueries();
-      } catch {
-        // offline or rejected: keep the lines for a later attempt
+        if (!current(actorId, run)) return;
+        const bound = await captureActorApi(actorId);
+        while(current(actorId,run)){
+          const reserved = await guestCart.reserveMerge(actorId, () => intentKey('cart-merge'));
+          if (!reserved || !current(actorId, run)) return;
+          await bound.assertCurrent();
+          const lines = JSON.parse(reserved.payloadJson) as { variant_id: string; quantity: number }[];
+          await bound.api.cart.mergeWithIntent(lines, reserved.key);
+          await bound.assertCurrent();
+          if (!current(actorId, run)) return;
+          await qc.invalidateQueries({ queryKey: ['cart',actorId] });
+          await bound.assertCurrent();
+          if (!current(actorId, run)) return;
+          await guestCart.completeMerge(reserved);
+          // Lines added after the reserved snapshot are a new operation, never a reason to clear them.
+        }
+      } catch (error) {
+        // Another account's durable reservation stays private and intact. It must
+        // not prevent this buyer from checking out their own server cart.
+        if (current(actorId, run) && (error as {code?:string})?.code !== 'foreign_guest_merge') setCartSyncError((error as Error).message || 'No pudimos incorporar tu carrito. Tus productos siguen guardados.');
       } finally {
-        setCartSyncing(false);
+        if (current(actorId, run)) setCartSyncing(false);
       }
     };
+    const scheduleSync = (actorId: string) => {
+      const run = ++syncRun;
+      setCartSyncError(null);
+      setCartSyncing(true);
+      // Keep Supabase work outside its auth callback.
+      setTimeout(() => { void syncGuestCart(actorId, run); }, 0);
+    };
+    retrySync.current = () => {
+      supabase.auth.getSession().then(({ data }) => {
+        const actorId = data.session?.user.id;
+        if (active && actorId && actorId === owner) scheduleSync(actorId);
+      }).catch(() => undefined);
+    };
     // the device keeps one account's data for offline use (lib/query); another account must never see it
-    let owner: string | null | undefined;
     const ownedBy = (id: string | null) => {
+      if (owner !== id) { syncRun++; setCartSyncing(false); setCartSyncError(null); }
       if (owner !== undefined && owner !== id) clearAccountCache().catch(() => qc.clear());
       if (owner === undefined && id === null) clearAccountCache().catch(() => undefined);
       owner = id;
     };
+    const initialRun = syncRun;
     supabase.auth.getSession().then(({ data }) => {
+      if (!active || syncRun !== initialRun) return;
       ownedBy(data.session?.user.id ?? null);
       setSession(data.session);
       setReady(true);
       if (data.session) {
-        setCartSyncing(true);
-        syncGuestCart();
+        scheduleSync(data.session.user.id);
       }
     });
     const { data } = supabase.auth.onAuthStateChange((event, s) => {
+      if (!active) return;
       if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') ownedBy(s?.user.id ?? null);
       setSession(s);
+      setReady(true);
       if (event === 'SIGNED_IN') {
         // hold account cart queries in the same render that exposes the session, so they cannot read the
         // cart before the merge lands; run the merge outside the auth callback, as supabase-js recommends
-        setCartSyncing(true);
-        setTimeout(syncGuestCart, 0);
+        if (s) scheduleSync(s.user.id);
       }
     });
     // The server answering "sign in" while the app shows an account means the stored session is gone (expired
@@ -107,6 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (e.type === 'updated' && e.action.type === 'error') sessionGone(e.action.error);
     });
     return () => {
+      active = false; syncRun++; retrySync.current = () => undefined;
       data.subscription.unsubscribe();
       stopQueries();
       stopMutations();
@@ -122,6 +158,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       roles: c.roles,
       storeIds: c.stores,
       cartSyncing,
+      cartSyncError,
+      retryCartSync: () => retrySync.current(),
       signIn: async (email, password) => {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
@@ -158,7 +196,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (error) throw error;
       },
     };
-  }, [session, ready, cartSyncing]);
+  }, [session, ready, cartSyncing, cartSyncError]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

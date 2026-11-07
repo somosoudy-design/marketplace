@@ -1,6 +1,6 @@
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
-import { ApiError, type CheckoutSummary, type DeliveryGroup, type PlaceOrderResult, type ShippingSelection } from '@kora/api';
-import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL } from '@kora/core';
+import { ApiError, type CheckoutSummary, type ReviewedCheckoutSummary, type DeliveryGroup, type PlaceOrderResult, type ShippingSelection } from '@kora/api';
+import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL, productConditionLabel } from '@kora/core';
 import { palette } from '@kora/design-tokens';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack, useFocusEffect, useNavigation } from 'expo-router';
@@ -22,8 +22,8 @@ import { registerCheckoutWebBack } from '@/lib/checkout-navigation';
 import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/lib/checkout-confirmation';
 import { haptics } from '@/lib/haptics';
 import { useAddresses } from '@/lib/hooks';
-import { intentKey } from '@/lib/ids';
-import { api } from '@/lib/supabase';
+import { captureActorApi, assertCurrentActor } from '@/lib/actor-api';
+import { checkoutIntents, type StoredCheckoutAttempt } from '@/lib/checkout-intents';
 import { RadioRow, SummaryRow } from '@/components/checkout/Rows';
 import { Sheet } from '@/components/ui/Sheet';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -40,8 +40,8 @@ const STEPS = [
   { title: 'Revisa tu pedido', body: 'Revisa los productos y confirma el pedido. El pago viene después.' },
 ] as const;
 
-type OrderSelection = { addressId: string; shipping: ShippingSelection; plan: string };
-type Preview = CheckoutSummary & { recoveredShipping: boolean };
+type Preview = ReviewedCheckoutSummary & { recoveredShipping: boolean };
+type AttemptState = { stored: StoredCheckoutAttempt; snapshot?: Preview; fresh: boolean };
 
 export default function CheckoutScreen() {
   const { user } = useAuth();
@@ -60,11 +60,12 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const [step, setStep] = useState(0);
   const [deliveryIndex, setDeliveryIndex] = useState(0);
   const [chosenAddressId, setAddressId] = useState<string | null>(null);
-  const addressId = (addresses.data?.some((a) => a.id === chosenAddressId) ? chosenAddressId : null)
-    ?? (addresses.data?.find((a) => a.is_default) ?? addresses.data?.[0])?.id ?? null;
+  const chosenAddress = addresses.data?.find((a) => a.id === chosenAddressId) ?? addresses.data?.find((a) => a.is_default) ?? addresses.data?.[0];
+  const addressId = chosenAddress?.id ?? null;
+  const addressSignature = chosenAddress ? JSON.stringify(chosenAddress) : '';
   const [pickAddress, setPickAddress] = useState(false);
   const [shipping, setShipping] = useState<ShippingSelection>({});
-  const [shippingAddressId, setShippingAddressId] = useState<string | null>(null);
+  const [shippingDestination, setShippingDestination] = useState('');
   const [shippingRecovered, setShippingRecovered] = useState(false);
   const [lastPreview, setLastPreview] = useState<{ userId: string; summary: Preview } | null>(null);
   const [confirming, setConfirming] = useState(false);
@@ -75,26 +76,43 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const headingRef = useRef<View>(null);
   const submitting = useRef(false);
   const leaving = useRef(false);
-  const [attempt, setAttempt] = useState<{ selection: OrderSelection; snapshot: Preview } | null>(null);
-  // One intent per checkout visit, including back, edits and retries after a lost response.
-  const orderKey = useRef(intentKey('order')).current;
+  const [attempt, setAttempt] = useState<AttemptState | null>(null);
+  const [restored, setRestored] = useState(false);
+  const [restoreError, setRestoreError] = useState<Error | null>(null);
+  const [restoreNonce, setRestoreNonce] = useState(0);
+  const [preparing, setPreparing] = useState(false);
+  const [preparationError, setPreparationError] = useState<Error | null>(null);
+  const [reviewedToken, setReviewedToken] = useState('');
+  const [reviewNotice, setReviewNotice] = useState(false);
+  const alive = useRef(true);
+  useEffect(() => {
+    let active = true; alive.current = true;
+    checkoutIntents.load(buyerId).then((stored) => {
+      if (!active) return;
+      if (stored) { setAttempt({ stored, fresh: false }); setConfirming(true); }
+      setRestored(true);
+    }).catch((error: unknown) => { if (active) setRestoreError(new Error('No pudimos recuperar tu compra guardada. Conservamos sus datos; vuelve a intentar la lectura.', { cause: error })); });
+    return () => { active = false; alive.current = false; };
+  }, [buyerId, restoreNonce]);
 
   // A deleted/default/edited address can change the effective destination outside the picker too.
-  if (addressId !== shippingAddressId && !confirming) {
-    setShippingAddressId(addressId);
+  if (addressSignature !== shippingDestination && !confirming && !preparing) {
+    setShippingDestination(addressSignature);
+    setReviewedToken('');
     setShipping({});
     setDeliveryIndex(0);
     if (step > 0) setStep(0);
   }
 
   const preview = useQuery({
-    queryKey: ['checkout', buyerId, addressId, shipping, plan],
+    queryKey: ['checkout', buyerId, addressSignature, shipping, plan],
     queryFn: async () => {
+      const bound = await captureActorApi(buyerId);
       let selection = shipping;
       let planCode: string | null = plan;
       let recoveredShipping = false;
       for (let attempt = 0; attempt < 3; attempt++) {
-        try { return { ...await api.checkout.preview(addressId, selection, planCode), recoveredShipping }; }
+        try { const result = await bound.api.checkout.previewReviewed(addressId, selection, planCode); await bound.assertCurrent(); return { ...result, recoveredShipping }; }
         catch (e) {
           // Null returns eligible plans without a schedule. The next query uses an offered code.
           if (e instanceof ApiError && e.code === 'plan_invalid' && planCode !== null) { planCode = null; continue; }
@@ -104,14 +122,19 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
       }
       throw new Error('No pudimos actualizar las opciones. Intenta de nuevo.');
     },
-    enabled: !cartSyncing && addresses.isSuccess && !confirming,
+    enabled: restored && !restoreError && !preparing && !cartSyncing && addresses.isSuccess && !confirming,
     staleTime: 0,
     placeholderData: keepPreviousData,
   });
   // A changed query key loses its placeholder on failure. Keep the last server snapshot legible,
   // scoped to this account, while the fresh/error guards prevent using it to advance or confirm.
   const s = confirming && attempt ? attempt.snapshot : preview.data ?? (lastPreview?.userId === buyerId ? lastPreview?.summary : undefined);
-  if (preview.data && !preview.isPlaceholderData && preview.data !== lastPreview?.summary) setLastPreview({ userId: buyerId, summary: preview.data });
+  if (preview.data && !preview.isPlaceholderData && preview.data !== lastPreview?.summary) {
+    setLastPreview({ userId: buyerId, summary: preview.data });
+    if (!confirming && !preparing && step === 3 && reviewedToken && reviewedToken !== preview.data.review_token) {
+      setReviewedToken(''); setStep(2); setReviewNotice(true);
+    }
+  }
 
   if (s && !preview.isPlaceholderData && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
   if (s?.recoveredShipping && !preview.isPlaceholderData && Object.keys(shipping).length) {
@@ -121,59 +144,79 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     setStep(1);
   }
 
+  const complete = async (result: PlaceOrderResult, accepted: AttemptState) => {
+    if (!alive.current) return;
+    await assertCurrentActor(buyerId);
+    if (!alive.current) return;
+    try { await checkoutIntents.complete(accepted.stored); } catch { /* Retained identity safely recovers this confirmed order on the next visit. */ }
+    await qc.invalidateQueries({ queryKey: ['cart'] });
+    await qc.invalidateQueries({ queryKey: ['orders'] });
+    await assertCurrentActor(buyerId);
+    if (!alive.current) return;
+    submitting.current = false;
+    setRecoveredOrder(result); haptics.success();
+  };
   const place = useMutation({
-    mutationFn: (selection: OrderSelection) => confirmCheckout(
-      () => api.checkout.placeOrder(selection.addressId, selection.shipping, selection.plan, orderKey),
-      () => api.checkout.placedOrder(buyerId, orderKey),
-    ),
-    onSuccess: () => {
-      haptics.success();
-      qc.invalidateQueries({ queryKey: ['cart'] });
-      qc.invalidateQueries({ queryKey: ['orders'] });
+    mutationFn: async (accepted: AttemptState) => {
+      const bound = await captureActorApi(buyerId), payload = accepted.stored.payload;
+      await bound.assertCurrent();
+      const result = await confirmCheckout(
+        () => bound.api.checkout.placeOrderReviewed(payload.addressId, payload.shipping, payload.plan, accepted.stored.identity.key, payload.reviewToken),
+        () => bound.api.checkout.placedOrder(buyerId, accepted.stored.identity.key),
+      );
+      await bound.assertCurrent(); return result;
     },
-    onError: (e) => {
-      submitting.current = false;
-      if (e instanceof UnconfirmedCheckoutError) {
-        // Keep the reviewed attempt: an empty cart cannot tell us whether the order was created.
-        haptics.warning();
+    onSuccess: (result, accepted) => complete(result, accepted),
+    onError: async (error, accepted) => {
+      if (!alive.current) return;
+      try { await assertCurrentActor(buyerId); } catch { return; }
+      if (!alive.current) return;
+      submitting.current = false; haptics.warning();
+      const code = (error as { code?: string }).code;
+      const rejected = ['checkout_changed', 'plan_invalid', 'shipping_invalid', 'insufficient_stock', 'sold_out', 'unavailable', 'cart_has_issues', 'cart_empty', 'address_required', 'address_not_found', 'shipping_unavailable', 'invalid_input'].includes(code ?? '');
+      // A retry rejection cannot prove an older unanswered request will not commit.
+      if (error instanceof UnconfirmedCheckoutError || !rejected || !accepted.fresh) {
+        setAttempt((current) => current?.stored.identity.key === accepted.stored.identity.key ? { ...current, fresh: false } : current);
         return;
       }
-      setConfirming(false);
-      haptics.warning();
-      if (e instanceof ApiError) {
-        if (e.code === 'plan_invalid') setStep(2);
-        if (e.code === 'shipping_invalid') {
-          setShipping({});
-          setShippingRecovered(true);
-          setDeliveryIndex(0);
-          setStep(1);
-        }
-        if (['plan_invalid', 'shipping_invalid', 'insufficient_stock', 'sold_out', 'unavailable', 'cart_has_issues'].includes(e.code)) preview.refetch();
-      }
+      try { await checkoutIntents.complete(accepted.stored); } catch { return; }
+      if (!alive.current) return;
+      setConfirming(false); setAttempt(null); setReviewedToken('');
+      if (code === 'checkout_changed') { setStep(0); setDeliveryIndex(0); setReviewNotice(true); }
+      if (['address_required', 'address_not_found', 'shipping_unavailable'].includes(code ?? '')) { setStep(0); setDeliveryIndex(0); }
+      if (code === 'plan_invalid') setStep(2);
+      if (code === 'shipping_invalid') { setShipping({}); setShippingRecovered(true); setDeliveryIndex(0); setStep(1); }
+      void preview.refetch();
     },
   });
 
   const recovery = useMutation({
-    mutationFn: () => recoverCheckout(() => api.checkout.placedOrder(buyerId, orderKey)),
-    onSuccess: (result) => {
-      submitting.current = false;
-      if (!result) return;
-      setRecoveredOrder(result);
-      haptics.success();
-      qc.invalidateQueries({ queryKey: ['cart'] });
-      qc.invalidateQueries({ queryKey: ['orders'] });
+    mutationFn: async () => {
+      if (!attempt) throw new Error('No encontramos la referencia de compra.');
+      const accepted = attempt, bound = await captureActorApi(buyerId);
+      const result = await recoverCheckout(() => bound.api.checkout.placedOrder(buyerId, accepted.stored.identity.key));
+      await bound.assertCurrent(); return { result, accepted };
     },
-    onError: () => { submitting.current = false; haptics.warning(); },
+    onSuccess: async ({ result, accepted }) => {
+      if (!alive.current) return;
+      submitting.current = false;
+      if (result) await complete(result, accepted);
+    },
+    onError: () => { if (alive.current) { submitting.current = false; haptics.warning(); } },
   });
-  const completed = recoveredOrder ?? (place.isSuccess ? place.data : null);
+  const completed = recoveredOrder;
 
   const resetOrderError = place.reset;
   const goTo = useCallback((next: number, groupIndex = 0) => {
     if (submitting.current || confirming) return;
     resetOrderError();
+    if (next === 3) {
+      if (!preview.isSuccess || preview.isFetching || preview.isPlaceholderData) return;
+      setReviewedToken(preview.data.review_token); setReviewNotice(false);
+    } else setReviewedToken('');
     setDeliveryIndex(groupIndex);
     setStep(next);
-  }, [resetOrderError, confirming]);
+  }, [resetOrderError, confirming, preview.isSuccess, preview.isFetching, preview.isPlaceholderData, preview.data]);
   const deliveryCount = s?.groups.length ?? 1;
   const back = useCallback(() => {
     if (submitting.current || confirming) return;
@@ -183,7 +226,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     else router.replace('/cart');
   }, [step, deliveryIndex, deliveryCount, goTo, confirming]);
   // Native/header/browser back follows the phases instead of discarding the checkout selection.
-  usePreventRemove((step > 0 || confirming || place.isPending) && !completed, ({ data }) => {
+  usePreventRemove((step > 0 || preparing || confirming || place.isPending) && !completed, ({ data }) => {
     if (leaving.current && !submitting.current) navigation.dispatch(data.action);
     else back();
   });
@@ -197,10 +240,14 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   }, [step, back, confirming, completed]));
   useEffect(() => {
     if (!completed) return;
-    submitting.current = false;
-    leaving.current = true;
-    router.replace({ pathname: '/pay/[orderId]', params: { orderId: completed.order_id, fresh: '1' } });
-  }, [completed]);
+    let active = true;
+    assertCurrentActor(buyerId).then(() => {
+      if (!active || !alive.current) return;
+      submitting.current = false; leaving.current = true;
+      router.replace({ pathname: '/pay/[orderId]', params: { orderId: completed.order_id, fresh: '1' } });
+    }).catch(() => undefined);
+    return () => { active = false; };
+  }, [completed, buyerId]);
   const hasSummary = !!s;
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -219,13 +266,23 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     leaving.current = true;
     router.replace('/orders');
   };
+  const openConfirmed = (destination: 'payment' | 'order') => {
+    if (!completed) return;
+    void assertCurrentActor(buyerId).then(() => {
+      if (!alive.current) return;
+      if (destination === 'payment') router.replace({ pathname: '/pay/[orderId]', params: { orderId: completed.order_id, fresh: '1' } });
+      else router.replace({ pathname: '/orders/[id]', params: { id: completed.order_id } });
+    }).catch(() => undefined);
+  };
+  if (restoreError) return <ErrorState error={restoreError} onRetry={() => { setRestored(false); setRestoreError(null); setRestoreNonce((n) => n + 1); }} />;
+  if (!restored) return <View testID="checkout-restoring" style={{ padding: 24, gap: 16 }}><ActivityIndicator /><Text align="center">Preparando tu compra…</Text></View>;
   if (completed) return <ScrollView testID="checkout-created" style={{ flex: 1, backgroundColor: t.colors.background }} contentContainerStyle={{ flexGrow: 1, padding: 24, gap: 16, justifyContent: 'center', alignItems: 'center' }}>
     <Stack.Screen options={{ title: 'Pedido creado', headerBackVisible: false, headerLeft: () => null }} />
     <Icon name="circle-check" size={44} color={t.colors.success} />
     <Text variant="title" align="center">Pedido {completed.number} creado</Text>
     <Text color="textSecondary" align="center">Tu pedido está guardado. Continúa para elegir cómo pagar.</Text>
-    <Button testID="checkout-open-payment" title="Continuar al pago" full onPress={() => router.replace({ pathname: '/pay/[orderId]', params: { orderId: completed.order_id, fresh: '1' } })} />
-    <Button title="Ver mi pedido" variant="ghost" onPress={() => router.replace({ pathname: '/orders/[id]', params: { id: completed.order_id } })} />
+    <Button testID="checkout-open-payment" title="Continuar al pago" full onPress={() => openConfirmed('payment')} />
+    <Button title="Ver mi pedido" variant="ghost" onPress={() => openConfirmed('order')} />
   </ScrollView>;
   if (confirming) {
     const checking = place.isPending || recovery.isPending;
@@ -234,15 +291,16 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
       {checking ? <ActivityIndicator size="large" color={t.colors.brand} /> : <Icon name="wifi-off" size={40} color={t.colors.textSecondary} />}
       <Text testID="checkout-confirmation-status" variant="title" align="center" accessibilityLiveRegion="polite">{checking ? 'Estamos confirmando tu pedido' : 'No recibimos la confirmación'}</Text>
       <Text color="textSecondary" align="center">{checking ? 'Estamos comprobando que tu compra quede guardada.' : 'Tu pedido podría haberse creado. Compruébalo para continuar con la misma compra.'}</Text>
+      {place.isError && !(place.error instanceof UnconfirmedCheckoutError) ? <Banner tone="danger" body={(place.error as Error).message + ' Conservamos la referencia mientras comprobamos el resultado.'} /> : null}
       {recovery.isError ? <Banner tone="danger" body="No pudimos consultar tu pedido. Revisa tu conexión e intenta de nuevo." /> : null}
-      {recovery.isSuccess && !recovery.data ? <Text variant="bodySmall" color="textSecondary" align="center">La confirmación aún no aparece. Puedes volver a confirmar esta misma compra.</Text> : null}
+      {recovery.isSuccess && !recovery.data.result ? <Text variant="bodySmall" color="textSecondary" align="center">La confirmación aún no aparece. Puedes volver a confirmar esta misma compra.</Text> : null}
       {!checking ? <>
         <Button testID="checkout-check-order" title="Comprobar pedido" full onPress={() => { if (submitting.current) return; submitting.current = true; recovery.mutate(); }} />
-        {recovery.isSuccess && !recovery.data ? <Button testID="checkout-retry-confirmation" title="Reintentar confirmación" variant="secondary" full onPress={() => {
+        {recovery.isSuccess && !recovery.data.result ? <Button testID="checkout-retry-confirmation" title="Reintentar confirmación" variant="secondary" full onPress={() => {
           if (submitting.current || !attempt) return;
           submitting.current = true;
           recovery.reset();
-          place.mutate(attempt.selection);
+          place.mutate({ ...attempt, fresh: false });
         }} /> : null}
         <Button testID="checkout-view-orders" title="Ver mis pedidos" variant="ghost" onPress={viewOrders} />
       </> : null}
@@ -256,8 +314,8 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const address = s.address;
   const activeIndex = Math.min(deliveryIndex, Math.max(0, s.groups.length - 1));
   const group = s.groups[activeIndex];
-  const fresh = !preview.isFetching && !preview.isError && !preview.isPlaceholderData && !addresses.isFetching && !cartSyncing;
-  const busy = confirming || place.isPending || place.isSuccess;
+  const fresh = restored && !restoreError && !preparing && preview.isSuccess && addresses.isSuccess && !preview.isFetching && !preview.isError && !preview.isPlaceholderData && !addresses.isFetching && !cartSyncing;
+  const busy = preparing || confirming || place.isPending || place.isSuccess;
   const editable = fresh && !busy;
   const addressEditable = !busy && !addresses.isFetching;
   const addressReady = !!address && !s.needs_address;
@@ -267,7 +325,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     : !addressReady ? 'Agrega o selecciona una dirección para continuar.'
     : step > 0 && (step === 1 ? !groupReady : s.needs_shipping) ? 'No hay envío disponible para esta entrega. Prueba con otra dirección.' : null;
   const canContinue = editable && !blocking && (step === 0 ? addressReady : step === 1 ? groupReady : !s.needs_shipping && planReady);
-  const canPlace = editable && !blocking && s.can_place && planReady;
+  const canPlace = editable && !blocking && s.can_place && planReady && reviewedToken === s.review_token;
   const firstPayment = s.schedule.find((x) => x.due_in_days === 0)?.amount_usd ?? s.schedule[0]?.amount_usd;
   const productCount = s.groups.flatMap((g) => g.lines).length;
   const unitCount = s.groups.flatMap((g) => g.lines).reduce((sum, l) => sum + l.quantity, 0);
@@ -278,13 +336,32 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     if (step === 1 && activeIndex < s.groups.length - 1) goTo(1, activeIndex + 1);
     else goTo(step + 1);
   };
-  const confirm = () => {
+  const confirm = async () => {
     if (step !== 3 || !canPlace || !addressId || submitting.current) return;
-    const selection = { addressId, shipping: currentSelection(s, shipping), plan };
-    setAttempt({ selection, snapshot: s });
-    submitting.current = true;
-    setConfirming(true);
-    place.mutate(selection);
+    const payload = { addressId, shipping: currentSelection(s, shipping), plan, reviewToken: reviewedToken };
+    const snapshot = s;
+    submitting.current = true; setPreparing(true); setPreparationError(null);
+    try {
+      const prepared = await checkoutIntents.prepare(buyerId, payload);
+      await assertCurrentActor(buyerId);
+      if (!alive.current) return;
+      const accepted = { ...prepared, snapshot };
+      setAttempt(accepted); setConfirming(true); setPreparing(false);
+      place.mutate(accepted);
+    } catch (error) {
+      if (!alive.current) return;
+      try { await assertCurrentActor(buyerId); } catch { return; }
+      if (!alive.current) return;
+      submitting.current = false; setPreparing(false);
+      setPreparationError((error as { code?: string }).code === 'pending_intent' ? error as Error : new Error('No pudimos guardar la compra. No enviamos el pedido; vuelve a intentarlo.', { cause: error }));
+      // Another route may have persisted an older attempt. Never replace it with
+      // a fresh summary; bring its recovery state back before any transmission.
+      try {
+        const stored = await checkoutIntents.load(buyerId);
+        await assertCurrentActor(buyerId);
+        if (stored && alive.current) { setAttempt({ stored, fresh: false }); setConfirming(true); }
+      } catch { /* Keep the storage error visible and do not send a request. */ }
+    }
   };
 
   return (
@@ -303,6 +380,8 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
             {step !== 3 ? <Text variant="bodySmall" color="textSecondary">{STEPS[step]!.body}</Text> : null}
           </View>
         </View>
+        {reviewNotice ? <Banner tone="warning" body="El pedido cambió. Revisa los productos, la entrega y el total antes de confirmar." /> : null}
+        {preparationError ? <Banner tone="danger" body={preparationError.message} /> : null}
         {preview.isError ? <View testID="checkout-refresh-error" style={{ gap: 8 }}><Banner tone="danger" body="No pudimos actualizar tu compra. Reintenta antes de continuar; tus selecciones siguen aquí." /><Button title="Reintentar actualización" variant="secondary" onPress={() => preview.refetch()} loading={preview.isFetching} /></View> : null}
         {place.error ? <Banner tone="danger" icon="circle-alert" body={place.error instanceof ApiError && place.error.code === 'plan_invalid' ? 'El plan cambió y no pudimos crear el pedido. Revisa las opciones disponibles.' : (place.error as Error).message} /> : null}
 
@@ -359,10 +438,12 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
                 <ScalePressable testID={`checkout-edit-delivery-${i}`} disabled={busy} accessibilityRole="button" accessibilityLabel={`Cambiar entrega ${i + 1} de ${g.store.name}`} onPress={() => goTo(1, i)} style={{ minHeight: 44, minWidth: 44, justifyContent: 'center', opacity: busy ? 0.4 : 1 }}><Text variant="label" color="brand">Cambiar</Text></ScalePressable>
               </View>
               {g.lines.map((l) => <View key={l.variant_id} testID={`checkout-review-line-${l.variant_id}`} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingBottom: 4 }}>
-                <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} fit="contain" radius={6} style={{ width: 48 }} />
+                <ProductImage productId={l.product_id} variantId={l.variant_id} productIsDemo={false} path={l.image_path} aspect={1} fit="contain" radius={6} style={{ width: 48 }} />
                 <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
                   <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
                   <Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>
+                  {productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}
+                  {l.image_scope==='general'&&l.image_path?<Text variant="caption" color="textSecondary">Imagen general del producto</Text>:null}
                   <Text variant="label" tabular>{formatUSD(l.line_total_usd)}</Text>
                 </View>
               </View>)}
@@ -397,7 +478,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
         {step === 3 ? <>
           <SummaryRow label="Total del pedido" value={formatUSD(s.total_usd)} strong inverse testID="checkout-total" />
           {s.schedule.length > 1 ? <SummaryRow label="Pagas hoy" value={formatUSD(firstPayment ?? s.total_usd)} inverse /> : null}
-          <Button testID="checkout-place" title="Confirmar pedido" variant="inverse" size="lg" full loading={place.isPending || preview.isFetching} disabled={!canPlace} onPress={confirm} />
+          <Button testID="checkout-place" title="Confirmar pedido" variant="inverse" size="lg" full loading={preparing || place.isPending || preview.isFetching} disabled={!canPlace} onPress={confirm} />
         </> : <>
           {step >= 2 ? <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
             <Text variant="subtitle">{s.schedule.length > 1 ? 'Pagas hoy' : 'Total'}</Text>
@@ -456,8 +537,8 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
         <View style={{ gap: 2 }}><Text variant="label">{label}</Text><Text variant="caption" color="textSecondary">{g.label}</Text></View>
         {(allProducts ? g.lines : g.lines.slice(0, 2)).map((l) => (
           <View key={l.variant_id} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-            <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
-            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text><Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text></View>
+            <ProductImage productId={l.product_id} variantId={l.variant_id} productIsDemo={false} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
+            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text>{productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}<Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>{l.image_scope==='general'&&l.image_path?<Text variant="caption" color="textSecondary">Imagen general del producto</Text>:null}</View>
           </View>
         ))}
         {g.lines.length > 2 ? <Button title={allProducts ? 'Ver menos productos' : `Ver los ${g.lines.length} productos`} variant="ghost" onPress={() => setAllProducts((x) => !x)} /> : null}

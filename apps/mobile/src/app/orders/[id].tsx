@@ -1,5 +1,5 @@
 import type { Claim, Fulfillment, FulfillmentEvent, FulfillmentStep, MyReview, OrderItem } from '@kora/api';
-import { D, describeEtaDates, formatMoney, formatRate, formatUSD, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency } from '@kora/core';
+import { D, describeEtaDates, formatMoney, formatRate, formatUSD, productConditionLabel, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
@@ -230,10 +230,11 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, cla
         const review = reviews.find((r) => r.order_item_id === it.id);
         return (
           <View key={it.id} style={{ flexDirection: 'row', gap: 12, padding: 14, alignItems: 'center' }}>
-            <ScalePressable accessibilityRole="link" accessibilityLabel={`Ver ${it.title}`} onPress={() => router.push({ pathname: '/product/[id]', params: { id: it.product_id } })} style={{ flexDirection: 'row', gap: 12, flex: 1 }}>
-              <ProductImage productId={it.product_id} variantId={it.variant_id} path={it.image_path} style={{ width: 48 }} radius={t.radii.sm} />
+            <ScalePressable accessibilityRole="link" accessibilityLabel={`Ver ${it.title}`} onPress={() => router.push({ pathname: '/product/[id]', params: { id: it.product_id, ...(it.variant_id ? {variant:it.variant_id}: {}) } })} style={{ flexDirection: 'row', gap: 12, flex: 1 }}>
+              <ProductImage productId={it.product_id} variantId={it.variant_id} productIsDemo={false} path={it.image_path} style={{ width: 48 }} radius={t.radii.sm} />
               <View style={{ flex: 1, gap: 2 }}>
                 <Text variant="bodySmall" numberOfLines={2}>{it.title}</Text>
+                {productConditionLabel(it.product_condition)?<Text variant="caption">{productConditionLabel(it.product_condition)}</Text>:null}
                 <Text variant="caption" color="textMuted">{it.variant_title ? `${it.variant_title} · ` : ''}{it.quantity} × {formatUSD(it.unit_price_usd)}</Text>
                 {it.refunded_qty > 0 ? (
                   <Text variant="caption" color={voided ? 'textMuted' : 'info'}>{voided ? 'Cancelado' : `Reembolsado: ${it.refunded_qty} (${formatUSD(it.refunded_usd)})`}</Text>

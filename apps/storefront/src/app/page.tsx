@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, ShoppingBag } from 'lucide-react';
-import { publicApi } from '@/lib/server';
+import { publicApi, publicCatalogMetadata } from '@/lib/server';
 import { ProductGrid } from '@/components/product-card';
 import { ProductPhoto } from '@/components/photo';
 import { Failure } from '@/components/states';
@@ -27,6 +27,8 @@ export default async function Home() {
       return { ...c, unique };
     });
   const heroProducts = products.slice(0, 2);
+  let metadata;
+  try { metadata = await publicCatalogMetadata([...featured, ...collections.flatMap(c => c.unique)].map(p => p.id)); } catch { return <Failure message="No pudimos cargar las opciones del catálogo." />; }
   return (
     <>
       <div className="wrap market-home">
@@ -87,7 +89,7 @@ export default async function Home() {
               Ver todo <ArrowRight size={17} />
             </Link>
           </div>
-          <ProductGrid products={featured} />
+          <ProductGrid products={featured} metadata={metadata} />
         </section>
         <div className="market-collections">
           {collections.map((c) => (
@@ -104,7 +106,7 @@ export default async function Home() {
                   Ver colección <ArrowRight size={17} />
                 </Link>
               </div>
-              {c.unique.length > 0 && <ProductGrid products={c.unique} />}
+              {c.unique.length > 0 && <ProductGrid products={c.unique} metadata={metadata} />}
             </section>
           ))}
         </div>

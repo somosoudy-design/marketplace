@@ -1,9 +1,18 @@
 // Typed, error-normalized access to the marketplace backend. Shared by the Expo app and the web panel.
 // All business rules (prices, stock, rates, balances, permissions) are enforced in the database; this layer only
 // shapes requests and turns database hints into friendly errors (AppError from @kora/core).
-import { toAppError, type AppError } from '@kora/core';
+import { toAppError, sellerNumericChangesSchema, type AppError } from '@kora/core';
 import type { KoraClient } from './client';
 import type {
+  CatalogMetadata,
+  CatalogConditionResult,
+  CatalogMediaResult,
+  ProductCondition,
+  ReviewedCheckoutSummary,
+  CartIntentResult,
+  CartMergeIntentResult,
+  CartIntentCancellation,
+  CartCancelInput,
   Address,
   Category,
   City,
@@ -42,6 +51,9 @@ import type {
   Store,
   SellerEditableProduct,
   SellerProductInput,
+  SellerProductReview,
+  SellerProductChanges,
+  SellerProductSaveResult,
   SellerStoreInput,
   SellerDashboard,
   SellerProduct,
@@ -90,6 +102,11 @@ export function createApi(client: KoraClient) {
   const from = (table: string) => (client.from as unknown as (t: string) => any)(table);
 
   const catalog = {
+    /** Batch-local filter, not a global search/pagination filter. Missing legacy condition is not inferred. */
+    metadata: (productIds: string[], condition?: ProductCondition | null) =>
+      run<CatalogMetadata[]>(rpc('catalog_metadata', { p_ids: productIds, p_condition: condition ?? null })),
+    productCommercial: (productId: string) =>
+      run<ProductDetail | null>(rpc('product_detail_commercial', { p_id: productId })),
     home: () => run<HomeFeed>(rpc('home_feed')),
     search: (p: SearchParams = {}) =>
       run<ProductCard[]>(
@@ -166,6 +183,16 @@ export function createApi(client: KoraClient) {
   };
 
   const cart = {
+    summaryReviewed: (addressId?: string | null) => run<CheckoutSummary>(rpc('cart_summary_reviewed', { p_address_id: addressId ?? null })),
+    /** Terminal server cancellation; never discard a local reservation before this is confirmed. */
+    cancelIntent: (intent: CartCancelInput, idempotencyKey: string) =>
+      run<CartIntentCancellation>(rpc('cart_cancel_intent', { p_operation: intent.operation, p_payload: intent.payload, p_idempotency_key: idempotencyKey })),
+    addWithIntent: (variantId: string, quantity: number, idempotencyKey: string) =>
+      run<CartIntentResult>(
+        rpc('cart_add_intent', { p_variant_id: variantId, p_quantity: quantity, p_idempotency_key: idempotencyKey }),
+      ),
+    mergeWithIntent: (lines: { variant_id: string; quantity: number }[], idempotencyKey: string) =>
+      run<CartMergeIntentResult>(rpc('cart_merge_intent', { p_lines: lines, p_idempotency_key: idempotencyKey })),
     add: (variantId: string, quantity = 1) => run<unknown>(rpc('cart_add', { p_variant_id: variantId, p_quantity: quantity })),
     setQuantity: (variantId: string, quantity: number) =>
       run<unknown>(rpc('cart_set_quantity', { p_variant_id: variantId, p_quantity: quantity })),
@@ -175,6 +202,26 @@ export function createApi(client: KoraClient) {
   };
 
   const checkout = {
+    previewReviewed: (addressId: string | null, shipping: ShippingSelection, planCode: string | null) =>
+      run<ReviewedCheckoutSummary>(
+        rpc('checkout_preview_reviewed', { p_address_id: addressId, p_shipping: shipping, p_plan_code: planCode }),
+      ),
+    placeOrderReviewed: (
+      addressId: string,
+      shipping: ShippingSelection,
+      planCode: string,
+      idempotencyKey: string,
+      reviewToken: string,
+    ) =>
+      run<PlaceOrderResult>(
+        rpc('place_order_reviewed', {
+          p_address_id: addressId,
+          p_shipping: shipping,
+          p_plan_code: planCode,
+          p_idempotency_key: idempotencyKey,
+          p_review_token: reviewToken,
+        }),
+      ),
     preview: (addressId: string | null, shipping: ShippingSelection, planCode: string | null) =>
       run<CheckoutSummary>(rpc('checkout_preview', { p_address_id: addressId, p_shipping: shipping, p_plan_code: planCode })),
     placeOrder: (addressId: string, shipping: ShippingSelection, planCode: string, idempotencyKey: string) =>
@@ -370,6 +417,31 @@ export function createApi(client: KoraClient) {
   };
 
   const seller = {
+    setCondition: (storeId: string, productId: string, condition: ProductCondition | null, expectedUpdatedAt: string) =>
+      run<CatalogConditionResult>(
+        rpc('catalog_set_condition', {
+          p_store_id: storeId,
+          p_product_id: productId,
+          p_condition: condition,
+          p_expected_updated_at: expectedUpdatedAt,
+        }),
+      ),
+    setVariantMedia: (
+      storeId: string,
+      productId: string,
+      variantId: string,
+      imageIds: string[],
+      expectedUpdatedAt: string,
+    ) =>
+      run<CatalogMediaResult>(
+        rpc('catalog_set_variant_media', {
+          p_store_id: storeId,
+          p_product_id: productId,
+          p_variant_id: variantId,
+          p_image_ids: imageIds,
+          p_expected_updated_at: expectedUpdatedAt,
+        }),
+      ),
     ordersReady: async () => {
       try { return await run<boolean>(rpc('seller_orders_ready')); }
       catch (e) { if (e instanceof ApiError && e.code === 'PGRST202') return false; throw e; }
@@ -378,6 +450,35 @@ export function createApi(client: KoraClient) {
     editorReady: async () => {
       try { return await run<boolean>(rpc('seller_editor_ready')); }
       catch (e) { if (e instanceof ApiError && e.code === 'PGRST202') return false; throw e; }
+    },
+    /** One server snapshot for the draft, costs and revision. Existing products only. */
+    productReviewed: (storeId: string, productId: string) =>
+      run<SellerProductReview | null>(
+        rpc('seller_product_editor_reviewed', { p_store_id: storeId, p_product_id: productId }),
+      ),
+    /** Retry the same payload/key after response loss; never refresh a revision and replay an old draft. */
+    saveProductReviewed: (
+      storeId: string,
+      productId: string,
+      expectedRevision: string,
+      idempotencyKey: string,
+      changes: SellerProductChanges = {},
+    ) => {
+      if (!sellerNumericChangesSchema.safeParse(changes).success)
+        throw new ApiError(toAppError({ hint: 'invalid_input' }));
+      return run<SellerProductSaveResult>(
+        rpc('seller_save_product_reviewed', {
+          p_store_id: storeId,
+          p_product_id: productId,
+          p_expected_revision: expectedRevision,
+          p_idempotency_key: idempotencyKey,
+          p_fields: changes.fields ?? {},
+          p_variants: changes.variants ?? [],
+          p_images: changes.images ?? [],
+          p_costs: changes.costs ?? null,
+          p_variant_costs: changes.variantCosts ?? [],
+        }),
+      );
     },
     product: (storeId: string, productId: string) => run<SellerEditableProduct>(from('products')
       .select('*, product_images(id,path,sort), product_variants(id,title,sku,price_usd,stock,active,sort), moderation_events(id,to_status,note,automatic,created_at)')

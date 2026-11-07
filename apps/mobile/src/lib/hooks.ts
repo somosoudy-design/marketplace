@@ -5,6 +5,9 @@ import { useAuth } from './auth';
 import { guestCart, type GuestLine } from './guest-cart';
 import { qk } from './query';
 import { api } from './supabase';
+import { captureActorApi, assertCurrentActor } from './actor-api';
+import { addAccountCart } from './operation-intents';
+import { resolveProductSelection } from '@kora/core';
 
 export const useHome = () => useQuery({ queryKey: qk.home, queryFn: api.catalog.home });
 export const useCategories = () => useQuery({ queryKey: qk.categories, queryFn: api.catalog.categories, staleTime: 10 * 60_000 });
@@ -57,7 +60,7 @@ export function useSearch(params: Omit<SearchParams, 'limit' | 'offset'>) {
 export function useGuestCart(): GuestLine[] {
   const [lines, setLines] = useState<GuestLine[]>([]);
   useEffect(() => {
-    guestCart.read().then(setLines);
+    guestCart.read().then(setLines).catch(() => undefined);
     return guestCart.subscribe(setLines);
   }, []);
   return lines;
@@ -65,7 +68,7 @@ export function useGuestCart(): GuestLine[] {
 
 export function useCart(addressId?: string | null) {
   const { user, cartSyncing } = useAuth();
-  return useQuery({ queryKey: qk.cart(addressId), queryFn: () => api.cart.summary(addressId), enabled: !!user && !cartSyncing });
+  return useQuery({ queryKey: ['cart',user?.id,addressId??null], queryFn: async () => { const bound=await captureActorApi(user!.id);const result=await bound.api.cart.summaryReviewed(addressId);await bound.assertCurrent();return result; }, enabled: !!user && !cartSyncing });
 }
 
 export function useCartCount(): number {
@@ -82,22 +85,22 @@ export function useAddToCart() {
   return useMutation({
     mutationFn: async ({ product, variant, quantity }: { product: ProductDetail; variant: ProductVariant; quantity: number }) => {
       if (!user) {
+        const selection=resolveProductSelection(product,variant.id);
         await guestCart.add({
           variant_id: variant.id,
           product_id: product.id,
           quantity,
           title: product.title,
           variant_title: product.variants.length > 1 ? variant.title : null,
-          image_path: product.image_path,
+          image_path: selection.cover?.path ?? (selection.mediaState==='unclassified'?product.general_images?.[0]?.path??null:null),
+          product_condition: product.condition,
           price_usd: Number(variant.price_usd),
           availability: product.availability,
         });
         return;
       }
-      await api.cart.add(variant.id, quantity);
-      void api.catalog.track('add_to_cart', { productId: product.id });
+      await addAccountCart(user.id, variant.id, quantity, product.id, () => qc.invalidateQueries({ queryKey: ['cart'] }));
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['cart'] }),
   });
 }
 
@@ -107,12 +110,18 @@ export function useSetCartQuantity() {
   return useMutation({
     mutationFn: async ({ variantId, quantity }: { variantId: string; quantity: number }) => {
       if (!user) return guestCart.setQuantity(variantId, quantity);
-      await api.cart.setQuantity(variantId, quantity);
+      const bound = await captureActorApi(user.id);
+      await bound.assertCurrent();
+      await bound.api.cart.setQuantity(variantId, quantity);
+      await bound.assertCurrent();
     },
     onMutate: async ({ variantId, quantity }) => {
+      if (!user) return { actorId: null, snapshots: [] as [readonly unknown[], CheckoutSummary | undefined][] };
+      await assertCurrentActor(user.id);
       // optimistic update so steppers feel instant; the server response replaces it
-      await qc.cancelQueries({ queryKey: ['cart'] });
-      const snapshots = qc.getQueriesData<CheckoutSummary>({ queryKey: ['cart'] });
+      await qc.cancelQueries({ queryKey: ['cart',user.id] });
+      await assertCurrentActor(user.id);
+      const snapshots = qc.getQueriesData<CheckoutSummary>({ queryKey: ['cart',user.id] });
       snapshots.forEach(([key, data]) => {
         if (!data) return;
         qc.setQueryData<CheckoutSummary>(key, {
@@ -122,10 +131,18 @@ export function useSetCartQuantity() {
             .filter((g) => g.lines.length > 0),
         });
       });
-      return { snapshots };
+      return { snapshots, actorId: user.id };
     },
-    onError: (_e, _v, ctx) => ctx?.snapshots.forEach(([key, data]) => qc.setQueryData(key, data)),
-    onSettled: () => qc.invalidateQueries({ queryKey: ['cart'] }),
+    onError: async (_e, _v, ctx) => {
+      if (!ctx?.actorId) return;
+      try { await assertCurrentActor(ctx.actorId); } catch { return; }
+      ctx.snapshots.forEach(([key, data]) => { if (qc.getQueryState(key)) qc.setQueryData(key, data); });
+    },
+    onSettled: async (_data, _error, _variables, ctx) => {
+      if (!ctx?.actorId) return;
+      try { await assertCurrentActor(ctx.actorId); } catch { return; }
+      await qc.invalidateQueries({ queryKey: ['cart'] });
+    },
   });
 }
 

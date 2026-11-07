@@ -2074,3 +2074,10 @@ legend {
 .legal-note { font-size: .85rem; line-height: 1.65; }
 .legal-note a, .confirmation-note a { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 600px) { .information-page { padding-top: 24px; } .footer .legal-links { justify-content: center; gap: 4px 20px; } }
+
+/* Explicit variant navigation keeps colour names readable without painting colours onto product photos. */
+.product-card { display: flex; flex-direction: column; }
+.product-link { height: auto; flex: 1; }
+.product-colors { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 12px 12px; }
+.product-colors a { display: inline-flex; align-items: center; min-height: 44px; padding: 7px 9px; border: 1px solid var(--border-strong); border-radius: 6px; font-size: 11px; color: var(--text); }
+.product-colors a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }

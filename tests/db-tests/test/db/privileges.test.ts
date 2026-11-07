@@ -25,6 +25,12 @@ const EXPOSED = {
   ],
 };
 
+// The reviewed contracts are now installed by the catalog/cart/checkout/seller migration.
+// Keep the exact allowlist; never accept additional RPCs merely because they exist.
+EXPOSED.public.push('_catalog_option_color','catalog_metadata','product_detail_commercial');
+EXPOSED.buyer.push('cart_add_intent','cart_merge_intent','cart_cancel_intent','cart_summary_reviewed','checkout_preview_reviewed','place_order_reviewed');
+EXPOSED.seller.push('catalog_set_condition','catalog_set_variant_media','seller_product_editor_reviewed','seller_save_product_reviewed');
+
 afterAll(() => pool.end());
 
 describe('function privileges', () => {
@@ -64,6 +70,10 @@ describe('function privileges', () => {
       `select public.refresh_popularity()`,
       `select public.notify('${u.id}', 'system', 't', 'b')`,
       `select public.check_rate_limit('x', 1, 60)`,
+      `select public._reviewed_commercial_lines('{}'::jsonb)`,
+      `select public._build_checkout_reviewed('${u.id}',null,'{}','full')`,
+      `select public._cart_merge_atomic('[]'::jsonb)`,
+      `select authoring_private.product_state(null)`,
     ]) {
       await expect(asUser(u.id, (sql) => sql(call))).rejects.toMatchObject({ code: '42501' });
     }

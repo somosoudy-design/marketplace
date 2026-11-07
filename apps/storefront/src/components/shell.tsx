@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Search, Heart, ShoppingBag, UserRound, ArrowUpRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { brand } from '@/lib/format';
-import { browser } from '@/lib/browser';
+import { captureBuyerApi } from '@/lib/actor-api';
 import { useAccount } from '@/lib/providers';
 import { NotificationLink } from './notifications';
 import { BrandMark } from './brand-mark';
@@ -14,7 +14,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const { session } = useAccount();
   const cart = useQuery({
     queryKey: ['cart', session?.user.id],
-    queryFn: () => browser().api.cart.summary(),
+    queryFn: async () => { const bound=await captureBuyerApi(session!.user.id);const summary=await bound.api.cart.summaryReviewed();await bound.assertCurrent();return summary; },
     enabled: !!session,
   });
   const cartUnits =

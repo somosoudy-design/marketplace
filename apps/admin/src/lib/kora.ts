@@ -17,6 +17,19 @@ export function kora(): { client: KoraClient; api: Api } {
   return { client, api: api! };
 }
 
+/** Captured authorization prevents a delayed editor write from adopting another user's session. */
+export async function koraForActor(actorId: string) {
+  const current = kora().client;
+  const { data, error } = await current.auth.getSession();
+  if (error || !data.session || data.session.user.id !== actorId) throw new Error('Tu sesión cambió. Vuelve a abrir el editor.');
+  const bound = createKoraClient({ url: env.supabaseUrl, anonKey: env.supabaseAnonKey, accessToken: data.session.access_token, retryReads: false });
+  const assertCurrent = async () => {
+    const next = await current.auth.getSession();
+    if (next.error || next.data.session?.user.id !== actorId) throw new Error('Tu sesión cambió. Vuelve a abrir el editor.');
+  };
+  return { client: bound, api: createApi(bound), assertCurrent };
+}
+
 /** Table access with typed rows; errors become ApiError with Spanish copy. */
 export function db(table: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- table names are dynamic here; RLS and the generated types guard the shapes

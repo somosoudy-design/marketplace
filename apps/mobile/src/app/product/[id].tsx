@@ -1,5 +1,5 @@
-import type { OrderItem, ProductDetail, ProductVariant } from '@kora/api';
-import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint } from '@kora/core';
+import type { OrderItem, ProductDetail } from '@kora/api';
+import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, resolveProductSelection, productColorSummaries } from '@kora/core';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
@@ -29,11 +29,13 @@ import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { productLink } from '@/lib/links';
-import { isPrivateCatalogPresentation, productExhibitionGallery, productExhibitionPhoto } from '@/lib/catalog-exhibition';
-import { commercialCatalogText, exhibitionSourceKey } from '@/lib/catalog-exhibition-policy';
+import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+import { commercialCatalogText } from '@/lib/catalog-exhibition-policy';
 import { haptics } from '@/lib/haptics';
-import { useAddToCart, usePaymentMethods, useProduct } from '@/lib/hooks';
+import { useAddToCart, usePaymentMethods } from '@/lib/hooks';
 import { api } from '@/lib/supabase';
+import { useCommercialProduct } from '@/lib/catalog-selection';
+import { reviewedGeneralProductImages } from '@/lib/selection-media';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { qk } from '@/lib/query';
 import { useTheme } from '@/theme';
@@ -44,8 +46,8 @@ export const ErrorBoundary = ScreenErrorBoundary;
 const MAX_W = 760;
 
 export default function ProductScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const q = useProduct(id);
+  const { id, variant: requestedVariant } = useLocalSearchParams<{ id: string; variant?: string }>();
+  const q = useCommercialProduct(id);
   const t = useTheme();
   const insets = useSafeAreaInsets();
   useFocusEffect(useCallback(() => {
@@ -69,7 +71,7 @@ export default function ProductScreen() {
       </View>
     );
   }
-  return <ProductView product={q.data} />;
+  return <ProductView key={q.data.id} product={q.data} requestedVariant={typeof requestedVariant === 'string' ? requestedVariant : undefined} />;
 }
 
 function BackButton({ inline }: { inline?: boolean }) {
@@ -86,7 +88,7 @@ function BackButton({ inline }: { inline?: boolean }) {
   );
 }
 
-function ProductView({ product: p }: { product: ProductDetail }) {
+function ProductView({ product: p, requestedVariant }: { product: ProductDetail; requestedVariant?: string }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
@@ -94,8 +96,11 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const qc = useQueryClient();
   const methods = usePaymentMethods();
   const addToCart = useAddToCart();
-  const purchasableVariants = p.variants.filter((v) => v.active && (v.stock == null || v.stock > 0));
-  const [variant, setVariant] = useState<ProductVariant | undefined>(purchasableVariants[0] ?? p.variants[0]);
+  const selectedVariantId = requestedVariant ?? resolveProductSelection(p).selectedVariantId;
+  const selection = resolveProductSelection(p, selectedVariantId);
+  const variant = p.variants.find(v => v.id === selection.selectedVariantId);
+  const colors = productColorSummaries(p.variants);
+  const selectedColor = colors.find(c => c.variant_ids.includes(variant?.id ?? ''))?.value;
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [sharing, setSharing] = useState(false);
@@ -105,30 +110,37 @@ function ProductView({ product: p }: { product: ProductDetail }) {
   const [pending, setPending] = useState<'add' | 'buy' | null>(null);
   const submitting = useRef(false);
   const [page, setPage] = useState(0);
+  const selectVariant = (id: string) => { router.setParams({ variant: id }); setPage(0); setAdded(false); addToCart.reset(); };
   const [failedImageSources, setFailedImageSources] = useState<Set<string>>(() => new Set());
   const imageFailed = (key: string) => setFailedImageSources((old) => old.has(key) ? old : new Set([...old, key]));
   const imageLoaded = (key: string) => setFailedImageSources((old) => { if (!old.has(key)) return old; const next = new Set(old); next.delete(key); return next; });
   const availability = presentAvailability(p.availability);
   const imageWidth = Math.min(width, MAX_W);
-  const maxQty = Math.max(1, Math.min(p.max_per_order ?? 10, variant?.stock ?? 99));
+  const maxQty = Math.max(1, selection.maxQuantity);
+  if (qty > maxQty) setQty(maxQty);
   const lead = describeLeadTime(p.lead_min_days, p.lead_max_days, p.availability);
   const leadShort = describeLeadTimeShort(p.lead_min_days, p.lead_max_days, p.availability);
   const eta = p.lead_min_days != null && p.lead_max_days != null && availability.purchasable ? etaFromToday(p.lead_min_days, p.lead_max_days) : null;
-  const hint = stockHint(variant?.stock ?? p.stock_total, p.availability);
-  const images = productExhibitionGallery(p.id, p.images.length ? p.images : [{ path: p.image_path ?? '', alt: p.title, width: null, height: null }], p.is_demo);
-  const currentImage = images[page]?.path;
-  const referencePhoto = productExhibitionPhoto(p.id, currentImage, variant?.id, p.is_demo);
-  const referenceKey = exhibitionSourceKey(p.id, currentImage, referencePhoto);
-  const showReference = referencePhoto?.kind === 'manufacturer-reference' && (!referenceKey || !failedImageSources.has(referenceKey));
+  const hint = stockHint(variant ? variant.stock : null, p.availability);
+  // An assigned gallery never falls through to another colour's general photographs.
+  const assignedIds = new Set((p.variant_image_links ?? []).map(link => link.image_id));
+  const assignedImages = p.images.filter(image => image.id && assignedIds.has(image.id));
+  const generalImages = reviewedGeneralProductImages(p, assignedImages);
+  const selectedImages = !variant ? [] : selection.mediaState === 'assigned' ? selection.gallery : selection.mediaState === 'unclassified' ? generalImages : [];
+  const images = selectedImages.length ? selectedImages : [{ path: '', alt: 'Esta opción no tiene fotografías asignadas.' }];
+  const galleryIdentity = `${selection.selectedVariantId ?? 'missing'}:${selectedImages.map(i => i.path).join('|')}`;
+  const [galleryAnchor, setGalleryAnchor] = useState(galleryIdentity);
+  if (galleryAnchor !== galleryIdentity) { setGalleryAnchor(galleryIdentity); setPage(0); }
+
   const description = commercialCatalogText(isPrivateCatalogPresentation, p.description, p.is_demo);
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
-  const statusKey = variantSoldOut ? 'sold_out' : p.availability;
+  const statusKey = !variant || !variant.active ? 'unavailable' : variantSoldOut ? 'sold_out' : p.availability;
   const status = presentAvailability(statusKey);
   const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
   // options with different prices say theirs, so nobody has to tap each one to compare
   const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
-  const canBuy = availability.purchasable && !variantSoldOut;
+  const canBuy = selection.canBuy;
   const [moreText, setMoreText] = useState(false);
   const longText = (description?.length ?? 0) > LONG_DESCRIPTION;
   // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
@@ -170,7 +182,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
 
   // "Agregar" keeps the buyer here with a link to the cart; "Comprar" adds and opens the cart to pay
   const add = (buy: boolean) => {
-    if (!variant || submitting.current) return;
+    if (!variant || !selection.canBuy || qty > selection.maxQuantity || submitting.current) return;
     const key = `${variant.id}:${qty}`;
     if (buy && inCart === key) return router.navigate('/cart');
     submitting.current = true;
@@ -198,6 +210,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
           {/* gallery */}
           <View style={{ width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
             <FlatList
+              key={galleryIdentity}
               testID="product-gallery"
               {...(Platform.OS === 'web' ? { role: 'region' as const, 'aria-label': 'Fotos del producto', tabIndex: 0 as const } : {})}
               horizontal
@@ -210,7 +223,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               onScroll={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} showUnavailableLabel onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
+                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={false} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} showUnavailableLabel onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
               )}
             />
             {images.length > 1 ? (
@@ -220,7 +233,8 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             ) : null}
           </View>
 
-          {showReference ? <Text testID="product-reference-image" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>{referencePhoto?.disclosure ?? 'Imagen referencial; la presentación y los accesorios pueden variar.'}</Text> : null}
+          {selection.mediaState === 'unclassified' && selectedImages.length ? <Text testID="product-general-photos" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8 }}>Fotos generales del producto; no están asignadas a la opción elegida.</Text> : selection.mediaState !== 'assigned' ? <Text testID="product-no-variant-photos" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8 }}>Esta opción no tiene fotografías asignadas.</Text> : null}
+
 
           <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} onLayout={(event) => { infoY.current = event.nativeEvent.layout.y; }}>
             {/* name and one price right under the photo; what each payment method costs shows when the buyer picks it */}
@@ -234,8 +248,11 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: !reduced })} />
               {/* re-keyed so a variant with another price fades in instead of snapping */}
               <Animated.View key={String(variant?.price_usd ?? p.price_usd)} entering={reduced ? undefined : FadeIn.duration(200)}>
-                <Price usd={variant?.price_usd ?? p.price_usd} compareAt={p.compare_at_usd} size="lg" muted={!canBuy} />
+                {variant ? <Price usd={variant.price_usd} compareAt={p.compare_at_usd} size="lg" muted={!canBuy} /> : <Text testID="product-option-unavailable" variant="subtitle" color="textSecondary">Opción no disponible</Text>}
               </Animated.View>
+              <Text testID="product-condition" variant="bodySmall" color="textSecondary">{selection.conditionLabel ?? 'Condición sin especificar'}</Text>
+              {variant && 'sku' in variant && typeof variant.sku === 'string' && variant.sku ? <Text testID="product-sku" variant="caption" color="textSecondary">SKU: {variant.sku}</Text> : null}
+              {!variant ? <Text testID="product-missing-variant" variant="bodySmall" color="warning">La opción seleccionada ya no está disponible. Elige otra opción para continuar.</Text> : null}
               {statusKey !== 'available' || hint ? (
                 <View testID="product-status" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                   {/* sold out reads at a glance: a solid badge over a greyed price */}
@@ -257,13 +274,14 @@ function ProductView({ product: p }: { product: ProductDetail }) {
               <View ref={selectionHeading} testID="product-selection-heading" accessible accessibilityRole="header" accessibilityLabel="Tu selección" {...(Platform.OS === 'web' ? { tabIndex: -1 as const } : {})}>
                 <Text variant="subtitle">Tu selección</Text>
               </View>
+              {colors.length ? <View testID="product-colors" style={{ gap: 8 }}><Text variant="label" color="textSecondary">Color: {selectedColor ?? 'Elige una opción'}</Text><View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>{colors.map(c => <Chip key={c.value} testID={`product-color-${c.value}`} label={`${c.value}${!c.available_variant_ids.length ? ' · agotado' : ''}`} selected={selectedColor === c.value} disabled={pending !== null} onPress={() => selectVariant(c.available_variant_ids[0] ?? c.variant_ids[0]!)} />)}</View></View> : null}
               {p.variants.length > 1 ? <View style={{ gap: 10 }}>
                 <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                   {p.variants.map((v) => {
-                    const out = v.stock != null && v.stock <= 0;
+                    const out = !v.active || (v.stock != null && v.stock <= 0);
                     const label = `${v.title}${variantPrices ? ` · ${formatUSD(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
-                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => { setVariant(v); setAdded(false); addToCart.reset(); }} />;
+                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => selectVariant(v.id)} />;
                   })}
                 </View>
               </View> : null}
@@ -311,7 +329,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
                 ) : null}
               </View>
             ) : null}
-            <ExhibitionPhotoCredit productId={p.id} variantId={variant?.id} path={images[page]?.path} isDemo={p.is_demo} failedSources={failedImageSources} />
+            <ExhibitionPhotoCredit productId={p.id} variantId={variant?.id} path={images[page]?.path} isDemo={false} failedSources={failedImageSources} />
           </View>
 
           <View onLayout={(e) => (reviewsY.current = e.nativeEvent.layout.y)} style={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }}>
@@ -360,7 +378,7 @@ function ProductView({ product: p }: { product: ProductDetail }) {
             <Animated.View entering={reduced ? undefined : FadeInDown.duration(220)} exiting={reduced ? undefined : FadeOut.duration(160)}>
               <ScalePressable testID="added-to-cart" accessibilityRole="link" onPress={() => router.navigate('/cart')} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }} accessibilityLiveRegion="polite">
                 <View style={{ width: 36, height: 45, borderRadius: 8, overflow: 'hidden' }}>
-                  <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={p.is_demo} path={p.image_path} tone={p.tone} radius={8} />
+                  <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={false} path={selectedImages[0]?.path ?? null} tone={p.tone} radius={8} />
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text variant="label" color="success">Agregado al carrito</Text>

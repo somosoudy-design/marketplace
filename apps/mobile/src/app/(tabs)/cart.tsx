@@ -1,10 +1,11 @@
 import type { CartLine, DeliveryGroup } from '@kora/api';
-import { D, formatUSD, presentAvailability } from '@kora/core';
+import { D, formatUSD, presentAvailability, productConditionLabel } from '@kora/core';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { RefreshControl, ScrollView, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
+import { PendingCartMerge } from '@/components/catalog/PendingCartMerge';
 import { ExhibitionNotice } from '@/components/catalog/ExhibitionNotice';
 import { MAX_CONTENT, ProductRail } from '@/components/catalog/ProductGrid';
 import { Badge } from '@/components/ui/Badge';
@@ -35,7 +36,7 @@ export default function CartScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
-  const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice explain /></View>;
+  const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice explain />{user?<PendingCartMerge/>:null}</View>;
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       {user ? <AccountCart header={header} /> : <GuestCartView header={header} />}
@@ -44,6 +45,7 @@ export default function CartScreen() {
 }
 
 function AccountCart({ header }: { header: React.ReactNode }) {
+  const {cartSyncError,cartSyncing}=useAuth();
   const t = useTheme();
   const cart = useCart();
   const setQty = useSetCartQuantity();
@@ -94,7 +96,7 @@ function AccountCart({ header }: { header: React.ReactNode }) {
         items={s.items_usd}
         note="Envío y total final con tu dirección, en el siguiente paso."
         cta="Continuar"
-        disabled={s.issues > 0 || setQty.isPending || cart.isFetching}
+        disabled={s.issues > 0 || setQty.isPending || cart.isFetching || !!cartSyncError || cartSyncing}
         onPress={() => router.push('/checkout')}
         onHeightChange={setBarHeight}
       />
@@ -130,11 +132,12 @@ function LineRow({ line: l, onQty, onRemove, disabled }: { line: CartLine; onQty
   return (
     <View style={{ gap: 8, padding: 12 }} testID={`cart-line-${l.variant_id}`}>
       <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
-        <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id } })}>
-          <ProductImage productId={l.product_id} variantId={l.variant_id} path={l.image_path} aspect={1} fit="contain" style={{ width: width < 360 ? 64 : 72 }} radius={6} />
+        <ScalePressable accessibilityRole="link" accessibilityLabel={l.title} onPress={() => router.push({ pathname: '/product/[id]', params: { id: l.product_id, variant:l.variant_id } })}>
+          <ProductImage productId={l.product_id} variantId={l.variant_id} productIsDemo={false} path={l.image_path} aspect={1} fit="contain" style={{ width: width < 360 ? 64 : 72 }} radius={6} />
         </ScalePressable>
         <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
           <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
+          {productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}
           {l.variant_title ? <Text variant="caption" color="textSecondary">{l.variant_title}</Text> : null}
           {l.quantity > 1 ? <Text variant="caption" color="textSecondary" tabular testID={`cart-unit-${l.variant_id}`}>{formatUSD(l.unit_price_usd)} por unidad</Text> : null}
           {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
@@ -197,7 +200,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
               <View key={l.variant_id}>
                 {i > 0 ? <Divider inset={14} /> : null}
                 <LineRow
-                  line={{ issue: null, title: l.title, quantity: l.quantity, image_path: l.image_path, product_id: l.product_id, variant_id: l.variant_id, availability: l.availability as CartLine['availability'], max_quantity: 20, variant_title: l.variant_title, line_total_usd: Number(D(l.price_usd).times(l.quantity)), unit_price_usd: l.price_usd }}
+                  line={{ issue: null, title: l.title, quantity: l.quantity, image_path: l.image_path, product_id: l.product_id, variant_id: l.variant_id, availability: l.availability as CartLine['availability'], max_quantity: 20, variant_title: l.variant_title, line_total_usd: Number(D(l.price_usd).times(l.quantity)), unit_price_usd: l.price_usd,product_condition:l.product_condition }}
                   onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })}
                   onRemove={() => setRemoving(l)}
                   disabled={setQty.isPending}

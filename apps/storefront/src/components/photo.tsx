@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { ImageOff } from 'lucide-react';
 import { imageUrl } from '@/lib/photos';
+import { publicImageUrl } from '@kora/api';
+import { env } from '@/lib/env';
 export function ProductPhoto({
   id,
   path,
@@ -9,6 +11,7 @@ export function ProductPhoto({
   title,
   variant,
   priority = false,
+  exact = false,
 }: {
   id: string;
   path: string | null;
@@ -16,8 +19,9 @@ export function ProductPhoto({
   title: string;
   variant?: string;
   priority?: boolean;
+  exact?: boolean;
 }) {
-  const src = imageUrl(id, path, demo, variant);
+  const src = exact ? publicImageUrl(env.url, 'catalog', path) : imageUrl(id, path, demo, variant);
   const [failed, setFailed] = useState<string | null>(null);
   return (
     <div className="product-photo">

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -19,9 +19,10 @@ import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/li
 import { AddressEditor } from './addresses';
 import { QueryError } from './buyer';
 import { ReviewLine } from './review-line';
+import { assertBuyerActor, captureBuyerApi } from '@/lib/actor-api';
+import { checkoutIntentKey, clearCheckoutIntent, restoreCheckoutIntent, persistCheckoutIntent, type CheckoutIntent } from '@/lib/checkout-intent';
 const steps = ['Dirección', 'Entregas', 'Plan de pago', 'Revisión'];
-type Selection = { address: string; shipping: ShippingSelection; plan: string };
-type Intent = { key: string; selection: Selection };
+type Intent = CheckoutIntent;
 export function Checkout({ buyerId }: { buyerId: string }) {
   const router = useRouter(),
     qc = useQueryClient();
@@ -39,38 +40,30 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   const [uncertain, setUncertain] = useState(false);
   const [created, setCreated] = useState<PlaceOrderResult | null>(null);
   const [lookupMissing, setLookupMissing] = useState(false);
+  const [storageProblem, setStorageProblem] = useState('');
+  const [reviewedToken, setReviewedToken] = useState('');
+  const [restoreNonce,setRestoreNonce]=useState(0);
   const submitting = useRef(false),
     alive = useRef(true);
-  const storageKey = `checkout-intent:${buyerId}`;
-  const stored = useSyncExternalStore(
-    () => () => {},
-    () => {
-      try {
-        return sessionStorage.getItem(storageKey) ?? '';
-      } catch {
-        return '';
-      }
-    },
-    () => undefined,
-  );
-  if (!restored && stored !== undefined) {
-    setRestored(true);
-    try {
-      const i = JSON.parse(stored) as Intent;
-      if (
-        typeof i.key === 'string' &&
-        typeof i.selection?.address === 'string' &&
-        typeof i.selection?.plan === 'string' &&
-        i.selection.shipping &&
-        typeof i.selection.shipping === 'object'
-      ) {
-        setIntent(i);
-        setUncertain(true);
-      }
-    } catch {
-      /* No persisted attempt. */
-    }
-  }
+  useEffect(()=>{
+    let active=true;
+    const restore=async()=>{
+      try{
+        if(!navigator.locks)throw new Error('Este navegador no puede coordinar la compra entre pestañas. Usa un navegador actualizado.');
+        const i=await navigator.locks.request(`mayami.checkout:${buyerId}`,()=>active?restoreCheckoutIntent(localStorage,sessionStorage,buyerId):null);
+        if(active&&i){setIntent(i);setUncertain(true);}
+      }catch(error){if(active)setStorageProblem((error as Error).message||'No pudimos recuperar tu compra guardada.');}
+      finally{if(active)setRestored(true);}
+    };
+    void restore();return()=>{active=false;};
+  },[buyerId,restoreNonce]);
+  useEffect(()=>{
+    if(intent)return;
+    const changed=(event:StorageEvent)=>{if(event.storageArea===localStorage&&event.key===checkoutIntentKey(buyerId)&&event.newValue)setRestoreNonce(n=>n+1);};
+    window.addEventListener('storage',changed);return()=>window.removeEventListener('storage',changed);
+  },[buyerId,intent]);
+  const clearStoredIntent=(accepted:Intent)=>navigator.locks.request(`mayami.checkout:${buyerId}`,()=>clearCheckoutIntent(localStorage,accepted));
+
   useEffect(() => {
     alive.current = true;
     return () => {
@@ -79,7 +72,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   }, []);
   const addresses = useQuery({
     queryKey: ['addresses', buyerId],
-    queryFn: () => browser().api.account.addressesForBuyer(buyerId),
+    queryFn: async () => { const bound = await captureBuyerApi(buyerId); const rows = await bound.api.account.addressesForBuyer(buyerId); await bound.assertCurrent(); return rows; },
   });
   const methods = useQuery({
     queryKey: ['payment-methods'],
@@ -91,7 +84,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   const methodsReady = methods.isSuccess && !methods.isFetching && methods.data.some((m) => m.enabled);
   const address =
     addresses.data?.find((a) => a.id === chosen) ?? addresses.data?.find((a) => a.is_default) ?? addresses.data?.[0];
-  const signature = address ? JSON.stringify([address.id, address.region_code, address.city, address.line1]) : '';
+  const signature = address ? JSON.stringify(address) : '';
   if (destination !== signature && !uncertain) {
     setDestination(signature);
     setShipping({});
@@ -99,16 +92,18 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   }
   const preview = useQuery({
     queryKey: ['checkout', buyerId, signature, shipping, plan],
-    enabled: restored && addresses.isSuccess && !uncertain && !created,
+    enabled: restored && !storageProblem && addresses.isSuccess && !uncertain && !created,
     staleTime: 0,
     placeholderData: keepPreviousData,
     queryFn: async () => {
+      const bound = await captureBuyerApi(buyerId);
       let selected = shipping;
       let code: string | null = plan;
       let recoveredPlan = false;
       for (let n = 0; n < 4; n++) {
         try {
-          const s = await browser().api.checkout.preview(address?.id ?? null, selected, code);
+          const s = await bound.api.checkout.previewReviewed(address?.id ?? null, selected, code);
+          await bound.assertCurrent();
           if (!s.plan && s.plans[0]) {
             code = s.plans[0].code;
             continue;
@@ -138,6 +133,11 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   });
   if (preview.data && !preview.isFetching && preview.data !== seen && !uncertain) {
     setSeen(preview.data);
+    if (step === 3 && reviewedToken && reviewedToken !== preview.data.summary.review_token) {
+      setReviewedToken('');
+      setStep(2);
+      setNotice('El pedido cambió. Revisa los productos, la entrega y el total antes de confirmar.');
+    }
     if (preview.data.recovered) {
       setShipping({});
       setStep(1);
@@ -149,104 +149,118 @@ export function Checkout({ buyerId }: { buyerId: string }) {
       setNotice('El plan de pago cambió. Revisa el plan y los importes antes de confirmar.');
     }
   }
-  const complete = async (result: PlaceOrderResult) => {
+  const complete = async (result: PlaceOrderResult, accepted: Intent) => {
     if (!alive.current) return;
-    try {
-      sessionStorage.removeItem(storageKey);
-    } catch {}
+    await assertBuyerActor(buyerId);
+    if (!alive.current) return;
+    try { await clearStoredIntent(accepted); } catch { /* A retained key recovers this same confirmed order next time. */ }
+    try { await assertBuyerActor(buyerId); } catch { return; }
+    if(!alive.current)return;
     setCreated(result);
     setUncertain(false);
     submitting.current = false;
     await qc.invalidateQueries({ queryKey: ['cart', buyerId] });
     await qc.invalidateQueries({ queryKey: ['orders', buyerId] });
+    await assertBuyerActor(buyerId);
     if (alive.current) router.replace(`/pagar/${result.order_id}`);
   };
   const place = useMutation({
-    mutationFn: (i: Intent & { newAttempt?: boolean }) =>
-      confirmCheckout(
+    mutationFn: async (i: Intent & { newAttempt?: boolean }) => {
+      const bound = await captureBuyerApi(buyerId);
+      const result = await confirmCheckout(
         async () => {
-          const available = await methods.refetch();
-          if (!available.isSuccess || !available.data.some((m) => m.enabled)) {
-            // This marker exists only in mutation variables, never in persisted intent.
-            // No RPC has been transmitted for a fresh attempt rejected here.
-            if (i.newAttempt) {
-              throw new ApiError({
-                code: 'method_unavailable',
-                message: 'No podemos confirmar el pedido sin un método de pago disponible. Tu carrito se conserva.',
-              });
-            }
-            // A restored/retried attempt may have reached the server earlier.
-            try {
-              const existing = await recoverCheckout(() => browser().api.checkout.placedOrder(buyerId, i.key));
-              if (existing) return existing;
-            } catch (cause) {
-              throw new UnconfirmedCheckoutError(cause);
-            }
-            // A missing read is not proof that an earlier RPC cannot still commit.
+          await bound.assertCurrent();
+          // An older stored attempt has no accepted review token. Only recover its
+          // existing order; never attach a new summary or call the legacy writer.
+          if (!i.reviewToken) {
+            const existing = await recoverCheckout(() => bound.api.checkout.placedOrder(buyerId, i.key));
+            if (existing) return existing;
             throw new UnconfirmedCheckoutError();
           }
-          return browser().api.checkout.placeOrder(i.selection.address, i.selection.shipping, i.selection.plan, i.key);
+          const available = await methods.refetch();
+          await bound.assertCurrent();
+          if (!available.isSuccess || !available.data.some((m) => m.enabled)) {
+            if (i.newAttempt) {
+              throw new ApiError({ code: 'method_unavailable', message: 'No podemos confirmar el pedido sin un método de pago disponible. Tu carrito se conserva.' });
+            }
+            try {
+              const existing = await recoverCheckout(() => bound.api.checkout.placedOrder(buyerId, i.key));
+              if (existing) return existing;
+            } catch (cause) { throw new UnconfirmedCheckoutError(cause); }
+            throw new UnconfirmedCheckoutError();
+          }
+          return bound.api.checkout.placeOrderReviewed(i.selection.address, i.selection.shipping, i.selection.plan, i.key, i.reviewToken);
         },
-        () => browser().api.checkout.placedOrder(buyerId, i.key),
-      ),
-    onSuccess: complete,
-    onError: (e) => {
+        () => bound.api.checkout.placedOrder(buyerId, i.key),
+      );
+      await bound.assertCurrent();
+      return result;
+    },
+    onSuccess: (result, i) => complete(result, i),
+    onError: async (error, i) => {
+      if (!alive.current) return;
+      try { await assertBuyerActor(buyerId); } catch { return; }
+      if (!alive.current) return;
       submitting.current = false;
-      if (e instanceof UnconfirmedCheckoutError) {
-        setUncertain(true);
-        return;
-      }
+      const code = (error as { code?: string }).code;
+      const rejected = ['checkout_changed', 'plan_invalid', 'shipping_invalid', 'insufficient_stock', 'sold_out', 'unavailable', 'cart_has_issues', 'cart_empty', 'address_required', 'address_not_found', 'shipping_unavailable', 'invalid_input'].includes(code ?? '') || (code === 'method_unavailable' && i.newAttempt);
+      if (error instanceof UnconfirmedCheckoutError || !rejected || !i.newAttempt) { setUncertain(true); return; }
+      try { await clearStoredIntent(i); }
+      catch { setUncertain(true); return; }
+      try { await assertBuyerActor(buyerId); } catch { return; }
+      if(!alive.current)return;
       setUncertain(false);
-      try {
-        sessionStorage.removeItem(storageKey);
-      } catch {}
       setIntent(null);
-      const code = (e as { code?: string }).code;
-      setStep(code === 'plan_invalid' ? 2 : code === 'shipping_invalid' ? 1 : 3);
+      if (code === 'checkout_changed') {
+        setReviewedToken(''); setStep(0);
+        setNotice('El pedido cambió. Revisa los productos, la entrega y el total antes de confirmar.');
+      } else setStep(code === 'plan_invalid' ? 2 : code === 'shipping_invalid' ? 1 : 3);
       if (code === 'shipping_invalid') setShipping({});
       void preview.refetch();
     },
   });
   const check = useMutation({
-    mutationFn: () => recoverCheckout(() => browser().api.checkout.placedOrder(buyerId, intent!.key)),
-    onSuccess: (r) => {
-      if (r) void complete(r);
+    mutationFn: async () => {
+      const accepted = intent!;
+      const bound = await captureBuyerApi(buyerId);
+      const order = await recoverCheckout(() => bound.api.checkout.placedOrder(buyerId, accepted.key));
+      await bound.assertCurrent();
+      return { order, accepted };
+    },
+    onSuccess: async ({ order, accepted }) => {
+      if (!alive.current) return;
+      if (order) await complete(order, accepted);
       else setLookupMissing(true);
     },
   });
-  const confirm = () => {
-    if (
-      submitting.current ||
-      !methodsReady ||
-      !preview.data ||
-      preview.isFetching ||
-      preview.isError ||
-      !preview.data.summary.can_place ||
-      !address
-    )
-      return;
+  const confirm = async () => {
+    if (submitting.current || !methodsReady || !preview.isSuccess || preview.isFetching || preview.isPlaceholderData ||
+      !preview.data.summary.can_place || !address || reviewedToken !== preview.data.summary.review_token) return;
     const s = preview.data.summary;
-    const i: Intent = intent ?? {
-      key: newIdempotencyKey('web-order'),
-      selection: {
-        address: address.id,
-        plan: preview.data.code!,
-        shipping: Object.fromEntries(
-          s.groups.filter((g) => g.selected_shipping).map((g) => [g.key, g.selected_shipping!.method_id]),
-        ),
-      },
-    };
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    setSnapshot(s);
-    setIntent(i);
-    setUncertain(true);
-    setLookupMissing(false);
-    submitting.current = true;
+    const candidate: Intent = { version: 2, buyerId, key: newIdempotencyKey('web-order'), reviewToken: s.review_token,
+      selection: { address: address.id, plan: preview.data.code!, shipping: Object.fromEntries(s.groups.filter((g) => g.selected_shipping).map((g) => [g.key, g.selected_shipping!.method_id])) } };
+    submitting.current=true;
+    let shouldSend=true;
+    let prepared: ReturnType<typeof persistCheckoutIntent>;
     try {
-      sessionStorage.setItem(storageKey, JSON.stringify(i));
-    } catch {}
-    place.mutate({ ...i, newAttempt: true });
+      if(!navigator.locks)throw new Error('Este navegador no puede coordinar la compra entre pestañas. Usa un navegador actualizado.');
+      prepared=await navigator.locks.request(`mayami.checkout:${buyerId}`,{ifAvailable:true},async lock=>{
+        if(!lock)throw new Error('Hay una confirmación en curso en otra pestaña. Comprueba su resultado.');
+        await assertBuyerActor(buyerId);
+        const pending=restoreCheckoutIntent(localStorage,sessionStorage,buyerId);
+        if(pending){shouldSend=false;return{intent:pending,fresh:false};}
+        return persistCheckoutIntent(localStorage,candidate);
+      });
+      await assertBuyerActor(buyerId);
+      if(!alive.current){submitting.current=false;return;}
+    }
+    catch (error) { submitting.current=false;if(alive.current)setNotice((error as Error).message || 'No pudimos guardar tu compra. No enviamos el pedido; vuelve a intentarlo.'); return; }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setSnapshot(s); setIntent(prepared.intent); setUncertain(true); setLookupMissing(false); submitting.current = true;
+    if(shouldSend)place.mutate({ ...prepared.intent, newAttempt: prepared.fresh });
+    else submitting.current=false;
   };
+
   const locked = place.isPending || check.isPending;
   useEffect(() => {
     if (!uncertain) return;
@@ -259,10 +273,21 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   }, [uncertain]);
   const move = (n: number) => {
     if (n > step) setNotice('');
+    if (n === 3) {
+      if (!preview.isSuccess || preview.isFetching || preview.isPlaceholderData) return;
+      setReviewedToken(preview.data.summary.review_token);
+    } else setReviewedToken('');
     setStep(n);
     document.getElementById('checkout-heading')?.focus();
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
+  if (storageProblem) return (
+    <section className="state" role="alert" data-testid="checkout-storage-error">
+      <h1>No pudimos recuperar tu compra guardada</h1><p>{storageProblem}</p>
+      <button className="button" onClick={() => { setStorageProblem(''); setRestored(false);setRestoreNonce(n=>n+1); }}>Reintentar lectura</button>
+      <Link prefetch={false} href="/pedidos">Ver mis pedidos</Link>
+    </section>
+  );
   if (created)
     return (
       <section className="state" role="status">
@@ -294,12 +319,13 @@ export function Checkout({ buyerId }: { buyerId: string }) {
             No pudimos comprobarlo. Intenta de nuevo.
           </p>
         )}
+        {place.isError && !(place.error instanceof UnconfirmedCheckoutError) && <p className="error" role="alert">{place.error.message} Conservamos la referencia de esta compra mientras comprobamos su resultado.</p>}
         {!place.isPending && (
           <button className="button" disabled={locked} onClick={() => check.mutate()}>
             {check.isPending ? 'Comprobando…' : 'Comprobar pedido'}
           </button>
         )}
-        {lookupMissing && (
+        {lookupMissing && intent.reviewToken && (
           <>
             <p>Aún no aparece una confirmación. Puedes reintentar la misma compra.</p>
             <button
@@ -315,6 +341,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
             </button>
           </>
         )}
+        {lookupMissing && !intent.reviewToken && <p>Esta compra se inició con una versión anterior. Conservamos su referencia; sigue comprobando el pedido antes de iniciar otra compra.</p>}
         <Link prefetch={false} href="/pedidos">Ver mis pedidos</Link>
       </section>
     );
@@ -625,7 +652,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
               <button
                 className="button"
                 data-testid="checkout-next"
-                disabled={!fresh || !enabled || locked || (step === 3 && !methodsReady)}
+                disabled={!fresh || !enabled || locked || (step === 3 && (!methodsReady || reviewedToken !== preview.data?.summary.review_token))}
                 onClick={() => (step === 3 ? confirm() : move(step + 1))}
               >
                 {['Continuar a entregas', 'Elegir plan de pago', 'Revisar pedido', 'Confirmar pedido'][step]}

@@ -16,17 +16,21 @@ export interface ClientOptions {
    * the app's query client: stacked retries made a dead connection take about a minute to surface.
    */
   retryReads?: boolean;
+  /** Capture one user's token for an operation. Never persists or refreshes another session. */
+  accessToken?: string;
 }
 
 export function createKoraClient(opts: ClientOptions): KoraClient {
   if (/service_role/.test(decodeRole(opts.anonKey))) {
     throw new Error('Refusing to create a client with a service role key. Use the anon key.');
   }
+  const accessToken = opts.accessToken;
   return createClient<Database>(opts.url, opts.anonKey, {
+    ...(accessToken ? { accessToken: async () => accessToken } : {}),
     auth: {
       storage: opts.storage,
-      autoRefreshToken: true,
-      persistSession: true,
+      autoRefreshToken: !opts.accessToken,
+      persistSession: !opts.accessToken,
       detectSessionInUrl: opts.detectSessionInUrl ?? false,
     },
     db: { retry: opts.retryReads ?? true },

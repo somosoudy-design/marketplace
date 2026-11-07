@@ -3,12 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useAccount } from '@/lib/providers';
 import { browser } from '@/lib/browser';
 import { ProductGrid } from '@/components/product-card';
+import { catalogMetadataMap } from '@/lib/catalog-selection';
 import { Empty } from '@/components/states';
 export default function Favorites() {
   const { session, ready } = useAccount();
   const products = useQuery({
     queryKey: ['favorite-products', session?.user.id],
-    queryFn: () => browser().api.account.favoriteProductsForBuyer(session!.user.id),
+    queryFn: async () => { const api = browser().api; const products = await api.account.favoriteProductsForBuyer(session!.user.id); return { products, metadata: await catalogMetadataMap(products.map(p => p.id), api.catalog.metadata) }; },
     enabled: !!session,
   });
   if (!ready || (!!session && products.isPending))
@@ -39,10 +40,10 @@ export default function Favorites() {
     <div className="wrap account-page">
       <div className="section-heading">
         <h1>Mis favoritos</h1>
-        <span className="muted">{products.data?.length ?? 0} productos</span>
+        <span className="muted">{products.data?.products.length ?? 0} productos</span>
       </div>
-      {products.data?.length ? (
-        <ProductGrid products={products.data} />
+      {products.data?.products.length ? (
+        <ProductGrid products={products.data!.products} metadata={products.data!.metadata} />
       ) : (
         <Empty
           title="Tus favoritos empiezan aquí"

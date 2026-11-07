@@ -1,7 +1,9 @@
 // Shapes of the JSON documents returned by the database RPCs (see supabase/migrations).
 // Money arrives as JSON numbers with at most 2 decimals (USD) or 8 (rates); convert with @kora/core money helpers
 // before doing arithmetic. The backend is the source of truth for every amount shown here.
-import type { Database } from './database.types';
+import type { Database, Json } from './database.types';
+import type { ProductCondition, VariantImageLink } from '@kora/core';
+export type { ProductCondition } from '@kora/core';
 
 type Tables = Database['public']['Tables'];
 type Enums = Database['public']['Enums'];
@@ -15,7 +17,7 @@ export type ModerationStatus = Enums['moderation_status'];
 export type StoreKind = Enums['store_kind'];
 
 export type Order = Tables['orders']['Row'];
-export type OrderItem = Tables['order_items']['Row'];
+export type OrderItem = Tables['order_items']['Row'] & { product_condition?: ProductCondition | null };
 export type Fulfillment = Tables['fulfillments']['Row'];
 export type FulfillmentEvent = Tables['fulfillment_events']['Row'];
 export type FulfillmentStep = Tables['fulfillment_steps']['Row'];
@@ -34,6 +36,8 @@ export type ClaimMessage = Tables['claim_messages']['Row'];
 export type ClaimWithContext = Claim & { stores: { name: string } | null; orders: { number: string } | null };
 
 export interface ProductCard {
+  condition?: ProductCondition | null;
+  available_colors?: string[];
   id: string;
   slug: string;
   title: string;
@@ -65,6 +69,9 @@ export interface ProductCard {
 }
 
 export interface ProductVariant {
+  sku?: string | null;
+  media_classified?: boolean;
+  updated_at?: string;
   id: string;
   title: string;
   options: Record<string, string>;
@@ -74,12 +81,17 @@ export interface ProductVariant {
 }
 
 export interface ProductDetail extends ProductCard {
+  /** Present in the reviewed endpoint; shares the detail's database snapshot. */
+  catalog_metadata?: CatalogMetadata;
+  /** Server-confirmed images not assigned to any variant, including hidden/inactive variants. */
+  general_images?: { id: string; path: string; alt: string | null; width: number | null; height: number | null; sort: number }[];
+  variant_image_links?: VariantImageLink[];
   description: string | null;
   highlights: string[] | null;
   option_names: string[] | null;
   max_per_order: number;
   weight_kg: number | null;
-  images: { path: string; alt: string | null; width: number | null; height: number | null }[];
+  images: { id?: string; path: string; alt: string | null; width: number | null; height: number | null }[];
   variants: ProductVariant[];
   store: {
     id: string;
@@ -170,6 +182,9 @@ export interface ShippingOption {
 }
 
 export interface CartLine {
+  product_condition?: ProductCondition | null;
+  sku?: string | null;
+  image_scope?: 'general' | 'variant';
   issue: null | 'sold_out' | 'unavailable' | 'insufficient_stock' | 'over_limit';
   title: string;
   quantity: number;
@@ -470,4 +485,99 @@ export interface SellerProductInput {
   images: SellerEditableProduct['product_images'];
   costs?: Partial<ProductCosts>;
   variantCosts?: { variant_id: string; cost_usd: number | null }[];
+}
+
+/** Opt-in contracts: require the reviewed backend schema; legacy methods remain unchanged. */
+export interface CatalogVariantMetadata {
+  sku?: string | null;
+  variant_id: string;
+  title: string;
+  options: Record<string, string>;
+  price_usd: number;
+  stock: number | null;
+  active: boolean;
+  updated_at: string;
+  color: string | null;
+  media_classified: boolean;
+  media_state: 'unknown' | 'none' | 'mapped';
+  images: { id: string; path: string; alt: string | null; width: number | null; height: number | null; sort: number }[];
+}
+export interface CatalogMetadata {
+  general_images?: { id: string; path: string; alt: string | null; width: number | null; height: number | null; sort: number }[];
+  product_id: string;
+  condition: ProductCondition | null;
+  updated_at: string;
+  colors: string[];
+  variants: CatalogVariantMetadata[];
+}
+export interface CatalogConditionResult {
+  product_id: string;
+  condition: ProductCondition | null;
+  updated_at: string;
+}
+export interface CatalogMediaResult {
+  product_id: string;
+  variant_id: string;
+  updated_at: string;
+  media_classified: true;
+  media_state: 'none' | 'mapped';
+}
+export type ReviewedCheckoutSummary = CheckoutSummary & { review_token: string };
+export interface CartIntentResult {
+  variant_id: string;
+  quantity: number;
+  replayed: boolean;
+}
+export interface CartMergeIntentResult {
+  accepted: number;
+  replayed: boolean;
+}
+
+/** Cancellation never undoes a completed mutation. Its result is historical; refresh the cart. */
+export type CartIntentCancellation =
+  | { state: 'cancelled'; operation: 'add' | 'merge'; replayed: boolean }
+  | { state: 'completed'; operation: 'add'; result: Omit<CartIntentResult, 'replayed'>; replayed: true }
+  | { state: 'completed'; operation: 'merge'; result: Omit<CartMergeIntentResult, 'replayed'>; replayed: true };
+export type CartCancelInput =
+  | { operation: 'add'; payload: { variant_id: string; quantity: number } }
+  | { operation: 'merge'; payload: { variant_id: string; quantity: number }[] };
+
+/** JSON metadata read from legacy rows is not silently asserted to be a string map. */
+export type SellerReviewedProduct = Omit<SellerEditableProduct, 'product_variants' | 'product_images'> & {
+  condition?: ProductCondition | null;
+  product_variants: (Tables['product_variants']['Row'] & { media_classified?: boolean })[];
+  product_images: Tables['product_images']['Row'][];
+};
+/** This RPC returns JSON numbers; retain legacy pricing types for the existing consumers. */
+export type SellerReviewedPricing = Omit<ProductPricing, 'costs' | 'snapshot' | 'rule'> & {
+  costs: Tables['product_costs']['Row'] | null;
+  snapshot: Tables['pricing_snapshots']['Row'] | null;
+  rule: Json;
+};
+export interface SellerProductReview {
+  product: SellerReviewedProduct;
+  revision: string;
+  pricing: SellerReviewedPricing;
+}
+export interface SellerProductChanges {
+  fields?: Partial<SellerProductInput['fields']> & { option_names?: string[] };
+  variants?: (Partial<SellerEditableProduct['product_variants'][number]> & {
+    id: string;
+    options?: Record<string, string>;
+  })[];
+  /** Omission preserves an image. Removal must be explicit and cannot include other edits. */
+  images?: ({ id: string; path?: string; sort?: number; alt?: string | null; remove?: never } | { id: string; remove: true })[];
+  costs?: Partial<
+    Pick<
+      Tables['product_costs']['Row'],
+      'source' | 'source_url' | 'freight_usd' | 'logistics_usd' | 'margin_pct' | 'auto_price' | 'notes'
+    >
+  >;
+  /** Requires an explicit costs patch, even {}. Null removes only this variant's cost. */
+  variantCosts?: { variant_id: string; cost_usd: number | null }[];
+}
+export interface SellerProductSaveResult {
+  product_id: string;
+  revision: string;
+  replayed: boolean;
 }
