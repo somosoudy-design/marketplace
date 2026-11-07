@@ -87,6 +87,7 @@ export function createHandler(deps: Deps = defaultDeps()) {
       }
       if ((await db.rpc<Target[]>('account_close_targets', args)).length) throw new CleanupFailure('cleanup_batch_limit');
       await db.rpc('account_close_clean_data', args);
+      await db.rpc('account_close_minimize_audit', args);
       // The database verifies Auth's resulting state and every supported cleanup domain before completed.
       const finished = await db.rpc<{ state: string }>('account_close_finish', args);
       if (finished.state !== 'completed') throw new CleanupFailure('completion_not_verified');
