@@ -2,7 +2,9 @@
 appId: com.example.kora.preview
 name: mayami banner enlarged text
 ---
-- launchApp
+# The harness already cold-started this process after applying the system font scale.
+- launchApp:
+    stopApp: false
 - extendedWaitUntil:
     visible:
       id: home-editorial-price
