@@ -41,6 +41,17 @@ export function inspectRequest(cwd = process.cwd()) {
   return validateRequest({ text: readFileSync(resolve(cwd, REQUEST_PATH), 'utf8'), headSha, parents, changedPaths });
 }
 
+/** Validate an unpublished local request object, without changing HEAD or the deploy trigger. */
+export function inspectRequestRef(requestSha, cwd = process.cwd()) {
+  if (typeof requestSha !== 'string' || !SHA.test(requestSha)) throw new Error('requestSha debe ser un SHA completo.');
+  const git = (...args) => execFileSync('git', args, { cwd, encoding: 'utf8' }).trim();
+  if (git('cat-file', '-t', requestSha) !== 'commit') throw new Error('requestSha debe ser un commit.');
+  const [headSha, ...parents] = git('rev-list', '--parents', '-n', '1', requestSha).split(' ');
+  if (parents.length !== 1) throw new Error('La solicitud debe tener un único padre.');
+  const changedPaths = execFileSync('git', ['diff', '--name-only', '-z', parents[0], requestSha], { cwd, encoding: 'utf8' }).split('\0').filter(Boolean);
+  return validateRequest({ text: git('show', requestSha + ':' + REQUEST_PATH), headSha, parents, changedPaths });
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   try {
     const request = inspectRequest();

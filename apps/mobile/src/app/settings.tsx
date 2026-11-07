@@ -89,7 +89,7 @@ export default function SettingsScreen() {
       <Card style={{ gap: 12 }}>
         <Text variant="title">Eliminar cuenta</Text>
         {deletionRequested || del.isSuccess ? (
-          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Recibimos tu solicitud para revisión. Todavía no se ha completado la eliminación; tu cuenta sigue funcionando mientras se tramita. Consulta el alcance en Eliminar cuenta y datos." />
+          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Recibimos tu solicitud para revisión. Enviarla no elimina los datos de inmediato. Te informaremos del resultado y de cualquier conservación necesaria. Consulta Eliminar cuenta y datos." />
         ) : (
           <>
             <Text variant="bodySmall" color="textSecondary">Puedes solicitar la eliminación de tu cuenta y sus datos. La solicitud se revisa antes de procesarse. Consulta Eliminar cuenta y datos para conocer el alcance y la información que permanece después del cierre.</Text>
