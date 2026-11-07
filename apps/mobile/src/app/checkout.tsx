@@ -1,9 +1,9 @@
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { ApiError, type CheckoutSummary, type ReviewedCheckoutSummary, type DeliveryGroup, type PlaceOrderResult, type ShippingSelection } from '@kora/api';
-import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL, productConditionLabel } from '@kora/core';
+import { describeEtaDates, formatUSD, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, presentServerSchedule } from '@kora/core';
 import { palette } from '@kora/design-tokens';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { router, Stack, useFocusEffect, useNavigation } from 'expo-router';
+import { router, Stack, useFocusEffect, useNavigation, useLocalSearchParams } from 'expo-router';
 import { usePreventRemove } from 'expo-router/react-navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, ActivityIndicator, findNodeHandle, Platform, Pressable, ScrollView, View } from 'react-native';
@@ -47,12 +47,14 @@ type AttemptState = { stored: StoredCheckoutAttempt; snapshot?: Preview; fresh: 
 
 export default function CheckoutScreen() {
   const { user } = useAuth();
-  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace(authTarget('/sign-in', '/checkout'))} />;
+  const params = useLocalSearchParams<{ plan?: string | string[] }>();
+  const requestedPlan = safePlanCode(params.plan);
+  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace(authTarget('/sign-in', withPlan('/checkout', requestedPlan)))} />;
   // An in-flight attempt belongs to one buyer; switching account must never recover or open another buyer's order.
-  return <CheckoutSession key={user.id} buyerId={user.id} />;
+  return <CheckoutSession key={user.id} buyerId={user.id} requestedPlan={requestedPlan} />;
 }
 
-function CheckoutSession({ buyerId }: { buyerId: string }) {
+function CheckoutSession({ buyerId, requestedPlan }: { buyerId: string; requestedPlan?: string }) {
   const t = useTheme();
   const reduced = useReducedMotion();
   const qc = useQueryClient();
@@ -72,7 +74,8 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const [lastPreview, setLastPreview] = useState<{ userId: string; summary: Preview } | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [recoveredOrder, setRecoveredOrder] = useState<PlaceOrderResult | null>(null);
-  const [plan, setPlan] = useState('full');
+  const [plan, setPlan] = useState(() => requestedPlan ?? 'full');
+  const [planNotice, setPlanNotice] = useState<string | null>(null);
   const [barHeight, setBarHeight] = useState(150);
   const scrollRef = useRef<ScrollView>(null);
   const headingRef = useRef<View>(null);
@@ -91,7 +94,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     let active = true; alive.current = true;
     checkoutIntents.load(buyerId).then((stored) => {
       if (!active) return;
-      if (stored) { setAttempt({ stored, fresh: false }); setConfirming(true); }
+      if (stored) { setPlan(stored.payload.plan); setAttempt({ stored, fresh: false }); setConfirming(true); }
       setRestored(true);
     }).catch((error: unknown) => { if (active) setRestoreError(new Error('No pudimos recuperar tu compra guardada. Conservamos sus datos; vuelve a intentar la lectura.', { cause: error })); });
     return () => { active = false; alive.current = false; };
@@ -138,7 +141,19 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
     }
   }
 
-  if (s && !preview.isPlaceholderData && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
+  if (s && !confirming && !preparing && preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData && !s.plans.some(option => option.code === plan)) {
+    const offered = chooseOfferedPlan(plan, s.plans);
+    if (offered.notice && planNotice !== offered.notice) setPlanNotice(offered.notice);
+    if (offered.code && offered.code !== plan) {
+      setPlan(offered.code); setReviewedToken('');
+      if (step >= 2) setStep(2);
+    }
+  }
+  useEffect(() => {
+    if (restored && !attempt && !confirming && !preparing && preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData && s?.plan?.code === plan) {
+      router.setParams({ plan });
+    }
+  }, [restored, attempt, confirming, preparing, preview.isSuccess, preview.isFetching, preview.isPlaceholderData, s?.plan?.code, plan]);
   if (s?.recoveredShipping && !preview.isPlaceholderData && Object.keys(shipping).length) {
     setShipping({});
     setShippingRecovered(true);
@@ -386,6 +401,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
             {step !== 3 ? <Text variant="bodySmall" color="textSecondary">{STEPS[step]!.body}</Text> : null}
           </View>
         </View>
+        {planNotice ? <View testID="checkout-plan-notice"><Banner tone="info" body={planNotice} /></View> : null}
         {reviewNotice ? <Banner tone="warning" body="El pedido cambió. Revisa los productos, la entrega y el total antes de confirmar." /> : null}
         {preparationError ? <Banner tone="danger" body={preparationError.message} /> : null}
         {preview.isError ? <View testID="checkout-refresh-error" style={{ gap: 8 }}><Banner tone="danger" body="No pudimos actualizar tu compra. Reintenta antes de continuar; tus selecciones siguen aquí." /><Button title="Reintentar actualización" variant="secondary" onPress={() => preview.refetch()} loading={preview.isFetching} /></View> : null}
@@ -427,7 +443,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
           <Card padded={false}>
             {s.plans.map((p, i) => <View key={p.code}>
               {i > 0 ? <Divider inset={16} /> : null}
-              <RadioRow testID={`plan-${p.code}`} selected={plan === p.code} title={p.name} subtitle={p.description ?? undefined} disabled={!editable} onPress={() => setPlan(p.code)} />
+              <RadioRow testID={`plan-${p.code}`} selected={plan === p.code} title={paymentPlanTitle(p)} subtitle={paymentPlanDescription(p)} disabled={!editable} onPress={() => { setPlanNotice(null); setPlan(p.code); router.setParams({ plan: p.code }); }} />
             </View>)}
           </Card>
           <PaymentSchedule summary={s} />
@@ -465,7 +481,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
             {address ? <View testID="checkout-review-address" style={{ gap: 3 }}><Text variant="label">{address.recipient}</Text><Text variant="bodySmall" color="textSecondary">{address.line1}</Text><Text variant="bodySmall" color="textSecondary">{[address.municipality, address.city].filter(Boolean).join(', ')} · {address.phone}</Text></View> : null}
           </ReviewSection>
           <ReviewSection title="Plan de pago" testID="checkout-edit-plan" disabled={busy} onEdit={() => goTo(2)}>
-            <Text variant="label">{s.plan?.name}</Text>
+            <Text variant="label">{s.plan ? paymentPlanTitle(s.plan) : 'Plan de pago'}</Text>
             <PaymentSchedule summary={s} />
           </ReviewSection>
           <View testID="checkout-summary-detail" style={{ gap: 8 }}>
@@ -510,10 +526,12 @@ function ReviewSection({ title, testID, disabled, onEdit, children }: { title: s
 
 function PaymentSchedule({ summary: s }: { summary: CheckoutSummary }) {
   if (s.schedule.length <= 1) return null;
+  const shown = presentServerSchedule(s.schedule);
   return <View style={{ gap: 10 }}>
-    <Text variant="label">Calendario de pagos (en USD)</Text>
-    {s.schedule.map((x) => <View key={x.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
-      <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{OBLIGATION_KIND_LABEL[x.kind] ?? 'Pago'} {x.kind === 'installment' ? x.seq : ''} · {x.due_in_days === 0 ? 'hoy' : `en ${x.due_in_days} días`}</Text>
+    <Text variant="label">{shown.title} (en USD)</Text>
+    {shown.distribution ? <Text variant="bodySmall" color="textSecondary">{shown.distribution}</Text> : null}
+    {shown.rows.map(({ item: x, label, due }) => <View key={x.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
+      <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{label} · {due}</Text>
       <Text variant="label" tabular>{formatUSD(x.amount_usd)}</Text>
     </View>)}
     <Text variant="caption" color="textMuted">Tu saldo pendiente queda en dólares. Si pagas en bolívares, el monto se calcula con la tasa del día de cada pago.</Text>

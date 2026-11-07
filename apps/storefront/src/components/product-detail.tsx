@@ -1,10 +1,11 @@
 'use client';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ShoppingBag, ArrowRight, Check, Store } from 'lucide-react';
 import type { CatalogMetadata, ProductDetail as Product } from '@kora/api';
-import { presentAvailability, photoChoiceNotice, resolveProductSelection, variantSwatchLabel } from '@kora/core';
+import { presentAvailability, photoChoiceNotice, resolveProductSelection, variantSwatchLabel, offeredAtQuantity, productBasePreview, presentServerSchedule, withPlan } from '@kora/core';
 import { ProductPhoto } from './photo';
 import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
@@ -26,6 +27,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
   const { session, ready, retryCartSync } = useAccount();
   const guest = useGuestCartState();
   const qc = useQueryClient();
+  const router = useRouter();
   const input = reviewedSelectionInput(p, metadata);
   const variants = metadata.variants.filter(v => v.active).map(v => ({ ...v, id: v.variant_id }));
   const [selected, setSelected] = useState(initialVariantId ?? resolveProductSelection(input).selectedVariantId ?? '');
@@ -62,6 +64,28 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
     },
   });
   const canBuy = resolved.canBuy && availability.purchasable && quantity <= max;
+  // Both range and price belong to the same commercial product response. Missing offers never authorize a plan.
+  const installmentOffer = p.installment_options?.find(offer => offer.variant_id === selected && offer.basis === 'products_only_excludes_shipping');
+  const installmentPlan = installmentOffer && quantity <= installmentOffer.max_quantity
+    ? offeredAtQuantity(installmentOffer.plans, quantity).find(option => option.code === 'three_parts') : undefined;
+  const basePreview = canBuy && installmentOffer && installmentPlan
+    ? productBasePreview(installmentOffer.unit_price_usd, quantity, installmentPlan) : null;
+  const installmentPreview = basePreview?.schedule.length === 3 ? basePreview : null;
+  const displayedPayments = installmentPreview ? presentServerSchedule(installmentPreview.schedule) : null;
+  const addSelection = (preferredPlan?: 'three_parts') => {
+    if (adding.current || add.isPending) return;
+    const destination = preferredPlan ? withPlan('/carrito', preferredPlan) : undefined;
+    // The normal add action may already have succeeded for precisely this selection.
+    if (destination && add.isSuccess && add.variables.variantId === selected && add.variables.quantity === quantity) {
+      router.push(destination);
+      return;
+    }
+    adding.current = true;
+    add.mutate({ variantId: selected, quantity }, {
+      onSuccess: () => { if (destination) router.push(destination); },
+      onSettled: () => { adding.current = false; },
+    });
+  };
   return (
     <div className="wrap product-page">
       <div className="breadcrumbs">
@@ -192,12 +216,27 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
             <button
               className="button"
               disabled={!ready || (!session && !guest.ready) || !canBuy || add.isPending}
-              onClick={() => { if (adding.current) return; adding.current = true; add.mutate({ variantId: selected, quantity }, { onSettled: () => { adding.current = false; } }); }}
+              onClick={() => addSelection()}
             >
               <ShoppingBag size={18} />
               {add.isPending ? 'Agregando…' : canBuy ? 'Agregar al carrito' : 'No disponible'}
             </button>
           </div>
+          {installmentPreview && displayedPayments && (
+            <section className="payment-schedule" aria-label="Opción de pago del producto" data-testid="product-installments">
+              <h2>{displayedPayments.title}</h2>
+              {displayedPayments.distribution && <p>{displayedPayments.distribution}</p>}
+              {displayedPayments.rows.map(({ item, label, due }) => (
+                <div key={item.seq}><span>{label} · {due}</span><strong>{money(Number(item.amount_usd))}</strong></div>
+              ))}
+              <p>{installmentPreview.label}</p>
+              <button type="button" className="button secondary" data-testid="product-buy-three-parts"
+                disabled={!ready || (!session && !guest.ready) || !canBuy || add.isPending}
+                onClick={() => addSelection('three_parts')}>
+                {add.isPending ? 'Agregando…' : 'Comprar en 3 pagos'} <ArrowRight size={16} />
+              </button>
+            </section>
+          )}
           {add.isError && (
             <p role="alert" className="error">
               {add.error.message} Puedes volver a intentarlo.

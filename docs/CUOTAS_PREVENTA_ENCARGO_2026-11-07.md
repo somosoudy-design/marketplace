@@ -44,3 +44,7 @@ Workers/ExpoFree y APK/runtime existentes; sin binario nuevo.
 Próxima acción: completar pruebas DB y las seis pantallas preservando preferencia de plan por URL/retorno
 seguro, rechazar planes no ofrecidos y mostrar pagos exactos. Después revisión independiente y cierre.
 Evidencia privada: .local/installments-20261107 en checkoutprincipal.
+
+## Checkpoint de integración de pantallas
+
+Web y móvil conservan la preferencia en navegación y acceso. Las opciones del carrito vienen de su resumen servidor; la ficha limita su cálculo al producto sin envío y el checkout presenta el calendario recibido. Una intención guardada conserva su plan original. Fallback sólo a pago completo si el servidor lo ofrece. Tipos y lint del monorepo pasan;22 pruebas SQL aisladas aprobadas. QA visual y recorridos locales pendientes antes de considerar publicación. El conector sigue sin permiso para MIM; no se ha aplicado esta migración remota.

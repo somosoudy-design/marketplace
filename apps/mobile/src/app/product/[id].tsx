@@ -1,6 +1,6 @@
 import type { OrderItem, ProductDetail } from '@kora/api';
-import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel } from '@kora/core';
-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel, offeredAtQuantity, productBasePreview, presentServerSchedule, paymentPlanTitle, withPlan } from '@kora/core';
+import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOut, useReducedMotion } from 'react-native-reanimated';
@@ -143,6 +143,12 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
   // options with different prices say theirs, so nobody has to tap each one to compare
   const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
   const canBuy = selection.canBuy;
+  const paymentOffer = p.installment_options?.find(offer => offer.variant_id === variant?.id && offer.basis === 'products_only_excludes_shipping');
+  const threePayments = offeredAtQuantity(paymentOffer?.plans, qty).find(option => option.code === 'three_parts');
+  const offeredPreview = canBuy && paymentOffer && threePayments && qty <= paymentOffer.max_quantity
+    ? productBasePreview(paymentOffer.unit_price_usd, qty, threePayments) : null;
+  const basePreview = offeredPreview?.schedule.length === 3 ? offeredPreview : null;
+  const previewSchedule = basePreview ? presentServerSchedule(basePreview.schedule) : null;
   const [moreText, setMoreText] = useState(false);
   const longText = (description?.length ?? 0) > LONG_DESCRIPTION;
   // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
@@ -183,10 +189,11 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
   };
 
   // "Agregar" keeps the buyer here with a link to the cart; "Comprar" adds and opens the cart to pay
-  const add = (buy: boolean) => {
+  const add = (buy: boolean, preferredPlan?: string) => {
     if (!variant || !selection.canBuy || qty > selection.maxQuantity || submitting.current) return;
     const key = `${variant.id}:${qty}`;
-    if (buy && inCart === key) return router.navigate('/cart');
+    const target = withPlan('/cart', preferredPlan) as Href;
+    if (buy && inCart === key) return router.navigate(target);
     submitting.current = true;
     setPending(buy ? 'buy' : 'add');
     addToCart.mutate(
@@ -195,7 +202,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
         onSuccess: () => {
           haptics.success();
           setInCart(key);
-          if (buy) return router.navigate('/cart');
+          if (buy) return router.navigate(target);
           setAdded(true);
           setTimeout(() => setAdded(false), 4000);
         },
@@ -295,6 +302,17 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
               </View>
             ) : null}
             </View> : null}
+
+            {basePreview && previewSchedule && threePayments ? <Card testID="product-installment-options" style={{ gap: 10 }}>
+              <Text variant="subtitle">{paymentPlanTitle(threePayments)}</Text>
+              {previewSchedule.distribution ? <Text variant="bodySmall" color="textSecondary">{previewSchedule.distribution}</Text> : null}
+              {previewSchedule.rows.map(({ item, label, due }) => <View key={item.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
+                <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{label} · {due}</Text>
+                <Text variant="label" tabular>{formatUSD(item.amount_usd)}</Text>
+              </View>)}
+              <Text variant="caption" color="textMuted">{basePreview.label}</Text>
+              <Button testID="product-installments-buy" title="Comprar en 3 pagos" full loading={pending === 'buy'} disabled={pending === 'add'} onPress={() => add(true, threePayments.code)} />
+            </Card> : null}
 
             <View testID="product-store">
               <StoreChip store={{ ...p.store, tagline: null, cover_path: null }} overline="Vendido por" />

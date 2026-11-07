@@ -1,7 +1,7 @@
 import type { CartLine, DeliveryGroup } from '@kora/api';
-import { D, formatUSD, presentAvailability, productConditionLabel } from '@kora/core';
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { D, formatUSD, presentAvailability, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription } from '@kora/core';
+import { router, useLocalSearchParams, type Href } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
@@ -19,6 +19,7 @@ import { ScalePressable } from '@/components/ui/Pressable';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
+import { RadioRow } from '@/components/checkout/Rows';
 import { useAuth } from '@/lib/auth';
 import type { GuestLine } from '@/lib/guest-cart';
 import { useCart, useGuestCartState, useHome, useSetCartQuantity } from '@/lib/hooks';
@@ -37,15 +38,17 @@ export default function CartScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
+  const params = useLocalSearchParams<{ plan?: string | string[] }>();
+  const requestedPlan = safePlanCode(params.plan);
   const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice explain />{user?<PendingCartMerge/>:null}</View>;
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      {user ? <AccountCart key={user.id} header={header} /> : <GuestCartView header={header} />}
+      {user ? <AccountCart key={user.id} header={header} requestedPlan={requestedPlan} /> : <GuestCartView header={header} requestedPlan={requestedPlan} />}
     </View>
   );
 }
 
-function AccountCart({ header }: { header: React.ReactNode }) {
+function AccountCart({ header, requestedPlan }: { header: React.ReactNode; requestedPlan?: string }) {
   const {cartSyncError,cartSyncing}=useAuth();
   const t = useTheme();
   const cart = useCart();
@@ -55,6 +58,18 @@ function AccountCart({ header }: { header: React.ReactNode }) {
   const [refreshing, setRefreshing] = useState(false);
   const refresh = async () => { setRefreshing(true); try { await cart.refetch(); } finally { setRefreshing(false); } };
   const s = cart.data;
+  const selectedPlan = chooseOfferedPlan(requestedPlan, s?.plans ?? []);
+  const [planNotice, setPlanNotice] = useState<string | null>(null);
+  const plansFresh = cart.isSuccess && !cart.isFetching && !cart.isError && !setQty.isPending && !cartSyncing && !cartSyncError;
+  const nextPlanNotice = plansFresh && requestedPlan && selectedPlan.notice ? `${requestedPlan}:${selectedPlan.code ?? ''}` : '';
+  const [seenPlanNotice, setSeenPlanNotice] = useState('');
+  if (seenPlanNotice !== nextPlanNotice) {
+    setSeenPlanNotice(nextPlanNotice);
+    if (nextPlanNotice) setPlanNotice(selectedPlan.notice!);
+  }
+  useEffect(() => {
+    if (plansFresh && requestedPlan && selectedPlan.notice && selectedPlan.code) router.setParams({ plan: selectedPlan.code });
+  }, [plansFresh, requestedPlan, selectedPlan.code, selectedPlan.notice]);
 
   if (waitingForNetwork(cart)) return <View>{header}<OfflineState /></View>;
   if (cart.isPending) {
@@ -91,14 +106,27 @@ function AccountCart({ header }: { header: React.ReactNode }) {
             <GroupCard key={g.key} group={g} index={i} total={groups.length} disabled={setQty.isPending} onRemove={setRemoving} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
           ))}
           </View>
+          <View testID="cart-payment-options" style={{ gap: 10 }}>
+            <Text variant="subtitle">Plan de pago</Text>
+            {planNotice || (plansFresh && selectedPlan.notice) ? <Banner tone="info" body={planNotice ?? selectedPlan.notice!} /> : null}
+            <Card padded={false}>
+              {s.plans.map((option, index) => <View key={option.code}>
+                {index > 0 ? <Divider inset={16} /> : null}
+                <RadioRow testID={`cart-plan-${option.code}`} selected={selectedPlan.code === option.code}
+                  title={paymentPlanTitle(option)} subtitle={paymentPlanDescription(option)} disabled={!plansFresh || s.issues > 0}
+                  onPress={() => { setPlanNotice(null); router.setParams({ plan: option.code }); }} />
+              </View>)}
+            </Card>
+            <Text variant="caption" color="textMuted">El envío y los importes finales se confirman al continuar.</Text>
+          </View>
         </View>
       </ScrollView>
       <CartFooter
         items={s.items_usd}
         note="Envío y total final con tu dirección, en el siguiente paso."
         cta="Continuar"
-        disabled={s.issues > 0 || setQty.isPending || cart.isFetching || !!cartSyncError || cartSyncing}
-        onPress={() => router.push('/checkout')}
+        disabled={s.issues > 0 || setQty.isPending || cart.isFetching || cart.isError || !!cartSyncError || cartSyncing || !selectedPlan.code}
+        onPress={() => router.push(withPlan('/checkout', selectedPlan.code) as Href)}
         onHeightChange={setBarHeight}
       />
       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Sigue en tu carrito; intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
@@ -178,7 +206,7 @@ function EmptyCart({ header, body }: { header: React.ReactNode; body: string }) 
   );
 }
 
-function GuestCartView({ header }: { header: React.ReactNode }) {
+function GuestCartView({ header, requestedPlan }: { header: React.ReactNode; requestedPlan?: string }) {
   const t = useTheme();
   const guest = useGuestCartState();
   const lines = guest.data;
@@ -200,6 +228,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
         {header}
         <View style={{ paddingHorizontal: 16, gap: 16 }}>
           <Text variant="bodySmall" color="textSecondary" testID="cart-deliveries">{lines.length} {lines.length === 1 ? 'producto' : 'productos'} · {units} {units === 1 ? 'unidad' : 'unidades'}</Text>
+          {requestedPlan ? <View testID="guest-plan-preference"><Banner tone="info" body="Conservamos el plan que solicitaste. Verás las opciones disponibles después de iniciar sesión y revisar tu carrito." /></View> : null}
           <Card padded={false}>
             {lines.map((l: GuestLine, i) => (
               <View key={l.variant_id}>
@@ -215,7 +244,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
           </Card>
         </View>
       </ScrollView>
-      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push(authTarget('/sign-in', '/cart'))} onHeightChange={setBarHeight} compact={false} />
+      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push(authTarget('/sign-in', withPlan('/cart', requestedPlan)))} onHeightChange={setBarHeight} compact={false} />
       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
     </>
   );

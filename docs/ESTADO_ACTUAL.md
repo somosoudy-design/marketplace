@@ -2,7 +2,7 @@
 
 ## Cuotas preventa/encargo · en curso ·7nov2026
 
-Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core ytiposcoreAPI pasan, UI/DB en progreso. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core,22DB y tipos/lint completos pasan. Integración ficha-carrito-checkout y retorno con preferencia terminada en fuente; QA real de pantallas pendiente. Conector aún rechaza MIM tras aviso de sesión Browser. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
 
 ## Google y correo · preparación probada, sin activar ·7nov2026
 

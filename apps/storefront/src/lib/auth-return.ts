@@ -1,3 +1,4 @@
+import { planFromSearch, withPlan } from '@kora/core';
 const base = 'https://mayami.invalid';
 export function safeReturnPath(input: string | null | undefined, fallback = '/cuenta'): string {
   if (!input || input.length > 4096 || !input.startsWith('/') || input.startsWith('//') || /[\\\u0000-\u001f\u007f]/.test(input)) return fallback;
@@ -25,7 +26,7 @@ export function guestReturnPath(back: string) {
   const safe = safeReturnPath(back);
   const pathname = new URL(safe, base).pathname;
   if (pathname === '/cuenta') return '/buscar';
-  return pathname === '/checkout' ? '/carrito' : safe;
+  return pathname === '/checkout' ? withPlan('/carrito', planFromSearch(new URL(safe, base).searchParams)) : safe;
 }
 export function callbackPath(back: string, recovery = false) {
   const params = new URLSearchParams({ volver: safeReturnPath(back) });
