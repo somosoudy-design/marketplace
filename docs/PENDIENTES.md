@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Acceso Google · preparación y aprobación concreta pendientes
+
+Completar protocolo/adaptadores y pruebas aisladas antes de pedir decisión de identidad y configuración OAuth existente. Google sigue desactivado; no publicar botón operativo. No autoenlazar cuentas ni modificar roles/propietarios. [Estado y bloqueo](ACCESO_GOOGLE_2026-11-07.md).
+
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 
 Dos ajustes publicados: superficie de fotos en oscuro y nombre Odontología completo; diseño, imágenes y funciones conservados. Tecnología conserva su original, sin recorte adicional de UI. Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N; Preview4/4 y público4/4 (20fotos en4contextos),13assetsSHA/WWW301 verificados.147originales/9gates intactos;116core/139unitarias/30Node, tipos/lint y QA local final aprobados. ÚnicaOTA01a1b758-773b-7a0f-82c5-a96d2bc2fb81 recibida por mismaAPK; CI42403068492 SUCCESS,14XML/40PNG. Cobertura visualcaption2/4:1.6legible ambos temas;1.0noencuadrado (0swipes), no se declara aprobado. Normal sí probado local/web. Bloque cerrado con estos límites, sin rerun ni nuevo ciclo. Free, sin mutaciones de negocio/Chrome compartido. [Resultado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).

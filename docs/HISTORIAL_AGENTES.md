@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · WIP acceso Google
+
+Integrador: inspección SDK/metadata pública y documentación vigente; Google=false. Primer checkpoint del protocolo S256, aún sin importar en pantallas. Revisión independiente de enlace automático y carreras de SDK identifica límites; continúan adaptadores y pruebas aisladas. Sin configproveedor, consentimientos, cuentas/sesiones ni compras remotas. API typecheck aprobado. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
 ## 7nov2026 · Codex Mac · dos correcciones visuales y límite de Tecnología
 
 Fotos en tarjetas oscuras con superficie neutra/filete y originales intactos; Odontología completa sin recorte,390normal1línea y reflujo legible. Cuatro archivos UI, sin grilla nueva ni cambios en guest, Preventa, galería o banners. Tecnología muestra el bitmap completo: su recorte es intrínseco, identificado antes de actuar; no se genera/sustituye ni se atribuye un tercer fix.147SHA/9gates conservados,116core/139unitarias/30Node, tipos/lint y QA local aprobados. El candidato con última letra aislada fue retirado y corregido antes de publicar.
