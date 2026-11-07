@@ -78,7 +78,7 @@ jobs:
           cores: 4
           ram-size: 4096M
           disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swangle_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           script: bash tools/eas/native-ota-receipt.sh
       - name: Verificar recibo y matriz del caso
         run: |

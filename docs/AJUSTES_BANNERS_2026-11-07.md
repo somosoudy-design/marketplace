@@ -62,7 +62,11 @@ La comparación [42384648761](https://github.com/somosoudy-design/marketplace/ac
 
 Se corrige sólo el entorno: instalar `libpulse0`, asignar cuatro CPU y4GB de RAM dentro del mismo runner estándar, desactivar snapshots y esperar transporte/boot estable antes de cada Maestro. La versión/build del emulador se comprueba ahora como comando obligatorio al principio del script; un fallo detiene el caso antes de probar la app. Las mismas diez pruebas/36 capturas siguen siendo obligatorias. Una solicitud nueva de recibo sustituye la comprobación anterior ya obsoleta; el bloqueo de publicación EAS no se cambia ni se publica otra OTA.
 
-Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar la matriz con dependencias y preparación corregidas. La recepción física en el teléfono no se deduce del emulador.
+El ensayo preparado [42385540940](https://github.com/somosoudy-design/marketplace/actions/runs/42385540940), fuente `fa877ee`, sí verifica host37.1.11/build15917651 y completa oscuro1.6 y claro1.3. Conserva fallos posteriores de transporte/emulador en otros casos, en puntos distintos. En claro1.6 el kernel del host registra `RenderThread: segfault` a15:20:23, antes de desaparecer QEMU; sin evidencia OOM. Este dato acredita un fallo del host gráfico Linux en ese caso, sin atribuir el símbolo/binario exacto ni un fallo de Mayami.
+
+La [configuración primaria de Chromium37.1.11](https://chromium.googlesource.com/chromium/src/tools/+/115b3f40ea52dea3dede0f705fa5aaf978562ff0/android/avd/proto_creation/android_37_desktop_x64.textpb) también usa `swangle_indirect`. Se contrasta ese backend ANGLE con la misma matriz, sustituyendo el backend GLES `swiftshader_indirect` que registró el fallo. No se cambia la app, sus fotografías, el APK ni la OTA; tampoco se eliminan las aserciones que encontraron el problema.
+
+Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar la matriz con el backend gráfico alternativo y revisar su evidencia. La recepción física en el teléfono no se deduce del emulador.
 
 ## Evidencia y límites
 

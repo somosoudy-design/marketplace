@@ -5,6 +5,6 @@
   "updateId": "01a1b669-c74b-773b-b68d-e24f246f0ce7",
   "sourceCommit": "0df541008de9a7d7a5a38835d640821a63bb6477",
   "updateRun": 42381647257,
-  "verificationMode": "stable-emulator-linux-dependency-transport-v1",
-  "requestedAt": "2026-11-07T15:14:37.461440+00:00"
+  "verificationMode": "stable-emulator-swangle-receipt-v1",
+  "requestedAt": "2026-11-07T15:23:53.363266+00:00"
 }
