@@ -137,6 +137,26 @@ for theme in "${receipt_themes[@]}"; do
     verify_theme_process "$theme-font-$font"
   done
   fi
+  # The single publication (all) adds four focal caption receipts. Existing
+  # standard/font receipt cases and flows21/24/25/26 remain unchanged.
+  if [ "$receipt_case" = all ]; then
+  for category_font in 1.0 1.6; do
+    category_name="$theme-category-font-$category_font"
+    adb shell settings put system font_scale "$category_font"
+    adb shell settings get system font_scale > "$out/logs/$category_name.txt"
+    python3 - "$category_font" "$out/logs/$category_name.txt" <<'PY_CATEGORY'
+import pathlib,sys
+assert abs(float(pathlib.Path(sys.argv[2]).read_text().strip())-float(sys.argv[1]))<0.000001, 'Category font scale not confirmed'
+PY_CATEGORY
+    adb shell am force-stop "$pkg"
+    adb logcat -c
+    adb shell am start -W -n "$component" >/dev/null
+    sleep 10
+    wait_android_transport
+    maestro test --test-output-dir "$out/raw/$category_name" -e MAYAMI_SHOT_PREFIX="$category_name" --format junit --output "$out/logs/$category_name.xml" tests/apk-flows/27-category-caption.yaml > "$out/logs/$category_name-maestro.log" 2>&1
+    verify_theme_process "$category_name"
+  done
+  fi
   adb shell settings put system font_scale 1.0
   timeout 10s adb logcat -d -b crash > "$out/logs/$theme-completed-crash.txt"
   if grep -Fq "Process: $pkg" "$out/logs/$theme-completed-crash.txt"; then echo "App crash: $theme" >&2; exit 1; fi

@@ -54,6 +54,9 @@ function CategoryTile({ category, width }: { category: CategorySummary; width: n
   // Legacy sample files are not evidence of a current commercial photograph.
   const photo = category.image_path && !category.image_path.startsWith('demo/') && failedPhoto !== category.image_path ? category.image_path : null;
   const art = failedArt === category.slug ? undefined : categoryArtwork[category.slug];
+  const isDentistry = category.slug === 'odontologia';
+  // Optional syllable break; the accessible name and navigation retain the original name.
+  const label = isDentistry ? category.name.replace(/^(odonto)(logía)$/i, '$1\u00ad$2') : category.name;
   return (
     <ScalePressable testID={`category-${category.slug}`} accessibilityRole="link" accessibilityLabel={category.name}
       onPress={() => router.push({ pathname: '/catalog', params: { category: category.slug, title: category.name } })}
@@ -65,8 +68,8 @@ function CategoryTile({ category, width }: { category: CategorySummary; width: n
           <Icon name={category.icon ?? 'tag'} size={32} color={t.scheme === 'dark' ? t.colors.text : t.tone(category.tone).dark} />
         </View>
       )}
-      <View style={{ minHeight: 30, paddingHorizontal: 4, paddingVertical: 5, alignItems: 'center', justifyContent: 'center' }}>
-        <Text testID={`category-name-${category.slug}`} variant="caption" align="center" style={[{ fontFamily: 'PlusJakartaSans_600SemiBold' }, category.slug === 'odontologia' ? { alignSelf: 'stretch', minWidth: 0, maxWidth: '100%' } : undefined]}>{category.name}</Text>
+      <View style={{ minHeight: 30, paddingHorizontal: isDentistry ? 3 : 4, paddingVertical: 5, alignItems: 'center', justifyContent: 'center' }}>
+        <Text testID={`category-name-${category.slug}`} accessibilityLabel={category.name} variant="caption" align="center" style={[{ fontFamily: 'PlusJakartaSans_600SemiBold' }, isDentistry ? { alignSelf: 'stretch', minWidth: 0, maxWidth: '100%' } : undefined]}>{label}</Text>
       </View>
     </ScalePressable>
   );

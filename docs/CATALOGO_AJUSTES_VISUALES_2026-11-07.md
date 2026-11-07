@@ -21,3 +21,11 @@ No hace falta migración, SQL mutador ni nuevo servicio. Stack local de lectura 
 `.local/catalog-visual-20261107/`: before/, before-mobile/, candidate/, proposals/WEB_AUDITORIA_Y_PROPUESTA.md, proposals/REVISION_Y_QA_INDEPENDIENTE.md y logs/. Los fallos de selector del capturador se conservan aparte; no se corrige la app para satisfacer un oráculo equivocado.
 
 Próximo paso: export móvil después en8091, QA focal de los dos ajustes y constancia del tercer límite; después un único despliegue web y una única OTA compatible, sin APK nuevo/servicios de pago. No abrir otra tanda.
+
+## QA local y refinamiento del mismo nombre
+
+116 core,139 unitarias móvil/web,30 Node/marca y tipos/lint completos aprobados. Web de fuente integrada5/5:390/1440 ambos temas y320oscuro, nombre160%, superficies, originales, banner, Preventa, color/UUID/portada y persistencia guest. Sólo localStorage,0Auth/writes/destinos externos. Móvil export8091 conserva147originales y9gates de código de funcionalidad/ficha/banners. Foto blanca DJI/pastel mantienenSRC/contain161²/card173×271/filterNone/opacidad1; placeholder y claro conservados.
+
+La primera refluencia de Odontología aislaba la última letra en390normal; se retiró esa aprobación antes de publicar. Experimento local puntual: padding del pie3px sólo paraOdontología más guion discrecional Odonto\u00adlogía devuelve390normal a una línea y ofrece división silábica legible en360/1.6. Nombre accesible, datos y navegación conservan categoría.name original. Refinamiento ya integrado; tipos/lint móvil vuelven a pasar. Falta validar dos capturas del export definitivo, sin repetir la matriz ni fotos ya aprobadas.
+
+Se añade flow27 y cuatro recibos de caption a la misma observación OTA (normal1/1.6×dos temas), manteniendo los diez casos existentes. DSL contrastado con documentación primaria deMaestro; shell yYAML comprobados sin instalar dependencias. No altera infraestructura, APK ni datos; el PNG acredita glifos y los asserts usan el padre con nombre completo. Androidreal todavía pendiente.
