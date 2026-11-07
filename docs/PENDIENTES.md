@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Banners y texto · 7nov2026
+
+Web `8496d8a0` al 100% y Android `01a1b669` publicados desde `0df5410`. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, diez casos del Worker y seis públicos; revisión visual web aprobada. CI42381647257 recibió el UUID exacto y guardó 17PNG; perdió el emulador después de fuente1.6 clara. Se solicita recibo del mismo UUID en un emulador nuevo para completar 36 capturas y ambos temas; no otra publicación. [Detalle](AJUSTES_BANNERS_2026-11-07.md).
+
 ## Cierre de actualización ·7nov2026
 
 Backend compatible ya activado, sin bloque de pagos/D3. OTAAndroid publicada y recibida en emulador por42377231450Success: UUID01a1b635-a400-7536-bdcf-713c36832e47, grupo98888125-2dc8-429d-b40e-2cbe8ac2b1dc.12capturas y4recorridos claro/oscuro aprobados; cierre técnico completado. La recepción en el teléfono del propietario sigue sin observación física y no requiere republicar. No republicar idéntico si sólo falla la comprobación posterior. No hace faltaAPK nuevo: runtimeb691ec… compatible comprobado. [Detalle](ACTUALIZACION_APP_2026-11-07.md).

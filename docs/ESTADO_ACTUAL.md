@@ -1,8 +1,12 @@
 # Estado actual de mayami
 
-## En curso · tres ajustes de banners y texto ·7nov2026
+## Banners y texto del comprador · 7nov2026 · cierre nativo pendiente
 
-Por encargo de Oliver se corrigen únicamente banner Android, banners web y texto técnico de comprador. Fuente implementada,101core+85móvil y26UI dirigidas aprobadas; nueva revisión320 y26/26UI finales aprobadas; publicación y recibos nativos pendientes. Se conservan las asociaciones internas; aviso comercial sólo ante varias opciones, sin reasignar fotografías ni tocar pagos. Se prepara comprobación nativa con títulos largos y fuente ampliada. [Detalle](AJUSTES_BANNERS_2026-11-07.md). Worker vigente comprobado antes:1eea5edb…; Android vigente anterior:01a1b635… No describir este ajuste como publicado todavía.
+Tres ajustes de Oliver implementados en `ab5b877` y publicados desde `0df5410`: banner Android, banners web y texto técnico de comprador. Pasan 101 pruebas core, 85 móviles, 26 UI finales, 24 Node y tres de marca, tipos/lint y build Cloudflare. Revisión visual independiente favorable; asociaciones conservadas y aviso comercial sólo ante múltiples opciones con fotos desconocidas.
+
+Web publicada una vez: Worker `8496d8a0-bead-4184-9325-77f40c999195` al 100%, BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`. Pasan diez casos del Worker local con SSR sin JS y seis públicos; CSS por SHA, cabeceras y www verificados. Android OTA `01a1b669-c74b-773b-b68d-e24f246f0ce7`, grupo `ff072540-c0f4-481c-8eeb-3b53ebc773e3`, runtime existente `b691ec…`, manifiesto público 200. CI42381647257 confirmó recepción exacta, pero perdió el emulador al abrir Diagnóstico tras capturar fuente1.6; 17PNG y cuatro recorridos claros aprobados. Se solicita únicamente el recibo en un emulador nuevo, para el mismo UUID, sin otra OTA.
+
+Sin SQL, compras ni pagos. Workers/Expo Free; mismo APK, sin tiendas ni iOS. [Detalle](AJUSTES_BANNERS_2026-11-07.md). **Próxima acción:** seguir la CI de recepción disparada por la solicitud actual y completar la matriz nativa. Conservar el UUID publicado y no tocar la publicación web cerrada.
 
 ## Actualización de app y backend ·7nov2026 · publicada y verificada
 

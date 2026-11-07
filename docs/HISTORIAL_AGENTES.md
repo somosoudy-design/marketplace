@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · Codex Mac · tres ajustes de banners y texto
+
+Encargo acotado de Oliver: banner de app, banners web y texto técnico de comprador. Fuente `ab5b877` y publicación `0df5410` conservan fotografías, precios y selección; el aviso humano queda sólo ante múltiples opciones con fotos desconocidas. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, tipos/lint/build y guardas; revisión independiente favorable. Web `8496d8a0` al 100%, BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`, diez casos de Worker SSR sin JS y seis públicos, CSS/cabeceras/www comprobados. OTA `01a1b669`, grupo `ff072540`, runtime `b691ec…`, publicada por CI42381647257; manifiesto200 y recepción exacta en Android15. El emulador se desconectó después de las capturas1.6 claras: cuatro recorridos pasados/17PNG, solicitud posterior de recibo sin republicar. Sin SQL, pagos, nuevo APK, iOS ni cargos. [Informe](AJUSTES_BANNERS_2026-11-07.md).
+
 ## 7nov2026 · Codex Mac · actualización funcional y visual
 
 Por orden de Oliver («termina eso»), se cerró y activó el backend compatible20261107130620, excluyendo íntegramente la propuesta de pagos/D3. Baseline remoto contrastado,147 definiciones protegidas,221/221DB y grants/RLS posteriores comprobados; no operaciones financieras de prueba ni restauración de suspendidos. Integración y visuales locales preservados en45743f9. Free/cuota y runtime verificados por42375479457/42375479399. OTAAndroid publicada por3a3539b;42377231450Success confirmó UUID01a1b635-a400-7536-bdcf-713c36832e47/grupo98888125-2dc8-429d-b40e-2cbe8ac2b1dc, runtimeb691ec… en emuladorAndroid15.4recorridos y12PNG claro/oscuro conservados; cierre técnico completado. No se afirma recepción física en Samsung. [Informe](ACTUALIZACION_APP_2026-11-07.md).
