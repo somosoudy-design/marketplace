@@ -4,6 +4,31 @@ set -Eeuo pipefail
 pkg=com.example.kora.preview
 out="$PWD/shots/ota"
 mkdir -p "$out/logs" "$out/raw"
+receipt_case=${MAYAMI_RECEIPT_CASE:-all}
+case "$receipt_case" in all|standard|font-1.3|font-1.6) ;; *) echo 'Invalid receipt case' >&2; exit 1 ;; esac
+case "${MAYAMI_RECEIPT_THEME:-all}" in
+  all) receipt_themes=(light dark) ;;
+  light|dark) receipt_themes=("$MAYAMI_RECEIPT_THEME") ;;
+  *) echo 'Invalid receipt theme' >&2; exit 1 ;;
+esac
+receipt_fonts=(1.3 1.6)
+case "$receipt_case" in font-1.3) receipt_fonts=(1.3) ;; font-1.6) receipt_fonts=(1.6) ;; esac
+# Keep transport/host evidence even when the virtual device disappears. Never mask a test failure.
+capture_runner_state() {
+  local result=$?
+  trap - EXIT
+  set +e
+  free -m > "$out/logs/host-memory.txt" 2>&1
+  ps -eo pid,comm,rss --sort=-rss | head -20 > "$out/logs/host-process-memory.txt"
+  sudo -n dmesg --ctime 2> "$out/logs/kernel-read-error.txt" | tail -200 > "$out/logs/kernel-tail.txt"
+  timeout 10s adb devices -l > "$out/logs/adb-final-devices.txt" 2>&1
+  timeout 10s adb logcat -d -b crash > "$out/logs/android-crash-buffer.txt" 2>&1
+  timeout 10s adb shell cat /proc/meminfo > "$out/logs/android-final-memory.txt" 2>&1
+  # Inventory only: a raw crash dump could contain process memory or credentials.
+  if [ -d /tmp/android-runner ]; then find /tmp/android-runner -maxdepth 2 -type f -printf '%f %s bytes\n' > "$out/logs/emulator-crash-file-inventory.txt"; fi
+  exit "$result"
+}
+trap capture_runner_state EXIT
 : "${MAYAMI_UPDATE_ID:?Expected Android update UUID}"
 : "${MAYAMI_RUNTIME:?Expected Android runtime}"
 : "${ANDROID_HOME:?Android SDK required}"
@@ -56,9 +81,11 @@ for line in open(sys.argv[1],errors='replace'):
 assert rows and rows[-1].get('Código') == 'actualización '+sys.argv[2] and rows[-1].get('Runtime') == sys.argv[3] and rows[-1].get('Canal') == 'preview' and rows[-1].get('Cuenta') == 'sin sesión' and rows[-1].get('Backend') == 'mimnotafmfasvwrclxan.supabase.co', 'Theme capture has no matching current update'
 PY
 }
-for theme in light dark; do
+for theme in "${receipt_themes[@]}"; do
   adb shell settings put system font_scale 1.0
+  adb shell settings get system font_scale > "$out/logs/$theme-font-1.0.txt"
   if [ "$theme" = light ]; then adb shell cmd uimode night no >/dev/null; else adb shell cmd uimode night yes >/dev/null; fi
+  if [ "$receipt_case" = all ] || [ "$receipt_case" = standard ]; then
   adb shell am force-stop "$pkg"
   adb logcat -c
   adb shell am start -W -n "$component" >/dev/null
@@ -78,7 +105,9 @@ for theme in light dark; do
   sleep 10
   maestro test --test-output-dir "$out/raw/$theme-banners" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme-banners.xml" tests/apk-flows/25-banners-and-product-copy.yaml > "$out/logs/$theme-banners-maestro.log" 2>&1
   verify_theme_process "$theme-banners"
-  for font in 1.3 1.6; do
+  fi
+  if [ "$receipt_case" != standard ]; then
+  for font in "${receipt_fonts[@]}"; do
     adb shell settings put system font_scale "$font"
     adb shell settings get system font_scale > "$out/logs/$theme-font-$font.txt"
     adb shell am force-stop "$pkg"
@@ -88,6 +117,8 @@ for theme in light dark; do
     maestro test --test-output-dir "$out/raw/$theme-font-$font" -e MAYAMI_SHOT_PREFIX="$theme-font-$font" --format junit --output "$out/logs/$theme-font-$font.xml" tests/apk-flows/26-banner-enlarged-text.yaml > "$out/logs/$theme-font-$font-maestro.log" 2>&1
     verify_theme_process "$theme-font-$font"
   done
+  fi
   adb shell settings put system font_scale 1.0
-  if adb logcat -d -b crash | grep -Fq "Process: $pkg"; then echo "App crash: $theme" >&2; exit 1; fi
+  timeout 10s adb logcat -d -b crash > "$out/logs/$theme-completed-crash.txt"
+  if grep -Fq "Process: $pkg" "$out/logs/$theme-completed-crash.txt"; then echo "App crash: $theme" >&2; exit 1; fi
 done

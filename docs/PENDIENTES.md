@@ -2,7 +2,7 @@
 
 ## Banners y texto · 7nov2026
 
-Web `8496d8a0` al 100% y Android `01a1b669` publicados desde `0df5410`. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, diez casos del Worker y seis públicos; revisión visual web aprobada. CI42381647257 recibió el UUID exacto y guardó 17PNG; perdió el emulador después de fuente1.6 clara. Se solicita recibo del mismo UUID en un emulador nuevo para completar 36 capturas y ambos temas; no otra publicación. [Detalle](AJUSTES_BANNERS_2026-11-07.md).
+Web `8496d8a0` al 100% y Android `01a1b669` publicados desde `0df5410`. Pasan 101 core, 85 móviles, 26 UI, 24 Node/tres de marca, diez casos del Worker y seis públicos; revisión visual web aprobada. CI42381647257 recibió el UUID exacto y guardó 17PNG; perdió el emulador después de fuente1.6 clara. El recibo42382733005 repitió la desconexión; se aísla cada tema/fuente en seis emuladores para completar las mismas36capturas/diez XML con diagnóstico del host. No otra publicación. [Detalle](AJUSTES_BANNERS_2026-11-07.md).
 
 ## Cierre de actualización ·7nov2026
 

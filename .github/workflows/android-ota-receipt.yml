@@ -10,11 +10,20 @@ concurrency:
   cancel-in-progress: false
 jobs:
   emulator:
+    name: ${{ matrix.theme }} / ${{ matrix.receipt_case }}
     runs-on: ubuntu-latest
     timeout-minutes: 70
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        theme: [light, dark]
+        receipt_case: [standard, font-1.3, font-1.6]
     env:
       MAESTRO_CLI_NO_ANALYTICS: '1'
       MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAYAMI_RECEIPT_THEME: ${{ matrix.theme }}
+      MAYAMI_RECEIPT_CASE: ${{ matrix.receipt_case }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -61,11 +70,32 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: bash tools/eas/native-ota-receipt.sh
+      - name: Verificar recibo y matriz del caso
+        run: |
+          python3 - <<'PY'
+          import json,os,pathlib,xml.etree.ElementTree as ET
+          out=pathlib.Path('shots/ota')
+          r=json.loads((out/'receipt.json').read_text())
+          assert r['Código']=='actualización '+os.environ['MAYAMI_UPDATE_ID']
+          assert r['Runtime']==os.environ['MAYAMI_RUNTIME'] and r['Canal']=='preview' and r['Cuenta']=='sin sesión'
+          standard=os.environ['MAYAMI_RECEIPT_CASE']=='standard'
+          font='1.0' if standard else os.environ['MAYAMI_RECEIPT_CASE'].removeprefix('font-')
+          actual=float((out/'logs'/f"{os.environ['MAYAMI_RECEIPT_THEME']}-font-{font}.txt").read_text().strip())
+          assert abs(actual-float(font))<0.000001, 'Escala de texto no confirmada'
+          assert len(list(out.rglob('*.png')))==(12 if standard else 3), 'Capturas incompletas'
+          reports=list((out/'logs').glob('*.xml'))
+          assert len(reports)==(3 if standard else 1), 'Recorridos incompletos'
+          for report in reports:
+            root=ET.parse(report).getroot()
+            suites=list(root.iter('testsuite'))
+            assert suites and all(int(s.get('tests','0'))>0 and all(int(s.get(k,'0'))==0 for k in ['failures','errors','skipped']) for s in suites), 'Recorrido fallido u omitido'
+          print('Caso nativo completo con el UUID esperado; no se publicó otra OTA.')
+          PY
       - name: Conservar evidencia original
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mayami-ota-receipt-${{ github.run_id }}
+          name: mayami-ota-receipt-${{ github.run_id }}-${{ matrix.theme }}-${{ matrix.receipt_case }}
           path: shots/ota/
           if-no-files-found: warn
           retention-days: 30

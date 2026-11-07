@@ -50,7 +50,11 @@ El despliegue incluye la integración funcional ya aprobada que estaba en la ram
 
 El APK recibió el UUID exacto en Android15. La ejecución inicial terminó con fallo de conexión del emulador al abrir Diagnóstico después de capturar el banner y la M con fuente1.6. Los cuatro recorridos claros anteriores pasaron; no hubo una aserción visual fallida en ese punto. Se conservaron 17 PNG y cinco XML. ZIP SHA256 `c8f408bcc92ae57619b530644087d7d3f898b370d22e328c7584326b250834e2`. Root abrió los banners nativos 1.0/1.3/1.6: foto cargada, título completo, 65W unido, precio y CTA legibles.
 
-Se solicita una comprobación del mismo UUID en un emulador nuevo mediante `android-ota-receipt-request.json`; este workflow no publica otra OTA ni construye un APK. **Pendiente:** completar la matriz y revisión nativa, diez recorridos/36 capturas mínimas. La recepción física en el teléfono no se deduce del emulador.
+La comprobación independiente [42382733005](https://github.com/somosoudy-design/marketplace/actions/runs/42382733005), fuente `b09c24f`, recibió la misma OTA y perdió el dispositivo en el mismo punto. Conserva otros 17PNG/cinco XML, cuatro recorridos pasados y el fallo de transporte posterior; ZIP SHA256 `a731fde09704578ff02ff063b4e16bba266f6067362925ca2ce259655fec2066`. La causa raíz de la desaparición del emulador aún no está demostrada: no atribuirla a OOM ni a la app sin evidencia.
+
+Para aislar la acumulación entre casos se prepara una matriz de seis emuladores independientes: claro/oscuro × estándar/fuente1.3/fuente1.6. Conserva las mismas aserciones y verifica el mismo UUID en cada proceso; estándar conserva 21/24/25 y cada fuente ejecuta26. Se exigen 36PNG/diez XML en conjunto. Cada salida conserva memoria del host, lista de procesos sin argumentos, kernel y ADB con timeout; los archivos de crash sólo se inventarían por nombre/tamaño, sin volcar memoria a artefactos públicos. El diagnóstico de salida mantiene el código de error original.
+
+Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar esa matriz y revisar oscuro. La recepción física en el teléfono no se deduce del emulador.
 
 ## Evidencia y límites
 
