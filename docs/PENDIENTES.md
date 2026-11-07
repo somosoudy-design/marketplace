@@ -2,7 +2,7 @@
 
 ## Google y correo · preparación probada; acceso remoto pendiente
 
-Pruebas locales cerradas (73API/139regresiones/116core, Go16renders y SMTP/Auth local); plantillas Mayami y URLs canónicas listas en fuente. Google sigue apagado y sin integración de UI/sesión. Confirmar cuenta Supabase correcta con Oliver: lectura configMIM denegada por ACL, reintento agotado. Después, verificar metadata/clienteOAuth existente, resolver política identidad e integración y pedir sólo delta externo conocido. No configpush completo, credenciales nuevas, cambios de seguridad, correo externo o publicación por suposición. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+Cuenta esperada confirmada por Oliver y navegador con login iniciado; falta capacidad Browser en este chat para verificar identidad/MIM sin usar CLI erróneo. No tokens nuevos ni retries de config por otra vía. Publicar/verificar PNG original y sólo después instalar dos HTML aprobados mediante delta revisado; Google sigueoff y su integración pendiente. Auditoría de recibos sin evidencia de mutación fuera de MIM. Tanda de cuotas preventa/encargo solicitada por coordinación se conserva aparte, aún sin implementación ni publicación.
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 

@@ -4,6 +4,11 @@ Preparación local del7nov2026. `confirmation.html` y `recovery.html` conservan 
 el enlace oficial generado por Auth, `{{ .ConfirmationURL }}`. Confirmación y recuperación son propósitos
 distintos: no construir `token_hash` directo a una pantalla que sólo entiende code/fragmento de sesión.
 
+La cabecera HTML usa el **logotipo original** Workv3, rasterizado fielmente a PNG para correo. La placa blanca
+mantiene el color/proporción y el área libre en ambos temas. El PNG está preparado en public/brand/email;
+su URL todavía no está alojada. Antes de instalar los HTML ejecutar `node tools/auth-email/check-logo.mjs`:
+exige HTTP200, image/png y SHA exacto. `--local` comprueba sólo el archivo, no autoriza la instalación.
+
 | Plantilla | Asunto preparado | Propósito |
 |---|---|---|
 | confirmation | Confirma tu correo en Mayami | Verificar correo del registro, signup |

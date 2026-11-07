@@ -15,6 +15,33 @@ No se cambió de identidad/herramienta para eludirla. Desbloquear el llavero mac
 SiteURL, allowlist, SMTP y plantillas alojadas actuales quedan **sin verificar**; los valores documentados
 el6nov son antecedentes y no sustituyen una lectura actual. No se pide otra autorización de dominio.
 
+## Corrección posterior: cuenta y logo original
+
+Oliver confirmó que la identidad actual del CLI es incorrecta y señaló la cuenta Supabase esperada. Inició
+sesión en el navegador integrado; eso no cambia por sí solo la credencial del CLI/conector. La herramienta
+para leer/controlar ese navegador no está expuesta en este chat tras dos búsquedas. Hay plugin Browser oficial
+instalado, pero no su ejecutor disponible: no se conectaron sockets internos, leyeron cookies, contraseñas o almacenes de sesión,
+crearon tokens o sustituyeron por Chrome. No se repitió la configuración privada denegada con la cuenta errónea.
+Identidad y propiedad actual de MIM siguen pendientes de comprobar desde la conexión correcta.
+
+Auditoría de recibos6/7nov: no se hallaron escrituras Mayami en un projectref distinto de MIM. DDL/medios
+aplicados tienen destino MIM explícito; ese dato no demuestra el email del administrador ni propietario.
+Cloudflare tiene recibo independiente de la cuenta esperada y account9ea83…; Expo conserva su owner técnico
+marketplacebrand. No hay evidencia que justifique mover/borrar recursos o historia. La última tanda de
+Google/correos no cambió configuración alojada. Informe local: account-correction/ACCOUNT_TARGET_AUDIT.md.
+
+Las dos cabeceras HTML sustituyen ahora el nombre tipográfico por el **logo original Workv3**. PNG fiel al SVG,
+1600×404,21.190bytes; placa blanca con área libre62, logo a147.6×28 dentro de imagen160×40.4. Mismo asset ambos
+temas; alt Mayami si el cliente bloquea imágenes. SVG maestro intacto; procedencia en
+assets/brand/mayami/v3/email-provenance.json.8/8 renders320/390 claro/oscuro y revisión independiente favorables;
+motor Go2/2. Sólo cambian las dos imágenes de cabecera: código/CTA/copia/propósito permanecen iguales.
+
+El PNG está preparado en apps/storefront/public/brand/email, **aún no alojado**. Los renders interceptan esa URL
+con el archivo local, no acreditan su disponibilidad remota. Antes de instalar los HTML, ejecutar
+`node tools/auth-email/check-logo.mjs` sin --local: exige HTTP200,image/png,SHA exacto. --local sólo verifica
+integridad del archivo (aprobado); no autoriza publicación/instalación. Vista local actualizada en
+EVIDENCIA_CORREOS.html; la anterior se conserva como EVIDENCIA_CORREOS_ANTES_LOGO.html.
+
 ## Código preparado
 
 - `packages/api/src/google-auth.ts`: transporte manual S256, RNG/digest seguros, nonce por intento,
@@ -96,7 +123,7 @@ email-local-e2e/receipt.redacted.json y los reportes/hashes contiguos. Vista aut
 ## Activación pendiente y próxima acción
 
 1. Preparación y pruebas locales cerradas; guardar checkpoint sin desplegar un acceso operativo.
-2. Confirmar con Oliver la cuenta Supabase correcta (pregunta pendiente; identidad actual consultada sin volver a leer configuración denegada) y recuperar lectura autorizada MIM. No cambiar de identidad, recuperar/configurar credenciales ni activar proveedores para eludir la denegación.
+2. Cuenta correcta confirmada por Oliver; conectar la capacidad de lectura del navegador integrado o la conexión autorizada equivalente y comprobar identidad/MIM antes de recuperar lectura de configuración. No cambiar de identidad, recuperar/configurar credenciales ni activar proveedores para eludir la denegación.
 3. Verificar el proyecto y cliente OAuth **Web application existentes** de Google. El antecedente Firebase no
    acredita un client Web. Callback Google→Auth fijo:
    https://mimnotafmfasvwrclxan.supabase.co/auth/v1/callback. Confirmar scopes efectivos, audiencia y callbacks

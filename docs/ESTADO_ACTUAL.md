@@ -2,7 +2,7 @@
 
 ## Google y correo · preparación probada, sin activar ·7nov2026
 
-Preparación guardada:73API/139regresiones/116core, tipos/lint completos; dos HTML/TXT Mayami,8ejecucionesGo/16renders y cadena SMTP→OTP/enlace→Auth/SDK LOCAL comprobada con una fixture, sin ReactUI/Gmail/externos. Código email usa destino canónico cuando backendMIM y rechaza callback vacío/mixto sin aceptar B por error. Googlefalse, sin UI/AuthProvider/primaryboundary conectado; falta integración final y decisión identidad/configuración. Lectura privada MIM denegada por ACL, reintento agotado; pregunta pendiente sobre cuentaSupabase correcta. Sin activar proveedor, instalar templates hosted ni desplegar web/OTA/APK; Free conservado. [Resultados, límites y próximo paso](ACCESO_GOOGLE_2026-11-07.md).
+Oliver confirmó la cuenta Supabase correcta e inició sesión en el navegador integrado. El CLI continúa con identidad errónea; no se volvió a usar para MIM ni se crearon credenciales. Control Browser no expuesto en este chat, identidad/propiedad actuales pendientes. Auditoría de recibos no halló escrituras Mayami fuera de MIM; no equivale a prueba del propietario. Logo original ya sustituye texto en dos HTML; PNG/localguard/procedencia y8renders/revisiónGo preparados, asset aún no hospedado. Googleoff, sin instalartemplates/deploy. [Detalle y límites](ACCESO_GOOGLE_2026-11-07.md).
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 

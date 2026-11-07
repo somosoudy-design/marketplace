@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · logo original en correos y auditoría de destinos
+
+CuentaSupabase esperada confirmada por Oliver; login navegador iniciado, sin controlBrowser expuesto para comprobarlo. CLI erróneo no reutilizado/ningún token nuevo. Recibos6/7nov apuntan a MIM, sin evidencia de escrituras Mayami en otro projectref; dueño actual sin confirmar. Dos cabeceras HTML ahora usan PNG fiel al logoWorkv3, original intacto;8renders320/390 ambos temas, Go2/2 y revisión independiente favorables. PNG aún no hospedado; checkerHTTP/MIME/SHA impide dar por listo el asset. Preparación sindeploy/instalacióntemplates/Googleoff. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
 ## 7nov2026 · preparación Google/correo probada; activación pendiente
 
 73API/139regresiones/116core, tipos/lint completos; dos HTML/TXT Mayami, motorGo8ejecuciones/16renders y SMTP/Auth/SDK local con una fixture y16pasos finales. Corregidos callbacks vacíos/mixtos para no confundir sesiónB con link confirmado. Revisor favorable sólo a preparación apagada. Googlefalse, sin UI/primaryboundary/integración final; configMIM ACLdenegada/retry agotado, pregunta sobre cuentaSupabase pendiente. Sin credenciales/proveedor/URLs hosted cambiadas ni web/OTA/APK/correoexterno. [Cierre y límites](ACCESO_GOOGLE_2026-11-07.md).
