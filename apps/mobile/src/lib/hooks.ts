@@ -1,11 +1,13 @@
 import { favoriteState, type FavoriteEntry, type CheckoutSummary, type ProductDetail, type ProductVariant, type SearchParams } from '@kora/api';
 import { useInfiniteQuery, useMutation, useMutationState, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useAuth } from './auth';
 import { guestCart, type GuestLine } from './guest-cart';
+import { guestFavorites, guestFavoritesKey, pendingFavoritesKey } from './guest-favorites';
+import { useGuestState } from './guest-state';
 import { qk } from './query';
-import { api } from './supabase';
-import { captureActorApi, assertCurrentActor } from './actor-api';
+import { api, supabase } from './supabase';
+import { captureActorApi, assertCurrentActor, ActorChangedError } from './actor-api';
 import { addAccountCart } from './operation-intents';
 import { resolveProductSelection } from '@kora/core';
 
@@ -57,14 +59,11 @@ export function useSearch(params: Omit<SearchParams, 'limit' | 'offset'>) {
 }
 
 // ---------- cart (server cart for accounts, device cart for visitors) ----------
-export function useGuestCart(): GuestLine[] {
-  const [lines, setLines] = useState<GuestLine[]>([]);
-  useEffect(() => {
-    guestCart.read().then(setLines).catch(() => undefined);
-    return guestCart.subscribe(setLines);
-  }, []);
-  return lines;
-}
+const guestCartKey = ['guest-cart'] as const;
+export const useGuestCartState = () => useGuestState(guestCartKey, guestCart);
+export const useGuestFavoritesState = () => useGuestState(guestFavoritesKey, guestFavorites);
+/** Keep count/badge consumers compatible; screens use the explicit hydration/error state. */
+export function useGuestCart(): GuestLine[] { return useGuestCartState().data; }
 
 export function useCart(addressId?: string | null) {
   const { user, cartSyncing } = useAuth();
@@ -83,6 +82,7 @@ export function useAddToCart() {
   const { user } = useAuth();
   const qc = useQueryClient();
   return useMutation({
+    ...(!user ? { networkMode: 'always' as const } : {}),
     mutationFn: async ({ product, variant, quantity }: { product: ProductDetail; variant: ProductVariant; quantity: number }) => {
       if (!user) {
         const selection=resolveProductSelection(product,variant.id);
@@ -108,6 +108,7 @@ export function useSetCartQuantity() {
   const { user } = useAuth();
   const qc = useQueryClient();
   return useMutation({
+    ...(!user ? { networkMode: 'always' as const } : {}),
     mutationFn: async ({ variantId, quantity }: { variantId: string; quantity: number }) => {
       if (!user) return guestCart.setQuantity(variantId, quantity);
       const bound = await captureActorApi(user.id);
@@ -148,43 +149,82 @@ export function useSetCartQuantity() {
 
 // ---------- favorites ----------
 export function useFavorites() {
-  const { user } = useAuth();
+  const { user, favoritesSyncing, favoritesSyncError, retryFavoritesSync } = useAuth();
   const qc = useQueryClient();
+  const guest = useGuestFavoritesState();
   const key = [...qk.favorites, user?.id];
-  const mutationKey = ['favorite-write', user?.id];
-  const q = useQuery({ queryKey: key, queryFn: () => api.account.favoritesForBuyer(user!.id), enabled: !!user });
-  const ids = useMemo(() => new Set((user ? q.data ?? [] : []).map((f) => f.product_id)), [q.data, user]);
-  const pending = useMutationState({ filters: { mutationKey, status: 'pending' }, select: (mutation) => (mutation.state.variables as { productId: string }).productId });
+  const mutationKey = ['favorite-write', user?.id ?? 'guest'];
+  const q = useQuery({ queryKey: key, queryFn: () => api.account.favoritesForBuyer(user!.id), enabled: !!user && !favoritesSyncing });
+  const held = useQuery({ queryKey: pendingFavoritesKey(user?.id), queryFn: () => guestFavorites.pendingMerge(user!.id), enabled: !!user, networkMode: 'always', retry: false });
+  const ids = useMemo(() => new Set(user
+    ? [...(q.data ?? []).map(entry => entry.product_id), ...(held.data?.productIds ?? [])]
+    : guest.data.map(entry => entry.product_id)), [q.data, held.data, guest.data, user]);
+  const pending = useMutationState({ filters: { mutationKey, status: 'pending' }, select: mutation => (mutation.state.variables as { productId: string }).productId });
   const toggle = useMutation({
+    ...(!user ? { networkMode: 'always' as const } : {}),
     mutationKey,
-    mutationFn: ({ userId, productId, on }: { userId: string; productId: string; on: boolean }) => api.account.setFavorite(userId, productId, on),
+    mutationFn: async ({ userId, productId, on }: { userId: string | null; productId: string; on: boolean }) => {
+      if (!userId) {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        if (data.session) throw new ActorChangedError();
+        return guestFavorites.set(productId, on);
+      }
+      const bound = await captureActorApi(userId);
+      const reserved = await guestFavorites.pendingMerge(userId);
+      if (reserved?.productIds.includes(productId)) throw new Error('Primero comprobaremos los favoritos pendientes. Conservamos tu selección.');
+      await bound.assertCurrent();
+      await bound.api.account.setFavorite(userId, productId, on);
+      await bound.assertCurrent();
+    },
     onMutate: async ({ userId, productId, on }) => {
+      if (!userId) return null;
+      await assertCurrentActor(userId);
       const queryKey = [...qk.favorites, userId];
       await qc.cancelQueries({ queryKey, exact: true });
-      const previous = qc.getQueryData<FavoriteEntry[]>(queryKey)?.find((row) => row.product_id === productId) ?? null;
-      // A logout may have removed this query while cancellation was in flight.
+      await assertCurrentActor(userId);
+      const previous = qc.getQueryData<FavoriteEntry[]>(queryKey)?.find(row => row.product_id === productId) ?? null;
       if (qc.getQueryState(queryKey)) qc.setQueryData<FavoriteEntry[]>(queryKey, (rows = []) => favoriteState(rows, productId, on ? previous ?? { product_id: productId, created_at: new Date().toISOString() } : null));
-      return { previous, queryKey };
+      return { previous, queryKey, userId };
     },
-    onError: (_e, v, ctx) => {
-      if (ctx && qc.getQueryState(ctx.queryKey)) qc.setQueryData<FavoriteEntry[]>(ctx.queryKey, (rows = []) => favoriteState(rows, v.productId, ctx.previous));
+    onError: async (_error, variables, ctx) => {
+      if (!ctx) return;
+      try { await assertCurrentActor(ctx.userId); } catch { return; }
+      if (qc.getQueryState(ctx.queryKey)) qc.setQueryData<FavoriteEntry[]>(ctx.queryKey, (rows = []) => favoriteState(rows, variables.productId, ctx.previous));
     },
-    onSettled: (_d, _e, v) => {
-      // Do not refetch over another product's optimistic update.
-      if (qc.isMutating({ mutationKey: ['favorite-write', v.userId] }) === 1) {
-        qc.invalidateQueries({ queryKey: [...qk.favorites, v.userId], exact: true });
-        qc.invalidateQueries({ queryKey: ['favorite-products', v.userId] });
+    onSettled: async (_data, _error, variables) => {
+      if (!variables.userId) return;
+      try { await assertCurrentActor(variables.userId); } catch { return; }
+      if (qc.isMutating({ mutationKey: ['favorite-write', variables.userId] }) === 1) {
+        await qc.invalidateQueries({ queryKey: [...qk.favorites, variables.userId], exact: true });
+        await qc.invalidateQueries({ queryKey: ['favorite-products', variables.userId] });
       }
-      qc.invalidateQueries({ queryKey: qk.product(v.productId) });
+      await qc.invalidateQueries({ queryKey: qk.product(variables.productId) });
     },
   });
   return {
-    ids, isFavorite: (id: string) => ids.has(id), enabled: !!user,
-    loading: !!user && q.isPending, refreshing: q.isFetching, error: q.error, retry: q.refetch,
-    isPending: (id: string) => pending.includes(id),
+    ids, isFavorite: (id: string) => ids.has(id), enabled: true,
+    pendingIds: user ? held.data?.productIds ?? [] : [],
+    loading: user ? q.isPending || favoritesSyncing || held.isPending || !!favoritesSyncError : guest.isPending,
+    refreshing: user ? q.isFetching || favoritesSyncing : guest.isFetching,
+    error: user ? q.error : guest.error,
+    syncing: favoritesSyncing, syncError: user ? favoritesSyncError : null, retrySync: retryFavoritesSync,
+    retry: async () => {
+      if (!user) return guest.refresh();
+      if (favoritesSyncError) {
+        try {
+          await retryFavoritesSync();
+          if (await guestFavorites.pendingMerge(user.id)) return { isError: true };
+        } catch { return { isError: true }; }
+      }
+      return q.refetch();
+    },
+    isPending: (id: string) => pending.includes(id) || (!!user && !!held.data?.productIds.includes(id)),
     toggle: ({ productId, on }: { productId: string; on: boolean }, callbacks?: { onSuccess?: () => void; onError?: (error: unknown) => void }) => {
-      if (!user || qc.getQueryState([...qk.favorites, user.id])?.status !== 'success' || qc.getMutationCache().findAll({ mutationKey, status: 'pending' }).some((mutation) => (mutation.state.variables as { productId: string }).productId === productId)) return false;
-      toggle.mutate({ userId: user.id, productId, on }, callbacks);
+      const sourceKey = user ? [...qk.favorites, user.id] : guestFavoritesKey;
+      if (qc.getQueryState(sourceKey)?.status !== 'success' || qc.getMutationCache().findAll({ mutationKey, status: 'pending' }).some(mutation => (mutation.state.variables as { productId: string }).productId === productId)) return false;
+      if (user && (favoritesSyncing || favoritesSyncError || held.data?.productIds.includes(productId))) return false;
+      toggle.mutate({ userId: user?.id ?? null, productId, on }, callbacks);
       return true;
     },
   };

@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { authRedirect } from './auth-link';
 import { guestCart } from './guest-cart';
+import { guestFavorites, pendingFavoritesKey } from './guest-favorites';
 import { unregisterPush } from './push';
 import { clearAccountCache } from './query';
 import { supabase } from './supabase';
@@ -20,6 +21,9 @@ interface AuthState {
   cartSyncing: boolean;
   cartSyncError: string | null;
   retryCartSync: () => void;
+  favoritesSyncing: boolean;
+  favoritesSyncError: string | null;
+  retryFavoritesSync: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   /** Creates the account. Unless the project skips confirmation, Supabase emails a six-digit code and there is no session yet. */
   signUp: (email: string, password: string, fullName: string) => Promise<{ needsConfirmation: boolean }>;
@@ -35,6 +39,10 @@ interface AuthState {
 export type EmailCodePurpose = 'signup' | 'recovery';
 
 const AuthContext = createContext<AuthState | null>(null);
+const syncMessage = (error: unknown, fallback: string) => {
+  const value = error as { code?: string; message?: string };
+  return typeof value?.code === 'string' && value.message ? value.message : fallback;
+};
 
 function claims(session: Session | null): { roles: string[]; stores: string[] } {
   if (!session) return { roles: [], stores: [] };
@@ -53,99 +61,130 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [cartSyncing, setCartSyncing] = useState(false);
   const [cartSyncError, setCartSyncError] = useState<string | null>(null);
   const retrySync = useRef<() => void>(() => undefined);
+  const [favoritesSyncing, setFavoritesSyncing] = useState(false);
+  const [favoritesSyncError, setFavoritesSyncError] = useState<string | null>(null);
+  const retryFavorites = useRef<() => Promise<void>>(async () => undefined);
 
   useEffect(() => {
-    let active = true, syncRun = 0;
+    let active = true, cartRun = 0, favoritesRun = 0;
     let owner: string | null | undefined;
-    const current = (actorId: string, run: number) => active && owner === actorId && run === syncRun;
+    const current = (actorId: string, run: number, kind: 'cart' | 'favorites') => active && owner === actorId && run === (kind === 'cart' ? cartRun : favoritesRun);
     const syncGuestCart = async (actorId: string, run: number) => {
       try {
-        if (!current(actorId, run)) return;
+        if (!current(actorId, run, 'cart')) return;
         const bound = await captureActorApi(actorId);
-        while(current(actorId,run)){
+        while (current(actorId, run, 'cart')) {
           const reserved = await guestCart.reserveMerge(actorId, () => intentKey('cart-merge'));
-          if (!reserved || !current(actorId, run)) return;
+          if (!reserved || !current(actorId, run, 'cart')) return;
           await bound.assertCurrent();
           const lines = JSON.parse(reserved.payloadJson) as { variant_id: string; quantity: number }[];
           await bound.api.cart.mergeWithIntent(lines, reserved.key);
           await bound.assertCurrent();
-          if (!current(actorId, run)) return;
-          await qc.invalidateQueries({ queryKey: ['cart',actorId] });
+          if (!current(actorId, run, 'cart')) return;
+          await qc.invalidateQueries({ queryKey: ['cart', actorId] });
           await bound.assertCurrent();
-          if (!current(actorId, run)) return;
+          if (!current(actorId, run, 'cart')) return;
           await guestCart.completeMerge(reserved);
-          // Lines added after the reserved snapshot are a new operation, never a reason to clear them.
         }
       } catch (error) {
-        // Another account's durable reservation stays private and intact. It must
-        // not prevent this buyer from checking out their own server cart.
-        if (current(actorId, run) && (error as {code?:string})?.code !== 'foreign_guest_merge') setCartSyncError((error as Error).message || 'No pudimos incorporar tu carrito. Tus productos siguen guardados.');
+        if (current(actorId, run, 'cart')) setCartSyncError(syncMessage(error, 'No pudimos incorporar tu carrito. Tus productos siguen guardados.'));
       } finally {
-        if (current(actorId, run)) setCartSyncing(false);
+        if (current(actorId, run, 'cart')) setCartSyncing(false);
       }
     };
-    const scheduleSync = (actorId: string) => {
-      const run = ++syncRun;
-      setCartSyncError(null);
-      setCartSyncing(true);
-      // Keep Supabase work outside its auth callback.
+    const syncGuestFavorites = async (actorId: string, run: number) => {
+      try {
+        if (!current(actorId, run, 'favorites')) return;
+        const bound = await captureActorApi(actorId);
+        while (current(actorId, run, 'favorites')) {
+          const reserved = await guestFavorites.reserveMerge(actorId, () => intentKey('favorite-merge'));
+          if (!current(actorId, run, 'favorites')) return;
+          qc.setQueryData(pendingFavoritesKey(actorId), reserved);
+          if (!reserved) return;
+          await bound.assertCurrent();
+          // The immutable snapshot/key goes to the receipt RPC, never a fresh sequence of upserts.
+          await bound.api.account.mergeFavoritesWithIntent(reserved.productIds, reserved.key);
+          await bound.assertCurrent();
+          if (!current(actorId, run, 'favorites')) return;
+          await qc.fetchQuery({ queryKey: ['favorites', actorId], queryFn: async () => {
+            const rows = await bound.api.account.favoritesForBuyer(actorId); await bound.assertCurrent(); return rows;
+          }, retry: false, staleTime: 0 });
+          await qc.invalidateQueries({ queryKey: ['favorite-products', actorId] });
+          await bound.assertCurrent();
+          if (!current(actorId, run, 'favorites')) return;
+          await guestFavorites.completeMerge(reserved);
+          if (current(actorId, run, 'favorites')) qc.setQueryData(pendingFavoritesKey(actorId), null);
+        }
+      } catch (error) {
+        if (current(actorId, run, 'favorites')) setFavoritesSyncError(syncMessage(error, 'No pudimos incorporar tus favoritos. Siguen guardados para esta cuenta.'));
+      } finally {
+        if (current(actorId, run, 'favorites')) setFavoritesSyncing(false);
+      }
+    };
+    const scheduleCart = (actorId: string) => {
+      const run = ++cartRun;
+      setCartSyncError(null); setCartSyncing(true);
       setTimeout(() => { void syncGuestCart(actorId, run); }, 0);
     };
+    const scheduleFavorites = (actorId: string): Promise<void> => {
+      const run = ++favoritesRun;
+      setFavoritesSyncError(null); setFavoritesSyncing(true);
+      // Neither Supabase nor disk/RPC work runs within the auth callback.
+      return new Promise(resolve => { setTimeout(() => { void syncGuestFavorites(actorId, run).finally(() => resolve()); }, 0); });
+    };
     retrySync.current = () => {
-      supabase.auth.getSession().then(({ data }) => {
+      supabase.auth.getSession().then(({ data, error }) => {
+        if (error) return;
         const actorId = data.session?.user.id;
-        if (active && actorId && actorId === owner) scheduleSync(actorId);
+        if (active && actorId && actorId === owner) scheduleCart(actorId);
       }).catch(() => undefined);
     };
-    // the device keeps one account's data for offline use (lib/query); another account must never see it
+    retryFavorites.current = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) throw error;
+      const actorId = data.session?.user.id;
+      if (active && actorId && actorId === owner) await scheduleFavorites(actorId);
+    };
     const ownedBy = (id: string | null) => {
-      if (owner !== id) { syncRun++; setCartSyncing(false); setCartSyncError(null); }
+      if (owner !== id) {
+        cartRun++; favoritesRun++;
+        setCartSyncing(false); setCartSyncError(null);
+        setFavoritesSyncing(false); setFavoritesSyncError(null);
+      }
       if (owner !== undefined && owner !== id) clearAccountCache().catch(() => qc.clear());
       if (owner === undefined && id === null) clearAccountCache().catch(() => undefined);
       owner = id;
     };
-    const initialRun = syncRun;
+    const initialRun = cartRun;
     supabase.auth.getSession().then(({ data }) => {
-      if (!active || syncRun !== initialRun) return;
+      if (!active || cartRun !== initialRun) return;
       ownedBy(data.session?.user.id ?? null);
-      setSession(data.session);
-      setReady(true);
-      if (data.session) {
-        scheduleSync(data.session.user.id);
-      }
+      setSession(data.session); setReady(true);
+      if (data.session) { scheduleCart(data.session.user.id); void scheduleFavorites(data.session.user.id); }
     });
-    const { data } = supabase.auth.onAuthStateChange((event, s) => {
+    const { data } = supabase.auth.onAuthStateChange((event, next) => {
       if (!active) return;
-      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') ownedBy(s?.user.id ?? null);
-      setSession(s);
-      setReady(true);
-      if (event === 'SIGNED_IN') {
-        // hold account cart queries in the same render that exposes the session, so they cannot read the
-        // cart before the merge lands; run the merge outside the auth callback, as supabase-js recommends
-        if (s) scheduleSync(s.user.id);
-      }
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') ownedBy(next?.user.id ?? null);
+      setSession(next); setReady(true);
+      if (event === 'SIGNED_IN' && next) { scheduleCart(next.user.id); void scheduleFavorites(next.user.id); }
     });
-    // The server answering "sign in" while the app shows an account means the stored session is gone (expired
-    // and not refreshable, or unreadable): show the visitor's app instead of account screens that cannot load.
     const sessionGone = (error: unknown) => {
       if ((error as { code?: string } | null)?.code !== 'auth_required') return;
-      supabase.auth.getSession().then(({ data: current }) => {
-        if (current.session) return;
-        ownedBy(null);
-        setSession(null);
+      supabase.auth.getSession().then(({ data: next }) => {
+        if (!active || next.session) return;
+        ownedBy(null); setSession(null);
       });
     };
-    const stopQueries = qc.getQueryCache().subscribe((e) => {
-      if (e.type === 'updated' && e.action.type === 'error') sessionGone(e.action.error);
+    const stopQueries = qc.getQueryCache().subscribe(event => {
+      if (event.type === 'updated' && event.action.type === 'error') sessionGone(event.action.error);
     });
-    const stopMutations = qc.getMutationCache().subscribe((e) => {
-      if (e.type === 'updated' && e.action.type === 'error') sessionGone(e.action.error);
+    const stopMutations = qc.getMutationCache().subscribe(event => {
+      if (event.type === 'updated' && event.action.type === 'error') sessionGone(event.action.error);
     });
     return () => {
-      active = false; syncRun++; retrySync.current = () => undefined;
-      data.subscription.unsubscribe();
-      stopQueries();
-      stopMutations();
+      active = false; cartRun++; favoritesRun++;
+      retrySync.current = () => undefined; retryFavorites.current = async () => undefined;
+      data.subscription.unsubscribe(); stopQueries(); stopMutations();
     };
   }, [qc]);
 
@@ -160,6 +199,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       cartSyncing,
       cartSyncError,
       retryCartSync: () => retrySync.current(),
+      favoritesSyncing,
+      favoritesSyncError,
+      retryFavoritesSync: () => retryFavorites.current(),
       signIn: async (email, password) => {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
@@ -196,7 +238,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (error) throw error;
       },
     };
-  }, [session, ready, cartSyncing, cartSyncError]);
+  }, [session, ready, cartSyncing, cartSyncError, favoritesSyncing, favoritesSyncError]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

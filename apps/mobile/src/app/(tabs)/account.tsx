@@ -17,6 +17,7 @@ import { useFavorites, useOrders, useProfile, useSupport, useUnreadCount } from 
 import { useSellerAccess } from '@/lib/seller';
 import { useOnline } from '@/lib/query';
 import { useTheme } from '@/theme';
+import { authTarget } from '@/lib/auth-navigation';
 
 const PANEL_URL = process.env.EXPO_PUBLIC_PANEL_URL ?? '';
 // Builds made before the web panel is published say so instead of a row that does nothing.
@@ -48,11 +49,11 @@ export default function AccountScreen() {
             </View>
             <Text variant="title">Entra para comprar y seguir tus pedidos</Text>
             <Text color="textSecondary">Guarda direcciones, paga en bolívares o dólares y recibe avisos de cada entrega.</Text>
-            <Button testID="account-sign-in" title="Iniciar sesión" full onPress={() => router.push('/sign-in')} />
-            <Button title="Crear cuenta" variant="secondary" full onPress={() => router.push('/sign-up')} />
+            <Button testID="account-sign-in" title="Iniciar sesión" full onPress={() => router.push(authTarget('/sign-in', '/account'))} />
+            <Button title="Crear cuenta" variant="secondary" full onPress={() => router.push(authTarget('/sign-up', '/account'))} />
           </Card>
           <Card padded={false}>
-            <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle="Lo que guardas con el corazón" onPress={() => router.push('/favorites')} />
+            <ListRow testID="account-favorites" icon="heart" title="Favoritos" subtitle={fav.ids.size ? (fav.ids.size === 1 ? '1 producto guardado' : `${fav.ids.size} productos guardados`) : 'Lo que guardas con el corazón'} onPress={() => router.push('/favorites')} />
           </Card>
         </>
       ) : (

@@ -24,6 +24,17 @@ it('a lost response can retry the same cart intent without generating a replacem
   await expect(api.cart.addWithIntent('red', 2, 'same-intent')).resolves.toMatchObject({ quantity: 2, replayed: true });
   expect(rpc.mock.calls[0]).toEqual(rpc.mock.calls[1]);
 });
+it('recovers the same favorite import without a legacy upsert or client-supplied buyer', async () => {
+  const rpc = vi.fn().mockRejectedValueOnce(new TypeError('Failed to fetch'))
+    .mockResolvedValueOnce({ data: { accepted: 1, inserted: 1, product_ids: ['product'], replayed: true }, error: null });
+  const api = createApi({ rpc } as unknown as KoraClient);
+  await expect(api.account.mergeFavoritesWithIntent(['product'], 'same-favorite-intent')).rejects.toMatchObject({ code: 'network' });
+  await expect(api.account.mergeFavoritesWithIntent(['product'], 'same-favorite-intent')).resolves.toMatchObject({ replayed: true });
+  expect(rpc.mock.calls).toEqual([
+    ['favorites_merge_intent', { p_product_ids: ['product'], p_idempotency_key: 'same-favorite-intent' }],
+    ['favorites_merge_intent', { p_product_ids: ['product'], p_idempotency_key: 'same-favorite-intent' }],
+  ]);
+});
 it('an unavailable metadata RPC fails explicitly; the API does not invent a condition or associate global photos', async () => {
   const rpc = vi.fn().mockResolvedValue({ data: null, error: { code: 'PGRST202', message: 'function missing' } });
   const api = createApi({ rpc } as unknown as KoraClient);

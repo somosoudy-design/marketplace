@@ -4,7 +4,7 @@
 
 Nueva tanda autorizada por Oliver: agregar/quitar/consultar carrito y favoritos sin registro, persistir selección y combinarla de forma segura con cuenta tras identificación, sin duplicados ni cruces entre cuentas. Identificación sólo al proceder con compra; precios/stock/totales siguen en servidor. Reutilizar guest-cart móvil, contratos idempotentes y controles existentes. Sin rediseño, microajustes anteriores, OAuth, cuotas, dominio del panel, credenciales nuevas ni servicios de pago. Pruebas y cuentas sólo locales/aisladas. [Plan y estado](MODO_INVITADO_2026-11-07.md).
 
-Checkpoint de lógica compartida:113core/96unitarias y tipos core/API/móvil pasan. Carrito movido sin romper su import, reservas separadas poractor+batches50/WALlegacy y favoritos locales preparados. Próxima acción: integrar propuestas app/web/auth y RPC específico de recibo favorito, probar en DBaislada y revisar superficies; nada nuevo activado remotamente. Activación remota nueva sólo si se identifica y se declara exactamente; no fixtures/compras/pagos remotos.
+Checkpoint local:116core/96unitarias,13crash adicionales independientes,12SQL y5API reales conAuthOTP/RLS pasan; tipos/lintmóvil aprobados. Lógica compartida poractor/batches50/WALlegacy y móvil integrado; deltasweb en revisión. RPC nuevo sólo enDBaislada, nada remoto activado. Próxima acción: integrar propuestas app/web/auth y RPC específico de recibo favorito, probar en DBaislada y revisar superficies; nada nuevo activado remotamente. Activación remota nueva sólo si se identifica y se declara exactamente; no fixtures/compras/pagos remotos.
 
 ## Preventa y galería por color · cerradas y confirmadas por Oliver ·7nov2026
 

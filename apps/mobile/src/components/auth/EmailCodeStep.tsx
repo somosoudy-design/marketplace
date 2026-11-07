@@ -26,6 +26,8 @@ interface Props {
 // change) is only confirmed when the server accepts the code.
 export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, onChangeEmail }: Props) {
   const { colors } = useTheme();
+  const mounted = useRef(false);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const { sendEmailCode, verifyEmailCode } = useAuth();
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
@@ -52,15 +54,17 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
     setError(null);
     try {
       await verifyEmailCode(email, value, purpose);
+      if (!mounted.current) return;
       haptics.success();
       onVerified();
     } catch (e) {
+      if (!mounted.current) return;
       haptics.warning();
       const expired = authErrorKind(e).kind === 'invalid_code' && sentAt > 0 && Date.now() - sentAt > OTP_VALID_MINUTES * 60_000;
       setError(expired ? 'Este código ya venció. Pide uno nuevo.' : authErrorMessage(e));
       setErrorKey((n) => n + 1);
     } finally {
-      setBusy(false);
+      if (mounted.current) setBusy(false);
     }
   };
 
@@ -70,12 +74,14 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
     setNotice(null);
     try {
       await sendEmailCode(email, purpose);
+      if (!mounted.current) return;
       setSentAt(Date.now());
       allowResendIn(OTP_RESEND_SECONDS);
       setCode('');
       setNotice(onOpen ? 'Tu correo aún no está confirmado. Te enviamos un código.' : 'Te enviamos un código nuevo. Usa el más reciente.');
       input.current?.focus();
     } catch (e) {
+      if (!mounted.current) return;
       const k = authErrorKind(e);
       if (k.kind === 'resend_too_soon') {
         allowResendIn(k.seconds!);
@@ -83,7 +89,7 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
       }
       setError(authErrorMessage(e));
     } finally {
-      setSending(false);
+      if (mounted.current) setSending(false);
     }
   };
 

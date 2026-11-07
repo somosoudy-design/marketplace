@@ -7,11 +7,13 @@ import { Banner, EmptyState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuthLinkSession } from '@/lib/auth-link';
 import { useTheme } from '@/theme';
+import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
 
 // Opened from a "reset password" email link (emails sent before the six-digit codes, or link templates). The link
 // signs the user in for this one purpose; the new password is saved with the session it created.
 export default function ResetPasswordScreen() {
   const t = useTheme();
+  const returnTo = useAuthReturn();
   const link = useAuthLinkSession();
   const [done, setDone] = useState(false);
 
@@ -33,7 +35,7 @@ export default function ResetPasswordScreen() {
             ? 'Para cambiar tu contraseña, pide un código de 6 dígitos a tu correo.'
             : 'Los enlaces para cambiar la contraseña vencen y se pueden usar una sola vez. Pide un código de 6 dígitos a tu correo.'}
           action="Pedir un código"
-          onAction={() => router.replace('/forgot-password')}
+          onAction={() => router.replace(authTarget('/forgot-password', returnTo))}
         />
       </View>
     );
@@ -42,7 +44,7 @@ export default function ResetPasswordScreen() {
     return (
       <View testID="reset-done" style={{ flex: 1, justifyContent: 'center', padding: 24, gap: 16, backgroundColor: t.colors.background }}>
         <Banner tone="success" icon="circle-check" title="Contraseña actualizada" body="Ya entraste con tu contraseña nueva. Úsala la próxima vez que inicies sesión." />
-        <Button title="Ir a la tienda" size="lg" full onPress={() => router.replace('/')} />
+        <Button title="Ir a la tienda" size="lg" full onPress={() => returnTo ? finishAuth(returnTo) : router.replace('/')} />
       </View>
     );
   }

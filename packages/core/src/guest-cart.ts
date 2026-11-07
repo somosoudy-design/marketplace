@@ -15,8 +15,11 @@ const LEGACY_RESERVED = 'mayami.guest-merge-reservation.v1';
 const RESERVED = 'mayami.guest-merge-reservations.v2';
 const mergePayload = (lines: GuestLine[]) => lines.map(({ variant_id, quantity }) => ({ variant_id, quantity }));
 function validLines(value: unknown): value is GuestLine[] {
-  return Array.isArray(value) && value.every((line) => line && typeof line === 'object' && typeof line.variant_id === 'string' &&
-    typeof line.product_id === 'string' && Number.isInteger(line.quantity) && line.quantity > 0 && line.quantity <= 100);
+  return Array.isArray(value) && value.every((line) => line && typeof line === 'object' && typeof line.variant_id === 'string' && line.variant_id &&
+    typeof line.product_id === 'string' && line.product_id && Number.isInteger(line.quantity) && line.quantity > 0 && line.quantity <= 100 &&
+    typeof line.title === 'string' && typeof line.availability === 'string' &&
+    typeof line.price_usd === 'number' && Number.isFinite(line.price_usd) && line.price_usd >= 0 &&
+    (line.image_path === null || typeof line.image_path === 'string') && (line.variant_title === null || typeof line.variant_title === 'string'));
 }
 function reservation(raw: string): GuestMergeReservation {
   const r = JSON.parse(raw) as GuestMergeReservation;
@@ -92,7 +95,8 @@ export function createGuestCart(storage: IntentStorage, coordinate?: <T>(work: (
       const remaining = current.lines.filter(line => remainingIds.includes(line.variant_id));
       if (!remaining.length) { await saveReservations(all.filter(item => item !== current)); return null; }
       const key = newKey();
-      if (key.length < 8 || key.length > 80 || key === current.key) throw new Error('No pudimos preparar la operación nueva.');
+      if (key.length < 8 || key.length > 80 || all.some(item => item.actorId === current.actorId && item.key === key))
+        throw new Error('No pudimos preparar la operación nueva.');
       const replacement: GuestMergeReservation = { ...current, key, stage: 'ready', lines: remaining, payloadJson: canonicalIntentPayload(mergePayload(remaining)) };
       // One atomic storage entry replaces the confirmed-cancelled operation; new guest lines stay separate.
       await saveReservations(all.map(item => item === current ? replacement : item));
@@ -100,12 +104,14 @@ export function createGuestCart(storage: IntentStorage, coordinate?: <T>(work: (
     }),
     subscribe(listener: (lines: GuestLine[]) => void) { listeners.add(listener); return () => void listeners.delete(listener); },
     add: (line: GuestLine) => serial(async () => {
+      if (!validLines([line])) throw new Error('Revisa el producto y la cantidad antes de guardarlo.');
       const current = await lines(), index = current.findIndex((item) => item.variant_id === line.variant_id);
       if (index >= 0) current[index] = { ...current[index]!, quantity: Math.min(current[index]!.quantity + line.quantity, 20) };
       else current.push({ ...line });
       await write(current);
     }),
     setQuantity: (variantId: string, quantity: number) => serial(async () => {
+      if (!Number.isInteger(quantity) || quantity < 0 || quantity > 100) throw new Error('Revisa la cantidad antes de continuar.');
       await write((await lines()).map((line) => line.variant_id === variantId ? { ...line, quantity } : line).filter((line) => line.quantity > 0));
     }),
     mergeLines: () => serial(async () => mergePayload(await lines())),

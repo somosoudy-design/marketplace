@@ -46,6 +46,7 @@ export const ErrorBoundary = ScreenErrorBoundary;
 const MAX_W = 760;
 
 export default function ProductScreen() {
+  const { user } = useAuth();
   const { id, variant: requestedVariant } = useLocalSearchParams<{ id: string; variant?: string }>();
   const q = useCommercialProduct(id);
   const t = useTheme();
@@ -71,7 +72,7 @@ export default function ProductScreen() {
       </View>
     );
   }
-  return <ProductView key={q.data.id} product={q.data} requestedVariant={typeof requestedVariant === 'string' ? requestedVariant : undefined} />;
+  return <ProductView key={`${q.data.id}:${user?.id ?? 'guest'}`} product={q.data} requestedVariant={typeof requestedVariant === 'string' ? requestedVariant : undefined} />;
 }
 
 function BackButton({ inline }: { inline?: boolean }) {

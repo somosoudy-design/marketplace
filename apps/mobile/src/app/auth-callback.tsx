@@ -5,10 +5,12 @@ import { EmptyState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useAuthLinkSession } from '@/lib/auth-link';
 import { useTheme } from '@/theme';
+import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
 
 // Opened from the "confirm your email" message: the link confirms the address and signs the buyer in.
 export default function AuthCallbackScreen() {
   const t = useTheme();
+  const returnTo = useAuthReturn();
   const link = useAuthLinkSession();
 
   if (link.status === 'working') {
@@ -29,7 +31,7 @@ export default function AuthCallbackScreen() {
             ? 'El enlace venció o ya se usó. Inicia sesión con tu correo y contraseña: si aún falta confirmar, te enviaremos otro.'
             : 'Abre el enlace del correo en este teléfono, o inicia sesión si ya confirmaste.'}
           action="Iniciar sesión"
-          onAction={() => router.replace('/sign-in')}
+          onAction={() => router.replace(authTarget('/sign-in', returnTo))}
         />
       </View>
     );
@@ -38,7 +40,7 @@ export default function AuthCallbackScreen() {
     <View testID="confirm-done" style={{ flex: 1, justifyContent: 'center', backgroundColor: t.colors.background }}>
       <EmptyState icon="circle-check" title="Correo confirmado" body="Tu cuenta está lista. Agregarás tu dirección de envío en tu primera compra." />
       <View style={{ paddingHorizontal: 24 }}>
-        <Button title="Empezar a comprar" size="lg" full onPress={() => router.replace('/')} />
+        <Button title="Empezar a comprar" size="lg" full onPress={() => returnTo ? finishAuth(returnTo) : router.replace('/')} />
       </View>
     </View>
   );

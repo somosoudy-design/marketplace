@@ -21,9 +21,10 @@ import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from 
 import { Text } from '@/components/ui/Text';
 import { useAuth } from '@/lib/auth';
 import type { GuestLine } from '@/lib/guest-cart';
-import { useCart, useGuestCart, useHome, useSetCartQuantity } from '@/lib/hooks';
+import { useCart, useGuestCartState, useHome, useSetCartQuantity } from '@/lib/hooks';
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { useTheme } from '@/theme';
+import { authTarget } from '@/lib/auth-navigation';
 
 const ISSUE_TEXT: Record<string, string> = {
   sold_out: 'Se agotó. Quítalo para continuar.',
@@ -39,7 +40,7 @@ export default function CartScreen() {
   const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice explain />{user?<PendingCartMerge/>:null}</View>;
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
-      {user ? <AccountCart header={header} /> : <GuestCartView header={header} />}
+      {user ? <AccountCart key={user.id} header={header} /> : <GuestCartView header={header} />}
     </View>
   );
 }
@@ -178,10 +179,14 @@ function EmptyCart({ header, body }: { header: React.ReactNode; body: string }) 
 }
 
 function GuestCartView({ header }: { header: React.ReactNode }) {
-  const lines = useGuestCart();
+  const t = useTheme();
+  const guest = useGuestCartState();
+  const lines = guest.data;
   const setQty = useSetCartQuantity();
   const [removing, setRemoving] = useState<GuestLine | null>(null);
   const [barHeight, setBarHeight] = useState(180);
+  if (guest.isPending) return <View>{header}<View style={{ padding: 16, gap: 14 }}>{[0, 1].map(i => <Skeleton key={i} height={110} radius={t.radii.lg} />)}</View></View>;
+  if (guest.error) return <View>{header}<ErrorState error={guest.error} onRetry={() => guest.refresh()} /></View>;
   if (!lines.length) {
     return (
       <EmptyCart header={header} body="Agrega productos y continúa cuando quieras. Al iniciar sesión los guardamos en tu cuenta." />
@@ -210,7 +215,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
           </Card>
         </View>
       </ScrollView>
-      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push('/sign-in')} onHeightChange={setBarHeight} compact={false} />
+      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push(authTarget('/sign-in', '/cart'))} onHeightChange={setBarHeight} compact={false} />
       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
     </>
   );

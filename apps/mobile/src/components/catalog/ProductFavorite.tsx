@@ -1,4 +1,3 @@
-import { router } from 'expo-router';
 import { colors as colorTokens } from '@kora/design-tokens';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -34,23 +33,25 @@ function FavoriteControl({ id, slug, onPhoto = false, testID }: Props) {
   const heartStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
   const ringStyle = useAnimatedStyle(() => ({ opacity: (1 - ring.value) * 0.5, transform: [{ scale: 0.65 + ring.value * 0.7 }] }));
   const save = async (on: boolean) => {
-    if (!user) { router.push('/sign-in'); return; }
     setRetryOn(on);
     if (favorites.error) {
       const result = await favorites.retry();
       if (result.isError) { setFailed(true); return; }
     }
+    const feedback = () => {
+      haptics.select();
+      if (!reduced) {
+        scale.set(withSequence(withTiming(on ? 1.23 : 0.85, { duration: 90 }), withTiming(1, { duration: 150 })));
+        if (on) { ring.set(0); ring.set(withTiming(1, { duration: 260 })); }
+      }
+    };
     const accepted = favorites.toggle({ productId: id, on }, {
-      onSuccess: () => setFailed(false),
+      onSuccess: () => { setFailed(false); if (!user) feedback(); },
       onError: () => { setFailed(true); haptics.warning(); },
     });
     if (!accepted) return;
     setFailed(false);
-    haptics.select();
-    if (!reduced) {
-      scale.set(withSequence(withTiming(on ? 1.23 : 0.85, { duration: 90 }), withTiming(1, { duration: 150 })));
-      if (on) { ring.set(0); ring.set(withTiming(1, { duration: 260 })); }
-    }
+    if (user) feedback();
   };
   return <>
     <ScalePressable
@@ -72,8 +73,8 @@ function FavoriteControl({ id, slug, onPhoto = false, testID }: Props) {
         <Animated.View style={heartStyle}><Icon name="heart" size={19} color={color} fill={saved ? color : 'none'} strokeWidth={1.8} /></Animated.View>
       </View>
     </ScalePressable>
-    <Sheet visible={failed && !!user} title="No pudimos actualizar favoritos" testID="favorite-error" onClose={() => setFailed(false)} footer={<Button title="Reintentar" onPress={() => save(retryOn)} loading={pending || favorites.refreshing} />}>
-      <Text variant="bodySmall" accessibilityRole="alert">El cambio no se guardó. Revisa tu conexión e inténtalo de nuevo.</Text>
+    <Sheet visible={failed} title="No pudimos actualizar favoritos" testID="favorite-error" onClose={() => setFailed(false)} footer={<Button title="Reintentar" onPress={() => save(retryOn)} loading={pending || favorites.refreshing} />}>
+      <Text variant="bodySmall" accessibilityRole="alert">Intenta de nuevo para comprobar y guardar este cambio.</Text>
     </Sheet>
   </>;
 }

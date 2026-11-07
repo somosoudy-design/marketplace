@@ -523,6 +523,12 @@ export interface CatalogMediaResult {
   media_state: 'none' | 'mapped';
 }
 export type ReviewedCheckoutSummary = CheckoutSummary & { review_token: string };
+export interface FavoriteMergeIntentResult {
+  accepted: number;
+  inserted: number;
+  product_ids: string[];
+  replayed: boolean;
+}
 export interface CartIntentResult {
   variant_id: string;
   quantity: number;

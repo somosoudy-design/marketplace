@@ -28,6 +28,8 @@ import { RadioRow, SummaryRow } from '@/components/checkout/Rows';
 import { Sheet } from '@/components/ui/Sheet';
 import { ScalePressable } from '@/components/ui/Pressable';
 import { useTheme } from '@/theme';
+import { authTarget } from '@/lib/auth-navigation';
+import { PendingCartMerge } from '@/components/catalog/PendingCartMerge';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
 
 export const ErrorBoundary = ScreenErrorBoundary;
@@ -45,7 +47,7 @@ type AttemptState = { stored: StoredCheckoutAttempt; snapshot?: Preview; fresh: 
 
 export default function CheckoutScreen() {
   const { user } = useAuth();
-  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace('/sign-in')} />;
+  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace(authTarget('/sign-in', '/checkout'))} />;
   // An in-flight attempt belongs to one buyer; switching account must never recover or open another buyer's order.
   return <CheckoutSession key={user.id} buyerId={user.id} />;
 }
@@ -55,7 +57,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const reduced = useReducedMotion();
   const qc = useQueryClient();
   const navigation = useNavigation();
-  const { cartSyncing } = useAuth();
+  const { cartSyncing, cartSyncError } = useAuth();
   const addresses = useAddresses();
   const [step, setStep] = useState(0);
   const [deliveryIndex, setDeliveryIndex] = useState(0);
@@ -122,7 +124,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
       }
       throw new Error('No pudimos actualizar las opciones. Intenta de nuevo.');
     },
-    enabled: restored && !restoreError && !preparing && !cartSyncing && addresses.isSuccess && !confirming,
+    enabled: restored && !restoreError && !preparing && !cartSyncing && !cartSyncError && addresses.isSuccess && !confirming,
     staleTime: 0,
     placeholderData: keepPreviousData,
   });
@@ -306,6 +308,10 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
       </> : null}
     </ScrollView>;
   }
+  if (cartSyncError) return <View testID="checkout-cart-sync-pending" style={{ flex: 1, padding: 24, gap: 16, backgroundColor: t.colors.background }}>
+    <PendingCartMerge />
+    <Button title="Revisar carrito" variant="secondary" onPress={() => router.replace('/cart')} />
+  </View>;
   if (addresses.isError) return <ErrorState error={addresses.error} onRetry={() => addresses.refetch()} />;
   if (preview.isError && !s) return <ErrorState error={preview.error} onRetry={() => preview.refetch()} />;
   if (!s) return <View style={{ padding: 16, gap: 14, backgroundColor: t.colors.background, flex: 1 }}><Skeleton height={65} /><Skeleton height={200} radius={t.radii.lg} /></View>;
@@ -314,7 +320,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
   const address = s.address;
   const activeIndex = Math.min(deliveryIndex, Math.max(0, s.groups.length - 1));
   const group = s.groups[activeIndex];
-  const fresh = restored && !restoreError && !preparing && preview.isSuccess && addresses.isSuccess && !preview.isFetching && !preview.isError && !preview.isPlaceholderData && !addresses.isFetching && !cartSyncing;
+  const fresh = restored && !restoreError && !preparing && preview.isSuccess && addresses.isSuccess && !preview.isFetching && !preview.isError && !preview.isPlaceholderData && !addresses.isFetching && !cartSyncing && !cartSyncError;
   const busy = preparing || confirming || place.isPending || place.isSuccess;
   const editable = fresh && !busy;
   const addressEditable = !busy && !addresses.isFetching;

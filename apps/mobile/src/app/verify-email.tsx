@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { EmailCodeStep } from '@/components/auth/EmailCodeStep';
 import { Button } from '@/components/ui/Button';
@@ -7,25 +7,28 @@ import { Icon } from '@/components/ui/Icon';
 import { EmptyState } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
 import { useTheme } from '@/theme';
+import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
 
 // After "Crear cuenta" (or a sign-in with an unconfirmed address): the buyer types the code from the email and
 // the account becomes active, signed in, without leaving the app.
 export default function VerifyEmailScreen() {
   const t = useTheme();
+  const returnTo = useAuthReturn();
   const { email = '', resend } = useLocalSearchParams<{ email?: string; resend?: string }>();
   const [done, setDone] = useState(false);
-  const leave = () => (router.canGoBack() ? router.back() : router.replace('/'));
+  const left = useRef(false);
+  const leave = useCallback(() => { if (left.current) return; left.current = true; finishAuth(returnTo); }, [returnTo]);
 
   useEffect(() => {
     if (!done) return;
     const id = setTimeout(leave, 1600);
     return () => clearTimeout(id);
-  }, [done]);
+  }, [done, leave]);
 
   if (!email) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: t.colors.background }}>
-        <EmptyState icon="mail" title="Falta tu correo" body="Crea tu cuenta o inicia sesión para recibir el código." action="Crear cuenta" onAction={() => router.replace('/sign-up')} />
+        <EmptyState icon="mail" title="Falta tu correo" body="Crea tu cuenta o inicia sesión para recibir el código." action="Crear cuenta" onAction={() => router.replace(authTarget('/sign-up', returnTo))} />
       </View>
     );
   }
@@ -50,7 +53,7 @@ export default function VerifyEmailScreen() {
           title="Confirma tu correo"
           sendOnMount={resend === '1'}
           onVerified={() => setDone(true)}
-          onChangeEmail={() => router.replace('/sign-up')}
+          onChangeEmail={() => router.replace(authTarget('/sign-up', returnTo))}
         />
       </ScrollView>
     </KeyboardAvoidingView>

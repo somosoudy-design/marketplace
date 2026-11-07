@@ -74,6 +74,13 @@ it('coordinates separate instances before reading and detaching a shared browser
   const claims = await Promise.all([a.reserveMerge('A', () => 'account-a-key'), b.reserveMerge('B', () => 'account-b-key')]);
   expect(claims.filter(Boolean)).toHaveLength(1);
 });
+it('rejects a cancelled-batch replacement key already held by another batch without corrupting the journal', async () => {
+  const { storage } = memory(), cart = createGuestCart(storage); let key = 0;
+  for (let i = 0; i < 51; i++) await cart.add(line(String(i)));
+  const first = (await cart.reserveMerge('A', () => `reserved-key-${++key}`))!;
+  await expect(cart.replaceCancelledMerge(first, ['0'], () => 'reserved-key-2', { state: 'cancelled', operation: 'merge' })).rejects.toThrow();
+  expect((await createGuestCart(storage).pendingMerge('A'))?.key).toBe('reserved-key-1');
+});
 it('persists guest favorites without duplicates and keeps actor reservations separate from new guest choices', async () => {
   const { storage } = memory(), favorites = createGuestFavorites(storage);
   await favorites.set('p1', true); await favorites.set('p2', true); await favorites.set('p1', true);
@@ -107,4 +114,11 @@ it('preserves corrupt storage without replacing it by an empty selection', async
   await expect(createGuestFavorites(storage).read()).rejects.toThrow();
   await expect(createGuestFavorites(storage).set('new', true)).rejects.toThrow();
   expect(values.get('mayami.guest-favorites.v1')).toBe('{corrupt');
+});
+it('rejects invalid guest edits without corrupting the saved selection or turning it into a removal', async () => {
+  const { storage } = memory(), cart = createGuestCart(storage);
+  await cart.add(line('kept'));
+  for (const quantity of [-1, 0.5, 101, NaN]) await expect(cart.setQuantity('kept', quantity)).rejects.toThrow();
+  await expect(cart.add({ ...line('invalid'), price_usd: NaN })).rejects.toThrow();
+  expect(await createGuestCart(storage).read()).toEqual([line('kept')]);
 });

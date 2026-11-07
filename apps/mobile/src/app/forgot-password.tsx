@@ -9,6 +9,7 @@ import { Text } from '@/components/ui/Text';
 import { TextField } from '@/components/ui/TextField';
 import { authErrorMessage, useAuth } from '@/lib/auth';
 import { useTheme } from '@/theme';
+import { finishAuth, useAuthReturn } from '@/lib/auth-navigation';
 
 type Step = 'email' | 'code' | 'password' | 'done';
 
@@ -16,6 +17,7 @@ type Step = 'email' | 'code' | 'password' | 'done';
 // this one change; nothing is saved until Supabase accepts it.
 export default function ForgotPasswordScreen() {
   const t = useTheme();
+  const returnTo = useAuthReturn();
   const { sendEmailCode } = useAuth();
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
@@ -63,7 +65,7 @@ export default function ForgotPasswordScreen() {
         ) : (
           <View testID="reset-done" style={{ gap: 16 }}>
             <Banner tone="success" icon="circle-check" title="Contraseña actualizada" body="Ya entraste con tu contraseña nueva. Úsala la próxima vez que inicies sesión." />
-            <Button title="Continuar" size="lg" full onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))} />
+            <Button title="Continuar" size="lg" full onPress={() => finishAuth(returnTo)} />
           </View>
         )}
       </ScrollView>

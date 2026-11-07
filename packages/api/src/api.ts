@@ -11,6 +11,7 @@ import type {
   ReviewedCheckoutSummary,
   CartIntentResult,
   CartMergeIntentResult,
+  FavoriteMergeIntentResult,
   CartIntentCancellation,
   CartCancelInput,
   Address,
@@ -369,7 +370,7 @@ export function createApi(client: KoraClient) {
     favoriteProductsForBuyer: async (userId: string) => favoriteCards(await account.favoritesForBuyer(userId)),
     /** A durable receipt prevents an uncertain guest import from reapplying after a later unfavorite. */
     mergeFavoritesWithIntent: (productIds: string[], idempotencyKey: string) =>
-      run<unknown>(rpc('favorites_merge_intent', { p_product_ids: productIds, p_idempotency_key: idempotencyKey })),
+      run<FavoriteMergeIntentResult>(rpc('favorites_merge_intent', { p_product_ids: productIds, p_idempotency_key: idempotencyKey })),
     setFavorite: async (userId: string, productId: string, on: boolean) => {
       if (on) await run(from('favorites').upsert({ user_id: userId, product_id: productId }, { ignoreDuplicates: true }));
       else await run(from('favorites').delete().eq('user_id', userId).eq('product_id', productId));
