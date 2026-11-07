@@ -38,6 +38,20 @@ describe('Google callbacks are isolated from existing email access', () => {
     (mod.useAuthLinkSession as () => unknown)();
     await vi.waitFor(() => expect(last).toEqual({ status: 'ready', type: null })); expect(exchange).toHaveBeenCalledWith('email-code');
   });
+  it.each(['', '?access_token=partial', '?code=email&access_token=mixed&refresh_token=mixed'])('an incomplete callback never treats existing buyer B as a confirmed link: %s', suffix => {
+    let last: unknown;
+    const getSession = vi.fn(async () => ({ data: { session: { user: { id: 'buyer-b' } } } }));
+    const exchange = vi.fn(), install = vi.fn();
+    const mod = sourceModule('apps/mobile/src/lib/auth-link.ts', {
+      'expo-linking': { useURL: () => 'kora://auth-callback' + suffix }, 'react-native': { Platform: { OS: 'android' } },
+      react: { useState: () => [{ status: 'working' }, (s: unknown) => { last = s; }], useEffect: (effect: () => void) => effect() },
+      './supabase': { supabase: { auth: { exchangeCodeForSession: exchange, setSession: install, getSession } } },
+      '@kora/api': { emailWebCallbackUrl, productionNativeEmailCallback }, './env': { env: { supabaseUrl: 'https://mimnotafmfasvwrclxan.supabase.co' } },
+    });
+    (mod.useAuthLinkSession as () => unknown)();
+    expect(last).toEqual({ status: 'invalid', reason: suffix ? 'failed' : 'missing' });
+    expect(exchange).not.toHaveBeenCalled(); expect(install).not.toHaveBeenCalled(); expect(getSession).not.toHaveBeenCalled();
+  });
   it('mobile web SDK detector excludes query and fragment markers while retaining email auto-detection', () => {
     let detector: ((url: URL) => boolean) | undefined;
     sourceModule('apps/mobile/src/lib/supabase.ts', {

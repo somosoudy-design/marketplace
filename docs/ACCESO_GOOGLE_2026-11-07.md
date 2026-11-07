@@ -23,7 +23,7 @@ el6nov son antecedentes y no sustituyen una lectura actual. No se pide otra auto
 - Intento web temporal por pestaña, nativo sólo en memoria, TTL10min. Un callback ajeno/ambiguo,
   cancelado/consumido o expirado no instala sesión. Se revalida retorno interno; no se tocan selecciones guest.
 - Guardas query+fragment `google_flow` separan los callbacks preparados del acceso por correo actual,
-  incluida la detección automática en Expo Web. No hay botón Google operativo ni conexión al AuthProvider.
+  incluida la detección automática en Expo Web. En móvil, un callback vacío, incompleto o que mezcla código y tokens falla antes del SDK: una sesión B existente ya no acredita una confirmación inexistente. No se borra B. No hay botón Google operativo ni conexión al AuthProvider.
 - `google-session-boundary.ts` prueba promoción condicional/cola/rollback para **un propietario local**.
   Está sin instalar: no acredita recuperación entre pestañas, aliases de storage, procesos o tras crash.
   Antes de conectar el cliente primario y listeners/guest deben resolverse y revisarse esas fronteras.
@@ -58,19 +58,45 @@ Dos GET públicos sin tokens confirmaron200 en /auth/callback y /auth/callback?t
 no canje ni sesión. Ocho renders Chromium320/390 claro/oscuro aprobaron legibilidad, OTP completo, CTA52px y
 sin desborde ni red; revisor independiente abrió dos. No es Gmail/Outlook/Apple Mail ni entrega SMTP externa.
 
-## Verificación en curso
+## Verificación cerrada de esta preparación
 
-70 pruebas API nuevas pasan (protocolo, stores, crypto, aislamiento callbacks y destinos email), 139 regresiones
-móvil/web y116 core pasan. Se excluyó la copia ignorada de29tests para no inflar el recuento. Tipos/lint pasaron
-antes del último helper; se repiten al cierre. No SQL/migraciones ni funciones financieras cambiadas.
-Prueba del motor Go de plantillas y correo→OTP/enlace→Auth local en curso, sólo fixtures@example.com y SMTP sink
-loopback; resultados finales pendientes. Ninguna sesión Google real ni compra/pago/correo externo.
+| Comprobación | Resultado y alcance |
+|---|---|
+| Nuevas API/contratos/guardas/URLs | 73/73;29protocolo,15boundary,4web,4nativo,9callbacks,12URLs. Transportes Google simulados. |
+| Regresiones móvil/web | 139; excluida la copia ignorada de29tests para no inflar el recuento. |
+| Núcleo compartido | 116/116; reglas existentes conservadas. |
+| Tipos y lint | Monorepo completo, exit0 después del último guard email. |
+| Motor Go de plantillas | 4fixtures web/app/signup/recovery,8ejecuciones reales HTML/TXT offline. |
+| Renders desde salida Go | 16/16 a320/390 claro/oscuro, idénticos por bytes a previews aprobados, sin peticiones. |
+| Correo/Auth reales locales | Una fixture@example.com en clon mayami_guest_mode_20261107; SMTPsink/GoTrue/SDK reales, sin proveedor externo. |
+
+En el ensayo local: registro sin sesión antes de confirmar, HTML Mayami capturado, OTP incorrecto y propósito
+incorrecto rechazados, OTP válido/getUser del mismo actor y replay rechazado. Recuperación: nuevo HTML,
+ConfirmationURL→GoTrue303 al callback local correcto con tipo recovery y query tipo=recuperar, sesión aceptada
+por SDK2.117.3/getSession/getUser del mismo actor y replay rechazado. La contraseña original siguió válida;
+cero updatePassword, pedidos, pagos, mensajes externos o peticiones fuera de loopback.
+
+El recibo final registra16pasos/20peticiones; el arnés completo24HTTP y4SMTP locales, con intentos iniciales conservados aparte. Un health sin versión embebida
+y el path de mailer del harness local requirieron ajustar sólo los procesos de prueba; GoTrue usa303, no el302
+que asumía la primera aserción. Tras comprobar que el primer enlace ya estaba consumido, se emitió un nuevo
+recovery para la **misma única fixture**, sin repetir signup. Son límites/correcciones del ensayo local, no
+incidencias acreditadas en producción. El binario retenido se identifica por SHA, con procedencia fuente2.180;
+health no confirma su versión. No se ejecutó el callback React ni un navegador de producto en esa cadena. Los asuntos del helper eran sus defaults: los dos asuntos Mayami del config local están preparados, no probados como asuntos SMTP efectivos. Las TXT se probaron con text/template, no como parte MIME independiente.
+
+Revisión independiente favorable **sólo a preparación apagada**; leyó también el último guard email y abrió dos
+renders. Ninguna prueba acredita Google real, configuración hosted, Gmail/Outlook/AppleMail, entrega SMTP externa,
+recepción física en APK, integración final de sesión/guest o seguridad cross-tab/crash del boundary preparado.
+No hay SQL/migraciones ni funciones financieras cambiadas. La cuenta fixture permanece identificada en el clon
+local; no se borró historia ni se reinició el PostgreSQL compartido. Los servicios propios del ensayo quedaron detenidos; PostgreSQL PID77431 continúa en55437.
+
+Evidencia privada: proposals/CODE_REVIEW_FINAL.md, proposals/email/GO_TEMPLATE_REVIEW.md,
+email-local-e2e/receipt.redacted.json y los reportes/hashes contiguos. Vista autónoma local:
+.local/google-access-20261107/EVIDENCIA_CORREOS.html (dos PNG integrados, sin recursos externos).
 
 ## Activación pendiente y próxima acción
 
-1. Cerrar pruebas locales y revisión; guardar checkpoint sin publicar un acceso operativo.
-2. Recuperar lectura autorizada del proyecto MIM para contrastar estado actual; no recuperar/configurar nuevas
-   credenciales ni activar proveedores para eludir la denegación.
+1. Preparación y pruebas locales cerradas; guardar checkpoint sin desplegar un acceso operativo.
+2. Confirmar con Oliver la cuenta Supabase correcta (pregunta pendiente; identidad actual consultada sin volver a leer configuración denegada) y recuperar lectura autorizada MIM. No cambiar de identidad, recuperar/configurar credenciales ni activar proveedores para eludir la denegación.
 3. Verificar el proyecto y cliente OAuth **Web application existentes** de Google. El antecedente Firebase no
    acredita un client Web. Callback Google→Auth fijo:
    https://mimnotafmfasvwrclxan.supabase.co/auth/v1/callback. Confirmar scopes efectivos, audiencia y callbacks

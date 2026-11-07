@@ -56,7 +56,7 @@ function linkError(p: AuthLinkParams): AuthLinkState | null {
   return { status: 'invalid', reason: p.error_code === 'otp_expired' || /expired|invalid/i.test(p.error_description ?? '') ? 'expired' : 'failed' };
 }
 
-/** Turns the link the app was opened with into a session. Opening the screen without a link keeps a current session. */
+/** Validates the supplied link. An existing session alone never proves that this link was confirmed. */
 export function useAuthLinkSession(): AuthLinkState {
   const nativeUrl = Linking.useURL();
   const [state, setState] = useState<AuthLinkState>({ status: 'working' });
@@ -71,6 +71,9 @@ export function useAuthLinkSession(): AuthLinkState {
       if (p.google_flow !== undefined) return done({ status: 'invalid', reason: 'failed' });
       const failed = linkError(p);
       if (failed) return done(failed);
+      const anyToken = !!(p.access_token || p.refresh_token);
+      if ((p.code && anyToken) || (anyToken && !(p.access_token && p.refresh_token))) return done({ status: 'invalid', reason: 'failed' });
+      if (!p.code && !anyToken) return done({ status: 'invalid', reason: 'missing' });
       try {
         if (Platform.OS !== 'web') {
           if (p.code) {

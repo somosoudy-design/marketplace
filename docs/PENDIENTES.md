@@ -1,8 +1,8 @@
 # Pendientes de mayami
 
-## Acceso Google y correo · fuente preparada, activación bloqueada
+## Google y correo · preparación probada; acceso remoto pendiente
 
-Cerrar pruebas locales del mail y verificar cliente. Google permanece apagado, sin botón ni primaryboundary instalado. Resolver integración final y recuperar lectura autorizada MIM: ConfigPullReadStatusError/permiso de configuración denegado, reintento agotado. No configurar secretos/proveedor/URLs ni publicar templates sin diff conocido/aprobación delimitada. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+Pruebas locales cerradas (73API/139regresiones/116core, Go16renders y SMTP/Auth local); plantillas Mayami y URLs canónicas listas en fuente. Google sigue apagado y sin integración de UI/sesión. Confirmar cuenta Supabase correcta con Oliver: lectura configMIM denegada por ACL, reintento agotado. Después, verificar metadata/clienteOAuth existente, resolver política identidad e integración y pedir sólo delta externo conocido. No configpush completo, credenciales nuevas, cambios de seguridad, correo externo o publicación por suposición. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 

@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · preparación Google/correo probada; activación pendiente
+
+73API/139regresiones/116core, tipos/lint completos; dos HTML/TXT Mayami, motorGo8ejecuciones/16renders y SMTP/Auth/SDK local con una fixture y16pasos finales. Corregidos callbacks vacíos/mixtos para no confundir sesiónB con link confirmado. Revisor favorable sólo a preparación apagada. Googlefalse, sin UI/primaryboundary/integración final; configMIM ACLdenegada/retry agotado, pregunta sobre cuentaSupabase pendiente. Sin credenciales/proveedor/URLs hosted cambiadas ni web/OTA/APK/correoexterno. [Cierre y límites](ACCESO_GOOGLE_2026-11-07.md).
+
 ## 7nov2026 · WIP correo y acceso Google
 
 ProtocoloS256/ports/guardas y URLs email canónicas integrados sin conectar Google a pantallas.70API/139regresiones/116core aprobados; dos HTML/TXT Mayami y8renders locales. Pruebas Go/SMTP local continúan. Boundary queda un propietario local, sin afirmar pestañas/crash. CLIconfigpull lectura MIM denegada por ACL, reintento confirmado y sin otra vía; ningún cambio remoto ni publicación. [Detalle](ACCESO_GOOGLE_2026-11-07.md).

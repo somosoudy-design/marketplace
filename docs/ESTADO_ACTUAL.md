@@ -1,8 +1,8 @@
 # Estado actual de mayami
 
-## Acceso Google y correo · preparación desactivada ·7nov2026
+## Google y correo · preparación probada, sin activar ·7nov2026
 
-GateGooglefalse y sin UI/AuthProvider conectado; protocolo/adaptadores/guardas y destino email MIM canónico preparados.70API/139regresiones/116core pasan; dos correos Mayami HTML+TXT y8renders listos, pruebas Go/SMTP local en curso. Config privada denegada ConfigPullReadStatusError por permiso MIM; no eludir ni pedir autorización genérica. Sin activación/configuración externa ni web/OTA/APK. Faltan integración final y revisión de fronteras entre pestañas/crash además de decisiones OAuth/identidad. [Estado preciso y próxima acción](ACCESO_GOOGLE_2026-11-07.md).
+Preparación guardada:73API/139regresiones/116core, tipos/lint completos; dos HTML/TXT Mayami,8ejecucionesGo/16renders y cadena SMTP→OTP/enlace→Auth/SDK LOCAL comprobada con una fixture, sin ReactUI/Gmail/externos. Código email usa destino canónico cuando backendMIM y rechaza callback vacío/mixto sin aceptar B por error. Googlefalse, sin UI/AuthProvider/primaryboundary conectado; falta integración final y decisión identidad/configuración. Lectura privada MIM denegada por ACL, reintento agotado; pregunta pendiente sobre cuentaSupabase correcta. Sin activar proveedor, instalar templates hosted ni desplegar web/OTA/APK; Free conservado. [Resultados, límites y próximo paso](ACCESO_GOOGLE_2026-11-07.md).
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 
