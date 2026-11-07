@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## Retención del cierre · ensayo local en curso · 7nov2026
+
+Desde34ecd9ae, tanda mínima de copia Authaudit y recibo90d. SQL/worker propuestos y Deno check aprobado; aún sin aplicar migración ni aceptación. Sin remotos, UI, pagos/Google/cuotas o builds. Próxima acción: revisión focal, aplicar sólo al clon mayami_account_close_20261107, pruebas antes/después del vencimiento, hold/control/replay/JWT y límite externo explícito. [Detalle](RETENCION_CIERRE_CUENTA_2026-11-07.md).
+
 ## Cierre seguro de cuenta · mínimo local probado, retención pendiente · 7 de noviembre de 2026
 
 SQL/worker y conexión mínima del panel terminados localmente en fuente aislada. Baseline real RED3→aceptación PASS: JWT antiguo denegado tras fallo/retry; Auth DELETE1, Storage0bytes/filas, diez ámbitos diarios0 y otro actor intacto. SQLfocal ACL/lease/completion/staff/pedido/historia pendiente y concurrencia PASS.11DB admin/privilegios y67admin unitarias, tipos/lint/Deno pasan; panel claro/oscuro390px con workerHTTP local, copy pendiente sin éxito falso y capturas revisadas independientemente.
