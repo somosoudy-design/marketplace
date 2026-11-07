@@ -19,7 +19,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
     steps:
@@ -37,6 +37,17 @@ jobs:
 
       - name: Dependencias
         run: pnpm install --frozen-lockfile
+
+      - name: Mantener plan Free y cuota disponible
+        run: |
+          node tools/eas/read-account-plan.mjs > "$RUNNER_TEMP/expo-free.json"
+          node --input-type=module <<'JS'
+          import { readFileSync } from 'node:fs';
+          const r=JSON.parse(readFileSync(process.env.RUNNER_TEMP+'/expo-free.json','utf8'));
+          if(r.account!=='marketplacebrand'||r.subscription?.name!=='Free'||(r.subscription.recurringCents!=null&&r.subscription.recurringCents!==0)) throw Error('No se publica fuera del plan Free autorizado');
+          if(!Array.isArray(r.updates)||r.updates.length<2||r.updates.some(m=>!Number.isFinite(m.value)||!Number.isFinite(m.limit)||m.limit<=m.value)) throw Error('No se confirmó cuota gratuita disponible');
+          console.log('Plan Free y cuota disponible confirmados; no se cambia la suscripción.');
+          JS
 
       # The preview profile's variables, the same the APK was built with. eas.json is part of the fingerprint, so a
       # public value added after an APK goes in UPDATE_ONLY_ENV until the next APK carries it in eas.json, which then
@@ -62,6 +73,7 @@ jobs:
         working-directory: apps/mobile
         run: |
           want="$(grep -E '^runtime:' "$GITHUB_WORKSPACE/.github/eas-update-request" | head -1 | awk '{print $2}')"
+          if [[ ! "$want" =~ ^[a-f0-9]{40}$ ]]; then echo "::error::Falta el runtime esperado válido; no se publica."; exit 1; fi
           have="$(node_modules/.bin/expo-updates fingerprint:generate --platform android | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).hash))")"
           echo "runtime de esta versión: $have"
           if [ -n "$want" ] && [ "$want" != "$have" ]; then
@@ -87,3 +99,73 @@ jobs:
       - name: Resultado
         if: always() && steps.update.outcome != 'skipped'
         run: node tools/eas/update-report.mjs "$RUNNER_TEMP/eas-update.json"
+
+      - name: Identidad exacta de la OTA y del APK existente
+        if: steps.update.outcome == 'success'
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const raw=readFileSync(process.env.RUNNER_TEMP+'/eas-update.json','utf8');
+          const updates=JSON.parse(raw.slice(raw.indexOf('[')));
+          const android=updates.filter(u=>u.platform==='android');
+          const runtime='b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6';
+          if(android.length!==1||android[0].runtimeVersion!==runtime||!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(android[0].id)) throw Error('Identidad Android publicada no válida');
+          const values={MAYAMI_UPDATE_ID:android[0].id,MAYAMI_RUNTIME:runtime,MAYAMI_BUILD_ID:'df55b9b8-1ed5-42e6-b42f-8a09b9bce50f',MAYAMI_BUILD_COMMIT:'fc8368f598df3b90fb42b3863a221be47371a40c'};
+          for(const [key,value] of Object.entries(values))appendFileSync(process.env.GITHUB_ENV,`${key}=${value}\n`);
+          JS
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Recuperar y verificar la APK instalada compatible
+        run: |
+          mkdir -p shots/native
+          node tools/eas/wait-native-build.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME"
+          node tools/eas/signing-reference.mjs --output shots/native/signing-reference.json
+          node tools/eas/download-native-preview.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME" shots/native/signing-reference.json
+          certificate=$(node -p "JSON.parse(require('fs').readFileSync('shots/native/signing-reference.json','utf8')).certificateSha256")
+          node tools/eas/verify-native-apk.mjs --build-json apks/native-build.json --source "$MAYAMI_BUILD_COMMIT" --runtime "$MAYAMI_RUNTIME" --certificate "$certificate" --apk apks/mayami-preview.apk --output apks
+      - name: Preparar Maestro y KVM
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          curl -fsSL --retry 3 https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Recibir UUID exacto y revisar navegación nativa
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+          MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/eas/native-ota-receipt.sh
+      - name: Comprobar recibo y capturas completas
+        run: |
+          python3 - <<'PY_NATIVE'
+          import json,os,pathlib
+          out=pathlib.Path('shots/ota')
+          receipt=json.loads((out/'receipt.json').read_text())
+          assert receipt['Código']=='actualización '+os.environ['MAYAMI_UPDATE_ID']
+          assert receipt['Runtime']==os.environ['MAYAMI_RUNTIME']
+          assert len(list(out.rglob('*.png'))) >= 12, 'Faltan capturas de claro/oscuro'
+          print('Recibo exacto y capturas nativas conservados.')
+          PY_NATIVE
+      - name: Guardar publicación y evidencia nativa original
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mayami-update-and-native-receipt-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/eas-update.json
+            shots/ota/
+            apks/native-apk-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
