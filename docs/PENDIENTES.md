@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Privacidad y panel · preparación local terminada; activación pendiente · 7 de noviembre de 2026
+
+Resueltos el texto candidato y el pin del artefacto aislado sin modificar CI/request.28Node/5enlaces, tipos/lint panel, build snapshot offline y hashes verificados;245archivos desde da9085c00f884f487a2ae4d35aed71a220d553a0. No publicar copy antes de backend881+guardas/worker+ejecutor activados y observados. Logs/backups externos mantienen plazo físico individual desconocido. Siguiente bloque: activación coordinada desde fuentes limpias, preservando hook/permisos y trabajo paralelo; no publicar HEAD combinado. No hay activación ni cargos en esta tanda. [Entrega local y comando de verificación](PRIVACIDAD_PANEL_CANDIDATO_2026-11-07.md).
+
 ## Preflight remoto de retención · sólo lectura completada · 7 de noviembre de 2026
 
 Sesión UI legítima somosoudy@gmail.com → Marketplace/MIM/Free verificada. Preflight y complemento BEGINREADONLY/SELECT/COMMIT: dos MD5 iniciales coinciden, callerpostgres con SELECT/UPDATE/DELETE/TRIGGER auditoría, columnas/dependencias presentes, Authowner normal no superusuario. pg_cron ya instalado; módulo/ejecutor y dos versiones aún no activados,0jobs visibles para sus funciones. No DDL/DML, grants, cambios de Auth/plan/Cron, fixtures, credenciales extraídas, soporte o publicación.

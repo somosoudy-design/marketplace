@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Privacidad y panel · dos preparaciones locales cerradas · 7 de noviembre de 2026
+
+Textos de privacidad/eliminación alineados con backend881: datos diarios, auditoría de la cuenta cerrada90d desde evento, recibo90d desde cierre verificado, holds concretos y marcador mínimo seudónimo. Logs/backups externos separados con plazo físico individual desconocido. Sin rediseño ni otras páginas. Texto candidato: no publicar antes de activar/verificar backend, guardas/worker y ejecutor.
+
+Panel aislado compilado desde da9085c00f884f487a2ae4d35aed71a220d553a0 con snapshot Git verificado y dependencias offline fijadas.245archivos, marcador candidate.da9085c00f88; paquete7535b9b079c6cdc9e69155ae61501852634b09b569f40a742091011c6c505dcb y manifiesto c4155e02c64ee3ad41686debfb029e7bdae574dbd9dea7d912f303f82a09f184.28Node/5enlaces, tipos/lint panel, build/scan y verificación del paquete pasan. Revisión independiente favorable tras corregir alcance de auditoría e inputs locales. CI/request intactos; ningún despliegue, APK/OTA/AAB o cargo. Backend881 y fuentes paralelas conservados.
+
+Trabajo en curso: ninguno en esta tanda. Próxima acción: coordinar activación posterior de backend y ejecutor desde fuentes aisladas; después textos/frontends. No desplegar HEAD compartido ni repetir builds sin incidencia. [Artefactos, rutas, pruebas y límites](PRIVACIDAD_PANEL_CANDIDATO_2026-11-07.md).
+
 ## Preflight remoto de retención · sólo lectura completada · 7 de noviembre de 2026
 
 Cuenta indicada por Oliver y sesión UI legítima de Marketplace/MIM/Free verificadas. Preflight y complemento BEGIN READ ONLY / SELECT / COMMIT: dos MD5 iniciales coinciden, callerpostgres con SELECT/UPDATE/DELETE/TRIGGER auditoría, columnas/dependencias presentes, Authowner normal no superusuario. pg_cron ya instalado; módulo/ejecutor y dos versiones aún no activados,0jobs visibles para sus funciones. No DDL/DML, grants, cambios de Auth/plan/Cron, fixtures, credenciales extraídas, soporte o publicación.

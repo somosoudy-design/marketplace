@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-07 — privacidad candidata y artefacto aislado del panel
+
+Dos preparaciones locales: copy limitado a privacidad/eliminación y acuse móvil;90d correctamente acotados, holds/marcador y límites externos explícitos. Preparador local con snapshot por SHA, dependencias offline, request estricto, inventario y manifiesto fijado. Fuente da9085c00f884f487a2ae4d35aed71a220d553a0,245archivos;28Node/5enlaces, tipos/lint panel, build/scan y dos tar del mismo export idénticos. Revisiones independientes corregidas y favorables. Sin cambios CI/request, backend/migraciones, Google/correos/cuotas, proveedores, planes o publicación. Un checkpoint final; artefactos ignorados locales. [Informe](PRIVACIDAD_PANEL_CANDIDATO_2026-11-07.md).
+
 ## 2026-11-07 — preflight remoto de retención en sólo lectura
 
 Cuenta somosoudy, Marketplace/MIM/Free confirmados por UI. Dos SELECT dentro de BEGINREADONLY: guardas iniciales y dependencias coinciden; caller DML/TRIGGER metadata true, Authowner real no superusuario; Cron instalado pero módulo/ejecutor/versiones ausentes. Sin DDL/DML o activación, lectura de filas de usuarios, secretos, cambios de plan/Auth, fixtures, soporte o publicación. Metadata visible de backups/logs distinguida del borrado físico. Ruta mínima y dependencias de copy/pin/frontend documentadas; no otra implementación ni suites repetidas. [Informe](PREFLIGHT_REMOTO_RETENCION_2026-11-07.md).
