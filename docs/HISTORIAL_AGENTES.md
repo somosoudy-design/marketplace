@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · Codex Mac · actualización funcional y visual
+
+Por orden de Oliver («termina eso»), se cerró y activó el backend compatible20261107130620, excluyendo íntegramente la propuesta de pagos/D3. Baseline remoto contrastado,147 definiciones protegidas,221/221DB y grants/RLS posteriores comprobados; no operaciones financieras de prueba ni restauración de suspendidos. Integración y visuales locales preservados en45743f9. Free/cuota y runtime verificados por42375479457/42375479399. OTAAndroid y receipt nativo solicitados por3a3539b, pendientes de cierre. [Informe](ACTUALIZACION_APP_2026-11-07.md).
+
 ### 2026-11-06 · cierre: tres tiendas y eliminación disponible en panel
 
 Receipt-only42307651197 Success confirma qj86u6q1u9 como producción, source0eb9047/build42306772895.1, mismo marker en inmutable/alias y22/22rutas/JS/404/cabeceras. Se resolvió recepción después del primer check sin redeploy ni promoción extra. Root contrasta annotations y preserva recibo público más2PNG originales/hash enrepo.16DB+52core+50admin+2UI y auditor APROBADO; tres tiendas públicas verificadas,29tablas protegidas íntegras, ningún producto real eliminado. Función20261106000100 aplicada una vez; panel /admin/productos → Suspendidos disponible. No repetir bloque cerrado. Pendiente asignar responsables reales a Aroma'top/MilyeDent; Mac/Terra conserva diseño. ENTORNO actualizado para no confundir Marketplace operativo con fixtures.

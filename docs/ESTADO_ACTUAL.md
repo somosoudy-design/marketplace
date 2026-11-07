@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## Actualización de app y backend ·7nov2026 · en curso
+
+Oliver pidió terminar la fase pendiente. Backend compatible20261107130620 activado en Marketplace tras contraste exacto de baseline,221/221DB y revisión independiente; pagos/D3 quedan excluidos y la función de pagos vigente permanece idéntica. Fuente funcional/visual45743f9 preservada en la rama. OTAAndroid con runtime existente solicitada por3a3539b; el mismo workflow verifica Free/cuota, publica y comprueba UUID exacto en emulador. Falta registrar resultado de la ejecución; no afirmar recepción física. Detalle: [Actualización7nov](ACTUALIZACION_APP_2026-11-07.md). Sin nuevoAPK, tiendas ni servicios de pago.
+
 ## Eliminación de suspendidos · nube · 6nov2026
 
 RPCadmin y confirmación del panel listos, sin tocar mobile/storefront.16DB/privilegios+2UI real local320claro/390oscuro pasan; auditor APROBADO tras NOWAIT para costes/imágenes y guardas de concurrencia. Conserva pedidos/carritos/reseñas y snapshot auditable; no DELETE directo ni borrado de blobs. Función/migración20261106000100 activada con ensayoROLLBACK,29tablas intactas, ACL y rechazo anónimo401/42501 verificados; ningún producto real eliminado. Publicaciónpanel42306389893 se detuvo por9hints sin traducción. Corregidos en errors.ts compartido (sólo claves nuevas, sin UI/tokens del Mac);52core+50admin/tipos/lint+2UI finales pasan. Panel publicado42306772895 (fuente0eb9047/build42306772895.1); comprobación inicial vio alias antiguo, pero receipt-only42307651197 Success confirma deploymentqj86u6q1u9 y https://kora-panel.expo.app con el marcador exacto y22/22rutas/JS/404/cabeceras. **Disponible en /admin/productos → Suspendidos.** No republicar ni reaplicar migración. Nube cerró este bloque; Mac/Terra continúa diseño. Siguiente operación: identificar cuentas responsables de las dos tiendas nuevas y asignarlas sin inventar roles. [Detalle y próximos pasos](ELIMINACION_PRODUCTOS_SUSPENDIDOS_2026-11-06.md).
