@@ -29,7 +29,6 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
           </div>
           {selected.conditionLabel && <span className="availability" data-testid="product-condition">{selected.conditionLabel}</span>}
           {selected.variant?.stock != null && selected.variant.stock <= 0 ? <span className="availability">Esta opción está agotada</span> : product.availability !== 'available' && <span className="availability">{availability.label}</span>}
-          {general && path && <span className="availability">Imagen general del producto</span>}
           {catalogSample(product.id, product.is_demo) && !localExhibition && <span className="availability">Producto de muestra</span>}
         </div>
       </Link>

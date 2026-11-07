@@ -24,6 +24,8 @@ interface Props {
   fit?: 'cover' | 'contain';
   /** The full product gallery can explain the state; small thumbnails remain compact. */
   showUnavailableLabel?: boolean;
+  /** Native visual receipts wait for the actual photo, rather than an empty image frame. */
+  loadedTestID?: string;
   onExhibitionError?: (key: string) => void;
   onExhibitionLoad?: (key: string) => void;
   onRemoteError?: () => void;
@@ -36,7 +38,7 @@ export function ProductImage(props: Props) {
   return <ProductImageContent key={identity} {...props} />;
 }
 
-function ProductImageContent({ productId, variantId, productIsDemo, path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover', showUnavailableLabel = false, onExhibitionError, onExhibitionLoad, onRemoteError }: Props) {
+function ProductImageContent({ productId, variantId, productIsDemo, path, tone, alt, radius, aspect, style, priority = 'normal', fit = 'cover', showUnavailableLabel = false, loadedTestID, onExhibitionError, onExhibitionLoad, onRemoteError }: Props) {
   const t = useTheme();
   const reduced = useReducedMotion();
   const bg = t.tone(tone);
@@ -47,6 +49,8 @@ function ProductImageContent({ productId, variantId, productIsDemo, path, tone, 
   const [failedRemote, setFailedRemote] = useState<string>();
   const localPhoto = exhibition && failed !== exhibitionKey ? exhibition : undefined;
   const remotePhoto = uri && failedRemote !== uri ? uri : undefined;
+  const photoIdentity = localPhoto ? exhibitionKey : remotePhoto;
+  const [loadedPhoto, setLoadedPhoto] = useState<string>();
 
   // Retry once the device actually reconnects, without repeatedly requesting a missing file.
   useEffect(() => {
@@ -62,6 +66,7 @@ function ProductImageContent({ productId, variantId, productIsDemo, path, tone, 
     <View testID={localPhoto ? `exhibition-photo-${productId}` : undefined} style={[{ aspectRatio: aspect ?? t.imagery.productAspect, backgroundColor: localPhoto?.kind === 'generated-demo' || localPhoto?.kind === 'manufacturer-reference' ? '#F5F4F1' : bg.bg, borderRadius: radius ?? t.radii.lg, overflow: 'hidden' }, style]}>
       {localPhoto || remotePhoto ? (
         <Image
+          testID={loadedTestID && loadedPhoto === photoIdentity ? loadedTestID : undefined}
           source={localPhoto?.source ?? { uri: remotePhoto! }}
           style={{ width: '100%', height: '100%' }}
           contentFit={localPhoto ? 'contain' : fit}
@@ -69,7 +74,10 @@ function ProductImageContent({ productId, variantId, productIsDemo, path, tone, 
           priority={priority}
           recyclingKey={localPhoto ? exhibitionKey : uri ?? undefined}
           onError={localPhoto && exhibitionKey ? () => { setFailed(exhibitionKey); onExhibitionError?.(exhibitionKey); } : remotePhoto ? () => { setFailedRemote(remotePhoto); onRemoteError?.(); } : undefined}
-          onLoad={localPhoto && exhibitionKey ? () => onExhibitionLoad?.(exhibitionKey) : undefined}
+          onLoad={() => {
+            if (loadedTestID && photoIdentity) setLoadedPhoto(photoIdentity);
+            if (localPhoto && exhibitionKey) onExhibitionLoad?.(exhibitionKey);
+          }}
           accessibilityLabel={alt ?? ''}
           accessible={!!alt}
           cachePolicy="memory-disk"

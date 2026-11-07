@@ -57,6 +57,7 @@ assert rows and rows[-1].get('Código') == 'actualización '+sys.argv[2] and row
 PY
 }
 for theme in light dark; do
+  adb shell settings put system font_scale 1.0
   if [ "$theme" = light ]; then adb shell cmd uimode night no >/dev/null; else adb shell cmd uimode night yes >/dev/null; fi
   adb shell am force-stop "$pkg"
   adb logcat -c
@@ -71,5 +72,22 @@ for theme in light dark; do
   sleep 12
   maestro test --test-output-dir "$out/raw/$theme-store" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme-store.xml" tests/apk-flows/24-mayami-store-mark.yaml > "$out/logs/$theme-store-maestro.log" 2>&1
   verify_theme_process "$theme-store"
+  adb shell am force-stop "$pkg"
+  adb logcat -c
+  adb shell am start -W -n "$component" >/dev/null
+  sleep 10
+  maestro test --test-output-dir "$out/raw/$theme-banners" -e MAYAMI_SHOT_PREFIX="$theme" --format junit --output "$out/logs/$theme-banners.xml" tests/apk-flows/25-banners-and-product-copy.yaml > "$out/logs/$theme-banners-maestro.log" 2>&1
+  verify_theme_process "$theme-banners"
+  for font in 1.3 1.6; do
+    adb shell settings put system font_scale "$font"
+    adb shell settings get system font_scale > "$out/logs/$theme-font-$font.txt"
+    adb shell am force-stop "$pkg"
+    adb logcat -c
+    adb shell am start -W -n "$component" >/dev/null
+    sleep 10
+    maestro test --test-output-dir "$out/raw/$theme-font-$font" -e MAYAMI_SHOT_PREFIX="$theme-font-$font" --format junit --output "$out/logs/$theme-font-$font.xml" tests/apk-flows/26-banner-enlarged-text.yaml > "$out/logs/$theme-font-$font-maestro.log" 2>&1
+    verify_theme_process "$theme-font-$font"
+  done
+  adb shell settings put system font_scale 1.0
   if adb logcat -d -b crash | grep -Fq "Process: $pkg"; then echo "App crash: $theme" >&2; exit 1; fi
 done

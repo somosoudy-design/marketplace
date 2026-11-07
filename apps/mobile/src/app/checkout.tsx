@@ -443,7 +443,6 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
                   <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
                   <Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>
                   {productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}
-                  {l.image_scope==='general'&&l.image_path?<Text variant="caption" color="textSecondary">Imagen general del producto</Text>:null}
                   <Text variant="label" tabular>{formatUSD(l.line_total_usd)}</Text>
                 </View>
               </View>)}
@@ -538,7 +537,7 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
         {(allProducts ? g.lines : g.lines.slice(0, 2)).map((l) => (
           <View key={l.variant_id} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
             <ProductImage productId={l.product_id} variantId={l.variant_id} productIsDemo={false} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
-            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text>{productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}<Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>{l.image_scope==='general'&&l.image_path?<Text variant="caption" color="textSecondary">Imagen general del producto</Text>:null}</View>
+            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text>{productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}<Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text></View>
           </View>
         ))}
         {g.lines.length > 2 ? <Button title={allProducts ? 'Ver menos productos' : `Ver los ${g.lines.length} productos`} variant="ghost" onPress={() => setAllProducts((x) => !x)} /> : null}

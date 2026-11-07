@@ -1,5 +1,5 @@
 import type { OrderItem, ProductDetail } from '@kora/api';
-import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, resolveProductSelection, productColorSummaries } from '@kora/core';
+import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries } from '@kora/core';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
@@ -127,7 +127,8 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
   const assignedImages = p.images.filter(image => image.id && assignedIds.has(image.id));
   const generalImages = reviewedGeneralProductImages(p, assignedImages);
   const selectedImages = !variant ? [] : selection.mediaState === 'assigned' ? selection.gallery : selection.mediaState === 'unclassified' ? generalImages : [];
-  const images = selectedImages.length ? selectedImages : [{ path: '', alt: 'Esta opción no tiene fotografías asignadas.' }];
+  const choicePhotoNotice = photoChoiceNotice({ selectedVariantId: variant?.id, variants: p.variants, mediaState: selection.mediaState, imagePath: selectedImages[0]?.path });
+  const images = selectedImages.length ? selectedImages : [{ path: '', alt: 'Imagen no disponible' }];
   const galleryIdentity = `${selection.selectedVariantId ?? 'missing'}:${selectedImages.map(i => i.path).join('|')}`;
   const [galleryAnchor, setGalleryAnchor] = useState(galleryIdentity);
   if (galleryAnchor !== galleryIdentity) { setGalleryAnchor(galleryIdentity); setPage(0); }
@@ -223,7 +224,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
               onScroll={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               onMomentumScrollEnd={(e) => setPage(Math.round(e.nativeEvent.contentOffset.x / imageWidth))}
               renderItem={({ item, index }) => (
-                <ProductImage productId={p.id} variantId={variant?.id} productIsDemo={false} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} showUnavailableLabel onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
+                <ProductImage loadedTestID={index === 0 ? "product-photo-loaded" : undefined} productId={p.id} variantId={variant?.id} productIsDemo={false} path={item.path} tone={p.tone} alt={item.alt ?? p.title} radius={0} fit="contain" aspect={imageWidth / heroHeight} style={{ width: imageWidth }} priority={index === 0 ? 'high' : 'normal'} showUnavailableLabel onExhibitionError={imageFailed} onExhibitionLoad={imageLoaded} />
               )}
             />
             {images.length > 1 ? (
@@ -233,7 +234,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
             ) : null}
           </View>
 
-          {selection.mediaState === 'unclassified' && selectedImages.length ? <Text testID="product-general-photos" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8 }}>Fotos generales del producto; no están asignadas a la opción elegida.</Text> : selection.mediaState !== 'assigned' ? <Text testID="product-no-variant-photos" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8 }}>Esta opción no tiene fotografías asignadas.</Text> : null}
+          {choicePhotoNotice ? <Text testID="product-general-photos" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8 }}>{choicePhotoNotice}</Text> : !selectedImages.length ? <Text testID="product-no-variant-photos" variant="caption" color="textSecondary" style={{ paddingHorizontal: 20, paddingTop: 8 }}>Aún no hay fotos de esta opción.</Text> : null}
 
 
           <View style={{ paddingHorizontal: 20, paddingTop: 18, paddingBottom: 20, gap: 20, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} onLayout={(event) => { infoY.current = event.nativeEvent.layout.y; }}>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, ShoppingBag } from 'lucide-react';
 import { publicApi, publicCatalogMetadata } from '@/lib/server';
 import { ProductGrid } from '@/components/product-card';
+import { ProductBanner } from '@/components/product-banner';
 import { ProductPhoto } from '@/components/photo';
 import { Failure } from '@/components/states';
 import { catalogText } from '@/lib/photos';
@@ -26,33 +27,17 @@ export default async function Home() {
       unique.forEach((p) => seen.add(p.id));
       return { ...c, unique };
     });
-  const heroProducts = products.slice(0, 2);
   let metadata;
   try { metadata = await publicCatalogMetadata([...featured, ...collections.flatMap(c => c.unique)].map(p => p.id)); } catch { return <Failure message="No pudimos cargar las opciones del catálogo." />; }
   return (
     <>
       <div className="wrap market-home">
         <section className="market-discovery" aria-label="Descubre Mayami">
-          <div className="market-hero">
-            <div className="market-hero-copy">
-              <span className="eyebrow">DESCUBRE MAYAMI</span>
-              <h1>Encuentra lo que va contigo</h1>
-              <p>Tecnología, belleza y mucho más, en un solo lugar.</p>
-              <Link prefetch={false} className="button" href="/buscar">
-                Ver catálogo <ArrowRight size={18} />
-              </Link>
-            </div>
-            {heroProducts.length > 0 && (
-              <div className="market-hero-photos" aria-hidden="true">
-                {heroProducts.map((p) => (
-                  <ProductPhoto key={p.id} id={p.id} path={p.image_path} demo={p.is_demo} title="" priority />
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductBanner products={products} metadata={metadata} />
           <nav className="market-category-feature" aria-label="Categorías">
             {home.categories.map((c) => {
-              const product = c.image_path ? products.find((p) => p.image_path === c.image_path) : undefined;
+              const product = products.find(p => p.image_path && p.category_id === c.id);
+              const photoPath = product?.image_path ?? (c.image_path && !c.image_path.startsWith('demo/') ? c.image_path : null);
               return (
                 <Link prefetch={false} key={c.id} className="market-category-tile" href={`/buscar?category=${c.slug}`}>
                   <div>
@@ -61,8 +46,8 @@ export default async function Home() {
                       Ver productos <ArrowRight size={16} />
                     </span>
                   </div>
-                  {product ? (
-                    <ProductPhoto id={product.id} path={product.image_path} demo={product.is_demo} title="" />
+                  {photoPath ? (
+                    <ProductPhoto id={product?.id ?? c.id} path={photoPath} demo={product?.is_demo ?? false} exact title="" />
                   ) : (
                     <ShoppingBag className="market-category-icon" size={36} aria-hidden="true" />
                   )}

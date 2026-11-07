@@ -155,7 +155,7 @@ jobs:
           receipt=json.loads((out/'receipt.json').read_text())
           assert receipt['Código']=='actualización '+os.environ['MAYAMI_UPDATE_ID']
           assert receipt['Runtime']==os.environ['MAYAMI_RUNTIME']
-          assert len(list(out.rglob('*.png'))) >= 12, 'Faltan capturas de claro/oscuro'
+          assert len(list(out.rglob('*.png'))) >= 36, 'Faltan capturas de banners/fichas/fuente ampliada en claro/oscuro'
           print('Recibo exacto y capturas nativas conservados.')
           PY_NATIVE
       - name: Guardar publicación y evidencia nativa original

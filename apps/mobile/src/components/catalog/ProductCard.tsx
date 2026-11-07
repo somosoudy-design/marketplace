@@ -1,5 +1,5 @@
 import type { ProductCard as Card } from '@kora/api';
-import { formatUSD, presentAvailability, stockHint, productConditionLabel, productColorSummaries, resolveProductSelection } from '@kora/core';
+import { formatUSD, photoChoiceNotice, presentAvailability, stockHint, productConditionLabel, productColorSummaries, resolveProductSelection } from '@kora/core';
 import { router } from 'expo-router';
 import { memo, useState } from 'react';
 import { Platform, ScrollView, View } from 'react-native';
@@ -34,7 +34,9 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
   const unavailable = metadata.isSuccess && !chosen;
   const price = chosen?.price_usd ?? null;
   const generalCover = reviewedGeneralProductImages(metadata.data ?? {}, metadata.data?.variants.flatMap(v => v.images) ?? [])[0]?.path ?? null;
-  const cover = !chosen ? null : selection.cover?.path ?? (selection.mediaState === 'unclassified' ? generalCover : null);
+  const previewCover = !chosen ? null : selection.cover?.path ?? (selection.mediaState === 'unclassified' ? generalCover : null);
+  const missingChoicePhoto = selectedVariantId !== null && !!photoChoiceNotice({ selectedVariantId: chosen?.id, variants, mediaState: selection.mediaState, imagePath: previewCover });
+  const cover = missingChoicePhoto ? null : previewCover;
   const condition = productConditionLabel(metadata.data?.condition);
   const availability = presentAvailability(unavailable || !chosen?.active ? 'unavailable' : chosen.stock != null && chosen.stock <= 0 ? 'sold_out' : p.availability);
   const hint = stockHint(chosen ? chosen.stock : null, p.availability);
@@ -62,7 +64,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         }}
       >
         <View style={{ margin: 5 }}>
-          <ProductImage productId={p.id} productIsDemo={false} variantId={chosen?.id} path={cover} tone={p.tone} priority={priority} aspect={1} fit="contain" radius={7} />
+          <ProductImage productId={p.id} productIsDemo={false} variantId={chosen?.id} path={cover} tone={p.tone} priority={priority} aspect={1} fit="contain" radius={7} showUnavailableLabel={missingChoicePhoto} />
           {/* Demo prices and stock never masquerade as a real promotion or scarcity claim. */}
           <View style={{ position: 'absolute', left: 8, top: 8, gap: 4, maxWidth: width - 58 }}>
             {p.is_demo ? (!isPrivateCatalogPresentation ? <Badge onPhoto label="Demo" style={{ borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 }} /> : null) : <>
@@ -85,7 +87,6 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
       {condition ? <View style={{ paddingHorizontal: 10, paddingBottom: 6 }}><Text testID={`card-condition-${p.slug}`} variant="caption" color="textSecondary">{condition}</Text></View> : null}
       {colors.length ? <ScrollView testID={`card-colors-${p.slug}`} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6, paddingHorizontal: 10, paddingBottom: 8 }}>{colors.map(color => <ScalePressable key={color.value} accessibilityRole="button" accessibilityLabel={`Color ${color.value}${!color.available_variant_ids.length ? ', agotado' : ''}`} accessibilityState={{ selected: color.variant_ids.includes(chosen?.id ?? '') }} onPress={() => setSelectedVariantId(color.available_variant_ids[0] ?? color.variant_ids[0]!)} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 8, borderWidth: 1, borderColor: color.variant_ids.includes(chosen?.id ?? '') ? colorsTheme.brand : colorsTheme.border, backgroundColor: colorsTheme.surface }}><Text variant="caption" color="textSecondary">{color.value}</Text></ScalePressable>)}</ScrollView> : null}
       {chosen && selection.mediaState === 'none' ? <Text variant="caption" color="textSecondary" style={{ paddingHorizontal: 10, paddingBottom: 8 }}>Sin foto de esta opción</Text> : null}
-      {chosen && selection.mediaState === 'unclassified' && cover ? <Text variant="caption" color="textSecondary" style={{ paddingHorizontal: 10, paddingBottom: 8 }}>Imagen general del producto</Text> : null}
       {metadata.isError ? <ScalePressable accessibilityRole="button" accessibilityLabel="Reintentar opciones del producto" onPress={() => void metadata.refetch()} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 10 }}><Text variant="caption" color="danger">Reintentar opciones</Text></ScalePressable> : null}
       <View style={{ position: 'absolute', right: 5, top: 5 }}>
         <ProductFavorite id={p.id} slug={p.slug} onPhoto />

@@ -1,5 +1,6 @@
 import type { ProductCard } from '@kora/api';
-import { formatUSD } from '@kora/core';
+import { bannerTitle, formatUSD } from '@kora/core';
+import { palette } from '@kora/design-tokens';
 import { View } from 'react-native';
 import { Icon } from '@/components/ui/Icon';
 import { ScalePressable } from '@/components/ui/Pressable';
@@ -7,13 +8,11 @@ import { Text } from '@/components/ui/Text';
 import { TrackedSection } from '@/lib/impressions';
 import { useCardMetadata } from '@/lib/catalog-selection';
 import { reviewedEditorialPreview } from '@/lib/editorial-selection';
-import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
 import { EditorialHeroSurface } from './EditorialHeroSurface';
 
 /** Editorial product opening: the product is the real destination, not a synthetic promotion. */
 export function ProductEditorialOpening({ product, width, onOpen }: { product: ProductCard; width: number; onOpen: (variantId: string) => void }) {
-  const t = useTheme();
   const metadata = useCardMetadata(product.id);
   const preview = reviewedEditorialPreview(product, metadata.data);
   const availability = preview.availability;
@@ -29,14 +28,14 @@ export function ProductEditorialOpening({ product, width, onOpen }: { product: P
         scaleTo={0.99}
         style={{ paddingHorizontal: 12, paddingTop: 12 }}
       >
-        <EditorialHeroSurface width={width} generalImage={preview.generalImage} renderPhoto={photoWidth=><ProductImage productId={product.id} productIsDemo={false} variantId={preview.variantId} path={preview.imagePath} tone={product.tone} alt={product.title} fit="contain" aspect={1} radius={12} priority="high" style={{ width: photoWidth }} />}>
-            <Text variant="overline" color="editorial">Descubre Mayami</Text>
-            <Text testID="home-editorial-name" variant="subtitle" style={{fontFamily:'PlusJakartaSans_700Bold'}}>{product.title}</Text>
-            {preview.multipleVariants && preview.variantTitle ? <Text testID="home-editorial-variant" variant="caption" color="textSecondary">{preview.variantTitle}</Text> : null}
-            <Text testID="home-editorial-price" variant="price" tabular style={{fontSize:24,lineHeight:30}}>{priceLabel}</Text>
-            {preview.variantId && availability.label !== 'Disponible' ? <Text variant="caption" color="textSecondary">{availability.label}</Text> : null}
-            <View style={{ minHeight: 44, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 8, borderRadius: 10, backgroundColor: t.colors.brand }}>
-              <Text variant="label" style={{ color: t.colors.onBrand, flexShrink: 1 }}>{metadata.isError ? 'Reintentar' : 'Ver producto'}</Text><Icon name="arrow-right" size={16} color={t.colors.onBrand} />
+        <EditorialHeroSurface width={width} renderPhoto={photoWidth=><ProductImage loadedTestID="home-banner-photo-loaded" productId={product.id} productIsDemo={false} variantId={preview.variantId} path={preview.imagePath} tone={product.tone} alt={product.title} fit="contain" aspect={1} radius={0} priority="high" style={{ width: photoWidth, backgroundColor: 'transparent' }} />}>
+            <Text variant="overline" style={{ color: palette.violet[700] }}>Descubre Mayami</Text>
+            <Text testID="home-editorial-name" variant="subtitle" textBreakStrategy="balanced" android_hyphenationFrequency="none" style={{fontFamily:'PlusJakartaSans_700Bold',color:palette.ink[900],fontSize:15,lineHeight:20}}>{bannerTitle(product.title)}</Text>
+            {preview.multipleVariants && !preview.generalImage && preview.variantTitle ? <Text testID="home-editorial-variant" variant="caption" style={{color:palette.ink[700]}}>{preview.variantTitle}</Text> : null}
+            <Text testID="home-editorial-price" variant="price" tabular style={{fontSize:25,lineHeight:31,color:palette.ink[900]}}>{priceLabel}</Text>
+            {preview.variantId && availability.label !== 'Disponible' ? <Text variant="caption" style={{color:palette.ink[700]}}>{availability.label}</Text> : null}
+            <View style={{ minHeight: 44, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 8, borderRadius: 10, backgroundColor: palette.violet[600] }}>
+              <Text variant="label" style={{ color: palette.ink[0], flexShrink: 1 }}>{metadata.isError ? 'Reintentar' : 'Ver producto'}</Text><Icon name="arrow-right" size={16} color={palette.ink[0]} />
             </View>
         </EditorialHeroSurface>
       </ScalePressable>

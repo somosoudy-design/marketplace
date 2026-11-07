@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## En curso · tres ajustes de banners y texto ·7nov2026
+
+Por encargo de Oliver se corrigen únicamente banner Android, banners web y texto técnico de comprador. Fuente implementada,101core+85móvil y26UI dirigidas aprobadas; revisión/captura final320 y publicación pendientes. Se conservan las asociaciones internas; aviso comercial sólo ante varias opciones, sin reasignar fotografías ni tocar pagos. Se prepara comprobación nativa con títulos largos y fuente ampliada. [Detalle](AJUSTES_BANNERS_2026-11-07.md). Worker vigente comprobado antes:1eea5edb…; Android vigente anterior:01a1b635… No describir este ajuste como publicado todavía.
+
 ## Actualización de app y backend ·7nov2026 · publicada y verificada
 
 Oliver pidió terminar la fase pendiente. Backend compatible20261107130620 activado en Marketplace tras contraste exacto de baseline,221/221DB y revisión independiente; pagos/D3 quedan excluidos y la función de pagos vigente permanece idéntica. Fuente funcional/visual45743f9 preservada en la rama. OTAAndroid publicada por3a3539b y CI42377231450Success: UUID01a1b635-a400-7536-bdcf-713c36832e47, grupo98888125-2dc8-429d-b40e-2cbe8ac2b1dc, runtimeb691ec… existente. ManifestHTTP200 y recibo del UUID exacto en emuladorAndroid15;4recorridos y12capturas claro/oscuro aprobados. Publicación/compatibilidad cerradas; recepción física en Samsung no observada. Detalle: [Actualización7nov](ACTUALIZACION_APP_2026-11-07.md). Sin nuevoAPK, tiendas ni servicios de pago.

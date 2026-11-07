@@ -10,3 +10,4 @@ export * from './auth';
 export * from './product-selection';
 export * from './seller-authoring';
 export * from './persistent-intent';
+export * from './catalog-presentation';

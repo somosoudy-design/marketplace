@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ShoppingBag, ArrowRight, Check, Store } from 'lucide-react';
 import type { CatalogMetadata, ProductDetail as Product } from '@kora/api';
-import { presentAvailability, resolveProductSelection } from '@kora/core';
+import { presentAvailability, photoChoiceNotice, resolveProductSelection } from '@kora/core';
 import { ProductPhoto } from './photo';
 import { Favorite } from './favorite';
 import { ProductGrid } from './product-card';
@@ -35,6 +35,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
   const general = resolved.mediaState === 'unclassified';
   const gallery = !variant ? [] : general ? (metadata.general_images ?? []) : resolved.gallery;
   const image = gallery[Math.min(imageIndex, Math.max(0, gallery.length - 1))]?.path ?? null;
+  const choicePhotoNotice = photoChoiceNotice({ selectedVariantId: variant?.id, variants, mediaState: resolved.mediaState, imagePath: image });
   const reference = general ? photo(p.id, image, p.is_demo) : undefined;
   const selectedMetadata = metadata.variants.find(v => v.variant_id === selected);
   const selectVariant = (id: string) => {
@@ -65,8 +66,8 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
       <div className="product-detail">
         <section className="product-gallery" aria-label="Fotografías">
           <ProductPhoto id={p.id} path={image} demo={p.is_demo} title={p.title} priority exact />
-          {general && gallery.length > 0 && <p className="muted">Fotos generales del producto; no están asignadas a esta opción.</p>}
-          {!general && gallery.length === 0 && <p className="muted">Esta opción no tiene fotografías asignadas.</p>}
+          {choicePhotoNotice && <p className="muted" data-testid="product-photo-notice">{choicePhotoNotice}</p>}
+          {gallery.length === 0 && <p className="muted">Aún no hay fotos de esta opción.</p>}
           {gallery.length > 1 && (
             <div className="thumbnails">
               {gallery.map((i, index) => (

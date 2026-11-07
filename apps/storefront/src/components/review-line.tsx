@@ -27,7 +27,6 @@ export function ReviewLine({ line: l }: { line: Line }) {
       <div className="review-copy">
         <h3>{l.title}</h3>
         {productConditionLabel(l.product_condition)?<p>{productConditionLabel(l.product_condition)}</p>:null}
-        {l.image_scope==='general'&&l.image_path?<p className="muted">Imagen general del producto</p>:null}
         <p>
           {l.variant_title} · Cantidad {l.quantity}
         </p>
