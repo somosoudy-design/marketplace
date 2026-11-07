@@ -2,7 +2,7 @@
 
 ## En curso: tres casos visuales del catálogo ·7nov2026
 
-Tanda nueva acotada: superficie de fotos blancas en oscuro, desborde Odontología y encuadre Tecnología. Dos fallos reproducidos y corregidos localmente sin cambiar diseño/grilla/imágenes: stage neutro sólo en tarjetas oscuras y wrap del nombre. Tecnología muestra el bitmap completo en ambas interfaces; su recorte es intrínseco al original y no se cambia por requerir otro asset fuera del alcance. Tipos/lint aprobados, QA antes/candidato conservada; falta export/QA móvil final, revisión y publicación exacta. Sin mutaciones de catálogo/cuentas/compras/pagos en producción ni Chrome compartido. [Estado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
+Tanda nueva acotada: fotos blancas en oscuro y nombre Odontología corregidos/revisados sin rediseño, con originales intactos. Tecnología muestra su asset completo; el recorte es intrínseco y se conserva por límite de alcance. Caption final9916d3e evita letra aislada y conserva390normal1línea.116core/139unitarias/30Node, tipos/lint, web5/5, fotos/app/147SHA y revisión independiente aprobados. Build público y Preview4/4 con catálogo real; BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N. Solicitud únicaOTA preparada, mismoAPK/runtime; falta despliegue web/recibo exactoAndroid y4captions fontreal(14XML/40PNG). Sin Chrome compartido, mutaciones de negocio ni servicios de pago. [Estado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
 
 
 ## Modo invitado publicado y verificado ·7nov2026
