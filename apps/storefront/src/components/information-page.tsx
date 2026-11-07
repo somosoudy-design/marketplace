@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import policies from '@/data/policies.json';
 
-export type InformationSlug = 'terminos' | 'privacidad' | 'devoluciones' | 'contacto';
+export type InformationSlug = 'terminos' | 'privacidad' | 'devoluciones' | 'contacto' | 'eliminar-cuenta';
 export function information(slug: InformationSlug) {
   const page = policies.pages.find(page => page.slug === slug);
   if (!page) throw new Error('Information page unavailable');

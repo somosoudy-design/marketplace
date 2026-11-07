@@ -1,5 +1,21 @@
 # Estado actual de mayami
 
+## Preparación Play: privacidad y eliminación · local en curso · 7 de noviembre de 2026
+
+Tanda acotada sobre la fuente publicada 59e88a07, sin código de cuotas ni Google/correos. Enlaces de privacidad y términos en registro y Cuenta/Preferencias, recurso /eliminar-cuenta y textos honestos de solicitud preparados localmente. Tipos y lint de los dos clientes pasan. Revisión local de retención y pruebas UI focales pendientes; no se declara borrado completo. No producción, publicación, Console, AAB/APK, firma ni configuración de cuentas. Cuotas y Google/correos se conservan en sus fuentes previas. La sesión de navegador correcta de Supabase fue comprobada en sólo lectura; no hace falta reconexión para esta tanda. [Alcance](PLAY_PRIVACIDAD_ELIMINACION_2026-11-07.md).
+
+## Cuotas preventa y encargo · listas en local, activación pendiente · 7nov2026
+
+Implementadas las ofertas por variante/cantidad, selección y retorno seguro entre ficha, carrito y checkout en app/web. Son tres pagos totales, incluida la inicial. La nueva excepción se limita a carritos compuestos por líneas válidas reservable/on_order; los mixtos conservan sus reglas anteriores. El calendario, los planes y la verificación de abonos permanecen intactos.
+
+Pasan124pruebas core y175móvil/web/SQL (incluye22SQL), tipos/lint completos, Next producción, ExpoWeb y export Android Hermes. Recorridos y revisión independiente favorables en claro/oscuro; la UI móvil se verificó en ExpoWeb, no en APK/emulador/teléfono. Migración aplicada sólo al clon local aislado: nueve tablas de negocio/planes y permisos idénticos antes/después de aplicarla. No hay cambios de producción, OTA ni nuevoAPK.
+
+Fuente ejecutable limpia validada:1e8938ad1beedab31514bc52512d4f78fe7ddfa9, basada en59e88a07. Google/correos WIP siguen preservados aparte en la rama compartida. No publicar HEAD compartido con ese WIP. Bloqueo real: el conector aún rechaza MIM con «sin permiso» después del aviso de login del navegador, y este chat no expone control Browser. Falta una conexión autorizada a Marketplace para contrastar/aplicar/verificar la única migración y luego publicar desde fuente limpia, manteniendo Free y el APK/runtime existente. [Resultados y siguiente acción](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+
+## Google y correo · preparación probada, sin activar ·7nov2026
+
+Oliver confirmó la cuenta Supabase correcta e inició sesión en el navegador integrado. El CLI continúa con identidad errónea; no se volvió a usar para MIM ni se crearon credenciales. Control Browser no expuesto en este chat, identidad/propiedad actuales pendientes. Auditoría de recibos no halló escrituras Mayami fuera de MIM; no equivale a prueba del propietario. Logo original ya sustituye texto en dos HTML; PNG/localguard/procedencia y8renders/revisiónGo preparados, asset aún no hospedado. Googleoff, sin instalartemplates/deploy. [Detalle y límites](ACCESO_GOOGLE_2026-11-07.md).
+
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 
 Dos ajustes publicados: superficie de fotos en oscuro y nombre Odontología completo; diseño, imágenes y funciones conservados. Tecnología conserva su original, sin recorte adicional de UI. Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N; Preview4/4 y público4/4 (20fotos en4contextos),13assetsSHA/WWW301 verificados.147originales/9gates intactos;116core/139unitarias/30Node, tipos/lint y QA local final aprobados. ÚnicaOTA01a1b758-773b-7a0f-82c5-a96d2bc2fb81 recibida por mismaAPK; CI42403068492 SUCCESS,14XML/40PNG. Cobertura visualcaption2/4:1.6legible ambos temas;1.0noencuadrado (0swipes), no se declara aprobado. Normal sí probado local/web. Bloque cerrado con estos límites, sin rerun ni nuevo ciclo. Free, sin mutaciones de negocio/Chrome compartido. [Resultado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).

@@ -1,5 +1,33 @@
 # Historial de agentes
 
+## Preparación Play: privacidad y eliminación · local en curso · 7 de noviembre de 2026
+
+Tanda acotada sobre la fuente publicada 59e88a07, sin código de cuotas ni Google/correos. Enlaces de privacidad y términos en registro y Cuenta/Preferencias, recurso /eliminar-cuenta y textos honestos de solicitud preparados localmente. Tipos y lint de los dos clientes pasan. Revisión local de retención y pruebas UI focales pendientes; no se declara borrado completo. No producción, publicación, Console, AAB/APK, firma ni configuración de cuentas. Cuotas y Google/correos se conservan en sus fuentes previas. La sesión de navegador correcta de Supabase fue comprobada en sólo lectura; no hace falta reconexión para esta tanda. [Alcance](PLAY_PRIVACIDAD_ELIMINACION_2026-11-07.md).
+
+## Cuotas preventa y encargo · listas en local, activación pendiente · 7nov2026
+
+Implementadas las ofertas por variante/cantidad, selección y retorno seguro entre ficha, carrito y checkout en app/web. Son tres pagos totales, incluida la inicial. La nueva excepción se limita a carritos compuestos por líneas válidas reservable/on_order; los mixtos conservan sus reglas anteriores. El calendario, los planes y la verificación de abonos permanecen intactos.
+
+Pasan124pruebas core y175móvil/web/SQL (incluye22SQL), tipos/lint completos, Next producción, ExpoWeb y export Android Hermes. Recorridos y revisión independiente favorables en claro/oscuro; la UI móvil se verificó en ExpoWeb, no en APK/emulador/teléfono. Migración aplicada sólo al clon local aislado: nueve tablas de negocio/planes y permisos idénticos antes/después de aplicarla. No hay cambios de producción, OTA ni nuevoAPK.
+
+Fuente ejecutable limpia validada:1e8938ad1beedab31514bc52512d4f78fe7ddfa9, basada en59e88a07. Google/correos WIP siguen preservados aparte en la rama compartida. No publicar HEAD compartido con ese WIP. Bloqueo real: el conector aún rechaza MIM con «sin permiso» después del aviso de login del navegador, y este chat no expone control Browser. Falta una conexión autorizada a Marketplace para contrastar/aplicar/verificar la única migración y luego publicar desde fuente limpia, manteniendo Free y el APK/runtime existente. [Resultados y siguiente acción](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+
+## 7nov2026 · logo original en correos y auditoría de destinos
+
+CuentaSupabase esperada confirmada por Oliver; login navegador iniciado, sin controlBrowser expuesto para comprobarlo. CLI erróneo no reutilizado/ningún token nuevo. Recibos6/7nov apuntan a MIM, sin evidencia de escrituras Mayami en otro projectref; dueño actual sin confirmar. Dos cabeceras HTML ahora usan PNG fiel al logoWorkv3, original intacto;8renders320/390 ambos temas, Go2/2 y revisión independiente favorables. PNG aún no hospedado; checkerHTTP/MIME/SHA impide dar por listo el asset. Preparación sindeploy/instalacióntemplates/Googleoff. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
+## 7nov2026 · preparación Google/correo probada; activación pendiente
+
+73API/139regresiones/116core, tipos/lint completos; dos HTML/TXT Mayami, motorGo8ejecuciones/16renders y SMTP/Auth/SDK local con una fixture y16pasos finales. Corregidos callbacks vacíos/mixtos para no confundir sesiónB con link confirmado. Revisor favorable sólo a preparación apagada. Googlefalse, sin UI/primaryboundary/integración final; configMIM ACLdenegada/retry agotado, pregunta sobre cuentaSupabase pendiente. Sin credenciales/proveedor/URLs hosted cambiadas ni web/OTA/APK/correoexterno. [Cierre y límites](ACCESO_GOOGLE_2026-11-07.md).
+
+## 7nov2026 · WIP correo y acceso Google
+
+ProtocoloS256/ports/guardas y URLs email canónicas integrados sin conectar Google a pantallas.70API/139regresiones/116core aprobados; dos HTML/TXT Mayami y8renders locales. Pruebas Go/SMTP local continúan. Boundary queda un propietario local, sin afirmar pestañas/crash. CLIconfigpull lectura MIM denegada por ACL, reintento confirmado y sin otra vía; ningún cambio remoto ni publicación. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
+## 7nov2026 · WIP acceso Google
+
+Integrador: inspección SDK/metadata pública y documentación vigente; Google=false. Primer checkpoint del protocolo S256, aún sin importar en pantallas. Revisión independiente de enlace automático y carreras de SDK identifica límites; continúan adaptadores y pruebas aisladas. Sin configproveedor, consentimientos, cuentas/sesiones ni compras remotas. API typecheck aprobado. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
 ## 7nov2026 · Codex Mac · dos correcciones visuales y límite de Tecnología
 
 Fotos en tarjetas oscuras con superficie neutra/filete y originales intactos; Odontología completa sin recorte,390normal1línea y reflujo legible. Cuatro archivos UI, sin grilla nueva ni cambios en guest, Preventa, galería o banners. Tecnología muestra el bitmap completo: su recorte es intrínseco, identificado antes de actuar; no se genera/sustituye ni se atribuye un tercer fix.147SHA/9gates conservados,116core/139unitarias/30Node, tipos/lint y QA local aprobados. El candidato con última letra aislada fue retirado y corregido antes de publicar.
