@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { browser } from '@/lib/browser';
 export function VerifyCode({
@@ -15,24 +15,27 @@ export function VerifyCode({
 }) {
   const [code, setCode] = useState(''),
     [cooldown, setCooldown] = useState(30);
+  const alive = useRef(false), generation = useRef(0);
+  useEffect(() => { alive.current = true; generation.current += 1; return () => { alive.current = false; }; }, [email, type]);
   useEffect(() => {
     const timer = setInterval(() => setCooldown((n) => Math.max(0, n - 1)), 1000);
     return () => clearInterval(timer);
   }, []);
   const verify = useMutation({
-    mutationFn: async () => {
-      const { error } = await browser().client.auth.verifyOtp({ email, token: code.trim(), type });
+    mutationFn: async (input: { email: string; token: string; type: 'signup' | 'recovery'; generation: number }) => {
+      if (!alive.current || generation.current !== input.generation) throw new Error('La verificación se canceló.');
+      const { error } = await browser().client.auth.verifyOtp({ email: input.email, token: input.token, type: input.type });
       if (error) throw error;
     },
-    onSuccess: onDone,
+    onSuccess: (_result, input) => { if (alive.current && generation.current === input.generation) onDone(); },
   });
-  const again = useMutation({ mutationFn: resend, onSuccess: () => setCooldown(30) });
+  const again = useMutation({ mutationFn: (version: number) => { if (!alive.current || generation.current !== version) throw new Error('El reenvío se canceló.'); return resend(); }, onSuccess: (_result, version) => { if (alive.current && generation.current === version) setCooldown(30); } });
   return (
     <form method="post"
       className="login-form"
       onSubmit={(e) => {
         e.preventDefault();
-        if (!verify.isPending) verify.mutate();
+        if (!verify.isPending) verify.mutate({ email, token: code.trim(), type, generation: generation.current });
       }}
     >
       <h2>Revisa tu correo</h2>
@@ -69,7 +72,7 @@ export function VerifyCode({
         className="text-button"
         type="button"
         disabled={cooldown > 0 || verify.isPending || again.isPending}
-        onClick={() => again.mutate()}
+        onClick={() => again.mutate(generation.current)}
       >
         {again.isPending ? 'Reenviando…' : cooldown > 0 ? `Reenviar código en ${cooldown} s` : 'Reenviar código'}
       </button>

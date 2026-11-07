@@ -8,17 +8,20 @@ import { captureBuyerApi } from '@/lib/actor-api';
 import { useAccount } from '@/lib/providers';
 import { NotificationLink } from './notifications';
 import { BrandMark } from './brand-mark';
+import { useGuestCartState } from '@/lib/guest-hooks';
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
-  const { session } = useAccount();
+  const { session, ready, cartSyncing } = useAccount();
+  const guest = useGuestCartState();
   const cart = useQuery({
     queryKey: ['cart', session?.user.id],
     queryFn: async () => { const bound=await captureBuyerApi(session!.user.id);const summary=await bound.api.cart.summaryReviewed();await bound.assertCurrent();return summary; },
-    enabled: !!session,
+    enabled: !!session && !cartSyncing,
   });
   const cartUnits =
-    cart.data?.groups.reduce((n, g) => n + g.lines.reduce((count, line) => count + line.quantity, 0), 0) ?? 0;
+    session ? cart.data?.groups.reduce((n, g) => n + g.lines.reduce((count, line) => count + line.quantity, 0), 0) ?? 0
+      : ready ? guest.data.reduce((count, line) => count + line.quantity, 0) : 0;
   return (
     <>
       <a className="skip" href="#contenido">
@@ -49,7 +52,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <Link
               prefetch={false}
               href="/carrito"
-              aria-label={`Carrito${cart.data ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}
+              aria-label={`Carrito${(session ? !!cart.data : ready && guest.ready && !guest.error) ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}
             >
               <ShoppingBag size={21} />
               <span>Carrito</span>

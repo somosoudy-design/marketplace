@@ -1,32 +1,39 @@
 'use client';
-import { useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { signUpSchema, toAppError } from '@kora/core';
 import { browser } from '@/lib/browser';
 import { VerifyCode } from '@/components/verify-code';
-export default function Page() {
+import { authHref, callbackPath, safeReturnPath } from '@/lib/auth-return';
+function Registration() {
   const router = useRouter();
+  const params = useSearchParams();
+  const back = safeReturnPath(params.get('volver'));
+  const alive = useRef(false);
+  useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
   const [name, setName] = useState(''),
     [email, setEmail] = useState(''),
     [password, setPassword] = useState(''),
     [sent, setSent] = useState(false);
   const signup = useMutation({
     mutationFn: async () => {
+      if (!alive.current) throw new Error('El registro se canceló.');
       const p = signUpSchema.safeParse({ full_name: name, email, password });
       if (!p.success) throw Object.assign(new Error(p.error.issues[0]?.message), { name: 'ValidationError' });
       const { data, error } = await browser().client.auth.signUp({
         email: p.data.email,
         password: p.data.password,
-        options: { data: { full_name: p.data.full_name }, emailRedirectTo: window.location.origin + '/auth/callback' },
+        options: { data: { full_name: p.data.full_name }, emailRedirectTo: window.location.origin + callbackPath(back) },
       });
       if (error) throw error;
       return data;
     },
     onSuccess: (data) => {
+      if (!alive.current) return;
       setPassword('');
-      if (data.session) router.replace('/cuenta');
+      if (data.session) router.replace(back);
       else setSent(true);
     },
   });
@@ -36,9 +43,9 @@ export default function Page() {
         <VerifyCode
           email={email.trim()}
           type="signup"
-          onDone={() => router.replace('/cuenta')}
+          onDone={() => router.replace(back)}
           resend={async () => {
-            const { error } = await browser().client.auth.resend({ type: 'signup', email: email.trim() });
+            const { error } = await browser().client.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: window.location.origin + callbackPath(back) } });
             if (error) throw error;
           }}
         />
@@ -115,10 +122,12 @@ export default function Page() {
         <button className="button" disabled={signup.isPending}>
           {signup.isPending ? 'Creando cuenta…' : 'Crear cuenta'}
         </button>
-        <Link prefetch={false} href="/cuenta" className="text-link">
+        <Link prefetch={false} href={authHref('/cuenta', back)} className="text-link">
           Ya tengo cuenta
         </Link>
       </form>
     </div>
   );
 }
+
+export default function Page() { return <Suspense><Registration /></Suspense>; }

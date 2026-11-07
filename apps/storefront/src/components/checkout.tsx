@@ -21,9 +21,13 @@ import { QueryError } from './buyer';
 import { ReviewLine } from './review-line';
 import { assertBuyerActor, captureBuyerApi } from '@/lib/actor-api';
 import { checkoutIntentKey, clearCheckoutIntent, restoreCheckoutIntent, persistCheckoutIntent, type CheckoutIntent } from '@/lib/checkout-intent';
+import { useAccount } from '@/lib/providers';
+import { PendingCartMerge } from './guest-sync';
 const steps = ['Dirección', 'Entregas', 'Plan de pago', 'Revisión'];
 type Intent = CheckoutIntent;
 export function Checkout({ buyerId }: { buyerId: string }) {
+  const { cartSyncing, cartSyncError } = useAccount();
+  const cartBlocked = cartSyncing || !!cartSyncError;
   const router = useRouter(),
     qc = useQueryClient();
   const [step, setStep] = useState(0);
@@ -92,7 +96,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   }
   const preview = useQuery({
     queryKey: ['checkout', buyerId, signature, shipping, plan],
-    enabled: restored && !storageProblem && addresses.isSuccess && !uncertain && !created,
+    enabled: restored && !storageProblem && addresses.isSuccess && !uncertain && !created && !cartBlocked,
     staleTime: 0,
     placeholderData: keepPreviousData,
     queryFn: async () => {
@@ -216,7 +220,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
         setNotice('El pedido cambió. Revisa los productos, la entrega y el total antes de confirmar.');
       } else setStep(code === 'plan_invalid' ? 2 : code === 'shipping_invalid' ? 1 : 3);
       if (code === 'shipping_invalid') setShipping({});
-      void preview.refetch();
+      if (!cartBlocked) void preview.refetch();
     },
   });
   const check = useMutation({
@@ -234,7 +238,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     },
   });
   const confirm = async () => {
-    if (submitting.current || !methodsReady || !preview.isSuccess || preview.isFetching || preview.isPlaceholderData ||
+    if (cartBlocked || submitting.current || !methodsReady || !preview.isSuccess || preview.isFetching || preview.isPlaceholderData ||
       !preview.data.summary.can_place || !address || reviewedToken !== preview.data.summary.review_token) return;
     const s = preview.data.summary;
     const candidate: Intent = { version: 2, buyerId, key: newIdempotencyKey('web-order'), reviewToken: s.review_token,
@@ -345,6 +349,9 @@ export function Checkout({ buyerId }: { buyerId: string }) {
         <Link prefetch={false} href="/pedidos">Ver mis pedidos</Link>
       </section>
     );
+  // Existing persisted attempts remain recoverable above, even while a new guest merge needs attention.
+  if (cartSyncing) return <section className="state" role="status">Incorporando tus productos…</section>;
+  if (cartSyncError) return <PendingCartMerge />;
   const s = preview.data?.summary ?? snapshot;
   const fresh = preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData;
   if (addresses.isPending)

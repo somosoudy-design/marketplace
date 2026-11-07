@@ -1,5 +1,5 @@
 'use client';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Heart, ShoppingBag, LogOut, ArrowRight, UserRound, Bell, MapPin } from 'lucide-react';
@@ -8,21 +8,26 @@ import { browser } from '@/lib/browser';
 import { configured } from '@/lib/env';
 import { useAccount } from '@/lib/providers';
 import { toAppError } from '@kora/core';
+import { authHref, guestReturnPath, safeReturnPath } from '@/lib/auth-return';
 function Account() {
   const { session, ready } = useAccount();
   const router = useRouter();
   const params = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const alive = useRef(false);
+  useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
   const requested = params.get('volver') ?? '/cuenta';
   // Only same-origin application paths. Prevent scheme-relative redirects and backslash URL tricks.
-  const back = /^\/(?![\/\\])/.test(requested) && !requested.includes('\\') ? requested : '/cuenta';
+  const back = safeReturnPath(requested);
   const login = useMutation({
     mutationFn: async () => {
+      if (!alive.current) throw new Error('El inicio de sesión se canceló.');
       const { error } = await browser().client.auth.signInWithPassword({ email: email.trim(), password });
       if (error) throw error;
     },
     onSuccess: () => {
+      if (!alive.current) return;
       setPassword('');
       router.replace(back);
       router.refresh();
@@ -34,6 +39,7 @@ function Account() {
       if (error) throw error;
     },
     onSuccess: () => {
+      if (!alive.current) return;
       router.replace('/cuenta');
       router.refresh();
     },
@@ -132,7 +138,7 @@ function Account() {
           En un mismo lugar.
         </h1>
         <p>Entra con la misma cuenta que utilizas en la aplicación.</p>
-        <Link prefetch={false} href="/buscar">
+        <Link prefetch={false} href={guestReturnPath(back)}>
           Explorar sin iniciar sesión <ArrowRight size={17} />
         </Link>
       </section>
@@ -176,8 +182,8 @@ function Account() {
           {login.isPending ? 'Ingresando…' : 'Ingresar'}
         </button>
         <div className="auth-links">
-          <Link prefetch={false} href="/registro">Crear una cuenta</Link>
-          <Link prefetch={false} href="/recuperar">¿Olvidaste tu contraseña?</Link>
+          <Link prefetch={false} href={authHref('/registro', back)}>Crear una cuenta</Link>
+          <Link prefetch={false} href={authHref('/recuperar', back)}>¿Olvidaste tu contraseña?</Link>
         </div>
       </form>
     </div>

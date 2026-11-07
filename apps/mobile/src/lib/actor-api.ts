@@ -22,3 +22,24 @@ export async function captureActorApi(actorId: string) {
   });
   return { actorId, api: createApi(client), assertCurrent: () => assertCurrentActor(actorId) };
 }
+
+/** Update only the actor captured at submit; never let the shared Auth client pick a later account. */
+export async function updateActorPassword(actorId: string, password: string, stillCurrent: () => boolean): Promise<void> {
+  if (!stillCurrent()) throw new ActorChangedError();
+  const { data, error } = await supabase.auth.getSession();
+  if (error) throw error;
+  if (!data.session?.access_token || data.session.user.id !== actorId || !stillCurrent()) throw new ActorChangedError();
+  const token = data.session.access_token;
+  await assertCurrentActor(actorId);
+  if (!stillCurrent()) throw new ActorChangedError();
+  const response = await fetch(env.supabaseUrl.replace(/\/$/, '') + '/auth/v1/user', {
+    method: 'PUT', credentials: 'omit',
+    headers: { apikey: env.supabaseAnonKey, authorization: 'Bearer ' + token, 'content-type': 'application/json' },
+    body: JSON.stringify({ password }),
+  });
+  const result = await response.json().catch(() => null) as { id?: string; user?: { id?: string } } | null;
+  if (!response.ok) throw Object.assign(new Error('No pudimos actualizar tu contraseña. Verifica tu acceso e inténtalo de nuevo.'), { code: response.status === 401 ? 'session_not_found' : 'password_update_failed' });
+  if ((result?.user?.id ?? result?.id) !== actorId) throw new ActorChangedError();
+  await assertCurrentActor(actorId);
+  if (!stillCurrent()) throw new ActorChangedError();
+}

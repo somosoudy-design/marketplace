@@ -1,7 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ShoppingBag, ArrowRight, Check, Store } from 'lucide-react';
 import type { CatalogMetadata, ProductDetail as Product } from '@kora/api';
@@ -15,20 +14,24 @@ import { money } from '@/lib/format';
 import { catalogText, catalogSample, localExhibition, photo } from '@/lib/photos';
 import { reviewedSelectionInput } from '@/lib/catalog-selection';
 import { addReviewedCart } from '@/lib/cart-intents';
+import { guestCart } from '@/lib/guest-storage';
+import { useGuestCartState } from '@/lib/guest-hooks';
+import { guestError } from '@/lib/guest-errors';
 type DetailProps = { product: Product; metadata: CatalogMetadata; relatedMetadata: Record<string, CatalogMetadata>; initialVariantId?: string };
 export function ProductDetail({ product, metadata, relatedMetadata, initialVariantId }: DetailProps) {
   const { session } = useAccount();
   return <DetailSession key={`${product.id}:${session?.user.id ?? 'guest'}:${initialVariantId ?? ''}`} product={product} metadata={metadata} relatedMetadata={relatedMetadata} initialVariantId={initialVariantId} />;
 }
 function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId }: DetailProps) {
-  const { session, ready } = useAccount();
-  const router = useRouter();
+  const { session, ready, retryCartSync } = useAccount();
+  const guest = useGuestCartState();
   const qc = useQueryClient();
   const input = reviewedSelectionInput(p, metadata);
   const variants = metadata.variants.filter(v => v.active).map(v => ({ ...v, id: v.variant_id }));
   const [selected, setSelected] = useState(initialVariantId ?? resolveProductSelection(input).selectedVariantId ?? '');
   const [quantity, setQuantity] = useState(1);
   const [imageIndex, setImageIndex] = useState(0);
+  const adding = useRef(false);
   const resolved = resolveProductSelection(input, selected);
   const variant = resolved.variant;
   const availability = presentAvailability(p.availability);
@@ -45,9 +48,17 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
     window.history.replaceState(null, '', url.pathname + url.search + url.hash);
   };
   const add = useMutation({
-    mutationFn: () => {
-      if(!session)throw new Error('Inicia sesión para agregar productos.');
-      return addReviewedCart(session.user.id,selected,quantity,()=>qc.invalidateQueries({queryKey:['cart',session.user.id]}));
+    networkMode: session ? 'online' : 'always',
+    mutationFn: async (selection: { variantId: string; quantity: number }) => {
+      const choice = resolveProductSelection(input, selection.variantId);
+      const details = metadata.variants.find(v => v.variant_id === selection.variantId);
+      if (!choice.canBuy || !choice.variant || !details || selection.quantity < 1 || selection.quantity > choice.maxQuantity) throw new Error('Revisa la opción y la cantidad antes de agregar.');
+      if (session) return addReviewedCart(session.user.id, selection.variantId, selection.quantity, () => qc.invalidateQueries({ queryKey: ['cart', session.user.id] }));
+      try { await guestCart.add({ product_id: p.id, variant_id: selection.variantId, quantity: selection.quantity, title: p.title, variant_title: details.title,
+        image_path: choice.cover?.path ?? (metadata.variants.length === 1 ? metadata.general_images?.[0]?.path ?? null : null), price_usd: choice.price_usd!, availability: p.availability, product_condition: choice.condition }); }
+      catch (error) { throw guestError(error); }
+      // A sign-in may finish while this local write is waiting for another tab's storage lock.
+      retryCartSync();
     },
   });
   const canBuy = resolved.canBuy && availability.purchasable && quantity <= max;
@@ -180,10 +191,8 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
             </label>
             <button
               className="button"
-              disabled={!ready || !canBuy || add.isPending}
-              onClick={() =>
-                session ? add.mutate() : router.push(`/cuenta?volver=${encodeURIComponent(`/p/${p.slug}?variant=${encodeURIComponent(selected)}`)}`)
-              }
+              disabled={!ready || (!session && !guest.ready) || !canBuy || add.isPending}
+              onClick={() => { if (adding.current) return; adding.current = true; add.mutate({ variantId: selected, quantity }, { onSettled: () => { adding.current = false; } }); }}
             >
               <ShoppingBag size={18} />
               {add.isPending ? 'Agregando…' : canBuy ? 'Agregar al carrito' : 'No disponible'}

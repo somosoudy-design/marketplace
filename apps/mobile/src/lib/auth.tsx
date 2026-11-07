@@ -7,7 +7,7 @@ import { guestFavorites, pendingFavoritesKey } from './guest-favorites';
 import { unregisterPush } from './push';
 import { clearAccountCache } from './query';
 import { supabase } from './supabase';
-import { captureActorApi } from './actor-api';
+import { captureActorApi, updateActorPassword, ActorChangedError } from './actor-api';
 import { intentKey } from './ids';
 
 interface AuthState {
@@ -33,7 +33,7 @@ interface AuthState {
   verifyEmailCode: (email: string, code: string, purpose: EmailCodePurpose) => Promise<void>;
   signOut: () => Promise<void>;
   /** Saves a new password for the signed-in user (after the recovery code or reset link). */
-  updatePassword: (password: string) => Promise<void>;
+  updatePassword: (password: string, stillCurrent?: () => boolean) => Promise<void>;
 }
 
 export type EmailCodePurpose = 'signup' | 'recovery';
@@ -233,9 +233,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await unregisterPush();
         await supabase.auth.signOut();
       },
-      updatePassword: async (password) => {
-        const { error } = await supabase.auth.updateUser({ password });
-        if (error) throw error;
+      updatePassword: async (password, stillCurrent = () => true) => {
+        // This closure belongs to the session exposed with this AuthState value.
+        const actorId = session?.user.id;
+        if (!actorId) throw new ActorChangedError();
+        await updateActorPassword(actorId, password, stillCurrent);
       },
     };
   }, [session, ready, cartSyncing, cartSyncError, favoritesSyncing, favoritesSyncError]);

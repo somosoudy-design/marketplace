@@ -9,7 +9,7 @@ Agregar, quitar y consultar carrito/favoritos sin identidad; conservar productos
 ## Base existente y plan
 
 1. Reutilizar el carrito invitado móvil durable (reserva ligada a actor) y `cart_merge_intent`, cuyo journal privado y lock por comprador ya están activos. No usar el merge legacy parcial/no idempotente. Compartir lógica pura con web sin importar módulos nativos.
-2. Completar favoritos invitados con almacenamiento local y combinación por unión de IDs. Reutilizar favoritos conPK usuario/producto y upsert idempotente; revisar actor capturado, reservas, reintentos y cambios de cuenta antes de introducir nuevo backend.
+2. Completar favoritos invitados con almacenamiento local y combinación por unión de IDs. Conservar favoritos con PK usuario/producto y sus permisos; añadir recibo específico de combinación porque repetir un upsert tras una respuesta perdida podría reinsertar un favorito quitado posteriormente. Revisar actor capturado, reservas, reintentos y cambios de cuenta.
 3. Conectar los controles y listados actuales de web/app, contadores y retorno seguro de login/registro/OTP. Mantener acciones y distribución; retirar sólo las obligaciones prematuras de identificación de estos dos recorridos.
 4. Probar persistencia, selección/variantes/cantidades, cuenta no vacía, respuesta perdida/reintentos, cancelación, logout y cambio de cuenta en entorno aislado. Revisión focal claro/oscuro móvil/escritorio. Publicar sólo tras pruebas, con Free y APK compatible; ninguna cuenta, fixture, compra o pago de prueba remotos.
 
@@ -26,3 +26,11 @@ Lógica compartida revisada:116core y96unitarias existentes aprobadas, incluidos
 Migration preparada `20261107171748_guest_favorites_merge_intent.sql`: sólo schema privado favorites_private, journal y RPC autenticado por require_user; no modifica favoritos existentes/toggles/cartjournal/finanzas. Aplicada únicamente al clon local mayami_guest_mode_20261107;12SQL y8definiciones protegidas idénticas. GoTrue2.180.0 real compilado con toolchain verificada, Auth/REST/SMTP sólo loopback;5pruebas API reales con OTP/password/unión/replay/RLS/precio servidor pasan. A/B locales preparados en cuenta no vacía. Ningún fixture, usuario, pedido o pago remoto creado.
 
 Pendientes: integrar delta web tras revisión independiente, ejecutar UI focal real contra stackaislado y revisar capturas; concretar activación de RPC nuevo antes de publicar clientes. No repetir fixtures/preparadores API mientrasUIusa A/B. No publicar este checkpoint incompleto.
+
+## Integración web y revisión de identidad
+
+Web integrada tras revisión independiente: controles y listas guest, Web Locks entre pestañas, estado de almacenamiento y red, retorno interno seguro por login/registro/OTP y gates nuevos dentro del checkout después de restaurar referencias previas. Cuenta A/B remonta listas/estado transitorio y no usa placeholders privados entre actores. No se cambia CSS, estructura global, precio ni RPC financiero.
+
+Recuperación de contraseña de ambas plataformas captura el actor y usa su token sólo en el PUT Auth/user, sin permitir que una sesión mutable B reciba el password introducido para A. Los campos se remontan por actor y las respuestas tardías no navegan/muestran éxito tras cancelar.14 pruebas unitarias de cancelación/cambio durante captura/petición demorada/respuesta fallida aprobadas; no cambian claves reales.116 core y139 móvil/web totales; tipos/lint de monorepo aprobados.
+
+Recorridos UI locales en curso, con resets exactos sólo de cuentas A/B del clon mayami_guest_mode_20261107. Primera carrera A→logout→guest nuevo→B y estado efímero de ficha/modal correctos. Un fallo inicial del oráculo de etiqueta de una variante única se conserva y corrige según presentación existente; no se modifica el producto para satisfacer el test. No se ha activado RPC remoto ni publicado esta tanda.

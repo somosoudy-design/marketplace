@@ -3,9 +3,11 @@ import { Heart, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useQuery, useMutation, useMutationState, useQueryClient } from '@tanstack/react-query';
 import { favoriteState, type FavoriteEntry } from '@kora/api';
-import { useRouter } from 'next/navigation';
-import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
+import { useGuestFavoritesState } from '@/lib/guest-hooks';
+import { guestFavorites } from '@/lib/guest-storage';
+import { captureBuyerApi } from '@/lib/actor-api';
+import { guestError } from '@/lib/guest-errors';
 
 type Props = { id: string; title: string };
 export function Favorite(props: Props) {
@@ -13,31 +15,35 @@ export function Favorite(props: Props) {
   return <FavoriteControl key={`${session?.user.id ?? 'guest'}:${props.id}`} {...props} />;
 }
 function FavoriteControl({ id, title }: Props) {
-  const { session, ready } = useAccount();
+  const { session, ready, favoritesSyncing, favoritesSyncError, retryFavoritesSync } = useAccount();
   const user = session?.user.id;
-  const router = useRouter();
+  const guest = useGuestFavoritesState();
   const qc = useQueryClient();
   const queryKey = ['favorites', user];
   const mutationKey = ['favorite-write', user];
   const [pulse, setPulse] = useState(0);
-  const [failure, setFailure] = useState<{ on: boolean } | null>(null);
+  const [failure, setFailure] = useState<{ on: boolean; message?: string; sync?: boolean } | null>(null);
+  const [localPending, setLocalPending] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const favorites = useQuery({
     queryKey,
-    queryFn: () => browser().api.account.favoritesForBuyer(user!),
-    enabled: !!user,
+    queryFn: async () => { const bound = await captureBuyerApi(user!); const rows = await bound.api.account.favoritesForBuyer(user!); await bound.assertCurrent(); return rows; },
+    enabled: !!user && !favoritesSyncing && !favoritesSyncError,
   });
-  const active = !!user && (favorites.data?.some((row) => row.product_id === id) ?? false);
+  const reserved = useQuery({ queryKey: ['pending-guest-favorites', user, favoritesSyncError], queryFn: () => guestFavorites.pendingMerge(user!), enabled: !!user && !!favoritesSyncError });
+  const active = user ? (favorites.data?.some(row => row.product_id === id) ?? false) || (reserved.data?.productIds.includes(id) ?? false) : guest.data.some(row => row.product_id === id);
   const pendingProducts = useMutationState({
     filters: { mutationKey, status: 'pending' },
     select: (m) => (m.state.variables as { productId: string }).productId,
   });
-  const pending = pendingProducts.includes(id);
+  const pending = pendingProducts.includes(id) || localPending || (!!user && favoritesSyncing);
   const mutation = useMutation({
     mutationKey,
-    mutationFn: (v: { userId: string; productId: string; on: boolean }) =>
-      browser().api.account.setFavorite(v.userId, v.productId, v.on),
+    mutationFn: async (v: { userId: string; productId: string; on: boolean }) => {
+      const bound = await captureBuyerApi(v.userId); await bound.assertCurrent();
+      await bound.api.account.setFavorite(v.userId, v.productId, v.on); await bound.assertCurrent();
+    },
     onMutate: async (v) => {
       const key = ['favorites', v.userId];
       await qc.cancelQueries({ queryKey: key, exact: true });
@@ -69,9 +75,15 @@ function FavoriteControl({ id, title }: Props) {
   }, [failure]);
   const save = async (on: boolean) => {
     if (!user) {
-      router.push(`/cuenta?volver=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+      if (localPending) return;
+      setLocalPending(true); setFailure(null);
+      try { await guestFavorites.set(id, on); setPulse(n => n + 1); retryFavoritesSync(); }
+      catch (error) { setFailure({ on, message: guestError(error).message }); }
+      finally { setLocalPending(false); }
       return;
     }
+    if (favoritesSyncing) return;
+    if (favoritesSyncError) { setFailure({ on, sync: true, message: favoritesSyncError }); return; }
     if (favorites.isError) {
       const result = await favorites.refetch();
       if (result.isError) {
@@ -96,10 +108,10 @@ function FavoriteControl({ id, title }: Props) {
       <button
         type="button"
         className="favorite"
-        aria-label={`${favorites.isError ? 'Reintentar cargar' : active ? 'Quitar de' : 'Guardar en'} favoritos: ${title}`}
+        aria-label={`${favorites.isError || favoritesSyncError || (!user && guest.error) ? 'Reintentar cargar' : active ? 'Quitar de' : 'Guardar en'} favoritos: ${title}`}
         aria-pressed={active}
         aria-busy={pending}
-        disabled={!ready || pending || (!!user && favorites.isPending)}
+        disabled={!ready || pending || (!user && !guest.ready) || (!!user && !favoritesSyncError && favorites.isPending)}
         onClick={() => save(!active)}
       >
         <span key={pulse} className="favorite-glyph" data-pulse={pulse > 0} aria-hidden="true">
@@ -114,12 +126,12 @@ function FavoriteControl({ id, title }: Props) {
               <X size={20} />
             </button>
             <h2 id={titleId}>No pudimos actualizar favoritos</h2>
-            <p role="alert">El cambio no se guardó. Revisa tu conexión e inténtalo de nuevo.</p>
+            <p role="alert">{failure.message || 'El cambio no se guardó. Revisa tu conexión e inténtalo de nuevo.'}</p>
             <button
               type="button"
               className="button"
               disabled={pending || favorites.isFetching}
-              onClick={() => failure && save(failure.on)}
+              onClick={() => { if (failure?.sync) { setFailure(null); retryFavoritesSync(); } else if (failure) void save(failure.on); }}
             >
               Reintentar
             </button>

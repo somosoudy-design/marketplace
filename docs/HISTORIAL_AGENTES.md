@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 7nov2026 · Codex Mac · checkpoint de modo invitado integrado
+
+App/web integradas sin rediseño tras revisión independiente, usando stores compartidos, reservas por actor y recibos idempotentes. Recuperación de password ligada al actor y guardas de cancelación;116 core/139 móvil-web/13 crash independientes/12 SQL/5 API locales, tipos/lint completos aprobados. UI real en curso con Supabase Auth local y selección A/B no vacía; nuevas cuentas sólo locales, sin compras/pagos. Migration favorita preparada y probada en clon, todavía sin activación ni publicación remota. [Estado y siguiente acción](MODO_INVITADO_2026-11-07.md).
+
 ## 7nov2026 · cierre confirmado y siguiente tanda de invitado
 
 Oliver confirma Preventa e imágenes por color. Comprobación ya iniciada42393131475 termina5/6; Negro seleccionado ySKU correctos enAndroid claro/oscuro con toque centrado, mismoUUID; oscuro1.6 bloqueado por ANR PixelLauncher. Se conserva fallo inicial/recibos/artifacts, sin más ciclos ni nueva publicación. Círculos grandes/texto redundante/botón se registran para otra tanda. Se abre sólo modo invitado para carrito/favoritos, reutilizando persistencia/merge ya existentes, pruebas mutadoras aisladas y diseño preservado. [Plan](MODO_INVITADO_2026-11-07.md).
