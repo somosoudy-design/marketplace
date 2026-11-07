@@ -139,7 +139,10 @@
         {
           "heading": "Conservación y protección",
           "paragraphs": [
-            "Conservamos información mientras sea necesaria para mantener tu cuenta, cumplir las operaciones pendientes, atender reclamos, prevenir fraude y satisfacer las obligaciones legales aplicables. La eliminación de una cuenta no implica borrar de inmediato los registros que deban conservarse por una compra, un pago o una obligación legal.",
+            "Al completar un cierre verificado retiramos los datos de uso diario de la cuenta y los archivos personales comprendidos en esa gestión. Los pedidos, pagos, reclamos y otros documentos que necesitan revisión se tratan por separado. Te informaremos de lo que se conserve, su motivo y el plazo o condición aplicable.",
+            "Los eventos de seguridad de acceso de la cuenta comprendidos en el cierre que Mayami gestiona en su base de datos se reducen a la información necesaria y se conservan durante 90 días desde cada evento. El justificante mínimo de la solicitud de eliminación se conserva durante 90 días desde el cierre verificado. Si un caso concreto justifica conservar un registro, la conservación se limita a los datos necesarios para ese caso y a un plazo definido; no se amplía automáticamente a toda la cuenta.",
+            "Conservamos un marcador seudónimo mínimo mientras sea necesario mantener bloqueado ese identificador de cuenta y reconocer una gestión ya completada. Su necesidad se revisa si cambia el mecanismo de acceso o de revocación. No contiene el contenido de tu perfil ni supone que los datos conservados sean anónimos.",
+            "Los registros técnicos y las copias de seguridad que mantienen nuestros proveedores tienen ciclos propios. No hemos verificado un plazo de eliminación individual para todos esos sistemas; los 90 días anteriores no se les aplican. Puedes consultar el alcance de tu solicitud en soporte@mayami.app.",
             "Aplicamos controles de acceso para proteger cuentas y registros. Si compartes un dispositivo, cierra tu sesión al terminar. No envíes contraseñas, códigos de acceso ni claves bancarias a soporte."
           ]
         },
@@ -147,7 +150,7 @@
           "heading": "Acceso, corrección y eliminación",
           "paragraphs": [
             "Puedes solicitar información sobre los datos asociados a tu cuenta, su uso y finalidad, así como su corrección o eliminación cuando corresponda. Escribe desde el correo asociado a tu cuenta a soporte@mayami.app e indica qué necesitas. Antes de entregar o modificar información comprobaremos que la solicitud procede de su titular.",
-            "Puedes solicitar el cierre de tu cuenta por ese mismo canal. Te informaremos del resultado y de los datos que deban conservarse y su motivo. Esta política no limita los derechos ni los medios de reclamación que reconozca la legislación aplicable."
+            "Puedes solicitar la eliminación de tu cuenta desde Preferencias y privacidad en la app o por ese mismo correo, sin tener que instalar la app para escribirnos. Te informaremos del resultado, de los datos retirados y de cualquier conservación necesaria, su motivo y el plazo o condición aplicable. Esta política no limita los derechos ni los medios de reclamación que reconozca la legislación aplicable."
           ],
           "links": [
             {
@@ -296,22 +299,24 @@
           ]
         },
         {
-          "heading": "Qué retira el procedimiento actual",
+          "heading": "Qué retiramos al completar el cierre verificado",
           "bullets": [
             "Nombre, teléfono, referencia de foto y preferencias del perfil.",
-            "Direcciones guardadas, favoritos, carrito, alertas de existencias e historial de actividad registrado en la cuenta.",
-            "Tokens de notificaciones, sesiones guardadas y tokens de renovación de acceso."
+            "Direcciones guardadas, favoritos, carrito, alertas de existencias, actividad y notificaciones registradas en la cuenta.",
+            "Credenciales de acceso, sesiones guardadas, tokens de renovación y tokens de notificaciones.",
+            "Fotos personales del perfil comprendidas en el cierre, incluidos sus archivos almacenados."
           ],
           "paragraphs": [
-            "Se configura el bloqueo de la cuenta y se sustituyen algunos datos de identificación. En pedidos y entregas se reduce la dirección a región y ciudad; en pagos se retiran el nombre y teléfono del pagador de sus campos principales. Esto es un cierre con borrado parcial y anonimización, no un borrado total acreditado."
+            "La aprobación del cierre bloquea el acceso anterior a la cuenta. Si una limpieza falla o queda información pendiente de clasificar, la gestión permanece pendiente y puede retomarse; no se comunica una eliminación que no se haya verificado. Los comprobantes, mensajes y otros adjuntos se revisan por separado según su finalidad. El borrado en el servidor no acredita por sí solo la eliminación de copias guardadas en tus dispositivos."
           ]
         },
         {
           "heading": "Información que puede permanecer",
           "paragraphs": [
-            "El proceso actual conserva registros de pedidos, entregas, pagos, obligaciones, reembolsos y auditoría. También pueden permanecer datos de identificación, detalles de pago, mensajes y archivos adjuntos que ese proceso no elimina automáticamente. Retirar la referencia de la foto del perfil no acredita que el archivo original haya sido borrado.",
-            "Estos registros y archivos necesitan una revisión adicional al tramitar la eliminación. Mayami debe informarte de los datos que conservará, su motivo y las condiciones de conservación aplicables a tu solicitud. No publicamos aquí un plazo general ni afirmamos que todo registro conservado deba mantenerse por una obligación legal.",
-            "Puedes indicar expresamente que tu solicitud incluye fotos, comprobantes, mensajes y demás datos asociados, además del cierre de acceso. No consideramos el bloqueo de acceso una confirmación de que todos esos datos se hayan eliminado."
+            "Los pedidos, entregas, pagos, obligaciones, reembolsos, reclamos y sus documentos pueden necesitar conservación o revisión. No borramos ese historial automáticamente al cerrar el acceso ni aplicamos un plazo general a todos los datos. Te informaremos de los registros que deban conservarse, su motivo y el plazo o condición aplicable a tu caso.",
+            "Los eventos de seguridad de acceso de la cuenta comprendidos en el cierre que Mayami gestiona en su base de datos conservan sólo la información necesaria durante 90 días desde el evento. El justificante mínimo de la solicitud se conserva durante 90 días desde el cierre verificado. Una conservación justificada por un caso concreto se limita a los registros necesarios y a un plazo definido.",
+            "Puede permanecer un marcador seudónimo mínimo mientras sea necesario impedir que el acceso anterior vuelva a habilitar la cuenta y reconocer una gestión ya completada. No es un historial de actividad ni supone anonimato; su necesidad se revisa si cambia el mecanismo de acceso o de revocación.",
+            "Los registros técnicos y las copias de seguridad de los proveedores se gestionan por separado. No hemos verificado un plazo individual de eliminación para todos ellos y no les atribuimos los 90 días indicados arriba. Puedes pedir información sobre fotos, comprobantes, mensajes y demás datos asociados en soporte@mayami.app."
           ]
         },
         {
