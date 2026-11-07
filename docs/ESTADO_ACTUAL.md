@@ -2,7 +2,7 @@
 
 ## En curso · tres ajustes de banners y texto ·7nov2026
 
-Por encargo de Oliver se corrigen únicamente banner Android, banners web y texto técnico de comprador. Fuente implementada,101core+85móvil y26UI dirigidas aprobadas; revisión/captura final320 y publicación pendientes. Se conservan las asociaciones internas; aviso comercial sólo ante varias opciones, sin reasignar fotografías ni tocar pagos. Se prepara comprobación nativa con títulos largos y fuente ampliada. [Detalle](AJUSTES_BANNERS_2026-11-07.md). Worker vigente comprobado antes:1eea5edb…; Android vigente anterior:01a1b635… No describir este ajuste como publicado todavía.
+Por encargo de Oliver se corrigen únicamente banner Android, banners web y texto técnico de comprador. Fuente implementada,101core+85móvil y26UI dirigidas aprobadas; nueva revisión320 y26/26UI finales aprobadas; publicación y recibos nativos pendientes. Se conservan las asociaciones internas; aviso comercial sólo ante varias opciones, sin reasignar fotografías ni tocar pagos. Se prepara comprobación nativa con títulos largos y fuente ampliada. [Detalle](AJUSTES_BANNERS_2026-11-07.md). Worker vigente comprobado antes:1eea5edb…; Android vigente anterior:01a1b635… No describir este ajuste como publicado todavía.
 
 ## Actualización de app y backend ·7nov2026 · publicada y verificada
 

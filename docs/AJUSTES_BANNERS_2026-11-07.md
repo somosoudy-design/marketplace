@@ -11,7 +11,7 @@ Encargo de Oliver: tres correcciones por partes, banner de Android, banners web 
 
 ## Comprobación local
 
-Tipos y lint móvil/web aprobados;101 pruebas core y85 móviles aprobadas.26 ejecuciones Playwright pasan: app320/360/390/412 y web320/360/390/412/768/1024/1440, claro/oscuro, más fichas de opción única y ambigüedad. Las fotografías se esperan cargadas antes de capturar.
+Tipos y lint móvil/web aprobados;101 pruebas core y85 móviles aprobadas.26 ejecuciones Playwright pasan: app320/360/390/412 y web320/360/390/412/768/1024/1440, claro/oscuro, más fichas de opción única y ambigüedad. Las fotografías se esperan cargadas antes de capturar. El marcador nativo opcional sólo aparece después de onLoad de la fuente actual y se limpia en carga/error; conserva callbacks y no introduce texto visible.
 
 Los títulos actuales de las variantes UGREEN son Púrpura/Negro o Gris/Blanco, pero sus options están vacías. No se reconstruyen colores a partir del título ni se cambia el servidor. Para probar la protección de la tarjeta al elegir color se añade estructura Color únicamente a una respuesta del navegador de pruebas local; las fotos siguen sin clasificar. El caso de ficha se comprueba con datos públicos intactos.
 
@@ -19,6 +19,6 @@ No hay SQL nuevo, cambios RLS, compras, reportes o pagos reales. El backend comp
 
 ## Publicación y cierre
 
-Pendiente de terminar revisión visual y el ajuste estrecho final, publicar la corrección web en Workers Free y una OTA Android compatible con el APK existente. La comprobación nativa incluye JUOVI/BM88/AM8, varias opciones y fuentes1.3/1.6 en emulador. No nuevoAPK, tiendas públicas ni servicios de pago. No repetir una publicación si sólo falla su comprobación posterior: consultar primero la identidad vigente.
+Nueva corrida final26/26 sobre el ajuste320 y señales de carga aprobada, sin omitidas ni reintentos. Capturas320claro/oscuro nuevas en ui-receipt. Pendiente publicar la corrección web en Workers Free y una OTA Android compatible con el APK existente. La comprobación nativa incluye JUOVI/BM88/AM8, varias opciones y fuentes1.3/1.6 en emulador. No nuevoAPK, tiendas públicas ni servicios de pago. No repetir una publicación si sólo falla su comprobación posterior: consultar primero la identidad vigente.
 
 Evidencia local: `.local/banners-20261107/`. Referencia real: `.local/comparacion-referencias-20261107/referencia-ancho390.png`. No se afirma recepción en el teléfono del propietario sin observarlo.

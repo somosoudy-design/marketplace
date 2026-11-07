@@ -73,7 +73,8 @@ function ProductImageContent({ productId, variantId, productIsDemo, path, tone, 
           transition={reduced ? 0 : 180}
           priority={priority}
           recyclingKey={localPhoto ? exhibitionKey : uri ?? undefined}
-          onError={localPhoto && exhibitionKey ? () => { setFailed(exhibitionKey); onExhibitionError?.(exhibitionKey); } : remotePhoto ? () => { setFailedRemote(remotePhoto); onRemoteError?.(); } : undefined}
+          onLoadStart={loadedTestID ? () => setLoadedPhoto(undefined) : undefined}
+          onError={localPhoto && exhibitionKey ? () => { setLoadedPhoto(undefined); setFailed(exhibitionKey); onExhibitionError?.(exhibitionKey); } : remotePhoto ? () => { setLoadedPhoto(undefined); setFailedRemote(remotePhoto); onRemoteError?.(); } : undefined}
           onLoad={() => {
             if (loadedTestID && photoIdentity) setLoadedPhoto(photoIdentity);
             if (localPhoto && exhibitionKey) onExhibitionLoad?.(exhibitionKey);
