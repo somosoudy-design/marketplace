@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-07 — retención mínima local del cierre
+
+Desde34ecd9ae; dos resultados: copia Authaudit minimizada/TTL90d y recibo90d sin revivirJWT/replay.501eventos/batch500,holdsespecíficos,fronteraexactasinhold,Authrole sinclaims (superuserlocal explícito), P1remap ymarkerindependiente/control pasan.1Deno/11DB;18tablas idénticas. Revisionesindependientes P1/P2 corregidas antesSQLlocal; sin matrices/pagos/UI ni remotos. Ejecutormanualrealclock200, Cronnoactivo; proveedor/logexterno/backups/permisoshosted se verifican antesactivaciónfutura. [Detalle](RETENCION_CIERRE_CUENTA_2026-11-07.md).
+
 ## 2026-11-07 — cierre verificable mínimo local
 
 Integrador: worker/SQL y panel con estados honestos, bloqueo JWT en RPC/RLS/Storage, lease/retry y bytes porAPI. RED3 real→PASS con10dominios/4avatars; SQLfocal yconcurrencia PASS;11DB+67admin, tipos/lint/Deno ydos recorridospanel claro/oscuro. Revisión independiente funcional/visual; aviso pendiente local persistente corrige transparencia oscura. Authaudit conserva correo y no tiene plazo comprobado: retention_pending, no completed/Playready.16tablas intactas durante cierre;28regresionesPASS/2pagosfallan igualenbaseline,1suiteporclonguard;tasas locales cambiadas por esos tests, documentado. Sin producción, publicaciones, correos reales, nuevos accesos reales ni cargos; Google/cuotas/otras fuentes preservadas. [Informe](CIERRE_CUENTA_SEGURO_2026-11-07.md).

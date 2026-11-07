@@ -70,3 +70,7 @@ Evidencia reproducible privada: .local/play-privacy-20261107/DELETION_AUDIT.md, 
 ## Resultado del módulo mínimo de cierre · 7nov
 
 El nuevo flujo local retira credenciales mediante Auth, archivos mediante Storage y diez ámbitos diarios; bloquea el JWT anterior y evita completed prematuro. Auditoría Auth aún conserva identidad y no hay vencimiento efectivo comprobado: resultado retention_pending. No se confunde la retención legítima mínima de seguridad con guardar todos los datos o con un plazo contable. Ver [entrega, pruebas y límites](CIERRE_CUENTA_SEGURO_2026-11-07.md). La propuesta no se activó en producción.
+
+## Política materializada localmente · 7nov · continuación
+
+La [tanda mínima de retención](RETENCION_CIERRE_CUENTA_2026-11-07.md) prueba minimización/TTL90d de auditoríaSQL y recibo, holds específicos finitos y marcador separado que conserva bloqueo/replay. La purga fue manual con reloj privado de prueba y ejecutor realclock validado; no hay Cron activo ni implementación remota. Los plazos externos/backups y permisos alojados siguen por confirmar. No se conserva toda la auditoría como contabilidad ni se interpreta seguridad necesaria como impedimento automático para completar.
