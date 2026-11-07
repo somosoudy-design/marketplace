@@ -1,8 +1,8 @@
 # Estado actual de mayami
 
-## Actualización de app y backend ·7nov2026 · en curso
+## Actualización de app y backend ·7nov2026 · publicada y verificada
 
-Oliver pidió terminar la fase pendiente. Backend compatible20261107130620 activado en Marketplace tras contraste exacto de baseline,221/221DB y revisión independiente; pagos/D3 quedan excluidos y la función de pagos vigente permanece idéntica. Fuente funcional/visual45743f9 preservada en la rama. OTAAndroid con runtime existente solicitada por3a3539b; el mismo workflow verifica Free/cuota, publica y comprueba UUID exacto en emulador. Falta registrar resultado de la ejecución; no afirmar recepción física. Detalle: [Actualización7nov](ACTUALIZACION_APP_2026-11-07.md). Sin nuevoAPK, tiendas ni servicios de pago.
+Oliver pidió terminar la fase pendiente. Backend compatible20261107130620 activado en Marketplace tras contraste exacto de baseline,221/221DB y revisión independiente; pagos/D3 quedan excluidos y la función de pagos vigente permanece idéntica. Fuente funcional/visual45743f9 preservada en la rama. OTAAndroid publicada por3a3539b y CI42377231450Success: UUID01a1b635-a400-7536-bdcf-713c36832e47, grupo98888125-2dc8-429d-b40e-2cbe8ac2b1dc, runtimeb691ec… existente. ManifestHTTP200 y recibo del UUID exacto en emuladorAndroid15;4recorridos y12capturas claro/oscuro aprobados. Publicación/compatibilidad cerradas; recepción física en Samsung no observada. Detalle: [Actualización7nov](ACTUALIZACION_APP_2026-11-07.md). Sin nuevoAPK, tiendas ni servicios de pago.
 
 ## Eliminación de suspendidos · nube · 6nov2026
 

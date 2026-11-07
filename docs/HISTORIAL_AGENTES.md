@@ -2,7 +2,7 @@
 
 ## 7nov2026 · Codex Mac · actualización funcional y visual
 
-Por orden de Oliver («termina eso»), se cerró y activó el backend compatible20261107130620, excluyendo íntegramente la propuesta de pagos/D3. Baseline remoto contrastado,147 definiciones protegidas,221/221DB y grants/RLS posteriores comprobados; no operaciones financieras de prueba ni restauración de suspendidos. Integración y visuales locales preservados en45743f9. Free/cuota y runtime verificados por42375479457/42375479399. OTAAndroid y receipt nativo solicitados por3a3539b, pendientes de cierre. [Informe](ACTUALIZACION_APP_2026-11-07.md).
+Por orden de Oliver («termina eso»), se cerró y activó el backend compatible20261107130620, excluyendo íntegramente la propuesta de pagos/D3. Baseline remoto contrastado,147 definiciones protegidas,221/221DB y grants/RLS posteriores comprobados; no operaciones financieras de prueba ni restauración de suspendidos. Integración y visuales locales preservados en45743f9. Free/cuota y runtime verificados por42375479457/42375479399. OTAAndroid publicada por3a3539b;42377231450Success confirmó UUID01a1b635-a400-7536-bdcf-713c36832e47/grupo98888125-2dc8-429d-b40e-2cbe8ac2b1dc, runtimeb691ec… en emuladorAndroid15.4recorridos y12PNG claro/oscuro conservados; cierre técnico completado. No se afirma recepción física en Samsung. [Informe](ACTUALIZACION_APP_2026-11-07.md).
 
 ### 2026-11-06 · cierre: tres tiendas y eliminación disponible en panel
 

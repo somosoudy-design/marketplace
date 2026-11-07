@@ -38,7 +38,17 @@ El workflow de publicación exige Free/cuota, runtime obligatorio válido y fuen
 
 ## Estado de cierre
 
-Backend compatible activado. Publicación OTA y recepción nativa en curso; agregar el UUID, grupo, run y resultado al finalizar. No afirmar recepción en el teléfono de Oliver sin comprobarla. Una falla posterior de recibo no implica que la OTA no se haya publicado: conservar su UUID y repetir sólo la comprobación, no publicar otra copia idéntica.
+**Cierre técnico completado.** OTA Android publicada a13:32UTC y comprobada en emulador Android15 en claro/oscuro por [CI42377231450](https://github.com/somosoudy-design/marketplace/actions/runs/42377231450), resultado Success. UUID `01a1b635-a400-7536-bdcf-713c36832e47`, grupo `98888125-2dc8-429d-b40e-2cbe8ac2b1dc`, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, fuente `3a3539bc8c3d3bfe67264014cb7ba234724ff86d`. El manifest público devuelve HTTP200 con esa identidad.
+
+El recibo emitido por la app ejecutándose confirma UUID/runtime/canal/backend correctos y usuario sin sesión. Cuatro recorridos nativos terminaron sin fallos: Inicio, M durante scroll, búsqueda, diagnóstico y tienda en ambos temas;12 PNG originales conservados. El ZIP del artefacto13576317488 coincide con su digest GitHub SHA256 `c5cd1d3139873c0d13b2d595edf66d4696ca4051ed25ed3a38bbcdda87ae1d14`. Su tamaño es6532984bytes. Se guardaron manifest, XML y capturas con hashes; no se editaron los PNG. La portada capturada es JUOVI, mercancía real vigente durante el recorrido; no se fija un artículo ficticio para reproducir el mock.
+
+La revisión visual independiente abrió ocho capturas de Inicio, M durante scroll, búsqueda y tienda, en ambos temas: sin regresiones bloqueantes observadas, cuatro categorías y cuatro etiquetas visibles. Las capturas técnicas restantes y el recibo conservan la identidad de la ejecución.
+
+El recibo estático del binario verifica firma/paquete/runtime y tiene su campo `emulatorVerified=false` inicial; la prueba de ejecución de esta OTA es el recibo separado de la app, los XML/capturas y el job nativo aprobado. No confundir ambas piezas ni presentar el campo estático como prueba de instalación física.
+
+No hay comprobación de recepción en el Samsung de Oliver. La actualización puede descargarse al abrir la APK compatible y aplicarse al siguiente arranque: abrir, esperar unos segundos, cerrar por completo y volver a abrir. No desinstalar ni borrar datos para actualizar. El recorrido nativo fue invitado y no demuestra una compra real, pagos, push físico ni ejecución nativa con fontScale1.6.
+
+Si una comprobación futura falla después de publicar, conservar el UUID y repetir sólo la recepción; no publicar otra copia idéntica. La referencia de una request antigua no sustituye la identidad vigente documentada aquí.
 
 Recuperación: conservar journals e historial. Las definiciones anteriores están respaldadas y se contrastaron con las migraciones ya versionadas. Ante una reversión, devolver primero el cliente compatible y restaurar selectivamente funciones; no borrar órdenes/pagos ni retirar columnas o journals con datos. Para Android se conserva el grupo previo `2a0d076f-4aa9-421e-b762-791041c83609` y su runtime; no ejecutar una reversión sin evaluar la incidencia.
 

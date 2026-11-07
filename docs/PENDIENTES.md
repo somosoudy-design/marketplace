@@ -2,7 +2,7 @@
 
 ## Cierre de actualización ·7nov2026
 
-Backend compatible ya activado, sin bloque de pagos/D3. PublicaciónOTAAndroid y recibo nativo solicitados por3a3539b: esperar ejecución, conservar UUID/grupo, revisar capturas claro/oscuro y cerrar el estado. No republicar idéntico si sólo falla la comprobación posterior. No hace faltaAPK nuevo: runtimeb691ec… compatible comprobado. [Detalle](ACTUALIZACION_APP_2026-11-07.md).
+Backend compatible ya activado, sin bloque de pagos/D3. OTAAndroid publicada y recibida en emulador por42377231450Success: UUID01a1b635-a400-7536-bdcf-713c36832e47, grupo98888125-2dc8-429d-b40e-2cbe8ac2b1dc.12capturas y4recorridos claro/oscuro aprobados; cierre técnico completado. La recepción en el teléfono del propietario sigue sin observación física y no requiere republicar. No republicar idéntico si sólo falla la comprobación posterior. No hace faltaAPK nuevo: runtimeb691ec… compatible comprobado. [Detalle](ACTUALIZACION_APP_2026-11-07.md).
 
 ## Operación de tiendas y eliminación segura · 6nov
 
