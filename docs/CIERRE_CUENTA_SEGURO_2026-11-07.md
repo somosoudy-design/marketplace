@@ -1,5 +1,7 @@
 # Cierre seguro de cuenta · entrega mínima local · 7 de noviembre de 2026
 
+Actualización posterior local: la retención gestionada y el recibo90d se resolvieron en [RETENCION_CIERRE_CUENTA_2026-11-07.md](RETENCION_CIERRE_CUENTA_2026-11-07.md). Los resultados de esta tanda inicial se conservan como historial; no son el estado final del módulo.
+
 Se terminó el módulo local de bloqueo y limpieza verificable de cuentas simples. **No está activado en producción ni acredita eliminación integral o aceptación de Google Play.** El resultado real final es `in_review / retention_pending`: Auth conserva el correo original en su auditoría y su plazo/mecanismo de minimización no están resueltos. No se modificaron tablas internas de Auth para fabricar un resultado.
 
 La fuente se conserva aislada desde 92f75a0d, con checkpoints e0c665a7 y f4c2f22d; Google/correos y cuotas permanecen en sus fuentes separadas. La rama compartida conserva esos cambios paralelos. No desplegar su HEAD combinado.

@@ -1,8 +1,12 @@
 # Estado actual de mayami
 
-## Retención del cierre · ensayo local en curso · 7nov2026
+## Retención del cierre · dos resultados locales probados · 7 de noviembre de 2026
 
-Desde34ecd9ae, tanda mínima de copia Authaudit y recibo90d. SQL/worker propuestos y Deno check aprobado; aún sin aplicar migración ni aceptación. Sin remotos, UI, pagos/Google/cuotas o builds. Próxima acción: revisión focal, aplicar sólo al clon mayami_account_close_20261107, pruebas antes/después del vencimiento, hold/control/replay/JWT y límite externo explícito. [Detalle](RETENCION_CIERRE_CUENTA_2026-11-07.md).
+Desde34ecd9ae: auditoría AuthSQL conocida minimizada y con caducidad; holds específicos y vencimiento efectivo del recibo a90×24h. Un test real JWT/Storage pasó con501eventos, lotes de500→pendiente→completado, purga de504+1auditorías, hold de recibo, frontera exacta sin hold, marcador independiente, replay y sesión antigua denegada; control intacto. Pasaron11pruebas DB focales y Deno;18tablas protegidas idénticas. Sin UI/matrices ni suites financieras repetidas. P1/P2 de revisión independiente corregidos antes de aplicar SQL local.
+
+Completed admite registros necesarios bajo política/hold finito. Fuera de SQL quedan logs externos/backups y sus plazos concretos; los permisos hospedados no se infieren del rol Auth local, que es superusuario. Cron no instalado ni creado; ejecutor manual con reloj realHTTP200, sin purga automática activa. Próxima acción: preflight de lectura en Marketplace, confirmar retención del proveedor y preparar activación futura del ejecutor desde fuente aislada autorizada. [Fuente, pruebas y límites](RETENCION_CIERRE_CUENTA_2026-11-07.md).
+
+Sin producción, cuentas reales, cargos, Google/correos/cuotas o publicaciones/builds. No desplegar HEAD compartido; trabajo paralelo intacto.
 
 ## Cierre seguro de cuenta · mínimo local probado, retención pendiente · 7 de noviembre de 2026
 
