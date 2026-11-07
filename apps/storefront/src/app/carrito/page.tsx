@@ -1,10 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Minus, Plus, Trash2, ArrowRight } from 'lucide-react';
 import type { CartLine } from '@kora/api';
-import { D } from '@kora/core';
+import { D, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, planFromSearch, withPlan } from '@kora/core';
 import { useAccount } from '@/lib/providers';
 import { browser } from '@/lib/browser';
 import { money } from '@/lib/format';
@@ -124,13 +125,27 @@ function Line({ line, buyerId, guestQuantity, href, priceKnown = true }: { line:
     </article>
   );
 }
-function BuyerCart({ buyerId }: { buyerId: string }) {
+function BuyerCart({ buyerId, preference }: { buyerId: string; preference?: string }) {
+  const router = useRouter();
+  const [planNotice, setPlanNotice] = useState<{ source?: string; text: string }>({ text: '' });
   const qc = useQueryClient();
   const { cartSyncing, cartSyncError } = useAccount();
   const updating = useIsMutating({ mutationKey: ['cart-write', buyerId] }) > 0;
   const cart = useQuery({ queryKey: ['cart', buyerId], queryFn: async () => {
     const bound = await captureBuyerApi(buyerId); const result = await bound.api.cart.summaryReviewed(); await bound.assertCurrent(); return result;
   }, enabled: !cartSyncing });
+  const selectedPlan = chooseOfferedPlan(preference, cart.data?.plans ?? []);
+  const preferenceReady = cart.isSuccess && !cart.isFetching && !updating && !cartSyncing && !cartSyncError && cart.data.issues === 0;
+  // Retain a server fallback notice when its URL preference is replaced, until the buyer chooses again.
+  if (preferenceReady && selectedPlan.notice && planNotice.source !== preference) setPlanNotice({ source: preference, text: selectedPlan.notice });
+  useEffect(() => {
+    // Do not persist a fallback while the cart, account merge or a quantity write is still changing.
+    if (!cart.isSuccess || cart.isFetching || updating || cartSyncing || cartSyncError || cart.data.issues) return;
+    const offered = chooseOfferedPlan(preference, cart.data.plans);
+    if (!offered.code) return;
+    const next = withPlan('/carrito', offered.code);
+    if (window.location.pathname + window.location.search !== next) router.replace(next, { scroll: false });
+  }, [preference, cart.isSuccess, cart.isFetching, cart.data, updating, cartSyncing, cartSyncError, router]);
   if (cartSyncing || cart.isPending)
     return (
       <section className="state" role="status">
@@ -173,11 +188,22 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
             <span>Productos</span>
             <strong>{money(cart.data.items_usd)}</strong>
           </div>
-          <p>Entrega y opciones de pago se calculan al continuar con la compra.</p>
+          <p>El envío y los importes finales se confirman al continuar con la compra.</p>
+          <fieldset className="variant-picker" disabled={updating || cart.isFetching || !!cartSyncError}>
+            <legend>Plan de pago</legend>
+            {cart.data.plans.map(option => (
+              <label className="option-row" key={option.code}>
+                <input type="radio" name="cart-plan" checked={selectedPlan.code === option.code} onChange={() => { setPlanNotice({ source: preference, text: '' }); router.replace(withPlan('/carrito', option.code), { scroll: false }); }} />
+                <span><strong>{paymentPlanTitle(option)}</strong><span>{paymentPlanDescription(option)}</span></span>
+              </label>
+            ))}
+          </fieldset>
+          {(selectedPlan.notice || planNotice.text) && <p className="notice" role="status">{selectedPlan.notice || planNotice.text}</p>}
+          {!selectedPlan.code && <p className="notice error" role="alert">{cart.data.plans.length ? 'Selecciona un plan de pago disponible antes de continuar.' : 'No hay un plan de pago disponible para este carrito. Actualiza el carrito antes de continuar.'}</p>}
           {cart.data.issues > 0 ? (
             <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
           ) : (
-            <Link prefetch={false} className="button" data-testid="cart-checkout" href="/checkout" aria-disabled={updating || cart.isFetching || !!cartSyncError} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching || cartSyncError) event.preventDefault(); }}>
+            <Link prefetch={false} className="button" data-testid="cart-checkout" href={withPlan('/checkout', selectedPlan.code)} aria-disabled={updating || cart.isFetching || !!cartSyncError || !selectedPlan.code} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching || cartSyncError || !selectedPlan.code) event.preventDefault(); }}>
               Continuar con la compra
             </Link>
           )}
@@ -189,7 +215,7 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
     </div>
   );
 }
-function GuestCart() {
+function GuestCart({ preference }: { preference?: string }) {
   const guest = useGuestCartState();
   const ids = [...new Set(guest.data.map(line => line.product_id))];
   const current = useQuery({ queryKey: ['guest-cart-current', ids],
@@ -215,13 +241,16 @@ function GuestCart() {
     {(current.isError || offline) && <div className="notice error" role="alert"><p>{offline ? 'Sin conexión. Tus productos siguen guardados; actualizaremos precios y disponibilidad al recuperar la conexión.' : 'No pudimos actualizar precios y disponibilidad. Tus productos siguen guardados.'}</p><button type="button" className="button secondary" onClick={() => void current.refetch()}>Volver a intentar</button></div>}
     <div className="cart-layout"><div className="cart-products">{view.groups.map(group => <section className="cart-group" key={group.key}><header className="cart-group-heading"><h2>{group.storeName}</h2></header>{group.lines.map(line => <Line key={line.variant_id} line={line} priceKnown={line.priceKnown && !offline && !current.isError} href={line.slug ? `/p/${line.slug}?variant=${encodeURIComponent(line.variant_id)}` : undefined} guestQuantity={quantity => guestCart.setQuantity(line.variant_id, quantity)} />)}</section>)}</div>
       <aside className="cart-summary"><h2>Resumen</h2><div><span>Productos</span><strong>{view.items_usd == null || offline || current.isError ? 'Precio no disponible' : money(view.items_usd)}</strong></div><p>Entrega y opciones de pago se calculan al continuar con la compra.</p>
+        {preference && <p className="notice" role="status" data-testid="guest-plan-preference">{preference === 'three_parts' ? 'Preferencia: 3 pagos en total.' : 'Conservamos tu preferencia de pago.'} Confirmaremos los planes disponibles para tu carrito al iniciar sesión.</p>}
         {view.issues > 0 ? <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
-          : <Link prefetch={false} className="button" data-testid="cart-checkout" href={authHref('/cuenta', '/checkout')} aria-disabled={offline || current.isError || current.isFetching} onClick={event => { if (offline || current.isError || current.isFetching) event.preventDefault(); }}>Continuar con la compra</Link>}
+          : <Link prefetch={false} className="button" data-testid="cart-checkout" href={authHref('/cuenta', withPlan('/checkout', preference))} aria-disabled={offline || current.isError || current.isFetching} onClick={event => { if (offline || current.isError || current.isFetching) event.preventDefault(); }}>Continuar con la compra</Link>}
         <Link prefetch={false} className="text-link" href="/buscar">Seguir explorando <ArrowRight size={16} /></Link>
       </aside></div>
   </div>;
 }
-export default function Cart() {
+function CartContent() {
+  const search = useSearchParams();
+  const preference = planFromSearch(new URLSearchParams(search.toString()));
   const { session, ready } = useAccount();
   if (!ready)
     return (
@@ -230,8 +259,12 @@ export default function Cart() {
       </section>
     );
   return session ? (
-    <><PendingCartMerge key={'pending:' + session.user.id} /><BuyerCart key={session.user.id} buyerId={session.user.id} /></>
+    <><PendingCartMerge key={'pending:' + session.user.id} /><BuyerCart key={session.user.id} buyerId={session.user.id} preference={preference} /></>
   ) : (
-    <GuestCart />
+    <GuestCart preference={preference} />
   );
+}
+
+export default function Cart() {
+  return <Suspense fallback={<section className="state" role="status">Cargando tu carrito…</section>}><CartContent /></Suspense>;
 }

@@ -12,7 +12,7 @@ import {
   type PlaceOrderResult,
 } from '@kora/api';
 import { ArrowLeft, ArrowRight, Check, Plus, Truck } from 'lucide-react';
-import { describeEtaDates } from '@kora/core';
+import { describeEtaDates, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, planFromSearch, presentServerSchedule, withPlan } from '@kora/core';
 import { browser } from '@/lib/browser';
 import { money } from '@/lib/format';
 import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/lib/purchase';
@@ -56,6 +56,10 @@ export function Checkout({ buyerId }: { buyerId: string }) {
         if(!navigator.locks)throw new Error('Este navegador no puede coordinar la compra entre pestañas. Usa un navegador actualizado.');
         const i=await navigator.locks.request(`mayami.checkout:${buyerId}`,()=>active?restoreCheckoutIntent(localStorage,sessionStorage,buyerId):null);
         if(active&&i){setIntent(i);setUncertain(true);}
+        else if(active) {
+          // A URL carries a preference only. A stored/transmitted intent above keeps its accepted plan untouched.
+          setPlan(planFromSearch(new URLSearchParams(window.location.search)) ?? 'full');
+        }
       }catch(error){if(active)setStorageProblem((error as Error).message||'No pudimos recuperar tu compra guardada.');}
       finally{if(active)setRestored(true);}
     };
@@ -108,15 +112,19 @@ export function Checkout({ buyerId }: { buyerId: string }) {
         try {
           const s = await bound.api.checkout.previewReviewed(address?.id ?? null, selected, code);
           await bound.assertCurrent();
-          if (!s.plan && s.plans[0]) {
-            code = s.plans[0].code;
+          const offered = chooseOfferedPlan(code, s.plans);
+          if (code && offered.code !== code) recoveredPlan = true;
+          if (offered.code && s.plan?.code !== offered.code) {
+            recoveredPlan = recoveredPlan || (!!code && code !== offered.code);
+            code = offered.code;
             continue;
           }
           return {
             summary: s,
-            code: s.plan?.code ?? code,
+            code: offered.code && s.plan?.code === offered.code ? offered.code : null,
             recovered: Object.keys(shipping).length > 0 && selected !== shipping,
             recoveredPlan,
+            planNotice: chooseOfferedPlan(plan, s.plans).notice,
           };
         } catch (e) {
           const problem = (e as { code?: string }).code;
@@ -135,6 +143,12 @@ export function Checkout({ buyerId }: { buyerId: string }) {
       throw new Error('No pudimos actualizar las opciones de compra.');
     },
   });
+  useEffect(() => {
+    // This is navigation preference only; recovery never changes its stored selection or destination.
+    if (!restored || intent || uncertain || !preview.isSuccess || preview.isFetching || preview.isPlaceholderData || !preview.data.code) return;
+    const next = withPlan('/checkout', preview.data.code);
+    if (window.location.pathname + window.location.search !== next) router.replace(next, { scroll: false });
+  }, [restored, intent, uncertain, preview.isSuccess, preview.isFetching, preview.isPlaceholderData, preview.data, router]);
   if (preview.data && !preview.isFetching && preview.data !== seen && !uncertain) {
     setSeen(preview.data);
     if (step === 3 && reviewedToken && reviewedToken !== preview.data.summary.review_token) {
@@ -150,7 +164,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
     if (preview.data.recoveredPlan) {
       setPlan(preview.data.code ?? 'full');
       if (step >= 2 && !preview.data.recovered) setStep(2);
-      setNotice('El plan de pago cambió. Revisa el plan y los importes antes de confirmar.');
+      setNotice(preview.data.planNotice ?? 'El plan de pago cambió. Revisa el plan y los importes antes de confirmar.');
     }
   }
   const complete = async (result: PlaceOrderResult, accepted: Intent) => {
@@ -353,6 +367,8 @@ export function Checkout({ buyerId }: { buyerId: string }) {
   if (cartSyncing) return <section className="state" role="status">Incorporando tus productos…</section>;
   if (cartSyncError) return <PendingCartMerge />;
   const s = preview.data?.summary ?? snapshot;
+  const displayedPayments = s && preview.data?.code ? presentServerSchedule(s.schedule) : null;
+  const dueToday = displayedPayments?.singlePaymentDueToday;
   const fresh = preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData;
   if (addresses.isPending)
     return (
@@ -393,7 +409,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
           : !!s?.can_place;
   return (
     <div className="wrap commerce-page checkout-page">
-      <Link prefetch={false} className="text-link" href="/carrito">
+      <Link prefetch={false} className="text-link" href={withPlan('/carrito', plan)}>
         <ArrowLeft size={16} />
         Volver al carrito
       </Link>
@@ -521,17 +537,18 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                   <input
                     type="radio"
                     name="plan"
-                    checked={plan === p.code}
+                    checked={preview.data?.code === p.code}
                     disabled={!fresh}
-                    onChange={() => setPlan(p.code)}
+                    onChange={() => { setPlan(p.code); router.replace(withPlan('/checkout', p.code), { scroll: false }); }}
                   />
                   <span>
-                    <strong>{p.name}</strong>
-                    <span>{p.description}</span>
+                    <strong>{paymentPlanTitle(p)}</strong>
+                    <span>{paymentPlanDescription(p)}</span>
                   </span>
                 </label>
               ))}
-            {step === 2 && s && <PaymentSchedule summary={s} />}
+            {step === 2 && s && preview.data?.code && <PaymentSchedule summary={s} />}
+            {step === 2 && s && !preview.data?.code && <p className="notice" role="status">Selecciona uno de los planes disponibles para continuar.</p>}
             {step === 3 && s && (
               <>
                 <div className="checkout-products" data-testid="checkout-products">
@@ -587,7 +604,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                 </div>
                 <div className="review-address review-plan">
                   <div className="section-heading">
-                    <h2>{s.plan?.name}</h2>
+                    <h2>{s.plan ? paymentPlanTitle(s.plan) : 'Plan de pago'}</h2>
                     <button className="text-button" onClick={() => move(2)} aria-label="Cambiar plan de pago">
                       Cambiar
                     </button>
@@ -639,10 +656,10 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                   <dt>Total del pedido</dt>
                   <dd>{money(s.total_usd)}</dd>
                 </div>
-                {s.schedule.length > 1 && (
+                {s.schedule.length > 1 && dueToday && (
                   <div className="summary-now">
                     <dt>Pagas hoy</dt>
-                    <dd>{money(s.schedule[0]!.amount_usd)}</dd>
+                    <dd>{money(dueToday.amount_usd)}</dd>
                   </div>
                 )}
               </dl>
@@ -652,8 +669,8 @@ export function Checkout({ buyerId }: { buyerId: string }) {
             <div className="checkout-actions">
               {s && (
                 <div className="action-amount">
-                  <span>{s.schedule.length > 1 ? 'Pagas hoy' : 'Total del pedido'}</span>
-                  <strong>{money(s.schedule[0]?.amount_usd ?? s.total_usd)}</strong>
+                  <span>{s.schedule.length > 1 && dueToday ? 'Pagas hoy' : 'Total del pedido'}</span>
+                  <strong>{money(s.schedule.length > 1 && dueToday ? dueToday.amount_usd : s.total_usd)}</strong>
                 </div>
               )}
               <button
@@ -701,14 +718,15 @@ export function Checkout({ buyerId }: { buyerId: string }) {
 
 function PaymentSchedule({ summary: s }: { summary: CheckoutSummary }) {
   if (s.schedule.length <= 1) return null;
+  const displayed = presentServerSchedule(s.schedule);
   return (
     <div className="payment-schedule">
-      <h2>Calendario de pagos</h2>
-      {s.schedule.map((p) => (
+      <h2>{displayed.title}</h2>
+      {displayed.distribution && <p>{displayed.distribution}</p>}
+      {displayed.rows.map(({ item: p, label, due }) => (
         <div key={p.seq}>
           <span>
-            {p.kind === 'down_payment' ? 'Anticipo' : p.kind === 'installment' ? `Cuota ${p.seq}` : 'Pago total'} ·{' '}
-            {p.due_in_days === 0 ? 'Al pagar' : `En ${p.due_in_days} días`}
+            {label} · {due}
           </span>
           <strong>{money(p.amount_usd)}</strong>
         </div>
