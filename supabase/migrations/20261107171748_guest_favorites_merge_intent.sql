@@ -101,4 +101,5 @@ grant execute on function public.favorites_merge_intent(uuid[], text) to authent
 comment on function public.favorites_merge_intent(uuid[], text) is
   'Actor-bound additive guest-favorites migration, at most 100 input IDs. UUID-set normalization and historical receipts make lost-response retries non-mutating. Existing favorites and timestamps are preserved; invalid FKs roll back the entire new operation.';
 
+notify pgrst, 'reload schema';
 commit;
