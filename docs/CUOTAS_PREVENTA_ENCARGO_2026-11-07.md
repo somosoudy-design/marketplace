@@ -1,54 +1,53 @@
-# Tres pagos para preventa y encargo ·7nov2026
+# Tres pagos para preventa y encargo · 7nov2026
 
-## Alcance autorizado
+La implementación local está terminada y validada. La activación en Supabase y la publicación web/OTA siguen pendientes de acceso autorizado a Marketplace. No se modificó producción ni se construyó otro APK.
 
-Todos los productos reservable/preventa y on_order/por encargo deben ofrecer tres pagos totales, incluida la
-inicial. Conservar términos vigentes, diseño, guest, inventario/precios del servidor e históricos; sin compras
-ni pagos reales. Mixtos no deben financiar productos ajenos por una inferencia nueva.
+## Comportamiento y causa
 
-## Datos comprobados
+La lectura pública real de MIM a20:23:53UTC confirmó ocho productos publicados, cinco reservable/on_order, y las dos variantes HiTuneS3 deUSD39. three_parts está activo con anticipo0%,installments3,intervalo15d,recargo0,mínimo de productos60 y flujos local_stock/import_order. Una unidad de39 quedaba excluida por el mínimo; no había una cuarta cuota:0/3 ya produce tres pagos, el primero hoy. Los datos reales no se dedujeron del seed.
 
-Tres GET públicos MIM a20:23:53UTC respondieron200: three_parts activo, anticipo0,installments3, intervalo15d,
-recargo0,mínimo60,flujos local_stock/import_order. Deposit50 tiene mínimo40,una posterior30d;full100/0.
-8productos publicados,5reservable/on_order, HiTuneS3 dos variantes activasUSD39. El bloqueo de39 es el mínimo,
-no una cuarta cuota actual:0/3 ya genera3pagos, primero hoy. No usar el seed como prueba de datos actuales.
+La migración conserva el criterio anterior de todos los planes y añade elegibilidad para three_parts cuando todas las líneas válidas del carrito son reservable/on_order. Incluye los flujos existentes sin modificar las filas del plan ni ampliar la elegibilidad de otros productos. Los mixtos conservan la regla previa. El límite aritmético deUSD0,03 evita obligaciones de importe cero; no se crea otro mínimo comercial.
 
-## Implementación en curso
+La ficha recibe ofertas por variante y rango de cantidad desde product_detail_commercial, que conserva INVOKER/ACL/RLS. Estima únicamente el producto sin envío y lo explica. El carrito sólo ofrece planes de su resumen servidor; una preferencia de URL no concede elegibilidad. Checkout muestra el calendario final recibido, con importe y vencimiento de cada pago, e incluye el envío. La intención guardada conserva su plan/idempotencia; el retorno de acceso conserva únicamente la preferencia saneada. Si el plan deja de ofrecerse, sólo se elige full automáticamente cuando está ofrecido, con aviso; nunca otra financiación silenciosa.
 
-Nueva elegibilidad: conservar criterio previo de mínimos/flujos, o permitir three_parts para carrito de sólo
-líneas válidas reservable/on_order. No bajar mínimo global ni ampliar flujos de productos no objetivo.
-Mixtos conservan regla anterior. Planes/calendario/cobros existentes intactos; no se transforma installments
-ni se añade otra inicial. Sólo el límite aritmético de3centavos evita tres obligaciones con importe cero.
+## Alcance y preservación
 
-Ficha conserva product_detail_commercial INVOKER/ACL/RLS, añade ofertas por variante/rango de cantidad desde
-servidor. Preview sobre productos sin envío usa espejo core ya existente; checkout confirma importe final.
-Helper nuevo privado sin GRANT público; builder conserva seguridad y calendario. Sin RPC público nuevo.
+Migración20261107203116_mayami_deferred_three_payments creada con CLIlocal y aplicada UNA VEZ al clon mayami_installments_20261107 en127.0.0.1:55437. Tiene guardas de los dos cuerpos previos y de los términos reales del plan. Cambia dos funciones existentes y añade un helper privado sin permisos API. Owner,ACL,seguridad,volatilidad/search_path de las funciones previas permanecen idénticos. Nueve tablas completas de negocio/planes son idénticas antes y después de aplicar la migración; los tests SQL posteriores crean sus propios pedidos locales de prueba. Calendario, reglas de cobro, precios/stock y datos históricos remotos intactos.
 
-Módulo SQL/core en copia limpia: migración20261107203116 creada porCLIlocal y aplicada UNA VEZ en clon
-mayami_installments_20261107/127.0.0.1:55437. Guardas de2cuerpos previos + términos del plan antes de modificar.
-9tablas de negocio/planes idénticas antes/después, sólo2funciones modificadas y1privada nueva; seguridad,
-owner,ACL,volatilidad/search_path originales idénticos.124core/tiposcoreAPI pasan. PruebasDB/UIen progreso.
+Diseño y funciones existentes conservados, sin CSS nuevo. La revisión registra sólo una repetición menor del título del plan; no se abre otra tanda cosmética. Dos selectores Color existentes pertenecen a la base, sin atribuirlos al cambio de cuotas.
 
-## Fuente separada
+## Verificación completada
 
-Worktree técnico mayami-cuotas-release parte de59e88a07 (última tanda visual cerrada). Excluye el WIP Google,
-correo y su PNG, conservado completo en checkpointf3a642f9 y checkout principal. Los checkpoints de cuotas
-se incorporan a la rama compartida sin reescribir historia, y conservan un commit fuente limpio como padre
-adicional para revisión/publicación futura. No desplegar HEAD compartido con WIP por accidente.
+| Comprobación | Resultado y entorno |
+|---|---|
+| Core |124/124, incluido cálculo y presentación de calendario|
+| Regresiones móvil/web/SQL |175/175; incluye22SQL y14nuevas de navegación|
+| Seguridad y compatibilidad SQL |Paridad ficha/carrito/helper, INVOKER/RLS/ACL, stock inválido, replay, concurrencia, revisión obsoleta e históricos; clon aislado|
+| Redondeo con envío |44,50→14,83+14,83+14,84 en SQL; tres obligaciones, días0/15/30|
+| Web principal |Dos recorridos:1440claro/390oscuro; variante/cantidad, agregar→comprar sin duplicado, acceso/cancelación y revisión|
+| Web envío/mixto |Producto39+envío3→total42→14×3; mixto39+19=58 vuelveafull ofrecido conaviso, mantieneplanes legacy|
+| Invitado app |Cuatro contextos320/390claro/oscuro; preferencia y bytes de carrito conservados al cancelar/recargar|
+| Checkout app |Dos recorridos320claro/390oscuro, acceso y servidor real local;39+3→42→14×3|
+| Revisión visual |Independiente favorable; capturas tras fundido y scroll verifican tercera fila sobre barra fija, ambos temas|
+| Tipos/lint |Monorepo completo aprobado; tipos finales incluyen tests portables|
+| Compilaciones |Next producción local, ExpoWeb y export Android Hermes aprobados; sinAPK ni OTA|
 
-Sin cambio remoto aplicado. Para activar: verificar conexión correcta a Marketplace y contraste/fingerprint
-antes de aplicar sólo esta elegibilidad futura. No usar cuentaCLI errónea, cambiar permisos/credenciales,
-consultar configuración denegada ni activar Google. Publicación web/OTA sólo con fuente limpia validada,
-Workers/ExpoFree y APK/runtime existentes; sin binario nuevo.
+Las pruebas UI usan gateway/PostgREST/GoTrue/Postgres locales reales, no respuestas financieras simuladas. Cero solicitudes de creación de pedidos/pagos en UI. Cuentas y mutaciones de fixtures sólo en el clon aislado. No se probó esta tanda en Android nativo ni en el teléfono; compilar el bundle no equivale a verificar recepción de OTA. No se midió contrasteAA ni texto ampliado. La revisión independiente abrió25PNG concretos; el autor móvil abrió26adicionales/compartidos según manifiestos, sin sumar como imágenes únicas.
 
-Próxima acción: completar pruebas DB y las seis pantallas preservando preferencia de plan por URL/retorno
-seguro, rechazar planes no ofrecidos y mostrar pagos exactos. Después revisión independiente y cierre.
-Evidencia privada: .local/installments-20261107 en checkoutprincipal.
+Se conservaron los ensayos fallidos por campos/selectores del fixture y las capturas durante fundido. Los complementos estables resolvieron la evidencia visual sin cambios de CSS ni ocultar los originales.
 
-## Checkpoint de integración de pantallas
+## Fuente, evidencias y publicación pendiente
 
-Web y móvil conservan la preferencia en navegación y acceso. Las opciones del carrito vienen de su resumen servidor; la ficha limita su cálculo al producto sin envío y el checkout presenta el calendario recibido. Una intención guardada conserva su plan original. Fallback sólo a pago completo si el servidor lo ofrece. Tipos y lint del monorepo pasan;22 pruebas SQL aisladas aprobadas. QA visual y recorridos locales pendientes antes de considerar publicación. El conector sigue sin permiso para MIM; no se ha aplicado esta migración remota.
+Fuente ejecutable limpia validada1e8938ad1beedab31514bc52512d4f78fe7ddfa9, en worktree mayami-cuotas-release basado en59e88a07. Google/correo/PNG pendientes están preservados en el checkout principal y en f3a642f9; no hay intersección de archivos de código entre ese WIP y esta tanda. Los checkpoints se conservan en claude/marketplace-v1, con el commit limpio como padre adicional. No desplegar HEAD compartido con WIP Google/correos. Los cierres documentales posteriores no cambian ejecutables.
 
-## Pruebas locales de integración
+Evidencia privada reproducible en `.local/installments-20261107/` del checkout principal: LOCAL_RELEASE_EVIDENCE.json; public/; migration-before/after/result.json; portable-tests.json; logs/; ui-web-real/; ui-web-paid-mixed/; ui-web-focal/; ui-mobile-real/; ui-mobile-auth-real/; ui-mobile-auth-steady/; proposals/INDEPENDENT_CORE_TYPES_REVIEW.md e INDEPENDENT_VISUAL_REVIEW.md. Los builds locales contienen configuración loopback y nunca deben publicarse.
 
-124 core y175 pruebas móvil/web/SQL aprobadas (incluye22 SQL y14 de navegación nuevos versionados). Suite SQL portable sólo permite clonCI local o el clon explícito de esta tanda y verifica identidad antes de fixtures. Web:2 recorridos claro1440/oscuro390 y1 de envío pago/mixto. ExpoWeb:4 contextos guest320/390 claro/oscuro y2checkout autenticados320claro/390oscuro; no es comprobación Android nativo. Producto39→13×3 sin envío; envío3→total42→14×3 en checkout real de ambosclientes. Mixto39+19=58 no recibe excepción; vuelveafull ofrecido conaviso y permite elegirplanes anteriores. Cero llamadas financieras enUI, compras sólo de prueba encloneSQL. Fallos iniciales de fixtures/selectores de ensayo preservados y corregidos sin cambiarproducto. Revisión visual independiente enprogreso; buildNext producción local pendiente.
+El login del navegador comunicado por Oliver no habilitó las herramientas de esta conversación: get_project MIM devolvió MCP-32600 «You do not have permission to perform this action». No se reintentó configpull con la cuenta CLI errónea, se cambiaron credenciales/permisos o se inspeccionaron cookies. Google y los correos no se reabrieron en esta tanda.
+
+Siguiente acción concreta cuando exista conexión autorizada a Marketplace:
+
+1. Confirmar proyectoMIM y acceso esperado de somosoudy@gmail.com. Leer baseline actual de funciones/plan y preservar auditoría de permisos y tablas; sin fixtures ni compras remotas.
+2. Aplicar UNA VEZ esta migración con sus guardas y verificar funciones, permisos, datos preservados y oferta pública del producto39. Si las guardas difieren, revisar el cambio concurrente antes de aplicar.
+3. Preparar builds públicos nuevos desde fuente limpia, verificar Free y compatibilidad con runtime/APK vigente, y publicar web/OTA sólo tras comprobar backend. Verificar recepción y límites de cada superficie, sin reclamar prueba física no realizada.
+
+No se activó WorkersPaid, se contrataron servicios, enviaron pagos o realizaron compras reales. El impedimento actual es el acceso técnico a Supabase, no una nueva autorización comercial.

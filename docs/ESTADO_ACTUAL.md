@@ -1,8 +1,12 @@
 # Estado actual de mayami
 
-## Cuotas preventa/encargo · en curso ·7nov2026
+## Cuotas preventa y encargo · listas en local, activación pendiente · 7nov2026
 
-Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core,22DB y tipos/lint completos pasan. Integración ficha-carrito-checkout y retorno con preferencia terminada en fuente; Recorridos locales web/appweb y checkout con envío aprobados; revisión visual final y compilaciónNext producción pendientes. Conector aún rechaza MIM tras aviso de sesión Browser. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+Implementadas las ofertas por variante/cantidad, selección y retorno seguro entre ficha, carrito y checkout en app/web. Son tres pagos totales, incluida la inicial. La nueva excepción se limita a carritos compuestos por líneas válidas reservable/on_order; los mixtos conservan sus reglas anteriores. El calendario, los planes y la verificación de abonos permanecen intactos.
+
+Pasan124pruebas core y175móvil/web/SQL (incluye22SQL), tipos/lint completos, Next producción, ExpoWeb y export Android Hermes. Recorridos y revisión independiente favorables en claro/oscuro; la UI móvil se verificó en ExpoWeb, no en APK/emulador/teléfono. Migración aplicada sólo al clon local aislado: nueve tablas de negocio/planes y permisos idénticos antes/después de aplicarla. No hay cambios de producción, OTA ni nuevoAPK.
+
+Fuente ejecutable limpia validada:1e8938ad1beedab31514bc52512d4f78fe7ddfa9, basada en59e88a07. Google/correos WIP siguen preservados aparte en la rama compartida. No publicar HEAD compartido con ese WIP. Bloqueo real: el conector aún rechaza MIM con «sin permiso» después del aviso de login del navegador, y este chat no expone control Browser. Falta una conexión autorizada a Marketplace para contrastar/aplicar/verificar la única migración y luego publicar desde fuente limpia, manteniendo Free y el APK/runtime existente. [Resultados y siguiente acción](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
 
 ## Google y correo · preparación probada, sin activar ·7nov2026
 
