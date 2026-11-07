@@ -1,0 +1,42 @@
+{
+  "name": "@kora/storefront",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:assets": "node ../../tools/storefront/prepare-assets.mjs",
+    "dev": "pnpm prepare:assets && next dev --hostname 127.0.0.1 -p 3200",
+    "build": "node ../../tools/storefront/prepare-assets.mjs --release && next build",
+    "start": "pnpm verify:release && next start --hostname 0.0.0.0 -p 3200",
+    "typecheck": "node ../../tools/storefront/prepare-assets.mjs --types-only && next typegen && tsc --noEmit",
+    "lint": "eslint .",
+    "tokens": "node --experimental-strip-types ../../packages/design-tokens/scripts/css.ts src/app/tokens.css",
+    "verify:release": "node ../../tools/storefront/check-release.mjs",
+    "build:cloudflare": "opennextjs-cloudflare build && pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare",
+    "verify:cloudflare": "node ../../tools/storefront/check-cloudflare-release.mjs",
+    "preview:cloudflare": "pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare && opennextjs-cloudflare preview",
+    "deploy:cloudflare": "pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare && opennextjs-cloudflare deploy --keep-vars",
+    "verify:commercial": "node ../../tools/storefront/check-commercial-catalog.mjs"
+  },
+  "dependencies": {
+    "@kora/api": "workspace:*",
+    "@kora/core": "workspace:*",
+    "@kora/design-tokens": "workspace:*",
+    "@supabase/supabase-js": "^2.117.3",
+    "@tanstack/react-query": "^5.104.1",
+    "lucide-react": "1.53.0",
+    "next": "16.4.5",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.16",
+    "@types/node": "^22.20.5",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.5",
+    "typescript": "~5.9.3",
+    "wrangler": "4.148.0"
+  }
+}

@@ -1,0 +1,1694 @@
+{
+  "version": 1,
+  "kind": "generated-demo",
+  "date": "2026-10-23T23:59:19.816Z",
+  "source": "Original ImageGen generations and color edits of those original generations only. No third-party product photograph supplied.",
+  "authenticProductPhotographs": false,
+  "backendChanged": false,
+  "productCount": 25,
+  "resourceCount": 32,
+  "totalBytes": 2844800,
+  "resources": [
+    {
+      "slug": "audifonos-anc-over-ear",
+      "color": "Salvia",
+      "outputPrompt": "Created by root; exact generation prompt not supplied to catalog agent. Generic sage unbranded over-ear exhibition image on ivory background.",
+      "review": "Inspeccionada: una diadema y dos copas, Salvia uniforme, sin marcas/texto/accesorios; geometría coherente.",
+      "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
+      "catalogSlug": "audifonos-anc-over-ear",
+      "catalogTitle": "Audífonos inalámbricos con cancelación de ruido",
+      "originalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "variantId": "f4965176-bf53-4a7e-a9e1-07bf0608e856",
+      "variantTitle": "Salvia",
+      "catalogVariants": [
+        {
+          "id": "f4965176-bf53-4a7e-a9e1-07bf0608e856",
+          "title": "Salvia",
+          "options": {
+            "Color": "Salvia"
+          }
+        },
+        {
+          "id": "f984e205-a702-4f95-b0e2-c2249127a4a0",
+          "title": "Arena",
+          "options": {
+            "Color": "Arena"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "Inspeccionada: una diadema y dos copas, Salvia uniforme, sin marcas/texto/accesorios; geometría coherente.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "originalGalleryPaths": [
+        "demo/audifonos-anc-over-ear-1.webp",
+        "demo/audifonos-anc-over-ear-2.webp",
+        "demo/audifonos-anc-over-ear-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1771958,
+      "sha256": "77167d67785e4a25a1133d41a4c31acf53c5f487c7aaf843ee75e3cef903e760",
+      "outputPromptIsLiteral": false,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf-3d1c93923721.webp",
+      "optimizedSha256": "3d1c939237215f667002692f54d35cc291306966f10498a7b23a5f3d8884fcba",
+      "optimizedBytes": 75318,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "audifonos-anc-over-ear",
+      "color": "Arena",
+      "outputPrompt": "Edit ONLY the color of the attached generic unbranded over-ear headphone exhibition image. Preserve EXACT geometry, proportions, angle, cup shapes, hinges, cushion textures, controls, tiny holes, lighting, shadow, camera composition and neutral ivory background. Change all sage green product surfaces into harmonious warm sand/beige (Arena), including cushions and headband. Do not change any design detail; do not add logos, text, marks, cables or accessories. Keep square 1254x1254 composition and original clear margins. This is a newly generated generic demo depiction, not an authentic photograph of a commercial model.",
+      "review": "view_image: conserva geometría, articulaciones, copas, controles, encuadre y sombra de Salvia; cambio a Arena coherente; sin marcas/texto.",
+      "productId": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf",
+      "catalogSlug": "audifonos-anc-over-ear",
+      "catalogTitle": "Audífonos inalámbricos con cancelación de ruido",
+      "originalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "variantId": "f984e205-a702-4f95-b0e2-c2249127a4a0",
+      "variantTitle": "Arena",
+      "catalogVariants": [
+        {
+          "id": "f4965176-bf53-4a7e-a9e1-07bf0608e856",
+          "title": "Salvia",
+          "options": {
+            "Color": "Salvia"
+          }
+        },
+        {
+          "id": "f984e205-a702-4f95-b0e2-c2249127a4a0",
+          "title": "Arena",
+          "options": {
+            "Color": "Arena"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: conserva geometría, articulaciones, copas, controles, encuadre y sombra de Salvia; cambio a Arena coherente; sin marcas/texto.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen color edit of generated demo preserving geometry",
+      "primaryOriginalPath": "demo/audifonos-anc-over-ear-1.webp",
+      "originalGalleryPaths": [
+        "demo/audifonos-anc-over-ear-1.webp",
+        "demo/audifonos-anc-over-ear-2.webp",
+        "demo/audifonos-anc-over-ear-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/audifonos-anc-over-ear-v1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1857983,
+      "sha256": "d2f48bd8eabe1ee9016aaccf1816a53a5b05d124c48787e4af8b4ccde16a1251",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "0d93e509-6738-4d99-88ec-a5a1f5d08fdf-9a447315e1c8.webp",
+      "optimizedSha256": "9a447315e1c8594eb4c30728a3d17f1767d383689c1a9d230f01c35501fc4933",
+      "optimizedBytes": 70978,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "audifonos-in-ear-estuche",
+      "color": "Blanco",
+      "outputPrompt": "Create one ORIGINAL GENERATIVE EXHIBITION PRODUCT IMAGE for a generic unbranded marketplace DEMO. Not an authentic commercial product photograph and do not reproduce a named brand design. Square 1254x1254, clean product-centered composition on a perfectly plain opaque ivory #F5F4F1 seamless background, soft grounded studio shadow, realistic material quality, generous equal margins, object group fills about78% of frame, fully contained. Product: exactly TWO small WHITE in-ear wireless earbuds with silicone ear tips and ONE simple matching open white charging case. Use an understated generic non-distinctive bean-like earbud form, no stems imitating branded earbuds. Both earbuds clearly visible beside the empty open case; only two earbuds total. No cables, adapters, hand, person, props, extra accessories or packaging. No brands, logo, letters, words, numbers, certification symbols, watermarks, labels, screens, price or technical specifications. Studio finish with restrained highlights, subtle ivory background retained as opaque.",
+      "review": "view_image: exactamente dos in-ear blancos con puntas de silicona y un estuche abierto vacío; sin marcas/texto/props.",
+      "productId": "f1752791-3273-4001-beb6-000b7aace947",
+      "catalogSlug": "audifonos-in-ear-estuche",
+      "catalogTitle": "Audífonos in-ear con estuche de carga",
+      "originalPath": "demo/audifonos-in-ear-estuche-1.webp",
+      "variantId": "c243b59e-84a8-4be8-bc71-bd7552dcffeb",
+      "variantTitle": "Blanco",
+      "catalogVariants": [
+        {
+          "id": "c243b59e-84a8-4be8-bc71-bd7552dcffeb",
+          "title": "Blanco",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: exactamente dos in-ear blancos con puntas de silicona y un estuche abierto vacío; sin marcas/texto/props.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/audifonos-in-ear-estuche-1.webp",
+      "originalGalleryPaths": [
+        "demo/audifonos-in-ear-estuche-1.webp",
+        "demo/audifonos-in-ear-estuche-2.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/audifonos-in-ear-estuche-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1394011,
+      "sha256": "124b83c307257567475e5b553d14190ac91790c84d42e4ab7c702a6f7003a58a",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "f1752791-3273-4001-beb6-000b7aace947-d97e1446a17c.webp",
+      "optimizedSha256": "d97e1446a17c799ec4195c1540096ed21c077eb24879516a54cdd4bc0f8fb185",
+      "optimizedBytes": 26196,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "parlante-portatil",
+      "color": "Turquesa",
+      "outputPrompt": "Create one original generated exhibition image of ONE GENERIC UNBRANDED PORTABLE BLUETOOTH SPEAKER in saturated elegant TURQUOISE. This is a demo product representation, not a photograph of a verified commercial model. Square1254x1254, plain opaque ivory background #F5F4F1, generous margins, entire object fully contained and occupying about78% of frame, soft grounded studio shadow and realistic matte polymer/textile surfaces. Use a compact rounded rectangular horizontal form with a simple turquoise woven grille and discreet blank control buttons along the top. Non-distinctive industrial design, no imitation of any brand's recognizable silhouette. One speaker only, no strap, cable, box, accessories, props, hand or person. No water/splash scene, IP claims, power numbers, logos, text, letters, certification marks, labels, watermarks or screens. Balanced three-quarter view, clean retail studio finish.",
+      "review": "view_image: un parlante turquesa de rejilla textil, silueta contenida, sin marca, accesorios ni escena acuática. Botones +/- visibles pero ninguna especificación de potencia/IP.",
+      "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
+      "catalogSlug": "parlante-portatil",
+      "catalogTitle": "Parlante portátil resistente al agua",
+      "originalPath": "demo/parlante-portatil-1.webp",
+      "variantId": "1b7afb4c-1b8f-488f-a241-f0b028694416",
+      "variantTitle": "Turquesa",
+      "catalogVariants": [
+        {
+          "id": "1b7afb4c-1b8f-488f-a241-f0b028694416",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "767912c9-9b59-4bb2-8b90-71e42748ac2c",
+          "title": "Coral",
+          "options": {
+            "Color": "Coral"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: un parlante turquesa de rejilla textil, silueta contenida, sin marca, accesorios ni escena acuática. Botones +/- visibles pero ninguna especificación de potencia/IP.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/parlante-portatil-1.webp",
+      "originalGalleryPaths": [
+        "demo/parlante-portatil-1.webp",
+        "demo/parlante-portatil-2.webp",
+        "demo/parlante-portatil-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/parlante-portatil-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2241960,
+      "sha256": "cee5e3fd0e18f7d69f0309632465b73578bb4f3806f826e7567a427fd9083f5e",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01-50f29b167b1c.webp",
+      "optimizedSha256": "50f29b167b1cef522d4156dd6a9a4fab2cf0775d07901a69d2403588ad7f35e4",
+      "optimizedBytes": 224736,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "reloj-inteligente-deportivo",
+      "color": "Negro",
+      "outputPrompt": "Create one original generated exhibition image of ONE GENERIC UNBRANDED SPORTS SMARTWATCH with BLACK case and BLACK silicone strap. It represents a generic demo, not a real model or authentic product photograph. Square1254x1254; seamless perfectly plain opaque ivory #F5F4F1 background, subtle soft grounded studio shadow, object fully contained with generous equal margins occupying about78% of frame. Use a simple non-distinctive softly rounded octagonal watch case and modest black silicone strap with plain clasp; black glass screen completely OFF with restrained reflections. Three-quarter view; show the watch as one continuous coherent wearable object, strap curved naturally. No branded lookalike, no logo, text, digits, icons, apps, health sensors, medical graphics, colored rings, technical claims or extra accessories. Realistic matte materials, refined clean studio lighting.",
+      "review": "view_image: reloj negro genérico de caja octagonal suave y correa continua, pantalla apagada, sin texto/marca/accesorios ni funciones médicas.",
+      "productId": "4a16b9ea-86e1-428e-8989-461848dad920",
+      "catalogSlug": "reloj-inteligente-deportivo",
+      "catalogTitle": "Reloj inteligente deportivo",
+      "originalPath": "demo/reloj-inteligente-deportivo-1.webp",
+      "variantId": "a9202235-ee54-480f-b8d6-b7d582144479",
+      "variantTitle": "Negro",
+      "catalogVariants": [
+        {
+          "id": "a9202235-ee54-480f-b8d6-b7d582144479",
+          "title": "Negro",
+          "options": {
+            "Color": "Negro"
+          }
+        },
+        {
+          "id": "e5cec675-8b8c-4904-98a2-a78b3ff793af",
+          "title": "Oliva",
+          "options": {
+            "Color": "Oliva"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: reloj negro genérico de caja octagonal suave y correa continua, pantalla apagada, sin texto/marca/accesorios ni funciones médicas.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/reloj-inteligente-deportivo-1.webp",
+      "originalGalleryPaths": [
+        "demo/reloj-inteligente-deportivo-1.webp",
+        "demo/reloj-inteligente-deportivo-2.webp",
+        "demo/reloj-inteligente-deportivo-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/reloj-inteligente-deportivo-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1495785,
+      "sha256": "a16aea58492afe94bf1832bdae53022a83af0c4037ce71c4c63fec25624e4fb5",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "4a16b9ea-86e1-428e-8989-461848dad920-267944a6d674.webp",
+      "optimizedSha256": "267944a6d67455f0d0b6235d67f478c39bc3466e791be1ade3af0d02ead24ac5",
+      "optimizedBytes": 37970,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "parlante-portatil",
+      "color": "Coral",
+      "outputPrompt": "Edit ONLY the color of the attached GENERIC generated turquoise speaker. Change every turquoise polymer and woven grille surface to warm rich CORAL. Preserve EXACT object geometry, buttons, grille weave, proportions, shadow, ivory background, camera angle, framing and complete silhouette. No added logo, text, accessories, cable or props. Preserve square1254x1254. This is a generated demo exhibition color variant, not a real manufacturer photograph.",
+      "review": "view_image: mismo parlante, botones, rejilla, encuadre y sombra; color Coral homogéneo; no marca/accesorios.",
+      "productId": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01",
+      "catalogSlug": "parlante-portatil",
+      "catalogTitle": "Parlante portátil resistente al agua",
+      "originalPath": "demo/parlante-portatil-1.webp",
+      "variantId": "767912c9-9b59-4bb2-8b90-71e42748ac2c",
+      "variantTitle": "Coral",
+      "catalogVariants": [
+        {
+          "id": "1b7afb4c-1b8f-488f-a241-f0b028694416",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "767912c9-9b59-4bb2-8b90-71e42748ac2c",
+          "title": "Coral",
+          "options": {
+            "Color": "Coral"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: mismo parlante, botones, rejilla, encuadre y sombra; color Coral homogéneo; no marca/accesorios.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen color edit of generated demo preserving geometry",
+      "primaryOriginalPath": "demo/parlante-portatil-1.webp",
+      "originalGalleryPaths": [
+        "demo/parlante-portatil-1.webp",
+        "demo/parlante-portatil-2.webp",
+        "demo/parlante-portatil-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/parlante-portatil-v1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2380454,
+      "sha256": "e537a3a62628afff76e26b3f3997b74891bb1cc5b5ea752bd93dcc168a0d31a3",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "4e7ba2a1-ebe9-45e7-998e-5df50b41ec01-aa422768790a.webp",
+      "optimizedSha256": "aa422768790afab8e62b31f5a654f10919d94bf92177260c868e6b1e158d674c",
+      "optimizedBytes": 211920,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "reloj-inteligente-deportivo",
+      "color": "Oliva",
+      "outputPrompt": "Edit ONLY the strap color of the attached ORIGINAL GENERATED GENERIC BLACK smartwatch exhibition image. Change the black silicone strap, strap loops and clasp area to muted OLIVE green. Preserve the BLACK watch case and BLACK OFF screen exactly. Preserve EXACT geometry, shape, octagonal bezel, crown, number and placement of strap holes, camera angle, framing, material texture, ivory background and shadow. Do not add words, logos, digits, screen icons, health graphics, sensors or accessories. Square1254x1254 opaque background. Generated generic demo variant, not a real manufacturer photograph.",
+      "review": "view_image: misma caja y pantalla negras, correa Oliva; geometría, agujeros y sombra conservados. Sin marca/texto.",
+      "productId": "4a16b9ea-86e1-428e-8989-461848dad920",
+      "catalogSlug": "reloj-inteligente-deportivo",
+      "catalogTitle": "Reloj inteligente deportivo",
+      "originalPath": "demo/reloj-inteligente-deportivo-1.webp",
+      "variantId": "e5cec675-8b8c-4904-98a2-a78b3ff793af",
+      "variantTitle": "Oliva",
+      "catalogVariants": [
+        {
+          "id": "a9202235-ee54-480f-b8d6-b7d582144479",
+          "title": "Negro",
+          "options": {
+            "Color": "Negro"
+          }
+        },
+        {
+          "id": "e5cec675-8b8c-4904-98a2-a78b3ff793af",
+          "title": "Oliva",
+          "options": {
+            "Color": "Oliva"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: misma caja y pantalla negras, correa Oliva; geometría, agujeros y sombra conservados. Sin marca/texto.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen color edit of generated demo preserving geometry",
+      "primaryOriginalPath": "demo/reloj-inteligente-deportivo-1.webp",
+      "originalGalleryPaths": [
+        "demo/reloj-inteligente-deportivo-1.webp",
+        "demo/reloj-inteligente-deportivo-2.webp",
+        "demo/reloj-inteligente-deportivo-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/reloj-inteligente-deportivo-v1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1696544,
+      "sha256": "29bf90d6630d2f41a10a0ac6ea0ea76e97ddc9d2e4797f8459b50525f873cd95",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "4a16b9ea-86e1-428e-8989-461848dad920-02328a2a70bf.webp",
+      "optimizedSha256": "02328a2a70bf7a1171441fca14835eab95da4e7fc56094f60f5a2fa69c2979ed",
+      "optimizedBytes": 42896,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "teclado-mecanico-compacto",
+      "color": "Crema",
+      "outputPrompt": "Create one original generated exhibition image of ONE GENERIC UNBRANDED compact mechanical keyboard in warm CREAM, representing a demo product, not a verified commercial model. Square1254x1254, plain opaque ivory #F5F4F1 background and soft restrained studio contact shadow, fully contained object with generous margins, about78% frame width. Exact keyboard class:75percent layout, a function-key row, alphanumeric block, distinct arrow keys and a small navigation-key column; NO numeric keypad; not a60percent keyboard. Use realistic cream matte keycaps and simple cream case, blank keycaps without letters/numbers/legends, no RGB illumination, no screen, no control dial. Elevated three-quarter view lets rows and compact layout read clearly. Generic non-distinctive design without brand cues. No cable, dongle, tools, wristrest, box, accessories, logo, words, certification marks or watermark. Premium restrained realistic studio material finish. Entire keyboard fully inside frame.",
+      "review": "view_image: teclado compacto Crema, seis filas incluida función y flechas, sin bloque numérico; teclas sin leyendas, sin marcas/accesorios. Representación genérica, distribución comercial no acreditada.",
+      "productId": "e2963fef-06a4-41e7-8dcd-5ae42576c923",
+      "catalogSlug": "teclado-mecanico-compacto",
+      "catalogTitle": "Teclado mecánico compacto",
+      "originalPath": "demo/teclado-mecanico-compacto-1.webp",
+      "variantId": "9c30455d-8d6c-4476-8125-97e4ea73790a",
+      "variantTitle": "Crema",
+      "catalogVariants": [
+        {
+          "id": "9c30455d-8d6c-4476-8125-97e4ea73790a",
+          "title": "Crema",
+          "options": {
+            "Color": "Crema"
+          }
+        },
+        {
+          "id": "27202dd8-a0ee-4609-8dca-36bde90210ef",
+          "title": "Grafito",
+          "options": {
+            "Color": "Grafito"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: teclado compacto Crema, seis filas incluida función y flechas, sin bloque numérico; teclas sin leyendas, sin marcas/accesorios. Representación genérica, distribución comercial no acreditada.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/teclado-mecanico-compacto-1.webp",
+      "originalGalleryPaths": [
+        "demo/teclado-mecanico-compacto-1.webp",
+        "demo/teclado-mecanico-compacto-2.webp",
+        "demo/teclado-mecanico-compacto-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/teclado-mecanico-compacto-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1485851,
+      "sha256": "fb52f583ce69f8544671d7b093a503b61d25b6ff189a778b5b75af2a6918b840",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "e2963fef-06a4-41e7-8dcd-5ae42576c923-30451e56d8a6.webp",
+      "optimizedSha256": "30451e56d8a63fbf442997a6f3296f6d85d53fc7376584198a29cff2a1bdfd91",
+      "optimizedBytes": 61986,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "mochila-urbana-laptop",
+      "color": "Azul marino",
+      "outputPrompt": "Create one original generated exhibition image of ONE GENERIC UNBRANDED urban laptop backpack in rich NAVY BLUE. This is a representative demo image, not a real manufacturer photograph. Square1254x1254, perfectly plain solid opaque ivory #F5F4F1 background, soft grounded studio shadow, fully visible contained silhouette occupying about78% of frame with generous margins. Design: understated rounded rectangular navy textile backpack, practical simple front panel, one subtle front zip pocket and main zipper, lightly padded shoulder straps visible along side, modest fabric carry handle, believable fabric and seams, closed compartments. No computer or visible compartment contents, no extra bags, tags, badge, bottle, cable, USB port or branded design. No text, letters, logos, labels, certification symbols, size measurements, watermark or technical claims. Refined three-quarter front view, realistic controlled studio lighting, no person or props.",
+      "review": "view_image: una mochila Azul marino cerrada, tejido y costuras plausibles, tirantes acolchados; sin computadora ni objetos de bundle, marca o texto.",
+      "productId": "a22d2098-4aa9-422f-8c29-2ee0cfd59417",
+      "catalogSlug": "mochila-urbana-laptop",
+      "catalogTitle": "Mochila urbana para laptop",
+      "originalPath": "demo/mochila-urbana-laptop-1.webp",
+      "variantId": "1b79c80d-7a89-4e23-846c-b71e014db051",
+      "variantTitle": "Azul marino",
+      "catalogVariants": [
+        {
+          "id": "1b79c80d-7a89-4e23-846c-b71e014db051",
+          "title": "Azul marino",
+          "options": {
+            "Color": "Azul marino"
+          }
+        },
+        {
+          "id": "7565525e-ab73-4e3f-97f0-104ed5ac6c82",
+          "title": "Oliva",
+          "options": {
+            "Color": "Oliva"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: una mochila Azul marino cerrada, tejido y costuras plausibles, tirantes acolchados; sin computadora ni objetos de bundle, marca o texto.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/mochila-urbana-laptop-1.webp",
+      "originalGalleryPaths": [
+        "demo/mochila-urbana-laptop-1.webp",
+        "demo/mochila-urbana-laptop-2.webp",
+        "demo/mochila-urbana-laptop-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/mochila-urbana-laptop-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2757941,
+      "sha256": "414fa358f55bd920f0738f22f4e5e995a4df120e3c7a79b2a66f5d52cc754f39",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "a22d2098-4aa9-422f-8c29-2ee0cfd59417-63265823f4ee.webp",
+      "optimizedSha256": "63265823f4eec812903d339c62fd9e09e0fad031d5bdac263e676f86cebd5c04",
+      "optimizedBytes": 178186,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "teclado-mecanico-compacto",
+      "color": "Grafito",
+      "outputPrompt": "Edit ONLY the color of the attached ORIGINAL GENERATED generic cream compact keyboard into GRAPHITE. Change cream case and all cream keycaps to harmonious dark graphite gray matte surfaces. Preserve EXACT geometry, keyboard layout, number and shape of keys, blank key surfaces, proportions, perspective, background, shadows and framing. Keep all keys without text or legends. Do not add brands, dial, screen, lighting, cable or accessories. Square1254x1254, opaque ivory background unchanged. This is a generated unbranded demo color variant, not a real commercial unit photograph.",
+      "review": "view_image: mismo teclado compacto y distribución sin numpad; teclas blancas y gabinete pasan a Grafito, manteniendo geometría y perspectiva. Sin leyendas/marcas.",
+      "productId": "e2963fef-06a4-41e7-8dcd-5ae42576c923",
+      "catalogSlug": "teclado-mecanico-compacto",
+      "catalogTitle": "Teclado mecánico compacto",
+      "originalPath": "demo/teclado-mecanico-compacto-1.webp",
+      "variantId": "27202dd8-a0ee-4609-8dca-36bde90210ef",
+      "variantTitle": "Grafito",
+      "catalogVariants": [
+        {
+          "id": "9c30455d-8d6c-4476-8125-97e4ea73790a",
+          "title": "Crema",
+          "options": {
+            "Color": "Crema"
+          }
+        },
+        {
+          "id": "27202dd8-a0ee-4609-8dca-36bde90210ef",
+          "title": "Grafito",
+          "options": {
+            "Color": "Grafito"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: mismo teclado compacto y distribución sin numpad; teclas blancas y gabinete pasan a Grafito, manteniendo geometría y perspectiva. Sin leyendas/marcas.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen color edit of generated demo preserving geometry",
+      "primaryOriginalPath": "demo/teclado-mecanico-compacto-1.webp",
+      "originalGalleryPaths": [
+        "demo/teclado-mecanico-compacto-1.webp",
+        "demo/teclado-mecanico-compacto-2.webp",
+        "demo/teclado-mecanico-compacto-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/teclado-mecanico-compacto-v1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1703164,
+      "sha256": "5f3a5f79ec6ddad982d55f0384ac710437c86393ce3f45faf6121e7e156ebb62",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "e2963fef-06a4-41e7-8dcd-5ae42576c923-79223ecfbe1e.webp",
+      "optimizedSha256": "79223ecfbe1e79ee7ce0b3ba8843ceb4439f822a5408bb752ec35e724b512ae0",
+      "optimizedBytes": 50556,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "mochila-urbana-laptop",
+      "color": "Oliva",
+      "outputPrompt": "Edit ONLY the color of the attached ORIGINAL GENERATED generic navy backpack to muted OLIVE GREEN. Change navy textile, webbing, handle, padding, zipper fabric and matching trim into coherent olive hues. Preserve EXACT geometry, every pocket, zipper, straps, seams, fabric weave, proportions, angle, closed state, shadow, background and framing. Do not add or remove any part. No logo, words, badge, tag, accessories or contents. Square1254x1254 opaque ivory background unchanged. Generated unbranded demo exhibition color variant, not an authentic photo of a verified commercial model.",
+      "review": "view_image: misma mochila y costuras, bolsillos/tirantes/cierres conservados; color Oliva homogéneo, sin marca ni contenido visible.",
+      "productId": "a22d2098-4aa9-422f-8c29-2ee0cfd59417",
+      "catalogSlug": "mochila-urbana-laptop",
+      "catalogTitle": "Mochila urbana para laptop",
+      "originalPath": "demo/mochila-urbana-laptop-1.webp",
+      "variantId": "7565525e-ab73-4e3f-97f0-104ed5ac6c82",
+      "variantTitle": "Oliva",
+      "catalogVariants": [
+        {
+          "id": "1b79c80d-7a89-4e23-846c-b71e014db051",
+          "title": "Azul marino",
+          "options": {
+            "Color": "Azul marino"
+          }
+        },
+        {
+          "id": "7565525e-ab73-4e3f-97f0-104ed5ac6c82",
+          "title": "Oliva",
+          "options": {
+            "Color": "Oliva"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: misma mochila y costuras, bolsillos/tirantes/cierres conservados; color Oliva homogéneo, sin marca ni contenido visible.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen color edit of generated demo preserving geometry",
+      "primaryOriginalPath": "demo/mochila-urbana-laptop-1.webp",
+      "originalGalleryPaths": [
+        "demo/mochila-urbana-laptop-1.webp",
+        "demo/mochila-urbana-laptop-2.webp",
+        "demo/mochila-urbana-laptop-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/mochila-urbana-laptop-v1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2756512,
+      "sha256": "a59b0b5a1ba51c2b1845b6c9b91c3369c0b100badd34bad2e835f6aa8175caaa",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "a22d2098-4aa9-422f-8c29-2ee0cfd59417-d4bf750e7d12.webp",
+      "optimizedSha256": "d4bf750e7d12df16fc959928d560c5c20a4bd8e824c1c29eec89de4f73349df4",
+      "optimizedBytes": 165346,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "correa-reflectiva",
+      "color": "Turquesa",
+      "outputPrompt": "Create one original generated exhibition image of ONE GENERIC UNBRANDED reflective dog leash, TURQUOISE woven nylon webbing with two thin reflective gray stitched lines, one sewn loop handle and one simple plain silver metal snap hook. Represent a demo, not a verified real commercial model. Square1254x1254, plain solid opaque ivory #F5F4F1 background, soft studio shadow, believable fabric, stitching and metal. Entire leash arranged in a simple relaxed loose oval with handle and hook clearly visible, only ONE continuous leash, centered composition about78% of frame with generous margins and no clipping. No retractable housing, collar, harness, dog, person, packaging or extra accessories. No logo, words, labels, dimensions, strength rating, certification symbols or watermark. Generic construction, refined realistic studio finish, calm top-down three-quarter view.",
+      "review": "view_image: una correa Turquesa continua, asa cosida, dos líneas reflectivas y un mosquetón metálico. Sin perro/collar/accesorios/marcas; no cifras de longitud/carga.",
+      "productId": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d",
+      "catalogSlug": "correa-reflectiva",
+      "catalogTitle": "Correa reflectiva",
+      "originalPath": "demo/correa-reflectiva-1.webp",
+      "variantId": "16af21c2-ab3a-43ee-a716-b8597c6b8690",
+      "variantTitle": "Turquesa",
+      "catalogVariants": [
+        {
+          "id": "16af21c2-ab3a-43ee-a716-b8597c6b8690",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "14a5e387-664f-4353-8ec6-563649f42b91",
+          "title": "Coral",
+          "options": {
+            "Color": "Coral"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: una correa Turquesa continua, asa cosida, dos líneas reflectivas y un mosquetón metálico. Sin perro/collar/accesorios/marcas; no cifras de longitud/carga.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/correa-reflectiva-1.webp",
+      "originalGalleryPaths": [
+        "demo/correa-reflectiva-1.webp",
+        "demo/correa-reflectiva-2.webp",
+        "demo/correa-reflectiva-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/correa-reflectiva-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1724887,
+      "sha256": "543e0342ebbeff150e3d624c189be5502a1bdf4eba693b1b35c84a4dab408865",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d-2af53d90f8ef.webp",
+      "optimizedSha256": "2af53d90f8ef3db64ff64d66d6a58024a047bba1a35eaff10369dd6b13e12143",
+      "optimizedBytes": 112900,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "audifonos-deportivos",
+      "color": "Coral",
+      "outputPrompt": "Create one original generated exhibition image of exactly ONE PAIR of GENERIC UNBRANDED CORAL sports earphones with over-ear hooks. They are a demo representation, not a real manufacturer model or authentic photograph. Square1254x1254, plain opaque ivory #F5F4F1 seamless background, soft natural contact shadow, realistic matte polymer and silicone materials, balanced product composition occupying about78% of frame with generous margins. Two coherent matching coral earpieces with simple flexible curved ear hooks and modest silicone tips, visually understandable left/right pair. Use a non-distinctive generic design; do not imitate any named brand. No charging case, wires, cables, extra tips, accessories, packaging, person or props. No logo, words, letters, numbers, battery indicators, IP claims, certification marks, watermark or technical specifications. Both earphones completely visible.",
+      "review": "view_image: exactamente un par Coral con ganchos de oreja y puntas de silicona, sin estuche, cable, marcas/texto/accesorios.",
+      "productId": "efd602ef-4735-4c13-8c54-c9542a98610b",
+      "catalogSlug": "audifonos-deportivos",
+      "catalogTitle": "Audífonos deportivos",
+      "originalPath": "demo/audifonos-deportivos-1.webp",
+      "variantId": "19aeca53-5ba5-4557-a0cd-23d2ae2aed63",
+      "variantTitle": "Coral",
+      "catalogVariants": [
+        {
+          "id": "19aeca53-5ba5-4557-a0cd-23d2ae2aed63",
+          "title": "Coral",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: exactamente un par Coral con ganchos de oreja y puntas de silicona, sin estuche, cable, marcas/texto/accesorios.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen new generation without third-party references",
+      "primaryOriginalPath": "demo/audifonos-deportivos-1.webp",
+      "originalGalleryPaths": [
+        "demo/audifonos-deportivos-1.webp",
+        "demo/audifonos-deportivos-2.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/audifonos-deportivos-1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1400256,
+      "sha256": "b8824d7eb5ae9138d8c92f6c9b7c685a9a9955da190d11ea63c125ac26358c7c",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "efd602ef-4735-4c13-8c54-c9542a98610b-33e482998fe4.webp",
+      "optimizedSha256": "33e482998fe4d46c83b5a7ce935fff846d7598b8d55075f00520cb061d4d517c",
+      "optimizedBytes": 40452,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "slug": "correa-reflectiva",
+      "color": "Coral",
+      "outputPrompt": "Edit ONLY the color of the attached ORIGINAL GENERATED generic turquoise reflective dog leash to warm CORAL. Change turquoise textile webbing and threads into coherent coral; preserve the gray reflective stitched lines and silver snap hook. Preserve EXACT geometry, one continuous leash, sewn handle, hook construction, stitching, weave, curves, shadow, framing and ivory background. No new logo, label, text, numbers, collar, dog, harness or accessory. Square1254x1254 opaque background unchanged. Generated unbranded demo exhibition color variant, not an authentic manufacturer photograph.",
+      "review": "view_image: misma correa continua, asa, costuras reflectivas grises, mosquetón metálico y encuadre; color Coral coherente. Sin marcas/texto/accesorios.",
+      "productId": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d",
+      "catalogSlug": "correa-reflectiva",
+      "catalogTitle": "Correa reflectiva",
+      "originalPath": "demo/correa-reflectiva-1.webp",
+      "variantId": "14a5e387-664f-4353-8ec6-563649f42b91",
+      "variantTitle": "Coral",
+      "catalogVariants": [
+        {
+          "id": "16af21c2-ab3a-43ee-a716-b8597c6b8690",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "14a5e387-664f-4353-8ec6-563649f42b91",
+          "title": "Coral",
+          "options": {
+            "Color": "Coral"
+          }
+        }
+      ],
+      "isDemo": true,
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada, no fotografía de una unidad real.",
+      "visualReview": "view_image: misma correa continua, asa, costuras reflectivas grises, mosquetón metálico y encuadre; color Coral coherente. Sin marcas/texto/accesorios.",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "outputMethod": "ImageGen color edit of generated demo preserving geometry",
+      "primaryOriginalPath": "demo/correa-reflectiva-1.webp",
+      "originalGalleryPaths": [
+        "demo/correa-reflectiva-1.webp",
+        "demo/correa-reflectiva-2.webp",
+        "demo/correa-reflectiva-v1.webp"
+      ],
+      "suggestedVariantOriginalPath": "demo/correa-reflectiva-v1.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1993315,
+      "sha256": "90e1db4331db41b380944b13f59c2cbf4243a8433b0e6584f208ea7cf72a007a",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "39c9a9d2-48a9-4b8d-bd39-9224a33d9c7d-9d241d64c800.webp",
+      "optimizedSha256": "9d241d64c800e695b95fcd8dba3bff0cfb0a0c65d6f9360214482d12f7ab1c01",
+      "optimizedBytes": 112870,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "productId": "c3a54b68-0659-421d-baf9-86d3fa3caeca",
+      "catalogSlug": "vela-aromatica-vaso",
+      "originalPath": "demo/vela-aromatica-vaso-1.webp",
+      "outputPrompt": "Create one square 1024 x 1024 generated exhibition product image, a realistic premium studio still life of ONE generic unbranded candle in a simple cylindrical amber glass vessel, clear pale vegetable wax and one centered short unlit wick. No lid, no box, no ingredients, no plants or surrounding props. The complete single candle occupies about 78 percent of the frame height, with generous safe margins on every side and fully visible base and rim. Three-quarter view slightly from above so wax and wick are visible. Solid opaque warm ivory background #F5F4F1 continuing into the surface, soft controlled studio lighting, natural subtle grounding shadow, crisp believable glass reflections and fine material texture. No branding, no logo, no label, no text, no watermark, no certifications, no prices, no human. This is an original synthetic representative image for an unbranded demo marketplace candle, not a photo of a real product. Do not imitate an existing branded candle. Do not depict a particular scent or imply capacity, burning time, dimensions or certified composition.",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1508545,
+      "sha256": "4254c27f25db42ec92d46fc3d1910973cbffe0c6f15a7683f2aa1996694ed8c5",
+      "variantId": null,
+      "variantIds": [
+        "a8ed7b38-9366-433a-b2bc-6f411b76228c",
+        "b04652ac-9e46-4387-b012-e690a1a1e0c6"
+      ],
+      "variantTitles": [
+        "Vainilla",
+        "Cedro"
+      ],
+      "source": "ImageGen new generation without reference images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada; no fotografía de una unidad real. Vainilla/Cedro comparten una representación neutra del vaso ámbar; aroma, tamaño y capacidad no demostrados.",
+      "visualReview": "Viewed with view_image: one amber glass candle, pale wax, single unlit wick, no branding/text/props; complete silhouette, ivory background and soft grounding shadow.",
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "limitaciones": [
+        "No manufacturer/model identified",
+        "Geometry and appearance are synthetic choices, not exact commercial unit",
+        "No scent/capacity/burn-time certification"
+      ],
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/vela-aromatica-vaso-1.webp",
+      "catalogVariants": [
+        {
+          "id": "a8ed7b38-9366-433a-b2bc-6f411b76228c",
+          "title": "Vainilla",
+          "options": {
+            "Aroma": "Vainilla"
+          }
+        },
+        {
+          "id": "b04652ac-9e46-4387-b012-e690a1a1e0c6",
+          "title": "Cedro",
+          "options": {
+            "Aroma": "Cedro"
+          }
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/vela-aromatica-vaso-1.webp",
+        "demo/vela-aromatica-vaso-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "c3a54b68-0659-421d-baf9-86d3fa3caeca-2ea773da4c5d.webp",
+      "optimizedSha256": "2ea773da4c5da1cde2b523762e2421079d2b6488b194b7964ac8282aa4bca5c1",
+      "optimizedBytes": 44534,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen original synthetic generation without external product source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "1b895714-8723-4330-8472-75ade944652a",
+      "catalogSlug": "cama-ovalada-mascotas",
+      "originalPath": "demo/cama-ovalada-mascotas-1.webp",
+      "file": "/workspace/generated_images/exec-db1c77ca-79a6-4682-8c2e-3997fa3388d9.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2239740,
+      "sha256": "606b52656bb4123e0d4e94608a612a5763dbbddff836ce79eee2b3df44b95dff",
+      "outputPrompt": "Create ONE square 1024 x 1024 original generated exhibition product image: one generic unbranded OVAL PET BED with a continuous thick softly padded raised oval border and a quilted cushioned sleeping center, in a neutral warm greige woven fabric. Three-quarter front view slightly from above, entire bed visible. Realistic premium studio materials and seams, without ornate distinctive branded design. The single bed occupies about78 percent of the width with clean safe margins. Solid opaque ivory #F5F4F1 seamless background and floor, softly lit, natural subtle shadow. No animal, no logo, no tags, no text, no size labels, no ruler, no packaging, no blanket, no accessories or other object. This is a synthetic reference image for an unbranded demo listing, not a photograph of a real SKU. S/M/L are sizes without measured dimensions, so do not suggest a specific size or animal capacity. Shape must read clearly oval with raised padded borders.",
+      "variantId": null,
+      "variantIds": [
+        "3a73454c-b2ce-4663-8595-9ae34ce28ddc",
+        "3cdf2f95-f5ec-4ad3-8ea5-c4606ebb9357",
+        "945c6c91-72da-44e8-b137-9dd761881887"
+      ],
+      "variantTitles": [
+        "S",
+        "M",
+        "L"
+      ],
+      "visualReview": "Generated result and view_image inspected: one complete oval padded pet bed, raised continuous rim, quilted center, no labels, animal or accessories.",
+      "disclosure": "Imagen de exhibición generada; medidas S/M/L no acreditadas. Misma imagen neutral sin escala.",
+      "limitaciones": [
+        "Fabric appearance/color chosen as synthetic illustration, not commercial color SKU",
+        "No dimensions or pet-size capacity confirmed"
+      ],
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/cama-ovalada-mascotas-1.webp",
+      "catalogVariants": [
+        {
+          "id": "3a73454c-b2ce-4663-8595-9ae34ce28ddc",
+          "title": "S",
+          "options": {
+            "Tamaño": "S"
+          }
+        },
+        {
+          "id": "3cdf2f95-f5ec-4ad3-8ea5-c4606ebb9357",
+          "title": "M",
+          "options": {
+            "Tamaño": "M"
+          }
+        },
+        {
+          "id": "945c6c91-72da-44e8-b137-9dd761881887",
+          "title": "L",
+          "options": {
+            "Tamaño": "L"
+          }
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/cama-ovalada-mascotas-1.webp",
+        "demo/cama-ovalada-mascotas-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "1b895714-8723-4330-8472-75ade944652a-5cd7116a4023.webp",
+      "optimizedSha256": "5cd7116a40233041d3859e40e9d1d10b7e185578a20b42cb3ed3bcccece4c509",
+      "optimizedBytes": 136234,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen original synthetic generation without external product source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "ff742b48-0d15-4f33-8775-1efb54d05f5b",
+      "catalogSlug": "set-tazas-ceramica-x4",
+      "originalPath": "demo/set-tazas-ceramica-x4-1.webp",
+      "file": "/workspace/generated_images/exec-35a899ab-1b1d-41a0-b74e-971c68fff535.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2232481,
+      "sha256": "acbdff1f7d44d679f8fe6ea8491fed1848748b93af8ddfbf1c5926f042c32638",
+      "outputPrompt": "Create a square 1024 x 1024 original generated exhibition image for an unbranded demonstration marketplace product: EXACTLY FOUR matching TURQUOISE GLAZED CERAMIC MUGS. Four individual mugs, arranged as a calm compact group with two in back and two in front but no overlap that hides the count; each mug has exactly one simple handle and a clearly visible rim. The set is entirely one consistent turquoise glaze with subtle handmade ceramic texture, simple contemporary generic rounded form, no distinctive branded shape. No cup contains liquid. No saucers, no plates, no tray, no coffee, no plant, no packaging or any other object. Full group occupies about 78 percent of the frame, all four mugs fully inside generous margins. Realistic premium studio lighting and material reflections, neutral opaque seamless ivory #F5F4F1 background/floor, soft grounding shadows. No branding, no logo, no text, no watermark, no certification or dimensions. This is an original synthetic representative image of a DEMO four-piece set, not a photograph of a real product. Count precisely four mugs, not three, not five, not six.",
+      "variantId": "286878c6-29cf-4027-b027-dd67996ae96a",
+      "variantTitle": "Turquesa",
+      "visualReview": "Exactly FOUR turquoise ceramic mugs, each with one handle, rims and bases complete; no saucers or extra objects; narrow lateral margins but no object clipped.",
+      "disclosure": "Imagen de exhibición generada; juego de cuatro tazas de demostración.",
+      "limitaciones": [
+        "No capacity or exact commercial geometry confirmed",
+        "Use contain; do not crop handles"
+      ],
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/set-tazas-ceramica-x4-1.webp",
+      "catalogVariants": [
+        {
+          "id": "286878c6-29cf-4027-b027-dd67996ae96a",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "7ccd0285-c16f-402c-a6d8-a671b44a6a4d",
+          "title": "Mostaza",
+          "options": {
+            "Color": "Mostaza"
+          }
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/set-tazas-ceramica-x4-1.webp",
+        "demo/set-tazas-ceramica-x4-2.webp",
+        "demo/set-tazas-ceramica-x4-v1.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/set-tazas-ceramica-x4-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "ff742b48-0d15-4f33-8775-1efb54d05f5b-8326bddef32a.webp",
+      "optimizedSha256": "8326bddef32a3708bdc6719d38b58465187aca5d96688ec8d91c55e0e88884d8",
+      "optimizedBytes": 136784,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen color edit of original generated demo image; no external sources",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "ff742b48-0d15-4f33-8775-1efb54d05f5b",
+      "catalogSlug": "set-tazas-ceramica-x4",
+      "originalPath": "demo/set-tazas-ceramica-x4-v1.webp",
+      "file": "/workspace/generated_images/exec-5e942064-246a-4362-8042-ee0c52db0eb4.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2072650,
+      "sha256": "e15e9a8c23fff09cfd28c25b7932fe4351659e5be73cdcc3b4eecd71fbd45870",
+      "outputPrompt": "Edit this generated unbranded demo image by changing ONLY the glaze color of all EXACTLY FOUR mugs from turquoise to rich muted mustard yellow (Mostaza). Keep all four mugs' exact geometry, handles, thickness, size, positions, ceramic texture, highlights, framing, ivory #F5F4F1 background, margins and soft shadows unchanged. All four must remain the same mustard glaze. Preserve exactly four mugs and no other objects, no liquid, no saucers, no added marks, labels, logo, lettering or accessories. This is a synthetic exhibition color variant for a demonstration product, not an authentic product photograph. Square image, no transparency.",
+      "variantId": "7ccd0285-c16f-402c-a6d8-a671b44a6a4d",
+      "variantTitle": "Mostaza",
+      "editSourceFile": "/workspace/generated_images/exec-35a899ab-1b1d-41a0-b74e-971c68fff535.png",
+      "visualReview": "Exactly FOUR mustard ceramic mugs; same geometry, handles and positions as turquoise; no extra objects or marks, complete silhouette.",
+      "disclosure": "Imagen de exhibición generada; variante Mostaza de cuatro tazas de demostración.",
+      "limitaciones": [
+        "Color variant edit synthetic; no real unit photographed",
+        "Use contain; do not crop handles"
+      ],
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [
+          "/workspace/generated_images/exec-35a899ab-1b1d-41a0-b74e-971c68fff535.png"
+        ],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/set-tazas-ceramica-x4-1.webp",
+      "catalogVariants": [
+        {
+          "id": "286878c6-29cf-4027-b027-dd67996ae96a",
+          "title": "Turquesa",
+          "options": {
+            "Color": "Turquesa"
+          }
+        },
+        {
+          "id": "7ccd0285-c16f-402c-a6d8-a671b44a6a4d",
+          "title": "Mostaza",
+          "options": {
+            "Color": "Mostaza"
+          }
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/set-tazas-ceramica-x4-1.webp",
+        "demo/set-tazas-ceramica-x4-2.webp",
+        "demo/set-tazas-ceramica-x4-v1.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/set-tazas-ceramica-x4-v1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "ff742b48-0d15-4f33-8775-1efb54d05f5b-06824ba63e83.webp",
+      "optimizedSha256": "06824ba63e832d75cf84c0ef0d9c474f6939c4ec1cd4e497a72fdc5fd46e4a13",
+      "optimizedBytes": 122184,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen original synthetic generation without external product source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "d23a9fbb-8e4a-4299-ab29-5d1e73522c21",
+      "catalogSlug": "lampara-mesa-lino",
+      "originalPath": "demo/lampara-mesa-lino-1.webp",
+      "file": "/workspace/generated_images/exec-c065c24c-fe7d-4a6a-b094-e9d79b14ca47.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1818525,
+      "sha256": "49ca98c2ee99251a5526c997961c654f261de958bfd1f36876b22b39ee039703",
+      "outputPrompt": "Create ONE square 1024 x 1024 original generated exhibition product image of a generic unbranded TABLE LAMP with a simple solid OAK WOOD base and a natural off-white LINEN lampshade. Upright, complete lamp from base to top, clean classic non-distinctive proportions, linen shade showing believable woven texture, oak grain realistic. Soft warm light from inside the shade, not a visible bulb. Three-quarter front view at normal product height. Lamp occupies approximately78 percent of image height, all edges comfortably within generous margins. Seamless solid opaque ivory #F5F4F1 studio background and surface; soft natural grounding shadow, premium restrained realistic material rendering. No logo, no brand, no text, no markings, no cord plug closeup, no box, no extra bulb, no accessories, no tabletop props or other objects. The image is an original synthetic representative depiction for an unbranded demo listing, not a photo of a real unit. Do not imply exact measurements, wattage, regional plug or included bulb, and do not copy a distinctive branded lamp.",
+      "variantId": "c703b052-af15-46fa-8b67-a5c02f5491ab",
+      "variantTitle": "Roble",
+      "visualReview": "One complete table lamp, oak-grain wood base and linen shade, soft warm internal glow; no cord plug, branding, tags or accessories.",
+      "disclosure": "Imagen de exhibición generada; lámpara genérica de demostración, forma representativa.",
+      "limitaciones": [
+        "No exact size/wattage/plug or included bulb documented"
+      ],
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/lampara-mesa-lino-1.webp",
+      "catalogVariants": [
+        {
+          "id": "c703b052-af15-46fa-8b67-a5c02f5491ab",
+          "title": "Roble",
+          "options": {}
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/lampara-mesa-lino-1.webp",
+        "demo/lampara-mesa-lino-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/lampara-mesa-lino-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "d23a9fbb-8e4a-4299-ab29-5d1e73522c21-da7e43dac53d.webp",
+      "optimizedSha256": "da7e43dac53de1566c25ecd4be82b6efeb7b12e15a7570e505d8b99d95f46af8",
+      "optimizedBytes": 87148,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "productId": "22e5a48f-a7d7-4799-8e5c-5ea695a486db",
+      "catalogSlug": "comedero-doble-acero",
+      "originalPath": "demo/comedero-doble-acero-1.webp",
+      "outputPrompt": "Create ONE square 1024 x 1024 original generated exhibition product image of a generic unbranded DOUBLE PET FEEDER: EXACTLY TWO empty stainless steel bowls seated side by side in one simple low dark-neutral non-slip base. Clean smooth stainless steel interiors with believable soft reflections, no sharp specular glare. Three-quarter view slightly above so both empty bowls are clearly visible. The complete feeder occupies about78 percent of the frame width, all bowls and base fully visible with at least10 percent calm margins left/right. Solid opaque ivory #F5F4F1 seamless background and surface, premium studio realism, soft natural grounding shadow. No pet, food, water, scoop, box, third bowl, height adjustment, logo, label, text or other object. This is a synthetic representative image for an unbranded demo listing, not a photograph of a real SKU. Do not imply specific capacity or dimensions.",
+      "variantId": "c39c4ccd-bc53-4b96-9b5f-3f32e9d3058e",
+      "variantTitle": "Único",
+      "visualReview": "One low feeder with exactly TWO empty stainless bowls, simple dark base, no food/water/pet or extras; whole silhouette visible.",
+      "limitaciones": [
+        "No capacity or dimensions established",
+        "Geometry/base color synthetic representative choices"
+      ],
+      "source": "ImageGen new generation without source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada; producto de demostración. No fotografía de una unidad real.",
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1663438,
+      "sha256": "ef4f465836f3978a9a6a1671817a9504f73a1d64964e94c103d6c2881c20cc01",
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/comedero-doble-acero-1.webp",
+      "catalogVariants": [
+        {
+          "id": "c39c4ccd-bc53-4b96-9b5f-3f32e9d3058e",
+          "title": "Único",
+          "options": {}
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/comedero-doble-acero-1.webp",
+        "demo/comedero-doble-acero-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/comedero-doble-acero-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "22e5a48f-a7d7-4799-8e5c-5ea695a486db-87c86f7cef6c.webp",
+      "optimizedSha256": "87c86f7cef6ce3c3af3a56ebf6c41e47a5e980eee52e77f429abdc83bb6c706c",
+      "optimizedBytes": 47652,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "productId": "0f0f1c24-b4d4-4f44-9a93-f1c4c0fb4eea",
+      "catalogSlug": "esponjas-maquillaje-x4",
+      "originalPath": "demo/esponjas-maquillaje-x4-1.webp",
+      "outputPrompt": "Create ONE square 1024 x 1024 original generated exhibition product image for an unbranded demo makeup SPONGE PACK OF EXACTLY FOUR. Show FOUR separate small generic cosmetic blending sponges, clearly countable and entirely visible, arranged as an elegant compact group with space between objects. Use four muted soft tones: dusty rose, warm beige, muted peach and soft terracotta, one sponge in each color; simple generic egg/teardrop shapes with fine believable porous foam surface, none shaped like a branded character. All four together occupy about78 percent of frame width, generous clean margins all around. Premium realistic studio product rendering, solid opaque ivory #F5F4F1 seamless background and surface, soft subtle grounding shadows. No box, no makeup, no brushes, no liquids, no fifth sponge, no extra object. No logos, no branding, no text, no watermark, no certification. This is a synthetic representative image, not a photograph of an actual commercial unit, and does not assert certified composition. Count exactly four sponges.",
+      "variantId": "a8895e5b-d054-4a6b-b73d-a35a50ce2045",
+      "variantTitle": "Pack x4",
+      "visualReview": "Exactly FOUR separated complete teardrop cosmetic sponges; muted rose/beige/peach/terracotta, no packaging or extra object.",
+      "limitaciones": [
+        "Shape/colors are synthetic choices, not verified commercial pack composition",
+        "No actual foam composition certification"
+      ],
+      "source": "ImageGen new generation without source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "disclosure": "Imagen de exhibición generada; producto de demostración. No fotografía de una unidad real.",
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1902228,
+      "sha256": "a088eb3b7b6fd989db6769c96272c4cb843fa014f034cede622a579e90d59ccb",
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/esponjas-maquillaje-x4-1.webp",
+      "catalogVariants": [
+        {
+          "id": "a8895e5b-d054-4a6b-b73d-a35a50ce2045",
+          "title": "Pack x4",
+          "options": {}
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/esponjas-maquillaje-x4-1.webp",
+        "demo/esponjas-maquillaje-x4-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/esponjas-maquillaje-x4-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "0f0f1c24-b4d4-4f44-9a93-f1c4c0fb4eea-0a974fc9da63.webp",
+      "optimizedSha256": "0a974fc9da63f6e94463e5216de8cf89b5c467a2158b8576bb58c338e05b8bfc",
+      "optimizedBytes": 116804,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen new generation without external source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "6a90d97a-df57-4052-b2fb-1eb64a4f8e6b",
+      "catalogSlug": "juguete-cuerda-perros",
+      "originalPath": "demo/juguete-cuerda-perros-1.webp",
+      "outputPrompt": "Create ONE square 1024 x 1024 original synthetic exhibition product image: a SINGLE generic unbranded DOG TOY made of thick natural COTTON BRAIDED ROPE, simple knotted rope with softly frayed cotton ends. Use understated ivory and muted sand fibers with a little muted sage thread, chosen as representative styling, no bright patterns or distinctive brand design. Lay the single rope toy in a relaxed slight diagonal on a seamless solid opaque warm ivory #F5F4F1 surface, whole toy fully visible, about78 percent of the frame diagonal, generous margins. Believable fiber detail, premium realistic studio lighting, soft subtle grounding shadow. No animal, no ball, no rubber attachments, no packaging, no tags, no logo, no lettering, no certification, no ruler, no other objects. This is an original generated representative image for an unbranded DEMO listing, not an actual product photograph. Do not assert measured length, tested strength, dental safety or a particular commercial knot count.",
+      "variantId": "441caae3-1f6f-4bf2-b2aa-b171c079c78f",
+      "variantTitle": "Único",
+      "visualReview": "One complete braided cotton rope toy with two simple knotted ends and frayed fibers, no attachments, labels or animal. Neutral ivory/sand/sage illustrative styling.",
+      "disclosure": "Imagen de exhibición generada; juguete de cuerda representativo. Colores, geometría y nudos no acreditan referencia comercial.",
+      "limitaciones": [
+        "No dimensions, tested resistance or dental safety claims",
+        "Exact shape, colors and knot arrangement are synthetic representative choices"
+      ],
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1982115,
+      "sha256": "539180a6fb356e98293fa186be2bf5da903309a8406d3e9f2bc139f45776cc47",
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/juguete-cuerda-perros-1.webp",
+      "catalogVariants": [
+        {
+          "id": "441caae3-1f6f-4bf2-b2aa-b171c079c78f",
+          "title": "Único",
+          "options": {}
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/juguete-cuerda-perros-1.webp",
+        "demo/juguete-cuerda-perros-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/juguete-cuerda-perros-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "6a90d97a-df57-4052-b2fb-1eb64a4f8e6b-89e6e3816a61.webp",
+      "optimizedSha256": "89e6e3816a616bbacdb1e323bfd972d796c346a11c213b48f1a9c4f88e53c2f9",
+      "optimizedBytes": 78838,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen new generation without external source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "0eb5df2e-b2c2-4cd1-ba83-362cd140f85d",
+      "catalogSlug": "rascador-gatos-torre",
+      "originalPath": "demo/rascador-gatos-torre-1.webp",
+      "outputPrompt": "Create ONE square 1024 x 1024 original generated exhibition product image: a SINGLE simple generic unbranded BEIGE CAT SCRATCHING TOWER with one low square padded base, one upright cylindrical rope-wrapped scratching post and one plain padded horizontal top platform. Compact restrained generic construction, beige/cream fibers, visibly sturdy and physically plausible joins, no distinctive branded design. No house, no hammock, no dangling toys, no ball, no second tower, no extra platform, no cat, no other object. Full tower from base to platform visible in a three-quarter studio view, occupying about78 percent of frame height with at least10 percent safe top/bottom margins. Seamless solid opaque ivory #F5F4F1 studio background and floor; soft realistic lighting, fine fibers, subtle grounding shadow. No logo, tags, text, measurements, packaging or certification. This is a synthetic representative image of a demo product, not an actual product photograph; dimensions and commercial platform construction are not verified.",
+      "variantId": "04c38ded-9b75-4946-82e2-82b0e170ea93",
+      "variantTitle": "Beige",
+      "visualReview": "One beige tower with complete base, rope-wrapped post and one padded platform, physically plausible joints; no cat, dangling toys, house or extra accessories.",
+      "disclosure": "Imagen de exhibición generada; rascador de demostración. Forma y estructura representativas, no medidas de una unidad real.",
+      "limitaciones": [
+        "No manufacturer/model or dimensions confirmed",
+        "Platform/post geometry is illustrative, not verified commercial structure"
+      ],
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1591453,
+      "sha256": "86af73ffcc45d0201ff5c5ad927d2d524380a29a78b8e5037e3742e029809e12",
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/rascador-gatos-torre-1.webp",
+      "catalogVariants": [
+        {
+          "id": "04c38ded-9b75-4946-82e2-82b0e170ea93",
+          "title": "Beige",
+          "options": {}
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/rascador-gatos-torre-1.webp",
+        "demo/rascador-gatos-torre-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/rascador-gatos-torre-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "0eb5df2e-b2c2-4cd1-ba83-362cd140f85d-dba061bc8fde.webp",
+      "optimizedSha256": "dba061bc8fde1df6aede82191ad41190c12bb1cb9f4224d3d88edf8c7ecd902a",
+      "optimizedBytes": 67950,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "source": "ImageGen new generation without external source images",
+      "authenticProductPhotograph": false,
+      "isDemo": true,
+      "requireDisclosure": true,
+      "reviewStatus": "ACCEPTED_GENERATED_DEMO_REFERENCE",
+      "productId": "5eb2d0c6-0ea1-4036-92b4-6c542cef3a4e",
+      "catalogSlug": "juego-toallas-algodon",
+      "originalPath": "demo/juego-toallas-algodon-1.webp",
+      "outputPrompt": "Create ONE square 1024 x 1024 original generated exhibition image of generic unbranded SAGE GREEN COTTON TOWELS, a restrained studio reference of two types: ONE folded bath towel and ONE smaller folded hand towel placed partly on top but both fully readable, showing soft fine cotton terry loops, neat unbranded hems and a subtle woven border. Exactly these two referential towel forms, no third towel and no other objects. Muted sage green Salvia throughout, believable cotton texture. Calm three-quarter slightly elevated view, entire folded arrangement occupies about78 percent of frame width with generous safe margins. Solid opaque seamless ivory #F5F4F1 studio background and surface, soft natural light and subtle grounding shadow. No tags, labels, logo, text, ribbon, basket, plant, soap, bathroom scene, certification or measurements. This is a synthetic representative image for a DEMO towel listing, not an actual product photograph. The depiction illustrates bath/hand TYPES only and must not imply that the commercial set contains exactly two pieces; quantity, size and gram weight remain unverified. Do not add any visual claims.",
+      "variantId": "8fba0742-700e-4d3e-87d2-ac85e95be6ab",
+      "variantTitle": "Salvia",
+      "visualReview": "Two folded sage cotton towel types, one bath and one smaller hand towel, visible terry texture and hems, no labels, packaging or extra objects.",
+      "disclosure": "Imagen de exhibición generada. La composición ilustra tipos de toalla para baño y manos; no acredita cantidad de piezas incluidas en el juego comercial.",
+      "compositionNotProven": true,
+      "limitaciones": [
+        "Commercial set quantity is UNKNOWN; do not label x2 or claim photo proves included pieces",
+        "Dimensions, gram weight and textile certification unverified",
+        "Must preserve explicit representative-composition disclosure"
+      ],
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2738398,
+      "sha256": "3c454ffea7cb223ea92377541dc935182953ef516b22204ec73ad4a5a0eba032",
+      "provenance": {
+        "tool": "image_gen__imagegen",
+        "kind": "synthetic generated demo exhibition image",
+        "referenceImages": [],
+        "thirdPartyProductPhotosUsed": false,
+        "authenticPhotoClaim": false
+      },
+      "primaryOriginalPath": "demo/juego-toallas-algodon-1.webp",
+      "catalogVariants": [
+        {
+          "id": "8fba0742-700e-4d3e-87d2-ac85e95be6ab",
+          "title": "Salvia",
+          "options": {}
+        }
+      ],
+      "originalGalleryPaths": [
+        "demo/juego-toallas-algodon-1.webp",
+        "demo/juego-toallas-algodon-2.webp"
+      ],
+      "thirdPartyPhotoUsed": false,
+      "suggestedVariantOriginalPath": "demo/juego-toallas-algodon-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "status": "VISUALLY_REVIEWED_GENERATED_EXHIBITION",
+      "optimizedFile": "5eb2d0c6-0ea1-4036-92b4-6c542cef3a4e-b287247bde7a.webp",
+      "optimizedSha256": "b287247bde7a1c13fd08d9b972fa91a433aa5e3e379af082cc3fcd47ee980c1f",
+      "optimizedBytes": 190546,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one square 1024 x 1024 premium studio product-style illustration for an honestly labeled generated demonstration catalog, NOT a photograph of an actual manufactured unit. Show exactly one pair of empty disposable nitrile examination gloves in a pale clean blue, gently overlapping with all ten finger shapes anatomically plausible, no hands or arms inside. Powder-free smooth thin material with realistic soft folds. No box, no pack, no printed quantity; this image is a reference sample, not a representation of the 100-piece package contents or of any size. No brand, logo, readable text, certificates, seal, watermark, accessory, medical claim or recognizable branded design. Solid opaque ivory background #F5F4F1, seamless tabletop, very soft restrained contact shadow, controlled realistic studio lighting, centered pair occupying about 78 percent of the frame with generous intact margins on all sides, clean contain composition. One independent image, no contact sheet or collage.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: se muestran dos guantes de referencia, no el contenido de la caja x100 ni una talla acreditada. Azul es una elección visual genérica, no color oficial.",
+      "visualReview": "Dos guantes vacíos con cinco dedos cada uno, sin texto ni marca, fondo marfil opaco y sombra suave; composición completa.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE",
+      "productId": "3e280c0e-dd8b-404a-927e-39c0fd9e4a9e",
+      "catalogSlug": "guantes-nitrilo-x100",
+      "catalogTitle": "Guantes de nitrilo sin polvo · caja x100",
+      "originalPath": "demo/guantes-nitrilo-x100-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "073e6883-f5d7-4390-b2ff-474d76f21877",
+          "title": "S",
+          "options": {
+            "Talla": "S"
+          }
+        },
+        {
+          "id": "b29a9ea2-e5aa-4d53-8f09-7e929c5a19c9",
+          "title": "M",
+          "options": {
+            "Talla": "M"
+          }
+        },
+        {
+          "id": "66b4902e-5f05-4202-9e51-cf0e9beb709d",
+          "title": "L",
+          "options": {
+            "Talla": "L"
+          }
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1536713,
+      "sha256": "776b1391c561a90e0fa131b886684a065a1a88f535201a9441447b8b5dbedcb0",
+      "primaryOriginalPath": "demo/guantes-nitrilo-x100-1.webp",
+      "originalGalleryPaths": [
+        "demo/guantes-nitrilo-x100-1.webp",
+        "demo/guantes-nitrilo-x100-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "3e280c0e-dd8b-404a-927e-39c0fd9e4a9e-98b885041887.webp",
+      "optimizedSha256": "98b885041887954f5851912c9975e5b2c9222952fd02f5d5e55b00ffbb96d23a",
+      "optimizedBytes": 55830,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one square 1024 x 1024 premium studio product-style illustration for an honestly labeled generated demonstration catalog, not an authentic photograph of a specific manufactured instrument. Show exactly ONE generic plain dental mouth mirror: a single slim stainless-steel textured handle attached to one small round FLAT mirror head angled slightly to the handle. The whole instrument intact, lying diagonally in a tasteful 3/4 view, with a believable simple neutral reflection, no room scene or person. No box, package, additional heads, extra instruments or accessories; this is only a class-reference sample, NOT a depiction of a twelve-piece package. No branding, logo, readable letters or numbers, watermarks, certifications, medical efficacy or sterility claims. Solid opaque ivory #F5F4F1 seamless background, soft restrained contact shadow, controlled realistic studio lighting, one instrument centered with its long dimension occupying about 78 percent of square frame, generous intact margins on all sides. Elegant subtle metal highlights; no contact sheet, no collage.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: un espejo bucal plano de referencia, sin acreditar diámetro, modelo o contenido de la caja x12 (cabezas, mangos o conjuntos).",
+      "visualReview": "Un espejo de cabeza redonda plana, mango de apariencia acero y textura plausible, sin caja ni otros instrumentos; sin texto/marca; objeto completo y márgenes.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE",
+      "productId": "589c3a62-09aa-4256-bf45-057a494cdb69",
+      "catalogSlug": "espejos-bucales-x12",
+      "catalogTitle": "Espejos bucales planos · caja x12",
+      "originalPath": "demo/espejos-bucales-x12-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "adafa406-5071-444c-8305-26ba7e29e994",
+          "title": "Caja x12",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1320110,
+      "sha256": "7247fe5ec9b4fdc3570fcb7125a394ebbd96f8bcb0bfd67f3035f2768bd809d2",
+      "primaryOriginalPath": "demo/espejos-bucales-x12-1.webp",
+      "originalGalleryPaths": [
+        "demo/espejos-bucales-x12-1.webp",
+        "demo/espejos-bucales-x12-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "589c3a62-09aa-4256-bf45-057a494cdb69-6de1da616ef0.webp",
+      "optimizedSha256": "6de1da616ef010e193ad38763e4168061ab08093119d921673edf056a414c39e",
+      "optimizedBytes": 31366,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one original generated exhibition reference image showing exactly TWO GENERIC UNBRANDED DENTAL EXAMINATION INSTRUMENTS: ONE slender dental explorer with a gently curved hooked examination tip, and ONE dental cotton/collage tweezer (a dental college tweezers forceps with two slender angled gripping jaws). Both instrument classes must be clearly recognizable and separate, lying side-by-side with generous gap, fully visible from handle to tip; not surgical pliers and not tooth-extraction forceps. Simple stainless-steel-looking generic finish with restrained knurled grip detail. This is a REPRESENTATIVE image of the two classes named in a demo kit, NOT a verified complete kit composition and NOT an authentic real-unit photograph. Square1254x1254, opaque plain ivory #F5F4F1 background, soft studio contact shadow, safe full margins, product group about78% of frame. No extra instruments, mirror, case, tray, box, sterile wrap, packaging, accessories, human, brand, words, letters, numbers, certification symbols, watermark or medical claims. Elegant controlled realistic studio lighting.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: un explorador y una pinza dental representan ambas clases nombradas; no acreditan la cantidad ni composición exacta del kit comercial.",
+      "visualReview": "view_image directo: exactamente dos instrumentos separados, un explorador curvo y una pinza dental de puntas anguladas, completamente visibles; sin marcas/textos/caja/otros instrumentos; fondo marfil y sombra suave.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE_BOTH_INSTRUMENT_CLASSES",
+      "productId": "74ebec82-84d2-40f4-b5ac-52a455572dea",
+      "catalogSlug": "kit-exploradores-pinzas",
+      "catalogTitle": "Kit de exploradores y pinzas",
+      "originalPath": "demo/kit-exploradores-pinzas-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "6b98a399-9d74-48fe-a343-51024c505123",
+          "title": "Kit",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen NEW original generation without any reference image; independent correction requested by root/auditor",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1275004,
+      "sha256": "a43044fe95fc3e6c8e82e6c81ef77f46c4a1367f7fb2724e7b8a61592bd3a9bf",
+      "supersedesSourceFile": "/workspace/generated_images/exec-2b708d00-4d65-46a7-9743-7557f7b22c86.png",
+      "compositionNotProven": true,
+      "primaryOriginalPath": "demo/kit-exploradores-pinzas-1.webp",
+      "originalGalleryPaths": [
+        "demo/kit-exploradores-pinzas-1.webp",
+        "demo/kit-exploradores-pinzas-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "74ebec82-84d2-40f4-b5ac-52a455572dea-c61019fa45f0.webp",
+      "optimizedSha256": "c61019fa45f0bbc68e24f6b05f75fdb2b9b85b9b1628fd3385912fc2579f7b0a",
+      "optimizedBytes": 29120,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one square 1024 x 1024 premium studio product-style illustration for a clearly labeled generated demonstration catalog, NOT an authentic photograph of a specific product. Show exactly ONE disposable dental saliva ejector as a class-reference sample: a slender gently curved translucent pale tube with a simple small rounded vented soft suction tip, all in a generic restrained clear/pale-blue appearance. Lay the single instrument diagonally on the surface, entirely within the frame. Physical construction should be plausible and tidy. No bag, package, extra instruments, hose, dental chair, hands or teeth. No logo, brand, readable text, numbers, sterility or certification seals, watermark or accessories. Do not depict or imply 100 visible units or verified pack composition. Solid opaque ivory #F5F4F1 seamless studio background, very soft contact shadow, elegant realistic material highlights, controlled studio lighting, centered object long dimension about 78 percent of frame with intact margins. One object in one image, no collage or contact sheet.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: un eyector de saliva genérico de referencia. No acredita la composición de la bolsa x100, dimensiones, material ni color comercial.",
+      "visualReview": "Un tubo curvo translúcido con punta redondeada y ranuras de aspiración; un único instrumento íntegro, sin texto, marca o embalaje.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE",
+      "productId": "24210e39-1b0b-4cb9-8ca7-5415bd02637a",
+      "catalogSlug": "eyectores-saliva-x100",
+      "catalogTitle": "Eyectores de saliva · bolsa x100",
+      "originalPath": "demo/eyectores-saliva-x100-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "c4204dda-85ec-42ad-a8db-1981e92a06b4",
+          "title": "Bolsa x100",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1182902,
+      "sha256": "f5109a3de803ee920fe4786df7828d998dc791a3700ff2850c2ffe5c6a8e57cc",
+      "primaryOriginalPath": "demo/eyectores-saliva-x100-1.webp",
+      "originalGalleryPaths": [
+        "demo/eyectores-saliva-x100-1.webp",
+        "demo/eyectores-saliva-x100-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "24210e39-1b0b-4cb9-8ca7-5415bd02637a-8ac37715ca56.webp",
+      "optimizedSha256": "8ac37715ca56a5d217fa22b843b9ca37dc8fe23cd27bfd8414995d83cb40e904",
+      "optimizedBytes": 23570,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one square 1024 x 1024 premium studio product-style illustration for an honestly labeled generated dental demonstration catalog, not a photograph of an actual product. Depict exactly ONE disposable dental patient bib sheet in pale sky blue (Celeste), rectangular, with a subtle embossed paper texture and a thin two-layer edge gently visible at one corner. Lay the single sheet in a graceful slight perspective on a seamless surface, mostly flat with one small soft fold, realistic lightweight paper. No neck cutout, ties, clips, chain, person, hands, package, box, stack, extra sheets or props. This is one reference sample, not a representation of the contents or dimensions of a 125-piece package. No brand, text, printed numbers, logos, watermark, certifications or sterile seals. Solid opaque ivory background #F5F4F1, restrained soft contact shadow, studio lighting, centered sheet occupying about 78 percent of the frame, all four corners fully visible with ample margins. One object only, no contact sheet or collage.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: una hoja de babero celeste de referencia. No muestra ni acredita el contenido del paquete x125, dimensiones o composición técnica.",
+      "visualReview": "Una hoja rectangular celeste con textura en relieve y ligera doble capa en el borde; sin sujeciones, texto, marca o paquete; cuatro esquinas completas.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE",
+      "productId": "f441a857-6c8c-49c3-83e0-e6fc05476398",
+      "catalogSlug": "baberos-desechables-x125",
+      "catalogTitle": "Baberos desechables · paquete x125",
+      "originalPath": "demo/baberos-desechables-x125-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "a9fc6bdc-b3ec-48d6-9b9f-1dcdd41da31a",
+          "title": "Celeste",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1756843,
+      "sha256": "6c1e76400e280ae954a706643452c4500d62356fe9bc210d86d7ec0e4f2c2fec",
+      "primaryOriginalPath": "demo/baberos-desechables-x125-1.webp",
+      "originalGalleryPaths": [
+        "demo/baberos-desechables-x125-1.webp",
+        "demo/baberos-desechables-x125-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "f441a857-6c8c-49c3-83e0-e6fc05476398-2165268e2a19.webp",
+      "optimizedSha256": "2165268e2a1965b8646c4ab8665871780daf61dfbede5d816905c3f26dfb5244",
+      "optimizedBytes": 88614,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one square 1024 x 1024 premium studio product-style illustration for an honestly labeled generated dental demonstration catalog, not an authentic photograph of any specific manufactured item. Show exactly ONE generic dental upper-arch impression tray as a class-reference sample: horseshoe-shaped shallow tray with a solid upper-palate area and a short integral front handle. Use a plain neutral softly brushed metallic appearance, with a simple clean continuous rim, no exaggerated holes or decorative design. Show it in a three-quarter top view so the upper-arch form is understandable; no dental impression putty, teeth, mouths, hands, ruler, box, package, second lower tray, extra instruments or props. Do NOT depict a set or imply verified set composition, quantities, sizes, materials or certification. No branding, logos, text, numbers or watermark. Solid opaque ivory #F5F4F1 seamless studio background, soft restrained contact shadow, realistic controlled lighting and subtle highlights; single object centered at about 78 percent of frame, complete and uncropped with generous margins. One image, no collage or contact sheet.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: una cubeta de impresión genérica aislada. No acredita forma superior/inferior exacta, material, tallas ni composición/cantidad del set.",
+      "visualReview": "Una cubeta genérica metálica en U con mango integral, objeto completo sin texto o marca. La generación no permite acreditar una geometría maxilar específica; usar sólo como referencia de clase, nunca como prueba de cubeta superior del set.",
+      "status": "VISUALLY_REVIEWED_GENERATED_CLASS_REFERENCE_GEOMETRY_UNCONFIRMED",
+      "productId": "5b0d1430-8d4f-4b49-a3cf-fb96ae6b0979",
+      "catalogSlug": "cubetas-impresion-set",
+      "catalogTitle": "Cubetas de impresión · set",
+      "originalPath": "demo/cubetas-impresion-set-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "0bb43649-5825-4686-9086-cd50ec47eb2f",
+          "title": "Set",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1700206,
+      "sha256": "23eb8a0e9cb904620424c1cbef2d53f0bb2713f8ebea76ef00b8750459af0268",
+      "primaryOriginalPath": "demo/cubetas-impresion-set-1.webp",
+      "originalGalleryPaths": [
+        "demo/cubetas-impresion-set-1.webp",
+        "demo/cubetas-impresion-set-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "5b0d1430-8d4f-4b49-a3cf-fb96ae6b0979-3b01ef7ead4e.webp",
+      "optimizedSha256": "3b01ef7ead4eadac5e40a02c38edfd0425413495110ce5b5cf1f44162fd10154",
+      "optimizedBytes": 66698,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "outputPrompt": "Create one square 1024 x 1024 premium studio product-style illustration for a clearly labeled generated demonstration dental catalog, NOT an authentic photograph of a real manufacturer product. Depict exactly ONE generic cordless handheld dental LED curing light, with a simple softly rounded pearl-gray body, a smooth dark unlit display without letters or numbers, one plain small button, and a slim bent black light-guide tip. It should look like an intentionally generic, plausible dental curing device, with no distinctive brand design. No charging base, cable, power supply, extra guide, orange shield accessory, boxes, teeth, hands, patient or props. Keep the device switched off: no beam, no illuminated wavelength display, no claims of medical efficacy, sterility or certification. No logos, branding, printed text, symbols, numbers or watermark. Lay the single complete device diagonally in a subtle 3/4 view on a solid opaque ivory #F5F4F1 seamless background, soft restrained contact shadow, controlled realistic studio lighting, centered at about 78 percent of frame, generous intact margins with clean contain composition. One image, no collage or contact sheet.",
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición de un dispositivo genérico, no de un modelo o unidad acreditada. Mantener aviso existente: documentación sanitaria pendiente de revisión. No acredita potencia, longitud de onda, eficacia, homologación, accesorios ni posibilidad de publicación comercial.",
+      "preserveCatalogReviewNotice": true,
+      "visualReview": "Un dispositivo inalámbrico genérico con guía negra curvada, cuerpo claro, pantalla apagada y botón sin leyendas; sin base/cable/accesorios, sin texto, marca, haz o certificaciones.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE_PRESERVE_SANITARY_REVIEW",
+      "productId": "ea963d02-a8d3-412d-a683-483aaaf61bba",
+      "catalogSlug": "lampara-fotocurado-led",
+      "catalogTitle": "Lámpara de fotocurado LED inalámbrica",
+      "originalPath": "demo/lampara-fotocurado-led-1.webp",
+      "variantId": null,
+      "catalogVariants": [
+        {
+          "id": "6b5d9ec0-44d9-48fc-a142-49c82762f81c",
+          "title": "Unidad",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1332667,
+      "sha256": "265f360780db4d82516444f876909951982371d529b526120bf0eb6f23368db9",
+      "primaryOriginalPath": "demo/lampara-fotocurado-led-1.webp",
+      "originalGalleryPaths": [
+        "demo/lampara-fotocurado-led-1.webp",
+        "demo/lampara-fotocurado-led-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "ea963d02-a8d3-412d-a683-483aaaf61bba-af34d5098bea.webp",
+      "optimizedSha256": "af34d5098bea4ed4ac16de3c3fda48aa2b0e45aa23992787c0b0d4217cafac08",
+      "optimizedBytes": 23512,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    },
+    {
+      "productId": "43184890-9356-490f-be9d-2c00199ba8d5",
+      "catalogSlug": "organizador-bambu",
+      "catalogTitle": "Organizador de bambú",
+      "originalPath": "demo/organizador-bambu-1.webp",
+      "outputPrompt": "Create one square 1254 x 1254 premium studio product-style illustration for a clearly labeled generated demonstration catalog, NOT an authentic photograph of a specific manufactured unit. Depict exactly ONE empty generic organizer made of natural bamboo, with simple clean low rectangular walls and a few uncomplicated open compartments, believable bamboo grain and softly finished edges. Intentionally ordinary non-branded geometry, no distinctive commercial product design. The organizer must be COMPLETELY EMPTY: no stationery, pens, kitchen utensils, papers, cups, plants or other props. Do not add a lid or accessories. No brand, logo, text, numbers, dimensions, ruler, labels, watermark or certification seals. This is a representative design only, do not establish a commercial compartment count or dimensions. Three-quarter top view showing the natural bamboo material, centered object occupying about 78 percent of the square frame, ample fully intact margins, clean contain composition. Solid opaque ivory #F5F4F1 seamless background, soft subtle contact shadow, refined controlled realistic studio lighting. One independent image, no collage or contact sheet.",
+      "variantId": "bf2733b7-06b0-49c5-a140-d2b223c5c7f0",
+      "variantTitle": "Natural",
+      "catalogVariants": [
+        {
+          "id": "bf2733b7-06b0-49c5-a140-d2b223c5c7f0",
+          "title": "Natural",
+          "options": {}
+        }
+      ],
+      "isDemo": true,
+      "method": "image_gen__imagegen new generation; no reference images",
+      "authenticPhotograph": false,
+      "thirdPartyPhotoUsed": false,
+      "brand": null,
+      "requiresGeneratedImageCredit": true,
+      "requireDisclosure": true,
+      "disclosure": "Imagen generada de exhibición: organizador de bambú vacío y genérico. La geometría y distribución de compartimentos son representativas; no acreditan medidas, número comercial de compartimentos ni un modelo real.",
+      "visualReview": "Un organizador de apariencia bambú natural, vacío, con compartimentos simples, sin textos/marcas/utensilios/accesorios; objeto completo con márgenes y sombra suave sobre marfil.",
+      "status": "VISUALLY_REVIEWED_GENERATED_REFERENCE",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1773725,
+      "sha256": "4a69efe42258eb274cde442389f52bf95128eb01b45ec7611188d210f5756096",
+      "primaryOriginalPath": "demo/organizador-bambu-1.webp",
+      "originalGalleryPaths": [
+        "demo/organizador-bambu-1.webp",
+        "demo/organizador-bambu-2.webp"
+      ],
+      "authenticProductPhotograph": false,
+      "suggestedVariantOriginalPath": "demo/organizador-bambu-1.webp",
+      "outputPromptIsLiteral": true,
+      "sourceAuthor": "OpenAI ImageGen",
+      "optimizedFile": "43184890-9356-490f-be9d-2c00199ba8d5-307d097ef885.webp",
+      "optimizedSha256": "307d097ef885b41e23730c50ed2a6051eab564aef03bbb7b2bfe0bcc96eadc47",
+      "optimizedBytes": 85106,
+      "optimizedWidth": 1024,
+      "optimizedHeight": 1024
+    }
+  ]
+}

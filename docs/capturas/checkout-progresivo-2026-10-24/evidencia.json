@@ -1,0 +1,267 @@
+{
+  "source_commit": "1737f16",
+  "captured": "2026-10-24",
+  "environment": "Expo web, Chromium, backend Supabase-lite local; no Android físico",
+  "fixture": "Dos productos/dos tiendas; mismos envíos y total62,30USD antes/después. No datos financieros inventados.",
+  "font_test": "1.6 por CSS sólo en web, no prueba física Android",
+  "files": [
+    {
+      "path": "antes/dark/checkout-320.png",
+      "sha256": "0db3fad23ef2c6986e8c935fecfeee219547ec8c6757ff6a4d4c880b0bfa9949",
+      "bytes": 65561
+    },
+    {
+      "path": "antes/dark/checkout-412.png",
+      "sha256": "06798292090acbaab8ef32fc1721a6ff5b6d83f23e3a09502eac3600d6cd4737",
+      "bytes": 72458
+    },
+    {
+      "path": "antes/dark/checkout-summary-320.png",
+      "sha256": "ca89c8182ded72d9f0c8386da3df6155f0815c9cae1bf56c1e5bda50223bc015",
+      "bytes": 57962
+    },
+    {
+      "path": "antes/dark/checkout-summary-412.png",
+      "sha256": "145273fc6dadf3a7db40053b1c461baeae61da5878d389746b5a258fa76c6c00",
+      "bytes": 64446
+    },
+    {
+      "path": "antes/light/checkout-320.png",
+      "sha256": "21f1691a0163b18e99f0e8a6a0a84926f80701c78fb006c66b38a9e564aed289",
+      "bytes": 63903
+    },
+    {
+      "path": "antes/light/checkout-412.png",
+      "sha256": "e35f479b3d13f24adffba9d5e780f24f774a81b0fa24b12b5b0c4513915e22ef",
+      "bytes": 71166
+    },
+    {
+      "path": "antes/light/checkout-summary-320.png",
+      "sha256": "3bf4679627fd946afc9c59c6983b091ef1a2982f04d1723faadcf625d25f81fe",
+      "bytes": 56216
+    },
+    {
+      "path": "antes/light/checkout-summary-412.png",
+      "sha256": "c9073fc783011bcb015b3aabd3699d653ca29e688620cf6f7b224cc38d240d70",
+      "bytes": 62589
+    },
+    {
+      "path": "despues/dark/01-direccion-320.png",
+      "sha256": "cd0b270b1bc056c0e145296c29382e67c5f2404c3df5f330dba1135850662e40",
+      "bytes": 32043
+    },
+    {
+      "path": "despues/dark/01-direccion-412.png",
+      "sha256": "cdc69bec5f39cde0372af824f847b1b1af6fd0c91d1796af8bb2353b84e87d16",
+      "bytes": 32860
+    },
+    {
+      "path": "despues/dark/02-entrega-1-320.png",
+      "sha256": "bb0eb8425a2697683d6495742471343656ecfe731040a1d3283419bbda8cfaf6",
+      "bytes": 45512
+    },
+    {
+      "path": "despues/dark/02-entrega-1-412.png",
+      "sha256": "84a2768f0ee8cf867c9ce6f8881c961244bdadd7e7621926ba16c7c709dd3734",
+      "bytes": 44771
+    },
+    {
+      "path": "despues/dark/03-entrega-2-320.png",
+      "sha256": "56dab14d68f21739e2c62ef39ef0d232e2d2ae4fa86dbb153f04af985c3946de",
+      "bytes": 46568
+    },
+    {
+      "path": "despues/dark/03-entrega-2-412.png",
+      "sha256": "83fb55627b67ccd44d5ed131af44d1b8e91d45d65092d61c3a6ff387807df153",
+      "bytes": 45792
+    },
+    {
+      "path": "despues/dark/04-plan-320.png",
+      "sha256": "ec1dbb9e9ca39f55f4c73e9f373ffc329dd2ffc844b05b137b67f8069e3d5662",
+      "bytes": 29048
+    },
+    {
+      "path": "despues/dark/04-plan-412.png",
+      "sha256": "2c7abae623de60f11e38ef232ba7aa7e5b7742b19f6e21697527f2d829320c62",
+      "bytes": 29051
+    },
+    {
+      "path": "despues/dark/05-revision-320.png",
+      "sha256": "a8d5d5e7c5e4eb04ca07bcc7d3a7dd78967ced15a61c41b9778795d71cfe90df",
+      "bytes": 64906
+    },
+    {
+      "path": "despues/dark/05-revision-412.png",
+      "sha256": "2875c6de6358015528a81fe17dde9f8e5a9566ced2816aab482300e969ee9f21",
+      "bytes": 67527
+    },
+    {
+      "path": "despues/dark/06-total-320.png",
+      "sha256": "167509c8a2dfbee1bee2b6ffd9eaa22227228536d3f88692ed003c219cc9a76a",
+      "bytes": 63029
+    },
+    {
+      "path": "despues/dark/06-total-412.png",
+      "sha256": "dd3eaa8cc98c821c5c7cd66093dd358ff099c3723c77126093bcf52a41f8b6d8",
+      "bytes": 65402
+    },
+    {
+      "path": "despues/dark/font-160-direccion-320.png",
+      "sha256": "5eca978c65fa840d62f264ae1fa0a4293c6d21fb73ca291d074b4ee7f498f651",
+      "bytes": 53424
+    },
+    {
+      "path": "despues/dark/font-160-entrega-1-320.png",
+      "sha256": "19a408f8002571d1459a06721b7e70c5c150b42636e0b66ae2e2f4d289638ca8",
+      "bytes": 74796
+    },
+    {
+      "path": "despues/dark/font-160-entrega-2-320.png",
+      "sha256": "8b8a01e62d74887cd2dfbbcbabf7fbcc51bc88b28f30b905f9a494cb0fdb72b8",
+      "bytes": 77726
+    },
+    {
+      "path": "despues/dark/font-160-plan-320.png",
+      "sha256": "f5d641670dd630c057b2be1a430fdee138259927aea7f54e9a5c396423b6232f",
+      "bytes": 46432
+    },
+    {
+      "path": "despues/dark/font-160-revision-320.png",
+      "sha256": "b7b85894b487a3da078dc2f927c565ca3b6453fa20e2fc1c481a4e8ccbbb70d7",
+      "bytes": 71222
+    },
+    {
+      "path": "despues/dark/font-160-total-320.png",
+      "sha256": "6ad6cc683d6e6a5895caff6a3970c97b4aaa86b8853a7aa7473c4efd1cbe1590",
+      "bytes": 69846
+    },
+    {
+      "path": "despues/light/01-direccion-320.png",
+      "sha256": "8634f764b985df51b6ac0326b90f756356a805eae801c4b422df73b49e9b9bd2",
+      "bytes": 31121
+    },
+    {
+      "path": "despues/light/01-direccion-412.png",
+      "sha256": "481e275e8f9bccf20187e90391d98578fc63a5c8f21c3945e1859ddc1d20316a",
+      "bytes": 31937
+    },
+    {
+      "path": "despues/light/02-entrega-1-320.png",
+      "sha256": "53556e26723ff22fd93d9f49c8f460554ed86eed2a3d856ba0c82c0f892a29af",
+      "bytes": 44300
+    },
+    {
+      "path": "despues/light/02-entrega-1-412.png",
+      "sha256": "6140c9ea28b7adcac5a9167d9235865c50620324a95e0bef393a4ac9f174b4e3",
+      "bytes": 43824
+    },
+    {
+      "path": "despues/light/03-entrega-2-320.png",
+      "sha256": "32ef23226be79751e5f9fb6969dc698651ed8225da15884a2bb71c8b4431f6fb",
+      "bytes": 45031
+    },
+    {
+      "path": "despues/light/03-entrega-2-412.png",
+      "sha256": "8b802aa123d6d3539e94286c560bddff9fb4e657574aa54ce68c1f17a9e763c1",
+      "bytes": 44531
+    },
+    {
+      "path": "despues/light/04-plan-320.png",
+      "sha256": "b7e290f933bdae4c329c4d94957c8cc34dfaf03c24ef2d89334594aa303e8462",
+      "bytes": 28455
+    },
+    {
+      "path": "despues/light/04-plan-412.png",
+      "sha256": "82a2c2a0fc73dead179f40a4c11d4b14bc1421ca87ac1b3eda46c19570cefee4",
+      "bytes": 28349
+    },
+    {
+      "path": "despues/light/05-revision-320.png",
+      "sha256": "10d0e7b7450f141dfa070cc42eb1e69b5183339b6e6029759bb97fc5932cd440",
+      "bytes": 64039
+    },
+    {
+      "path": "despues/light/05-revision-412.png",
+      "sha256": "85b731b2486ba8e6700308528f00784f440e20f1c7a83ab1dd53c5d06f6897d5",
+      "bytes": 66823
+    },
+    {
+      "path": "despues/light/06-total-320.png",
+      "sha256": "e8b7bbcb9373c4936b5cc542586798bbae14bb8eff152f6f9ab878d159e6213d",
+      "bytes": 62363
+    },
+    {
+      "path": "despues/light/06-total-412.png",
+      "sha256": "4959fe6fa5636a8d2b27c7c8d5881a24d7ba3470b0f3d55e9e4d49f4f1078374",
+      "bytes": 65024
+    },
+    {
+      "path": "despues/light/font-160-direccion-320.png",
+      "sha256": "c531b477a5bdfc702e283b6e8513c899cbadb477bd4d48296bb087351b7b2287",
+      "bytes": 51453
+    },
+    {
+      "path": "despues/light/font-160-entrega-1-320.png",
+      "sha256": "5b2cb3edebeaf892b748efdd47599de8561efc33f479919da1b6034c86144310",
+      "bytes": 72512
+    },
+    {
+      "path": "despues/light/font-160-entrega-2-320.png",
+      "sha256": "7d005c9b691288657409fa6ee8ded0f1d51dc0c7f6e320bef1272101261ecf82",
+      "bytes": 75085
+    },
+    {
+      "path": "despues/light/font-160-plan-320.png",
+      "sha256": "2847a9ed69d26738af0f89553c898ef26b53677d4e990942e34b91771f488ec8",
+      "bytes": 45082
+    },
+    {
+      "path": "despues/light/font-160-revision-320.png",
+      "sha256": "2f59c9a74394111d2c5ac122f966a057710f16e4276e195c9120cc7047345146",
+      "bytes": 70212
+    },
+    {
+      "path": "despues/light/font-160-total-320.png",
+      "sha256": "6708f7633acaa2cddfd418d69841d3abd3d5d468cd284a21e6ed59357a4c3e5e",
+      "bytes": 68792
+    }
+  ],
+  "measurements": {
+    "before/dark/checkout-320.json": {
+      "height": 828,
+      "content": 1288
+    },
+    "before/dark/checkout-412.json": {
+      "height": 828,
+      "content": 1210
+    },
+    "before/light/checkout-320.json": {
+      "height": 828,
+      "content": 1288
+    },
+    "before/light/checkout-412.json": {
+      "height": 828,
+      "content": 1210
+    },
+    "after/dark/measurements.json": {
+      "address-412": {
+        "height": 828,
+        "content": 828
+      },
+      "address-320": {
+        "height": 828,
+        "content": 828
+      }
+    },
+    "after/light/measurements.json": {
+      "address-412": {
+        "height": 828,
+        "content": 828
+      },
+      "address-320": {
+        "height": 828,
+        "content": 828
+      }
+    }
+  }
+}

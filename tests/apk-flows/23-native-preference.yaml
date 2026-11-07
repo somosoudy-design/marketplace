@@ -1,0 +1,10 @@
+# Sets only the existing device-local appearance preference (AsyncStorage); never touches profile toggles.
+appId: com.example.kora.preview
+name: Device appearance preference
+---
+- openLink: kora://settings
+- extendedWaitUntil:
+    visible: Apariencia
+    timeout: 15000
+- tapOn: ${MAYAMI_PREFERENCE}
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-appearance

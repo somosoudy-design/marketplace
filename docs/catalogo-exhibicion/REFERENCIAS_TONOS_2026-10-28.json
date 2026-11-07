@@ -1,0 +1,103 @@
+{
+  "productos": [
+    {
+      "producto": "SHEGLAM base de maquillaje fluida",
+      "productId": "04e929cf-0be8-45db-a957-aa418599b572",
+      "originalPath": "demo/sheglam-base-fluida-1.webp",
+      "aviso": "Imagen referencial; el modelo y el tono pueden variar.",
+      "derechos": "Autorización del propietario registrada; licencia del fabricante no acreditada.",
+      "variantes": [
+        {
+          "variantId": "355ca171-81c1-4b52-8de6-bd3b96ecf690",
+          "variant": "Claro",
+          "asset": "04e929cf-0be8-45db-a957-aa418599b572-reference-8c20b41bbb88.jpg",
+          "sha256Original": "8c20b41bbb88fb445268703f192cfde1a913ff960918b74596ec6aeee1333616",
+          "sourcePage": "https://www.sheglam.com/product/Skinfinite-Hydrating-Foundation-Fair-7100390604965",
+          "sourceImage": "https://img.ltwebstatic.com/v4/j/pi/2026/04/14/d4/1776146491ee40cf2a4e1591043d288bf6a38f45ae.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y subtono de la muestra no confirmados."
+        },
+        {
+          "variantId": "b5982486-3fac-492e-9913-5f83368c3e89",
+          "variant": "Medio",
+          "asset": "04e929cf-0be8-45db-a957-aa418599b572-reference-7cf0c3fc7483.jpg",
+          "sha256Original": "7cf0c3fc74839aa90ebe26351fd48cc9aa018be37f38e69e74ebfe9688c0dc53",
+          "sourcePage": "https://www.sheglam.com/product/Skinfinite-Hydrating-Foundation-Golden-7100399648933",
+          "sourceImage": "https://img.ltwebstatic.com/v4/j/pi/2026/04/14/08/177615750639c9ba40e78a63c5a318120b3cb41a3a.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y subtono de la muestra no confirmados."
+        },
+        {
+          "variantId": "64713b70-8fcf-42c4-bcab-413adec8eb8c",
+          "variant": "Profundo",
+          "asset": "04e929cf-0be8-45db-a957-aa418599b572-reference-1a4859c0ee53.jpg",
+          "sha256Original": "1a4859c0ee531422a0a77d370187936dc61b20c586f55c56a85302829e2eb455",
+          "sourcePage": "https://www.sheglam.com/product/Skinfinite-Hydrating-Foundation-Deep-7100379922597",
+          "sourceImage": "https://img.ltwebstatic.com/v4/j/pi/2026/04/17/be/1776406047cab7260628aa6541f032a6879295ef9e.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y subtono de la muestra no confirmados."
+        }
+      ]
+    },
+    {
+      "producto": "SHEGLAM labial líquido mate",
+      "productId": "5abf4366-e062-41e5-966e-1c7908ca2a7a",
+      "originalPath": "demo/sheglam-labial-liquido-mate-1.webp",
+      "aviso": "Imagen referencial; el modelo y el tono pueden variar.",
+      "derechos": "Autorización del propietario registrada; licencia del fabricante no acreditada.",
+      "variantes": [
+        {
+          "variantId": "cda87461-a64b-498c-b311-adea913a04a2",
+          "variant": "Rosa nude",
+          "asset": "5abf4366-e062-41e5-966e-1c7908ca2a7a-reference-edf40b71375f.jpg",
+          "sha256Original": "edf40b71375f8b6eda1cfba6eeddeba027469721b1807269f519902b82a28e87",
+          "sourcePage": "https://www.sheglam.com/product/Matte-Allure-Liquid-Lipstick-True-FaIth-5922630795429",
+          "sourceImage": "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/9e/17744116693e4fdf5d86114e235100266a393cb5cd.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y tono exacto de la muestra no confirmados."
+        },
+        {
+          "variantId": "8ee86f11-cfaf-4c34-8130-53b8fc991461",
+          "variant": "Terracota",
+          "asset": "5abf4366-e062-41e5-966e-1c7908ca2a7a-reference-94ae48dcadef.jpg",
+          "sha256Original": "94ae48dcadefe6d8526b4c6f15fcda32d4d0844d87c97af68b92dd7fbe7a3fc8",
+          "sourcePage": "https://www.sheglam.com/product/Matte-Allure-Liquid-Lipstick---Maven-6712066932901",
+          "sourceImage": "https://img.ltwebstatic.com/v4/j/pi/2025/05/15/f4/1747291875baa52e0bdc1d19dd2b4eba5038cfe051.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y tono exacto de la muestra no confirmados."
+        },
+        {
+          "variantId": "e8d0ee55-4d21-455a-9ede-7508fcba47ea",
+          "variant": "Rojo clásico",
+          "asset": "5abf4366-e062-41e5-966e-1c7908ca2a7a-reference-2ecc0a410b3c.jpg",
+          "sha256Original": "2ecc0a410b3c5f28b3c68246e064463c2fc8d3bff0ba9ed916ba84da6e20054d",
+          "sourcePage": "https://www.sheglam.com/product/Matte-Allure-Liquid-Lipstick-Heartthrob-5777523146917",
+          "sourceImage": "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/db/1774411682bbede48ed4fcff81f2f5944dd57e0980.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y tono exacto de la muestra no confirmados."
+        }
+      ]
+    },
+    {
+      "producto": "SHEGLAM brillo labial",
+      "productId": "96f52279-bb49-4d5c-a47d-495611d67191",
+      "originalPath": "demo/sheglam-brillo-labial-1.webp",
+      "aviso": "Imagen referencial; el modelo y el tono pueden variar.",
+      "derechos": "Autorización del propietario registrada; licencia del fabricante no acreditada.",
+      "variantes": [
+        {
+          "variantId": "0782aae9-7fcb-4c9f-97f2-655c8741984a",
+          "variant": "Rosado",
+          "asset": "96f52279-bb49-4d5c-a47d-495611d67191-reference-7d216246bec5.jpg",
+          "sha256Original": "7d216246bec51d8d17f3a4dd8b3cea86ecc3a26de4dd0fd28871206ca5b96a7a",
+          "sourcePage": "https://www.sheglam.com/product/Glaze-Daze-Lip-Gloss-Rose-Tea-7906091892901",
+          "sourceImage": "https://img.ltwebstatic.com/images3_pi/2025/01/26/fe/1737876955042a92cda8ba6e9f19e5332494e66889.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y tono exacto de la muestra no confirmados."
+        },
+        {
+          "variantId": "01b52cfb-de49-4611-963f-0785c16fc972",
+          "variant": "Baya",
+          "asset": "96f52279-bb49-4d5c-a47d-495611d67191-reference-d7192d8b3f0d.jpg",
+          "sha256Original": "d7192d8b3f0ddbe00f551ac6e76f5cb5c0ba3e2b9032c074b54f8bf3c5c2ec42",
+          "sourcePage": "https://www.sheglam.com/product/Glaze-Daze-Lip-Gloss-Grape-Juice-7906087731365",
+          "sourceImage": "https://img.ltwebstatic.com/images3_pi/2025/01/26/e2/1737877874dc3eaf52dcd4e93430e2cd66b842ee28.jpg",
+          "unconfirmed": "Referencia por rango visual; modelo, SKU y tono exacto de la muestra no confirmados."
+        }
+      ]
+    }
+  ]
+}

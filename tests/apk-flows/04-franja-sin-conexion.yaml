@@ -1,0 +1,89 @@
+# Solo visitante, APK 5 existente: sin cuentas, pedidos, pagos ni escrituras remotas.
+# CI usa un emulador descartable; en un dispositivo propio restaurar conexión si se interrumpe el flujo.
+appId: com.example.kora.preview
+name: Franja sin conexión y encabezado nativo
+---
+- setAirplaneMode: disabled
+- launchApp
+- runFlow:
+    when:
+      visible: .*isn't responding.*
+    commands:
+      - tapOn: Wait
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- takeScreenshot: offline-home-01-conexion
+- tapOn:
+    id: buyer-tab-account
+- tapOn:
+    id: account-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+- takeScreenshot: offline-01-encabezado-conexion
+- setAirplaneMode: enabled
+- extendedWaitUntil:
+    visible:
+      id: offline-notice
+    timeout: 15000
+- assertVisible: Guarda lo que te gusta
+- takeScreenshot: offline-02-encabezado-sin-conexion
+- back
+- extendedWaitUntil:
+    visible:
+      id: account-favorites
+    timeout: 15000
+- tapOn:
+    id: account-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+- assertVisible:
+    id: offline-notice
+- takeScreenshot: offline-03-encabezado-al-volver
+- back
+- extendedWaitUntil:
+    visible:
+      id: account-favorites
+    timeout: 15000
+- tapOn:
+    id: buyer-tab-index
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- assertVisible:
+    id: offline-notice
+- takeScreenshot: offline-home-02-sin-conexion
+- tapOn:
+    id: buyer-tab-account
+- tapOn:
+    id: account-favorites
+- extendedWaitUntil:
+    visible: Guarda lo que te gusta
+    timeout: 15000
+- assertVisible:
+    id: offline-notice
+- setAirplaneMode: disabled
+- extendedWaitUntil:
+    notVisible:
+      id: offline-notice
+    timeout: 15000
+- assertVisible: Guarda lo que te gusta
+- takeScreenshot: offline-04-encabezado-reconexion
+- back
+- extendedWaitUntil:
+    visible:
+      id: account-favorites
+    timeout: 15000
+- tapOn:
+    id: buyer-tab-index
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 15000
+- assertNotVisible:
+    id: offline-notice
+- takeScreenshot: offline-home-03-reconexion

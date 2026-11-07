@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mayami-storefront",
+  "account_id": "9ea83b61b8f2d27846eaacd60b7c7aa3",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-13",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "minify": true,
+  "routes": [
+    { "pattern": "mayami.app", "custom_domain": true },
+    { "pattern": "www.mayami.app", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "mayami-storefront"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

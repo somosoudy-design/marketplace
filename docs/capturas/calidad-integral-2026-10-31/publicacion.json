@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-10-31",
+  "source": "45dca29673beea98bf497fef86b300c058944fa1",
+  "androidPublish": {
+    "conclusion": "success",
+    "head_sha": "72b0b9f91614934b061c1ca4efc63a3c3a61119c",
+    "html_url": "https://github.com/somosoudy-design/marketplace/actions/runs/41205629069",
+    "id": 41205629069,
+    "run_attempt": 1,
+    "status": "completed",
+    "updated_at": "2026-10-31T13:29:13Z"
+  },
+  "androidObservation": {
+    "id": "01a19226-40aa-7ce4-bd4c-0bdd0931385f",
+    "group": "6494951a-d30b-4d74-8edb-eea02adc7721",
+    "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+    "commit": "72b0b9f91614934b061c1ca4efc63a3c3a61119c",
+    "platform": "android",
+    "channel": "preview",
+    "branch": "preview",
+    "createdAt": "2026-10-31T13:29:02.890Z",
+    "matchingUpdates": 1,
+    "latestCompatibleInBranch": true,
+    "isGitWorkingTreeDirty": false,
+    "isRollBackToEmbedded": false,
+    "workingTreeState": "clean",
+    "rollbackState": "standard_update",
+    "workingTreeFlagPresent": true,
+    "rollbackFlagPresent": true
+  },
+  "observationRun": 41205938369,
+  "panelPublish": {
+    "conclusion": "failure",
+    "head_sha": "f48af272f8ae0a97e3e2d811ee114719554735a6",
+    "html_url": "https://github.com/somosoudy-design/marketplace/actions/runs/41205620181",
+    "id": 41205620181,
+    "run_attempt": 2,
+    "status": "completed",
+    "updated_at": "2026-10-31T13:32:15Z"
+  },
+  "limits": [
+    "Observación del servidor EAS; no recepción en Android físico ni emulador.",
+    "Panel: export y verificaciones aprobados; EAS Hosting falló en intentos1 y2. Alias no validado; causa detallada pendiente de acceso a logs.",
+    "Storefront comprador sólo local; sin alojamiento público."
+  ]
+}

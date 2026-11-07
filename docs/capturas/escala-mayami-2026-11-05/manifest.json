@@ -1,0 +1,65 @@
+{
+  "environment": "Chromium local; no Android físico",
+  "images": [
+    {
+      "file": "before-01-app-home-320-light.png",
+      "sha256": "36b6af55a3b36e08bcf63ed0ced6cd5ac5aa1eaac82ec7c57637707686a4a385",
+      "stage": "before",
+      "state": "Inicio320 claro"
+    },
+    {
+      "file": "after-01-app-home-320-light.png",
+      "sha256": "d10f93b3d141bb6eff115c52f13b5b4042547c0815e033fe501f85e96c01bdd1",
+      "stage": "after",
+      "state": "Inicio320 claro"
+    },
+    {
+      "file": "before-01-app-home-412-dark.png",
+      "sha256": "dc5f98bedce6371894cf27905e168873ef43ec7e80a4f59fdc7da247349015c7",
+      "stage": "before",
+      "state": "Inicio412 oscuro"
+    },
+    {
+      "file": "after-01-app-home-412-dark.png",
+      "sha256": "147b45377682813823cf97d606a2fdb2d2813e96b4f19cc135944ec9b96e1c10",
+      "stage": "after",
+      "state": "Inicio412 oscuro"
+    },
+    {
+      "file": "before-08-app-sticky-320-dark.png",
+      "sha256": "ca5c2e31f871996606c0f8ef57c7d4bd37a2fb162f8572eaab8934f81a82c7f9",
+      "stage": "before",
+      "state": "Barra fija320 oscuro"
+    },
+    {
+      "file": "after-08-app-sticky-320-dark.png",
+      "sha256": "98fa5fe87dc4458b4ab96b1867588e525ff517041bd8ba46267c385db3f4a871",
+      "stage": "after",
+      "state": "Barra fija320 oscuro"
+    },
+    {
+      "file": "before-02-web-home-320-light.png",
+      "sha256": "64008fb83e677b5cbe917b925b980d82490e0919280fa7d1aad40a2bf064d83a",
+      "stage": "before",
+      "state": "Web320 claro"
+    },
+    {
+      "file": "after-02-web-home-320-light.png",
+      "sha256": "5008affd483326f4c80b091d8ce596bbdacc0c4356ce385af89f196011f03cb6",
+      "stage": "after",
+      "state": "Web320 claro"
+    },
+    {
+      "file": "before-07-panel-menu-320-dark.png",
+      "sha256": "7872756467950557a279347db56d05186b40f4ac5dda6e8272a90b52202444a0",
+      "stage": "before",
+      "state": "Panel320 oscuro"
+    },
+    {
+      "file": "after-07-panel-menu-320-dark.png",
+      "sha256": "9a01216cc90399b6b5545e5a805ad06e042a6d44877ad20110abaa22cfda80a0",
+      "stage": "after",
+      "state": "Panel320 oscuro"
+    }
+  ]
+}

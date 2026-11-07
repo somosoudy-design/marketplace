@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-23",
+  "functionalSource": "130d0413bb335f7d9a6c9dea0aad7c30f46d76ad",
+  "localBrowserUniqueChecks": 36,
+  "focusedFinalPass": {
+    "composition": 12,
+    "recovery": 10,
+    "singular": 2
+  },
+  "regressionPassed": {
+    "buyerErrors": 6,
+    "product": 3,
+    "localPurchase": 1,
+    "storeShare": 2
+  },
+  "typecheckMobile": true,
+  "lintMobile": true,
+  "webExport": true,
+  "androidHermesExport": true,
+  "androidHermesBytes": 5945608,
+  "officialReferenceCaptureGroups": 4,
+  "officialReferenceScreenshots": 18,
+  "officialReferencesProducts": 1,
+  "officialReferenceFilesDownloaded": 2,
+  "officialResourcesInNativeExport": 0,
+  "catalogAssetRegistryRestored": true,
+  "nativeConfigChanged": false,
+  "newApk": false,
+  "newOta": false,
+  "apk5ExactRuntimeGuardExecuted": false,
+  "physicalAndroidTested": false,
+  "nativeEmulatorTested": false,
+  "remoteBackendChanged": false,
+  "independentDesignReview": "round2 approved for local increment",
+  "remaining": [
+    "Official-source network policy draft not applied",
+    "Redistribution rights and exact variant mapping for new professional images",
+    "APK5 runtime guard and Android acceptance before authorized publication",
+    "Session storage startup hypothesis not reproduced"
+  ]
+}

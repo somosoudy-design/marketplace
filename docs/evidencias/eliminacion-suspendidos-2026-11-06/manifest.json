@@ -1,0 +1,18 @@
+{
+  "environment": "Panel web Chromium + backend local; not Android or production",
+  "sourceContext": "Working tree integrated in 0eb9047, not a clean checkout at capture",
+  "scenario": "UI error response product_has_orders injected; actual PostgreSQL history protection tested separately",
+  "imageProcessing": "none; original byte-for-byte copies",
+  "images": [
+    {
+      "file": "light-protected.png",
+      "bytes": 54403,
+      "sha256": "56eed8a3fea1f3d30b4c7da8d1882b9db41b5cb219c10da384bbc6b7da2ee60b"
+    },
+    {
+      "file": "dark-protected.png",
+      "bytes": 54153,
+      "sha256": "0fff5ab687b9ce80d9ecd69a616087b2f4aa98cf8f1e1cf69a19f171989d368e"
+    }
+  ]
+}

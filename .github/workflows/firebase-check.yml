@@ -1,0 +1,49 @@
+# Checks that push on Android is ready for the next preview APK: google-services.json in the EAS "preview" environment
+# (GOOGLE_SERVICES_JSON), the FCM V1 key and the signing keystore on Expo, all for com.example.kora.preview.
+# Runs when .github/firebase-check-request changes on the work branch. Prints identifiers only, never secrets.
+name: Firebase y Expo (push)
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/firebase-check-request']
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Proyecto Expo y token
+        run: node tools/eas/check-project.mjs
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Variables del entorno preview de EAS
+        working-directory: apps/mobile
+        run: npx --yes eas-cli@24.12.1 env:pull preview --non-interactive --path "$RUNNER_TEMP/preview.env"
+
+      - name: Firebase, clave FCM V1 y firma
+        run: node tools/eas/check-firebase.mjs "$RUNNER_TEMP/preview.env"
+
+      # The runtime the next APK will have with this google-services.json (the file's contents are part of it).
+      - name: Runtime con Firebase
+        working-directory: apps/mobile
+        run: |
+          export $(grep -E '^GOOGLE_SERVICES_JSON=' "$RUNNER_TEMP/preview.env")
+          export $(node -e "for (const [k, v] of Object.entries(require('./eas.json').build.preview.env)) console.log(k + '=' + v)")
+          node_modules/.bin/expo-updates fingerprint:generate --platform android | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log('runtime: ' + JSON.parse(s).hash))"

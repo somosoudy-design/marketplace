@@ -1,0 +1,27 @@
+{
+  "source": {
+    "head": "01baea95a0fb92cdb668e8724301d132458027c8",
+    "workingTreePatchSha256": "3a57a9495c080fd86c5dce893d8a4bb05686f5b3dbb1759fca8ab94cc8d7a389",
+    "workingTreePatchBytes": 54689,
+    "bundleDirectory": "/workspace/marketplace/.local/equipo-20261026/mobile-final",
+    "baseURL": "http://127.0.0.1:8102",
+    "presentationFlag": "EXPO_PUBLIC_CATALOG_PRESENTATION=private-preview",
+    "bundles": [
+      {
+        "path": "/_expo/static/js/web/entry-43ca32ecf1b1f42a95b5b52537002e3d.js",
+        "sha256": "cad3baec08d259b1d403945352d7c1adb78045c6721a78838a7dc9c3780157e1"
+      }
+    ],
+    "testFileSha256": "d1b9c549354881c53511a850e72231ba43ac77e1d4bd2cb29c13803a1b67c348"
+  },
+  "testStats": {
+    "startTime": "2026-10-26T22:10:39.853Z",
+    "duration": 36255.78,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visualStates": 8,
+  "verdict": "APROBADO para bloque StoreChip/carrito en web local; normal matrix already approved independently; Android OS1.6 still needs native receipt."
+}

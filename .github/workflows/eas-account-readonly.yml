@@ -1,0 +1,21 @@
+name: Expo - consultar plan sin cambios
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/eas-account-readonly-request']
+permissions:
+  contents: read
+jobs:
+  read:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.23.3
+          package-manager-cache: false
+      - name: Consultar plan y uso de Update sin modificar cuenta
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: node tools/eas/read-account-plan.mjs

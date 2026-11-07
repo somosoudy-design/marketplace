@@ -1,0 +1,88 @@
+# Supabase CLI configuration (supabase start / db push / functions deploy).
+# Local development without Docker uses tools/local-stack instead; both read supabase/migrations and seed.sql.
+project_id = "kora-marketplace"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 500
+
+[db]
+port = 54322
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[storage]
+enabled = true
+file_size_limit = "5MiB"
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3100"
+additional_redirect_urls = ["kora://**", "exp://**", "http://127.0.0.1:3100/**", "http://localhost:8081/**"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+# Accounts are confirmed with a 6-digit code typed in the app (no links, so nothing depends on a web address).
+enable_confirmations = true
+otp_length = 6
+otp_expiry = 3600
+max_frequency = "1m"
+
+[auth.email.template.confirmation]
+subject = "Tu código de Kora"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Código para cambiar tu contraseña"
+content_path = "./supabase/templates/recovery.html"
+
+[auth.email.template.magic_link]
+subject = "Tu código para entrar a Kora"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.email_change]
+subject = "Confirma tu nuevo correo"
+content_path = "./supabase/templates/email_change.html"
+
+# Adds app_metadata.roles / app_metadata.stores to every access token (see migrations).
+[auth.hook.custom_access_token]
+enabled = true
+uri = "pg-functions://postgres/public/custom_access_token_hook"
+
+[edge_runtime]
+enabled = true
+policy = "per_worker"
+
+# Buyers call payments-start with their session; the function also passes that token to the database.
+[functions.payments-start]
+verify_jwt = true
+
+# Providers call the webhooks without a Supabase token: each one verifies the provider signature itself.
+[functions.binance-pay-webhook]
+verify_jwt = false
+
+[functions.paypal-webhook]
+verify_jwt = false
+
+# Called by pg_cron with the service role key; the functions compare it themselves (works with new-style keys too).
+[functions.rates-sync]
+verify_jwt = false
+
+[functions.push-dispatch]
+verify_jwt = false
+
+# The hosted panel (a static site) calls it with the admin's session; the function also checks is_admin().
+[functions.panel-api]
+verify_jwt = true
+
+# One-time copy of the demo images from GitHub to Storage; called from SQL with the Vault job token.
+[functions.assets-mirror]
+verify_jwt = false

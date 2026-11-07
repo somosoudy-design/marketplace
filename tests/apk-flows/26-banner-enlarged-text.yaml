@@ -1,0 +1,40 @@
+# Font scale is set only on the disposable emulator by native-ota-receipt.sh.
+appId: com.example.kora.preview
+name: mayami banner enlarged text
+---
+# The harness already cold-started this process after applying the system font scale.
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible:
+      id: home-editorial-price
+    timeout: 60000
+- extendedWaitUntil:
+    visible:
+      id: home-banner-photo-loaded
+    timeout: 60000
+- assertNotVisible: Imagen general del producto
+- assertVisible: Inicio
+- assertVisible: Buscar
+- assertVisible: Carrito
+- assertVisible: Cuenta
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-banner
+- swipe:
+    start: 50%, 75%
+    end: 50%, 20%
+- extendedWaitUntil:
+    visible:
+      id: home-search-sticky
+    timeout: 15000
+- assertVisible:
+    id: brand-symbol
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-sticky
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Runtime
+    timeout: 15000
+- extendedWaitUntil:
+    visible: responde en .*
+    timeout: 30000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-receipt

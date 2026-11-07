@@ -1,0 +1,24 @@
+{
+  "fuente": "Chromium local, DTO y precios sintéticos, no representa compra ni recepción Android",
+  "indice": "0 cargador; 1 soporte; 2 cable; 3 power bank; 4 rubor; 5 brochas",
+  "sha256": {
+    "buscar-dark-320.png": "b16cccd708c6c730558fb3bde06be3f5f7dfb409372de52f182cf20239240714",
+    "buscar-light-320.png": "d7be2b16a84b0aa5d2fba23bb836e120987a31cbdafff4d222133201a37fa6cf",
+    "ficha-0-dark-320.png": "1d573abd929fa3494dae2136f1321f22b13a71be4c82af25e32e9bea8e3c4eb8",
+    "ficha-0-light-320.png": "285a82cc33e0abf4c84cfabbfd9dda3d5730e8e840beb85c1fece87bd1389383",
+    "ficha-1-dark-320.png": "195e1d46e4a062b184027fb721be209ebe6423098ac8125cfdebd3dc9c9284ee",
+    "ficha-1-light-320.png": "0634e4af466d974b3802d5de8fbb8891d640b581d8d8eadf65059ee89cf7b6ce",
+    "ficha-2-dark-320.png": "f5892235725d7d1d74fb79ca4a3976d25877fa15c5dacc56c69cc640a3fcdc37",
+    "ficha-2-light-320.png": "356e85f2aa88aa010e08ea24f8d2e31eb570e3d5982a0bce7e0cc1972cc53d81",
+    "ficha-3-dark-320.png": "c26f6f236c878c39c1469ccb1664b5c40d6d71500f9cb1ae948321d835e7fe78",
+    "ficha-3-light-320.png": "12ddb422c50f9e8483cc30efc03c22556991e7aad1422b46314ab401cae382ab",
+    "ficha-4-dark-320.png": "ea9b98945c55bfeda371b04ecb0e76ecba3e004c5fd9b6a0364d10983ea63997",
+    "ficha-4-light-320.png": "58db302997832278743b1b9198aefbf1c282e00269b9b151a06cd0319bed5743",
+    "ficha-5-dark-320.png": "8b4a68114324c57d7fa3363cc08c65faabd541e4e51374eea30b8e6dd417609e",
+    "ficha-5-light-320.png": "76226ce580acd25d538153ca4c807c7843915b38a8710743b37e2f98e0626362",
+    "recientes-antes-dark-320.png": "ca958f1d8b2f38e2cc56c4fcdec1b598493dc5135a7c7f883867a4971aa02165",
+    "recientes-antes-light-320.png": "cc325cd3a9b69bf792bb3a7a5971c967ab5cba17ca3f5a5ff6c2c4faec6be7ab",
+    "recientes-despues-dark-320.png": "77a9efb704ba6bbc1bf52766eca341cb3e91debf2fb71eb990a5c7415224d9a5",
+    "recientes-despues-light-320.png": "989435788d8dbe916f9013e9e5e8922280f2c6eaa2e37441e5df472f7c7c928a"
+  }
+}

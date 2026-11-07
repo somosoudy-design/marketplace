@@ -1,0 +1,249 @@
+{
+  "observedAtCaracas": "2026-10-14T15:06:43.758574-04:00",
+  "references": [
+    {
+      "reference": "65w",
+      "sourceUrl": "https://us.ugreen.com/products/65w-3-ports-gan-fast-charger",
+      "metadataUrl": "https://us.ugreen.com/products/65w-3-ports-gan-fast-charger.js",
+      "httpStatus": 200,
+      "title": "UGREEN Nexode 65W 3-Port Charger",
+      "variants": [
+        {
+          "sku": "10334",
+          "title": "Only Charger",
+          "option1": "Only Charger",
+          "option2": null,
+          "option3": null
+        },
+        {
+          "sku": "10334+10232",
+          "title": "+6.6FT 100W USB C Cable 2 Pack",
+          "option1": "+6.6FT 100W USB C Cable 2 Pack",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "65W GaN Charger",
+          "position": 1,
+          "values": [
+            "Only Charger",
+            "+6.6FT 100W USB C Cable 2 Pack"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    },
+    {
+      "reference": "powerbank100w",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-100w-20000mah-power-bank",
+      "metadataUrl": "https://us.ugreen.com/products/ugreen-100w-20000mah-power-bank.js",
+      "httpStatus": 200,
+      "title": "UGREEN Nexode Power Bank 20000mAh 100W",
+      "variants": [
+        {
+          "sku": "25188",
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    },
+    {
+      "reference": "powerbank130w",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-nexode-power-bank-20000mah-130w",
+      "metadataUrl": "https://us.ugreen.com/products/ugreen-nexode-power-bank-20000mah-130w.js",
+      "httpStatus": 200,
+      "title": "UGREEN Nexode Power Bank 20000mAh 130W with Smart Digital Display",
+      "variants": [
+        {
+          "sku": "35524",
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    },
+    {
+      "reference": "cable",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-usb-c-to-usb-c-cable-3ft-6ft-10ft",
+      "metadataUrl": "https://us.ugreen.com/products/ugreen-usb-c-to-usb-c-cable-3ft-6ft-10ft.js",
+      "httpStatus": 200,
+      "title": "UGREEN USB C to USB C 100W Fast Cable 2 Pack",
+      "variants": [
+        {
+          "sku": "70427P",
+          "title": "3.3FT",
+          "option1": "3.3FT",
+          "option2": null,
+          "option3": null
+        },
+        {
+          "sku": "10232",
+          "title": "6.6FT",
+          "option1": "6.6FT",
+          "option2": null,
+          "option3": null
+        },
+        {
+          "sku": "90120P",
+          "title": "10FT",
+          "option1": "10FT",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "Size",
+          "position": 1,
+          "values": [
+            "3.3FT",
+            "6.6FT",
+            "10FT"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    },
+    {
+      "reference": "hub206",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-revodok-pro-6-in-1-usb-c-hub",
+      "metadataUrl": "https://us.ugreen.com/products/ugreen-revodok-pro-6-in-1-usb-c-hub.js",
+      "httpStatus": 200,
+      "title": "UGREEN Revodok 206 6 in 1 USB-C Hub",
+      "variants": [
+        {
+          "sku": "15852",
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    },
+    {
+      "reference": "hub106",
+      "sourceUrl": "https://us.ugreen.com/products/6-in-1-usb-c-hub-4k",
+      "metadataUrl": "https://us.ugreen.com/products/6-in-1-usb-c-hub-4k.js",
+      "httpStatus": 200,
+      "title": "UGREEN Revodok Pro 106 4K@60Hz 10Gbps USB-C Hub",
+      "variants": [
+        {
+          "sku": "45363",
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    },
+    {
+      "reference": "30w",
+      "sourceUrl": "https://uk.ugreen.com/products/ugreen-nexode-30w-gan-wall-charger",
+      "metadataUrl": "https://uk.ugreen.com/products/ugreen-nexode-30w-gan-wall-charger.js",
+      "httpStatus": 200,
+      "title": "UGREEN Nexode 30W Charger with Foldable Plug",
+      "variants": [
+        {
+          "sku": "90878",
+          "title": "Default Title",
+          "option1": "Default Title",
+          "option2": null,
+          "option3": null
+        }
+      ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "rights": "not_confirmed",
+      "catalogCorrespondence": "not_confirmed",
+      "imageDownloaded": false
+    }
+  ],
+  "integratedPhotos": 0,
+  "rightsConfirmed": 0,
+  "modelCorrespondencesConfirmed": 0,
+  "remoteWrites": false,
+  "easPublished": false,
+  "scope": "first-five-ugreen; candidates only; no approved mapping",
+  "sources": [
+    {
+      "url": "https://www.ugreen.com/pages/terms-and-conditions",
+      "httpStatus": 200,
+      "scope": "images reserved; no written permission obtained"
+    },
+    {
+      "url": "https://us.ugreen.com/policies/terms-of-service",
+      "httpStatus": 200,
+      "sections": "5.1–5.3",
+      "scope": "personal/non-transferable license; redistribution not granted"
+    },
+    {
+      "url": "https://www.ugreen.com/pages/contact-us",
+      "httpStatus": 200,
+      "scope": "official partner/PR/legal contact; no messages sent"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+Pedidos de mi tienda
+Voltio · Tienda de ejemplo
+Solo las entregas de esta tienda. La plataforma confirma los pagos. Prepara y despacha cuando estén habilitados.
+En curso
+Cerrados
+No hay entregas pendientes
+Cuando recibas un pedido, su entrega aparecerá aquí.
+Máximo 200 entregas por vista; cerrados de los últimos 180 días. Para consultas avanzadas, usa el panel.
+Para operaciones avanzadas, usa el panel web con tu cuenta habitual.
+Abrir panel web

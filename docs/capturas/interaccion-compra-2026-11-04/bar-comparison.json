@@ -1,0 +1,82 @@
+{
+  "before": {
+    "bar": {
+      "x": 0,
+      "y": 682,
+      "width": 320,
+      "height": 210,
+      "top": 682,
+      "right": 320,
+      "bottom": 892,
+      "left": 0
+    },
+    "bottom": {
+      "containsProducts": false,
+      "containsTotal": false,
+      "containsPlan": true,
+      "lastText": [
+        {
+          "text": "Av. Ejemplo, Edif. Demo, piso 2",
+          "bottom": 544
+        },
+        {
+          "text": "Libertador, Caracas · +58 412 555 0101",
+          "bottom": 565
+        },
+        {
+          "text": "Plan de pago",
+          "bottom": 622
+        },
+        {
+          "text": "Cambiar",
+          "bottom": 620
+        },
+        {
+          "text": "Pago completo",
+          "bottom": 658
+        }
+      ]
+    },
+    "orders": 0
+  },
+  "after": {
+    "bar": {
+      "x": 0,
+      "y": 779,
+      "width": 320,
+      "height": 113,
+      "top": 779,
+      "right": 320,
+      "bottom": 892,
+      "left": 0
+    },
+    "bottom": {
+      "containsProducts": true,
+      "containsTotal": false,
+      "containsPlan": true,
+      "lastText": [
+        {
+          "text": "Productos",
+          "bottom": 685
+        },
+        {
+          "text": "$101,00",
+          "bottom": 683
+        },
+        {
+          "text": "Envío",
+          "bottom": 715
+        },
+        {
+          "text": "$5,30",
+          "bottom": 713
+        },
+        {
+          "text": "Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.",
+          "bottom": 755
+        }
+      ]
+    },
+    "orders": 0
+  }
+}
