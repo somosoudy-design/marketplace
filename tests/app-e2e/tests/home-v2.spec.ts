@@ -139,7 +139,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await expect(page.getByTestId('home-sticky-bar')).toHaveAttribute('aria-hidden', 'true');
         await page.getByTestId('home-scroll').hover(); await page.mouse.wheel(0, 700);
         await expect(page.getByTestId('home-search-sticky')).toHaveAttribute('tabindex', '0');
-        await expect(page.getByTestId('home-sticky-bar')).toHaveAttribute('aria-hidden', 'false');
+        // React Native Web removes aria-hidden when the bar becomes accessible.
+        await expect(page.getByTestId('home-sticky-bar')).not.toHaveAttribute('aria-hidden', 'true');
         await expect(page.getByTestId('home-sticky-bar').getByTestId('brand-symbol')).toBeVisible();
         await expect(page.getByTestId('home-sticky-bar').getByTestId('brand-mark')).toHaveCount(0);
         await page.getByTestId('home-scroll').evaluate((node) => { node.scrollTop = 0; });
