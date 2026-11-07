@@ -2,7 +2,7 @@
 
 ## En curso: tres casos visuales del catálogo ·7nov2026
 
-Tanda nueva acotada: fotos blancas en oscuro y nombre Odontología corregidos/revisados sin rediseño, con originales intactos. Tecnología muestra su asset completo; el recorte es intrínseco y se conserva por límite de alcance. Caption final9916d3e evita letra aislada y conserva390normal1línea.116core/139unitarias/30Node, tipos/lint, web5/5, fotos/app/147SHA y revisión independiente aprobados. Build público y Preview4/4 con catálogo real; BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N. Solicitud únicaOTA preparada, mismoAPK/runtime; falta despliegue web/recibo exactoAndroid y4captions fontreal(14XML/40PNG). Sin Chrome compartido, mutaciones de negocio ni servicios de pago. [Estado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
+Dos ajustes publicados: superficie de fotos en oscuro y nombre Odontología completo; grilla, imágenes y funciones conservadas. Tecnología no tiene recorte adicional de UI: se mantiene el original con su límite identificado. Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N; Preview4/4 y público4/4 con20fotos/contextos,13assetsSHA yWWW301 correctos.147originales/9gates intactos;116core/139unitarias/30Node, tipos/lint y QA local final aprobados. OTA publicada una vez:01a1b758-773b-7a0f-82c5-a96d2bc2fb81, fuente73fc75ef, mismoAPK/runtime; CI42403068492 sigue en recibo nativo14XML/40PNG. Próximo paso único: archivar resultado y cerrar sin otros ciclos. Free conservado, sin mutaciones de negocio ni Chrome compartido. [Resultado, límite y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).
 
 
 ## Modo invitado publicado y verificado ·7nov2026

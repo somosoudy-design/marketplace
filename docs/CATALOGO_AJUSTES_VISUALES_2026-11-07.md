@@ -1,39 +1,60 @@
-# Tres casos visuales del catálogo · 7 de noviembre de 2026
+# Correcciones visuales del catálogo · 7 de noviembre de 2026
 
-Tanda autorizada después del cierre invitado85f0110. Son correcciones de superficies existentes: fotos con fondo blanco en oscuro, nombre completo Odontología y encuadre Tecnología. Sin rediseño de catálogo, nuevos assets, filtros/tintes, cambios de grilla, cuentas, precios, stock, pagos ni microajustes aplazados de círculos/textos/botón. Sólo root integra y publica; especialistas trabajan en carpetas ignoradas y contextos locales aislados, sin controlar Chrome compartido.
+## Resultado de los tres casos
 
-## Evidencia anterior y decisiones
+Se publican **dos correcciones puntuales** sobre el diseño existente. El tercer caso es un límite del archivo original y se conserva, sin simular una reparación. No cambian la grilla, las fotografías, los colores del producto, el catálogo ni sus operaciones.
 
-1. **Foto oscura reproducida:** en móvil una foto800×1000 dentro de161×161 deja16.1px de banda lateral por lado, pintada con tono oscuro de categoría frente al fondo claro del original. Web ya tenía contain y superficie#f4f3f6; no se vuelve a presentar contain como novedad. Ajuste sólo en la superficie de foto de ProductCard oscuro: fondo blanco continuo y filete discreto, misma geometría, radio y foto. No se cambia ProductImage global, ficha, carrito ni banners. El color del producto y los fondos que pertenezcan al bitmap permanecen intactos.
-2. **Odontología reproducida:** móvil360 tiene tile76, área útil66 y texto74.23; a390 normal cabe. Estrés equivalente a1.6 deja118.77px de texto en90px útiles. Web320/160% tiene140px de texto en columna104 y CTA122px. Ajuste local de ancho/wrap del label móvil y sólo el tile Odontología web; conserva nombre y controles, sin reducir fuente ni fijar altura/grilla. El estrés CSS de ExpoWeb es aproximación, no prueba de font_scale Android.
-3. **Tecnología sin recorte adicional de UI:** app usa tecnologia.webp448×448 en marco cuadrado; se muestran81×81@390 y74×74@360 sin corte adicional. El portátil ya sale de los bordes superior/derecho en el original SHAa387649040c6acbca4a6eebe8c12ab8e1dbe69be100102af82c6a0d0a2184a97. Web usa otra foto de categoría800×1000 en contain. No se cambia el arte ni se simula recuperar contenido inexistente. Reencuadrar la composición original exigiría otro asset, fuera de esta autorización; se identifica el límite antes de actuar y se conserva tal cual.
+| Caso | Evidencia anterior | Resultado |
+|---|---|---|
+| Fotos con fondo blanco en oscuro | ProductCard móvil colocaba bandas oscuras junto al bitmap claro: foto800×1000 en marco161×161,16.1px laterales. Web ya tenía contain y fondo#f4f3f6. | Sólo la superficie de foto de la tarjeta oscura pasa a blanco continuo con filete discreto. Foto, SRC, proporción, opacidad y colores intactos; claro y placeholder conservados. No se presenta contain como una novedad. |
+| Odontología | A360 la tile76 daba66px útiles frente a74.23px del nombre. Web320/160% tenía140px de texto en104px útiles y CTA122px. | Nombre completo dentro del pie, sin reducir fuente ni fijar altura.390normal sigue en una línea; al necesitar reflujo ofrece división silábica legible. Nombre accesible, datos y navegación siguen usando categoría.name original. |
+| Tecnología | App muestra el arte448×448 en marco cuadrado sin recorte extra:81×81@390/74×74@360. El portátil ya sale por arriba/derecha dentro del original. Web usa fotos de catálogo distintas, en contain; hoy una tablet. | Sin modificación: no existe contenido fuera del bitmap que un ajuste de encuadre pueda recuperar. Cambiar esa composición requeriría otro asset fuera de esta tanda. No se genera, sustituye ni tiñe el arte ni se cambian las demás categorías. |
 
-El ajuste anterior45743f9 de alturas/pies de categorías sigue conservado. No se rehace ni se sustituye un caso ya resuelto por otro pendiente.
+El arte móvil Tecnología conserva SHA-256 `a387649040c6acbca4a6eebe8c12ab8e1dbe69be100102af82c6a0d0a2184a97`. Su límite se identificó antes de actuar. El ajuste anterior de alturas/pies45743f9 tampoco se rehace.
 
-## Implementación local en curso
+## Cambios concretos
 
-Cuatro archivos de UI: ProductCard.tsx, CategoryShowcase.tsx, globals.css y marketplace-home.css. Sólo superficie de foto oscura y wrap Odontología. CSS candidato revisado en8contextos sin cambiar geometría, src, fit, tarjeta ni color de fotos; controlesDJI original blanco y foto pastel iguales porSHA. Originales registrados en before/source-assets.json (147archivos). Tipos y lint completos pasan. Falta cerrar export móvil/QA final, revisión independiente y publicación compatible autorizada.
+Cuatro archivos de interfaz: ProductCard.tsx, CategoryShowcase.tsx, globals.css y marketplace-home.css. ProductImage global, ficha, carrito, galería por color y tres banners conservan su código. La superficie nueva se aplica sólo a tarjetas oscuras, con el mismo margen/radio/área. No hay filtros, multiply ni opacidad añadidos sobre el producto.
 
-No hace falta migración, SQL mutador ni nuevo servicio. Stack local de lectura reutiliza el clon mayami_guest_mode_20261107 y puertos55442/55444; no se reinicia el PostgreSQL compartido, no se siembran productos/cuentas y no se usa producción para pruebas mutadoras.
+Odontología usa ancho acotado y reflujo local; en móvil el padding del pie pasa4→3 sólo para esa categoría y un guion discrecional permite la división Odonto-/logía cuando hace falta. No altera el nombre del registro, el enlace ni su nombre accesible. En web únicamente su tile permite envolver nombre/CTA. La primera aproximación aislaba una última letra a390; se retiró esa aprobación y se corrigió antes de publicar. Sus originales se conservan.
 
-## Evidencia local
+Se añade el flow27 de categorías y cuatro recibos en la misma comprobación Android (normal1/1.6×ambos temas), sin alterar los diez flows anteriores ni infraestructura. Shell y YAML validados; DSL contrastado con documentación primaria. El guard de publicación exige al menos40PNG. Un assert de nombre accesible no sustituye la revisión de los glifos en esos PNG.
 
-`.local/catalog-visual-20261107/`: before/, before-mobile/, candidate/, proposals/WEB_AUDITORIA_Y_PROPUESTA.md, proposals/REVISION_Y_QA_INDEPENDIENTE.md y logs/. Los fallos de selector del capturador se conservan aparte; no se corrige la app para satisfacer un oráculo equivocado.
+No se incluyen círculos, textos redundantes, botón de ficha, OAuth, cuotas, estructura general de ficha, dominio del panel ni otros pendientes. No hay nuevas credenciales, permisos, servicios, migraciones o SQL mutador.
 
-Próximo paso: export móvil después en8091, QA focal de los dos ajustes y constancia del tercer límite; después un único despliegue web y una única OTA compatible, sin APK nuevo/servicios de pago. No abrir otra tanda.
+## Pruebas locales
 
-## QA local y refinamiento del mismo nombre
+- Tipos/lint del monorepo aprobados; tras el refinamiento final, tipos/lint móvil repetidos y aprobados.116core,139unitarias móvil/web y30Node/marca pasan.
+- Web integrada5/5:390/1440 ambos temas y medición320oscuro; Odontología normal/160%, superficie, fotografía original, banner, Preventa, selección de color/UUID/portada y persistencia guest. Cero Auth, writers o destinos prohibidos.
+- ExpoWeb antes85f0110 y después9916d3e: blanco DJI/pastel mantienen foto, contain161², tarjeta173×271, filtroNone/opacidad1. Placeholder conserva tamaño/tono y no incorpora filete.147originales sin cambios porSHA y nueve gates de código de guest/ficha/banners/availability idénticos.
+- Caption final export8092: dos PNG de fuente real abiertos por integrador y revisor.390normal conserva una línea;160% usa Odonto-/logía dentro92px, sin letra aislada. Lectura360 completa. Aria/canonical/destino originales. El estrésCSS es una aproximación sobre ExpoWeb; no se atribuye a Android nativo.
 
-116 core,139 unitarias móvil/web,30 Node/marca y tipos/lint completos aprobados. Web de fuente integrada5/5:390/1440 ambos temas y320oscuro, nombre160%, superficies, originales, banner, Preventa, color/UUID/portada y persistencia guest. Sólo localStorage,0Auth/writes/destinos externos. Móvil export8091 conserva147originales y9gates de código de funcionalidad/ficha/banners. Foto blanca DJI/pastel mantienenSRC/contain161²/card173×271/filterNone/opacidad1; placeholder y claro conservados.
+Las vistas locales usan un clon y fixtures visuales previos, no el inventario comercial oficial. No se siembra ni se modifica el clon, no se ejecuta Auth ni se reinicia el PostgreSQL compartido. Contextos de navegador nuevos y aislados; Chrome compartido del Mac no se controló. Todos los servidores locales de esta tanda están cerrados; el cluster compartido permanece intacto.
 
-La primera refluencia de Odontología aislaba la última letra en390normal; se retiró esa aprobación antes de publicar. Experimento local puntual: padding del pie3px sólo paraOdontología más guion discrecional Odonto\u00adlogía devuelve390normal a una línea y ofrece división silábica legible en360/1.6. Nombre accesible, datos y navegación conservan categoría.name original. Refinamiento ya integrado; tipos/lint móvil vuelven a pasar. Falta validar dos capturas del export definitivo, sin repetir la matriz ni fotos ya aprobadas.
+## Publicación web verificada
 
-Se añade flow27 y cuatro recibos de caption a la misma observación OTA (normal1/1.6×dos temas), manteniendo los diez casos existentes. DSL contrastado con documentación primaria deMaestro; shell yYAML comprobados sin instalar dependencias. No altera infraestructura, APK ni datos; el PNG acredita glifos y los asserts usan el padre con nombre completo. Androidreal todavía pendiente.
+Fuente compilada `9916d3ef7792584f1ad9ceb52f4080664d370c80`, igual en código de aplicación a la solicitud `73fc75ef124121693d8fc42efa77dd11dcf370f6`. BUILD_ID `ZFY1G0Dw-qyRFOIV0IH7N`; Worker `d8756e3b-42c9-47ee-b041-44456fa341f6` al100%. Sólo ASSETS y WORKER_SELF_REFERENCE, Workers Free. Despliegue único; anterior8a9d859c conservado como referencia.
 
-## Cierre local y solicitud única de publicación
+Build/guards release, comercial yCloudflare aprobados. Preview4/4 y público4/4 en390/1440 ambos temas con el catálogo real actual. CadaHTML confirma BUILD_ID; cinco fotos por contexto mantienen path/dimensiones/contain/opacidad/radio respecto a Preview y sólo oscuro recibe la superficie. Odontología normal/160% cabe en104px móviles/149px desktop. Tecnología muestra su bitmap completo en contain, sin atribuir un cambio. PNG representativos revisados tras carga.
 
-Export definitivo9916d3e (8092): dos PNG de fuente real revisados por integrador y revisor independiente.390normal conserva una línea; ampliado usa Odonto-/logía sin letra aislada; nombres accesibles/datos/destino mantienenOdontología. Revisión retirada del candidato anterior queda conservada y sustituida explícitamente por el dictamen final. Fotos/web aprobadas siguen con sus mismos hashes; no se repite esa matriz. Shell y YAML de cuatro captions nativos comprobados, y guard CI exige al menos40PNG.
+Cero errores de app/HTTP/red inesperados y cero Auth/writers prohibidos. Cuatro GET del beacon deCloudflare se abortan intencionalmente y se registran con sus requestfailed/consoleerror como diagnóstico opcional; no se declara consola global limpia ni se oculta otro error. Root confirma HTML200, treceJS/CSS porSHA idénticos al artefacto yWWW301 conservando ruta/consulta.
 
-Build público de fuente9916d3e y guards release/comercial/Cloudflare aprobados. Preview4/4 con catálogo real actual, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N en cadaHTML; cero writers/Auth/errores. Fotos actuales HiTune/FIFINE/Tablet, contain/opacidad1 y superficie sólo oscuro. Tecnología es Tablet en contain, sin reparación atribuida. En público Odontología forma parte de los cuatro tiles desktop; fits149px y104px móvil. Recursos de capturas se esperan cargados; timing del primer caption de preview se conserva y se mejora sólo la espera del runner para la verificación pública.
+## Android publicado, recibo en curso
 
-Se solicita una única OTA del mismo APK/runtime. Worker anterior8a9d859c-9278-4053-9a72-082e9949fc99/100% guardado para referencia; no se contratan servicios. Próximo paso: desplegar artefacto web una vez, verificar identidad pública y observar la única OTA/14XML/40PNG. No mutaciones de catálogo/cuentas/compras/pagos de prueba ni uso de Chrome compartido.
+Una solicitud, [ejecución42403068492](https://github.com/somosoudy-design/marketplace/actions/runs/42403068492), intento1, fuente `73fc75ef124121693d8fc42efa77dd11dcf370f6`. Guard Free/cuota, runtime y fuente limpia aprobados; publicación completada. ManifestHTTP200: UUID `01a1b758-773b-7a0f-82c5-a96d2bc2fb81`, grupo `db1d3f57-b2b3-4c6e-9507-b9e4f859f0bf`, runtime `b691ec2b61ee413fb1d6e7671a1a84446b4cd4f6`, creado18:49:50.651UTC. Mismo APKdf55b9b8, sin APK nuevo, iOS ni tiendas. Falta archivar recepción exacta y las cuatro capturas de categorías con font_scale real; no se presenta como ya aprobado.
+
+No servicios con cargos ni pruebas mutadoras de catálogo, cuentas, compras o pagos en producción. La recepción en el teléfono físico no ha sido observada.
+
+## Evidencia antes/después
+
+Bajo `.local/catalog-visual-20261107/`:
+
+- `before/`, `before-mobile/`: código y capturas anteriores; `before/source-assets.json` registra147SHA.
+- `candidate/` y `after-source/`: propuesta web y fuente integrada; `after-source/README.md` separa sus fixtures de producción.
+- `after-mobile/`: fotografías/controles y huellas conservadas; su aprobación intermedia de caption remite al cierre definitivo.
+- `final-source-caption/README.md`: dos PNG del export final y mediciones; no son un experimento con texto/padding inyectados.
+- `proposals/DICTAMEN_CAPTION_9916d3e.md` y `caption-final-independent.json`: revisión final independiente.
+- `publication/worker/README.md` y `publication/public/README.md`: cuatro contextos reales,20fotos, errores/diagnósticos separados, originales y hashes.
+- `publication/public-integrity.json`: identidad/treceassets/www; `publication/native/`: manifest y seguimiento de la única ejecución.
+
+Próximo paso único: archivar resultado de esa observación Android y cerrar esta tanda con el límite de Tecnología explícito. No abrir otra ni iniciar un ciclo de infraestructura.
