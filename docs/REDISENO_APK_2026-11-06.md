@@ -25,3 +25,5 @@ CI 42339315891 confirmó la recepción del UUID exacto, pero falló al buscar la
 CI 42340453409 aprobó la batería completa con la corrección, incluida la regresión en 320/360/390/412 claro y oscuro. Se solicita la actualización correctiva y después se verificará de nuevo la recepción nativa en emulador.
 
 Correctiva publicada con CI 42340887343, fuente `ee0c686`, Android `01a1b463-38b7-7516-bacf-dac2518128c9`, grupo `2a0d076f-4aa9-421e-b762-791041c83609`; runtime compatible confirmado. Verificación nativa solicitada; recepción en Samsung sin comprobar.
+
+CI 42341088500 completó la verificación de firma, recepción exacta y navegación invitada en emulador Android 15 con los temas claro y oscuro. La evidencia visual se guarda en el artefacto de esa corrida. No equivale a recepción o aprobación visual en el teléfono físico.
