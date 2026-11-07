@@ -23,3 +23,5 @@ Actualización publicada en canal preview por CI 42339077729, fuente `ae1fa3a`, 
 CI 42339315891 confirmó la recepción del UUID exacto, pero falló al buscar la cabecera compacta: la captura muestra la búsqueda original recortada en un inicio corto. Se ajusta el umbral para anticipar la cabecera y se añade regresión con desplazamiento corto y vuelta al inicio. Pendientes pruebas, actualización correctiva y nueva verificación nativa.
 
 CI 42340453409 aprobó la batería completa con la corrección, incluida la regresión en 320/360/390/412 claro y oscuro. Se solicita la actualización correctiva y después se verificará de nuevo la recepción nativa en emulador.
+
+Correctiva publicada con CI 42340887343, fuente `ee0c686`, Android `01a1b463-38b7-7516-bacf-dac2518128c9`, grupo `2a0d076f-4aa9-421e-b762-791041c83609`; runtime compatible confirmado. Verificación nativa solicitada; recepción en Samsung sin comprobar.
