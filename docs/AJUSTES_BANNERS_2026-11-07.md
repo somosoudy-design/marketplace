@@ -54,7 +54,11 @@ La comprobación independiente [42382733005](https://github.com/somosoudy-design
 
 Para aislar la acumulación entre casos se prepara una matriz de seis emuladores independientes: claro/oscuro × estándar/fuente1.3/fuente1.6. Conserva las mismas aserciones y verifica el mismo UUID en cada proceso; estándar conserva 21/24/25 y cada fuente ejecuta26. Se exigen 36PNG/diez XML en conjunto. Cada salida conserva memoria del host, lista de procesos sin argumentos, kernel y ADB con timeout; los archivos de crash sólo se inventarían por nombre/tamaño, sin volcar memoria a artefactos públicos. El diagnóstico de salida mantiene el código de error original.
 
-Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar esa matriz y revisar oscuro. La recepción física en el teléfono no se deduce del emulador.
+La matriz [42383755747](https://github.com/somosoudy-design/marketplace/actions/runs/42383755747), fuente `b87e65a`, completó estándar y fuente1.3 en ambos temas. Fuente1.6 pierde el emulador al abrir Diagnóstico en ambos temas, incluso aislada. Por tanto no se demuestra que la acumulación entre casos sea la causa. Las capturas1.6 de banner y M sí se guardaron. Kernel/host no muestran OOM; causa exacta aún sin stack del proceso del emulador.
+
+Se encontró un [reporte primario de Chromium](https://chromium.googlesource.com/chromium/src/tools/+/115b3f40ea52dea3dede0f705fa5aaf978562ff0) que retira37.2.13 por caída de ProcessCleanupThread/EglContext y vuelve a37.1.11. Se prepara la misma matriz con Android Emulator37.1.11 Stable/build15917651, obtenido del [archivo oficial de Android](https://developer.android.com/studio/emulator_archive). ArchivoLinux oficial:334378080bytes, SHA256publicado`95771e0ae431897b2a4bd2d97fa095f29a8b0624a7b216baf529f9306161c266`. El input `emulator-build` fija el host y el hook verifica versión/build antes de ejecutar; no cambia Android15/API35, APK, OTA, app ni aserciones. La coincidencia con ese reporte motiva la comparación, sin afirmar todavía la causa del fallo local.
+
+Este workflow sólo comprueba el APK y OTA existentes. **Pendiente:** completar la matriz con el host fijado y revisar su evidencia. La recepción física en el teléfono no se deduce del emulador.
 
 ## Evidencia y límites
 

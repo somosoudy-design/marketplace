@@ -140,12 +140,20 @@ jobs:
           MAESTRO_CLI_NO_ANALYTICS: '1'
           MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
         with:
+          # Pin the host emulator: 37.2.13 has an upstream context-cleanup crash.
+          # Archive: developer.android.com/studio/emulator_archive (37.1.11 Stable).
+          emulator-build: 15917651
           api-level: 35
           target: google_apis
           arch: x86_64
           profile: pixel_6
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          pre-emulator-launch-script: |
+            mkdir -p shots/ota/logs
+            "$ANDROID_HOME/emulator/emulator" -version > shots/ota/logs/emulator-version.txt 2>&1
+            grep -F '37.1.11' shots/ota/logs/emulator-version.txt
+            grep -F '15917651' shots/ota/logs/emulator-version.txt
           script: bash tools/eas/native-ota-receipt.sh
       - name: Comprobar recibo y capturas completas
         run: |
