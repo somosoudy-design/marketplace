@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Preflight remoto de retención · sólo lectura completada · 7 de noviembre de 2026
+
+Sesión UI legítima somosoudy@gmail.com → Marketplace/MIM/Free verificada. Preflight y complemento BEGINREADONLY/SELECT/COMMIT: dos MD5 iniciales coinciden, callerpostgres con SELECT/UPDATE/DELETE/TRIGGER auditoría, columnas/dependencias presentes, Authowner normal no superusuario. pg_cron ya instalado; módulo/ejecutor y dos versiones aún no activados,0jobs visibles para sus funciones. No DDL/DML, grants, cambios de Auth/plan/Cron, fixtures, credenciales extraídas, soporte o publicación.
+
+Backups UI excluye los backups de proyecto de Free y ofrece Pro7d; no demuestra ausencia de copias internas. Rangos de logs son filtros, no TTL físico comprobado. Pendientes exactos: texto policies.json8817 y pin de CI panel, hook anterior/conjunto DEFINER a preservar, activación posterior de dos migraciones+worker+frontends limpios+ejecutor observado, y límites externos. Fuente backend881765ff; no desplegar HEAD compartido. [Evidencia y ruta](PREFLIGHT_REMOTO_RETENCION_2026-11-07.md). Sin nuevas pruebas locales ni implementación.
+
 ## Retención del cierre · dos resultados locales probados · 7 de noviembre de 2026
 
 Desde34ecd9ae: auditoría AuthSQL conocida minimizada y con caducidad; holds específicos y vencimiento efectivo del recibo a90×24h. Un test real JWT/Storage pasó con501eventos, lotes de500→pendiente→completado, purga de504+1auditorías, hold de recibo, frontera exacta sin hold, marcador independiente, replay y sesión antigua denegada; control intacto. Pasaron11pruebas DB focales y Deno;18tablas protegidas idénticas. Sin UI/matrices ni suites financieras repetidas. P1/P2 de revisión independiente corregidos antes de aplicar SQL local.
