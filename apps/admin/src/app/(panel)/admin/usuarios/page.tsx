@@ -5,11 +5,12 @@ import { useState } from 'react';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Table, Tabs, Td, Textarea } from '@/components/ui';
 import { useAuth } from '@/lib/auth';
+import { closureLabel, closureMessage, closureResult, type ClosureResult } from '@/lib/account-closure';
 import { ago, dateTime } from '@/lib/format';
-import { db, rpc, run } from '@/lib/kora';
+import { db, koraForActor, rpc, run } from '@/lib/kora';
 
 type U = { id: string; email: string; full_name: string | null; phone: string | null; created_at: string; last_sign_in_at: string | null; blocked: boolean; roles: string[]; stores: { id: string; name: string; role: string }[]; deletion_status: string | null };
-type Req = { id: string; user_id: string; reason: string | null; status: string; requested_at: string; processed_at: string | null; notes: string | null };
+type Req = { id: string; user_id: string; reason: string | null; status: string; cleanup_state?: string | null; requested_at: string; processed_at: string | null; notes: string | null };
 
 export default function UsersPage() {
   const [tab, setTab] = useState<'users' | 'deletions'>('users');
@@ -67,31 +68,54 @@ function Users() {
 }
 
 function Deletions() {
+  const { userId } = useAuth();
   const qc = useQueryClient();
   const toast = useToast();
-  const [open, setOpen] = useState<{ req: Req; approve: boolean } | null>(null);
+  const [open, setOpen] = useState<{ req: Req; approve: boolean; actorId: string } | null>(null);
   const [notes, setNotes] = useState('');
-  const q = useQuery({ queryKey: ['deletion-requests'], queryFn: () => run<Req[]>(db('account_deletion_requests').select('*').order('requested_at', { ascending: false }).limit(200)) });
+  const [outcome, setOutcome] = useState<ClosureResult | null>(null);
+  const q = useQuery({ queryKey: ['deletion-requests', userId], queryFn: () => run<Req[]>(db('account_deletion_requests').select('*').order('requested_at', { ascending: false }).limit(200)), enabled: !!userId });
+  const capability = useQuery({ queryKey: ['account-closure-capability', userId], queryFn: () => rpc<boolean>('account_closure_capabilities'), enabled: !!userId, retry: false });
   const users = useQuery({ queryKey: ['admin-users', 'deletions', q.data?.length], queryFn: () => rpc<U[]>('admin_users', { p_query: null, p_limit: 200 }), enabled: !!q.data?.length });
   const email = (id: string) => users.data?.find((u) => u.id === id)?.email ?? id.slice(0, 8);
   const process = useMutation({
-    mutationFn: () => rpc('process_account_deletion', { p_request_id: open!.req.id, p_approve: open!.approve, p_notes: notes.trim() || null }),
-    onSuccess: () => { toast.ok(open!.approve ? 'Datos personales eliminados y acceso bloqueado' : 'Solicitud rechazada'); qc.invalidateQueries(); setOpen(null); setNotes(''); },
+    mutationFn: async (v: { req: Req; approve: boolean; actorId: string; notes: string }): Promise<ClosureResult | null> => {
+      const bound = await koraForActor(v.actorId);
+      await bound.assertCurrent();
+      if (!v.approve) {
+        await run(bound.client.rpc('process_account_deletion', { p_request_id: v.req.id, p_approve: false, p_notes: v.notes.trim() }));
+        await bound.assertCurrent();
+        return null;
+      }
+      if (capability.data !== true) throw new Error('El cierre verificable todavía no está disponible. La solicitud permanece pendiente.');
+      const { data, error } = await bound.client.functions.invoke('account-close', { body: { requestId: v.req.id, notes: v.notes.trim() || null } });
+      await bound.assertCurrent();
+      if (error) throw new Error('No se pudo procesar el cierre. Revisa los permisos y las operaciones pendientes; actualiza la solicitud antes de reintentar.');
+      return closureResult(data, v.req.id);
+    },
+    onSuccess: (result) => {
+      if (!result) toast.ok('Solicitud rechazada');
+      else if (result.state === 'completed') toast.ok(closureMessage(result.state));
+      else setOutcome(result);
+      qc.invalidateQueries(); setOpen(null); setNotes('');
+    },
     onError: toast.error,
   });
   return (
     <>
+      {capability.isError || capability.data === false ? <div className="mb-4"><Notice tone="info">El cierre verificable todavía no está disponible. Puedes revisar las solicitudes; la eliminación permanece deshabilitada.</Notice></div> : null}
+      {outcome ? <div className="mb-4"><Notice tone="info">{closureMessage(outcome.state)}</Notice></div> : null}
       <Card padded={false}>
-        {q.isPending ? <Loading /> : !q.data?.length ? <Empty title="No hay solicitudes" /> : (
+        {q.isPending ? <Loading /> : q.isError ? <ErrorBox error={q.error} /> : !q.data?.length ? <Empty title="No hay solicitudes" /> : (
           <Table head={['Cuenta', 'Motivo', 'Solicitada', 'Estado', '']}>
             {q.data.map((r) => (
               <tr key={r.id}>
                 <Td className="font-semibold">{email(r.user_id)}</Td>
                 <Td className="text-ink-2">{r.reason ?? '—'}</Td>
                 <Td className="whitespace-nowrap text-ink-3">{dateTime(r.requested_at)}</Td>
-                <Td><Badge tone={r.status === 'completed' ? 'success' : r.status === 'rejected' ? 'neutral' : 'warning'}>{{ requested: 'Pendiente', in_review: 'En revisión', completed: 'Completada', rejected: 'Rechazada' }[r.status] ?? r.status}</Badge></Td>
+                <Td><Badge tone={r.status === 'completed' && r.cleanup_state === 'completed' ? 'success' : r.status === 'rejected' ? 'neutral' : 'warning'}>{closureLabel(r.status, r.cleanup_state)}</Badge></Td>
                 <Td className="whitespace-nowrap text-right">
-                  {['requested', 'in_review'].includes(r.status) ? (<><Button size="sm" variant="ghost" onClick={() => setOpen({ req: r, approve: false })}>Rechazar</Button><Button size="sm" variant="danger" onClick={() => setOpen({ req: r, approve: true })}>Eliminar datos</Button></>) : null}
+                  {['requested', 'in_review'].includes(r.status) && userId ? (<>{!r.cleanup_state ? <Button size="sm" variant="ghost" onClick={() => setOpen({ req: r, approve: false, actorId: userId })}>Rechazar</Button> : null}<Button size="sm" variant="danger" disabled={capability.data !== true} onClick={() => setOpen({ req: r, approve: true, actorId: userId })}>{r.cleanup_state ? 'Reintentar cierre' : 'Procesar cierre'}</Button></>) : null}
                 </Td>
               </tr>
             ))}
@@ -99,9 +123,9 @@ function Deletions() {
         )}
       </Card>
       {open ? (
-        <Dialog open onClose={() => setOpen(null)} title={open.approve ? 'Eliminar datos personales' : 'Rechazar solicitud'} footer={<Button variant={open.approve ? 'danger' : 'primary'} disabled={!open.approve && !notes.trim()} loading={process.isPending} onClick={() => process.mutate()}>{open.approve ? 'Eliminar definitivamente' : 'Rechazar'}</Button>}>
+        <Dialog open onClose={() => { if (!process.isPending) setOpen(null); }} title={open.approve ? 'Procesar cierre de cuenta' : 'Rechazar solicitud'} footer={<Button variant={open.approve ? 'danger' : 'primary'} disabled={!open.approve && !notes.trim()} loading={process.isPending} onClick={() => process.mutate({ ...open, notes })}>{open.approve ? 'Procesar cierre' : 'Rechazar'}</Button>}>
           <div className="flex flex-col gap-4">
-            {open.approve ? <Notice tone="danger" title="No se puede deshacer">Se borran nombre, teléfono, direcciones, favoritos, historial y carrito; el correo se reemplaza y el acceso queda bloqueado. Pedidos, pagos y registros contables se conservan por obligación legal, con la dirección reducida a ciudad y estado.</Notice> : null}
+            {open.approve ? <Notice tone="danger" title="No se puede deshacer">Tras aprobar, se bloquea el acceso y se procesan las credenciales, los datos de uso y los archivos personales. Los registros pendientes de clasificación se conservan. El cierre sólo figura como verificado cuando todas las comprobaciones terminan; un fallo o una retención mantienen la solicitud abierta.</Notice> : null}
             <Field label={open.approve ? 'Nota interna (opcional)' : 'Motivo (lo verá el usuario)'}><Textarea value={notes} onChange={(e) => setNotes(e.target.value)} /></Field>
           </div>
         </Dialog>

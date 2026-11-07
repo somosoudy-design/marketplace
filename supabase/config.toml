@@ -83,6 +83,10 @@ verify_jwt = false
 [functions.panel-api]
 verify_jwt = true
 
+# Account closure requires the operator JWT and a separate service-only cleanup receipt.
+[functions.account-close]
+verify_jwt = true
+
 # One-time copy of the demo images from GitHub to Storage; called from SQL with the Vault job token.
 [functions.assets-mirror]
 verify_jwt = false

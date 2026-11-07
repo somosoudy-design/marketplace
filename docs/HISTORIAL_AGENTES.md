@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-07 — cierre verificable mínimo local
+
+Integrador: worker/SQL y panel con estados honestos, bloqueo JWT en RPC/RLS/Storage, lease/retry y bytes porAPI. RED3 real→PASS con10dominios/4avatars; SQLfocal yconcurrencia PASS;11DB+67admin, tipos/lint/Deno ydos recorridospanel claro/oscuro. Revisión independiente funcional/visual; aviso pendiente local persistente corrige transparencia oscura. Authaudit conserva correo y no tiene plazo comprobado: retention_pending, no completed/Playready.16tablas intactas durante cierre;28regresionesPASS/2pagosfallan igualenbaseline,1suiteporclonguard;tasas locales cambiadas por esos tests, documentado. Sin producción, publicaciones, correos reales, nuevos accesos reales ni cargos; Google/cuotas/otras fuentes preservadas. [Informe](CIERRE_CUENTA_SEGURO_2026-11-07.md).
+
 ## Cierre seguro de cuenta · implementación local en curso · 7 de noviembre de 2026
 
 Se retoma sólo la finalización del cierre, sin repetir enlaces, inventario Play o compilaciones de app. Fuente aislada 92f75a0d. Baseline real local confirmado: GoTrue emite JWT, Storage oficial guarda bytes, el procesador anterior marca completed y el mismo JWT todavía lee/modifica datos y descarga/sube archivos. Tres aserciones de aceptación fallan antes del arreglo, sin .fails/.skip. El clon exclusivo es mayami_account_close_20261107; no se alteró otra base ni producción.

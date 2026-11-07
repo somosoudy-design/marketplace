@@ -56,7 +56,7 @@ describe('admin tools', () => {
     ).rejects.toMatchObject({ code: '42501' });
   });
 
-  it('approving a deletion anonymizes personal data, keeps orders and blocks the login', async () => {
+  it('approving a deletion schedules verified cleanup and blocks the old actor without claiming completion', async () => {
     const adm = await createUser('del-admin', { role: 'admin' });
     const u = await createUser('del-user');
     await admin(`update public.profiles set full_name = 'Persona Real', phone = '0412-0000000' where id = $1`, [u.id]);
@@ -74,17 +74,21 @@ describe('admin tools', () => {
     await asUser(adm.id, (sql) =>
       sql(`select public.process_account_deletion($1, true, 'verificado por soporte')`, [reqId]),
     );
+    // Approval only installs the access gate. Auth and physical bytes require the worker APIs.
     const [p] = await admin(`select full_name, phone from public.profiles where id = $1`, [u.id]);
-    expect(p).toEqual({ full_name: null, phone: null });
-    expect(await admin(`select 1 from public.addresses where user_id = $1`, [u.id])).toHaveLength(0);
-    const [au] = await admin(`select email, banned_until > now() as blocked from auth.users where id = $1`, [u.id]);
-    expect(au.email).toMatch(/@example\.invalid$/);
-    expect(au.blocked).toBe(true);
-    const [r] = await admin(`select status, processed_by from public.account_deletion_requests where id = $1`, [reqId]);
-    expect(r).toEqual({ status: 'completed', processed_by: adm.id });
-    await expect(
-      asUser(adm.id, (sql) => sql(`select public.process_account_deletion($1, true)`, [reqId])),
-    ).rejects.toMatchObject({ code: 'P0001' });
+    expect(p).toEqual({ full_name: 'Persona Real', phone: '0412-0000000' });
+    expect(await admin(`select 1 from public.addresses where user_id = $1`, [u.id])).toHaveLength(1);
+    const [au] = await admin(`select encrypted_password, deleted_at from auth.users where id = $1`, [u.id]);
+    expect(au).toEqual({ encrypted_password: 'x', deleted_at: null });
+    const [r] = await admin(`select status, cleanup_state, processed_by, processed_at from public.account_deletion_requests where id = $1`, [reqId]);
+    expect(r).toEqual({ status: 'in_review', cleanup_state: 'processing', processed_by: adm.id, processed_at: null });
+    await expect(asUser(u.id, (sql) => sql(`select public.request_account_deletion(null)`))).rejects.toMatchObject({ hint: 'account_closed' });
+    expect(await asUser(u.id, (sql) => sql(`select id from public.profiles where id=$1`, [u.id]))).toHaveLength(0);
+    await expect(asUser(u.id, (sql) => sql(`update public.profiles set full_name='Repopulated' where id=$1`, [u.id]))).rejects.toMatchObject({ hint: 'account_closed' });
+    await asUser(adm.id, (sql) => sql(`select public.process_account_deletion($1, true)`, [reqId]));
+    expect(await admin(`select 1 from account_private.close_jobs where request_id=$1`, [reqId])).toHaveLength(1);
+    await expect(asUser(adm.id, (sql) => sql(`select public.process_account_deletion($1, false, 'undo')`, [reqId]))).rejects.toMatchObject({ hint: 'closure_in_progress' });
+    await expect(admin(`update public.account_deletion_requests set status='completed',cleanup_state='completed' where id=$1`, [reqId])).rejects.toMatchObject({ hint: 'closure_not_verified' });
   });
 
   it('a deletion waits while the account has open orders or staff access', async () => {

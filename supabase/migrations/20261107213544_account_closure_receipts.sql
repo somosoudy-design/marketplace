@@ -63,7 +63,7 @@ begin perform account_private.assert_open(); return auth.uid(); end $$;
 revoke all on function account_private.current_open_uid() from public,anon,authenticated,service_role;
 
 create or replace function public.require_user() returns uuid
-language plpgsql volatile as $$
+language plpgsql volatile set search_path=pg_catalog as $$
 declare u uuid:=auth.uid();
 begin
  if u is null then raise exception 'authentication required' using errcode='28000',hint='auth_required'; end if;
@@ -141,7 +141,8 @@ begin
   ('payouts','created_by'),('payouts','paid_by'),('refunds','created_by'),('buyer_refund_payouts','paid_by'),
   ('cargo_batches','created_by'),('exchange_rates','created_by'),('pricing_snapshots','taken_by'),
   ('product_costs','updated_by'),('variant_costs','updated_by'),('rate_policies','updated_by'),
-  ('app_settings','updated_by'),('url_imports','created_by'),('ledger_entries','created_by'),
+  ('app_settings','updated_by'),('account_deletion_requests','processed_by'),
+  ('url_imports','created_by'),('ledger_entries','created_by'),
   ('fulfillment_events','actor_id'),('moderation_events','actor_id')
  ) v(t,c)
  loop
@@ -312,7 +313,9 @@ begin
   or exists(select 1 from auth.sessions where user_id=j.user_id)
   or exists(select 1 from auth.refresh_tokens where user_id=j.user_id::text)
   or exists(select 1 from auth.mfa_factors where user_id=j.user_id)
-  or exists(select 1 from auth.one_time_tokens where user_id=j.user_id) then
+  or exists(select 1 from auth.one_time_tokens where user_id=j.user_id)
+  or exists(select 1 from auth.oauth_authorizations where user_id=j.user_id)
+  or exists(select 1 from auth.oauth_consents where user_id=j.user_id) then
   raise exception 'Auth credentials remain' using hint='auth_cleanup_incomplete';
  end if;
  if exists(select 1 from storage.objects o where (to_jsonb(o)->>'owner')=j.user_id::text
@@ -403,7 +406,9 @@ begin
   and not exists(select 1 from auth.sessions where user_id=j.user_id)
   and not exists(select 1 from auth.refresh_tokens where user_id=j.user_id::text)
   and not exists(select 1 from auth.mfa_factors where user_id=j.user_id)
-  and not exists(select 1 from auth.one_time_tokens where user_id=j.user_id);
+  and not exists(select 1 from auth.one_time_tokens where user_id=j.user_id)
+  and not exists(select 1 from auth.oauth_authorizations where user_id=j.user_id)
+  and not exists(select 1 from auth.oauth_consents where user_id=j.user_id);
 end $$;
 revoke all on function public.account_close_auth_ready(uuid,uuid) from public,anon,authenticated,service_role;
 grant execute on function public.account_close_auth_ready(uuid,uuid) to service_role;

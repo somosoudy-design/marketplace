@@ -1,10 +1,12 @@
 # Estado actual de mayami
 
-## Cierre seguro de cuenta · implementación local en curso · 7 de noviembre de 2026
+## Cierre seguro de cuenta · mínimo local probado, retención pendiente · 7 de noviembre de 2026
 
-Se retoma sólo la finalización del cierre, sin repetir enlaces, inventario Play o compilaciones de app. Fuente aislada 92f75a0d. Baseline real local confirmado: GoTrue emite JWT, Storage oficial guarda bytes, el procesador anterior marca completed y el mismo JWT todavía lee/modifica datos y descarga/sube archivos. Tres aserciones de aceptación fallan antes del arreglo, sin .fails/.skip. El clon exclusivo es mayami_account_close_20261107; no se alteró otra base ni producción.
+SQL/worker y conexión mínima del panel terminados localmente en fuente aislada. Baseline real RED3→aceptación PASS: JWT antiguo denegado tras fallo/retry; Auth DELETE1, Storage0bytes/filas, diez ámbitos diarios0 y otro actor intacto. SQLfocal ACL/lease/completion/staff/pedido/historia pendiente y concurrencia PASS.11DB admin/privilegios y67admin unitarias, tipos/lint/Deno pasan; panel claro/oscuro390px con workerHTTP local, copy pendiente sin éxito falso y capturas revisadas independientemente.
 
-Segundo checkpoint: worker y SQL de estados/bloqueo propuestos; aún sin aplicar al clon ni conectar al panel. Comprobación Deno pasa. La API Auth retira credenciales pero deja correo en su auditoría: se comprobará ese residuo y se mantendrá retention_pending, sin falsear completed. Próxima acción: aplicar transaccionalmente sólo al clon mayami_account_close_20261107 y ejecutar aceptación real JWT/Storage y fallos/reintentos. Los casos comerciales sin clasificación explícita quedarán pendientes, sin purgar historia financiera. [Estado y límites](CIERRE_CUENTA_SEGURO_2026-11-07.md).
+**No producción/Play ready:** Auth conserva correo en auditoría; falta minimización/plazo real y clasificación comercial. Resultado in_review/retention_pending, sin false completed ni manipular esquemas del proveedor.16tablas financieras idénticas durante el cierre; regresiones separadas28PASS/2fallos de pagos reproducidos igual en baseline sin módulo, una suite no inició por guard de clon. Esos tests modificaron tasas locales; no declarar todas las suites verdes o la base final íntegra por hash. Fuente Google/cuotas intacta; no publicar HEAD combinado. Sin remotos, correo real, OTA, APK/AAB, cuentas nuevas reales o cargos.
+
+Próxima acción concreta: resolver sólo el residuo de auditoría/recibo y clasificación indicada en [CIERRE_CUENTA_SEGURO_2026-11-07.md](CIERRE_CUENTA_SEGURO_2026-11-07.md); no repetir inventarios, infraestructura, builds o Console. Pruebas/recibos bajo .local/account-close-20261107. Mantener pendiente hasta acreditar condiciones; activación futura separada.
 
 ## Preparación Play: privacidad y eliminación · entrega local con bloqueo comprobado · 7 de noviembre de 2026
 
