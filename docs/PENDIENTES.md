@@ -1,12 +1,16 @@
 # Pendientes de mayami
 
-## Cuotas preventa/encargo · en curso ·7nov2026
+## Cuotas preventa y encargo · listas en local, activación pendiente · 7nov2026
 
-Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core ytiposcoreAPI pasan, UI/DB en progreso. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+Implementadas las ofertas por variante/cantidad, selección y retorno seguro entre ficha, carrito y checkout en app/web. Son tres pagos totales, incluida la inicial. La nueva excepción se limita a carritos compuestos por líneas válidas reservable/on_order; los mixtos conservan sus reglas anteriores. El calendario, los planes y la verificación de abonos permanecen intactos.
+
+Pasan124pruebas core y175móvil/web/SQL (incluye22SQL), tipos/lint completos, Next producción, ExpoWeb y export Android Hermes. Recorridos y revisión independiente favorables en claro/oscuro; la UI móvil se verificó en ExpoWeb, no en APK/emulador/teléfono. Migración aplicada sólo al clon local aislado: nueve tablas de negocio/planes y permisos idénticos antes/después de aplicarla. No hay cambios de producción, OTA ni nuevoAPK.
+
+Fuente ejecutable limpia validada:1e8938ad1beedab31514bc52512d4f78fe7ddfa9, basada en59e88a07. Google/correos WIP siguen preservados aparte en la rama compartida. No publicar HEAD compartido con ese WIP. Bloqueo real: el conector aún rechaza MIM con «sin permiso» después del aviso de login del navegador, y este chat no expone control Browser. Falta una conexión autorizada a Marketplace para contrastar/aplicar/verificar la única migración y luego publicar desde fuente limpia, manteniendo Free y el APK/runtime existente. [Resultados y siguiente acción](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
 
 ## Google y correo · preparación probada; acceso remoto pendiente
 
-Cuenta esperada confirmada por Oliver y navegador con login iniciado; falta capacidad Browser en este chat para verificar identidad/MIM sin usar CLI erróneo. No tokens nuevos ni retries de config por otra vía. Publicar/verificar PNG original y sólo después instalar dos HTML aprobados mediante delta revisado; Google sigueoff y su integración pendiente. Auditoría de recibos sin evidencia de mutación fuera de MIM. Tanda de cuotas preventa/encargo solicitada por coordinación se conserva aparte, aún sin implementación ni publicación.
+Cuenta esperada confirmada por Oliver y navegador con login iniciado; falta capacidad Browser en este chat para verificar identidad/MIM sin usar CLI erróneo. No tokens nuevos ni retries de config por otra vía. Publicar/verificar PNG original y sólo después instalar dos HTML aprobados mediante delta revisado; Google sigueoff y su integración pendiente. Auditoría de recibos sin evidencia de mutación fuera de MIM. La implementación local de cuotas se conserva aparte y se detalla arriba; su activación/publicación permanece pendiente.
 
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 
