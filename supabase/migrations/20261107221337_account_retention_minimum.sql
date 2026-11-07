@@ -189,10 +189,13 @@ begin
   'user_updated_password','token_revoked','token_refreshed','generate_recovery_codes','factor_in_progress',
   'factor_unenrolled','challenge_created','verification_attempted','factor_deleted','recovery_codes_deleted',
   'factor_updated','mfa_code_login','identity_unlinked']),false)
+  or jsonb_typeof(p->'log_type')<>'string'
   or not coalesce(p->>'log_type'~'^[a-z_]{1,32}$',false) then return null; end if;
+ if exists(select 1 from jsonb_each(p) where key in('actor_name','actor_username') and jsonb_typeof(value) not in('string','null')) then return null; end if;
  if p ? 'actor_via_sso' and jsonb_typeof(p->'actor_via_sso')<>'boolean' then return null; end if;
  traits:=coalesce(p->'traits','{}'::jsonb);
  if jsonb_typeof(traits)<>'object' or traits-array['provider','user_id','user_email','user_phone']<>'{}'::jsonb then return null; end if;
+ if exists(select 1 from jsonb_each(traits) where key in('user_email','user_phone') and jsonb_typeof(value) not in('string','null')) then return null; end if;
  if traits ? 'provider' and not coalesce(traits->>'provider'=any(array['email','phone','google','apple','anonymous','sso','saml']),false) then return null; end if;
  actor:=nullif(p->>'actor_id',''); subject:=nullif(traits->>'user_id','');
  if actor='00000000-0000-0000-0000-000000000000' then actor:=null; end if;
@@ -240,15 +243,22 @@ begin
  return true;
 end $$;
 
-create function account_private.audit_ready(p_user uuid,p_now timestamptz) returns boolean
+create function account_private.audit_row_ready(p_id uuid,p_user uuid,p_now timestamptz) returns boolean
 language sql stable security definer set search_path=pg_catalog as $$
- select not exists(select 1 from auth.audit_log_entries a where account_private.audit_links(a.payload::jsonb,p_user)
-  and not exists(select 1 from account_private.managed_auth_audit m where m.audit_id=a.id
-   and m.subject_hash=account_private.subject_key(p_user)
+ select exists(select 1 from auth.audit_log_entries a join account_private.managed_auth_audit m on m.audit_id=a.id
+  where a.id=p_id and m.subject_hash=account_private.subject_key(p_user)
    and account_private.audit_subject(a.payload::jsonb)=p_user
    and m.fingerprint=account_private.audit_fingerprint(a.payload::jsonb,a.created_at,a.ip_address)
    and ((m.disposition='minimized' and a.payload::jsonb=account_private.audit_minimal(a.payload::jsonb,p_user) and a.ip_address='')
-     or (m.disposition='held' and account_private.audit_held(m.subject_hash,a.id,p_now)))))
+    or (m.disposition='held' and account_private.audit_held(m.subject_hash,a.id,p_now))))
+$$;
+create function account_private.audit_ready(p_user uuid,p_now timestamptz) returns boolean
+language sql stable security definer set search_path=pg_catalog as $$
+ select not exists(select 1 from auth.audit_log_entries a where account_private.audit_links(a.payload::jsonb,p_user)
+  and not account_private.audit_row_ready(a.id,p_user,p_now))
+ -- A rewritten subject must not make a registered fingerprint disappear from this check.
+ and not exists(select 1 from account_private.managed_auth_audit m where m.subject_hash=account_private.subject_key(p_user)
+  and not account_private.audit_row_ready(m.audit_id,p_user,p_now))
 $$;
 
 create function public.account_close_minimize_audit(p_request_id uuid,p_lease_token uuid) returns void
@@ -260,8 +270,12 @@ begin
   raise exception 'Cleanup must precede audit minimization' using hint='cleanup_not_ready';
  end if;
  if account_private.blockers(j.user_id)<>'{}'::jsonb then raise exception 'Classification required' using hint='retention_pending'; end if;
- for a in select id from auth.audit_log_entries where account_private.audit_links(payload::jsonb,j.user_id)
-  order by created_at,id limit 500 for update skip locked
+ for a in select x.id from auth.audit_log_entries x where account_private.audit_subject(x.payload::jsonb)=j.user_id
+  and not account_private.audit_row_ready(x.id,j.user_id,clock_timestamp())
+  and not exists(select 1 from account_private.managed_auth_audit m where m.audit_id=x.id
+    and (m.subject_hash<>account_private.subject_key(j.user_id)
+      or m.fingerprint is distinct from account_private.audit_fingerprint(x.payload::jsonb,x.created_at,x.ip_address)))
+  order by x.created_at,x.id limit 500 for update of x skip locked
  loop perform account_private.minimize_audit_row(a.id,j.user_id,clock_timestamp()); end loop;
  -- Unknown/busy/extra rows are detected by audit_ready at finish, not silently discarded.
 end $$;
@@ -350,7 +364,7 @@ grant execute on function public.account_retention_run(integer) to service_role;
 revoke all on function account_private.subject_key(uuid),account_private.receipt_held(uuid,timestamptz),
  account_private.audit_held(bytea,uuid,timestamptz),account_private.audit_subject(jsonb),account_private.audit_links(jsonb,uuid),
  account_private.audit_minimal(jsonb,uuid),account_private.audit_fingerprint(jsonb,timestamptz,text),
- account_private.minimize_audit_row(uuid,uuid,timestamptz),account_private.audit_ready(uuid,timestamptz),
+ account_private.minimize_audit_row(uuid,uuid,timestamptz),account_private.audit_row_ready(uuid,uuid,timestamptz),account_private.audit_ready(uuid,timestamptz),
  account_private.guard_auth_audit_insert(),account_private.expire_auth_audit(timestamptz,integer),
  account_private.retention_sweep(timestamptz,integer) from public,anon,authenticated,service_role;
 -- Deliberately no Cron job. Scheduling/hosted privilege verification is a separate activation.
