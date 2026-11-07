@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Cuotas preventa/encargo · en curso ·7nov2026
+
+Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core ytiposcoreAPI pasan, UI/DB en progreso. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+
+## Google y correo · preparación probada, sin activar ·7nov2026
+
+Oliver confirmó la cuenta Supabase correcta e inició sesión en el navegador integrado. El CLI continúa con identidad errónea; no se volvió a usar para MIM ni se crearon credenciales. Control Browser no expuesto en este chat, identidad/propiedad actuales pendientes. Auditoría de recibos no halló escrituras Mayami fuera de MIM; no equivale a prueba del propietario. Logo original ya sustituye texto en dos HTML; PNG/localguard/procedencia y8renders/revisiónGo preparados, asset aún no hospedado. Googleoff, sin instalartemplates/deploy. [Detalle y límites](ACCESO_GOOGLE_2026-11-07.md).
+
 ## Tanda visual publicada · dos correcciones y un límite ·7nov2026
 
 Dos ajustes publicados: superficie de fotos en oscuro y nombre Odontología completo; diseño, imágenes y funciones conservados. Tecnología conserva su original, sin recorte adicional de UI. Worker d8756e3b/100%, BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N; Preview4/4 y público4/4 (20fotos en4contextos),13assetsSHA/WWW301 verificados.147originales/9gates intactos;116core/139unitarias/30Node, tipos/lint y QA local final aprobados. ÚnicaOTA01a1b758-773b-7a0f-82c5-a96d2bc2fb81 recibida por mismaAPK; CI42403068492 SUCCESS,14XML/40PNG. Cobertura visualcaption2/4:1.6legible ambos temas;1.0noencuadrado (0swipes), no se declara aprobado. Normal sí probado local/web. Bloque cerrado con estos límites, sin rerun ni nuevo ciclo. Free, sin mutaciones de negocio/Chrome compartido. [Resultado y evidencia](CATALOGO_AJUSTES_VISUALES_2026-11-07.md).

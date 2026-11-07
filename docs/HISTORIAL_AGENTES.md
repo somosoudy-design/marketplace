@@ -1,5 +1,25 @@
 # Historial de agentes
 
+## Cuotas preventa/encargo · en curso ·7nov2026
+
+Tanda única:3pagos totales incluida inicial, elegibilidad para reservable/on_order y coherencia ficha-carrito-checkout. Datos públicos actuales MIM confirman0/3/15d/0recargo/min60; HiTune39 excluido por mínimo. Módulo SQL/core en fuente limpia59e88 sinWIPGoogle/correo; migración sólo en clonlocal,9tablas/planes/históricos y ACL intactos.124core ytiposcoreAPI pasan, UI/DB en progreso. No cambios remotos ni publicación. [Estado y fuente](CUOTAS_PREVENTA_ENCARGO_2026-11-07.md).
+
+## 7nov2026 · logo original en correos y auditoría de destinos
+
+CuentaSupabase esperada confirmada por Oliver; login navegador iniciado, sin controlBrowser expuesto para comprobarlo. CLI erróneo no reutilizado/ningún token nuevo. Recibos6/7nov apuntan a MIM, sin evidencia de escrituras Mayami en otro projectref; dueño actual sin confirmar. Dos cabeceras HTML ahora usan PNG fiel al logoWorkv3, original intacto;8renders320/390 ambos temas, Go2/2 y revisión independiente favorables. PNG aún no hospedado; checkerHTTP/MIME/SHA impide dar por listo el asset. Preparación sindeploy/instalacióntemplates/Googleoff. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
+## 7nov2026 · preparación Google/correo probada; activación pendiente
+
+73API/139regresiones/116core, tipos/lint completos; dos HTML/TXT Mayami, motorGo8ejecuciones/16renders y SMTP/Auth/SDK local con una fixture y16pasos finales. Corregidos callbacks vacíos/mixtos para no confundir sesiónB con link confirmado. Revisor favorable sólo a preparación apagada. Googlefalse, sin UI/primaryboundary/integración final; configMIM ACLdenegada/retry agotado, pregunta sobre cuentaSupabase pendiente. Sin credenciales/proveedor/URLs hosted cambiadas ni web/OTA/APK/correoexterno. [Cierre y límites](ACCESO_GOOGLE_2026-11-07.md).
+
+## 7nov2026 · WIP correo y acceso Google
+
+ProtocoloS256/ports/guardas y URLs email canónicas integrados sin conectar Google a pantallas.70API/139regresiones/116core aprobados; dos HTML/TXT Mayami y8renders locales. Pruebas Go/SMTP local continúan. Boundary queda un propietario local, sin afirmar pestañas/crash. CLIconfigpull lectura MIM denegada por ACL, reintento confirmado y sin otra vía; ningún cambio remoto ni publicación. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
+## 7nov2026 · WIP acceso Google
+
+Integrador: inspección SDK/metadata pública y documentación vigente; Google=false. Primer checkpoint del protocolo S256, aún sin importar en pantallas. Revisión independiente de enlace automático y carreras de SDK identifica límites; continúan adaptadores y pruebas aisladas. Sin configproveedor, consentimientos, cuentas/sesiones ni compras remotas. API typecheck aprobado. [Detalle](ACCESO_GOOGLE_2026-11-07.md).
+
 ## 7nov2026 · Codex Mac · dos correcciones visuales y límite de Tecnología
 
 Fotos en tarjetas oscuras con superficie neutra/filete y originales intactos; Odontología completa sin recorte,390normal1línea y reflujo legible. Cuatro archivos UI, sin grilla nueva ni cambios en guest, Preventa, galería o banners. Tecnología muestra el bitmap completo: su recorte es intrínseco, identificado antes de actuar; no se genera/sustituye ni se atribuye un tercer fix.147SHA/9gates conservados,116core/139unitarias/30Node, tipos/lint y QA local aprobados. El candidato con última letra aislada fue retirado y corregido antes de publicar.
