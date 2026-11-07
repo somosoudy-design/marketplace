@@ -21,3 +21,5 @@ Implementación revisada con tipos, lint y pruebas de interfaz en CI 42338548920
 Actualización publicada en canal preview por CI 42339077729, fuente `ae1fa3a`, grupo `46c3adba-f1b2-4333-b131-545a368f2376`, Android `01a1b44b-4bdd-74bb-8fb8-33b06bb63bc4`; fingerprint del APK Mayami confirmado por el propio flujo. Solicitada verificación de recepción en emulador con captura de la M al desplazarse. Esto no verifica recepción en el teléfono físico ni publica en Google Play.
 
 CI 42339315891 confirmó la recepción del UUID exacto, pero falló al buscar la cabecera compacta: la captura muestra la búsqueda original recortada en un inicio corto. Se ajusta el umbral para anticipar la cabecera y se añade regresión con desplazamiento corto y vuelta al inicio. Pendientes pruebas, actualización correctiva y nueva verificación nativa.
+
+CI 42340453409 aprobó la batería completa con la corrección, incluida la regresión en 320/360/390/412 claro y oscuro. Se solicita la actualización correctiva y después se verificará de nuevo la recepción nativa en emulador.
