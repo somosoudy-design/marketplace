@@ -2,7 +2,7 @@ import { defaultDeps, type Deps } from '../_shared/env.ts';
 import { bearer, cors, json, readJson } from '../_shared/http.ts';
 import { rest } from '../_shared/rest.ts';
 
-interface Job { state: string; user_id?: string; lease_token?: string; blockers?: string[] }
+interface Job { state: string; user_id?: string; lease_token?: string; blockers?: Record<string, number> }
 interface Target { bucket_id: string; name: string }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 class CleanupFailure extends Error { constructor(readonly code: string) { super(code); } }
@@ -35,7 +35,7 @@ export function createHandler(deps: Deps = defaultDeps()) {
     }
     let job: Job;
     try { job = await db.rpc<Job>('account_close_claim', { p_request_id: id }); }
-    catch { return json({ state: 'failed', code: 'claim_unavailable', retryable: true }, 202); }
+    catch { return json({ state: 'failed', requestId: id, code: 'claim_unavailable', retryable: true }, 202); }
     if (job.state === 'completed') return json({ state: 'completed', requestId: id });
     if (job.state !== 'processing' || !job.user_id || !job.lease_token)
       return json({ state: job.state, requestId: id, retryable: true, blockers: job.blockers ?? [] }, 202);
@@ -55,6 +55,15 @@ export function createHandler(deps: Deps = defaultDeps()) {
         value?.error === 'not_found' || value?.code === 'NoSuchKey';
     };
     try {
+      // Auth owns identity, credential and factor deletion. Soft deletion preserves FK references via a tombstone UID.
+      if (!await db.rpc<boolean>('account_close_auth_ready', args)) {
+        const deleted = await call('/auth/v1/admin/users/' + user, {
+          method: 'DELETE', body: JSON.stringify({ should_soft_delete: true }),
+        });
+        if (!deleted.ok) throw new CleanupFailure('auth_delete_failed');
+        await deleted.arrayBuffer();
+      }
+      if (!await db.rpc<boolean>('account_close_auth_ready', args)) throw new CleanupFailure('auth_verification_failed');
       // Bounded batches resume from the remaining objects after a failure; never delete bucket metadata in SQL.
       for (let batch = 0; batch < 10; batch++) {
         const targets = await db.rpc<Target[]>('account_close_targets', args);
@@ -78,21 +87,16 @@ export function createHandler(deps: Deps = defaultDeps()) {
       }
       if ((await db.rpc<Target[]>('account_close_targets', args)).length) throw new CleanupFailure('cleanup_batch_limit');
       await db.rpc('account_close_clean_data', args);
-      // Auth owns identity, credential and factor deletion. Soft deletion preserves FK references via a tombstone UID.
-      const deleted = await call('/auth/v1/admin/users/' + user, {
-        method: 'DELETE', body: JSON.stringify({ should_soft_delete: true }),
-      });
-      if (!deleted.ok) throw new CleanupFailure('auth_delete_failed');
-      await deleted.arrayBuffer();
       // The database verifies Auth's resulting state and every supported cleanup domain before completed.
       const finished = await db.rpc<{ state: string }>('account_close_finish', args);
       if (finished.state !== 'completed') throw new CleanupFailure('completion_not_verified');
       return json({ state: 'completed', requestId: id });
     } catch (error) {
-      const code = error instanceof CleanupFailure ? error.code : 'cleanup_interrupted';
+      const retention = ['retention_pending', 'auth_audit_retention_pending'].includes((error as { hint?: string }).hint ?? '');
+      const code = retention ? 'retention_pending' : error instanceof CleanupFailure ? error.code : 'cleanup_interrupted';
       // No original error, object path, email, password or provider response is persisted in the receipt.
       await db.rpc('account_close_fail', { ...args, p_code: code }).catch(() => undefined);
-      return json({ state: 'failed', requestId: id, code, retryable: true }, 202);
+      return json({ state: retention ? 'retention_pending' : 'failed', requestId: id, code, retryable: true, ...(retention ? { blockers: ['retention_review_required'] } : {}) }, 202);
     }
   };
 }
