@@ -68,6 +68,8 @@ name: mayami banners and customer photo copy
     element:
       id: variant-Negro
     direction: DOWN
+    # Native visibility includes content behind the sticky purchase bar. Bring the target above it.
+    centerElement: true
 - tapOn:
     id: variant-Negro
 - assertVisible:
