@@ -2081,3 +2081,9 @@ legend {
 .product-colors { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 12px 12px; }
 .product-colors a { display: inline-flex; align-items: center; min-height: 44px; padding: 7px 9px; border: 1px solid var(--border-strong); border-radius: 6px; font-size: 11px; color: var(--text); }
 .product-colors a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* Colour choices retain their existing controls, with a named decorative swatch. */
+.variant-color-dot { display: inline-block; width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid var(--text-muted); border-radius: 50%; }
+.variant-picker button[data-color-choice] { display: inline-flex; align-items: center; gap: 8px; text-align: start; }
+.variant-picker button[aria-pressed='true'] .variant-color-dot { outline: 2px solid var(--brand); outline-offset: 2px; }
+.product-colors a { gap: 6px; }

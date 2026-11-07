@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ShoppingBag, ArrowRight, Check, Store } from 'lucide-react';
 import type { CatalogMetadata, ProductDetail as Product } from '@kora/api';
-import { presentAvailability, photoChoiceNotice, resolveProductSelection } from '@kora/core';
+import { presentAvailability, photoChoiceNotice, resolveProductSelection, variantSwatchLabel } from '@kora/core';
 import { ProductPhoto } from './photo';
+import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
 import { ProductGrid } from './product-card';
 import { useAccount } from '@/lib/providers';
@@ -65,7 +66,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
       </div>
       <div className="product-detail">
         <section className="product-gallery" aria-label="Fotografías">
-          <ProductPhoto id={p.id} path={image} demo={p.is_demo} title={p.title} priority exact />
+          <ProductPhoto key={`${selected}:${image ?? 'none'}`} id={p.id} path={image} demo={p.is_demo} title={p.title} priority exact />
           {choicePhotoNotice && <p className="muted" data-testid="product-photo-notice">{choicePhotoNotice}</p>}
           {gallery.length === 0 && <p className="muted">Aún no hay fotos de esta opción.</p>}
           {gallery.length > 1 && (
@@ -145,11 +146,14 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
                   type="button"
                   key={v.id}
                   aria-pressed={v.id === selected}
+                  aria-label={variantSwatchLabel(v) ? `Color ${v.title}` : undefined}
+                  data-color-choice={variantSwatchLabel(v) ? '' : undefined}
                   disabled={add.isPending}
                   onClick={() => {
                     selectVariant(v.id);
                   }}
                 >
+                  {variantSwatchLabel(v) ? <ColorDot label={variantSwatchLabel(v)!} /> : null}
                   {v.title}
                 </button>
               ))}

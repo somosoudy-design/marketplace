@@ -54,12 +54,27 @@ name: mayami banners and customer photo copy
 - takeScreenshot: ${MAYAMI_SHOT_PREFIX}-bm88
 - openLink: kora://product/8ce01c8b-232b-4bba-a0ff-94c739b4d3bc
 - extendedWaitUntil:
-    visible: Las fotos pueden variar según la opción elegida.
+    visible:
+      id: product-title
     timeout: 30000
+- assertNotVisible:
+    id: product-general-photos
+- assertVisible: Preventa
 - extendedWaitUntil:
     visible:
       id: product-photo-loaded
     timeout: 60000
+- scrollUntilVisible:
+    element:
+      id: variant-Negro
+    direction: DOWN
+- tapOn:
+    id: variant-Negro
+- assertVisible:
+    id: variant-Negro
+    selected: true
+- assertNotVisible:
+    id: product-general-photos
 - takeScreenshot: ${MAYAMI_SHOT_PREFIX}-photo-choice
 - openLink: kora://diagnostico
 - extendedWaitUntil:

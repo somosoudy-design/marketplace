@@ -13,6 +13,7 @@ import { useCardMetadata } from '@/lib/catalog-selection';
 import { reviewedGeneralProductImages } from '@/lib/selection-media';
 import { useTheme } from '@/theme';
 import { ProductImage } from './ProductImage';
+import { ColorDot } from '@/components/ui/ColorDot';
 import { ProductFavorite } from './ProductFavorite';
 import { splitCardBrand } from './card-brand';
 
@@ -85,7 +86,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         </View>
       </ScalePressable>
       {condition ? <View style={{ paddingHorizontal: 10, paddingBottom: 6 }}><Text testID={`card-condition-${p.slug}`} variant="caption" color="textSecondary">{condition}</Text></View> : null}
-      {colors.length ? <ScrollView testID={`card-colors-${p.slug}`} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6, paddingHorizontal: 10, paddingBottom: 8 }}>{colors.map(color => <ScalePressable key={color.value} accessibilityRole="button" accessibilityLabel={`Color ${color.value}${!color.available_variant_ids.length ? ', agotado' : ''}`} accessibilityState={{ selected: color.variant_ids.includes(chosen?.id ?? '') }} onPress={() => setSelectedVariantId(color.available_variant_ids[0] ?? color.variant_ids[0]!)} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 8, borderWidth: 1, borderColor: color.variant_ids.includes(chosen?.id ?? '') ? colorsTheme.brand : colorsTheme.border, backgroundColor: colorsTheme.surface }}><Text variant="caption" color="textSecondary">{color.value}</Text></ScalePressable>)}</ScrollView> : null}
+      {colors.length ? <ScrollView testID={`card-colors-${p.slug}`} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6, paddingHorizontal: 10, paddingBottom: 8 }}>{colors.map(color => <ScalePressable key={color.value} accessibilityRole="button" accessibilityLabel={`Color ${color.value}${!color.available_variant_ids.length ? ', agotado' : ''}`} accessibilityState={{ selected: color.variant_ids.includes(chosen?.id ?? '') }} onPress={() => setSelectedVariantId(color.available_variant_ids[0] ?? color.variant_ids[0]!)} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 8, borderWidth: 1, borderColor: color.variant_ids.includes(chosen?.id ?? '') ? colorsTheme.brand : colorsTheme.border, backgroundColor: colorsTheme.surface }}><View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}><ColorDot label={color.value} /><Text variant="caption" color="textSecondary">{color.value}</Text></View></ScalePressable>)}</ScrollView> : null}
       {chosen && selection.mediaState === 'none' ? <Text variant="caption" color="textSecondary" style={{ paddingHorizontal: 10, paddingBottom: 8 }}>Sin foto de esta opción</Text> : null}
       {metadata.isError ? <ScalePressable accessibilityRole="button" accessibilityLabel="Reintentar opciones del producto" onPress={() => void metadata.refetch()} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 10 }}><Text variant="caption" color="danger">Reintentar opciones</Text></ScalePressable> : null}
       <View style={{ position: 'absolute', right: 5, top: 5 }}>

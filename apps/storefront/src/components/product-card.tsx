@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { CatalogMetadata, ProductCard as Product } from '@kora/api';
 import { presentAvailability, productColorSummaries, resolveProductSelection } from '@kora/core';
 import { ProductPhoto } from './photo';
+import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
 import { money } from '@/lib/format';
 import { catalogText, catalogSample, localExhibition } from '@/lib/photos';
@@ -33,7 +34,7 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
         </div>
       </Link>
       {colors.length > 0 && <nav className="product-colors" aria-label={`Colores de ${product.title}`}>
-        {colors.map(color => <Link prefetch={false} key={color.value} href={href(color.available_variant_ids[0] ?? color.variant_ids[0])} aria-label={`${color.value}${color.available_variant_ids.length ? '' : ', agotado'}`}>{color.value}{!color.available_variant_ids.length && <span> · Agotado</span>}</Link>)}
+        {colors.map(color => <Link prefetch={false} key={color.value} href={href(color.available_variant_ids[0] ?? color.variant_ids[0])} aria-label={`Color ${color.value}${color.available_variant_ids.length ? '' : ', agotado'}`}><ColorDot label={color.value} />{color.value}{!color.available_variant_ids.length && <span> · Agotado</span>}</Link>)}
       </nav>}
       <Favorite id={product.id} title={product.title} />
     </article>

@@ -13,7 +13,7 @@ export const AVAILABILITY: Record<Availability, AvailabilityPresentation> = {
   available: { label: 'Disponible', action: 'Comprar', intent: 'buy', tone: 'success', purchasable: true },
   on_order: { label: 'Por encargo', action: 'Encargar', intent: 'order', tone: 'editorial', purchasable: true },
   in_transit: { label: 'En camino', action: 'Reservar', intent: 'reserve', tone: 'info', purchasable: true },
-  reservable: { label: 'Reservable', action: 'Reservar', intent: 'reserve', tone: 'warning', purchasable: true },
+  reservable: { label: 'Preventa', action: 'Reservar', intent: 'reserve', tone: 'warning', purchasable: true },
   sold_out: { label: 'Agotado', action: 'Avisarme', intent: 'notify', tone: 'muted', purchasable: false },
   unavailable: { label: 'No disponible', action: 'Avisarme', intent: 'notify', tone: 'muted', purchasable: false },
 };

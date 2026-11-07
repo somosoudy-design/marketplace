@@ -40,7 +40,7 @@ const AVAIL: { value: Availability; label: string }[] = [
   { value: 'available', label: 'Disponible' },
   { value: 'on_order', label: 'Por encargo' },
   { value: 'in_transit', label: 'En camino' },
-  { value: 'reservable', label: 'Reservable' },
+  { value: 'reservable', label: 'Preventa' },
 ];
 const PRICES: { label: string; min: number | null; max: number | null }[] = [
   { label: 'Cualquier precio', min: null, max: null },

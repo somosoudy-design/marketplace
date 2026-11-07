@@ -19,7 +19,7 @@ const availabilities = {
   available: 'Disponible',
   on_order: 'Por encargo',
   in_transit: 'En camino',
-  reservable: 'Reservable',
+  reservable: 'Preventa',
 };
 const single = (value: string | string[] | undefined) => (typeof value === 'string' ? value : '');
 const price = (value: string) =>

@@ -1,5 +1,5 @@
 import type { OrderItem, ProductDetail } from '@kora/api';
-import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries } from '@kora/core';
+import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel } from '@kora/core';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
@@ -275,14 +275,14 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
               <View ref={selectionHeading} testID="product-selection-heading" accessible accessibilityRole="header" accessibilityLabel="Tu selección" {...(Platform.OS === 'web' ? { tabIndex: -1 as const } : {})}>
                 <Text variant="subtitle">Tu selección</Text>
               </View>
-              {colors.length ? <View testID="product-colors" style={{ gap: 8 }}><Text variant="label" color="textSecondary">Color: {selectedColor ?? 'Elige una opción'}</Text><View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>{colors.map(c => <Chip key={c.value} testID={`product-color-${c.value}`} label={`${c.value}${!c.available_variant_ids.length ? ' · agotado' : ''}`} selected={selectedColor === c.value} disabled={pending !== null} onPress={() => selectVariant(c.available_variant_ids[0] ?? c.variant_ids[0]!)} />)}</View></View> : null}
+              {colors.length ? <View testID="product-colors" style={{ gap: 8 }}><Text variant="label" color="textSecondary">Color: {selectedColor ?? 'Elige una opción'}</Text><View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>{colors.map(c => <Chip key={c.value} testID={`product-color-${c.value}`} swatch={c.value} label={`${c.value}${!c.available_variant_ids.length ? ' · agotado' : ''}`} selected={selectedColor === c.value} disabled={pending !== null} onPress={() => selectVariant(c.available_variant_ids[0] ?? c.variant_ids[0]!)} />)}</View></View> : null}
               {p.variants.length > 1 ? <View style={{ gap: 10 }}>
                 <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                   {p.variants.map((v) => {
                     const out = !v.active || (v.stock != null && v.stock <= 0);
                     const label = `${v.title}${variantPrices ? ` · ${formatUSD(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
-                    return <Chip key={v.id} testID={`variant-${v.title}`} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => selectVariant(v.id)} />;
+                    return <Chip key={v.id} testID={`variant-${v.title}`} swatch={variantSwatchLabel(v)} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => selectVariant(v.id)} />;
                   })}
                 </View>
               </View> : null}

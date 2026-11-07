@@ -4,13 +4,15 @@ import { useTheme } from '@/theme';
 import { Icon, type IconName } from './Icon';
 import { ScalePressable } from './Pressable';
 import { Text } from './Text';
+import { ColorDot } from './ColorDot';
 
-export function Chip({ label, selected, onPress, icon, count, testID, disabled = false, wrap = false }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string; disabled?: boolean; wrap?: boolean }) {
+export function Chip({ label, selected, onPress, icon, count, testID, disabled = false, wrap = false, swatch }: { label: string; selected?: boolean; onPress?: () => void; icon?: IconName; count?: number; testID?: string; disabled?: boolean; wrap?: boolean; swatch?: string | null }) {
   const { colors, radii, layout } = useTheme();
   return (
     <ScalePressable
       testID={testID}
       accessibilityRole="button"
+      accessibilityLabel={swatch ? `Color ${label}` : undefined}
       accessibilityState={{ selected, disabled }}
       disabled={disabled}
       aria-pressed={selected}
@@ -33,6 +35,7 @@ export function Chip({ label, selected, onPress, icon, count, testID, disabled =
         borderColor: selected ? colors.brand : colors.border,
       }}
     >
+      {swatch ? <ColorDot label={swatch} selected={selected} /> : null}
       {icon ? <Icon name={icon} size={16} color={selected ? colors.onBrand : colors.textSecondary} /> : null}
       <Text variant="label" style={{ color: selected ? colors.onBrand : colors.text, flexShrink: wrap ? 1 : undefined }}>{label}</Text>
       {count ? (

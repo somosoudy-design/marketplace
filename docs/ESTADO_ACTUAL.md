@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## En curso: Preventa, galería por color y selector · 7nov2026
+
+Tanda autorizada por Oliver: sólo etiqueta Preventa para `reservable`, fotos por variante y círculo con nombre legible, conservando estructura y reglas comerciales. Lectura real: HiTune S3 reservable; Nexode Air65W unavailable (se mantiene). Doce imágenes verificadas, tres por cada una de cuatro variantes, sin fotos comunes en estos dos productos. El catálogo heredado no tiene options ni asociaciones; no inventar atributos. Preparado uso del RPC existente con sesión real y control optimista, sólo asociaciones de imagen. No pagos, stock, precios, estados, cuotas, migraciones ni credenciales nuevas.
+
+Implementación local: etiqueta compartida, selector decorativo por nombre exacto existente y reinicio de imagen web.104core, tipos/lint app/web aprobados. Baseline16 contextos/64capturas en `.local/preventa-color-20261107/before`. Próxima acción: aplicar únicamente las asociaciones verificadas mediante RPC autorizado, contrastar campos comerciales, validar UI claro/oscuro/texto160%, y publicar una vez usando Workers/Expo Free y el mismo APK. Revisión independiente requerida antes de publicar.
+
+Suplemento del bloque anterior: el coordinador confirmó que42387846456 terminó6/6, incluido oscuro160% y UUID exacto. Conservado en `.local/banners-20261107/native-single-launch/CONFIRMACION_COORDINADOR.json`; no reemplaza el antecedenteANGLE5/6 ni exige cambios de infraestructura.
+
 ## Tres correcciones cerradas · 7nov2026
 
 Por instrucción de Oliver se cierra esta tanda: banner app, banners web y texto del comprador, publicados desde `0df5410`. Worker `8496d8a0-bead-4184-9325-77f40c999195` al100%, BUILD_ID `yd9Rq1GFjFGg70Vk51U6z`; OTA Android `01a1b669-c74b-773b-b68d-e24f246f0ce7`, grupo `ff072540-c0f4-481c-8eeb-3b53ebc773e3`, runtime `b691ec…`. Una publicación por plataforma, mismo APK.101core/85móvil/26UI/24Node/tres marca, diez Worker y seis públicos aprobados; recepción Android exacta y capturas revisadas.
