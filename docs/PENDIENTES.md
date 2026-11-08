@@ -1,8 +1,12 @@
 # Pendientes de mayami
 
-## Cierre hospedado · panel publicado; solicitud APK pendiente · 8 de noviembre de 2026
+## Prueba de cierre · completada en servidor; observación APK pendiente · 8 de noviembre de 2026
 
-El panel `da9085c`/`candidate.da9085c00f88` ya está recibido en `kora-panel.expo.app` (deployment `fzi7bsabfc`); no volver a publicarlo. Sesión administradora funciona y lista oficial indica «No hay solicitudes». Falta que Oliver envíe la solicitud desde la APK con la cuenta de prueba designada; entonces revalidar UID/requestId y completar sólo ese cierre autorizado por UI normal, reconciliando cualquier resultado antes de reintentar. No crear adaptadores, extraer sesiones, usar SQL mutante o eliminar sólo Auth. [Evidencia y alcance](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
+Una cuenta de prueba cotejada, un intento, request/job completados y Auth/sesiones/datos diarios/perfil/Storage verificados por lectura filtrada. No repetir el cierre. Falta la observación del acceso anterior desde la APK de Oliver; no se acredita un JWT real probado. La caducidad90d es elegibilidad del recibo, sin ejecutor automático; logs/backups externos permanecen fuera de esta prueba. [Recibos y alcance](CIERRE_CUENTA_PRUEBA_2026-11-08.md).
+
+## Android/AAB · identidad pendiente; propuesta validada sin activar · 8 de noviembre de 2026
+
+Confirmar el applicationId de producción antes de la primera publicación; propuesta `app.mayami.marketplace`, no reservada ni adoptada. Plantillas desconectadas y4 pruebas/tipos/esquema aprobados; no modificar eas.json/app.config/brand del preview porque participan en su fingerprint. Próximo paso sólo en copia Android limpia y tras autorización de firma/build. Pendientes reales: AAB firmado, API36+, soporte16KB del binario y sus bibliotecas, App Links/certificado y estado actual de Console. No se crea keystore ni se compila/publica en esta tanda. [Preparación y comando exacto](propuestas/android-production/README.md).
 
 ## Retención de cuenta · segunda migración instalada; operación pendiente · 7 de noviembre de 2026
 

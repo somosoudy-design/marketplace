@@ -1,12 +1,28 @@
 # Estado actual de mayami
 
+## Cuenta de prueba · cierre hospedado verificado · 8 de noviembre de 2026
+
+Oliver confirmó la solicitud desde la APK. UID/alias/alta exactos y única solicitud cotejados por lectura oficial, sin roles, tiendas, pedidos, pagos o vínculos comerciales. Un envío por el panel publicado: solicitud completed/completed y job closed/completed, data_cleaned=true, attempts=1, sin error/lease; terminó a01:56:03 de Venezuela. Auth soft-deleted con credenciales/metadata/sesiones retiradas, una identidad vacía legítima, diez ámbitos diarios vacíos, perfil minimizado y Storage relacionado0.
+
+La revisión independiente confirma los recibos. No se sembraron archivos/datos para probar su borrado, no se verificaron bytes físicos por una lectura independiente ni una purga global de logs/backups. Recibo elegible para caducidad90d; ejecutor automático no activado. Ninguna operación se dirigió a otro UID.
+
+Trabajo en curso: observar la sesión anterior desde la APK en manos de Oliver; respuesta solicitada, todavía sin evidencia de rechazo literal de JWT. No repetir el cierre ni crear/restablecer una cuenta para probarlo. Próxima acción: registrar sólo esa observación si llega. Android quedó pausado en7325bcc con plantillas desconectadas; no build/firma/publicación. Panel, backend, planes y permisos intactos. [Resultado y límites](CIERRE_CUENTA_PRUEBA_2026-11-08.md).
+
+## Android producción · propuesta aislada validada · 8 de noviembre de 2026
+
+Preparadas plantillas Android/AAB desconectadas desde59e88a07: nombre/dominio/soporte Mayami, perfil store/app-bundle, anon de Marketplace y panel oficial. ApplicationId propuesto `app.mayami.marketplace`, sin decisión ni reserva acreditada; el perfil mantiene un placeholder y la configuración bloquea identidad ausente/provisional, preview, iOS y plataforma no explícita. Se conserva `kora` por el retorno de pagos.
+
+Cuatro pruebas de resolución Expo, tipos estrictos, esquema EAS24.12.1 y revisión independiente aprobados. Huella local preview antes/después idéntica `ccbac2f55b3a72ea6cf04871d415813c4ff6690e`, sin Firebase: no se atribuye al APK instalado. Archivos activos apps/mobile/config/packages y requests intactos. Editar eas.json global, incluso sólo production, alteraría la huella; no integrar allí estas plantillas.
+
+Trabajo en curso: ninguno en este bloque. Próxima acción: confirmar applicationId existente o propuesto; después autorizar firma/build y activar las plantillas sólo en una fuente limpia Android dedicada. Falta AAB final y verificar API36+/16KB/ELF/ZIP sobre ese binario; App Links devuelve404 y requiere identidad/certificado reales. No build, firma, Play, OTA, cargos, UI o backend. El panel publicado queda intacto; el estado de cierre de cuenta se documenta por separado. [Archivos, comandos y límites](propuestas/android-production/README.md).
+
 ## Panel de cierre publicado · 8 de noviembre de 2026
 
 Publicado sólo el panel limpio `da9085c00f884f487a2ae4d35aed71a220d553a0`, build `candidate.da9085c00f88`, deployment `fzi7bsabfc`. Export previo de 245 archivos revalidado; recepción exacta en URL inmutable y alias oficial, 22 comprobaciones HTTP y revisión independiente del chunk de usuarios con `account-close`. Sesión administradora oficial conservada. Expo Marketplace permanece Free, $0/mes y estimado $0; acceso permanente del CLI aprobado por Oliver sólo para marketplacebrand/Developer.
 
-Trabajo en curso: cierre de la cuenta de prueba designada, todavía **sin solicitud** según la pantalla oficial. No se llamó a `account-close`, ni se aprobó o borró una cuenta en esta tanda. Próxima acción: Oliver entra exclusivamente en esa cuenta desde la APK y envía Cuenta → Preferencias y privacidad → Solicitar eliminación; después cotejar UID/requestId y procesar una vez desde el panel nuevo. La web de compradores no dispone de ese formulario. No repetir el despliegue ni usar la operación antigua como prueba de cierre completo. Datos exactos y recibos locales bajo `.local/panel-publish-20261108/` y `.local/account-normal-flow-20261108/`.
+Estado posterior del8nov: la solicitud de la cuenta de prueba se recibió y su cierre quedó verificado en un intento. No repetir publicación o cierre. La observación de acceso en la APK se sigue en la entrada más reciente y en [el resultado](CIERRE_CUENTA_PRUEBA_2026-11-08.md).
 
-Sin publicación de storefront, APK/OTA/AAB o privacidad pública; sin editor Aroma'top, backend, hook/Cron, roles de Mayami ni planes de pago. No acredita aún cierre hospedado, invalidación de sesión previa o aceptación Play. [Resultado y límites](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
+Sin publicación de storefront, APK/OTA/AAB o privacidad pública; sin editor Aroma'top, backend, hook/Cron, roles de Mayami ni planes de pago. La recepción del panel por sí sola no acredita invalidación de sesión previa o aceptación Play; la prueba posterior de cierre se documenta aparte. [Resultado y límites](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
 
 ## Segunda migración de retención · instalada y commit confirmado · 7 de noviembre de 2026
 

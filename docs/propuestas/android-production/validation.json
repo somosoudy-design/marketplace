@@ -1,0 +1,26 @@
+{
+  "source": "59e88a07a53338678c29aaf16a824daa7b31d58c",
+  "activeConfigChanged": false,
+  "previewLocalFingerprintBefore": "ccbac2f55b3a72ea6cf04871d415813c4ff6690e",
+  "previewLocalFingerprintAfter": "ccbac2f55b3a72ea6cf04871d415813c4ff6690e",
+  "googleServicesJsonIncluded": false,
+  "installedApkRuntimeNotClaimed": true,
+  "nodeTests": 4,
+  "nodeTestsPass": 4,
+  "strictTypes": true,
+  "easSchema": "24.12.1 PASS",
+  "applicationIdProposal": "app.mayami.marketplace",
+  "applicationIdConfirmed": false,
+  "remoteReservationChecked": false,
+  "aabBuilt": false,
+  "keystoreCreated": false,
+  "remoteBuild": false,
+  "published": false,
+  "publicLinks": {
+    "contact": 200,
+    "privacy": 200,
+    "terms": 200,
+    "assetlinks": 404
+  },
+  "supportEmail": "published; mailbox delivery not verified"
+}

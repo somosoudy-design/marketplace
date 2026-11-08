@@ -1,5 +1,8 @@
 # Panel de cierre publicado
 
+Actualización posterior del8nov: la cuenta de prueba ya quedó cerrada y verificada. [Resultado y límites](CIERRE_CUENTA_PRUEBA_2026-11-08.md). El estado sin solicitud descrito abajo corresponde al momento de publicación del panel.
+
+
 8 de noviembre de 2026. Publicación puntual autorizada por Oliver, con alcance exclusivo del panel administrativo y de vendedores existente. No es una publicación en Google Play ni prueba de eliminación completada.
 
 ## Fuente y paquete

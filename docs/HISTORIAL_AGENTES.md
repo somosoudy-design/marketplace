@@ -1,5 +1,17 @@
 # Historial de agentes
 
+## 2026-11-08 — cierre de la cuenta sintética por UI oficial, un intento
+
+Confirmación humana de solicitud recibida; Android pausado en7325bcc. Preflight READONLY: identidad/alta/alias/UID y única solicitud exactos, job0, roles/tiendas/pedidos/pagos0 y27 ámbitos comerciales sin vínculos. Un clic de procesamiento por panel da9085c/fzi7bsabfc, sin SQL mutante/Auth-delete manual/credenciales extraídas. UI «Cierre verificado» y postflight: request completed/completed; job closed/completed/data_cleaned/attempts1; Auth softdelete, credenciales/metadata/sesiones/token-renovación0; identidad vacía legítima, diez ámbitos diarios{},perfil minimizado/Storage0. Revisión independiente favorable.
+
+No prueba de archivos previamente cargados, bytes físicos, JWT literal, otras cuentas por hash global ni purga de proveedor/retención programada. Se pidió observar acceso en APK aún abierta; no repetir cierre. Sin cambio de fuentes activas, backend, permisos, planes, publicaciones o cargos. [Resultado](CIERRE_CUENTA_PRUEBA_2026-11-08.md).
+
+## 2026-11-08 — identidad Android/AAB propuesta sin alterar preview
+
+Revisados AGENTS/config/historia y fuente limpia59e88a07; no se halló decisión o reserva de applicationId en el repositorio. Detectado eas.json entero en fingerprint: la corrección queda como plantilla desconectada, no en la configuración activa. Nombre/dominio/soporte Mayami y perfil AAB/store con anon MIM; propuesta app.mayami.marketplace pendiente, esquema kora preservado por callback de pagos. Guard sóloAndroidproduction con plataforma explícita e identidad válida.
+
+Cuatro pruebas Expo reales en fixture offline, tipos estrictos, esquema EAS24.12.1 y revisión independiente aprobados. Huella local sin Firebase ccbac2f55b3a72ea6cf04871d415813c4ff6690e idéntica; no equivale al runtime literal instalado. HTTPS contacto/privacidad/términos200 y soporte publicado, sin prueba de buzón; assetlinks404. Requisitos oficiales actuales API36 y16KB documentados para verificar AAB final. No UI, build/AAB/APK/OTA, firma, credenciales, Console, servicios/cargos, backend, panel o cuenta de prueba. [Entrega](propuestas/android-production/README.md).
+
 ## 2026-11-08 — panel de cierre publicado, prueba de cuenta pendiente de solicitud
 
 Acceso del CLI oficial confirmado tras autorización humana específica: sólo marketplacebrand/Developer. Cuenta/proyecto exactos y plan Free/$0 verificados. Un export ya compilado, 245 archivos, manifiesto c4155e02…f184 y tar7535b9b0…5dcb; sin rebuild. CLI24.12.1 rechazó la ruta absoluta antes de upload; código oficial acreditó path.join y se corrigió únicamente a la ruta relativa del mismo export. Un despliegue subido/promovido: fzi7bsabfc, source da9085c00f884f487a2ae4d35aed71a220d553a0/build candidate.da9085c00f88. Gate HTTP22/22 e inspección independiente de fuente/build y hash del chunk account-close aprobados. UI oficial con admin válido y «No hay solicitudes»; cuenta de prueba visible como cliente sin tienda. No solicitud/aprobación/cierre ejecutado, ni otras cuentas o datos afectados. Falta solicitud del comprador por APK y prueba exacta posterior. Sin storefront/móvil/privacidad pública, backend, editor Aroma'top, Cron o cargos. [Resultado](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
