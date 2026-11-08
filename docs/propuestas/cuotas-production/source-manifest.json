@@ -1,0 +1,287 @@
+{
+  "quotaSource": "1e8938ad1beedab31514bc52512d4f78fe7ddfa9",
+  "targetAabSource": "bb3de95871419ac35afb213067d02c9e6cd02835",
+  "paths": [
+    {
+      "status": "M",
+      "path": "apps/mobile/src/app/(tabs)/cart.tsx",
+      "source": {
+        "sha256": "cd0a18615f7087f7facfafe4f42737bc6ccc69c7993b71a7e1587af9e8d379a6",
+        "gitBlob": "c7a081b1a8bba611d2f3055f1d601266c7065210",
+        "bytes": 18245
+      },
+      "baseAndAabSource": {
+        "sha256": "380c6197e427083ac6e539e4f1077f63e17aca349ed3539fc3ed682221334264",
+        "gitBlob": "f28942bbdc1b002ff6b487cf155b7b1b23b0335c",
+        "bytes": 15690
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/mobile/src/app/checkout.tsx",
+      "source": {
+        "sha256": "00a7c6c697feeb61a8740d541147b1321faa12de7f901e4e61a4536b90766e61",
+        "gitBlob": "d79589b3c0c3f2928d0cd3309d1af0c322a4b1a7",
+        "bytes": 43338
+      },
+      "baseAndAabSource": {
+        "sha256": "981bdf4bd47e66391c590b1c293f37911448df65526fa44e5e15e5ff3e695c78",
+        "gitBlob": "05af72773d274a28bcf866bab73009fda7e9bb0f",
+        "bytes": 41932
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/mobile/src/app/product/[id].tsx",
+      "source": {
+        "sha256": "975452735ccee68a0c2a9b173153600bcfc3906f09cd2084bab1cc25d605ed9d",
+        "gitBlob": "fe4fb1ab3d2abab0d33404cda189b476825dcb95",
+        "bytes": 33201
+      },
+      "baseAndAabSource": {
+        "sha256": "8181a0359283549a99122f25b72b184674752020e2400b0b172cbc470a4411ac",
+        "gitBlob": "0c080f312460bcf9f9b5d6ec3871e1a398c75d2b",
+        "bytes": 31341
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/mobile/src/lib/auth-navigation.ts",
+      "source": {
+        "sha256": "ed6db8379c087c8ff48c1e8a653ff98ad4987f21781cd63ab8c6ac1909615817",
+        "gitBlob": "95e80bdcbfa341fe5c74381a6f1ccd49e9b794f8",
+        "bytes": 2012
+      },
+      "baseAndAabSource": {
+        "sha256": "4d176d278ab674ba2166cffbc8401753d5765d72574b615aff5581f47535ced4",
+        "gitBlob": "af18900e04839d270893581f048c8342d83e019f",
+        "bytes": 1712
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/storefront/src/app/carrito/page.tsx",
+      "source": {
+        "sha256": "b8806e94f6d2e71f94b4f0c45aefcb95e157a61e2ebf54ae94c06abf205fd3d4",
+        "gitBlob": "8d7e46ea8e8921e71112a213fdbcb35772edac36",
+        "bytes": 15982
+      },
+      "baseAndAabSource": {
+        "sha256": "a9c94191f309ee38503643d2de5cdd677f0ade636b6009aeef505d7d8479ffb8",
+        "gitBlob": "88be5b18399a93f52926f88e2787f525dc33379a",
+        "bytes": 12758
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/storefront/src/components/buyer.tsx",
+      "source": {
+        "sha256": "4347140298e7ded26c787e565129d03957f4af1eb713245b1034d967bfcc0d8a",
+        "gitBlob": "34aa77953260898c1403e3c2d3a7ad0b1736752c",
+        "bytes": 1765
+      },
+      "baseAndAabSource": {
+        "sha256": "07fa2a55effa40fe2fda9a2886ef638e039967e79527245c67b09e8da3785db6",
+        "gitBlob": "1fcba453827d48fccb5054b8e92da61c824fa746",
+        "bytes": 1184
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/storefront/src/components/checkout.tsx",
+      "source": {
+        "sha256": "4b12220e677dbcc500c8b21977cf9802461f1d72047db2ec5ffd2c93ed7635eb",
+        "gitBlob": "b15925d7f60ff471f0de0fcf5e9311a713c6dc9c",
+        "bytes": 33808
+      },
+      "baseAndAabSource": {
+        "sha256": "c3ab9a021615811dcbe181b67dc7ea66fe0c2c37c73ce32b31fbf654636ae958",
+        "gitBlob": "a5b62515e5ecbb8007fde3b6096a3897a071648e",
+        "bytes": 32009
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/storefront/src/components/product-detail.tsx",
+      "source": {
+        "sha256": "a126f8adfc96d66a4065db6e0b41ad57bab1b9006dd27a39653c8f6cc6bbf7ab",
+        "gitBlob": "a24f9f8d049bbd7542572bc4db4d2dce8494e271",
+        "bytes": 15136
+      },
+      "baseAndAabSource": {
+        "sha256": "b75898125cd1439883eeffcfc452ffb8452fb0ba889116a05b36ea9c386b588a",
+        "gitBlob": "19349cf00677dc210f067cf05be785358e057d5b",
+        "bytes": 12641
+      }
+    },
+    {
+      "status": "M",
+      "path": "apps/storefront/src/lib/auth-return.ts",
+      "source": {
+        "sha256": "3b80610566067a596c0153978596e74cb804647e31317d3296d11023b0406819",
+        "gitBlob": "9c0210fc880b380021fa398f70c0f2dd05a4a419",
+        "bytes": 2155
+      },
+      "baseAndAabSource": {
+        "sha256": "9b7cf1ebbd305c0ae1de3ebfae28468bdb4d1f2d387ba52dd9686254699fe5b3",
+        "gitBlob": "4e7cfb03cca512f7f899d4c01644b72c0cc5f66f",
+        "bytes": 2040
+      }
+    },
+    {
+      "status": "M",
+      "path": "packages/api/src/types.ts",
+      "source": {
+        "sha256": "013777512b275d9fbe1d1275e32605536f69ed5c32e72c8d691da8e0cd8ffc32",
+        "gitBlob": "b3e9a72a57e0e58fa38558c0cc8dad6b14848fa5",
+        "bytes": 21124
+      },
+      "baseAndAabSource": {
+        "sha256": "68f4c84d6264b5caae9d3923719199eb82ba1f5ecce0eae81cebff353cb7a364",
+        "gitBlob": "112a0e31eb38018156e17e8f2bb2e363e59e84c8",
+        "bytes": 20665
+      }
+    },
+    {
+      "status": "M",
+      "path": "packages/core/src/index.ts",
+      "source": {
+        "sha256": "95b4fade5117f3a171d100e360749f9584d31a6c9a72abd378d060b03cdc2034",
+        "gitBlob": "b29a3b4921ae73bd2281cd36f7227c95b6954ca5",
+        "bytes": 527
+      },
+      "baseAndAabSource": {
+        "sha256": "1576063a1bceac66a8b4987b7f107ef9ded66921e5519b964627fb4977233d9c",
+        "gitBlob": "3d4c08a0ddd25a6f565d79eb76c222549a23a809",
+        "bytes": 487
+      }
+    },
+    {
+      "status": "A",
+      "path": "packages/core/src/payment-presentation.ts",
+      "source": {
+        "sha256": "5cf94295c2a15e20476e3019eee63a0a95288008bc7092542943be65981db6db",
+        "gitBlob": "dd7ae5d02a61838afd26bc14c2de7c5cecdae4eb",
+        "bytes": 4767
+      },
+      "baseAndAabSource": null
+    },
+    {
+      "status": "A",
+      "path": "packages/core/test/payment-presentation.test.ts",
+      "source": {
+        "sha256": "4bab7c41a3ebd7a77ab66f2a7496deeb6bf6095d367c8ad5a0347b52c70e748a",
+        "gitBlob": "65790a8b1e8f166da579ecb9f5f306053ce9458a",
+        "bytes": 4576
+      },
+      "baseAndAabSource": null
+    },
+    {
+      "status": "A",
+      "path": "supabase/migrations/20261107203116_mayami_deferred_three_payments.sql",
+      "source": {
+        "sha256": "5f929adbcc1ccc5063599ce88bd54ce101f2749d2df617d8dea5b559ceb0d653",
+        "gitBlob": "978d06d80d74e02fb765303c86e3fab9468a2402",
+        "bytes": 13299
+      },
+      "baseAndAabSource": null
+    },
+    {
+      "status": "A",
+      "path": "tests/db-tests/test/db/installments.test.ts",
+      "source": {
+        "sha256": "09e8d6b43f8090e7115b5b87ad7a759295dc19b409759f4f16a289519dfd8452",
+        "gitBlob": "a1e5db1c017fe810fae618cb51273f36e61ed991",
+        "bytes": 20518
+      },
+      "baseAndAabSource": null
+    },
+    {
+      "status": "A",
+      "path": "tests/storefront/checkout-plan-navigation.test.ts",
+      "source": {
+        "sha256": "b1fc8cc2fba3abbceedc7c49732c16478f249dbfcd6c066e7b495f6d7e048788",
+        "gitBlob": "c914f722d327052300c7ab8578104d16b10ac3f4",
+        "bytes": 5077
+      },
+      "baseAndAabSource": null
+    },
+    {
+      "status": "A",
+      "path": "tests/storefront/payment-auth-return.test.ts",
+      "source": {
+        "sha256": "5bb98830b37e99d7193077f5d404e1bcfc4138c1aae49250218cbd3444af75fa",
+        "gitBlob": "6b44912a101049264d988e0f9f5d9a697acc327a",
+        "bytes": 1832
+      },
+      "baseAndAabSource": null
+    }
+  ],
+  "protectedAabDelta": [
+    {
+      "path": "apps/mobile/app.config.ts",
+      "sha256": "c9927531790a582a7ca6537550b833c69973edc42e79acb4f39fce9285826d77",
+      "gitBlob": "46bb5a90225356fc53c31153132a269cc5ad303f",
+      "bytes": 6255
+    },
+    {
+      "path": "apps/mobile/eas.json",
+      "sha256": "22b64b76792d7490018e8182076ff4571976bc02a05b72e591073898fd8058b2",
+      "gitBlob": "7a0d6a13f985c58beac84660e7df9601ea067a97",
+      "bytes": 930
+    },
+    {
+      "path": "apps/mobile/src/app/(tabs)/account.tsx",
+      "sha256": "287d43a7c4bcc6994689c5b9984d405ab68f628ac14f36ec42b751b0ef25f667",
+      "gitBlob": "550ecb8ab822dfb9228098817855cd847c033298",
+      "bytes": 7829
+    },
+    {
+      "path": "apps/mobile/src/app/settings.tsx",
+      "sha256": "80e2341c141c8f27cba7a677aa9dc3a9965bf74f2d0c4cb88558aa66777c49cf",
+      "gitBlob": "28eb0fd9b2ce65eed9e21c64bd236aaac9f2289c",
+      "bytes": 6993
+    },
+    {
+      "path": "apps/mobile/src/app/sign-up.tsx",
+      "sha256": "38647b44b7508043fe2185d4783aa63ea1e77ca8b57869a59af6ad2408288c7b",
+      "gitBlob": "07401f2b80d69dd2b8f116b6ec9002478abd3fdc",
+      "bytes": 3928
+    },
+    {
+      "path": "apps/mobile/src/components/account/LegalLinks.tsx",
+      "sha256": "2feaf6b0037206732d5ebece69ce265628c9145e3159d28d2adbc009b1b65a9c",
+      "gitBlob": "0ae73ff97b47012b4eb243a12604ad746feeb0fb",
+      "bytes": 1949
+    },
+    {
+      "path": "apps/mobile/src/lib/legal-links.ts",
+      "sha256": "7ef5857c1c59190d36360f345c6764fd337040cc694405221cbe8942d1e44367",
+      "gitBlob": "74a6cafc063c054e802b32c2a9cb9c2cc5a91f70",
+      "bytes": 906
+    },
+    {
+      "path": "tests/mobile/legal-links.test.ts",
+      "sha256": "a61e62190cf5b62e5f3d4a398b2737789dd8fb3fae213c0fd454d15089819b39",
+      "gitBlob": "7e9b46af212f0c31a28963b4c0448bd699e1ffec",
+      "bytes": 1143
+    },
+    {
+      "path": "tools/eas/android-production-source.test.cjs",
+      "sha256": "bc1ad180816056ddb6c7c73158433616cf2e5e8b23c68400087c9f08a8367ab0",
+      "gitBlob": "dbd627a51c57f73a6a3dbae8cd39f91fd110a709",
+      "bytes": 4114
+    }
+  ],
+  "excludedDocs": [
+    "docs/ACCESO_GOOGLE_2026-11-07.md",
+    "docs/CUOTAS_PREVENTA_ENCARGO_2026-11-07.md",
+    "docs/ESTADO_ACTUAL.md",
+    "docs/HISTORIAL_AGENTES.md",
+    "docs/PENDIENTES.md"
+  ],
+  "integratedSource": "da803460fcc3f819b0bbd896de58438207ace5d7",
+  "integratedTree": "8d6307c16c04a18bd3fa3bc4be25da1c4598d853",
+  "verifiedExactQuotaPaths": 17,
+  "verifiedProtectedPaths": 9
+}

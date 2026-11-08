@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Cuotas integradas en production local; preflight remoto pendiente · 8 de noviembre de 2026
+
+Fuente aislada da803460 sobre bb3de958, árbol 8d6307c1: 17 archivos exactos de 1e8938ad, 9 de identidad/legal intactos y 3 archivos nuevos de pruebas. Tres pagos totales, primero hoy; importes, intervalos, recargos, historial y controles del servidor conservados. Pasaron 30 checks focales, tipos móvil/web y lint; revisión independiente favorable. Evidencia previa de 299 casos reutilizada y 20 hashes verificados, sin repetir matriz ni sumarlos como casos nuevos. Tres casos nuevos también pasan en la rama compartida.
+
+Trabajo en curso: ninguno local de este bloque. El preflight de Marketplace no se ejecutó: Chrome agotó el tiempo también tras reconexión; la coordinación cerró los intentos de navegador. No se infiere un nuevo rechazo de permisos. Consulta de lectura exacta, expectativas y guardas preparadas; estado remoto desconocido. Próxima acción: verificar cuenta/proyecto oficial y ejecutar PRECHECK_READONLY.sql una vez cuando vuelva el controlador; comparar de forma independiente antes de cualquier activación posterior. No reintentar credenciales, alterar guardas ni aplicar SQL en este bloque.
+
+Sin publicación, build, OTA, dispositivo o nuevo render. El AAB entregado permanece igual. No publicar todo el storefront desde esta base Android anterior a los últimos legales web, ni sobrescribir cierre de cuenta desde cuotas antiguas. Callbacks de correo, Google y otros frentes siguen separados; la secuencia de cuotas de esta entrada sustituye el próximo bloque propuesto en entradas anteriores. [Fuente, pruebas, recuperación y riesgos](CUOTAS_PRODUCTION_INTEGRADAS_2026-11-08.md).
+
 ## AAB de validación entregado y camino OTA local separado · 8 de noviembre de 2026
 
 Primer AAB 44d FINISHED desde bb3de958, copia en Descargas: app.mayami.marketplace, 0.1.0 / vc2, target 36, 86.912.363 bytes, SHA256 cff66915…0d197d. Clave exclusiva b0d025… en EAS; preview intacto. Firma de 1546 payloads, CRC, estructura y 52 ELF64 con condiciones estáticas de 16 KB aprobados. Alertas RELRO iniciales eran falsos positivos del lector; corrección y revisión independiente, sin tocar AAB. Dispositivo de 16 KB y ZIP de APK derivado no ejecutados. Free/coste 0, Android 2/15. Una clave y un build, sin Play/OTA.

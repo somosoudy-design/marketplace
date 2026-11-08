@@ -1,5 +1,13 @@
 # Pendientes de mayami
 
+## Cuotas production: implementación local cerrada; lectura hospedada pendiente · 8 de noviembre de 2026
+
+Integración da803460 sobre bb3de958 terminada, 30/30 focales, tipos y lint aprobados. Los 17 blobs de cuotas y los 9 protegidos coinciden; tres pruebas móviles nuevas también pasan en shared. Evidencia de 299 pruebas anteriores reutilizada. No falta rehacer UI o repetir esa matriz para cerrar este bloque.
+
+Pendiente externo: controlador Chrome agotó el tiempo antes de SQL incluso tras reconexión. La coordinación cerró navegación; no seguir reintentando. Cuando esté disponible, verificar cuenta y Marketplace/mimnotafmfasvwrclxan y ejecutar sólo la consulta PRECHECK_READONLY.sql guardada, una vez. Comparar versiones, MD5/atributos/ACL/RLS/términos con expectativas locales, preservando el cierre. No reaplicar si ya coincide; detenerse ante deriva o estado parcial. La activación exacta, si procede, es una acción posterior delimitada, no autorizada por esta preparación.
+
+No declarar cuotas activas, OTA compatible recibida o app final. No publicar el storefront completo de esta base antigua; su delta web debe reconciliarse con legales publicados. Callbacks de correo y Google siguen fuera del bloque; no crear otro AAB/clave o cambiar planes para avanzar. [Informe y próxima acción exacta](CUOTAS_PRODUCTION_INTEGRADAS_2026-11-08.md).
+
 ## Código pendiente después del AAB de validación · 8 de noviembre de 2026
 
 AAB 44d entregado y verificado; no repetir build, clave, cierre o publicación. El runtime b6cc permite OTA compatible, pero el publicador antiguo sólo sirve a APK5; nuevo validador local de fuente listo, 7 tests PASS y smoke real, todavía sin export/publish. Se preservan controles y el fallo legacy preexistente 5/6, sin declarar todo verde.

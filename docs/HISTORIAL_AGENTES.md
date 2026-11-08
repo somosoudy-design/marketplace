@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — integración de cuotas en fuente Android production aislada
+
+Integrador preparó da803460 sobre bb3de958, 20 archivos: 17 idénticos a cuotas 1e8938ad y 3 nuevos de pruebas focales. Nueve archivos de identidad/configuración/legal de production intactos. Tres pagos totales, primero hoy, sin cambios de importes, recargos, intervalos, historial, seguridad o plan remoto. Excluidos Google/correos/admin/cosmética. Core real, sólo puertos Expo Router simulados; 30/30 focales, tipos y lint aprobados. Tres casos nuevos pasan además en shared. Reutilizados 299 casos previos y verificados 20 hashes. Fallos iniciales del arnés y tipos generados conservados y corregidos sin cambiar producto para ponerlo en verde. Revisión independiente favorable.
+
+Preflight remoto no ejecutado: Chrome agotó el tiempo antes de SQL, también en intento explícito tras reconexión. La coordinación cerró navegación, sin nuevas credenciales o reintentos por otros canales. Consulta de sólo lectura y expectativas guardadas; estado hospedado desconocido. Se preservan guardas de migración y cierre. Patches completo/incremental, bundle y recibos verificables; checkpoint compartido sólo pruebas y documentación de recuperación, sin sobrescribir producto activo. No nuevos builds, OTA, publicaciones, pagos, SQL/grants, Google/correo o cargos. Próxima acción remota sólo lectura oficial y comparación independiente; la activación posterior queda separada. [Informe y límites](CUOTAS_PRODUCTION_INTEGRADAS_2026-11-08.md).
+
 ## 2026-11-08 — primer AAB verificado y validador OTA production local
 
 Único build 44d desde bb3de958 terminó a las 11:04 de Venezuela. Copia de 86.912.363 bytes en Descargas/SHA256 cff66915…0d197d; package, 0.1.0 / vc2, target 36 y certificado b0d025… verificados. JarFile validó 1546 payloads; 52 ELF64 pasan condiciones estáticas de 16 KB tras corregir cuatro falsos positivos RELRO con LLVM/Bionic y controles de regresión. Binario inmutable; Advertencias de JBR por idioma y orden del manifiesto conservadas, sin declarar aceptación de Play o ejecución en 16 KB. Free/coste 0/Android 2 de 15 y preview intacto.

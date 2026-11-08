@@ -1,0 +1,160 @@
+{
+  "recordedAt": "2026-11-08T16:01:25.289565+00:00",
+  "status": "LOCAL_INTEGRATION_COMPLETE_REMOTE_PREFLIGHT_PENDING",
+  "sharedParent": "0ec87049121258d595840a771ac6842228b9ef4d",
+  "isolatedSource": "da803460fcc3f819b0bbd896de58438207ace5d7",
+  "isolatedTree": "8d6307c16c04a18bd3fa3bc4be25da1c4598d853",
+  "aabSourceParent": "bb3de95871419ac35afb213067d02c9e6cd02835",
+  "quotaSource": "1e8938ad1beedab31514bc52512d4f78fe7ddfa9",
+  "scope": "Android production source integration. Not a publication candidate for the entire older storefront.",
+  "exactQuotaPaths": 17,
+  "protectedNativeAndLegalPathsPreserved": 9,
+  "sourceDeltaPaths": 20,
+  "extraPaths": [
+    "tests/mobile/installment-auth-navigation.test.ts",
+    "tests/mobile/fixtures/expo-router-port-only.ts",
+    "tools/eas/installments-integration.vitest.config.mjs"
+  ],
+  "checks": {
+    "isolatedFocal": {
+      "passed": 30,
+      "total": 30,
+      "suites": 5,
+      "command": "pnpm exec vitest run --config tools/eas/installments-integration.vitest.config.mjs"
+    },
+    "sharedNewMobileTests": {
+      "passed": 3,
+      "totalSelected": 3,
+      "unselected": 27,
+      "reason": "Only newly added mobile cases selected for shared-branch compatibility; isolated full focal suite ran all 30."
+    },
+    "mobileTypecheck": "PASS",
+    "storefrontTypecheck": "PASS",
+    "mobileFocalLint": "PASS",
+    "storefrontFocalLint": "PASS",
+    "diffCheck": "PASS",
+    "bundleVerify": "PASS",
+    "priorTestsReused": {
+      "core": 124,
+      "otherIncludingSql": 175,
+      "sqlIncluded": 22,
+      "total": 299,
+      "evidenceHashesVerified": 20,
+      "rerun": false
+    },
+    "independentSourceReview": "Favorable; 17 source blobs and 9 protected blobs exact, three declared test extras only. No native/UI/remote/OTA conclusion.",
+    "fullPatchRecoveryIndependentReview": {
+      "base": "59e88a07a53338678c29aaf16a824daa7b31d58c",
+      "tree": "8d6307c16c04a18bd3fa3bc4be25da1c4598d853",
+      "method": "Temporary ignored Git index; source unchanged; no test or remote action",
+      "result": "EXACT"
+    }
+  },
+  "toolingCorrections": [
+    "Preserved initial Vitest alias/Flow failures. Scoped test config uses actual core and mocks Expo Router ports only; no product test disabled.",
+    "Moved stale generated .next/dev/types into ignored evidence folder and regenerated route types. No product route added or removed to pass typecheck."
+  ],
+  "paymentSemantics": "Three total payments, including first today, then days 15 and 30. No change to server amounts, surcharge, interval, historical rows, mixed-cart rules or other plan downpayments.",
+  "remote": {
+    "recordedAt": "2026-11-08T16:01:25.289565+00:00",
+    "project": "mimnotafmfasvwrclxan",
+    "status": "PENDING_NOT_EXECUTED",
+    "metadataSelectsExecuted": 0,
+    "customerRowsRead": false,
+    "sqlApplied": false,
+    "businessFunctionsInvoked": false,
+    "browserOutcome": "Chrome controller timed out before SQL. Explicit controller retry after reconnection also timed out. Coordinator closed browser scope; no further attempts.",
+    "authorizationMeaning": "Controller timeout is not evidence of a new Supabase permission denial. Account/project were not freshly observed in this task.",
+    "prohibitedFallbacksNotUsed": [
+      "denied connector retry",
+      "wrong CLI account",
+      "credential/cookie extraction",
+      "new grants or login"
+    ],
+    "querySha256": "e1b4ef64f775d7be26a5192fc49c439dc22ab95fd56bf6794ddb3691cdcbd47e",
+    "sqlSyntaxReview": "Manual source review only; not parsed or executed on PostgreSQL.",
+    "hostedMigrationState": "UNKNOWN",
+    "hostedFunctionDrift": "UNKNOWN",
+    "hostedPlanTerms": "UNKNOWN",
+    "nextStep": "When official controller is available, verify correct account and Marketplace project in UI, execute exact PRECHECK_READONLY.sql once, save result and obtain independent comparison. Do not apply migration in this scope.",
+    "decisionRules": {
+      "alreadyApplied": "If exactly one quota version, reviewed after hashes, helper, attributes, terms and closure guards match, do not reapply.",
+      "notApplied": "If zero quota versions, absent helper, exact before guards and expected attributes/terms with closure guards preserved, prepare separately bounded activation of unchanged migration; do not apply now.",
+      "driftOrPartial": "Stop on partial state, duplicates or mismatches. Do not modify hashes, grants, ownership or security to force acceptance."
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/source.bundle",
+      "bytes": 34924,
+      "sha256": "65a67eae7fa342ee1e36cf96f7e4bec456ad41347b13fb8d010e6b5ae591ac5a"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/source.patch",
+      "bytes": 108665,
+      "sha256": "9456e985ef7aedfe5898821f13df0ac86910488def56c22e5fe1b8d2d27e2e3a"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/full-source.patch",
+      "bytes": 129156,
+      "sha256": "67a23f00822cd8c9314129345a55bb0915d241a3d057049494bb1347a3fa4a94"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/focal-tests.log",
+      "bytes": 1896,
+      "sha256": "16b0d261a3a0c055cb0785ee7dc99d4e999c3581e935e8b74ff76eac0807bda6"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/focal-tests-resolved.log",
+      "bytes": 590,
+      "sha256": "244b99b248f08346d731cadf319546a18106127d40a497241663f4c2aab8bce9"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/mobile-types.log",
+      "bytes": 130,
+      "sha256": "a7f8c11960212ceee5d6805c13c84a4ec8c928e75ffcbf426c5d56a46a3ddd5d"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/storefront-types.log",
+      "bytes": 877,
+      "sha256": "32dc44507a6842da11fb3cbef88ed9faeabd575f12b8295adae8bf82b1636042"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/storefront-types-fresh.log",
+      "bytes": 276,
+      "sha256": "ba50ad78b248f546a6bf088802ede8e3f6b4ff90d2ee3c399ec319bbb51e1b34"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/mobile-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/installments-production-20261108/storefront-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/installments-production-20261108/shared-new-tests.log",
+      "bytes": 608,
+      "sha256": "85fd54639c79adbcc68b6fc945c7bec2a6553ce22feead78072fd051c99f2708"
+    }
+  ],
+  "notPerformed": [
+    "DB stack reset or migration run",
+    "new UI captures or device tests",
+    "new build or export",
+    "OTA/AAB/storefront publication",
+    "real purchase or payment",
+    "service charges",
+    "Google/mail/admin integration"
+  ],
+  "releaseRisks": [
+    "Remote quota migration and plan state remain unverified; do not expose as active before preflight and separately scoped activation.",
+    "Preserve account closure require_user, restrictive account_open_only policies and account_00_open triggers; old quota snapshot must not overwrite them.",
+    "Do not publish entire storefront from this older base; integrate web delta onto current published legal source first.",
+    "No fresh proof of native runtime compatibility, device receipt or hosted rendering. Existing AAB is unchanged."
+  ]
+}
