@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — primer AAB verificado y validador OTA production local
+
+Único build 44d desde bb3de958 terminó a las 11:04 de Venezuela. Copia de 86.912.363 bytes en Descargas/SHA256 cff66915…0d197d; package, 0.1.0 / vc2, target 36 y certificado b0d025… verificados. JarFile validó 1546 payloads; 52 ELF64 pasan condiciones estáticas de 16 KB tras corregir cuatro falsos positivos RELRO con LLVM/Bionic y controles de regresión. Binario inmutable; Advertencias de JBR por idioma y orden del manifiesto conservadas, sin declarar aceptación de Play o ejecución en 16 KB. Free/coste 0/Android 2 de 15 y preview intacto.
+
+Comprobación OTA de sólo lectura: recurso file:fingerprint y asset b6cc reales, canal production y mapping production, último Android APK5/eb5 y ninguna OTA b6cc. Nuevo preparador offline separado exige fuente aislada/config/fingerprint correctos, sin publisher/CI/permisos nuevos. Siete tests y smoke real PASS, legacy 5/6 por fixture no vacío ya existente, sin desactivar guardas. Auditoría limitada confirma Google/correos/cuotas no integrados en AAB y Firebase production no configurado. Próximo bloque callbacks de correo, no trámites Google; no otra clave, build, publicación, correo o activación remota en esta tanda. [AAB](PRIMER_AAB_MAYAMI_2026-11-08.md) · [OTA y auditoría](OTA_PRODUCCION_LOCAL_2026-11-08.md).
+
 ## 2026-11-08 — clave exclusiva creada y primer AAB iniciado una vez
 
 Flujo oficial EAS CLI 24.12.1 desde bb3de958 limpio, non-interactive/no-wait y sin submit: exit 0, nueva clave de producción a869aa32/SHA256 b0d0254f…4af2a85. Metadata anterior/posterior conserva la firma preview y Free. Subida de 115 MB completada; build 44d230e2-fd34-4772-bf72-55c79f4ea69e creado, ANDROID/STORE/production/source/package exactos e IN_PROGRESS en lectura posterior. versionCode de 1 a 2 remoto. Sin reintentos, secretos exportados, nuevos permisos o planes, cambios de preview, OTA o Play. AAB aún no descargado ni verificado. Próximo paso: esperar el mismo build y comprobar el binario. [Seguimiento](PRIMER_AAB_MAYAMI_2026-11-08.md).

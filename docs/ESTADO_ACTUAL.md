@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## AAB de validación entregado y camino OTA local separado · 8 de noviembre de 2026
+
+Primer AAB 44d FINISHED desde bb3de958, copia en Descargas: app.mayami.marketplace, 0.1.0 / vc2, target 36, 86.912.363 bytes, SHA256 cff66915…0d197d. Clave exclusiva b0d025… en EAS; preview intacto. Firma de 1546 payloads, CRC, estructura y 52 ELF64 con condiciones estáticas de 16 KB aprobados. Alertas RELRO iniciales eran falsos positivos del lector; corrección y revisión independiente, sin tocar AAB. Dispositivo de 16 KB y ZIP de APK derivado no ejecutados. Free/coste 0, Android 2/15. Una clave y un build, sin Play/OTA.
+
+Runtime real b6ccf6e187d74e4c38c968346618a194df34d4df, canal production. Mapping actual production→production y última OTA Android APK5/eb5ed117; ninguna compatible b6cc publicada. Sí puede recibir JS/assets compatibles, no cambios nativos sin otro AAB. Añadido tools/eas/prepare-production-update.mjs: validación offline de fuente/config/fingerprint propios, rechaza mezcla preview/prod y runtime forzado. Siete tests nuevos y ejecución real PASS; legacy 5/6 con fallo preexistente de fixture no vacío, sin cambiar controles. No export OTA ni publicación nueva.
+
+Trabajo de esta tanda terminado; no es app final. Auditoría corta: Google apagado, logo/callbacks de correo y cuotas aún locales fuera del AAB; Firebase production sin configurar ni push probado. Próximo bloque: integrar callbacks de correo por separado de Google, con pruebas focales, sin otra clave/AAB por cada cambio. No esperar a la identidad Google para ese trabajo. Después cuotas desde fuente limpia y acciones remotas delimitadas, no en esta tanda. [AAB y evidencia](PRIMER_AAB_MAYAMI_2026-11-08.md) · [Código OTA y pendientes reales](OTA_PRODUCCION_LOCAL_2026-11-08.md).
+
 ## Primer AAB en curso · clave exclusiva confirmada · 8 de noviembre de 2026
 
 Una única ejecución oficial desde bb3de958 creó la clave de carga exclusiva de app.mayami.marketplace, ID a869aa32 y SHA256 b0d0254f…4af2a85. Metadata posterior confirma preview intacto y Free sin cambios. Build 44d230e2-fd34-4772-bf72-55c79f4ea69e, URL oficial guardada, source/package/profile/store cotejados; IN_PROGRESS a las 10:42:59 de Venezuela. versionCode 2. Ningún reintento, cambio de preview, OTA, submit o publicación.

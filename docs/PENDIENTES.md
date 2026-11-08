@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Código pendiente después del AAB de validación · 8 de noviembre de 2026
+
+AAB 44d entregado y verificado; no repetir build, clave, cierre o publicación. El runtime b6cc permite OTA compatible, pero el publicador antiguo sólo sirve a APK5; nuevo validador local de fuente listo, 7 tests PASS y smoke real, todavía sin export/publish. Se preservan controles y el fallo legacy preexistente 5/6, sin declarar todo verde.
+
+Siguiente bloque: conectar únicamente callbacks de correo endurecidos en fuente production aislada. Después cuotas de tres pagos desde 1e8938ad y delta de plantillas/logo; Google sigue apagado y sus pruebas no acreditan OAuth real. Firebase/push production requiere configuración propia y AAB final cuando haya cambios nativos. No activar Google, cuotas o Firebase remotos ahora. Pruebas reales de 16 KB / ZIP de APK derivado pendientes; la observación de sesión de la APK de prueba no es requisito de aceptación Google. [Auditoría corta y límites](OTA_PRODUCCION_LOCAL_2026-11-08.md).
+
 ## Primer AAB · compilando; no duplicar operación · 8 de noviembre de 2026
 
 Clave exclusiva creada y preview intacto. Único build 44d230e2-fd34-4772-bf72-55c79f4ea69e en curso, fuente bb3de958 y app.mayami.marketplace/production/STORE confirmados. Falta terminar, descargar y validar el binario; firma pública, SDK y 16 KB todavía no aprobados. Seguir sólo ese UUID, sin nuevos builds o claves. Free se conserva; no Play/submit/OTA. [Seguimiento](PRIMER_AAB_MAYAMI_2026-11-08.md).

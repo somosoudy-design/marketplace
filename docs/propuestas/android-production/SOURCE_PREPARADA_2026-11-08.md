@@ -1,5 +1,7 @@
 # Fuente Android de producción aislada · 8 de noviembre de 2026
 
+Actualización del 8 de noviembre: Oliver confirmó identidad y clave; el primer [AAB de validación terminó y se entregó](../../PRIMER_AAB_MAYAMI_2026-11-08.md). El texto siguiente conserva la preparación anterior. No representa la versión final con todos los pendientes integrados.
+
 Preparación local terminada. Fuente concreta `bb3de95871419ac35afb213067d02c9e6cd02835`, árbol `1f5498524cba222639cc39e2749a9ebbcda13744`, sobre `59e88a07a53338678c29aaf16a824daa7b31d58c`. Configura AAB/production y los enlaces legales ya implementados, sin construir, firmar ni publicar. `app.mayami.marketplace` es sólo propuesta local; no acredita reserva, identidad existente ni autorización de firma.
 
 ## Base y delta exactos
