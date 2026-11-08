@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Privacidad pública · candidato aislado terminado, publicación pendiente · 8 de noviembre de 2026
+
+GET público confirma /eliminar-cuenta404; privacidad/contacto200 y Worker d8756e3b/BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N sin cambios. Candidato limpio db41707 sobre fuente publicada9916d3e: cinco archivos, páginaSSR/enlaces/copy preciso sin rediseño o cambios de catálogo/compra.90d explícitamente sin purga automática ni máximo garantizado; logs/backups y JWT hospedado no acreditados. Fecha global6nov conservada; privacidad/eliminación/contacto8nov.
+
+Cinco Node, tipos/lint, un build Cloudflare, tres gates, tres GETSSR locales y cuatro vistas claro/oscuro390/1280 con footer PASS. Paquete extraído pasa gates; tarSHA f838936a8838d40cbb8b41c1cd4ffd3adce2450dd24fd7db2c0a9205aadef9c3, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ. Revisión independiente favorable. Código y diff exacto conservados; bundle recupera db417 sobre9916. Compatibilidad de pruebas compartidas conserva el acuse móvil.
+
+Trabajo en curso: ninguno de implementación. Próxima acción: confirmar recepción/gestión externa real de soporte@mayami.app y autorizar publicación del artefacto aislado; **no desplegar HEAD compartido**. DNS actual y regla histórica6nov no prueban entrega al buzón hoy; no se envió correo de prueba. Sin deployment, cambios de servicio/permisos, Cron, Android, Google, cuotas, editor ni nuevo cierre. No declarar Play listo. [Artefacto, diff, pruebas y ruta de publicación](PRIVACIDAD_PUBLICA_CANDIDATO_2026-11-08.md).
+
 ## Cuenta de prueba · cierre hospedado verificado · 8 de noviembre de 2026
 
 Oliver confirmó la solicitud desde la APK. UID/alias/alta exactos y única solicitud cotejados por lectura oficial, sin roles, tiendas, pedidos, pagos o vínculos comerciales. Un envío por el panel publicado: solicitud completed/completed y job closed/completed, data_cleaned=true, attempts=1, sin error/lease; terminó a01:56:03 de Venezuela. Auth soft-deleted con credenciales/metadata/sesiones retiradas, una identidad vacía legítima, diez ámbitos diarios vacíos, perfil minimizado y Storage relacionado0.

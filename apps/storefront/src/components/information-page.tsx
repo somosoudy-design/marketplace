@@ -9,6 +9,7 @@ export function information(slug: InformationSlug) {
 }
 export function InformationPage({ slug }: { slug: InformationSlug }) {
   const page = information(slug);
+  const updatedAt = ('updatedAt' in page && page.updatedAt) || policies.updatedAt;
   return (
     <article className="wrap information-page">
       <Link prefetch={false} className="text-link" href="/">Volver a Mayami</Link>
@@ -16,7 +17,7 @@ export function InformationPage({ slug }: { slug: InformationSlug }) {
         <span className="eyebrow">MAYAMI</span>
         <h1>{page.title}</h1>
         <p>{page.lead}</p>
-        <small className="muted">Actualizado el {policies.updatedAt}</small>
+        <small className="muted">Actualizado el {updatedAt}</small>
       </header>
       {page.sections.map(section => (
         <section key={section.heading}>

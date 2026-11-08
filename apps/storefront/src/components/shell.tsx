@@ -93,6 +93,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <Link prefetch={false} href="/privacidad">
             Privacidad
           </Link>
+          <Link prefetch={false} href="/eliminar-cuenta">
+            Eliminar cuenta
+          </Link>
           <Link prefetch={false} href="/devoluciones">
             Devoluciones
           </Link>

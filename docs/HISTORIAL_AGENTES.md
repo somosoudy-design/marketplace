@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — privacidad y enlace externo preparados en storefront aislado
+
+Verificación pública/Cloudflare de sólo lectura: eliminación404, privacidad/contacto200, Worker d875/BUILD_ID publicado9916 conservados. Delta db417 de cinco archivos, reuso de candidato anterior con corrección90d no automáticos/no máximo garantizado, límites externos y fechas por documento. Footer/rutaSSR sin rediseño ni compra/catalogo modificados. CincoNode/tipos/lint, un build, tresgates, tresHTTPSSR/cuatrocapturas/footerlocal PASS; paquete extraído pasa gates; revisiones independientes aprobadas. Tar20.378.099bytes/SHAf838936a…f9c3; manifiesto, diff y bundle recuperable guardados.
+
+No publicación, correos de prueba, permisos/credenciales, servicios/cargos, Cron, backend, APK/Android, Google, cuotas, editor o cierre repetido. Canal externo: DNS actual/regla6nov disponibles, recepción/gestión aún sin prueba. Se conserva test del acuse móvil al actualizar las pruebas compartidas. Próximo paso: canal real y publicación posterior del artefacto exacto con autorización; no HEAD combinado ni Play listo. [Resultado y límites](PRIVACIDAD_PUBLICA_CANDIDATO_2026-11-08.md).
+
 ## 2026-11-08 — cierre de la cuenta sintética por UI oficial, un intento
 
 Confirmación humana de solicitud recibida; Android pausado en7325bcc. Preflight READONLY: identidad/alta/alias/UID y única solicitud exactos, job0, roles/tiendas/pedidos/pagos0 y27 ámbitos comerciales sin vínculos. Un clic de procesamiento por panel da9085c/fzi7bsabfc, sin SQL mutante/Auth-delete manual/credenciales extraídas. UI «Cierre verificado» y postflight: request completed/completed; job closed/completed/data_cleaned/attempts1; Auth softdelete, credenciales/metadata/sesiones/token-renovación0; identidad vacía legítima, diez ámbitos diarios{},perfil minimizado/Storage0. Revisión independiente favorable.

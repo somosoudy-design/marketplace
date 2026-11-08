@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Privacidad pública · sólo publicación y canal externo pendientes · 8 de noviembre de 2026
+
+Candidato db41707 aislado sobre9916 listo localmente: /eliminar-cuentaSSR, enlaces y copy sin prometer90d automáticos; pruebas focales, build/gates, paquete portable y revisión independiente aprobados. /eliminar-cuenta público sigue404. Antes de publicación posterior: confirmar recepción/gestión manual real de soporte@mayami.app; DNS actual+regla histórica no acreditan entrega. No mail de prueba/credenciales nuevas en esta tanda. Autorizar y consumir artefacto exacto, nunca HEAD compartido. No Play listo; sin Cron o nuevo cierre. [Entrega y pasos](PRIVACIDAD_PUBLICA_CANDIDATO_2026-11-08.md).
+
 ## Prueba de cierre · completada en servidor; observación APK pendiente · 8 de noviembre de 2026
 
 Una cuenta de prueba cotejada, un intento, request/job completados y Auth/sesiones/datos diarios/perfil/Storage verificados por lectura filtrada. No repetir el cierre. Falta la observación del acceso anterior desde la APK de Oliver; no se acredita un JWT real probado. La caducidad90d es elegibilidad del recibo, sin ejecutor automático; logs/backups externos permanecen fuera de esta prueba. [Recibos y alcance](CIERRE_CUENTA_PRUEBA_2026-11-08.md).
