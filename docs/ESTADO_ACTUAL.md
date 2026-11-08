@@ -1,10 +1,10 @@
 # Estado actual de mayami
 
-## Tecnología web: publicación aislada autorizada, pendiente de build · 8 de noviembre de 2026
+## Tecnología web: publicación detenida por foto vigente distinta · 8 de noviembre de 2026
 
-Oliver autorizó publicar sólo la corrección visual ya revisada. GET público y Cloudflare confirman la base db41707 / BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker 3fa586f2 al 100%, deployment 5a856939. Cuota semanal comprobada: 58% consumido, 42% restante; detener trabajo al 20% restante, sin créditos ni resets.
+No se ejecutó despliegue. La base pública/Worker siguen correctos (db41707 por recibos, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ, versión3fa586f2 al100%), pero el catálogo vivo usa la foto da3eea0c…jpg y el parche autorizado sólo enmascara c6dba434…jpg. Cuatro capturas públicas y el Worker local confirman que el candidato no quitaría el cuadro actual. No desplegar b9a09a0 ni su tar, tampoco HEAD compartido.
 
-Se reutiliza checkout limpio dedicado: fuente b9a09a0e1cc22e5bb7877d1e6713c9a54e4359f6 sobre db41707, árbol 6f0b52c4ec80fc4a5c86bb72fdb4146c6a803594. Sólo seis rutas de visual-only.patch SHA256 d53f464d89713d2af960f46f35ed5c7e90d089dc938d4fc1a79442e409f7b1c0; revisión independiente confirma exclusión de Google, cuotas y Android preparados. Fuente recuperable en bundle local. Próxima acción: pruebas focales/build/gates, artefacto inmutable revisado, una publicación con sesión Cloudflare existente y comprobación pública Tecnología/Audio claro/oscuro/móvil. Sin nuevo permiso, credencial, backend, OAuth, OTA/AAB ni cargos; no desplegar HEAD compartido. [Recibo de esta tanda](TECNOLOGIA_WEB_PUBLICACION_2026-11-08.md).
+La fuente aislada conserva exactamente seis archivos y pasó3focales/tipos/lint/build/gates; revisión independiente confirma integridad del artefacto. Esto no acredita cumplimiento visual con la imagen vigente. Trabajo en curso: ninguno activo, tanda cerrada sin publicación. Próxima acción concreta: revisar el path exacto actual en helper/prueba/procedencia, fijar un nuevo parche dentro de las seis rutas y obtener autorización para ese delta revisado antes de otra compilación/publicación. No ampliar sólo por categoría. El JPEG actual coincide con el input limpio de la máscara, pero difiere del original acotado anterior. Cuota final59%usada/41%restante; parada20%. [Hallazgo, hashes y recuperación](TECNOLOGIA_WEB_PUBLICACION_2026-11-08.md).
 
 ## Tecnología web: propuesta mínima sin cuadrado, sin publicar · 8 de noviembre de 2026
 

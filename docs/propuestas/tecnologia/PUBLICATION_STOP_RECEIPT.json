@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-08T17:23:11.223305+00:00",
+  "category": "tecnologia",
+  "currentPath": "5afbabbf-0678-40ee-a5d8-540f53efe114/b1b4a794-c740-47e9-ae57-1c1e3089b80d/da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg",
+  "currentSha256": "0eb198ff2389e39568eff25de22c7ef0a4afe4898871c483584f53b713576ad8",
+  "currentBytes": 504851,
+  "pinnedPath": "5afbabbf-0678-40ee-a5d8-540f53efe114/b1b4a794-c740-47e9-ae57-1c1e3089b80d/c6dba434-37f6-4758-91e5-a65a028c2fc2.jpg",
+  "pinnedOriginalSha256": "bac462d0317a528b93ded4390311421c997d151f362e82537485641db524622a",
+  "deployExecuted": false,
+  "reason": "Current public image path differs; exact pinned patch will not install mask on the live image. Do not broaden guard or change pinned patch without reconciled review.",
+  "sameBytesAsPinned": false,
+  "stoppedAt": "2026-11-08T17:23:57.357284+00:00",
+  "lastDeploymentUnchanged": {
+    "id": "5a856939-a21d-4103-9e4e-ceb56f0b9f10",
+    "source": "wrangler",
+    "strategy": "percentage",
+    "author_email": "somosoudy@gmail.com",
+    "annotations": {
+      "workers/triggered_by": "deployment"
+    },
+    "versions": [
+      {
+        "version_id": "3fa586f2-cf50-4ec1-a288-9171ae216591",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-11-08T13:16:00.294183Z"
+  },
+  "currentImageMatchesMaskGenerationInput": true,
+  "currentBuildIdStillExpectedFromBaseline": "gXzoqz9BVz7a2MPxDrfwZ",
+  "publishedAfterScreenshots": false,
+  "proposedNextStep": "Review a revised exact image path guard, update its scoped test/provenance within the same six paths, pin a new patch and approve it before another build/deployment. No broadening by category alone."
+}

@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — publicación Tecnología detenida por deriva de imagen
+
+No se ejecutó despliegue. La base pública/Worker siguen correctos (db41707 por recibos, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ, versión3fa586f2 al100%), pero el catálogo vivo usa la foto da3eea0c…jpg y el parche autorizado sólo enmascara c6dba434…jpg. Cuatro capturas públicas y el Worker local confirman que el candidato no quitaría el cuadro actual. No desplegar b9a09a0 ni su tar, tampoco HEAD compartido.
+
+La fuente aislada conserva exactamente seis archivos y pasó3focales/tipos/lint/build/gates; revisión independiente confirma integridad del artefacto. Esto no acredita cumplimiento visual con la imagen vigente. Trabajo en curso: ninguno activo, tanda cerrada sin publicación. Próxima acción concreta: revisar el path exacto actual en helper/prueba/procedencia, fijar un nuevo parche dentro de las seis rutas y obtener autorización para ese delta revisado antes de otra compilación/publicación. No ampliar sólo por categoría. El JPEG actual coincide con el input limpio de la máscara, pero difiere del original acotado anterior. Cuota final59%usada/41%restante; parada20%. [Hallazgo, hashes y recuperación](TECNOLOGIA_WEB_PUBLICACION_2026-11-08.md).
+
 ## 2026-11-08 — checkpoint antes de compilar Tecnología web
 
 Oliver autorizó publicar sólo la corrección visual ya revisada. GET público y Cloudflare confirman la base db41707 / BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker 3fa586f2 al 100%, deployment 5a856939. Cuota semanal comprobada: 58% consumido, 42% restante; detener trabajo al 20% restante, sin créditos ni resets.
