@@ -1,0 +1,90 @@
+{
+  "reviewedAtUTC": "2026-10-26T22:59:55.252185+00:00",
+  "verdict": {
+    "otaPublication": "OBSERVED",
+    "androidReception": "BLOCKED",
+    "newNativeFlowsExecuted": 0,
+    "globalQualityCertified": false
+  },
+  "publication": {
+    "runId": 40413225725,
+    "status": "completed",
+    "conclusion": "success",
+    "sourceSha": "8233df7b526321c7e0c7dcc7a38bb13a75766c73"
+  },
+  "jobsReadFromGitHubAPI": {
+    "40416237747": {
+      "jobId": 121899149748,
+      "conclusion": "failure",
+      "reason": "ota_dirty_or_rollback"
+    },
+    "40416237632": {
+      "jobId": 121899149733,
+      "conclusion": "failure",
+      "failedStep": "Descargar los APK",
+      "skipped": [
+        "Proyecto de pruebas (registro sin correo)",
+        "Run actions/setup-java@v4",
+        "Maestro",
+        "Instalar, abrir y recorrer en Android 15"
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "path": ".local/equipo-20261026/receipt-40416237747.jsonl",
+      "sha256": "ce45091423462a18ef3683814d946b3857a121e485f6691675d7fbc642763679",
+      "notices": {
+        "Published Android OTA identity": {
+          "id": "01a17a59-84da-79e1-a24e-ae78498e7c1c",
+          "group": "9c671692-ae0a-44c0-ad59-09071ba7d0b7",
+          "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+          "commit": "8233df7b526321c7e0c7dcc7a38bb13a75766c73",
+          "platform": "android",
+          "channel": "preview",
+          "branch": "preview",
+          "createdAt": "2026-10-26T22:34:09.498Z",
+          "matchingUpdates": 1,
+          "latestCompatibleInBranch": true,
+          "isGitWorkingTreeDirty": true,
+          "isRollBackToEmbedded": false,
+          "workingTreeState": "dirty",
+          "rollbackState": "standard_update",
+          "workingTreeFlagPresent": true,
+          "rollbackFlagPresent": true
+        }
+      },
+      "failures": [
+        "Process completed with exit code 1.",
+        "ota_dirty_or_rollback"
+      ]
+    },
+    {
+      "path": ".local/equipo-20261026/receipt-40416237632.jsonl",
+      "sha256": "863ff5678f1a8ea5502c791d82665004f457884d441a4807c004f0e184c26283",
+      "notices": {
+        "Existing APK5 archive": {
+          "id": "d1d10c28-1d9e-4123-8487-602dc10b9710",
+          "archiveAvailable": true,
+          "downloadRequested": true
+        },
+        "Existing APK5 identity": {
+          "id": "d1d10c28-1d9e-4123-8487-602dc10b9710",
+          "projectId": "9f629f10-d679-4a99-9965-8a9e588afc85",
+          "commit": "cc5b1010691a492745a52e5842a4baaaf8ec3da8",
+          "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+          "package": "com.example.kora.preview",
+          "versionCode": "4",
+          "channel": "preview",
+          "profile": "preview",
+          "expirationDate": "2026-10-24T04:08:34.494Z"
+        }
+      },
+      "failures": [
+        "Process completed with exit code 1.",
+        "archive_http_404"
+      ]
+    }
+  ],
+  "closure": "No further downloads, metadata refreshes, new builds or OTA publication authorized by this closeout."
+}

@@ -1,0 +1,25 @@
+import { formatMoney } from '@kora/core';
+export {
+  confirmCheckout,
+  recoverCheckout,
+  UnconfirmedCheckoutError,
+} from '@kora/api';
+export function safeExternal(url: string | null | undefined) {
+  try {
+    const parsed = new URL(url ?? '');
+    return parsed.protocol === 'https:' ? parsed.href : null;
+  } catch {
+    return null;
+  }
+}
+export function date(value: string | null | undefined) {
+  return value
+    ? new Intl.DateTimeFormat('es-VE', { dateStyle: 'medium', timeZone: 'America/Caracas' }).format(
+        new Date(value.length === 10 ? value + 'T12:00:00' : value),
+      )
+    : 'Por confirmar';
+}
+export function currency(value: number | string, code: string) {
+  if (code === 'USD' || code === 'VES' || code === 'USDT') return formatMoney(value, code);
+  return `${value} ${code}`;
+}

@@ -1,0 +1,108 @@
+# APK5 preview. Public reads and visitor cart only: no remote account, order, quote or payment.
+appId: com.example.kora.preview
+name: Catálogo original — imágenes nuevas, color y carrito
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-recommended
+    timeout: 60000
+- assertVisible:
+    id: catalog-exhibition-notice
+- takeScreenshot: catalogo-original-01-inicio
+- tapOn:
+    id: home-search
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: Audifonos
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-audifonos-anc-over-ear
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-0d93e509-6738-4d99-88ec-a5a1f5d08fdf
+- assertNotVisible: "^Demo$"
+- takeScreenshot: catalogo-original-02-buscar
+- tapOn:
+    id: product-card-audifonos-anc-over-ear
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-0d93e509-6738-4d99-88ec-a5a1f5d08fdf
+- takeScreenshot: catalogo-original-03-salvia
+- scrollUntilVisible:
+    element:
+      id: variant-Arena
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: variant-Arena
+- swipe:
+    start: 50%, 25%
+    end: 50%, 85%
+- takeScreenshot: catalogo-original-04-arena
+- tapOn:
+    id: product-add
+- extendedWaitUntil:
+    visible:
+      id: added-to-cart
+    timeout: 15000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-line-f984e205-a702-4f95-b0e2-c2249127a4a0
+    timeout: 20000
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-0d93e509-6738-4d99-88ec-a5a1f5d08fdf
+    timeout: 15000
+- assertVisible: Arena
+- takeScreenshot: catalogo-original-05-carrito-arena
+- tapOn:
+    id: cart-continue
+- extendedWaitUntil:
+    visible:
+      id: sign-in-submit
+    timeout: 15000
+- back
+- tapOn:
+    id: cart-remove-f984e205-a702-4f95-b0e2-c2249127a4a0
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- tapOn:
+    id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- openLink: kora://p/set-tazas-ceramica-x4
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-ff742b48-0d15-4f33-8775-1efb54d05f5b
+    timeout: 20000
+- takeScreenshot: catalogo-original-06-hogar
+- openLink: kora://p/kit-exploradores-pinzas
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-74ebec82-84d2-40f4-b5ac-52a455572dea
+    timeout: 20000
+- takeScreenshot: catalogo-original-07-dental
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a16a08-5900-7324-83c5-8f833e369d19.*
+- takeScreenshot: catalogo-original-08-recepcion

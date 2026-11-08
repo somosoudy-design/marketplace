@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-26T22:00:49.429461+00:00",
+  "surface": "Immutable static export on 127.0.0.1:3101, local backend54321",
+  "config": "playwright-static.config.ts, no webServer",
+  "stats": {
+    "startTime": "2026-10-26T21:58:57.022Z",
+    "duration": 28752.901,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "directory": ".local/equipo-20261026/panel-static",
+  "export_files": 239,
+  "export_manifest_sha256": "d6e07187a3fbccc626585282d2cd98b735c706224c5b05eadd42930b10db92a1",
+  "screenshots": "375/1280 light, both byte-identical to approved dev images",
+  "request_origins": [
+    "http://127.0.0.1:3101",
+    "http://127.0.0.1:54321"
+  ],
+  "fixture_cleanup": "static/cleanup.json"
+}

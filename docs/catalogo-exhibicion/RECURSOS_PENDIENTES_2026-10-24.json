@@ -1,0 +1,398 @@
+{
+  "date": "2026-10-24",
+  "scope": "13 demo references still not cleared for a new professional photographic replacement; factual identity and rights metadata only",
+  "existingDJIPhotoUnchanged": {
+    "productId": "d9b01dc4-2f12-4b45-b726-c34325f1f9bb",
+    "isDemo": false,
+    "reason": "Existing actual product uses its current backend photography; no synthetic override"
+  },
+  "newOfficialPermissionsFound": 0,
+  "distributionAuthorizationFromOwner": "Android preview authorized after validation; not interpreted as rights to third-party originals",
+  "rightsSources": [
+    {
+      "brand": "SHEGLAM",
+      "terms": "https://www.sheglam.com/page/terms",
+      "copyright": "https://www.sheglam.com/page/copyright",
+      "affiliate": "https://www.sheglam.com/activity/affiliate-713",
+      "finding": "Reviewed terms require prior written permission. Copyright/affiliate pages do not establish a general photo redistribution grant for this app/OTA/repository."
+    },
+    {
+      "brand": "UGREEN",
+      "url": "https://www.ugreen.com/pages/terms-and-conditions",
+      "httpStatus": 200,
+      "reviewedOn": "2026-10-24"
+    },
+    {
+      "brand": "Anker",
+      "url": "https://www.anker.com/policies/terms-of-service",
+      "httpStatus": 200,
+      "reviewedOn": "2026-10-24"
+    },
+    {
+      "brand": "Samsung",
+      "url": "https://www.samsung.com/us/about-us/brand-identity/logo/",
+      "httpStatus": 403
+    },
+    {
+      "brand": "StarTech",
+      "url": "https://www.startech.com/en-us/terms-conditions",
+      "httpStatus": 403
+    },
+    {
+      "brand": "DJI",
+      "url": "https://www.dji.com/newsroom"
+    }
+  ],
+  "products": [
+    {
+      "productId": "5abf4366-e062-41e5-966e-1c7908ca2a7a",
+      "catalogSlug": "sheglam-labial-liquido-mate",
+      "catalogTitle": "SHEGLAM labial líquido mate",
+      "catalogVariants": [
+        {
+          "id": "cda87461-a64b-498c-b311-adea913a04a2",
+          "title": "Rosa nude",
+          "options": {
+            "Tono": "Rosa nude"
+          }
+        },
+        {
+          "id": "8ee86f11-cfaf-4c34-8130-53b8fc991461",
+          "title": "Terracota",
+          "options": {
+            "Tono": "Terracota"
+          }
+        },
+        {
+          "id": "e8d0ee55-4d21-455a-9ede-7508fcba47ea",
+          "title": "Rojo clásico",
+          "options": {
+            "Tono": "Rojo clásico"
+          }
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sbbeauty03200817648",
+        "manufacturerTitle": "Matte Allure Liquid Lipstick-True FaIth",
+        "manufacturerShade": "True Faith",
+        "sourcePage": "https://www.sheglam.com/product/Matte-Allure-Liquid-Lipstick-True-FaIth-5922630795429",
+        "sourceEvidencePage": null,
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "UNCONFIRMED_LINE_SHADE",
+      "missingIdentityEvidence": [
+        "Línea/SKU real del artículo del catálogo",
+        "Asignación oficial de cada variante Rosa nude, Terracota y Rojo clásico"
+      ],
+      "identityUnlockStep": "Acreditar SKU/línea mediante etiqueta o referencia de inventario vinculada al UUID y asignar cada variantId a un tono oficial. True Faith no se equipara por apariencia.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "96f52279-bb49-4d5c-a47d-495611d67191",
+      "catalogSlug": "sheglam-brillo-labial",
+      "catalogTitle": "SHEGLAM brillo labial",
+      "catalogVariants": [
+        {
+          "id": "0782aae9-7fcb-4c9f-97f2-655c8741984a",
+          "title": "Rosado",
+          "options": {
+            "Tono": "Rosado"
+          }
+        },
+        {
+          "id": "01b52cfb-de49-4611-963f-0785c16fc972",
+          "title": "Baya",
+          "options": {
+            "Tono": "Baya"
+          }
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sb2407220579666515",
+        "manufacturerTitle": "The Powerpuff Girls X SHEGLAM Super Trio Lip Gloss-Blossom",
+        "manufacturerShade": "Blossom (from manufacturer product title; direct product page unavailable503)",
+        "sourcePage": "https://www.sheglam.com/product/The-Powerpuff-Girls-X-SHEGLAM-Super-Trio-Lip-Gloss-Blossom-8815106883749",
+        "sourceEvidencePage": "https://www.sheglam.com/category/Lip-Gloss-2252",
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "UNCONFIRMED_COLLABORATION_SHADE_UNIT",
+      "missingIdentityEvidence": [
+        "Línea/SKU real",
+        "Si pertenece a Powerpuff Girls",
+        "Correspondencia Rosado/Baya con tonos oficiales",
+        "Unidad o contenido del kit"
+      ],
+      "identityUnlockStep": "Acreditar colaboración, SKU/tono y unidad de venta; la palabra Super Trio no acredita tres unidades. Blossom sigue siendo sólo candidato de categoría oficial.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "1cb658e6-5f4a-4d13-83e4-97a5af667920",
+      "catalogSlug": "sheglam-rubor-liquido",
+      "catalogTitle": "SHEGLAM rubor líquido",
+      "catalogVariants": [
+        {
+          "id": "aa4199ef-cc1f-46e4-9767-6a3b275b7cc8",
+          "title": "Coral",
+          "options": {}
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sb2402227745578144",
+        "manufacturerTitle": "Color Bloom Liquid Blush-Hot Topic",
+        "manufacturerShade": "Hot Topic",
+        "sourcePage": "https://www.sheglam.com/product/Color-Bloom-Liquid-Blush-Hot-Topic-8580912054437",
+        "sourceEvidencePage": null,
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "UNCONFIRMED_LINE_SHADE",
+      "missingIdentityEvidence": [
+        "Línea/SKU real",
+        "Correspondencia oficial de Coral"
+      ],
+      "identityUnlockStep": "Acreditar la línea real y SKU del rubor y su tono; confirmar o descartar Hot Topic con documento/etiqueta del producto previsto, sin deducirlo del color de pantalla.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "04e929cf-0be8-45db-a957-aa418599b572",
+      "catalogSlug": "sheglam-base-fluida",
+      "catalogTitle": "SHEGLAM base de maquillaje fluida",
+      "catalogVariants": [
+        {
+          "id": "355ca171-81c1-4b52-8de6-bd3b96ecf690",
+          "title": "Claro",
+          "options": {
+            "Tono": "Claro"
+          }
+        },
+        {
+          "id": "b5982486-3fac-492e-9913-5f83368c3e89",
+          "title": "Medio",
+          "options": {
+            "Tono": "Medio"
+          }
+        },
+        {
+          "id": "64713b70-8fcf-42c4-bcab-413adec8eb8c",
+          "title": "Profundo",
+          "options": {
+            "Tono": "Profundo"
+          }
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sb2406284202626862",
+        "manufacturerTitle": "Skinfinite Hydrating Foundation-Linen",
+        "manufacturerShade": "Linen",
+        "sourcePage": "https://www.sheglam.com/product/Skinfinite-Hydrating-Foundation-Linen-8816507781285",
+        "sourceEvidencePage": null,
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "UNCONFIRMED_LINE_SHADE",
+      "missingIdentityEvidence": [
+        "Línea/SKU real de base",
+        "Tono oficial y subtono para cada Claro, Medio y Profundo"
+      ],
+      "identityUnlockStep": "Acreditar línea y SKU por variante del producto previsto; Linen no sirve como muestra de los tres tonos.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "e38df4e4-9633-4e67-82a7-c4f581607fbc",
+      "catalogSlug": "sheglam-paleta-sombras",
+      "catalogTitle": "SHEGLAM paleta de sombras",
+      "catalogVariants": [
+        {
+          "id": "a78cb1e6-6e8c-4c51-b2c5-4c2bd03b93cc",
+          "title": "Cálidos",
+          "options": {}
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sb2207191171232773",
+        "manufacturerTitle": "Wonka Bar Eyeshadow Palette",
+        "manufacturerShade": "Multicolor",
+        "sourcePage": "https://www.sheglam.com/product/Wonka-Bar-Eyeshadow-Palette-8074106994853",
+        "sourceEvidencePage": null,
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "UNCONFIRMED_COLLABORATION_COMPOSITION",
+      "missingIdentityEvidence": [
+        "Línea/SKU real de paleta",
+        "Confirmación de colaboración Wonka o de otra línea",
+        "Gama y número de tonos reales"
+      ],
+      "identityUnlockStep": "Acreditar SKU y línea/paleta prevista por inventario o etiqueta; la gama Cálidos no acredita Wonka Bar ni ocho tonos.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "c36a2f27-0634-45cf-aa96-2fe0a693476d",
+      "catalogSlug": "sheglam-set-brochas",
+      "catalogTitle": "SHEGLAM set de brochas",
+      "catalogVariants": [
+        {
+          "id": "1a104f54-e971-41bf-a1de-331aa3284491",
+          "title": "Set",
+          "options": {}
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sb2306055918004384",
+        "manufacturerTitle": "Pro Core Brush Kit",
+        "manufacturerShade": "Beige",
+        "sourcePage": "https://www.sheglam.com/product/Pro-Core-Brush-Kit-8210438783141",
+        "sourceEvidencePage": null,
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "UNCONFIRMED_LINE_KIT_COMPOSITION",
+      "missingIdentityEvidence": [
+        "Línea/SKU del kit",
+        "Número de herramientas y composición",
+        "Acabado/color comercial"
+      ],
+      "identityUnlockStep": "Acreditar línea/SKU y contenido real del set; confirmar o descartar Pro Core de ocho herramientas con una doble punta. No se cuentan nueve piezas por sus nueve extremos.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "791b9673-d6b4-4f5a-a9b3-4019f2094fb3",
+      "catalogSlug": "sheglam-polvo-sellador",
+      "catalogTitle": "SHEGLAM polvo sellador",
+      "catalogVariants": [
+        {
+          "id": "c3d0784f-0379-4fb3-a668-1b3a68def040",
+          "title": "Translúcido",
+          "options": {}
+        }
+      ],
+      "dtoManufacturerSku": null,
+      "candidate": {
+        "manufacturerSku": "sbbeauty03200727122",
+        "manufacturerTitle": "Baked Glow Setting Powder-Translucent",
+        "manufacturerShade": "Translucent",
+        "sourcePage": "https://www.sheglam.com/product/Baked-Glow-Setting-Powder-Translucent-5694029267109",
+        "sourceEvidencePage": null,
+        "sourceEvidenceStatus": 200
+      },
+      "identityDecision": "REJECTED_FORMAT_MISMATCH",
+      "missingIdentityEvidence": [
+        "SKU/línea de un polvo compacto",
+        "Tono oficial Translúcido y envase real"
+      ],
+      "identityUnlockStep": "Conseguir la referencia exacta del compacto previsto. El Baked Glow suelto no puede desbloquearse sólo obteniendo permiso ni por compartir Translucent.",
+      "redistributionPermissionConfirmed": false,
+      "rightsUnlockStep": "Permiso escrito del titular autorizado para copiar estos archivos en app de exhibición privada, OTA preview, repositorio público y capturas; incluir cambios/derivados si se prevén. Alternativa: fotografía profesional propia/autorizada del producto identificado con permiso para ese alcance."
+    },
+    {
+      "productId": "1003a685-601c-4806-9e24-007db516e7c0",
+      "catalogTitle": "UGREEN Nexode cargador GaN 100 W",
+      "catalogVariants": [
+        {
+          "id": "2fa942f9-ac75-4eca-9340-fab52f2fc063",
+          "title": "Gris",
+          "options": {}
+        }
+      ],
+      "modelOrCandidate": "UGREEN Nexode 100 W Gris; candidato 40737, US 3C1A",
+      "missingIdentityOrPermission": "Faltan SKU real, revisión, número/tipo de puertos y enchufe/mercado de la unidad de catálogo.",
+      "referenceUrl": "https://us.ugreen.com/products/100w-3c1a-gan-fast-charger",
+      "referenceEvidence": "Original40737 ya guardado: candidato no mapeable sin identidad; permiso escrito pendiente.",
+      "professionalOfficialPhotoApprovedForDistribution": false,
+      "decision": "RETAIN_PENDING_EXACT_IDENTITY_AND_SPECIFIC_REUSE_PERMISSION"
+    },
+    {
+      "productId": "0e4494b7-b93f-4e69-b39f-64486dd85b2e",
+      "catalogTitle": "UGREEN soporte de aluminio para laptop",
+      "catalogVariants": [
+        {
+          "id": "477f3514-1998-409a-ab80-a65b0a451c40",
+          "title": "Plata",
+          "options": {}
+        }
+      ],
+      "modelOrCandidate": "UGREEN soporte plegable y ajustable Plata; candidato 40289",
+      "missingIdentityOrPermission": "Faltan SKU real y geometría/revisión de bisagras/apoyos; Plata por sí solo no fija modelo.",
+      "referenceUrl": "https://eu.ugreen.com/products/ugreen-laptop-stand-for-desk-adjustable",
+      "referenceEvidence": "Original40289 existente; permiso pendiente.",
+      "professionalOfficialPhotoApprovedForDistribution": false,
+      "decision": "RETAIN_PENDING_EXACT_IDENTITY_AND_SPECIFIC_REUSE_PERMISSION"
+    },
+    {
+      "productId": "97157db3-7c15-467d-b9a6-03d7a43fb25a",
+      "catalogTitle": "UGREEN power bank magnético 10.000 mAh",
+      "catalogVariants": [
+        {
+          "id": "6e8b77f6-ae45-49c6-b083-7f7527764a28",
+          "title": "Azul",
+          "options": {}
+        }
+      ],
+      "modelOrCandidate": "UGREEN magnético 10.000 mAh Azul; 65958 separado de 25208",
+      "missingIdentityOrPermission": "Faltan SKU real, potencia/protocolo y cable integrado.25208crema rechazado;65958Azul es otro modelo, nunca variante25208.",
+      "referenceUrl": "https://us.ugreen.com/products/ugreen-25w-magnetic-power-bank-10000mah",
+      "referenceEvidence": "Original65958 y25208 rechazado ya guardados; comunicadoMagFlow oficial200 no concede licencia de imagen ni confirma SKU del catálogo.",
+      "professionalOfficialPhotoApprovedForDistribution": false,
+      "decision": "RETAIN_PENDING_EXACT_IDENTITY_AND_SPECIFIC_REUSE_PERMISSION"
+    },
+    {
+      "productId": "d727246f-decd-4c7e-8060-385f78d8ac04",
+      "catalogTitle": "UGREEN cable USB-C a Lightning",
+      "catalogVariants": [
+        {
+          "id": "b6794122-c95b-4355-8d5b-3d4203485e49",
+          "title": "1 m",
+          "options": {}
+        }
+      ],
+      "modelOrCandidate": "UGREEN USB-C a Lightning, 1 m; candidato 60759",
+      "missingIdentityOrPermission": "Faltan SKU real, acabado/color y presentación de una unidad. La foto no acredita certificación/potencia.",
+      "referenceUrl": "https://us.ugreen.com/products/ugreen-20w-usb-c-to-lightning-cable",
+      "referenceEvidence": "Original60759 existente; permiso pendiente.",
+      "professionalOfficialPhotoApprovedForDistribution": false,
+      "decision": "RETAIN_PENDING_EXACT_IDENTITY_AND_SPECIFIC_REUSE_PERMISSION"
+    },
+    {
+      "productId": "3d0aae18-6668-4b5a-b094-7b322e67b6e4",
+      "catalogTitle": "UGREEN hub USB-C 10 en 1",
+      "catalogVariants": [
+        {
+          "id": "a67a8203-b5bd-4588-a774-ad37cd168141",
+          "title": "Plata",
+          "options": {}
+        }
+      ],
+      "modelOrCandidate": "UGREEN hub 10 en 1 Plata; 45366 grafito rechazado",
+      "missingIdentityOrPermission": "Faltan SKU exacto y lista de puertos/funciones, modelo acabadoPlata y contenido real. No asignar45366 por similitud.",
+      "referenceUrl": "https://us.ugreen.com/products/ugreen-10-in-1-usb-c-docking-station",
+      "referenceEvidence": "Original45366 existente, RECHAZADO por color; permiso también pendiente.",
+      "professionalOfficialPhotoApprovedForDistribution": false,
+      "decision": "RETAIN_PENDING_EXACT_IDENTITY_AND_SPECIFIC_REUSE_PERMISSION"
+    },
+    {
+      "productId": "648be3ae-6ce1-4293-af7a-0cae15648c09",
+      "catalogTitle": "UGREEN cargador de auto USB-C",
+      "catalogVariants": [
+        {
+          "id": "5a9fccb0-17d3-42c7-8e15-32b9067f29a1",
+          "title": "Negro",
+          "options": {}
+        }
+      ],
+      "modelOrCandidate": "UGREEN auto USB-C Negro; 90314 gris + cable rechazado",
+      "missingIdentityOrPermission": "Faltan SKU real, potencia/puertos y contenido. No confundir con25845 del otroUUID.",
+      "referenceUrl": "https://uk.ugreen.com/products/ugreen-30w-pd-car-charger-2-ports-with-60w-usb-c-cable",
+      "referenceEvidence": "Original90314 existente, RECHAZADO por acabado/paquete sin confirmar; permiso pendiente.",
+      "professionalOfficialPhotoApprovedForDistribution": false,
+      "decision": "RETAIN_PENDING_EXACT_IDENTITY_AND_SPECIFIC_REUSE_PERMISSION"
+    }
+  ]
+}

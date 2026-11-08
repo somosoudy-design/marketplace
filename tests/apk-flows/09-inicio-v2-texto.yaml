@@ -1,0 +1,49 @@
+# font-scale: 1.6
+# The isolated emulator changes OS text size; this does not change the APK or the user's phone settings.
+appId: com.example.kora.preview
+name: Inicio V2 — fuente Android ampliada
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-hero
+    timeout: 60000
+- takeScreenshot: inicio-v2-texto-01-portada
+- runFlow:
+    when:
+      visible:
+        id: home-product-opening
+    commands:
+      - tapOn:
+          id: home-product-opening
+      - extendedWaitUntil:
+          visible:
+            id: product-title
+          timeout: 20000
+      - takeScreenshot: inicio-v2-texto-02-producto-editorial
+      - back
+- runFlow:
+    when:
+      notVisible:
+        id: home-product-opening
+    commands:
+      - tapOn:
+          id: collection-.*-all
+      - extendedWaitUntil:
+          visible:
+            id: catalog-search
+          timeout: 20000
+      - back
+- swipe:
+    start: 50%, 75%
+    end: 50%, 30%
+- takeScreenshot: inicio-v2-texto-02-comparacion
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a1693d-60d9-7183-a309-92769e4ea219.*
+- takeScreenshot: inicio-v2-texto-03-diagnostico

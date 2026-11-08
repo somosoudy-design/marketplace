@@ -1,0 +1,317 @@
+{
+  "checked_at_utc": "2026-10-26T22:30:28.787800+00:00",
+  "gallery_png": 14,
+  "error_png": 8,
+  "store_png": 8,
+  "commercial_pairs_inspected": 4,
+  "commercial_png_inspected": 8,
+  "commercial_pairs_equal_total": 8,
+  "captures": [
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/attributed-fallback-no-credit.png",
+      "sha256": "f386891eb6f4aacae243e147012ff4f610c9c33c169c0c46c26ae60200a05e6a",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/variant-credit-recovery-sheet.png",
+      "sha256": "f91029e33ccc4ac3d2fa57c10baee6708ff6e5101ff3d4aa30969b132f8d69c7",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/variant-credit-recovery.png",
+      "sha256": "279abab217a97ada36588a08aa58de330f5f60cf56fa37eaebc54439356bd8b0",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-1e668-low-the-active-gallery-page/mapped-photo-sources-sheet.png",
+      "sha256": "8d081d7c7e7f8f7db5aee88e342b83ed60190349885ff40f8c6102c80323b3e1",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-1e668-low-the-active-gallery-page/own-storage-photo-active.png",
+      "sha256": "eeb6d7eddfdfbeade52e3f806a02f5e0cffcb046751b6d822c9daf738ea67709",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-4dde0--opens-and-closes-on-demand/commercial-cart.png",
+      "sha256": "228d74df71117dd89989dfcc9a6a812544660308806f0bd523fc50f12aec6376",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-4dde0--opens-and-closes-on-demand/commercial-info-keyboard.png",
+      "sha256": "7a2e94c4df33f654b99267dc9fd7dd1e65203f125816f55726d9fea3b72f24d3",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-5d0d2-low-the-active-gallery-page/mapped-photo-sources-sheet.png",
+      "sha256": "ff92555eb37aa7d681d79cc3990e5615343dcab40f4c354421310968d3138499",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-5d0d2-low-the-active-gallery-page/own-storage-photo-active.png",
+      "sha256": "e35658e1e55085dd0a9ad412c8a43ffee6a7fa02dd6b47814c3c4a59b5ee2a89",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/attributed-fallback-no-credit.png",
+      "sha256": "53f4598c0473efcbf572dbbe7c37be3fa9e68f2782ff79be9cdce3891e0aaf14",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/variant-credit-recovery-sheet.png",
+      "sha256": "6ff0eda07a98802a9478751ba7c9cde6d9d954bbc548b0f0769b4af188f13668",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/variant-credit-recovery.png",
+      "sha256": "eb935592d0c713aa792d7cb600925a624ce5fda2c3585eb05aac1d6dd39f28ef",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-bdc70--opens-and-closes-on-demand/commercial-cart.png",
+      "sha256": "44b8818cfcc71dda7f37d22da14533a182f08e5b5dc67e3dc93a47651f71687f",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-bdc70--opens-and-closes-on-demand/commercial-info-keyboard.png",
+      "sha256": "b042af6d43e8bc49ca3548e865e30de3e7977aed30cd5200ed25bd7122d94433",
+      "width": 320,
+      "height": 892,
+      "category": "gallery",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/04-cart-quantity-error-light-320.png",
+      "sha256": "d415a29a06b1e057d3dd7fe8103b3dc1174b092a2bd91bc47fc41dd6eacef9f4",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/05-cart-remove-light-320.png",
+      "sha256": "f3c8fce65265144899dd761cb2db39de41d7090934fe43874f412ab840f774db",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/06-cart-load-error-light-320.png",
+      "sha256": "38d3ee25e336bc9bab1f4b8fdf9132f25c780570a1e0d9a3c806c641ce709d1b",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/07-cart-empty-light-320.png",
+      "sha256": "c14634ad16b69fb3ef8c4714e309daec236287438c7050ca30231070eea2d784",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/04-cart-quantity-error-dark-320.png",
+      "sha256": "cb8e59fb3ed517b44ae312283a6547d5c9927d4924c7cacc485e536e5546386b",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/05-cart-remove-dark-320.png",
+      "sha256": "4672258ec0b5409db59d6326468a37b2058dd1588711bedccb5bc7eb880f1b2a",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/06-cart-load-error-dark-320.png",
+      "sha256": "5a3507197fa0c1b8676e59cbd01f3f28769c2c5221293a4fe804e2967e70bb02",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/after-final-states/07-cart-empty-dark-320.png",
+      "sha256": "d3e3e5e942b05ce7c123c0a057961c28f94c47bd21dc19c5e88cf04fba8ae939",
+      "width": 320,
+      "height": 892,
+      "category": "errors",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/kora-dark-01-description.png",
+      "sha256": "e7f1934427e88953a407960da230707baf30d91f9e3ff5b74cff63144b73b653",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/kora-dark-02-products.png",
+      "sha256": "46aae75180dc2f03a25d365407fe5578d80a66cf6d31d93bf082912a32611398",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/kora-light-01-description.png",
+      "sha256": "9d44b3330b4f5a816e26a6dd9344b957e2351419c0e6b362a672e860b6297f09",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/kora-light-02-products.png",
+      "sha256": "6ec63d019103e44157eb22eff57ab9cee4715a03c7ed25d1a6991db4cfb6a78e",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/patitas-dark-01-description.png",
+      "sha256": "0952fde17075791e5392ca631528da81fc5070b62a1714fe773b23c8f3749a0b",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/patitas-dark-02-products.png",
+      "sha256": "3954dbaa23fb3b6c53b067db3e71c3964f3f39bbecce4a1aa3e94b97f2abe025",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/patitas-light-01-description.png",
+      "sha256": "516a4e77c5a0037f90e6ea715f2645e29d60452e9a7e0bd94724b7d47f679d15",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/ux_mobile/store-smoke-final/patitas-light-02-products.png",
+      "sha256": "df9dfd1774caf72e2240977eb7b68f8736779d6655fb0a256937db21e0548106",
+      "width": 412,
+      "height": 892,
+      "category": "store",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/320-light-home.png",
+      "sha256": "006cd581afbbdc3426992aa14a585635395ba9a68a25b216e207740453794a75",
+      "width": 320,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/320-light-home.png",
+      "sha256": "a128b1877033d0e6750eac78189872593fb3dd92086840b07435a83bc491729a",
+      "width": 320,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-search.png",
+      "sha256": "f08e23757b8cce349eb17e9fc6280f8f8f90d0490c32cf5f7b86728ce2f154ea",
+      "width": 412,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-search.png",
+      "sha256": "ddb4ffea938ca1c89373fb01d628a73dbdfba9c4d6f2facd35e771d36214c8a1",
+      "width": 412,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-light-detail.png",
+      "sha256": "276bdb9d46066a83435d4ec8d321b97deb0b7eaf1bdaf4179482354c6f74c27d",
+      "width": 412,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-light-detail.png",
+      "sha256": "4e401c0f91c8981273a71d8c2070751d1165c8dc98dbdb3b3bb1b0c9ac825fda",
+      "width": 412,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/before/412-dark-detail.png",
+      "sha256": "739ee5bbe3ef9db61d6f6916f0d7d309280193b0934f689844ba90458f5ae46b",
+      "width": 412,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    },
+    {
+      "file": "/workspace/marketplace/.local/equipo-20261026/catalog_verify/commercial-qa/comparison-real/after/412-dark-detail.png",
+      "sha256": "043bb20ca916d974e870f2ee8978356dbdb840a0d11d7c9c207129f8a6d8a160",
+      "width": 412,
+      "height": 892,
+      "category": "commercial-comparison",
+      "opened_by_qa": true
+    }
+  ],
+  "store_current_source_matches": true,
+  "gallery_versioned_spec_matches": true
+}

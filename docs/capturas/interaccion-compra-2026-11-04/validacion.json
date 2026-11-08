@@ -1,0 +1,30 @@
+{
+  "app_unique_cases": 44,
+  "app_runs": [
+    "35/36 initial regression; remaining historical text selector corrected to accessible product link",
+    "10/10 final: 8 new interaction/loading + 2 favorites regression"
+  ],
+  "web_unique_cases": 42,
+  "web_runs": [
+    "40/40 full storefront including new cart test",
+    "2/2 independent favorite tests on same source"
+  ],
+  "unit": {
+    "core": 52,
+    "favorite_state": 3,
+    "confirmation": 11
+  },
+  "capture_flows": 5,
+  "independent_tests": {
+    "app": 8,
+    "web": 2,
+    "included_in_totals": true
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "next_production_build": "passed",
+  "expo_android_hermes_export": "passed",
+  "android_device": "not available",
+  "native_config_changes": false,
+  "remote_database_mutations": false
+}

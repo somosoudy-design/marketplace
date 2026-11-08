@@ -1,0 +1,23 @@
+{
+  "fuente": "Capturas Chromium con fixtures locales, sin manipulación; precios sintéticos. No son capturas de Android.",
+  "imagenes": {
+    "paleta-dark.png": "2c192599eef98e4010218f5e5f1c1ae2504fdd465617b6871f774f3edcd0ef70",
+    "paleta-light.png": "4d2eab48d3ecf3cd1750d399d81f61340b1e010b7009fc82a73359a512f20b80",
+    "tono-0-0-dark-320.png": "4460d4b5e71338cb16830698317d6a35df02e853ea1feb30d3002243979c67f0",
+    "tono-0-0-light-320.png": "32930d335d76978e4e8bb316ea4014dc155f1c506ab92e9fc10771e99030b342",
+    "tono-0-1-dark-320.png": "beb9b024b984a95b3e7eb667b9987c172659080df39007de3090a9e53fee6688",
+    "tono-0-1-light-320.png": "e66bee610fdb14cc37303ec7c61facad4ec7a4bb53fdb67fef49b52ae1ed2fef",
+    "tono-0-2-dark-320.png": "064b6d7d105dd2a09e04be3541704caed82d75e096b91ab94ea714390c8dd83e",
+    "tono-0-2-light-320.png": "f033d127f5291d9feaa3f03b47d2174f81d14aa9089490844108ad62d927066a",
+    "tono-1-0-dark-320.png": "e4ec2662e8b66484bae79128686b90b7268d0a3e4e455ce14b1c68d88a243bd2",
+    "tono-1-0-light-320.png": "c32b72f9088bf778eb91476ef6ead83b6638df30df895f620f0b301868f91f82",
+    "tono-1-1-dark-320.png": "0360bf40e6e10b995ff696a6c23028032967e624d13b1750904de38408b2f09c",
+    "tono-1-1-light-320.png": "6a743fe6114156315c8ac6dd9266a1bd19cf65953a12f98184c999ea1ba85365",
+    "tono-1-2-dark-320.png": "27ba3d7ced01fec36ecc71fbd28e931bc1afeb264531dc1e6861bbe80ddb0113",
+    "tono-1-2-light-320.png": "06912cb4fa447225d74fedfda94d00b7f79789c0f3c17b49c1409daead6d3bb9",
+    "tono-2-0-dark-320.png": "b533285a20870bd106dbacaf89a0ce174756c143fbe8e025e5c2703576597227",
+    "tono-2-0-light-320.png": "8b7f966596020e2e8a6fc0a987113d17fa4e3ece58e9db5936ba84757258af04",
+    "tono-2-1-dark-320.png": "a1c167d1b78535d6cc6094c2401267f79cbb09b1401045740d92a48bba3ae742",
+    "tono-2-1-light-320.png": "6fac0d30a9c3557ba3bcf6fadb1141937374f6f8a4caed5d1576fded3e0bd44b"
+  }
+}

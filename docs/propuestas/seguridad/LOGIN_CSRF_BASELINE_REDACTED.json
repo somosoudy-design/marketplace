@@ -1,0 +1,118 @@
+{
+  "recordedAt": "2026-11-08T17:47:51.056Z",
+  "refs": {
+    "published": "064f4729dc8c2680859bb38c1338f274906465c3",
+    "head": "08c3f7a5d995c9845c3230b4bd7a497f99ed4a92",
+    "google": "884611780a1a3207aca9c3f3d8703b0324f65718",
+    "panel": "da9085c00f884f487a2ae4d35aed71a220d553a0"
+  },
+  "sdkVersion": "2.117.3",
+  "scope": "Exact source callback effects and panel factory + installed SDK; synthetic GET/user transport only, no browser or external network; a characterization, not a passing security acceptance suite",
+  "sourceSha256": {
+    "064f4729dc8c2680859bb38c1338f274906465c3:packages/api/src/client.ts": "f920b2fd4da9535ebdaa9226eb979fb79365345bf33bd339fc2bed85a1d15989",
+    "064f4729dc8c2680859bb38c1338f274906465c3:apps/storefront/src/app/auth/callback/page.tsx": "897f55e5c327729db01a6579dcb3a23ffbfd7449a2853309ab1b86313c46e86d",
+    "08c3f7a5d995c9845c3230b4bd7a497f99ed4a92:packages/api/src/client.ts": "5c926418ad60686e42ea9b54753f0ad750b7c1b6ae0e3c5791641d0e340e52f3",
+    "08c3f7a5d995c9845c3230b4bd7a497f99ed4a92:apps/storefront/src/app/auth/callback/page.tsx": "7e33e33945654de9d4436c576bff5b6218584418b653d447e1821c72d3554dfd",
+    "884611780a1a3207aca9c3f3d8703b0324f65718:packages/api/src/google-auth-runtime.ts": "07b130ee807fcb869e891f9dce2c808e0ed51afe779894c867452f5112d393dd",
+    "884611780a1a3207aca9c3f3d8703b0324f65718:packages/api/src/client.ts": "8e9e676385a515afcbc3b272f1afe8dca454982cd9d052759e3b62099a7aab39",
+    "884611780a1a3207aca9c3f3d8703b0324f65718:packages/api/src/google-auth.ts": "500173e0c94a182e24a7a9440e3f3e33c62dc93fd8858e49ab6a05cf9d3eed35",
+    "884611780a1a3207aca9c3f3d8703b0324f65718:packages/api/src/google-session-boundary.ts": "04bbd484dae4436cb7ba7edb6d22100873bf1a5790ad0fef002c2fff1a736e5d",
+    "884611780a1a3207aca9c3f3d8703b0324f65718:packages/api/src/google-web-session.ts": "c109a3a9c90c2f3a36caf0a8059fd88b9426de5f293b0a40c9f36742ad77a980",
+    "884611780a1a3207aca9c3f3d8703b0324f65718:apps/storefront/src/app/auth/callback/page.tsx": "169cfb47fa17550bddc0b93bbeb62370196260fa4d0788ce94363a067553352f",
+    "da9085c00f884f487a2ae4d35aed71a220d553a0:packages/api/src/client.ts": "f920b2fd4da9535ebdaa9226eb979fb79365345bf33bd339fc2bed85a1d15989",
+    "da9085c00f884f487a2ae4d35aed71a220d553a0:apps/admin/src/lib/kora.ts": "ed6bfd3d7ec816d270b2fa4ee3580f503524ed6251d6020ac377a55847b705b5"
+  },
+  "results": [
+    {
+      "label": "published",
+      "ref": "064f4729dc8c2680859bb38c1338f274906465c3",
+      "runtimeEnabled": null,
+      "initialActor": "B",
+      "callbackInitiatedLocally": false,
+      "submittedActor": "A",
+      "finalActor": "A",
+      "setSessionCalls": 1,
+      "authRequests": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user"
+        }
+      ],
+      "redirect": "/cuenta",
+      "characterization": "unrelated fragment session accepted; rejection acceptance criterion is false",
+      "rejectionAcceptancePassed": false
+    },
+    {
+      "label": "head",
+      "ref": "08c3f7a5d995c9845c3230b4bd7a497f99ed4a92",
+      "runtimeEnabled": null,
+      "initialActor": "B",
+      "callbackInitiatedLocally": false,
+      "submittedActor": "A",
+      "finalActor": "A",
+      "setSessionCalls": 1,
+      "authRequests": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user"
+        }
+      ],
+      "redirect": "/cuenta",
+      "characterization": "unrelated fragment session accepted; rejection acceptance criterion is false",
+      "rejectionAcceptancePassed": false
+    },
+    {
+      "label": "google-gate-false",
+      "ref": "884611780a1a3207aca9c3f3d8703b0324f65718",
+      "runtimeEnabled": false,
+      "initialActor": "B",
+      "callbackInitiatedLocally": false,
+      "submittedActor": "A",
+      "finalActor": "A",
+      "setSessionCalls": 1,
+      "authRequests": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user"
+        }
+      ],
+      "redirect": "/cuenta",
+      "characterization": "unrelated fragment session accepted; rejection acceptance criterion is false",
+      "rejectionAcceptancePassed": false
+    },
+    {
+      "label": "google-gate-true-fixture-only",
+      "ref": "884611780a1a3207aca9c3f3d8703b0324f65718",
+      "runtimeEnabled": true,
+      "initialActor": "B",
+      "callbackInitiatedLocally": false,
+      "submittedActor": "A",
+      "finalActor": "A",
+      "setSessionCalls": 1,
+      "authRequests": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user"
+        }
+      ],
+      "redirect": "/cuenta",
+      "characterization": "unrelated fragment session accepted; rejection acceptance criterion is false",
+      "rejectionAcceptancePassed": false
+    },
+    {
+      "label": "published-panel-auto-detect",
+      "ref": "da9085c00f884f487a2ae4d35aed71a220d553a0",
+      "initialStoredActor": "B",
+      "callbackInitiatedLocally": false,
+      "finalActor": "A",
+      "authRequests": [
+        {
+          "method": "GET",
+          "path": "/auth/v1/user"
+        }
+      ],
+      "characterization": "SDK implicit URL auto-detection accepted unrelated fragment",
+      "rejectionAcceptancePassed": false
+    }
+  ]
+}

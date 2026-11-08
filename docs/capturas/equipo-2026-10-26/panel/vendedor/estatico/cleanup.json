@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-26T22:00:28.089Z",
+  "surface": "local loopback database only",
+  "fixtureId": "42815387-852b-4bf9-a9db-daad705dd2a8",
+  "guard": "id + title + store_id",
+  "removedIds": [
+    "42815387-852b-4bf9-a9db-daad705dd2a8"
+  ],
+  "remaining": {
+    "products": 0,
+    "variants": 0,
+    "images": 0
+  },
+  "note": "Only the retained baseline fixture and its cascading child rows were deleted. Test artifacts remain."
+}

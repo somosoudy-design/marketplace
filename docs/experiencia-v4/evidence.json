@@ -1,0 +1,120 @@
+{
+  "verifiedAtCaracas": "2026-10-14T22:02:11.130870-04:00",
+  "before": [
+    {
+      "direction": "A",
+      "viewport": {
+        "width": 412,
+        "height": 892
+      },
+      "firstCartPhotoTop": 302.5,
+      "photoWidth": 64,
+      "photoHeight": 72,
+      "source": "current repository V3, not live Work site"
+    },
+    {
+      "direction": "B",
+      "viewport": {
+        "width": 412,
+        "height": 892
+      },
+      "firstCartPhotoTop": 277.15625,
+      "photoWidth": 64,
+      "photoHeight": 72,
+      "source": "current repository V3, not live Work site"
+    }
+  ],
+  "after": {
+    "checks": [
+      {
+        "name": "light-412: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+        "passed": true
+      },
+      {
+        "name": "light-320: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+        "passed": true
+      },
+      {
+        "name": "dark-412: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+        "passed": true
+      },
+      {
+        "name": "dark-320: journey, coherent quantity/total, modal focus, matching photo, two deliveries, commitment, duplicate report guard",
+        "passed": true
+      },
+      {
+        "name": "filter, ordering, empty search, favorites, actual removal and empty cart",
+        "passed": true
+      },
+      {
+        "name": "independent pickup cost and optional cash reference",
+        "passed": true
+      },
+      {
+        "name": "Home is a real editorial/catalogue destination, not a cart redirect",
+        "passed": true
+      },
+      {
+        "name": "direct payment link cannot impersonate an existing order",
+        "passed": true
+      }
+    ],
+    "screenshots": 36,
+    "metrics": [
+      {
+        "theme": "light",
+        "width": 412,
+        "firstCartPhotoTop": 163.390625,
+        "fullyVisibleCartPhotos": 2,
+        "firstCatalogPhotoTop": 131
+      },
+      {
+        "theme": "light",
+        "width": 320,
+        "firstCartPhotoTop": 163.390625,
+        "fullyVisibleCartPhotos": 2,
+        "firstCatalogPhotoTop": 131
+      },
+      {
+        "theme": "dark",
+        "width": 412,
+        "firstCartPhotoTop": 163.390625,
+        "fullyVisibleCartPhotos": 2,
+        "firstCatalogPhotoTop": 131
+      },
+      {
+        "theme": "dark",
+        "width": 320,
+        "firstCartPhotoTop": 163.390625,
+        "fullyVisibleCartPhotos": 2,
+        "firstCatalogPhotoTop": 131
+      }
+    ],
+    "errors": [],
+    "blocked": [],
+    "source": "local repository prototype; remote Work site not accessed",
+    "android": false,
+    "backend": false,
+    "realTransactions": false
+  },
+  "download": {
+    "passed": true,
+    "journey": "cart-checkout-method-payment-verification",
+    "platform": "Chromium local, standalone HTML served on loopback then network offline",
+    "fileUrl": "Blocked by managed browser policy; not verified",
+    "errors": [],
+    "externalRequests": [],
+    "android": false
+  },
+  "downloadSha256": "279b5b428d40f3e0e5b4df028f2cdb21cffd9a486f85eaecbeacd3ee5eb46edb",
+  "independentReview": {
+    "agent": "release_auditor",
+    "verdict": "LISTA PARA REVISIÓN DE OLIVER",
+    "corrections": [
+      "Títulos catálogo13px en320",
+      "Encuadre del lector UGREEN",
+      "Sin snackbar redundante en resultado"
+    ],
+    "limits": "Propuesta visual local; no aprobación comercial final, publicación Work o validación Android."
+  }
+}

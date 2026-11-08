@@ -1,0 +1,1608 @@
+{
+  "reviewedAt": "2026-11-08T16:07:54.180882+00:00",
+  "receiptObservedAt": "2026-11-08T16:03:17.333Z",
+  "receiptSha256": "a9d7f8386e252c1f9c99f5a3b6ad0271c69984016a7dde9883a7fe5c90849739",
+  "status": "PASS_METADATA_WITH_CAPTURE_LIMITATION_NOT_APPLIED",
+  "checksPassed": 171,
+  "checksTotal": 171,
+  "checks": [
+    {
+      "name": "receipt.query_sha256",
+      "actual": "e1b4ef64f775d7be26a5192fc49c439dc22ab95fd56bf6794ddb3691cdcbd47e",
+      "expected": "e1b4ef64f775d7be26a5192fc49c439dc22ab95fd56bf6794ddb3691cdcbd47e",
+      "pass": true
+    },
+    {
+      "name": "receipt.query_chars",
+      "actual": 9062,
+      "expected": 9062,
+      "pass": true
+    },
+    {
+      "name": "receipt.query_matched",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "receipt.successful_executions",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "receipt.mutations",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "receipt.customer_rows",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "context.read_only",
+      "actual": "on",
+      "expected": "on",
+      "pass": true
+    },
+    {
+      "name": "context.caller",
+      "actual": "postgres",
+      "expected": "postgres",
+      "pass": true
+    },
+    {
+      "name": "project.dashboard_ref",
+      "actual": "mimnotafmfasvwrclxan",
+      "expected": "mimnotafmfasvwrclxan",
+      "pass": true
+    },
+    {
+      "name": "project.dashboard_branch",
+      "actual": "main Production",
+      "expected": "main Production",
+      "pass": true
+    },
+    {
+      "name": "project.dashboard_org",
+      "actual": "lspwtzxmraagilwwnqrl",
+      "expected": "lspwtzxmraagilwwnqrl",
+      "pass": true
+    },
+    {
+      "name": "project.dashboard_profile",
+      "actual": "somosoudy-design",
+      "expected": "somosoudy-design",
+      "pass": true
+    },
+    {
+      "name": "summary.helper_absent",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "summary.one_three_parts_row",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "summary.reader_body_matches",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "summary.checkout_body_matches",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "summary.three_parts_terms_match",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "summary.installments_version_absent",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "summary.guard_count",
+      "actual": 6,
+      "expected": 6,
+      "pass": true
+    },
+    {
+      "name": "migration.20261107130620",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "migration.20261107203116",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "name": "migration.20261107213544",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "migration.20261107221337",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).body",
+      "actual": "2052c218ca383e8366fd8bf85b27a833",
+      "expected": "2052c218ca383e8366fd8bf85b27a833",
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).prosecdef",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).provolatile",
+      "actual": "s",
+      "expected": "s",
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).proconfig",
+      "actual": [
+        "search_path=public"
+      ],
+      "expected": [
+        "search_path=public"
+      ],
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).acl_explicit",
+      "actual": "{postgres=X/postgres,service_role=X/postgres}",
+      "expected": "{postgres=X/postgres,service_role=X/postgres}",
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).owner",
+      "actual": "postgres",
+      "expected": "postgres",
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).anon",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).authenticated",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public._build_checkout(uuid,uuid,jsonb,text).service_role",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).body",
+      "actual": "62fee35a611d6593055bad973f016d6b",
+      "expected": "62fee35a611d6593055bad973f016d6b",
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).prosecdef",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).provolatile",
+      "actual": "s",
+      "expected": "s",
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).proconfig",
+      "actual": [
+        "search_path=public, pg_temp"
+      ],
+      "expected": [
+        "search_path=public, pg_temp"
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).acl_explicit",
+      "actual": "{postgres=X/postgres,anon=X/postgres,authenticated=X/postgres}",
+      "expected": "{postgres=X/postgres,anon=X/postgres,authenticated=X/postgres}",
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).owner",
+      "actual": "postgres",
+      "expected": "postgres",
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).anon",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).authenticated",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_detail_commercial(uuid).service_role",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "helper.absent",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "require_user.actual_body_md5",
+      "actual": "03b48aa32e343e8f52465e4e66a10e4f",
+      "expected": "03b48aa32e343e8f52465e4e66a10e4f",
+      "pass": true
+    },
+    {
+      "name": "require_user.provolatile",
+      "actual": "v",
+      "expected": "v",
+      "pass": true
+    },
+    {
+      "name": "require_user.proconfig",
+      "actual": [
+        "search_path=pg_catalog"
+      ],
+      "expected": [
+        "search_path=pg_catalog"
+      ],
+      "pass": true
+    },
+    {
+      "name": "require_user.prosecdef",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "require_user.owner",
+      "actual": "postgres",
+      "expected": "postgres",
+      "pass": true
+    },
+    {
+      "name": "three_parts.rows",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "three_parts.code",
+      "actual": "three_parts",
+      "expected": "three_parts",
+      "pass": true
+    },
+    {
+      "name": "three_parts.active",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "three_parts.down_payment_pct",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "name": "three_parts.installments",
+      "actual": 3,
+      "expected": 3,
+      "pass": true
+    },
+    {
+      "name": "three_parts.interval_days",
+      "actual": 15,
+      "expected": 15,
+      "pass": true
+    },
+    {
+      "name": "three_parts.surcharge_pct",
+      "actual": 0,
+      "expected": 0,
+      "pass": true
+    },
+    {
+      "name": "three_parts.min_order_usd",
+      "actual": 60,
+      "expected": 60,
+      "pass": true
+    },
+    {
+      "name": "three_parts.allowed_flows_set",
+      "actual": [
+        "import_order",
+        "local_stock"
+      ],
+      "expected": [
+        "import_order",
+        "local_stock"
+      ],
+      "pass": true
+    },
+    {
+      "name": "checkout_private.owner",
+      "actual": "postgres",
+      "expected": "postgres",
+      "pass": true
+    },
+    {
+      "name": "checkout_private.anon_usage",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.anon_create",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.authenticated_usage",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.authenticated_create",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.service_role_usage",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.service_role_create",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.acl",
+      "actual": "{postgres=UC/postgres}",
+      "expected": "{postgres=UC/postgres}",
+      "pass": true
+    },
+    {
+      "name": "custom_default_acls.private_or_global",
+      "actual": [],
+      "expected": [],
+      "pass": true
+    },
+    {
+      "name": "relations.inspected_count",
+      "actual": 17,
+      "expected": 17,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.cart_intent_journal.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.cart_intent_journal.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.cart_intent_journal.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.cart_intent_journal.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "checkout_private.cart_intent_journal.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "checkout_private.cart_intent_journal.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON checkout_private.cart_intent_journal FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON checkout_private.cart_intent_journal FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.addresses.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.addresses.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.addresses.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.addresses.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.addresses.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.addresses.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.addresses FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.addresses FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.cart_items.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.cart_items.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.cart_items.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.cart_items.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.cart_items.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.cart_items.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.cart_items FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.cart_items FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.fulfillments.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.fulfillments.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.fulfillments.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.fulfillments.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.fulfillments.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.fulfillments.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.fulfillments FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.fulfillments FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.installment_plans.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.installment_plans.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.installment_plans.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.installment_plans.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.installment_plans.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.installment_plans.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.installment_plans FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.installment_plans FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.ledger_entries.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.ledger_entries.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.ledger_entries.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.ledger_entries.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.ledger_entries.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.ledger_entries.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.ledger_entries FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.ledger_entries FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.order_items.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.order_items.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.order_items.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.order_items.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.order_items.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.order_items.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.order_items FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.order_items FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.orders.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.orders.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.orders.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.orders.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.orders.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.orders.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.orders FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.orders FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.payment_obligations.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.payment_obligations.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.payment_obligations.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.payment_obligations.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.payment_obligations.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.payment_obligations.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payment_obligations FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payment_obligations FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.payment_quotes.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.payment_quotes.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.payment_quotes.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.payment_quotes.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.payment_quotes.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.payment_quotes.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payment_quotes FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payment_quotes FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.payments.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.payments.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.payments.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.payments.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.payments.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.payments.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payments FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payments FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.product_images.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_images.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_images.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.product_images.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.product_images.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.product_images.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_images FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_images FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.product_variant_images.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_variant_images.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_variant_images.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.product_variant_images.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.product_variant_images.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.product_variant_images.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_variant_images FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_variant_images FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.product_variants.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_variants.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.product_variants.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.product_variants.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.product_variants.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.product_variants.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_variants FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_variants FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.products.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.products.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.products.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.products.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.products.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.products.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.products FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.products FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.refunds.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.refunds.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.refunds.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.refunds.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.refunds.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.refunds.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.refunds FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.refunds FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "public.stores.present",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.stores.rls",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "public.stores.forced_rls",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "public.stores.closure_policy_count",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "public.stores.closure_policy",
+      "actual": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "expected": {
+        "name": "account_open_only",
+        "roles": [
+          "authenticated"
+        ],
+        "using": "( SELECT account_private.session_open() AS session_open)",
+        "command": "*",
+        "permissive": false,
+        "with_check": "( SELECT account_private.session_open() AS session_open)"
+      },
+      "pass": true
+    },
+    {
+      "name": "public.stores.closure_trigger",
+      "actual": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.stores FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "expected": [
+        {
+          "name": "account_00_open",
+          "enabled": "O",
+          "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.stores FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "plans_read.policy",
+      "actual": {
+        "name": "plans_read",
+        "roles": [
+          "PUBLIC"
+        ],
+        "using": "(active OR is_admin())",
+        "command": "r",
+        "permissive": true,
+        "with_check": null
+      },
+      "expected": {
+        "name": "plans_read",
+        "roles": [
+          "PUBLIC"
+        ],
+        "using": "(active OR is_admin())",
+        "command": "r",
+        "permissive": true,
+        "with_check": null
+      },
+      "pass": true
+    }
+  ],
+  "observationAttribution": "Hosted query performed once by coordinator through official dashboard; this review only reads the saved receipt. No remote query repeated.",
+  "limits": [
+    "17 selected relations, not a global closure re-audit",
+    "Function definitions of closure helpers and reviewed wrappers were not returned; their body hashes and attributes were returned",
+    "Two captured definition strings do not preserve the exact bytes corresponding to server body MD5 fields; never use them as DDL or rollback backup",
+    "No business RPC, purchase, payment, native client or physical device tested",
+    "State is observed at receipt time, not a lock on future schema changes",
+    "SQL context does not prove project ref; dashboard evidence supplies that binding"
+  ],
+  "activation": "Exact migration may be prepared for a separately authorized activation; it remains unapplied.",
+  "definitionCaptureAssessment": [
+    {
+      "signature": "public._build_checkout(uuid,uuid,jsonb,text)",
+      "serverReportedBodyMd5": "2052c218ca383e8366fd8bf85b27a833",
+      "capturedDefinitionBodyMd5": "1cfb965d8ca6e4020fb87d44654aa8a1",
+      "bytesMatch": false,
+      "usableAsDdlOrRollback": false
+    },
+    {
+      "signature": "public.product_detail_commercial(uuid)",
+      "serverReportedBodyMd5": "62fee35a611d6593055bad973f016d6b",
+      "capturedDefinitionBodyMd5": "f4966e00121522a71fd369f6d459e39e",
+      "bytesMatch": false,
+      "usableAsDdlOrRollback": false
+    }
+  ]
+}

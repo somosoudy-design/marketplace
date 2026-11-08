@@ -1,0 +1,126 @@
+{
+  "source": "1e8938ad1beedab31514bc52512d4f78fe7ddfa9",
+  "migrationVersion": "20261107203116",
+  "migrationFile": "supabase/migrations/20261107203116_mayami_deferred_three_payments.sql",
+  "migrationSha256": "5f929adbcc1ccc5063599ce88bd54ce101f2749d2df617d8dea5b559ceb0d653",
+  "sqlFile": "PRECHECK_READONLY.sql",
+  "sqlSha256": "e1b4ef64f775d7be26a5192fc49c439dc22ab95fd56bf6794ddb3691cdcbd47e",
+  "execution": "NOT EXECUTED; source-only preparation. Root verifies official Marketplace project/account and performs read-only SELECT.",
+  "before": {
+    "migrationCount": 0,
+    "privateHelperPresent": false,
+    "functionBaselinesLocalEvidence": {
+      "public._build_checkout(uuid,uuid,jsonb,text)": {
+        "body": "2052c218ca383e8366fd8bf85b27a833",
+        "securityDefiner": true,
+        "volatility": "s",
+        "config": [
+          "search_path=public"
+        ],
+        "acl": "{postgres=X/postgres,service_role=X/postgres}",
+        "owner": "10"
+      },
+      "public.product_detail_commercial(uuid)": {
+        "body": "62fee35a611d6593055bad973f016d6b",
+        "securityDefiner": false,
+        "volatility": "s",
+        "config": [
+          "search_path=public, pg_temp"
+        ],
+        "acl": "{postgres=X/postgres,anon=X/postgres,authenticated=X/postgres}",
+        "owner": "10"
+      }
+    },
+    "ownerNote": "Local owner OID10 is not a remote assertion; compare pg_get_userbyid name and preserve actual owner.",
+    "plan": {
+      "code": "three_parts",
+      "active": true,
+      "down_payment_pct": 0,
+      "installments": 3,
+      "interval_days": 15,
+      "surcharge_pct": 0,
+      "min_order_usd": 60,
+      "allowed_flows_set": [
+        "local_stock",
+        "import_order"
+      ]
+    }
+  },
+  "afterReviewedBodyMd5": {
+    "public._build_checkout(uuid,uuid,jsonb,text)": "c0cdff602e045c6bc2a976b1ed5f57c7",
+    "public.product_detail_commercial(uuid)": "b8a5d5fc7b0699d66911a19cebecad53",
+    "checkout_private.installment_plan_eligible(public.installment_plans,numeric,public.fulfillment_flow[],boolean)": "e97402dedabb61fef26cc8ee7194c0b4"
+  },
+  "closureCoexistence": {
+    "firstVersion": "20261107213544",
+    "secondVersion": "20261107221337",
+    "bothExpectedInstalledOnceFromPriorVerifiedWork": true,
+    "targetsShouldNotBeRewritten": {
+      "checkout": "No raw auth.uid() in body and no authenticated EXECUTE in reviewed baseline.",
+      "productReader": "SECURITY INVOKER; excluded from the closure DEFINER rewrite."
+    },
+    "requireUserExpectedAfterClosureMd5": "03b48aa32e343e8f52465e4e66a10e4f",
+    "requireUserExpectedAfterClosureVolatility": "v",
+    "requireUserExpectedAfterClosureConfig": [
+      "search_path=pg_catalog"
+    ],
+    "rlsDifferenceExpected": "Closure added account_open_only restrictive authenticated policies and account_00_open statement guards; preserve them.",
+    "missingOrDifferentGuardAction": "STOP. Do not alter expected hashes or replay migration to force acceptance."
+  },
+  "metadataOnly": true,
+  "customerRowsRead": false,
+  "businessFunctionsExecuted": false,
+  "ddlOrDmlIncluded": false,
+  "sourceFilesEdited": false,
+  "independentRemoteVerificationRequired": true,
+  "attributeExpectations": {
+    "public._build_checkout(uuid,uuid,jsonb,text)": {
+      "ownerNameLocalBaseline": "postgres",
+      "securityDefiner": true,
+      "volatility": "s",
+      "config": [
+        "search_path=public"
+      ],
+      "anonExecute": false,
+      "authenticatedExecute": false,
+      "serviceRoleExecute": true
+    },
+    "public.product_detail_commercial(uuid)": {
+      "ownerNameLocalBaseline": "postgres",
+      "securityDefiner": false,
+      "volatility": "s",
+      "config": [
+        "search_path=public, pg_temp"
+      ],
+      "anonExecute": true,
+      "authenticatedExecute": true,
+      "serviceRoleExecute": false
+    },
+    "checkout_private.installment_plan_eligible(public.installment_plans,numeric,public.fulfillment_flow[],boolean)": {
+      "before": "absent",
+      "afterSecurityDefiner": false,
+      "afterVolatility": "i",
+      "afterConfig": [
+        "search_path=public, pg_temp"
+      ],
+      "afterApiExecuteAllFalse": true,
+      "afterOwnerOnlyAcl": true
+    },
+    "checkout_private_schema": {
+      "apiUsageExpectedFalse": true,
+      "apiCreateExpectedFalse": true,
+      "existingOwnerAndAclMustRemainUnchanged": true
+    },
+    "tableRls": {
+      "account_open_only": "Expected existing restrictive authenticated policy where RLS enabled, inherited from closure migration. Preserve its exact expression and roles.",
+      "account_00_open": "Expected existing statement trigger. Preserve its exact definition and enabled state.",
+      "plans_read": "Preserve existing active-or-admin SELECT policy; do not relax RLS for the INVOKER reader."
+    }
+  },
+  "localVerification": {
+    "migrationBlobMatchesPinnedSource": true,
+    "queryExecutionPerformed": false,
+    "sqlParserAvailable": false,
+    "manualReview": "Single metadata SELECT surrounded by BEGIN TRANSACTION READ ONLY / ROLLBACK; pg_catalog inspection only plus three_parts terms. No business RPC execution."
+  }
+}

@@ -1,0 +1,42 @@
+name: Estado de build Android existente
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/native-build-status-request.json']
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Consultar compilación exacta sin crear ni cancelar builds
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFileSync} from 'node:fs';
+          import {graphql} from './tools/eas/recover-apk5.mjs';
+          import {EXPECTED} from './tools/eas/verify-native-apk.mjs';
+          const {commit}=JSON.parse(readFileSync('.github/native-build-status-request.json','utf8'));
+          assert(/^[a-f0-9]{40}$/.test(commit));
+          const query=`query NativeBuildStatus($appId:String!,$filter:BuildFilter) {
+            app { byId(appId:$appId) { id builds(offset:0,limit:5,filter:$filter) {
+              id status platform buildProfile appIdentifier appBuildVersion gitCommitHash isGitWorkingTreeDirty
+              createdAt enqueuedAt workerStartedAt completedAt queuePosition estimatedWaitTimeLeftSeconds
+              runtime { version } updateChannel { name }
+            } } }
+          }`;
+          const data=await graphql(query,{appId:EXPECTED.project,filter:{gitCommitHash:commit,platform:'ANDROID',buildProfile:'preview',appIdentifier:EXPECTED.package}},{token:process.env.EXPO_TOKEN});
+          assert.equal(data.app.byId.id,EXPECTED.project);
+          const builds=data.app.byId.builds;
+          assert.equal(builds.length,1,'Expected one build for this source; do not guess or start another');
+          assert.equal(builds[0].gitCommitHash,commit);
+          console.log('::notice title=Estado real de build Android::'+JSON.stringify(builds[0]));
+          JS

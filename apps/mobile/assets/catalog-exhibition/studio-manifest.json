@@ -1,0 +1,399 @@
+{
+  "version": 1,
+  "date": "2026-10-24",
+  "scope": "private-preview; Android APK5; is_demo required",
+  "sourceCodeBeforeChange": "7025f23",
+  "productCount": 5,
+  "resourceCount": 6,
+  "totalBytes": 426812,
+  "authenticProductPhotographs": false,
+  "officialManufacturerPhotos": false,
+  "backendChanged": false,
+  "review": "Independent reviewer approved all six final resources after concrete identity/connector/framing corrections. Anker final overhead view received a focused final recheck.",
+  "resources": [
+    {
+      "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
+      "catalogTitle": "UGREEN lector SD · USB-A y USB-C",
+      "catalogSlug": "ugreen-cable-usb-c-100w",
+      "originalPath": "demo/ugreen-cable-usb-c-100w-1.webp",
+      "variantId": null,
+      "variantTitle": null,
+      "isDemo": true,
+      "kind": "generated-demo",
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": true,
+      "sourceKind": "generative-studio-derivative-of-cleared-CC-photograph",
+      "disclosure": "Edición generativa de una fotografía autorizada del producto; imagen de exhibición.",
+      "author": "Bejnamin",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "originUrl": "https://commons.wikimedia.org/wiki/File:UGREEN_SD_Card_Reader.jpg",
+      "rights": {
+        "status": "confirmed",
+        "basis": "Existing verified CC source permits adaptations; attribution and ShareAlike retained where applicable",
+        "evidence": "https://commons.wikimedia.org/wiki/File:UGREEN_SD_Card_Reader.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "derivedImageLicense": "CC0"
+      },
+      "sourcePhotos": [
+        {
+          "author": "Bejnamin",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:UGREEN_SD_Card_Reader.jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/UGREEN_SD_Card_Reader.jpg",
+          "sha256": "8ba5db3923bb4df723e9cb5bd36ecd927e2249e3b4371f9c162fc8d856655dd5",
+          "license": "CC0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/22516bf2-7283-45c1-a3a5-2449797a25db-8ba5db3923bb.webp",
+          "sha256": "8ba5db3923bb4df723e9cb5bd36ecd927e2249e3b4371f9c162fc8d856655dd5"
+        }
+      ],
+      "outputPrompt": "Edit the attached licensed product photograph into an exceptionally clean professional e-commerce studio packshot for HAYAZGO. This is the EXACT UGREEN rigid dual USB-A / USB-C aluminium SD card reader shown, not a USB thumb drive or hub. Preserve the original real product's geometry, metallic graphite aluminium body, black end collars, UGREEN wordmark, USB-A plug at one end and USB-C plug at the opposite end, the detached small black cap beside the body and its thin wrist strap. Do not add SD cards or accessories not in the photograph, do not invent ports, do not change the product model or colour. Re-stage it cleanly on seamless warm ivory #F5F4F1; remove the tabletop texture, dirt and amateur flash. Use broad softbox studio lighting with realistic controlled metallic edge highlights, crisp readable branding, balanced blacks, and a subtle physically plausible contact shadow. Product body diagonal from lower-left to upper-right, well separated from the cap; strap arranged tidily without filling the frame. Square 1:1 commercial catalog composition, entire product visible and occupying roughly 72 percent of frame, about 12 percent safe margins, tack-sharp realistic material, no poster text, no badge, no decoration, no vignette, no gradients, no watermark. The output must feel like a premium studio reshoot of this exact unit, not a cut-out pasted on a white rectangle.",
+      "history": [
+        {
+          "prompt": "Edit the attached licensed product photograph into an exceptionally clean professional e-commerce studio packshot for HAYAZGO. This is the EXACT UGREEN rigid dual USB-A / USB-C aluminium SD card reader shown, not a USB thumb drive or hub. Preserve the original real product's geometry, metallic graphite aluminium body, black end collars, UGREEN wordmark, USB-A plug at one end and USB-C plug at the opposite end, the detached small black cap beside the body and its thin wrist strap. Do not add SD cards or accessories not in the photograph, do not invent ports, do not change the product model or colour. Re-stage it cleanly on seamless warm ivory #F5F4F1; remove the tabletop texture, dirt and amateur flash. Use broad softbox studio lighting with realistic controlled metallic edge highlights, crisp readable branding, balanced blacks, and a subtle physically plausible contact shadow. Product body diagonal from lower-left to upper-right, well separated from the cap; strap arranged tidily without filling the frame. Square 1:1 commercial catalog composition, entire product visible and occupying roughly 72 percent of frame, about 12 percent safe margins, tack-sharp realistic material, no poster text, no badge, no decoration, no vignette, no gradients, no watermark. The output must feel like a premium studio reshoot of this exact unit, not a cut-out pasted on a white rectangle.",
+          "sha256": "70603ac77af7b2eeaea0cb12d858f765ae1505fefe0e4ee74c9ce53ea9d78110",
+          "status": "accepted"
+        }
+      ],
+      "sha256": "70603ac77af7b2eeaea0cb12d858f765ae1505fefe0e4ee74c9ce53ea9d78110",
+      "width": 1024,
+      "height": 1024,
+      "optimizedFile": "22516bf2-7283-45c1-a3a5-2449797a25db-studio-b43c56af1ab7.webp",
+      "optimizedSha256": "b43c56af1ab7e462f6c82ea69bbc630763ace1d721a53858e7208bcc6a914e9f",
+      "optimizedBytes": 77380,
+      "review": "APPROVED independent visual review, exact source reference, synthetic studio derivative only"
+    },
+    {
+      "productId": "6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "catalogTitle": "UGREEN cargador de carro 30 W · 25845",
+      "catalogSlug": "ugreen-nexode-30w",
+      "originalPath": "demo/ugreen-nexode-30w-1.webp",
+      "variantId": null,
+      "variantTitle": null,
+      "isDemo": true,
+      "kind": "generated-demo",
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": true,
+      "sourceKind": "generative-studio-derivative-of-cleared-CC-photograph",
+      "disclosure": "Edición generativa de una fotografía autorizada del producto; imagen de exhibición.",
+      "author": "Qurren",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "originUrl": "https://commons.wikimedia.org/wiki/File:Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg",
+      "rights": {
+        "status": "confirmed",
+        "basis": "Existing verified CC source permits adaptations; attribution and ShareAlike retained where applicable",
+        "evidence": "https://commons.wikimedia.org/wiki/File:Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "derivedImageLicense": "CC BY-SA 4.0"
+      },
+      "sourcePhotos": [
+        {
+          "author": "Qurren",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/9/92/Ugreen_car_charger_USB-C_USB-A_30W_25845.jpg",
+          "sha256": "42b760ebef0001af819f1f3f1d8c15f6201b389d1619f9c8786c34073c76cac9",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/6209f8ff-aeab-40e3-9168-9528a30ca55d-42b760ebef00.webp",
+          "sha256": "42b760ebef0001af819f1f3f1d8c15f6201b389d1619f9c8786c34073c76cac9"
+        }
+      ],
+      "outputPrompt": "Fidelity correction of FIRST studio image, using SECOND original licensed photograph. Keep the same black UGREEN25845 charger, geometry, pose, material, ivory studio background and exactly two portsC aboveA. Restore the small narrow dark indicator window/mark at the top of the port face ABOVE the USB-C lettering, clearly visible in reference2. It is a tiny unlit dark slot, not a bright light, not a third connector. No other redesign. Keep the entire object comfortably in frame with clean safe margins, high-quality studio illumination and contact shadow. Do not change the UGREENwordmark or port layout. No overlay text, no additional accessories, square1:1.",
+      "history": [
+        {
+          "prompt": "Edit this licensed photo of the EXACT black UGREEN 25845 30W car charger into a premium professional e-commerce studio packshot. Preserve its real short tapered cylindrical body, two silver side contacts, metal bottom contact, rounded rectangular face, one USB-C port ABOVE one USB-A port, UGREEN wordmark and real geometry. No additional ports, no different model, no imaginary controls, no glowing LEDs, no cables or car interior. Product lying diagonally at a three-quarter angle with its two-port face clearly visible at lower-right and tip toward upper-left, entire charger in frame. Re-stage on seamless warm ivory #F5F4F1, broad softbox studio lighting, clean deep matte black surface with restrained precise highlights so silhouette is legible, realistic metal reflections, highly sharp port edges. Subtle real contact shadow only. Square 1:1 commercial catalog frame, product occupies about 72 percent with safe margins, no graphic backgrounds, no marketing words, no watermark. Clean professional commercial retouch and studio relighting, not a detached cutout.",
+          "sha256": "63197523be887b99b6b14b463c6ed903f1c4f97fe1f9f70f9239c834071b3278",
+          "status": "superseded; not distributed"
+        },
+        {
+          "prompt": "Fidelity correction of FIRST studio image, using SECOND original licensed photograph. Keep the same black UGREEN25845 charger, geometry, pose, material, ivory studio background and exactly two portsC aboveA. Restore the small narrow dark indicator window/mark at the top of the port face ABOVE the USB-C lettering, clearly visible in reference2. It is a tiny unlit dark slot, not a bright light, not a third connector. No other redesign. Keep the entire object comfortably in frame with clean safe margins, high-quality studio illumination and contact shadow. Do not change the UGREENwordmark or port layout. No overlay text, no additional accessories, square1:1.",
+          "sha256": "d148079f7f156f8180c43e5b737b0dbc49e304ab84ceb80b3c99c182ef8197f5",
+          "status": "accepted"
+        }
+      ],
+      "sha256": "d148079f7f156f8180c43e5b737b0dbc49e304ab84ceb80b3c99c182ef8197f5",
+      "width": 1024,
+      "height": 1024,
+      "optimizedFile": "6209f8ff-aeab-40e3-9168-9528a30ca55d-studio-82659fe4d9a2.webp",
+      "optimizedSha256": "82659fe4d9a2050bf3276ee1a3031cb78ffe22c8b4a54da756ee77a3e5285c3e",
+      "optimizedBytes": 37994,
+      "review": "APPROVED independent visual review, exact source reference, synthetic studio derivative only"
+    },
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "catalogTitle": "Samsung cargador USB-C 45 W · EP-T4510",
+      "catalogSlug": "ugreen-nexode-65w",
+      "originalPath": "demo/ugreen-nexode-65w-1.webp",
+      "variantId": "930576a5-751f-4f67-904e-19f21b2e969b",
+      "variantTitle": "Con cable · Negro",
+      "isDemo": true,
+      "kind": "generated-demo",
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": true,
+      "sourceKind": "generative-studio-derivative-of-cleared-CC-photograph",
+      "disclosure": "Edición generativa de una fotografía autorizada del producto; imagen de exhibición.",
+      "author": "Dinkun Chen",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+      "rights": {
+        "status": "confirmed",
+        "basis": "Existing verified CC source permits adaptations; attribution and ShareAlike retained where applicable",
+        "evidence": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "derivedImageLicense": "CC BY-SA 4.0"
+      },
+      "sourcePhotos": [
+        {
+          "author": "Dinkun Chen",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/45/SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+          "sha256": "c3b0a254f1c943ef260fe9bc1f1861f667f9bc89d629560ee674fcff8ace5616",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        },
+        {
+          "author": "Dinkun Chen",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_(4).jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%284%29.jpg",
+          "sha256": "c4883d905bde48ce449d819a41601e95df0eb7d47b0df98f659a4d51ba0de9a8",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.webp",
+          "sha256": "c3b0a254f1c943ef260fe9bc1f1861f667f9bc89d629560ee674fcff8ace5616"
+        },
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c4883d905bde.webp",
+          "sha256": "c4883d905bde48ce449d819a41601e95df0eb7d47b0df98f659a4d51ba0de9a8"
+        }
+      ],
+      "outputPrompt": "Keep the exact Samsung charger + USB-C cable studio composition in this image including the corrected clearly horizontal USB-C port. CHANGE ONLY THE FRAMING: zoom the camera out by 30 PERCENT, making the COMPLETE combined charger-and-cable subject SMALLER on the SAME square ivory seamless canvas. There must be a clearly visible broad band of EMPTY IVORY SPACE between the cable coil's right edge and the picture edge, at least150pixels in a1254square output. The current image has almost no right margin: correct this. Center the entire kit within a square bounding box about70percent of canvas width/height. All geometry, matte-black materials, cable ends, softbox highlights and the single horizontal USB-C socket remain unchanged. The whole kit and realistic soft contact shadows fit with at least12percent margins on every side. No added frame/box, no words, no decoration or watermark.",
+      "history": [
+        {
+          "prompt": "Edit this licensed photograph into an immaculate premium e-commerce studio packshot of the exact BLACK Samsung EP-T4510 charger and its black USB-C to USB-C cable shown. Preserve the original charger geometry, square rounded body, black Super Fast Charging lightning mark, its actual plug type, and both identical USB-C cable plugs. Do NOT redesign the charger, do NOT invent extra ports, do NOT replace with a different GaN model, do NOT add packaging, power figures or accessories. Re-stage this same unit cleanly with charger dominant at a three-quarter angle and the cable arranged in a single tidy loose coil beside it, plugs visible. Remove the dark wooden table, amateur flash, dust and sprawling cable arrangement; light it as premium product photography with large softbox, controlled edge highlights on matte black, sharp actual branding, realistic contact shadow. Seamless warm ivory #F5F4F1 background matches HAYAZGO private catalogue. Square 1:1 commercial composition, full kit occupies about 75 percent with clean safe margins, readable silhouette, realistic materials, no gradients, no display platforms, no decorative graphics, no marketing text, no watermark. Aim for a professionally photographed exact product, not the original tabletop snapshot pasted onto white.",
+          "sha256": "db165e14705379d77d93de03d2bbf600c4aaaaa4955e6a2d3c6fd2bc2af6158b",
+          "status": "superseded; not distributed"
+        },
+        {
+          "prompt": "Correct the FIRST attached generated studio composition using the SECOND image as the authoritative exact close-up of the real charger's front. This is the SAME licensed black Samsung EP-T4510 45W charger, not a new design. Critical: replace the little round/vertical hole in the generated charger face with the real WIDE HORIZONTAL USB-C receptacle from image2: a clearly recognizable horizontal rounded rectangular / pill opening with black plastic tongue, metal inner edge and correct proportions. Keep it centered on the face, and aligned horizontally across the face's width, not vertical, not a barrel jack, not Micro-USB. Preserve black body, lightning/Super Fast Charging mark, flat plug prongs and the black USB-C to USB-C cable from the original kit reference image3. Redo framing to leave at least 12 percent safe margin on EVERY side; the right cable coil must not almost touch the frame. Product and tidy cable form one balanced studio packshot on seamless warm ivory #F5F4F1, broad softbox lighting, crisp black materials, gentle real contact shadows. Square1:1. No hands, no wood, no accessories beyond original charger+cable, no overlay words or watermark. This is a generative studio retouch with geometry fidelity to the licensed reference.",
+          "sha256": "433c0d446278371ac6781929244deff05a0cb7b678bd82726ca720afcbe2e283",
+          "status": "superseded; not distributed"
+        },
+        {
+          "prompt": "Keep the exact Samsung charger + USB-C cable studio composition in this image including the corrected clearly horizontal USB-C port. CHANGE ONLY THE FRAMING: zoom the camera out by 30 PERCENT, making the COMPLETE combined charger-and-cable subject SMALLER on the SAME square ivory seamless canvas. There must be a clearly visible broad band of EMPTY IVORY SPACE between the cable coil's right edge and the picture edge, at least150pixels in a1254square output. The current image has almost no right margin: correct this. Center the entire kit within a square bounding box about70percent of canvas width/height. All geometry, matte-black materials, cable ends, softbox highlights and the single horizontal USB-C socket remain unchanged. The whole kit and realistic soft contact shadows fit with at least12percent margins on every side. No added frame/box, no words, no decoration or watermark.",
+          "sha256": "36283617ee3ae803b8a3b7f0161497a60f046fdc32d2fa19eae3ec4515a24728",
+          "status": "accepted"
+        }
+      ],
+      "sha256": "36283617ee3ae803b8a3b7f0161497a60f046fdc32d2fa19eae3ec4515a24728",
+      "width": 1024,
+      "height": 1024,
+      "optimizedFile": "e7a91cd8-d3a2-4436-986c-71d1d95da813-studio-8c61cdefcfe4.webp",
+      "optimizedSha256": "8c61cdefcfe4d3aedd2ee2d8954cb8c2c42022be4290c773e71009cded4e8630",
+      "optimizedBytes": 37780,
+      "review": "APPROVED independent visual review, exact source reference, synthetic studio derivative only"
+    },
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "catalogTitle": "Samsung cargador USB-C 45 W · EP-T4510",
+      "catalogSlug": "ugreen-nexode-65w",
+      "originalPath": "demo/ugreen-nexode-65w-1.webp",
+      "variantId": "03c25cc2-2186-466f-a3a5-0f0201dfad81",
+      "variantTitle": "Solo cargador · Negro",
+      "isDemo": true,
+      "kind": "generated-demo",
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": true,
+      "sourceKind": "generative-studio-derivative-of-cleared-CC-photograph",
+      "disclosure": "Edición generativa de una fotografía autorizada del producto; imagen de exhibición.",
+      "author": "Dinkun Chen",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+      "rights": {
+        "status": "confirmed",
+        "basis": "Existing verified CC source permits adaptations; attribution and ShareAlike retained where applicable",
+        "evidence": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "derivedImageLicense": "CC BY-SA 4.0"
+      },
+      "sourcePhotos": [
+        {
+          "author": "Dinkun Chen",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/45/SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%26_USB_C_TO_C_CABLE.jpg",
+          "sha256": "c3b0a254f1c943ef260fe9bc1f1861f667f9bc89d629560ee674fcff8ace5616",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        },
+        {
+          "author": "Dinkun Chen",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_(4).jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/SAMSUNG_EP-T4510_45W_POWER_ADAPER_BLACK_%284%29.jpg",
+          "sha256": "c4883d905bde48ce449d819a41601e95df0eb7d47b0df98f659a4d51ba0de9a8",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.webp",
+          "sha256": "c3b0a254f1c943ef260fe9bc1f1861f667f9bc89d629560ee674fcff8ace5616"
+        },
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c4883d905bde.webp",
+          "sha256": "c4883d905bde48ce449d819a41601e95df0eb7d47b0df98f659a4d51ba0de9a8"
+        }
+      ],
+      "outputPrompt": "Create a professional studio edit of ONLY the black Samsung EP-T4510 charger in the FIRST licensed reference, using the SECOND licensed macro reference to preserve its exact port face. Remove the cable entirely for the real 'Solo cargador · Negro' variant. No hand, no cable, no adapter different from the reference, no extra accessories. Preserve the same black squared rounded body, subtle Super Fast Charging lightning mark and real flat plug style. Photograph in a three-quarter view so the USB-C face is clearly legible: exactly ONE WIDE HORIZONTAL USB-C pill-shaped receptacle, as image2 shows, with correct inner tongue/metal border, not a small round hole or vertical slot. Warm seamless ivory #F5F4F1 background, sophisticated softbox lighting, clear restrained matte-black edge highlights, realistic materials, light natural contact shadow. Square1:1 frame, entire charger centered with about15percent safe margins, no marketing graphics, no pedestal, no watermark, no invented power labels. Retain actual model geometry, clean commercial photographic finish.",
+      "history": [
+        {
+          "prompt": "Create a professional studio edit of ONLY the black Samsung EP-T4510 charger in the FIRST licensed reference, using the SECOND licensed macro reference to preserve its exact port face. Remove the cable entirely for the real 'Solo cargador · Negro' variant. No hand, no cable, no adapter different from the reference, no extra accessories. Preserve the same black squared rounded body, subtle Super Fast Charging lightning mark and real flat plug style. Photograph in a three-quarter view so the USB-C face is clearly legible: exactly ONE WIDE HORIZONTAL USB-C pill-shaped receptacle, as image2 shows, with correct inner tongue/metal border, not a small round hole or vertical slot. Warm seamless ivory #F5F4F1 background, sophisticated softbox lighting, clear restrained matte-black edge highlights, realistic materials, light natural contact shadow. Square1:1 frame, entire charger centered with about15percent safe margins, no marketing graphics, no pedestal, no watermark, no invented power labels. Retain actual model geometry, clean commercial photographic finish.",
+          "sha256": "7fde287df7d57034de2d1fd1e866f2a0d25f6c7e406a24ec0182c0f878ed3344",
+          "status": "accepted"
+        }
+      ],
+      "sha256": "7fde287df7d57034de2d1fd1e866f2a0d25f6c7e406a24ec0182c0f878ed3344",
+      "width": 1024,
+      "height": 1024,
+      "optimizedFile": "e7a91cd8-d3a2-4436-986c-71d1d95da813-studio-576d875fea45.webp",
+      "optimizedSha256": "576d875fea45592048b1cdabea5cf019c69b569418bd39a9d3143641a620a1b2",
+      "optimizedBytes": 127532,
+      "review": "APPROVED independent visual review, exact source reference, synthetic studio derivative only"
+    },
+    {
+      "productId": "01a43334-e485-41cc-a12a-c049e933665d",
+      "catalogTitle": "Anker PowerCore 10.000 mAh",
+      "catalogSlug": "ugreen-power-bank-20000",
+      "originalPath": "demo/ugreen-power-bank-20000-1.webp",
+      "variantId": null,
+      "variantTitle": null,
+      "isDemo": true,
+      "kind": "generated-demo",
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": true,
+      "sourceKind": "generative-studio-derivative-of-cleared-CC-photograph",
+      "disclosure": "Edición generativa de una fotografía autorizada del producto; imagen de exhibición.",
+      "author": "Saucy",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "originUrl": "https://commons.wikimedia.org/wiki/File:Anker_power_bank_and_cable.jpg",
+      "rights": {
+        "status": "confirmed",
+        "basis": "Existing verified CC source permits adaptations; attribution and ShareAlike retained where applicable",
+        "evidence": "https://commons.wikimedia.org/wiki/File:Anker_power_bank_and_cable.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "derivedImageLicense": "CC BY 4.0"
+      },
+      "sourcePhotos": [
+        {
+          "author": "Saucy",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:Anker_power_bank_and_cable.jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Anker_power_bank_and_cable.jpg",
+          "sha256": "fa4a0d962e8c5af0d65005664cce2cc0dcfb21b84d6b97dd5512a98f6099829b",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/01a43334-e485-41cc-a12a-c049e933665d-fa4a0d962e8c.webp",
+          "sha256": "fa4a0d962e8c5af0d65005664cce2cc0dcfb21b84d6b97dd5512a98f6099829b"
+        }
+      ],
+      "outputPrompt": "Use the FIRST licensed real ANKER PowerCore photograph and the SECOND previous studio edit as references for a final conservative packshot. Preserve the exact matte-black rounded rectangular Anker PowerCore 10,000mAh top body, embossed ANKER logo near one end and four small indicator dots. CHANGE THE CAMERA TO A STRICT TOP-DOWN OVERHEAD VIEW so ONLY THE TOP FACE and a tiny silhouette edge are visible. The entire SHORT CONNECTOR END PANEL MUST BE HIDDEN by that top-down viewpoint: it contains USB-A and a charging input in the real product and must not be drawn with a missing port or an invented connector. Do NOT show a smooth fake end panel, do NOT draw any visible ports at all in this overhead photo. Remove the white cable as photographic clutter. The top body lies at a slight diagonal on seamless warm ivory #F5F4F1, entire body with broad safe margins around15percent. Premium softbox lighting, crisp subtle matte texture, rounded original silhouette and gentle realistic contact shadow showing a real solid object. Square1:1, no accessories, no poster words, no screen, no platform, no watermark. This is an explicitly disclosed generative studio edit of this exact source product, not a new Anker design.",
+      "history": [
+        {
+          "prompt": "Edit this licensed photograph into premium commercial studio product photography of the exact ANKER PowerCore black 10,000 mAh power bank shown. Preserve the real rectangular smooth matte black rounded body, the subtle embossed ANKER logo at upper-left of its top face, the same visible side-port geometry and the white short cable as photographed; do not invent USB-C, screens, additional ports, specifications or a newer Anker model. Re-stage on seamless warm ivory #F5F4F1 background. Keep the recognizable three-quarter top view, power bank body fully in frame as the protagonist, cable arranged neatly alongside without hiding its body. Remove the dirty tabletop, scratches in background, harsh amateur reflections. Use broad softbox lighting with defined but soft edge highlights, crisp high-quality material detail and a subtle real contact shadow so the black silhouette is legible. Square 1:1 marketplace catalogue packshot, roughly 72 percent subject occupancy with safe margins, no packaging, no graphic labels, no decoration, no watermark, no vignette, no claims about included accessories. Preserve the actual model and colour rather than imagining another product.",
+          "sha256": "35423b03978c14a6c56a735ba0ddc1dd3834451dffac3987f1a710ce38c47dbd",
+          "status": "superseded; not distributed"
+        },
+        {
+          "prompt": "Create a faithful premium studio edit of the exact black ANKER PowerCore 10,000mAh body in this licensed reference. Remove the WHITE CABLE COMPLETELY from the composition, showing ONLY the power-bank body with no accessories, so no included cable is implied. Preserve its rounded rectangular matte black casing, subtle embossed ANKERwordmark, real side-connector shapes and placement as visible in the reference, and actual colour. Do not add a USB-C socket, a display, buttons or a newer model; do not invent unseen technical details. Use essentially the same three-quarter top view and complete body silhouette as the reference. Place the ENTIRE body centered on a seamless warm ivory #F5F4F1 background, occupying only around70percent of the square frame; all edges at least12percent away from the image borders. High-end commercial studio softbox lighting, restrained rim highlights on black surfaces, crisp realistic fine matte texture, soft physically plausible contact shadow. No tabletop dirt, no cables, no props, no graphic text or watermark, no platform. Elegant restrained catalogue product image, exact recognizable unit from reference, square1:1.",
+          "sha256": "3476f6f26ccb4caedc8873dd1c0c95850d17a0221d175be22d8a36e6e0233ef9",
+          "status": "superseded; not distributed"
+        },
+        {
+          "prompt": "Use the FIRST licensed real ANKER PowerCore photograph and the SECOND previous studio edit as references for a final conservative packshot. Preserve the exact matte-black rounded rectangular Anker PowerCore 10,000mAh top body, embossed ANKER logo near one end and four small indicator dots. CHANGE THE CAMERA TO A STRICT TOP-DOWN OVERHEAD VIEW so ONLY THE TOP FACE and a tiny silhouette edge are visible. The entire SHORT CONNECTOR END PANEL MUST BE HIDDEN by that top-down viewpoint: it contains USB-A and a charging input in the real product and must not be drawn with a missing port or an invented connector. Do NOT show a smooth fake end panel, do NOT draw any visible ports at all in this overhead photo. Remove the white cable as photographic clutter. The top body lies at a slight diagonal on seamless warm ivory #F5F4F1, entire body with broad safe margins around15percent. Premium softbox lighting, crisp subtle matte texture, rounded original silhouette and gentle realistic contact shadow showing a real solid object. Square1:1, no accessories, no poster words, no screen, no platform, no watermark. This is an explicitly disclosed generative studio edit of this exact source product, not a new Anker design.",
+          "sha256": "4ca9549ebfbc55c952d4f720de8d0f98e7f18ac5c2a7d358534b5526706d90cd",
+          "status": "accepted"
+        }
+      ],
+      "sha256": "4ca9549ebfbc55c952d4f720de8d0f98e7f18ac5c2a7d358534b5526706d90cd",
+      "width": 1024,
+      "height": 1024,
+      "optimizedFile": "01a43334-e485-41cc-a12a-c049e933665d-studio-260faf99c42c.webp",
+      "optimizedSha256": "260faf99c42c1a87181c51915c0b7f958a2e17ed435a11a9d11a693b5425d000",
+      "optimizedBytes": 77206,
+      "review": "APPROVED independent visual review, exact source reference, synthetic studio derivative only"
+    },
+    {
+      "productId": "910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "catalogTitle": "StarTech.com hub USB 3.0 de 7 puertos · ST7300U3M",
+      "catalogSlug": "ugreen-revodok-hub-6-en-1",
+      "originalPath": "demo/ugreen-revodok-hub-6-en-1-1.webp",
+      "variantId": null,
+      "variantTitle": null,
+      "isDemo": true,
+      "kind": "generated-demo",
+      "authenticProductPhotograph": false,
+      "thirdPartyPhotoUsed": true,
+      "sourceKind": "generative-studio-derivative-of-cleared-CC-photograph",
+      "disclosure": "Edición generativa de una fotografía autorizada del producto; imagen de exhibición.",
+      "author": "OnBeyondZebrax",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "originUrl": "https://commons.wikimedia.org/wiki/File:Powered_USB_hub_with_7_ports.jpg",
+      "rights": {
+        "status": "confirmed",
+        "basis": "Existing verified CC source permits adaptations; attribution and ShareAlike retained where applicable",
+        "evidence": "https://commons.wikimedia.org/wiki/File:Powered_USB_hub_with_7_ports.jpg — Own work y licencia publicada por el autor, metadata Wikimedia Commons verificada el2026-10-14",
+        "derivedImageLicense": "CC BY-SA 4.0"
+      },
+      "sourcePhotos": [
+        {
+          "author": "OnBeyondZebrax",
+          "originUrl": "https://commons.wikimedia.org/wiki/File:Powered_USB_hub_with_7_ports.jpg",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/Powered_USB_hub_with_7_ports.jpg",
+          "sha256": "eceb731d809144d12890a8115d2f74a8ffecabf591517a963331bec24bf60ccb",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+        }
+      ],
+      "sourceFiles": [
+        {
+          "file": "apps/mobile/assets/catalog-exhibition/910cdfb7-9a3e-48e5-bd40-99269aea332a-eceb731d8091.webp",
+          "sha256": "eceb731d809144d12890a8115d2f74a8ffecabf591517a963331bec24bf60ccb"
+        }
+      ],
+      "outputPrompt": "Faithful studio edit of the actual StarTech.com ST7300U3M hub in the licensed reference. Show a STRICTLY STRAIGHT-ON FRONTAL ELEVATION of the same long black front panel, with NO VISIBLE END/SIDE CONNECTOR FACE, so the obscured power/upstream connectors cannot be invented or misrepresented. Preserve EXACTLY SEVEN blue USB-A sockets in the same straight row, seven small pale rectangular indicators below those sockets, eight small FLAT red/orange circular indicator windows along the lower edge (one power +7ports), original port numbering1–7, StarTech.com wordmark at the left. Keep indicators FLAT and UNLIT, not raised pushbuttons. Do not show any synthesized DC-only side and do not imply the upstreamUSB-B is absent; end faces are not visible in this front-facing camera angle. Remove the paper manual, adapter and ALL cables only as photographic clutter. Entire same hub front fully visible, precise black metal body and restrained neutral highlights. Seamless warm ivory #F5F4F1 studio background with subtle contact shadow. Square1:1 frame with balanced generous margins, hub about75percent of frame width, no additional ports/cards/accessories/graphics, no watermark. Professional commercial photographic finish while preserving functional identity.",
+      "history": [
+        {
+          "prompt": "Transform this licensed reference photograph into a precise professional e-commerce studio packshot of ONLY the exact black StarTech.com ST7300U3M 7-port powered USB 3.0 hub shown. Preserve its long slim rectangular metal body, EXACTLY SEVEN blue USB-A ports in a straight row with corresponding small round red status indicators, the StarTech.com wordmark, and the original numbers 1 through 7 if they can be reproduced cleanly. Do not create an eighth port, USB-C, card slots or switches; do not change model or connector layout. The paper manual and tangled cables are background clutter and must be removed; no power adapter or accessories in this packshot. Re-stage the hub at a subtle three-quarter angle so all seven blue sockets are visible and countable; full device well inside the frame. Seamless warm ivory #F5F4F1 background, sophisticated broad softbox lighting, restrained highlights on black finish, high sharpness and realistic subtle contact shadow. Square 1:1 commercial product frame, hub occupies around 75 percent of the width, balanced safe margins, no pedestal, no graphics, no poster words, no gradients, no watermark. This must retain the exact real pictured product, not invent a similar hub.",
+          "sha256": "143d58f8b408859e32fe2da1600a68249ef998ff0a9520e5101207a4bd424209",
+          "status": "superseded; not distributed"
+        },
+        {
+          "prompt": "Faithful studio edit of the actual StarTech.com ST7300U3M hub in the licensed reference. Show a STRICTLY STRAIGHT-ON FRONTAL ELEVATION of the same long black front panel, with NO VISIBLE END/SIDE CONNECTOR FACE, so the obscured power/upstream connectors cannot be invented or misrepresented. Preserve EXACTLY SEVEN blue USB-A sockets in the same straight row, seven small pale rectangular indicators below those sockets, eight small FLAT red/orange circular indicator windows along the lower edge (one power +7ports), original port numbering1–7, StarTech.com wordmark at the left. Keep indicators FLAT and UNLIT, not raised pushbuttons. Do not show any synthesized DC-only side and do not imply the upstreamUSB-B is absent; end faces are not visible in this front-facing camera angle. Remove the paper manual, adapter and ALL cables only as photographic clutter. Entire same hub front fully visible, precise black metal body and restrained neutral highlights. Seamless warm ivory #F5F4F1 studio background with subtle contact shadow. Square1:1 frame with balanced generous margins, hub about75percent of frame width, no additional ports/cards/accessories/graphics, no watermark. Professional commercial photographic finish while preserving functional identity.",
+          "sha256": "c0cbf4dcaa5db65b823ebcefc020c4303971a3ca6af69792e3b52a4133243972",
+          "status": "accepted"
+        }
+      ],
+      "sha256": "c0cbf4dcaa5db65b823ebcefc020c4303971a3ca6af69792e3b52a4133243972",
+      "width": 1024,
+      "height": 1024,
+      "optimizedFile": "910cdfb7-9a3e-48e5-bd40-99269aea332a-studio-dc7596241ac5.webp",
+      "optimizedSha256": "dc7596241ac536337fbecc585967f8fdac36ca1922fb03d8c9a54772f1a3751e",
+      "optimizedBytes": 68920,
+      "review": "APPROVED independent visual review, exact source reference, synthetic studio derivative only"
+    }
+  ]
+}

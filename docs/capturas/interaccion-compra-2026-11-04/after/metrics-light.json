@@ -1,0 +1,98 @@
+{
+  "cart-412": {
+    "height": 814,
+    "content": 814,
+    "lines": [
+      {
+        "x": 17,
+        "y": 134,
+        "width": 378,
+        "height": 150
+      },
+      {
+        "x": 17,
+        "y": 285,
+        "width": 378,
+        "height": 150
+      },
+      {
+        "x": 17,
+        "y": 485,
+        "width": 378,
+        "height": 150
+      }
+    ]
+  },
+  "review-412": {
+    "height": 828,
+    "content": 1053,
+    "lines": [
+      {
+        "x": 29,
+        "y": 248,
+        "width": 354,
+        "height": 58
+      },
+      {
+        "x": 29,
+        "y": 314,
+        "width": 354,
+        "height": 58
+      },
+      {
+        "x": 29,
+        "y": 505,
+        "width": 354,
+        "height": 58
+      }
+    ]
+  },
+  "cart-320": {
+    "height": 814,
+    "content": 823,
+    "lines": [
+      {
+        "x": 17,
+        "y": 134,
+        "width": 286,
+        "height": 152
+      },
+      {
+        "x": 17,
+        "y": 287,
+        "width": 286,
+        "height": 142
+      },
+      {
+        "x": 17,
+        "y": 495,
+        "width": 286,
+        "height": 142
+      }
+    ]
+  },
+  "review-320": {
+    "height": 828,
+    "content": 1105,
+    "lines": [
+      {
+        "x": 29,
+        "y": 248,
+        "width": 262,
+        "height": 58
+      },
+      {
+        "x": 29,
+        "y": 314,
+        "width": 262,
+        "height": 76
+      },
+      {
+        "x": 29,
+        "y": 539,
+        "width": 262,
+        "height": 76
+      }
+    ]
+  }
+}

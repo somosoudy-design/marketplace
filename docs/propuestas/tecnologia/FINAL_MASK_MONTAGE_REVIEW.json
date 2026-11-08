@@ -1,0 +1,65 @@
+{
+  "recordedAt": "2026-11-08T17:05:07.777047+00:00",
+  "scope": "Read-only local code, six PNGs and in-memory pixel analysis; no image edit/generation, browser/network, rerun tests or source mutation",
+  "conclusion": "Favorable for the reviewed small Technology navigation tile; no visual blocking defect observed in final mount. Not a pixel-exact cutout or product photo replacement.",
+  "sourceReview": [
+    "Home guard requires exact tecnologia slug and exact c6.jpg path; other image/category fallback unchanged",
+    "ProductPhoto retains original JPEG URL and existing blend/layout; matte is optional and applied after load",
+    "No diff found from8846117 in native category-art, catalog-exhibition, CategoryShowcase or marketplace-home.css",
+    "Actual matte448x448 RGBA sha046d5825ab82a348b98b6c47cc7ff077851f06cdb623c55888aaacd129fa44a2 matches reported asset"
+  ],
+  "visualReview": [
+    "Before/after440light and dark: baked violet rectangle removed; Technology title and CTA, Audio neighbor and layout remain visually consistent",
+    "DPR3 light crop confirms tablet, keyboard, mouse and stylus visible within the small63CSS photo frame",
+    "No missing principal component or added product detail observed; source image supplies screen/keyboard RGB",
+    "The AI-derived silhouette is not exactly aligned to every source edge: stylus thickness is partly reduced; visible result remains legible for category navigation and this is non-blocking in the reviewed tile"
+  ],
+  "pixelAnalysisLimit": {
+    "purpose": "Check initial concern that thin stylus might disappear; retina disproves complete absence",
+    "method": "Read original JPEG and448matte raw pixels using existing sharp in memory; no image output written",
+    "sourceDarkRoi": [
+      450,
+      470,
+      500,
+      865
+    ],
+    "darkPixelRule": "r+g+b<420",
+    "sourceDarkPixels": 6471,
+    "coveredByProjectedAlphaAtLeast128": 2816,
+    "coverageRatioApprox": 0.4351723072168135,
+    "meanAlphaApprox": 0.5109062756612458,
+    "interpretation": "Partial mask coverage of a thin stylus region. Nearest pixel mapping is not a final screenshot measurement or proof of pixel equivalence. Does not imply stylus absent in UI."
+  },
+  "openedImages": [
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/before/categories-440-light.png",
+      "sha256": "598d2aac7b98258b0b83f9194307c7c5a2c392f8d889eac36ba2588d308b0f4a"
+    },
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/after/categories-440-light.png",
+      "sha256": "be77bbce4c2154d31b909edfbbcdcb2469a99d6a19c913146e60d88a1c56a918"
+    },
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/before/categories-440-dark.png",
+      "sha256": "05a9fffa37ff7229a56b5b0508f71f39acd18cac76fdffbe99027058f957b006"
+    },
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/after/categories-440-dark.png",
+      "sha256": "febff0624de13ca0ea6e023d2ec5ba09c619a91788259ac0af9e6d5f14004236"
+    },
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/after-retina/technology-photo-retina.png",
+      "sha256": "6da2e63622f539b004013c45d6b6a3e4b80ccd6edd39f194159565a5e20e7fe5"
+    },
+    {
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/after-retina/technology-tile-retina.png",
+      "sha256": "2a2c4198f8bee7382ca50d872778f642ae913c80246e20d4995840f37ba84f45"
+    }
+  ],
+  "limits": [
+    "DPR3 review is light only; both themes also reviewed in440standard crops",
+    "No physical browser/device, performance, full accessibility or hosted verification",
+    "Asset is an AI-derived alpha matte over unchanged sourceRGB, not a pixel-identical extraction; disclose that provenance",
+    "Root and capture agent handle alpha/runtime assertions,404fallback and test receipts; not rerun by this reviewer"
+  ]
+}

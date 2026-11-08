@@ -1,0 +1,46 @@
+[
+  {
+    "theme": "light",
+    "width": 320,
+    "firstProductTop": 500,
+    "completeProducts": 2,
+    "heroTop": 232,
+    "heroHeight": 188,
+    "overflow": false,
+    "discardedVerticalOnlyCount": 7,
+    "countMethod": "Inspección de PNG original: dos completas; descartado conteo DOM que incluía rail horizontal fuera de pantalla."
+  },
+  {
+    "theme": "light",
+    "width": 412,
+    "firstProductTop": 505,
+    "completeProducts": 2,
+    "heroTop": 232,
+    "heroHeight": 193,
+    "overflow": false,
+    "discardedVerticalOnlyCount": 7,
+    "countMethod": "Inspección de PNG original: dos completas; descartado conteo DOM que incluía rail horizontal fuera de pantalla."
+  },
+  {
+    "theme": "dark",
+    "width": 320,
+    "firstProductTop": 500,
+    "completeProducts": 2,
+    "heroTop": 232,
+    "heroHeight": 188,
+    "overflow": false,
+    "discardedVerticalOnlyCount": 7,
+    "countMethod": "Inspección de PNG original: dos completas; descartado conteo DOM que incluía rail horizontal fuera de pantalla."
+  },
+  {
+    "theme": "dark",
+    "width": 412,
+    "firstProductTop": 505,
+    "completeProducts": 2,
+    "heroTop": 232,
+    "heroHeight": 193,
+    "overflow": false,
+    "discardedVerticalOnlyCount": 7,
+    "countMethod": "Inspección de PNG original: dos completas; descartado conteo DOM que incluía rail horizontal fuera de pantalla."
+  }
+]

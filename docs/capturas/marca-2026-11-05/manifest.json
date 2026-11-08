@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-05",
+  "environment": "Chromium local; Expo export web, Next app/web/panel; datos locales",
+  "images": [
+    {
+      "file": "antes/01-app-home-320-light.png",
+      "source": ".local/brand-20261105/review/before/01-app-home-320-light.png",
+      "sha256": "b221c813bb0ac098dd5ce512a6e2f9a884398af4ce71aa0082a709d125364fd0",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/01-app-home-320-light.png",
+      "source": ".local/brand-20261105/review/after-final/01-app-home-320-light.png",
+      "sha256": "9c716a6bb1e212bfef5d8ce1d98e5508563b608edfd96005fac9395ec2ecd0e6",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/01-app-home-320-dark.png",
+      "source": ".local/brand-20261105/review/before/01-app-home-320-dark.png",
+      "sha256": "8a33e3b1c7329da10436d0efd2585cba52294d4726213c41ae87bbfdc4f983a4",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/01-app-home-320-dark.png",
+      "source": ".local/brand-20261105/review/after-final/01-app-home-320-dark.png",
+      "sha256": "599b41b2ff5e1c0de9f9c6a7b58d2842ff90f3c0da2fe00e89b7ef5e950e1bb3",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/04-web-home-320-light.png",
+      "source": ".local/brand-20261105/review/before/04-web-home-320-light.png",
+      "sha256": "be395249b3ffc942c32a040b659f3f7df0314139a4d3e0d5e93cc44cebf424cd",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/04-web-home-320-light.png",
+      "source": ".local/brand-20261105/review/after/04-web-home-320-light.png",
+      "sha256": "2d7f8262aaf444b6b7edbf3a6b7b56676f12b8ad13e82c836852d22bf1ef6e33",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/06-web-account-320-dark.png",
+      "source": ".local/brand-20261105/review/before/06-web-account-320-dark.png",
+      "sha256": "64711a955c5adc986c0da0525456202111f0f1163bd7cc216aa707dc77a456e1",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/06-web-account-320-dark.png",
+      "source": ".local/brand-20261105/review/after/06-web-account-320-dark.png",
+      "sha256": "7e42e95d33916449c4989fd4450aa086fa391d1804b59886ecbede61c5e9af14",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/07-panel-login-320-light.png",
+      "source": ".local/brand-20261105/review/before/07-panel-login-320-light.png",
+      "sha256": "bd50b70544b3374e4443f3e52064591c36ff5655ad3e2f68d45fb2f42b42d5e6",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/07-panel-login-320-light.png",
+      "source": ".local/brand-20261105/review/after/07-panel-login-320-light.png",
+      "sha256": "e83df441f97f6906c50a2748d8ace1996f04244b48ae9cfb303a6f80003e6f60",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/07-panel-login-320-dark.png",
+      "source": ".local/brand-20261105/review/before/07-panel-login-320-dark.png",
+      "sha256": "149b1a0c3974351643a12ab4daf7401d1365f93b7831b873896b2abdce5abb13",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/07-panel-login-320-dark.png",
+      "source": ".local/brand-20261105/review/after/07-panel-login-320-dark.png",
+      "sha256": "adf33ef76f7e2efdebf56cc292b35607c01504a825213c0cbe692498f9b01681",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/15-panel-editor-320-dark.png",
+      "source": ".local/brand-20261105/review/before/15-panel-editor-320-dark.png",
+      "sha256": "92e08e15e159f961521755ec42a9212fe075f903b32f8f2461427628d1c19f87",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/15-panel-editor-320-dark.png",
+      "source": ".local/brand-20261105/review/after-r2/15-panel-editor-320-dark.png",
+      "sha256": "f0175864cd26c74dee80872337924e658aec65da7a8d6c63e7c4c7d340de4978",
+      "pixelEditing": false
+    },
+    {
+      "file": "antes/12-panel-danger-320-dark.png",
+      "source": ".local/brand-20261105/review/before/12-panel-danger-320-dark.png",
+      "sha256": "c05724b55847d1f94913601238bd9c1ce321b9620e3ada3fb4d870d2159adea5",
+      "pixelEditing": false
+    },
+    {
+      "file": "despues/12-panel-danger-320-dark.png",
+      "source": ".local/brand-20261105/review/after-r2/12-panel-danger-320-dark.png",
+      "sha256": "4fca588f176d3f73412d54715cf70d6156b15edb90b2c7514cc3b18e69dc25c7",
+      "pixelEditing": false
+    }
+  ]
+}

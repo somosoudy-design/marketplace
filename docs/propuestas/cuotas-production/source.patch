@@ -1,0 +1,1610 @@
+diff --git a/apps/mobile/src/app/(tabs)/cart.tsx b/apps/mobile/src/app/(tabs)/cart.tsx
+index f28942b..c7a081b 100644
+--- a/apps/mobile/src/app/(tabs)/cart.tsx
++++ b/apps/mobile/src/app/(tabs)/cart.tsx
+@@ -1,7 +1,7 @@
+ import type { CartLine, DeliveryGroup } from '@kora/api';
+-import { D, formatUSD, presentAvailability, productConditionLabel } from '@kora/core';
+-import { router } from 'expo-router';
+-import { useState } from 'react';
++import { D, formatUSD, presentAvailability, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription } from '@kora/core';
++import { router, useLocalSearchParams, type Href } from 'expo-router';
++import { useEffect, useState } from 'react';
+ import { RefreshControl, ScrollView, useWindowDimensions, View } from 'react-native';
+ import { useSafeAreaInsets } from 'react-native-safe-area-context';
+ import { ProductImage } from '@/components/catalog/ProductImage';
+@@ -19,6 +19,7 @@ import { ScalePressable } from '@/components/ui/Pressable';
+ import { Skeleton } from '@/components/ui/Skeleton';
+ import { Banner, EmptyState, ErrorState, OfflineState, waitingForNetwork } from '@/components/ui/States';
+ import { Text } from '@/components/ui/Text';
++import { RadioRow } from '@/components/checkout/Rows';
+ import { useAuth } from '@/lib/auth';
+ import type { GuestLine } from '@/lib/guest-cart';
+ import { useCart, useGuestCartState, useHome, useSetCartQuantity } from '@/lib/hooks';
+@@ -37,15 +38,17 @@ export default function CartScreen() {
+   const t = useTheme();
+   const insets = useSafeAreaInsets();
+   const { user } = useAuth();
++  const params = useLocalSearchParams<{ plan?: string | string[] }>();
++  const requestedPlan = safePlanCode(params.plan);
+   const header = <View style={{ paddingHorizontal: 16, paddingTop: insets.top + 8, paddingBottom: 12 }}><Text variant="displayL">Carrito</Text><ExhibitionNotice explain />{user?<PendingCartMerge/>:null}</View>;
+   return (
+     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
+-      {user ? <AccountCart key={user.id} header={header} /> : <GuestCartView header={header} />}
++      {user ? <AccountCart key={user.id} header={header} requestedPlan={requestedPlan} /> : <GuestCartView header={header} requestedPlan={requestedPlan} />}
+     </View>
+   );
+ }
+ 
+-function AccountCart({ header }: { header: React.ReactNode }) {
++function AccountCart({ header, requestedPlan }: { header: React.ReactNode; requestedPlan?: string }) {
+   const {cartSyncError,cartSyncing}=useAuth();
+   const t = useTheme();
+   const cart = useCart();
+@@ -55,6 +58,18 @@ function AccountCart({ header }: { header: React.ReactNode }) {
+   const [refreshing, setRefreshing] = useState(false);
+   const refresh = async () => { setRefreshing(true); try { await cart.refetch(); } finally { setRefreshing(false); } };
+   const s = cart.data;
++  const selectedPlan = chooseOfferedPlan(requestedPlan, s?.plans ?? []);
++  const [planNotice, setPlanNotice] = useState<string | null>(null);
++  const plansFresh = cart.isSuccess && !cart.isFetching && !cart.isError && !setQty.isPending && !cartSyncing && !cartSyncError;
++  const nextPlanNotice = plansFresh && requestedPlan && selectedPlan.notice ? `${requestedPlan}:${selectedPlan.code ?? ''}` : '';
++  const [seenPlanNotice, setSeenPlanNotice] = useState('');
++  if (seenPlanNotice !== nextPlanNotice) {
++    setSeenPlanNotice(nextPlanNotice);
++    if (nextPlanNotice) setPlanNotice(selectedPlan.notice!);
++  }
++  useEffect(() => {
++    if (plansFresh && requestedPlan && selectedPlan.notice && selectedPlan.code) router.setParams({ plan: selectedPlan.code });
++  }, [plansFresh, requestedPlan, selectedPlan.code, selectedPlan.notice]);
+ 
+   if (waitingForNetwork(cart)) return <View>{header}<OfflineState /></View>;
+   if (cart.isPending) {
+@@ -91,14 +106,27 @@ function AccountCart({ header }: { header: React.ReactNode }) {
+             <GroupCard key={g.key} group={g} index={i} total={groups.length} disabled={setQty.isPending} onRemove={setRemoving} onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })} />
+           ))}
+           </View>
++          <View testID="cart-payment-options" style={{ gap: 10 }}>
++            <Text variant="subtitle">Plan de pago</Text>
++            {planNotice || (plansFresh && selectedPlan.notice) ? <Banner tone="info" body={planNotice ?? selectedPlan.notice!} /> : null}
++            <Card padded={false}>
++              {s.plans.map((option, index) => <View key={option.code}>
++                {index > 0 ? <Divider inset={16} /> : null}
++                <RadioRow testID={`cart-plan-${option.code}`} selected={selectedPlan.code === option.code}
++                  title={paymentPlanTitle(option)} subtitle={paymentPlanDescription(option)} disabled={!plansFresh || s.issues > 0}
++                  onPress={() => { setPlanNotice(null); router.setParams({ plan: option.code }); }} />
++              </View>)}
++            </Card>
++            <Text variant="caption" color="textMuted">El envío y los importes finales se confirman al continuar.</Text>
++          </View>
+         </View>
+       </ScrollView>
+       <CartFooter
+         items={s.items_usd}
+         note="Envío y total final con tu dirección, en el siguiente paso."
+         cta="Continuar"
+-        disabled={s.issues > 0 || setQty.isPending || cart.isFetching || !!cartSyncError || cartSyncing}
+-        onPress={() => router.push('/checkout')}
++        disabled={s.issues > 0 || setQty.isPending || cart.isFetching || cart.isError || !!cartSyncError || cartSyncing || !selectedPlan.code}
++        onPress={() => router.push(withPlan('/checkout', selectedPlan.code) as Href)}
+         onHeightChange={setBarHeight}
+       />
+       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Sigue en tu carrito; intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
+@@ -178,7 +206,7 @@ function EmptyCart({ header, body }: { header: React.ReactNode; body: string })
+   );
+ }
+ 
+-function GuestCartView({ header }: { header: React.ReactNode }) {
++function GuestCartView({ header, requestedPlan }: { header: React.ReactNode; requestedPlan?: string }) {
+   const t = useTheme();
+   const guest = useGuestCartState();
+   const lines = guest.data;
+@@ -200,6 +228,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
+         {header}
+         <View style={{ paddingHorizontal: 16, gap: 16 }}>
+           <Text variant="bodySmall" color="textSecondary" testID="cart-deliveries">{lines.length} {lines.length === 1 ? 'producto' : 'productos'} · {units} {units === 1 ? 'unidad' : 'unidades'}</Text>
++          {requestedPlan ? <View testID="guest-plan-preference"><Banner tone="info" body="Conservamos el plan que solicitaste. Verás las opciones disponibles después de iniciar sesión y revisar tu carrito." /></View> : null}
+           <Card padded={false}>
+             {lines.map((l: GuestLine, i) => (
+               <View key={l.variant_id}>
+@@ -215,7 +244,7 @@ function GuestCartView({ header }: { header: React.ReactNode }) {
+           </Card>
+         </View>
+       </ScrollView>
+-      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push(authTarget('/sign-in', '/cart'))} onHeightChange={setBarHeight} compact={false} />
++      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push(authTarget('/sign-in', withPlan('/cart', requestedPlan)))} onHeightChange={setBarHeight} compact={false} />
+       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
+     </>
+   );
+diff --git a/apps/mobile/src/app/checkout.tsx b/apps/mobile/src/app/checkout.tsx
+index 05af727..d79589b 100644
+--- a/apps/mobile/src/app/checkout.tsx
++++ b/apps/mobile/src/app/checkout.tsx
+@@ -1,9 +1,9 @@
+ import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
+ import { ApiError, type CheckoutSummary, type ReviewedCheckoutSummary, type DeliveryGroup, type PlaceOrderResult, type ShippingSelection } from '@kora/api';
+-import { describeEtaDates, formatUSD, OBLIGATION_KIND_LABEL, productConditionLabel } from '@kora/core';
++import { describeEtaDates, formatUSD, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, presentServerSchedule } from '@kora/core';
+ import { palette } from '@kora/design-tokens';
+ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+-import { router, Stack, useFocusEffect, useNavigation } from 'expo-router';
++import { router, Stack, useFocusEffect, useNavigation, useLocalSearchParams } from 'expo-router';
+ import { usePreventRemove } from 'expo-router/react-navigation';
+ import { useCallback, useEffect, useRef, useState } from 'react';
+ import { AccessibilityInfo, ActivityIndicator, findNodeHandle, Platform, Pressable, ScrollView, View } from 'react-native';
+@@ -47,12 +47,14 @@ type AttemptState = { stored: StoredCheckoutAttempt; snapshot?: Preview; fresh:
+ 
+ export default function CheckoutScreen() {
+   const { user } = useAuth();
+-  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace(authTarget('/sign-in', '/checkout'))} />;
++  const params = useLocalSearchParams<{ plan?: string | string[] }>();
++  const requestedPlan = safePlanCode(params.plan);
++  if (!user) return <EmptyState icon="lock" title="Inicia sesión para continuar" action="Iniciar sesión" onAction={() => router.replace(authTarget('/sign-in', withPlan('/checkout', requestedPlan)))} />;
+   // An in-flight attempt belongs to one buyer; switching account must never recover or open another buyer's order.
+-  return <CheckoutSession key={user.id} buyerId={user.id} />;
++  return <CheckoutSession key={user.id} buyerId={user.id} requestedPlan={requestedPlan} />;
+ }
+ 
+-function CheckoutSession({ buyerId }: { buyerId: string }) {
++function CheckoutSession({ buyerId, requestedPlan }: { buyerId: string; requestedPlan?: string }) {
+   const t = useTheme();
+   const reduced = useReducedMotion();
+   const qc = useQueryClient();
+@@ -72,7 +74,8 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
+   const [lastPreview, setLastPreview] = useState<{ userId: string; summary: Preview } | null>(null);
+   const [confirming, setConfirming] = useState(false);
+   const [recoveredOrder, setRecoveredOrder] = useState<PlaceOrderResult | null>(null);
+-  const [plan, setPlan] = useState('full');
++  const [plan, setPlan] = useState(() => requestedPlan ?? 'full');
++  const [planNotice, setPlanNotice] = useState<string | null>(null);
+   const [barHeight, setBarHeight] = useState(150);
+   const scrollRef = useRef<ScrollView>(null);
+   const headingRef = useRef<View>(null);
+@@ -91,7 +94,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
+     let active = true; alive.current = true;
+     checkoutIntents.load(buyerId).then((stored) => {
+       if (!active) return;
+-      if (stored) { setAttempt({ stored, fresh: false }); setConfirming(true); }
++      if (stored) { setPlan(stored.payload.plan); setAttempt({ stored, fresh: false }); setConfirming(true); }
+       setRestored(true);
+     }).catch((error: unknown) => { if (active) setRestoreError(new Error('No pudimos recuperar tu compra guardada. Conservamos sus datos; vuelve a intentar la lectura.', { cause: error })); });
+     return () => { active = false; alive.current = false; };
+@@ -138,7 +141,19 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
+     }
+   }
+ 
+-  if (s && !preview.isPlaceholderData && !s.plans.some((p) => p.code === plan) && s.plans[0]) setPlan(s.plans[0].code);
++  if (s && !confirming && !preparing && preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData && !s.plans.some(option => option.code === plan)) {
++    const offered = chooseOfferedPlan(plan, s.plans);
++    if (offered.notice && planNotice !== offered.notice) setPlanNotice(offered.notice);
++    if (offered.code && offered.code !== plan) {
++      setPlan(offered.code); setReviewedToken('');
++      if (step >= 2) setStep(2);
++    }
++  }
++  useEffect(() => {
++    if (restored && !attempt && !confirming && !preparing && preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData && s?.plan?.code === plan) {
++      router.setParams({ plan });
++    }
++  }, [restored, attempt, confirming, preparing, preview.isSuccess, preview.isFetching, preview.isPlaceholderData, s?.plan?.code, plan]);
+   if (s?.recoveredShipping && !preview.isPlaceholderData && Object.keys(shipping).length) {
+     setShipping({});
+     setShippingRecovered(true);
+@@ -386,6 +401,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
+             {step !== 3 ? <Text variant="bodySmall" color="textSecondary">{STEPS[step]!.body}</Text> : null}
+           </View>
+         </View>
++        {planNotice ? <View testID="checkout-plan-notice"><Banner tone="info" body={planNotice} /></View> : null}
+         {reviewNotice ? <Banner tone="warning" body="El pedido cambió. Revisa los productos, la entrega y el total antes de confirmar." /> : null}
+         {preparationError ? <Banner tone="danger" body={preparationError.message} /> : null}
+         {preview.isError ? <View testID="checkout-refresh-error" style={{ gap: 8 }}><Banner tone="danger" body="No pudimos actualizar tu compra. Reintenta antes de continuar; tus selecciones siguen aquí." /><Button title="Reintentar actualización" variant="secondary" onPress={() => preview.refetch()} loading={preview.isFetching} /></View> : null}
+@@ -427,7 +443,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
+           <Card padded={false}>
+             {s.plans.map((p, i) => <View key={p.code}>
+               {i > 0 ? <Divider inset={16} /> : null}
+-              <RadioRow testID={`plan-${p.code}`} selected={plan === p.code} title={p.name} subtitle={p.description ?? undefined} disabled={!editable} onPress={() => setPlan(p.code)} />
++              <RadioRow testID={`plan-${p.code}`} selected={plan === p.code} title={paymentPlanTitle(p)} subtitle={paymentPlanDescription(p)} disabled={!editable} onPress={() => { setPlanNotice(null); setPlan(p.code); router.setParams({ plan: p.code }); }} />
+             </View>)}
+           </Card>
+           <PaymentSchedule summary={s} />
+@@ -465,7 +481,7 @@ function CheckoutSession({ buyerId }: { buyerId: string }) {
+             {address ? <View testID="checkout-review-address" style={{ gap: 3 }}><Text variant="label">{address.recipient}</Text><Text variant="bodySmall" color="textSecondary">{address.line1}</Text><Text variant="bodySmall" color="textSecondary">{[address.municipality, address.city].filter(Boolean).join(', ')} · {address.phone}</Text></View> : null}
+           </ReviewSection>
+           <ReviewSection title="Plan de pago" testID="checkout-edit-plan" disabled={busy} onEdit={() => goTo(2)}>
+-            <Text variant="label">{s.plan?.name}</Text>
++            <Text variant="label">{s.plan ? paymentPlanTitle(s.plan) : 'Plan de pago'}</Text>
+             <PaymentSchedule summary={s} />
+           </ReviewSection>
+           <View testID="checkout-summary-detail" style={{ gap: 8 }}>
+@@ -510,10 +526,12 @@ function ReviewSection({ title, testID, disabled, onEdit, children }: { title: s
+ 
+ function PaymentSchedule({ summary: s }: { summary: CheckoutSummary }) {
+   if (s.schedule.length <= 1) return null;
++  const shown = presentServerSchedule(s.schedule);
+   return <View style={{ gap: 10 }}>
+-    <Text variant="label">Calendario de pagos (en USD)</Text>
+-    {s.schedule.map((x) => <View key={x.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
+-      <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{OBLIGATION_KIND_LABEL[x.kind] ?? 'Pago'} {x.kind === 'installment' ? x.seq : ''} · {x.due_in_days === 0 ? 'hoy' : `en ${x.due_in_days} días`}</Text>
++    <Text variant="label">{shown.title} (en USD)</Text>
++    {shown.distribution ? <Text variant="bodySmall" color="textSecondary">{shown.distribution}</Text> : null}
++    {shown.rows.map(({ item: x, label, due }) => <View key={x.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
++      <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{label} · {due}</Text>
+       <Text variant="label" tabular>{formatUSD(x.amount_usd)}</Text>
+     </View>)}
+     <Text variant="caption" color="textMuted">Tu saldo pendiente queda en dólares. Si pagas en bolívares, el monto se calcula con la tasa del día de cada pago.</Text>
+diff --git a/apps/mobile/src/app/product/[id].tsx b/apps/mobile/src/app/product/[id].tsx
+index 0c080f3..fe4fb1a 100644
+--- a/apps/mobile/src/app/product/[id].tsx
++++ b/apps/mobile/src/app/product/[id].tsx
+@@ -1,6 +1,6 @@
+ import type { OrderItem, ProductDetail } from '@kora/api';
+-import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel } from '@kora/core';
+-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
++import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel, offeredAtQuantity, productBasePreview, presentServerSchedule, paymentPlanTitle, withPlan } from '@kora/core';
++import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
+ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
+ import Animated, { FadeIn, FadeInDown, FadeOut, useReducedMotion } from 'react-native-reanimated';
+@@ -143,6 +143,12 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
+   // options with different prices say theirs, so nobody has to tap each one to compare
+   const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
+   const canBuy = selection.canBuy;
++  const paymentOffer = p.installment_options?.find(offer => offer.variant_id === variant?.id && offer.basis === 'products_only_excludes_shipping');
++  const threePayments = offeredAtQuantity(paymentOffer?.plans, qty).find(option => option.code === 'three_parts');
++  const offeredPreview = canBuy && paymentOffer && threePayments && qty <= paymentOffer.max_quantity
++    ? productBasePreview(paymentOffer.unit_price_usd, qty, threePayments) : null;
++  const basePreview = offeredPreview?.schedule.length === 3 ? offeredPreview : null;
++  const previewSchedule = basePreview ? presentServerSchedule(basePreview.schedule) : null;
+   const [moreText, setMoreText] = useState(false);
+   const longText = (description?.length ?? 0) > LONG_DESCRIPTION;
+   // related products count as recommendations: impressions when the rail is on screen, clicks on its cards
+@@ -183,10 +189,11 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
+   };
+ 
+   // "Agregar" keeps the buyer here with a link to the cart; "Comprar" adds and opens the cart to pay
+-  const add = (buy: boolean) => {
++  const add = (buy: boolean, preferredPlan?: string) => {
+     if (!variant || !selection.canBuy || qty > selection.maxQuantity || submitting.current) return;
+     const key = `${variant.id}:${qty}`;
+-    if (buy && inCart === key) return router.navigate('/cart');
++    const target = withPlan('/cart', preferredPlan) as Href;
++    if (buy && inCart === key) return router.navigate(target);
+     submitting.current = true;
+     setPending(buy ? 'buy' : 'add');
+     addToCart.mutate(
+@@ -195,7 +202,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
+         onSuccess: () => {
+           haptics.success();
+           setInCart(key);
+-          if (buy) return router.navigate('/cart');
++          if (buy) return router.navigate(target);
+           setAdded(true);
+           setTimeout(() => setAdded(false), 4000);
+         },
+@@ -296,6 +303,17 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
+             ) : null}
+             </View> : null}
+ 
++            {basePreview && previewSchedule && threePayments ? <Card testID="product-installment-options" style={{ gap: 10 }}>
++              <Text variant="subtitle">{paymentPlanTitle(threePayments)}</Text>
++              {previewSchedule.distribution ? <Text variant="bodySmall" color="textSecondary">{previewSchedule.distribution}</Text> : null}
++              {previewSchedule.rows.map(({ item, label, due }) => <View key={item.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
++                <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{label} · {due}</Text>
++                <Text variant="label" tabular>{formatUSD(item.amount_usd)}</Text>
++              </View>)}
++              <Text variant="caption" color="textMuted">{basePreview.label}</Text>
++              <Button testID="product-installments-buy" title="Comprar en 3 pagos" full loading={pending === 'buy'} disabled={pending === 'add'} onPress={() => add(true, threePayments.code)} />
++            </Card> : null}
++
+             <View testID="product-store">
+               <StoreChip store={{ ...p.store, tagline: null, cover_path: null }} overline="Vendido por" />
+             </View>
+diff --git a/apps/mobile/src/lib/auth-navigation.ts b/apps/mobile/src/lib/auth-navigation.ts
+index af18900..95e80bd 100644
+--- a/apps/mobile/src/lib/auth-navigation.ts
++++ b/apps/mobile/src/lib/auth-navigation.ts
+@@ -1,3 +1,4 @@
++import { safePlanCode } from '@kora/core';
+ import { router, useLocalSearchParams, type Href } from 'expo-router';
+ 
+ /** Destinations are internal navigation data, never an instruction to add, quote or place an order. */
+@@ -8,10 +9,15 @@ export function safeAuthReturn(value: unknown): string | undefined {
+     if (url.origin !== 'https://mayami.local' || url.hash) return undefined;
+     const fixed = new Set(['/', '/cart', '/favorites', '/account', '/explore', '/checkout']);
+     if (!fixed.has(url.pathname) && !/^\/(?:product|p|tienda)\/[a-zA-Z0-9_-]+$/.test(url.pathname)) return undefined;
+-    // Retain only the product option used by the existing detail screens.
++    // Keep only the product option and the bounded payment-plan preference.
+     const variant = url.searchParams.get('variant');
+-    const query = variant && /^[a-zA-Z0-9_-]+$/.test(variant) ? `?variant=${encodeURIComponent(variant)}` : '';
+-    return url.pathname + query;
++    const query = new URLSearchParams();
++    if (variant && /^[a-zA-Z0-9_-]+$/.test(variant)) query.set('variant', variant);
++    const planValues = url.searchParams.getAll('plan');
++    const plan = planValues.length === 1 ? safePlanCode(planValues[0]) : undefined;
++    if (plan) query.set('plan', plan);
++    const encoded = query.toString();
++    return url.pathname + (encoded ? `?${encoded}` : '');
+   } catch { return undefined; }
+ }
+ 
+diff --git a/apps/storefront/src/app/carrito/page.tsx b/apps/storefront/src/app/carrito/page.tsx
+index 88be5b1..8d7e46e 100644
+--- a/apps/storefront/src/app/carrito/page.tsx
++++ b/apps/storefront/src/app/carrito/page.tsx
+@@ -1,10 +1,11 @@
+ 'use client';
+ import Link from 'next/link';
+-import { useState } from 'react';
++import { Suspense, useEffect, useState } from 'react';
++import { useRouter, useSearchParams } from 'next/navigation';
+ import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+ import { Minus, Plus, Trash2, ArrowRight } from 'lucide-react';
+ import type { CartLine } from '@kora/api';
+-import { D } from '@kora/core';
++import { D, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, planFromSearch, withPlan } from '@kora/core';
+ import { useAccount } from '@/lib/providers';
+ import { browser } from '@/lib/browser';
+ import { money } from '@/lib/format';
+@@ -124,13 +125,27 @@ function Line({ line, buyerId, guestQuantity, href, priceKnown = true }: { line:
+     </article>
+   );
+ }
+-function BuyerCart({ buyerId }: { buyerId: string }) {
++function BuyerCart({ buyerId, preference }: { buyerId: string; preference?: string }) {
++  const router = useRouter();
++  const [planNotice, setPlanNotice] = useState<{ source?: string; text: string }>({ text: '' });
+   const qc = useQueryClient();
+   const { cartSyncing, cartSyncError } = useAccount();
+   const updating = useIsMutating({ mutationKey: ['cart-write', buyerId] }) > 0;
+   const cart = useQuery({ queryKey: ['cart', buyerId], queryFn: async () => {
+     const bound = await captureBuyerApi(buyerId); const result = await bound.api.cart.summaryReviewed(); await bound.assertCurrent(); return result;
+   }, enabled: !cartSyncing });
++  const selectedPlan = chooseOfferedPlan(preference, cart.data?.plans ?? []);
++  const preferenceReady = cart.isSuccess && !cart.isFetching && !updating && !cartSyncing && !cartSyncError && cart.data.issues === 0;
++  // Retain a server fallback notice when its URL preference is replaced, until the buyer chooses again.
++  if (preferenceReady && selectedPlan.notice && planNotice.source !== preference) setPlanNotice({ source: preference, text: selectedPlan.notice });
++  useEffect(() => {
++    // Do not persist a fallback while the cart, account merge or a quantity write is still changing.
++    if (!cart.isSuccess || cart.isFetching || updating || cartSyncing || cartSyncError || cart.data.issues) return;
++    const offered = chooseOfferedPlan(preference, cart.data.plans);
++    if (!offered.code) return;
++    const next = withPlan('/carrito', offered.code);
++    if (window.location.pathname + window.location.search !== next) router.replace(next, { scroll: false });
++  }, [preference, cart.isSuccess, cart.isFetching, cart.data, updating, cartSyncing, cartSyncError, router]);
+   if (cartSyncing || cart.isPending)
+     return (
+       <section className="state" role="status">
+@@ -173,11 +188,22 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
+             <span>Productos</span>
+             <strong>{money(cart.data.items_usd)}</strong>
+           </div>
+-          <p>Entrega y opciones de pago se calculan al continuar con la compra.</p>
++          <p>El envío y los importes finales se confirman al continuar con la compra.</p>
++          <fieldset className="variant-picker" disabled={updating || cart.isFetching || !!cartSyncError}>
++            <legend>Plan de pago</legend>
++            {cart.data.plans.map(option => (
++              <label className="option-row" key={option.code}>
++                <input type="radio" name="cart-plan" checked={selectedPlan.code === option.code} onChange={() => { setPlanNotice({ source: preference, text: '' }); router.replace(withPlan('/carrito', option.code), { scroll: false }); }} />
++                <span><strong>{paymentPlanTitle(option)}</strong><span>{paymentPlanDescription(option)}</span></span>
++              </label>
++            ))}
++          </fieldset>
++          {(selectedPlan.notice || planNotice.text) && <p className="notice" role="status">{selectedPlan.notice || planNotice.text}</p>}
++          {!selectedPlan.code && <p className="notice error" role="alert">{cart.data.plans.length ? 'Selecciona un plan de pago disponible antes de continuar.' : 'No hay un plan de pago disponible para este carrito. Actualiza el carrito antes de continuar.'}</p>}
+           {cart.data.issues > 0 ? (
+             <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
+           ) : (
+-            <Link prefetch={false} className="button" data-testid="cart-checkout" href="/checkout" aria-disabled={updating || cart.isFetching || !!cartSyncError} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching || cartSyncError) event.preventDefault(); }}>
++            <Link prefetch={false} className="button" data-testid="cart-checkout" href={withPlan('/checkout', selectedPlan.code)} aria-disabled={updating || cart.isFetching || !!cartSyncError || !selectedPlan.code} onClick={(event) => { if (qc.isMutating({ mutationKey: ['cart-write', buyerId] }) || cart.isFetching || cartSyncError || !selectedPlan.code) event.preventDefault(); }}>
+               Continuar con la compra
+             </Link>
+           )}
+@@ -189,7 +215,7 @@ function BuyerCart({ buyerId }: { buyerId: string }) {
+     </div>
+   );
+ }
+-function GuestCart() {
++function GuestCart({ preference }: { preference?: string }) {
+   const guest = useGuestCartState();
+   const ids = [...new Set(guest.data.map(line => line.product_id))];
+   const current = useQuery({ queryKey: ['guest-cart-current', ids],
+@@ -215,13 +241,16 @@ function GuestCart() {
+     {(current.isError || offline) && <div className="notice error" role="alert"><p>{offline ? 'Sin conexión. Tus productos siguen guardados; actualizaremos precios y disponibilidad al recuperar la conexión.' : 'No pudimos actualizar precios y disponibilidad. Tus productos siguen guardados.'}</p><button type="button" className="button secondary" onClick={() => void current.refetch()}>Volver a intentar</button></div>}
+     <div className="cart-layout"><div className="cart-products">{view.groups.map(group => <section className="cart-group" key={group.key}><header className="cart-group-heading"><h2>{group.storeName}</h2></header>{group.lines.map(line => <Line key={line.variant_id} line={line} priceKnown={line.priceKnown && !offline && !current.isError} href={line.slug ? `/p/${line.slug}?variant=${encodeURIComponent(line.variant_id)}` : undefined} guestQuantity={quantity => guestCart.setQuantity(line.variant_id, quantity)} />)}</section>)}</div>
+       <aside className="cart-summary"><h2>Resumen</h2><div><span>Productos</span><strong>{view.items_usd == null || offline || current.isError ? 'Precio no disponible' : money(view.items_usd)}</strong></div><p>Entrega y opciones de pago se calculan al continuar con la compra.</p>
++        {preference && <p className="notice" role="status" data-testid="guest-plan-preference">{preference === 'three_parts' ? 'Preferencia: 3 pagos en total.' : 'Conservamos tu preferencia de pago.'} Confirmaremos los planes disponibles para tu carrito al iniciar sesión.</p>}
+         {view.issues > 0 ? <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
+-          : <Link prefetch={false} className="button" data-testid="cart-checkout" href={authHref('/cuenta', '/checkout')} aria-disabled={offline || current.isError || current.isFetching} onClick={event => { if (offline || current.isError || current.isFetching) event.preventDefault(); }}>Continuar con la compra</Link>}
++          : <Link prefetch={false} className="button" data-testid="cart-checkout" href={authHref('/cuenta', withPlan('/checkout', preference))} aria-disabled={offline || current.isError || current.isFetching} onClick={event => { if (offline || current.isError || current.isFetching) event.preventDefault(); }}>Continuar con la compra</Link>}
+         <Link prefetch={false} className="text-link" href="/buscar">Seguir explorando <ArrowRight size={16} /></Link>
+       </aside></div>
+   </div>;
+ }
+-export default function Cart() {
++function CartContent() {
++  const search = useSearchParams();
++  const preference = planFromSearch(new URLSearchParams(search.toString()));
+   const { session, ready } = useAccount();
+   if (!ready)
+     return (
+@@ -230,8 +259,12 @@ export default function Cart() {
+       </section>
+     );
+   return session ? (
+-    <><PendingCartMerge key={'pending:' + session.user.id} /><BuyerCart key={session.user.id} buyerId={session.user.id} /></>
++    <><PendingCartMerge key={'pending:' + session.user.id} /><BuyerCart key={session.user.id} buyerId={session.user.id} preference={preference} /></>
+   ) : (
+-    <GuestCart />
++    <GuestCart preference={preference} />
+   );
+ }
++
++export default function Cart() {
++  return <Suspense fallback={<section className="state" role="status">Cargando tu carrito…</section>}><CartContent /></Suspense>;
++}
+diff --git a/apps/storefront/src/components/buyer.tsx b/apps/storefront/src/components/buyer.tsx
+index 1fcba45..34aa779 100644
+--- a/apps/storefront/src/components/buyer.tsx
++++ b/apps/storefront/src/components/buyer.tsx
+@@ -1,11 +1,19 @@
+ 'use client';
+-import { Fragment, type ReactNode } from 'react';
+-import { usePathname } from 'next/navigation';
++import { Fragment, Suspense, type ReactNode } from 'react';
++import { usePathname, useSearchParams } from 'next/navigation';
++import { planFromSearch, withPlan } from '@kora/core';
++import { authHref } from '@/lib/auth-return';
+ import { useAccount } from '@/lib/providers';
+ import { Empty } from './states';
+ export function Buyer({ children }: { children: (buyerId: string) => ReactNode }) {
++  return <Suspense fallback={<section className="state" role="status">Cargando tu cuenta…</section>}><BuyerSession>{children}</BuyerSession></Suspense>;
++}
++function BuyerSession({ children }: { children: (buyerId: string) => ReactNode }) {
+   const { session, ready } = useAccount();
+   const path = usePathname();
++  const search = useSearchParams();
++  // Only the public plan preference survives direct checkout authentication.
++  const back = path === '/checkout' ? withPlan(path, planFromSearch(new URLSearchParams(search.toString()))) : path;
+   if (!ready)
+     return (
+       <section className="state" role="status">
+@@ -17,7 +25,7 @@ export function Buyer({ children }: { children: (buyerId: string) => ReactNode }
+       <Empty
+         title="Inicia sesión para continuar"
+         text="Accede con la cuenta con la que realizas tus compras."
+-        href={`/cuenta?volver=${encodeURIComponent(path)}`}
++        href={authHref('/cuenta', back)}
+         action="Iniciar sesión"
+       />
+     );
+diff --git a/apps/storefront/src/components/checkout.tsx b/apps/storefront/src/components/checkout.tsx
+index a5b6251..b15925d 100644
+--- a/apps/storefront/src/components/checkout.tsx
++++ b/apps/storefront/src/components/checkout.tsx
+@@ -12,7 +12,7 @@ import {
+   type PlaceOrderResult,
+ } from '@kora/api';
+ import { ArrowLeft, ArrowRight, Check, Plus, Truck } from 'lucide-react';
+-import { describeEtaDates } from '@kora/core';
++import { describeEtaDates, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, planFromSearch, presentServerSchedule, withPlan } from '@kora/core';
+ import { browser } from '@/lib/browser';
+ import { money } from '@/lib/format';
+ import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/lib/purchase';
+@@ -56,6 +56,10 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+         if(!navigator.locks)throw new Error('Este navegador no puede coordinar la compra entre pestañas. Usa un navegador actualizado.');
+         const i=await navigator.locks.request(`mayami.checkout:${buyerId}`,()=>active?restoreCheckoutIntent(localStorage,sessionStorage,buyerId):null);
+         if(active&&i){setIntent(i);setUncertain(true);}
++        else if(active) {
++          // A URL carries a preference only. A stored/transmitted intent above keeps its accepted plan untouched.
++          setPlan(planFromSearch(new URLSearchParams(window.location.search)) ?? 'full');
++        }
+       }catch(error){if(active)setStorageProblem((error as Error).message||'No pudimos recuperar tu compra guardada.');}
+       finally{if(active)setRestored(true);}
+     };
+@@ -108,15 +112,19 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+         try {
+           const s = await bound.api.checkout.previewReviewed(address?.id ?? null, selected, code);
+           await bound.assertCurrent();
+-          if (!s.plan && s.plans[0]) {
+-            code = s.plans[0].code;
++          const offered = chooseOfferedPlan(code, s.plans);
++          if (code && offered.code !== code) recoveredPlan = true;
++          if (offered.code && s.plan?.code !== offered.code) {
++            recoveredPlan = recoveredPlan || (!!code && code !== offered.code);
++            code = offered.code;
+             continue;
+           }
+           return {
+             summary: s,
+-            code: s.plan?.code ?? code,
++            code: offered.code && s.plan?.code === offered.code ? offered.code : null,
+             recovered: Object.keys(shipping).length > 0 && selected !== shipping,
+             recoveredPlan,
++            planNotice: chooseOfferedPlan(plan, s.plans).notice,
+           };
+         } catch (e) {
+           const problem = (e as { code?: string }).code;
+@@ -135,6 +143,12 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+       throw new Error('No pudimos actualizar las opciones de compra.');
+     },
+   });
++  useEffect(() => {
++    // This is navigation preference only; recovery never changes its stored selection or destination.
++    if (!restored || intent || uncertain || !preview.isSuccess || preview.isFetching || preview.isPlaceholderData || !preview.data.code) return;
++    const next = withPlan('/checkout', preview.data.code);
++    if (window.location.pathname + window.location.search !== next) router.replace(next, { scroll: false });
++  }, [restored, intent, uncertain, preview.isSuccess, preview.isFetching, preview.isPlaceholderData, preview.data, router]);
+   if (preview.data && !preview.isFetching && preview.data !== seen && !uncertain) {
+     setSeen(preview.data);
+     if (step === 3 && reviewedToken && reviewedToken !== preview.data.summary.review_token) {
+@@ -150,7 +164,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+     if (preview.data.recoveredPlan) {
+       setPlan(preview.data.code ?? 'full');
+       if (step >= 2 && !preview.data.recovered) setStep(2);
+-      setNotice('El plan de pago cambió. Revisa el plan y los importes antes de confirmar.');
++      setNotice(preview.data.planNotice ?? 'El plan de pago cambió. Revisa el plan y los importes antes de confirmar.');
+     }
+   }
+   const complete = async (result: PlaceOrderResult, accepted: Intent) => {
+@@ -353,6 +367,8 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+   if (cartSyncing) return <section className="state" role="status">Incorporando tus productos…</section>;
+   if (cartSyncError) return <PendingCartMerge />;
+   const s = preview.data?.summary ?? snapshot;
++  const displayedPayments = s && preview.data?.code ? presentServerSchedule(s.schedule) : null;
++  const dueToday = displayedPayments?.singlePaymentDueToday;
+   const fresh = preview.isSuccess && !preview.isFetching && !preview.isPlaceholderData;
+   if (addresses.isPending)
+     return (
+@@ -393,7 +409,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+           : !!s?.can_place;
+   return (
+     <div className="wrap commerce-page checkout-page">
+-      <Link prefetch={false} className="text-link" href="/carrito">
++      <Link prefetch={false} className="text-link" href={withPlan('/carrito', plan)}>
+         <ArrowLeft size={16} />
+         Volver al carrito
+       </Link>
+@@ -521,17 +537,18 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+                   <input
+                     type="radio"
+                     name="plan"
+-                    checked={plan === p.code}
++                    checked={preview.data?.code === p.code}
+                     disabled={!fresh}
+-                    onChange={() => setPlan(p.code)}
++                    onChange={() => { setPlan(p.code); router.replace(withPlan('/checkout', p.code), { scroll: false }); }}
+                   />
+                   <span>
+-                    <strong>{p.name}</strong>
+-                    <span>{p.description}</span>
++                    <strong>{paymentPlanTitle(p)}</strong>
++                    <span>{paymentPlanDescription(p)}</span>
+                   </span>
+                 </label>
+               ))}
+-            {step === 2 && s && <PaymentSchedule summary={s} />}
++            {step === 2 && s && preview.data?.code && <PaymentSchedule summary={s} />}
++            {step === 2 && s && !preview.data?.code && <p className="notice" role="status">Selecciona uno de los planes disponibles para continuar.</p>}
+             {step === 3 && s && (
+               <>
+                 <div className="checkout-products" data-testid="checkout-products">
+@@ -587,7 +604,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+                 </div>
+                 <div className="review-address review-plan">
+                   <div className="section-heading">
+-                    <h2>{s.plan?.name}</h2>
++                    <h2>{s.plan ? paymentPlanTitle(s.plan) : 'Plan de pago'}</h2>
+                     <button className="text-button" onClick={() => move(2)} aria-label="Cambiar plan de pago">
+                       Cambiar
+                     </button>
+@@ -639,10 +656,10 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+                   <dt>Total del pedido</dt>
+                   <dd>{money(s.total_usd)}</dd>
+                 </div>
+-                {s.schedule.length > 1 && (
++                {s.schedule.length > 1 && dueToday && (
+                   <div className="summary-now">
+                     <dt>Pagas hoy</dt>
+-                    <dd>{money(s.schedule[0]!.amount_usd)}</dd>
++                    <dd>{money(dueToday.amount_usd)}</dd>
+                   </div>
+                 )}
+               </dl>
+@@ -652,8 +669,8 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+             <div className="checkout-actions">
+               {s && (
+                 <div className="action-amount">
+-                  <span>{s.schedule.length > 1 ? 'Pagas hoy' : 'Total del pedido'}</span>
+-                  <strong>{money(s.schedule[0]?.amount_usd ?? s.total_usd)}</strong>
++                  <span>{s.schedule.length > 1 && dueToday ? 'Pagas hoy' : 'Total del pedido'}</span>
++                  <strong>{money(s.schedule.length > 1 && dueToday ? dueToday.amount_usd : s.total_usd)}</strong>
+                 </div>
+               )}
+               <button
+@@ -701,14 +718,15 @@ export function Checkout({ buyerId }: { buyerId: string }) {
+ 
+ function PaymentSchedule({ summary: s }: { summary: CheckoutSummary }) {
+   if (s.schedule.length <= 1) return null;
++  const displayed = presentServerSchedule(s.schedule);
+   return (
+     <div className="payment-schedule">
+-      <h2>Calendario de pagos</h2>
+-      {s.schedule.map((p) => (
++      <h2>{displayed.title}</h2>
++      {displayed.distribution && <p>{displayed.distribution}</p>}
++      {displayed.rows.map(({ item: p, label, due }) => (
+         <div key={p.seq}>
+           <span>
+-            {p.kind === 'down_payment' ? 'Anticipo' : p.kind === 'installment' ? `Cuota ${p.seq}` : 'Pago total'} ·{' '}
+-            {p.due_in_days === 0 ? 'Al pagar' : `En ${p.due_in_days} días`}
++            {label} · {due}
+           </span>
+           <strong>{money(p.amount_usd)}</strong>
+         </div>
+diff --git a/apps/storefront/src/components/product-detail.tsx b/apps/storefront/src/components/product-detail.tsx
+index 19349cf..a24f9f8 100644
+--- a/apps/storefront/src/components/product-detail.tsx
++++ b/apps/storefront/src/components/product-detail.tsx
+@@ -1,10 +1,11 @@
+ 'use client';
+ import { useRef, useState } from 'react';
+ import Link from 'next/link';
++import { useRouter } from 'next/navigation';
+ import { useMutation, useQueryClient } from '@tanstack/react-query';
+ import { ShoppingBag, ArrowRight, Check, Store } from 'lucide-react';
+ import type { CatalogMetadata, ProductDetail as Product } from '@kora/api';
+-import { presentAvailability, photoChoiceNotice, resolveProductSelection, variantSwatchLabel } from '@kora/core';
++import { presentAvailability, photoChoiceNotice, resolveProductSelection, variantSwatchLabel, offeredAtQuantity, productBasePreview, presentServerSchedule, withPlan } from '@kora/core';
+ import { ProductPhoto } from './photo';
+ import { ColorDot } from './color-dot';
+ import { Favorite } from './favorite';
+@@ -26,6 +27,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
+   const { session, ready, retryCartSync } = useAccount();
+   const guest = useGuestCartState();
+   const qc = useQueryClient();
++  const router = useRouter();
+   const input = reviewedSelectionInput(p, metadata);
+   const variants = metadata.variants.filter(v => v.active).map(v => ({ ...v, id: v.variant_id }));
+   const [selected, setSelected] = useState(initialVariantId ?? resolveProductSelection(input).selectedVariantId ?? '');
+@@ -62,6 +64,28 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
+     },
+   });
+   const canBuy = resolved.canBuy && availability.purchasable && quantity <= max;
++  // Both range and price belong to the same commercial product response. Missing offers never authorize a plan.
++  const installmentOffer = p.installment_options?.find(offer => offer.variant_id === selected && offer.basis === 'products_only_excludes_shipping');
++  const installmentPlan = installmentOffer && quantity <= installmentOffer.max_quantity
++    ? offeredAtQuantity(installmentOffer.plans, quantity).find(option => option.code === 'three_parts') : undefined;
++  const basePreview = canBuy && installmentOffer && installmentPlan
++    ? productBasePreview(installmentOffer.unit_price_usd, quantity, installmentPlan) : null;
++  const installmentPreview = basePreview?.schedule.length === 3 ? basePreview : null;
++  const displayedPayments = installmentPreview ? presentServerSchedule(installmentPreview.schedule) : null;
++  const addSelection = (preferredPlan?: 'three_parts') => {
++    if (adding.current || add.isPending) return;
++    const destination = preferredPlan ? withPlan('/carrito', preferredPlan) : undefined;
++    // The normal add action may already have succeeded for precisely this selection.
++    if (destination && add.isSuccess && add.variables.variantId === selected && add.variables.quantity === quantity) {
++      router.push(destination);
++      return;
++    }
++    adding.current = true;
++    add.mutate({ variantId: selected, quantity }, {
++      onSuccess: () => { if (destination) router.push(destination); },
++      onSettled: () => { adding.current = false; },
++    });
++  };
+   return (
+     <div className="wrap product-page">
+       <div className="breadcrumbs">
+@@ -192,12 +216,27 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
+             <button
+               className="button"
+               disabled={!ready || (!session && !guest.ready) || !canBuy || add.isPending}
+-              onClick={() => { if (adding.current) return; adding.current = true; add.mutate({ variantId: selected, quantity }, { onSettled: () => { adding.current = false; } }); }}
++              onClick={() => addSelection()}
+             >
+               <ShoppingBag size={18} />
+               {add.isPending ? 'Agregando…' : canBuy ? 'Agregar al carrito' : 'No disponible'}
+             </button>
+           </div>
++          {installmentPreview && displayedPayments && (
++            <section className="payment-schedule" aria-label="Opción de pago del producto" data-testid="product-installments">
++              <h2>{displayedPayments.title}</h2>
++              {displayedPayments.distribution && <p>{displayedPayments.distribution}</p>}
++              {displayedPayments.rows.map(({ item, label, due }) => (
++                <div key={item.seq}><span>{label} · {due}</span><strong>{money(Number(item.amount_usd))}</strong></div>
++              ))}
++              <p>{installmentPreview.label}</p>
++              <button type="button" className="button secondary" data-testid="product-buy-three-parts"
++                disabled={!ready || (!session && !guest.ready) || !canBuy || add.isPending}
++                onClick={() => addSelection('three_parts')}>
++                {add.isPending ? 'Agregando…' : 'Comprar en 3 pagos'} <ArrowRight size={16} />
++              </button>
++            </section>
++          )}
+           {add.isError && (
+             <p role="alert" className="error">
+               {add.error.message} Puedes volver a intentarlo.
+diff --git a/apps/storefront/src/lib/auth-return.ts b/apps/storefront/src/lib/auth-return.ts
+index 4e7cfb0..9c0210f 100644
+--- a/apps/storefront/src/lib/auth-return.ts
++++ b/apps/storefront/src/lib/auth-return.ts
+@@ -1,3 +1,4 @@
++import { planFromSearch, withPlan } from '@kora/core';
+ const base = 'https://mayami.invalid';
+ export function safeReturnPath(input: string | null | undefined, fallback = '/cuenta'): string {
+   if (!input || input.length > 4096 || !input.startsWith('/') || input.startsWith('//') || /[\\\u0000-\u001f\u007f]/.test(input)) return fallback;
+@@ -25,7 +26,7 @@ export function guestReturnPath(back: string) {
+   const safe = safeReturnPath(back);
+   const pathname = new URL(safe, base).pathname;
+   if (pathname === '/cuenta') return '/buscar';
+-  return pathname === '/checkout' ? '/carrito' : safe;
++  return pathname === '/checkout' ? withPlan('/carrito', planFromSearch(new URL(safe, base).searchParams)) : safe;
+ }
+ export function callbackPath(back: string, recovery = false) {
+   const params = new URLSearchParams({ volver: safeReturnPath(back) });
+diff --git a/packages/api/src/types.ts b/packages/api/src/types.ts
+index 112a0e3..b3e9a72 100644
+--- a/packages/api/src/types.ts
++++ b/packages/api/src/types.ts
+@@ -81,6 +81,8 @@ export interface ProductVariant {
+ }
+ 
+ export interface ProductDetail extends ProductCard {
++  /** Server eligibility per variant/quantity. Amounts are product-only until checkout includes delivery. */
++  installment_options?: ProductInstallmentOffer[];
+   /** Present in the reviewed endpoint; shares the detail's database snapshot. */
+   catalog_metadata?: CatalogMetadata;
+   /** Server-confirmed images not assigned to any variant, including hidden/inactive variants. */
+@@ -224,6 +226,15 @@ export interface PlanOption {
+   down_payment_pct: number;
+ }
+ 
++export interface ProductPaymentOption extends PlanOption { min_quantity: number; max_quantity: number }
++export interface ProductInstallmentOffer {
++  variant_id: string;
++  unit_price_usd: number;
++  max_quantity: number;
++  basis: 'products_only_excludes_shipping';
++  plans: ProductPaymentOption[];
++}
++
+ export interface ScheduleItem {
+   seq: number;
+   kind: Enums['obligation_kind'];
+diff --git a/packages/core/src/index.ts b/packages/core/src/index.ts
+index 3d4c08a..b29a3b4 100644
+--- a/packages/core/src/index.ts
++++ b/packages/core/src/index.ts
+@@ -1,5 +1,6 @@
+ export * from './money';
+ export * from './plans';
++export * from './payment-presentation';
+ export * from './availability';
+ export * from './eta';
+ export * from './errors';
+diff --git a/packages/core/src/payment-presentation.ts b/packages/core/src/payment-presentation.ts
+new file mode 100644
+index 0000000..dd7ae5d
+--- /dev/null
++++ b/packages/core/src/payment-presentation.ts
+@@ -0,0 +1,69 @@
++import { D } from './money';
++import { planFinancing, planSchedule, type InstallmentPlan } from './plans';
++
++export interface QuantityPaymentOption extends InstallmentPlan { min_quantity: number; max_quantity: number }
++export function offeredAtQuantity<T extends QuantityPaymentOption>(options: readonly T[] | undefined, quantity: number): T[] {
++  if (!Number.isSafeInteger(quantity) || quantity < 1) return [];
++  return (options ?? []).filter(p => Number.isSafeInteger(p.min_quantity) && Number.isSafeInteger(p.max_quantity) &&
++    p.min_quantity >= 1 && p.max_quantity >= p.min_quantity && quantity >= p.min_quantity && quantity <= p.max_quantity);
++}
++/** Product-only estimate from the current server offer/price. Checkout remains authoritative. */
++export function productBasePreview(price: number | string, quantity: number, option: QuantityPaymentOption) {
++  if (!offeredAtQuantity([option], quantity).length) return null;
++  try {
++    const unit = D(price);
++    if (!unit.gt(0) || !Number.isSafeInteger(option.installments) || option.installments < 0 ||
++        !Number.isSafeInteger(option.interval_days) || option.interval_days < 0 ||
++        D(option.down_payment_pct).lt(0) || D(option.down_payment_pct).gt(100) ||
++        (D(option.down_payment_pct).lt(100) && option.installments < 1)) return null;
++    const items = unit.times(quantity), financing = planFinancing(items, option), total = items.plus(financing);
++    const schedule = planSchedule(total, option);
++    if (schedule.some(row => !D(row.amount_usd).gt(0))) return null;
++    return { scope: 'product_without_shipping' as const, items_usd: items.toFixed(2), financing_usd: financing.toFixed(2),
++      total_usd: total.toFixed(2), schedule,
++      label: 'Previsualización del producto, sin envío. El total final se confirma al continuar.' };
++  } catch { return null; }
++}
++
++type DisplayPayment = { seq: number; kind: string; amount_usd: number | string; due_in_days: number };
++export function presentServerSchedule<T extends DisplayPayment>(schedule: readonly T[]) {
++  const total = schedule.length, today = schedule.filter(row => row.due_in_days === 0), later = schedule.filter(row => row.due_in_days > 0);
++  return {
++    title: total > 1 ? `${total} pagos en total` : total === 1 ? 'Pago completo' : 'Plan de pago',
++    distribution: total > 1 && today.length === 1 && later.length === total - 1
++      ? `Un pago hoy y ${later.length} ${later.length === 1 ? 'pago posterior' : 'pagos posteriores'}.` : undefined,
++    singlePaymentDueToday: today.length === 1 ? today[0]! : null,
++    requiresServerDueNowTotal: today.length > 1,
++    rows: schedule.map((item, index) => ({ item, label: total > 1 ? `Pago ${index + 1} de ${total}` : 'Pago completo',
++      due: item.due_in_days === 0 ? 'Hoy' : `En ${item.due_in_days} días` })),
++  };
++}
++export function paymentPlanTitle(plan: InstallmentPlan) {
++  if (plan.code !== 'three_parts') return plan.name;
++  const count = D(plan.down_payment_pct).gte(100) ? 1 : plan.installments + (D(plan.down_payment_pct).gt(0) ? 1 : 0);
++  return count > 1 ? `${count} pagos en total` : plan.name;
++}
++export function paymentPlanDescription(plan: InstallmentPlan & { description?: string | null }) {
++  if (plan.code !== 'three_parts') return plan.description ?? undefined;
++  const count = plan.installments + (D(plan.down_payment_pct).gt(0) ? 1 : 0);
++  return count > 1 ? `Primer pago hoy y ${count - 1} después, cada ${plan.interval_days} días.` : plan.description ?? undefined;
++}
++
++const planSyntax = /^[A-Za-z0-9_-]{1,64}$/;
++export function safePlanCode(value: unknown): string | undefined { return typeof value === 'string' && planSyntax.test(value) ? value : undefined; }
++export function planFromSearch(params: URLSearchParams): string | undefined {
++  const values = params.getAll('plan'); return values.length === 1 ? safePlanCode(values[0]) : undefined;
++}
++export function withPlan(path: string, preference?: string): string {
++  if (!path.startsWith('/') || path.startsWith('//') || /[\\\u0000-\u001f\u007f]/.test(path)) throw new Error('Invalid route');
++  const url = new URL(path, 'https://mayami.invalid');
++  if (url.origin !== 'https://mayami.invalid' || url.hash) throw new Error('Invalid route');
++  url.searchParams.delete('plan'); const code = safePlanCode(preference); if (code) url.searchParams.set('plan', code);
++  return url.pathname + url.search;
++}
++export function chooseOfferedPlan(preference: unknown, offered: readonly { code: string }[]) {
++  const code = safePlanCode(preference);
++  if (code && offered.some(p => p.code === code)) return { code, notice: undefined };
++  return { code: offered.find(p => p.code === 'full')?.code,
++    notice: code ? 'El plan solicitado no está disponible para este carrito. Revisa las opciones de pago.' : undefined };
++}
+diff --git a/packages/core/test/payment-presentation.test.ts b/packages/core/test/payment-presentation.test.ts
+new file mode 100644
+index 0000000..65790a8
+--- /dev/null
++++ b/packages/core/test/payment-presentation.test.ts
+@@ -0,0 +1,56 @@
++import { describe, expect, it } from 'vitest';
++import { chooseOfferedPlan, offeredAtQuantity, paymentPlanDescription, paymentPlanTitle, planFromSearch,
++  planSchedule, presentServerSchedule, productBasePreview, safePlanCode, sumMoney, withPlan } from '../src';
++const three = { code: 'three_parts', name: '3 cuotas', down_payment_pct: 0, installments: 3, interval_days: 15, surcharge_pct: 0, min_quantity: 1, max_quantity: 2 };
++describe('server payment offers and presentation', () => {
++  it('previews the real USD39 offer as three total payments, with the first today', () => {
++    const preview = productBasePreview('39', 1, three)!;
++    expect(preview.schedule.map(p => [p.amount_usd, p.due_in_days])).toEqual([['13.00', 0], ['13.00', 15], ['13.00', 30]]);
++    expect(preview.scope).toBe('product_without_shipping'); expect(preview.label).toContain('sin envío');
++    expect(paymentPlanTitle(three)).toBe('3 pagos en total'); expect(paymentPlanDescription(three)).not.toContain('iguales');
++  });
++  it('requires a current server offer and quantity range; never fabricates eligibility', () => {
++    expect(offeredAtQuantity(undefined, 1)).toEqual([]); expect(offeredAtQuantity([three], 3)).toEqual([]);
++    expect(productBasePreview('39', 3, three)).toBeNull(); expect(productBasePreview('39', 1.5, three)).toBeNull();
++    expect(productBasePreview('bad', 1, three)).toBeNull(); expect(productBasePreview('0.01', 1, three)).toBeNull();
++  });
++  it('keeps price, quantity, financing and remainder cents aligned with the existing schedule contract', () => {
++    for (const total of ['39.01', '47', '99.99']) {
++      const preview = productBasePreview(total, 2, three)!;
++      expect(preview.schedule).toEqual(planSchedule(preview.total_usd, three));
++      expect(sumMoney(preview.schedule.map(p => p.amount_usd)).toFixed(2)).toBe(preview.total_usd);
++      expect(presentServerSchedule(preview.schedule).rows.map(p => p.item.amount_usd)).toEqual(preview.schedule.map(p => p.amount_usd));
++    }
++  });
++  it('counts an initial payment plus future payments without changing installments semantics', () => {
++    const initialAndTwo = { ...three, down_payment_pct: 50, installments: 2 };
++    expect(planSchedule('100', initialAndTwo)).toHaveLength(3);
++    expect(presentServerSchedule(planSchedule('100', initialAndTwo)).title).toBe('3 pagos en total');
++    const initialAndThree = { ...three, down_payment_pct: 50 };
++    expect(planSchedule('100', initialAndThree)).toHaveLength(4); expect(paymentPlanTitle(initialAndThree)).toBe('4 pagos en total');
++  });
++  it('labels exact returned rows including the unequal final remainder and keeps other plan names', () => {
++    const rows = planSchedule('100', three), display = presentServerSchedule(rows);
++    expect(display.distribution).toBe('Un pago hoy y 2 pagos posteriores.');
++    expect(display.rows.map(row => [row.label, row.due, row.item.amount_usd])).toEqual([
++      ['Pago 1 de 3', 'Hoy', '33.33'], ['Pago 2 de 3', 'En 15 días', '33.33'], ['Pago 3 de 3', 'En 30 días', '33.34'],
++    ]);
++    expect(paymentPlanTitle({ ...three, code: 'deposit_50', name: 'Anticipo 50%', installments: 1, down_payment_pct: 50 })).toBe('Anticipo 50%');
++  });
++  it('does not fake a today total when multiple returned obligations are due today', () => {
++    const rows = planSchedule('39', { ...three, interval_days: 0 });
++    const display = presentServerSchedule(rows); expect(display.singlePaymentDueToday).toBeNull(); expect(display.requiresServerDueNowTotal).toBe(true);
++  });
++  it('preserves only valid plan intent in internal URLs', () => {
++    expect(withPlan('/checkout', 'three_parts')).toBe('/checkout?plan=three_parts');
++    expect(withPlan('/checkout?variant=v&plan=old', 'full')).toBe('/checkout?variant=v&plan=full');
++    expect(planFromSearch(new URLSearchParams('plan=full&plan=three_parts'))).toBeUndefined();
++    expect(safePlanCode(['three_parts'])).toBeUndefined(); expect(safePlanCode('https://evil.invalid')).toBeUndefined();
++    expect(() => withPlan('//evil.invalid', 'full')).toThrow(); expect(() => withPlan('/\\evil.invalid', 'full')).toThrow();
++  });
++  it('chooses only an offered plan and never silently substitutes another financed plan', () => {
++    expect(chooseOfferedPlan('three_parts', [{ code: 'full' }, { code: 'three_parts' }])).toEqual({ code: 'three_parts', notice: undefined });
++    expect(chooseOfferedPlan('three_parts', [{ code: 'full' }])).toMatchObject({ code: 'full', notice: expect.any(String) });
++    expect(chooseOfferedPlan('three_parts', [{ code: 'deposit_50' }]).code).toBeUndefined();
++  });
++});
+diff --git a/supabase/migrations/20261107203116_mayami_deferred_three_payments.sql b/supabase/migrations/20261107203116_mayami_deferred_three_payments.sql
+new file mode 100644
+index 0000000..978d06d
+--- /dev/null
++++ b/supabase/migrations/20261107203116_mayami_deferred_three_payments.sql
+@@ -0,0 +1,222 @@
++-- Future eligibility only: three total payments for preorder/on-order carts.
++-- Existing plan rows, financial schedules, permissions and historic data remain untouched.
++-- Same existing public reader + checkout builder. No new public RPC, GRANT, role,
++-- policy, interest, dates, plan row, product row or historic business row changes.
++-- Current real public plan receipt: ../public/plans-active.json (MIM, 7nov2026).
++-- Runner owns transaction. Existing wrappers keep their owner/ACL/security attributes.
++
++-- Fail closed if a newer implementation replaced either reviewed function.
++do $$ begin
++  if (select md5(prosrc) from pg_proc where oid='public._build_checkout(uuid,uuid,jsonb,text)'::regprocedure)<>'2052c218ca383e8366fd8bf85b27a833' then raise exception 'checkout source differs from reviewed baseline'; end if;
++  if (select md5(prosrc) from pg_proc where oid='public.product_detail_commercial(uuid)'::regprocedure)<>'62fee35a611d6593055bad973f016d6b' then raise exception 'checkout source differs from reviewed baseline'; end if;
++end $$;
++
++do $$
++declare p public.installment_plans;
++begin
++  select * into p from public.installment_plans where code='three_parts';
++  if not found or not p.active or p.down_payment_pct<>0 or p.installments<>3 or p.interval_days<>15
++      or p.surcharge_pct<>0 or p.min_order_usd<>60
++      or not (p.allowed_flows @> array['local_stock','import_order']::public.fulfillment_flow[])
++      or not (p.allowed_flows <@ array['local_stock','import_order']::public.fulfillment_flow[]) then
++    raise exception 'current three_parts config differs from reviewed real receipt';
++  end if;
++end $$;
++
++create function checkout_private.installment_plan_eligible(
++  p_plan public.installment_plans,p_items_usd numeric,p_flows public.fulfillment_flow[],p_all_target boolean
++) returns boolean language sql immutable security invoker set search_path=public,pg_temp as $$
++  select p_plan.active and (
++    (p_items_usd>=p_plan.min_order_usd and (p_flows is null or p_flows<@p_plan.allowed_flows))
++    or (p_plan.code='three_parts' and p_plan.down_payment_pct=0 and p_plan.installments=3
++      and p_plan.surcharge_pct=0 and coalesce(p_all_target,false) and p_items_usd>=0.03)
++  )
++$$;
++revoke all on function checkout_private.installment_plan_eligible(public.installment_plans,numeric,public.fulfillment_flow[],boolean)
++  from public,anon,authenticated,service_role;
++
++create or replace function public._build_checkout(
++  p_user uuid, p_address_id uuid, p_shipping jsonb, p_plan_code text
++) returns jsonb language plpgsql stable security definer set search_path = public as $$
++declare
++  v_addr public.addresses;
++  v_groups jsonb := '[]'::jsonb;
++  v_group record;
++  v_options jsonb;
++  v_selected jsonb;
++  v_sel_id text;
++  v_items numeric := 0;
++  v_shipping numeric := 0;
++  v_issues int := 0;
++  v_needs_shipping boolean := false;
++  v_seq int := 0;
++  v_plan public.installment_plans;
++  v_plans jsonb;
++  v_total numeric;
++  v_financing numeric := 0;
++  v_schedule jsonb := '[]'::jsonb;
++  v_flows public.fulfillment_flow[];
++  v_count int := 0;
++  v_preorder_only boolean := true;
++begin
++  if p_address_id is not null then
++    select * into v_addr from public.addresses where id = p_address_id and user_id = p_user;
++    if not found then raise exception 'address not found' using errcode = 'P0002', hint = 'address_not_found'; end if;
++  else
++    select * into v_addr from public.addresses where user_id = p_user and is_default;
++  end if;
++
++  for v_group in
++    select l.group_key, l.store_id, min(l.store_name) as store_name, min(l.store_slug) as store_slug,
++           min(l.store_kind::text) as store_kind, l.flow,
++           sum(case when l.issue is null then l.unit_price_usd * l.quantity else 0 end) as subtotal,
++           sum(case when l.issue is null then l.weight_kg * l.quantity else 0 end) as weight,
++           max(l.ready_min) as ready_min, max(l.ready_max) as ready_max,
++           count(*) filter (where l.issue is not null) as issues,
++           count(*) filter (where l.issue is null) as ok_lines,
++           bool_and(l.issue is null and l.availability in ('reservable','on_order')) as preorder_only,
++           jsonb_agg(jsonb_build_object(
++             'variant_id', l.variant_id, 'product_id', l.product_id, 'title', l.title, 'variant_title', l.variant_title,
++             'image_path', l.image_path, 'availability', l.availability, 'unit_price_usd', l.unit_price_usd,
++             'quantity', l.quantity, 'line_total_usd', l.unit_price_usd * l.quantity,
++             'max_quantity', least(l.max_per_order, coalesce(l.stock, l.max_per_order)), 'issue', l.issue
++           )) as lines
++      from public._cart_lines(p_user) l
++     group by l.group_key, l.store_id, l.flow
++     order by case l.flow when 'local_stock' then 0 when 'import_order' then 1 else 2 end, min(l.store_name), l.group_key
++  loop
++    v_count := v_count + 1;
++    v_preorder_only := v_preorder_only and coalesce(v_group.preorder_only,false);
++    v_issues := v_issues + v_group.issues;
++    v_items := v_items + v_group.subtotal;
++    v_options := null; v_selected := null;
++    if v_group.ok_lines > 0 then
++      v_seq := v_seq + 1;
++      v_flows := array_append(v_flows, v_group.flow);
++      if v_addr.id is not null then
++        select coalesce(jsonb_agg(jsonb_build_object(
++                 'method_id', o.method_id, 'code', o.method_code, 'name', o.method_name, 'kind', o.kind,
++                 'carrier', o.carrier_name, 'cost_usd', o.cost_usd,
++                 'min_days', v_group.ready_min + o.min_days, 'max_days', v_group.ready_max + o.max_days,
++                 'eta_min_date', current_date + (v_group.ready_min + o.min_days),
++                 'eta_max_date', current_date + (v_group.ready_max + o.max_days),
++                 'is_demo', o.is_demo) order by o.cost_usd), '[]'::jsonb)
++          into v_options
++          from public.shipping_options(v_group.store_id, v_group.flow, v_addr.region_code, v_group.weight, v_group.subtotal, v_addr.country_code) o;
++        v_sel_id := nullif(p_shipping ->> v_group.group_key, ''); -- method id or method code
++        if v_sel_id is not null then
++          select e into v_selected from jsonb_array_elements(v_options) e where e ->> 'method_id' = v_sel_id or e ->> 'code' = v_sel_id;
++          if v_selected is null then
++            raise exception 'shipping method not available for this delivery' using errcode = 'P0001', hint = 'shipping_invalid';
++          end if;
++        else
++          v_selected := v_options -> 0; -- cheapest by default
++        end if;
++        if v_selected is null then v_needs_shipping := true; else v_shipping := v_shipping + (v_selected ->> 'cost_usd')::numeric; end if;
++      else
++        v_needs_shipping := true;
++      end if;
++    end if;
++    v_groups := v_groups || jsonb_build_object(
++      'key', v_group.group_key, 'seq', case when v_group.ok_lines > 0 then v_seq end,
++      'store', jsonb_build_object('id', v_group.store_id, 'name', v_group.store_name, 'slug', v_group.store_slug, 'kind', v_group.store_kind),
++      'flow', v_group.flow, 'label', public._group_label(v_group.flow, v_group.group_key, v_group.store_name),
++      'subtotal_usd', v_group.subtotal, 'weight_kg', v_group.weight,
++      'ready_min_days', v_group.ready_min, 'ready_max_days', v_group.ready_max,
++      'shipping_options', v_options, 'selected_shipping', v_selected, 'lines', v_group.lines);
++  end loop;
++
++  v_total := v_items + v_shipping;
++
++  -- plans available for this cart
++  select coalesce(jsonb_agg(jsonb_build_object(
++           'code', code, 'name', name, 'description', description, 'down_payment_pct', down_payment_pct,
++           'installments', installments, 'interval_days', interval_days, 'surcharge_pct', surcharge_pct) order by sort), '[]'::jsonb)
++    into v_plans
++    from public.installment_plans ip
++   where checkout_private.installment_plan_eligible(ip,v_items,v_flows,v_seq>0 and v_preorder_only);
++
++  if p_plan_code is not null then
++    select * into v_plan from public.installment_plans where code = p_plan_code and active;
++    if not found or not exists (select 1 from jsonb_array_elements(v_plans) e where e ->> 'code' = p_plan_code) then
++      raise exception 'plan not available for this cart' using errcode = 'P0001', hint = 'plan_invalid';
++    end if;
++    v_financing := round((v_total - round(v_total * v_plan.down_payment_pct / 100, 2)) * v_plan.surcharge_pct / 100, 2);
++    v_total := v_total + v_financing;
++    v_schedule := public._plan_schedule(v_total, v_plan);
++  end if;
++
++  return jsonb_build_object(
++    'groups', v_groups,
++    'address', case when v_addr.id is null then null else to_jsonb(v_addr) end,
++    'items_usd', v_items, 'shipping_usd', v_shipping, 'financing_usd', v_financing, 'total_usd', v_total,
++    'line_count', v_count, 'issues', v_issues, 'needs_address', v_addr.id is null,
++    'needs_shipping', v_needs_shipping, 'plans', v_plans,
++    'plan', case when v_plan.code is null then null else to_jsonb(v_plan) end,
++    'schedule', v_schedule,
++    'can_place', v_issues = 0 and v_seq > 0 and v_addr.id is not null and not v_needs_shipping and p_plan_code is not null
++  );
++end $$;
++
++create or replace function public.product_detail_commercial(p_id uuid)
++returns jsonb language plpgsql stable security invoker set search_path = public, pg_temp as $$
++declare v_detail jsonb; v_meta jsonb; v_variants jsonb; v_images jsonb; v_links jsonb; v_installment_options jsonb;
++begin
++  v_detail := public.product_detail(p_id);
++  if v_detail is null then return null; end if;
++  v_meta := public.catalog_metadata(array[p_id]) -> 0;
++  if v_meta is null then return null; end if;
++  -- STABLE functions share the calling query's snapshot; no second client round trip.
++  select coalesce(jsonb_agg(v.value || jsonb_build_object(
++      'media_classified', (m.value->>'media_classified')::boolean, 'sku', m.value->'sku'
++    ) order by v.ordinality), '[]'::jsonb) into v_variants
++    from jsonb_array_elements(v_detail->'variants') with ordinality v(value, ordinality)
++    join jsonb_array_elements(v_meta->'variants') m(value) on m.value->>'variant_id'=v.value->>'id';
++  select coalesce(jsonb_agg(jsonb_build_object('id',i.id,'path',i.path,'alt',i.alt,
++      'width',i.width,'height',i.height) order by i.sort,i.id),'[]'::jsonb) into v_images
++    from public.product_images i where i.product_id=p_id;
++  select coalesce(jsonb_agg(jsonb_build_object('variant_id',m.variant_id,'image_id',m.image_id,'sort',m.sort)
++      order by m.variant_id,m.sort),'[]'::jsonb) into v_links
++    from public.product_variant_images m join public.product_variants v on v.id=m.variant_id and v.product_id=m.product_id
++    where m.product_id=p_id and v.active and v.media_classified;
++  -- This reader stays INVOKER and cannot call the revoked private checkout helper.
++  -- RLS and the existing active-plan SELECT surface remain authoritative.
++  -- The inline eligibility expression is parity-tested against that helper.
++  with visible_variants as (
++    select v.id as variant_id,v.price_usd,p.availability,
++      least(p.max_per_order,coalesce(v.stock,p.max_per_order)) as max_quantity,
++      case when s.kind='seller' then 'seller_shipping'::public.fulfillment_flow
++        when p.origin='import' then 'import_order'::public.fulfillment_flow
++        else 'local_stock'::public.fulfillment_flow end as flow
++    from public.products p join public.stores s on s.id=p.store_id
++      join public.product_variants v on v.product_id=p.id
++    where p.id=p_id and p.moderation_status='published' and s.status='active' and v.active
++      and p.availability not in ('sold_out','unavailable') and v.price_usd>0
++  ), candidates as (
++    select v.variant_id,v.price_usd,v.max_quantity,ip as plan,
++      case when ip.code='three_parts' and ip.down_payment_pct=0 and ip.installments=3
++          and ip.surcharge_pct=0 and v.availability in ('reservable','on_order')
++        then greatest(1,ceil(0.03/v.price_usd))
++        else greatest(1,ceil(ip.min_order_usd/v.price_usd)) end as min_quantity,
++      v.flow=any(ip.allowed_flows)
++        or (ip.code='three_parts' and ip.down_payment_pct=0 and ip.installments=3
++          and ip.surcharge_pct=0 and v.availability in ('reservable','on_order')) as flow_allowed
++    from visible_variants v cross join public.installment_plans ip
++    where ip.active and v.max_quantity>0
++  ), per_variant as (
++    select c.variant_id,c.price_usd,c.max_quantity,
++      jsonb_agg(to_jsonb(c.plan)||jsonb_build_object('min_quantity',c.min_quantity,
++        'max_quantity',c.max_quantity) order by (c.plan).sort,(c.plan).code) as plans
++    from candidates c where c.flow_allowed and c.min_quantity<=c.max_quantity
++    group by c.variant_id,c.price_usd,c.max_quantity
++  )
++  select coalesce(jsonb_agg(jsonb_build_object('variant_id',variant_id,'unit_price_usd',price_usd,
++    'max_quantity',max_quantity,'basis','products_only_excludes_shipping','plans',plans)
++    order by variant_id),'[]'::jsonb) into v_installment_options from per_variant;
++
++  return v_detail || jsonb_build_object('condition',v_meta->'condition','available_colors',v_meta->'colors',
++    'variants',v_variants,'images',v_images,'variant_image_links',v_links,'general_images',v_meta->'general_images',
++    'catalog_metadata',v_meta,'installment_options',v_installment_options);
++end $$;
++
++-- Intentionally no GRANT or SECURITY DEFINER change on the public product reader.
+diff --git a/tests/db-tests/test/db/installments.test.ts b/tests/db-tests/test/db/installments.test.ts
+new file mode 100644
+index 0000000..a1e5db1
+--- /dev/null
++++ b/tests/db-tests/test/db/installments.test.ts
+@@ -0,0 +1,250 @@
++import { afterAll, beforeAll, describe, expect, it } from 'vitest';
++import { planSchedule } from '@kora/core';
++import { DATABASE_URL, admin, asUser, createAddress, createStoreWithProduct, createUser, expectHint, key, ledgerBalanced, pool } from '../../src/db';
++
++const run = key('installments').replaceAll('-', '').slice(-16);
++type Fixture = Awaited<ReturnType<typeof createStoreWithProduct>> & { methodId: string };
++type Plan = Record<string, any>;
++let plans: Plan[];
++const cents = (n: unknown) => Math.round(Number(n) * 100);
++const codes = (doc: any) => (doc.plans as any[]).map(p => p.code).sort();
++const hasThree = (doc: any) => codes(doc).includes('three_parts');
++
++beforeAll(async () => {
++  // Keep the existing CI clone kora_test and the explicitly selected local release clone.
++  // Reject a remote/dev/default database BEFORE connecting or creating any fixture.
++  let target: URL;
++  try { target = new URL(DATABASE_URL); } catch { throw new Error('Installment tests require a local test database URL.'); }
++  const databaseName = decodeURIComponent(target.pathname.slice(1));
++  if (!['postgres:', 'postgresql:'].includes(target.protocol) ||
++      !['127.0.0.1', 'localhost', '[::1]'].includes(target.hostname) ||
++      !(databaseName === 'kora_test' ||
++        (databaseName === 'mayami_installments_20261107' && !!process.env.TEST_DATABASE_URL))) {
++    throw new Error('Installment tests may only use the local CI clone or the explicit isolated release clone.');
++  }
++  const [identity] = await admin('select current_database() db,host(inet_server_addr()) host,inet_server_port() port');
++  expect(identity.db).toBe(databaseName);
++  expect(['127.0.0.1', '::1']).toContain(identity.host);
++  expect(identity.port).toBe(Number(target.port || 5432));
++  const [schema] = await admin("select to_regprocedure('checkout_private.installment_plan_eligible(public.installment_plans,numeric,public.fulfillment_flow[],boolean)') is not null as ready");
++  expect(schema.ready).toBe(true);
++  plans = await admin('select * from public.installment_plans order by code');
++});
++afterAll(async () => {
++  try {
++    if (plans) expect(await admin('select * from public.installment_plans order by code')).toEqual(plans);
++  } finally { await pool.end(); }
++});
++
++async function fixture(opts: Parameters<typeof createStoreWithProduct>[0] = {}, shipping = 0): Promise<Fixture> {
++  const f = await createStoreWithProduct({ kind: 'platform', origin: 'local', availability: 'reservable', price: 39, stock: 6, ...opts });
++  const code = key('inst-' + run);
++  const [zone] = await admin("select id from public.shipping_zones where country_code='VE' and 'A'=any(region_codes) limit 1");
++  expect(zone).toBeDefined();
++  const [method] = await admin("insert into public.shipping_methods(code,name,kind) values($1,'Installments own test delivery','home_delivery') returning id", [code]);
++  await admin("insert into public.shipping_rates(method_id,zone_id,store_id,flows,base_usd,min_days,max_days) values($1,$2,$3,array['local_stock','import_order','seller_shipping']::public.fulfillment_flow[],$4,0,1)", [method.id, zone.id, f.storeId, shipping]);
++  return { ...f, methodId: method.id };
++}
++async function buyer() { return createUser('inst-' + run); }
++async function setCart(user: string, entries: { fixture: Fixture; quantity?: number }[]) {
++  // User is newly created by this suite; never touch another actor's cart.
++  await asUser(user, async sql => {
++    await sql('delete from public.cart_items where user_id=auth.uid()');
++    for (const row of entries) await sql('select public.cart_set_quantity($1,$2)', [row.fixture.variantId, row.quantity ?? 1]);
++  });
++}
++async function summary(user: string) {
++  return (await asUser(user, sql => sql('select public.cart_summary_reviewed(null) as s')))[0].s;
++}
++async function detail(product: string, user: string | null = null) {
++  return (await asUser(user, sql => sql('select public.product_detail_commercial($1) as d', [product])))[0].d;
++}
++async function reviewed(user: string, fixtures: Fixture[], plan = 'three_parts') {
++  const address = await createAddress(user);
++  const doc = (await asUser(user, sql => sql('select public.cart_summary_reviewed($1) as s', [address])))[0].s;
++  const shipping: Record<string, string> = {};
++  for (const group of doc.groups) shipping[group.key] = fixtures.find(f => f.storeId === group.store.id)!.methodId;
++  const preview = (await asUser(user, sql => sql('select public.checkout_preview_reviewed($1,$2::jsonb,$3) as s', [address, JSON.stringify(shipping), plan])))[0].s;
++  return { address, shipping, preview };
++}
++async function place(user: string, input: Awaited<ReturnType<typeof reviewed>>, idem = key('inst-order')) {
++  const result = (await asUser(user, sql => sql('select public.place_order_reviewed($1,$2::jsonb,$3,$4,$5) as r', [input.address, JSON.stringify(input.shipping), input.preview.plan.code, idem, input.preview.review_token])))[0].r;
++  return { ...result, idem };
++}
++function checkSchedule(doc: any, expected?: number[]) {
++  expect(doc.schedule).toHaveLength(3);
++  expect(doc.schedule.map((r: any) => r.seq)).toEqual([1, 2, 3]);
++  expect(doc.schedule.map((r: any) => r.due_in_days)).toEqual([0, 15, 30]);
++  expect(doc.schedule.every((r: any) => cents(r.amount_usd) > 0)).toBe(true);
++  expect(doc.schedule.reduce((sum: number, r: any) => sum + cents(r.amount_usd), 0)).toBe(cents(doc.total_usd));
++  if (expected) expect(doc.schedule.map((r: any) => cents(r.amount_usd))).toEqual(expected.map(cents));
++  expect(doc.schedule.map((r: any) => cents(r.amount_usd))).toEqual(planSchedule(doc.total_usd, doc.plan).map(r => cents(r.amount_usd)));
++}
++async function orderFootprint(id: string) {
++  return (await admin("select jsonb_build_object('order',(select to_jsonb(o) from public.orders o where id=$1),'obligations',(select jsonb_agg(to_jsonb(p) order by seq) from public.payment_obligations p where order_id=$1),'ledger',(select jsonb_agg(to_jsonb(l) order by id) from public.ledger_entries l where order_id=$1),'fulfillments',(select jsonb_agg(to_jsonb(f) order by seq) from public.fulfillments f where order_id=$1)) as f", [id]))[0].f;
++}
++
++describe('three total payments: local server, current public reader and RLS', () => {
++  it('01 reservable local USD39 is eligible and creates exactly three USD13 obligations', async () => {
++    const f = await fixture(), u = await buyer(); await setCart(u.id, [{ fixture: f }]);
++    expect(hasThree(await summary(u.id))).toBe(true);
++    const info = await detail(f.productId); expect(info.installment_options.find((o: any) => o.variant_id === f.variantId).plans.find((p: any) => p.code === 'three_parts').min_quantity).toBe(1);
++    const r = await reviewed(u.id, [f]); checkSchedule(r.preview, [13, 13, 13]);
++    const order = await place(u.id, r);
++    const obligations = await admin("select seq,kind,amount_usd,(due_date-current_date)::int days from public.payment_obligations where order_id=$1 order by seq", [order.order_id]);
++    expect(obligations.map(x => [x.seq, x.kind, cents(x.amount_usd), x.days])).toEqual([[1, 'installment', 1300, 0], [2, 'installment', 1300, 15], [3, 'installment', 1300, 30]]);
++    expect(await ledgerBalanced(order.order_id)).toBe(true);
++  });
++  it('02 on_order/import USD39 keeps import flow and three payments', async () => {
++    const f = await fixture({ origin: 'import', availability: 'on_order' }), u = await buyer(); await setCart(u.id, [{ fixture: f }]);
++    const r = await reviewed(u.id, [f]); expect(r.preview.groups[0].flow).toBe('import_order'); checkSchedule(r.preview, [13, 13, 13]);
++  });
++  it('03 both deferred seller states are eligible without changing delivery flow', async () => {
++    for (const availability of ['reservable', 'on_order']) {
++      const f = await fixture({ kind: 'seller', origin: 'seller', availability }), u = await buyer(); await setCart(u.id, [{ fixture: f }]);
++      const r = await reviewed(u.id, [f]); expect(r.preview.groups[0].flow).toBe('seller_shipping'); checkSchedule(r.preview, [13, 13, 13]);
++    }
++  });
++  it('04 reservable plus on_order across flows has one three-part order schedule', async () => {
++    const a = await fixture(), b = await fixture({ availability: 'on_order', origin: 'import', kind: 'seller' }), u = await buyer();
++    await setCart(u.id, [{ fixture: a }, { fixture: b }]);
++    const r = await reviewed(u.id, [a, b]); expect(r.preview.groups).toHaveLength(2); checkSchedule(r.preview, [26, 26, 26]);
++    const order = await place(u.id, r);
++    expect((await admin('select count(*)::int n from public.payment_obligations where order_id=$1', [order.order_id]))[0].n).toBe(3);
++  });
++  it('05 one qualifying line does not unlock a mixed USD40 cart', async () => {
++    const a = await fixture(), b = await fixture({ availability: 'available', price: 1 }), u = await buyer(); await setCart(u.id, [{ fixture: a }, { fixture: b }]);
++    expect(hasThree(await summary(u.id))).toBe(false);
++    await expectHint(asUser(u.id, sql => sql("select public.checkout_preview_reviewed(null,'{}','three_parts')")), 'plan_invalid');
++  });
++  it('06 legacy rules still admit mixed local USD69 carts', async () => {
++    const a = await fixture(), b = await fixture({ availability: 'available', price: 30 }), u = await buyer(); await setCart(u.id, [{ fixture: a }, { fixture: b }]);
++    expect(hasThree(await summary(u.id))).toBe(true);
++  });
++  it('07 available USD39 is quantity-sensitive in both reader and checkout', async () => {
++    const f = await fixture({ availability: 'available' }), u = await buyer(), d = await detail(f.productId);
++    const option = d.installment_options.find((o: any) => o.variant_id === f.variantId);
++    expect(option.plans.find((p: any) => p.code === 'three_parts').min_quantity).toBe(2);
++    await setCart(u.id, [{ fixture: f }]); expect(hasThree(await summary(u.id))).toBe(false);
++    await setCart(u.id, [{ fixture: f, quantity: 2 }]); expect(hasThree(await summary(u.id))).toBe(true);
++  });
++  it('08 seller available USD80 remains excluded by legacy flow', async () => {
++    const f = await fixture({ kind: 'seller', origin: 'seller', availability: 'available', price: 80 }), u = await buyer(); await setCart(u.id, [{ fixture: f }]);
++    expect(hasThree(await summary(u.id))).toBe(false);
++    expect((await detail(f.productId)).installment_options[0].plans.map((p: any) => p.code)).not.toContain('three_parts');
++  });
++  it('09 in_transit USD39 gains no deferred-state exception', async () => {
++    const f = await fixture({ availability: 'in_transit' }), u = await buyer(); await setCart(u.id, [{ fixture: f }]);
++    expect(hasThree(await summary(u.id))).toBe(false);
++  });
++  it('10 invalid stock, availability, variant or store never supplies installment quotes', async () => {
++    for (const change of ['stock', 'sold_out', 'unavailable', 'variant', 'store']) {
++      const f = await fixture();
++      if (change === 'stock') await admin('update public.product_variants set stock=0 where id=$1', [f.variantId]);
++      if (change === 'sold_out' || change === 'unavailable') await admin('update public.products set availability=$2 where id=$1', [f.productId, change]);
++      if (change === 'variant') await admin('update public.product_variants set active=false where id=$1', [f.variantId]);
++      if (change === 'store') await admin("update public.stores set status='suspended' where id=$1", [f.storeId]);
++      const d = await detail(f.productId);
++      expect(d === null || d.installment_options.length === 0).toBe(true);
++    }
++    const good = await fixture(), bad = await fixture(), u = await buyer(); await setCart(u.id, [{ fixture: good }, { fixture: bad }]);
++    await admin('update public.product_variants set stock=0 where id=$1', [bad.variantId]);
++    const s = await summary(u.id); expect(s.issues).toBeGreaterThan(0); expect(hasThree(s)).toBe(false);
++  });
++  it('11 inactive, changed-count and interest records cannot use the exception', async () => {
++    const base = plans.find(p => p.code === 'three_parts')!;
++    for (const patch of [{ active: false }, { down_payment_pct: 50, installments: 2 }, { installments: 4 }, { surcharge_pct: 1 }]) {
++      const [row] = await admin("select checkout_private.installment_plan_eligible(jsonb_populate_record(null::public.installment_plans,$1::jsonb),39,array['seller_shipping']::public.fulfillment_flow[],true) as ok", [JSON.stringify({ ...base, ...patch })]);
++      expect(row.ok).toBe(false);
++    }
++  });
++  it('12 cent rounding cannot create zero obligations and metadata states minimum quantity', async () => {
++    const f = await fixture({ price: 0.01 }), u = await buyer(), d = await detail(f.productId);
++    expect(d.installment_options[0].plans.find((p: any) => p.code === 'three_parts').min_quantity).toBe(3);
++    await setCart(u.id, [{ fixture: f }]); expect(hasThree(await summary(u.id))).toBe(false);
++    await setCart(u.id, [{ fixture: f, quantity: 3 }]); const r = await reviewed(u.id, [f]); checkSchedule(r.preview, [0.01, 0.01, 0.01]);
++    await place(u.id, r);
++  });
++  it('13 actual shipping is included in the final three-part schedule', async () => {
++    const f = await fixture({}, 5.50), u = await buyer(); await setCart(u.id, [{ fixture: f }]); const r = await reviewed(u.id, [f]);
++    expect(cents(r.preview.items_usd)).toBe(3900); expect(cents(r.preview.shipping_usd)).toBe(550); checkSchedule(r.preview, [14.83, 14.83, 14.84]);
++  });
++  it('14 remainder cents stay exact for total USD100', async () => {
++    const f = await fixture({ price: 100 }), u = await buyer(); await setCart(u.id, [{ fixture: f }]); checkSchedule((await reviewed(u.id, [f])).preview, [33.33, 33.33, 33.34]);
++  });
++  it('15 positive down payment counts separately: 50/2 is three, 50/3 is four', async () => {
++    for (const installments of [2, 3]) {
++      const config = { code: 'hypothesis_only', name: '', down_payment_pct: 50, installments, interval_days: 15, surcharge_pct: 0 };
++      const [{ s }] = await admin('select public._plan_schedule(39,jsonb_populate_record(null::public.installment_plans,$1::jsonb)) as s', [JSON.stringify(config)]);
++      expect(s).toHaveLength(installments + 1);
++      expect(s[0].kind).toBe('down_payment');
++      expect(s.map((x: any) => cents(x.amount_usd))).toEqual(planSchedule(39, config).map(x => cents(x.amount_usd)));
++      expect(s.reduce((n: number, x: any) => n + cents(x.amount_usd), 0)).toBe(3900);
++    }
++  });
++  it('16 detail ranges, private eligibility and real cart agree across price, states, flows and quantity', async () => {
++    for (const availability of ['reservable', 'on_order', 'available']) for (const kind of ['platform', 'seller'] as const) {
++      for (const price of [39, 49, 52]) {
++        const f = await fixture({ availability, kind, origin: kind === 'seller' ? 'seller' : 'local', price, stock: 3 }), u = await buyer();
++        const option = (await detail(f.productId)).installment_options.find((o: any) => o.variant_id === f.variantId);
++        expect(option.basis).toBe('products_only_excludes_shipping'); expect(option.max_quantity).toBe(3);
++        for (const quantity of [1, 2, 3]) {
++          await setCart(u.id, [{ fixture: f, quantity }]); const s = await summary(u.id);
++          const advertised = option.plans.filter((p: any) => quantity >= p.min_quantity && quantity <= p.max_quantity).map((p: any) => p.code).sort();
++          expect(codes(s)).toEqual(advertised);
++          const flow = kind === 'seller' ? 'seller_shipping' : 'local_stock';
++          for (const plan of plans) {
++            const [h] = await admin('select checkout_private.installment_plan_eligible(jsonb_populate_record(null::public.installment_plans,$1::jsonb),$2,array[$3::public.fulfillment_flow],$4) as ok', [JSON.stringify(plan), price * quantity, flow, ['reservable', 'on_order'].includes(availability)]);
++            expect(codes(s).includes(plan.code)).toBe(h.ok);
++          }
++        }
++      }
++    }
++  });
++  it('17 anonymous and buyer public readers respect hidden catalog RLS', async () => {
++    const f = await fixture(), u = await buyer();
++    expect((await detail(f.productId)).id).toBe(f.productId);
++    expect((await detail(f.productId, u.id)).installment_options).toEqual((await detail(f.productId)).installment_options);
++    await admin("update public.products set moderation_status='pending' where id=$1", [f.productId]);
++    expect(await detail(f.productId)).toBeNull(); expect(await detail(f.productId, u.id)).toBeNull();
++  });
++  it('18 private helper is denied to every API role and public reader remains invoker', async () => {
++    const [r] = await admin("select p.prosecdef as definer,has_function_privilege('anon',p.oid,'EXECUTE') a,has_function_privilege('authenticated',p.oid,'EXECUTE') b from pg_proc p where p.oid='public.product_detail_commercial(uuid)'::regprocedure");
++    expect(r).toEqual({ definer: false, a: true, b: true });
++    const [h] = await admin("select has_function_privilege('anon',p.oid,'EXECUTE') a,has_function_privilege('authenticated',p.oid,'EXECUTE') b,has_function_privilege('service_role',p.oid,'EXECUTE') c from pg_proc p where p.oid='checkout_private.installment_plan_eligible(public.installment_plans,numeric,public.fulfillment_flow[],boolean)'::regprocedure");
++    expect(h).toEqual({ a: false, b: false, c: false });
++    const u = await buyer();
++    for (const actor of [null, u.id]) await expect(asUser(actor, sql => sql("select checkout_private.installment_plan_eligible(null::public.installment_plans,39,'{local_stock}',true)"))).rejects.toMatchObject({ code: '42501' });
++  });
++  it('19 an existing local order history is untouched by later own catalog changes and another order', async () => {
++    const f = await fixture(), u = await buyer(); await setCart(u.id, [{ fixture: f }]);
++    const first = await place(u.id, await reviewed(u.id, [f])); const before = await orderFootprint(first.order_id);
++    await admin("update public.products set availability='available' where id=$1", [f.productId]);
++    await admin('update public.product_variants set price_usd=52 where id=$1', [f.variantId]);
++    const other = await fixture(), u2 = await buyer(); await setCart(u2.id, [{ fixture: other }]); await place(u2.id, await reviewed(u2.id, [other]));
++    expect(await orderFootprint(first.order_id)).toEqual(before);
++  });
++  it('20 replay returns the same old local order before new cart eligibility and preserves new cart', async () => {
++    const f = await fixture(), u = await buyer(); await setCart(u.id, [{ fixture: f }]); const input = await reviewed(u.id, [f]); const old = await place(u.id, input);
++    const next = await fixture({ availability: 'available', price: 1 }); await setCart(u.id, [{ fixture: next }]);
++    const before = await orderFootprint(old.order_id), replay = await place(u.id, input, old.idem);
++    expect(replay.order_id).toBe(old.order_id); expect(replay.replayed).toBe(true); expect(await orderFootprint(old.order_id)).toEqual(before);
++    const cart = await asUser(u.id, sql => sql('select variant_id,quantity from public.cart_items where user_id=auth.uid()'));
++    expect(cart).toEqual([{ variant_id: next.variantId, quantity: 1 }]);
++  });
++  it('21 concurrent identical confirmation creates one order and three obligations', async () => {
++    const f = await fixture(), u = await buyer(); await setCart(u.id, [{ fixture: f }]); const input = await reviewed(u.id, [f]), idem = key('inst-race');
++    const [a, b] = await Promise.all([place(u.id, input, idem), place(u.id, input, idem)]);
++    expect(a.order_id).toBe(b.order_id); expect([a.replayed, b.replayed].sort()).toEqual([false, true]);
++    expect((await admin('select count(*)::int n from public.payment_obligations where order_id=$1', [a.order_id]))[0].n).toBe(3);
++    expect((await admin('select stock from public.product_variants where id=$1', [f.variantId]))[0].stock).toBe(5);
++    expect(await ledgerBalanced(a.order_id)).toBe(true);
++  });
++  it('22 changed review cannot confirm a different price and fresh review produces exact three parts', async () => {
++    const f = await fixture(), u = await buyer(); await setCart(u.id, [{ fixture: f }]); const input = await reviewed(u.id, [f]), idem = key('inst-stale');
++    await admin('update public.product_variants set price_usd=42 where id=$1', [f.variantId]);
++    await expectHint(place(u.id, input, idem), 'checkout_changed');
++    expect((await admin('select count(*)::int n from public.orders where buyer_id=$1 and idempotency_key=$2', [u.id, idem]))[0].n).toBe(0);
++    const fresh = await reviewed(u.id, [f]); checkSchedule(fresh.preview, [14, 14, 14]); await place(u.id, fresh, idem);
++  });
++});
+diff --git a/tests/mobile/fixtures/expo-router-port-only.ts b/tests/mobile/fixtures/expo-router-port-only.ts
+new file mode 100644
+index 0000000..7bcc853
+--- /dev/null
++++ b/tests/mobile/fixtures/expo-router-port-only.ts
+@@ -0,0 +1,4 @@
++// Unit tests must replace these ports explicitly; this fixture is never imported by the app.
++const unavailable = () => { throw new Error('Mock the Expo Router ports for this Node unit test'); };
++export const router = { dismissTo: unavailable, back: unavailable, replace: unavailable, canGoBack: unavailable };
++export const useLocalSearchParams = unavailable;
+diff --git a/tests/mobile/installment-auth-navigation.test.ts b/tests/mobile/installment-auth-navigation.test.ts
+new file mode 100644
+index 0000000..2c21489
+--- /dev/null
++++ b/tests/mobile/installment-auth-navigation.test.ts
+@@ -0,0 +1,45 @@
++import { beforeEach, describe, expect, it, vi } from 'vitest';
++
++const ports = vi.hoisted(() => ({
++  dismissTo: vi.fn(), back: vi.fn(), replace: vi.fn(), canGoBack: vi.fn(), params: vi.fn(),
++}));
++vi.mock('expo-router', () => ({
++  router: { dismissTo: ports.dismissTo, back: ports.back, replace: ports.replace, canGoBack: ports.canGoBack },
++  useLocalSearchParams: ports.params,
++}));
++import { authTarget, finishAuth, safeAuthReturn, useAuthReturn } from '../../apps/mobile/src/lib/auth-navigation';
++
++describe('payment preference through existing mobile account and legal screens', () => {
++  beforeEach(() => { vi.clearAllMocks(); ports.canGoBack.mockReturnValue(false); });
++
++  it('preserves the sanitized preference across sign-in, sign-up and email verification', () => {
++    const returnTo = '/checkout?plan=three_parts';
++    for (const pathname of ['/sign-in', '/sign-up', '/verify-email'] as const) {
++      const target = authTarget(pathname, returnTo, { email: 'buyer@example.com' });
++      expect(target).toEqual({ pathname, params: { email: 'buyer@example.com', returnTo } });
++      ports.params.mockReturnValue(target.params);
++      expect(useAuthReturn()).toBe(returnTo);
++    }
++    expect(ports.dismissTo).not.toHaveBeenCalled();
++  });
++
++  it('never forwards duplicated or invalid plans, tokens or outside destinations', () => {
++    for (const value of ['/checkout?plan=full&plan=three_parts', '/checkout?plan=%2Fexternal', '/checkout?access_token=discard']) {
++      expect(safeAuthReturn(value)).toBe('/checkout');
++    }
++    for (const value of ['//outside.invalid/checkout', '/checkout#token', ['/checkout?plan=three_parts']]) {
++      expect(safeAuthReturn(value)).toBeUndefined();
++    }
++    expect(safeAuthReturn('/product/p1?variant=v1&plan=three_parts&other=discard')).toBe('/product/p1?variant=v1&plan=three_parts');
++  });
++
++  it('finishes only at the internal destination and retains the existing back/home fallback', () => {
++    finishAuth('/checkout?plan=three_parts');
++    expect(ports.dismissTo).toHaveBeenCalledWith('/checkout?plan=three_parts');
++    expect(ports.back).not.toHaveBeenCalled(); expect(ports.replace).not.toHaveBeenCalled();
++    ports.canGoBack.mockReturnValue(true); finishAuth('//outside.invalid');
++    expect(ports.back).toHaveBeenCalledOnce();
++    ports.canGoBack.mockReturnValue(false); finishAuth();
++    expect(ports.replace).toHaveBeenCalledWith('/');
++  });
++});
+diff --git a/tests/storefront/checkout-plan-navigation.test.ts b/tests/storefront/checkout-plan-navigation.test.ts
+new file mode 100644
+index 0000000..c914f72
+--- /dev/null
++++ b/tests/storefront/checkout-plan-navigation.test.ts
+@@ -0,0 +1,79 @@
++import { describe, expect, it } from 'vitest';
++import { planFromSearch, withPlan, chooseOfferedPlan } from '@kora/core';
++import { authHref } from '../../apps/storefront/src/lib/auth-return';
++import { checkoutIntentKey, parseCheckoutIntent, persistCheckoutIntent, restoreCheckoutIntent, type CheckoutIntent } from '../../apps/storefront/src/lib/checkout-intent';
++
++const buyerA = '11111111-1111-4111-8111-111111111111';
++const buyerB = '22222222-2222-4222-8222-222222222222';
++const address = '33333333-3333-4333-8333-333333333333';
++const intent = (plan: string, buyerId = buyerA, key = 'web-plan-navigation-1'): CheckoutIntent => ({
++  version: 2, buyerId, key, reviewToken: 'a'.repeat(64), selection: { address, shipping: { delivery: 'method-a' }, plan },
++});
++function memory() {
++  const values = new Map<string, string>();
++  return { values, getItem: (key: string) => values.get(key) ?? null,
++    setItem: (key: string, value: string) => { values.set(key, value); }, removeItem: (key: string) => { values.delete(key); } };
++}
++function returnedPlan(search: string) {
++  const destination = withPlan('/checkout', planFromSearch(new URLSearchParams(search)));
++  const login = new URL(authHref('/cuenta', destination), 'https://mayami.invalid');
++  return planFromSearch(new URL(login.searchParams.get('volver')!, 'https://mayami.invalid').searchParams);
++}
++
++describe('payment preference versus an accepted checkout operation', () => {
++  it.each([['three_parts', 'full'], ['full', 'three_parts']])('URL %s cannot replace a stored %s selection', (requested, accepted) => {
++    const durable = memory(), legacy = memory(), pending = intent(accepted);
++    persistCheckoutIntent(durable, pending);
++    const raw = durable.getItem(checkoutIntentKey(buyerA));
++    const preference = returnedPlan('plan=' + requested);
++    expect(preference).toBe(requested);
++    const restored = restoreCheckoutIntent(durable, legacy, buyerA);
++    expect(restored).toEqual(pending);
++    expect(() => persistCheckoutIntent(durable, { ...intent(preference!), key: 'replacement-key' })).toThrow('pendiente');
++    expect(durable.getItem(checkoutIntentKey(buyerA))).toBe(raw);
++  });
++  it('reuses the same accepted operation/key after an authentication round trip', () => {
++    const durable = memory(), pending = intent('three_parts');
++    persistCheckoutIntent(durable, pending);
++    const plan = returnedPlan('plan=three_parts');
++    const offered = chooseOfferedPlan(plan, [{ code: 'full' }, { code: 'three_parts' }]);
++    const retry = persistCheckoutIntent(durable, { ...pending, key: 'new-navigation-key', selection: { ...pending.selection, plan: offered.code! } });
++    expect(retry).toEqual({ intent: pending, fresh: false });
++  });
++  it('migrates an exact legacy operation without adding a token or applying the new URL preference', () => {
++    const durable = memory(), legacy = memory();
++    const old = { key: 'legacy-plan-key', selection: intent('three_parts').selection };
++    legacy.setItem(checkoutIntentKey(buyerA), JSON.stringify(old));
++    expect(returnedPlan('plan=full')).toBe('full');
++    const restored = restoreCheckoutIntent(durable, legacy, buyerA);
++    expect(restored).toEqual({ ...old, buyerId: buyerA });
++    expect(restored?.reviewToken).toBeUndefined();
++    expect(legacy.getItem(checkoutIntentKey(buyerA))).toBeNull();
++    expect(parseCheckoutIntent(durable.getItem(checkoutIntentKey(buyerA)), buyerA)).toEqual(restored);
++  });
++  it('keeps account operations separate while the public plan preference crosses accounts', () => {
++    const durable = memory(), legacy = memory(), pendingA = intent('three_parts');
++    persistCheckoutIntent(durable, pendingA);
++    const rawA = durable.getItem(checkoutIntentKey(buyerA));
++    const preference = returnedPlan('plan=three_parts');
++    expect(restoreCheckoutIntent(durable, legacy, buyerB)).toBeNull();
++    expect(() => parseCheckoutIntent(rawA, buyerB)).toThrow('recuperar');
++    const offeredB = chooseOfferedPlan(preference, [{ code: 'full' }]);
++    expect(offeredB.code).toBe('full'); expect(offeredB.notice).toBeTruthy();
++    persistCheckoutIntent(durable, intent(offeredB.code!, buyerB, 'buyer-b-navigation-key'));
++    expect(durable.getItem(checkoutIntentKey(buyerA))).toBe(rawA);
++    expect(restoreCheckoutIntent(durable, legacy, buyerB)?.selection.plan).toBe('full');
++  });
++  it('does not turn an ambiguous URL into an accepted financing choice', () => {
++    const durable = memory(), pending = intent('three_parts');
++    persistCheckoutIntent(durable, pending);
++    expect(returnedPlan('plan=full&plan=three_parts')).toBeUndefined();
++    expect(restoreCheckoutIntent(durable, memory(), buyerA)).toEqual(pending);
++  });
++  it('keeps damaged recovery data even when navigation carries a valid plan', () => {
++    const durable = memory(); durable.setItem(checkoutIntentKey(buyerA), '{damaged');
++    expect(returnedPlan('plan=three_parts')).toBe('three_parts');
++    expect(() => restoreCheckoutIntent(durable, memory(), buyerA)).toThrow('recuperar');
++    expect(durable.getItem(checkoutIntentKey(buyerA))).toBe('{damaged');
++  });
++});
+diff --git a/tests/storefront/payment-auth-return.test.ts b/tests/storefront/payment-auth-return.test.ts
+new file mode 100644
+index 0000000..6b44912
+--- /dev/null
++++ b/tests/storefront/payment-auth-return.test.ts
+@@ -0,0 +1,29 @@
++import { describe, expect, it } from 'vitest';
++import { authHref, callbackPath, guestReturnPath, safeReturnPath } from '../../apps/storefront/src/lib/auth-return';
++
++describe('web payment preference through authentication', () => {
++  it('preserves checkout preference inside login, registration and callback destinations', () => {
++    for (const route of ['/cuenta', '/registro'] as const) {
++      const url = new URL(authHref(route, '/checkout?plan=three_parts'), 'https://mayami.invalid');
++      expect(url.searchParams.get('volver')).toBe('/checkout?plan=three_parts');
++    }
++    expect(new URL(callbackPath('/checkout?plan=three_parts'), 'https://mayami.invalid').searchParams.get('volver')).toBe('/checkout?plan=three_parts');
++  });
++  it('returns a cancelled checkout to guest cart with only the sanitized plan', () => {
++    expect(guestReturnPath('/checkout?variant=private-looking-value&plan=three_parts&other=discard')).toBe('/carrito?plan=three_parts');
++  });
++  it.each(['/checkout?plan=three_parts&plan=full', '/checkout?plan=', '/checkout?plan=%2Fexternal'])('discards invalid or repeated preferences: %s', path => {
++    expect(guestReturnPath(path)).toBe('/carrito');
++  });
++  it('retains protection against auth tokens, hashes and outside return URLs', () => {
++    for (const path of ['/checkout?access_token=discard', '/checkout#token', '//outside.invalid/checkout']) {
++      expect(safeReturnPath(path)).toBe('/cuenta');
++      expect(guestReturnPath(path)).toBe('/buscar');
++    }
++  });
++  it('keeps recovery purpose separate from the nested payment preference', () => {
++    const url = new URL(callbackPath('/checkout?plan=three_parts', true), 'https://mayami.invalid');
++    expect(url.searchParams.get('tipo')).toBe('recuperar');
++    expect(url.searchParams.get('volver')).toBe('/checkout?plan=three_parts');
++  });
++});
+diff --git a/tools/eas/installments-integration.vitest.config.mjs b/tools/eas/installments-integration.vitest.config.mjs
+new file mode 100644
+index 0000000..27da9c5
+--- /dev/null
++++ b/tools/eas/installments-integration.vitest.config.mjs
+@@ -0,0 +1,18 @@
++import { defineConfig } from 'vitest/config';
++import { fileURLToPath } from 'node:url';
++
++const source = path => fileURLToPath(new URL('../../' + path, import.meta.url));
++export default defineConfig({
++  resolve: { alias: {
++    '@kora/core': source('packages/core/src/index.ts'),
++    // The new test checks navigation ports, not React Native rendering or a device.
++    'expo-router': source('tests/mobile/fixtures/expo-router-port-only.ts'),
++  } },
++  test: { environment: 'node', include: [
++    'packages/core/test/payment-presentation.test.ts',
++    'tests/storefront/checkout-plan-navigation.test.ts',
++    'tests/storefront/payment-auth-return.test.ts',
++    'tests/mobile/legal-links.test.ts',
++    'tests/mobile/installment-auth-navigation.test.ts',
++  ], exclude: ['**/node_modules/**', '**/.local/**'] },
++});

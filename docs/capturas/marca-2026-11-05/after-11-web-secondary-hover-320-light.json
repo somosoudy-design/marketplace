@@ -1,0 +1,18 @@
+{
+  "normal": {
+    "text": "Cerrar sesión",
+    "color": "rgb(28, 25, 40)",
+    "background": "rgb(255, 255, 255)",
+    "contrast": 17.22627718254782,
+    "width": 156.109375,
+    "height": 48
+  },
+  "hover": {
+    "text": "Cerrar sesión",
+    "color": "rgb(28, 25, 40)",
+    "background": "rgb(240, 238, 246)",
+    "contrast": 14.98327763848412,
+    "width": 156.109375,
+    "height": 48
+  }
+}

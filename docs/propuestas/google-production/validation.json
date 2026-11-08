@@ -1,0 +1,149 @@
+{
+  "source": "884611780a1a3207aca9c3f3d8703b0324f65718",
+  "tree": "e1ba22c96a3fba307edd295c72a840d132a776d0",
+  "parent": "da803460fcc3f819b0bbd896de58438207ace5d7",
+  "paths": 35,
+  "quotaBlobsExact": 17,
+  "androidConfigAndLegalFilesUntouched": true,
+  "recordedAt": "2026-11-08T16:43:08.717188+00:00",
+  "status": "LOCAL_GOOGLE_INTEGRATED_PUBLISHED_GATE_FALSE",
+  "gate": "GOOGLE_AUTH_ACTIVATED=false",
+  "artifacts": [
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/source.bundle",
+      "bytes": 83886,
+      "sha256": "1dc606232a07396606f4e3eee7bdb21b60c2b6a4661138d91709f5b389735f37"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/source.patch",
+      "bytes": 173807,
+      "sha256": "94d0cc7487215883e2a099659fdd8ff6266ba3921c47742483b1d9157da17ad6"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/full-source.patch",
+      "bytes": 301872,
+      "sha256": "0a93a4cfe413413ad4ee9cce3a35795bd189847354b493d3f552bda8d8d4ca53"
+    }
+  ],
+  "checks": {
+    "focal": {
+      "passed": 97,
+      "total": 97,
+      "suites": 10,
+      "command": "pnpm exec vitest run --config tools/auth/google-integration.vitest.config.mjs"
+    },
+    "typecheck": [
+      "api",
+      "mobile",
+      "storefront"
+    ],
+    "focalLint": [
+      "mobile",
+      "storefront"
+    ],
+    "ui": {
+      "groupsPassed": 5,
+      "groupsTotal": 5,
+      "loopbackHttpRequests": 29,
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "networkViolations": 0,
+      "sourceHashesStable": 25,
+      "includesRealMobileAuthProvider": true,
+      "nativePlatformBindingsControlled": true,
+      "physicalNativeUi": false
+    },
+    "visualReview": "Independent favorable, 4 screenshots at 390px light/dark; root viewed login light and registration dark",
+    "diffCheck": "PASS",
+    "bundleVerify": "PASS",
+    "independentCodeReview": {
+      "result": "Favorable; no open P1/P2 in focal review",
+      "source": "884611780a1a3207aca9c3f3d8703b0324f65718",
+      "fullPatchRecoveredTree": "e1ba22c96a3fba307edd295c72a840d132a776d0",
+      "reviewDocument": "CODE_REVIEW.md",
+      "newTestsOrRemoteActions": false
+    }
+  },
+  "preserved": {
+    "quotaBlobsExactToDa": 17,
+    "androidConfigExactToDa": true,
+    "legalComponentsExactToDa": true,
+    "signupLegalContentAndLinksPreserved": true,
+    "depsOrNativePermissionsChanged": false
+  },
+  "hostedBaseline": {
+    "reportedBy": "Coordinator; direct official dashboard read. Root did not repeat it.",
+    "observedAtUtcMinute": "2026-11-08T16:12Z",
+    "project": "mimnotafmfasvwrclxan",
+    "profile": "somosoudy-design",
+    "googleEnabled": false,
+    "clientIds": [],
+    "clientSecretRead": false,
+    "siteUrl": "https://mayami.app",
+    "redirectAllowlist": [
+      "https://mayami.app/auth/callback",
+      "https://mayami.app/auth/callback?tipo=recuperar"
+    ],
+    "confirmEmail": false,
+    "manualLinking": false,
+    "fieldsChanged": false
+  },
+  "uiEvidence": {
+    "path": "/Users/brandeastudio/marketplace/.local/google-integration-20261108/ui/results-final-source",
+    "resultSha256": "fffd3f4d42e8f95ccd0f65e730377f8a0f8bf8e4a3a7df5a3e3c8e8d171bac0e",
+    "sourceManifestSha256": "b9b7748fc5fd386b71791a554f2d5fb1bbf3931514b9d7c02867207eb68c141c",
+    "evidenceManifestSha256": "cf40afd2f1ceb5220d3e93b4cf0a985fa3746c625964b10ffcc80b434d4a1289"
+  },
+  "logs": [
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/focal-initial.log",
+      "sha256": "d1852cd45cf01bbdcf81ddd4da7c17b99e84ac5865b37f8a9a5cceffa50654d1"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/focal-fixed.log",
+      "sha256": "93e4a282f9329c7aa345856096ec3273159144726d888fac710ad150842dd6a2"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/focal-final.log",
+      "sha256": "d09ef0712013a8ef564b8a8876978408c44b8c99b5ae5b488bc5e2dcc3c38adb"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/api-types.log",
+      "sha256": "81f61578ce1928f66a2144d64dd47bffb2514169b09a796453040697fb5802ac"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/mobile-types.log",
+      "sha256": "a7f8c11960212ceee5d6805c13c84a4ec8c928e75ffcbf426c5d56a46a3ddd5d"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/storefront-types.log",
+      "sha256": "ba50ad78b248f546a6bf088802ede8e3f6b4ff90d2ee3c399ec319bbb51e1b34"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/mobile-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/google-integration-20261108/storefront-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "notPerformed": [
+    "OAuth/Google/GoTrue real",
+    "remote configuration or consent",
+    "account linking change",
+    "SQL or quota activation",
+    "orders, payments or test-order cleanup",
+    "APK/AAB/OTA or publication",
+    "Firebase or new dependencies",
+    "physical Android/Keystore/CustomTab testing"
+  ],
+  "limits": [
+    "Native durable journal tests use adapters and simulated restart, not hardware crash proof",
+    "Actual mobile Provider mounted with platform bindings; native sign-in/up screens typechecked/linted and source-reviewed, not run on a phone",
+    "UI runner uses Vite and controlled Next router/Link bindings, not a Next SSR production build",
+    "Isolated storefront baseline predates later published web legal pages; reconcile onto current web base before any web release",
+    "HTTPS dynamic callback acceptance inferred from local Auth2.180 hostname rule, not verified against hosted implementation",
+    "Native allowlist pattern remains a proposal requiring exact parser/dashboard validation before saving"
+  ]
+}
