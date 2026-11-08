@@ -23,9 +23,11 @@ export default function Callback() {
         try {
           // Google remains gated. Never exchange its code through the uncorrelated email callback.
           if (isGoogleAuthCallback(url.toString())) throw new Error('Google no está activado');
+          // Implicit tokens are not bound to this browser and can replace another actor's session.
+          // Only PKCE codes can prove possession of the verifier created by this email flow.
+          if (fragment.has('access_token') || fragment.has('refresh_token')) throw new Error('Enlace sin verificación local');
           const auth = browser().client.auth; let error: unknown;
           if (url.searchParams.get('code')) ({ error } = await auth.exchangeCodeForSession(url.searchParams.get('code')!));
-          else if (fragment.get('access_token') && fragment.get('refresh_token')) ({ error } = await auth.setSession({ access_token: fragment.get('access_token')!, refresh_token: fragment.get('refresh_token')! }));
           else throw new Error('Enlace inválido');
           return { destination, recovery, success: !error };
         } catch { return { destination, recovery, success: false }; }

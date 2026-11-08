@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — checkpoint de seguridad focal y login-CSRF local
+
+Revisión limitada a ownership servidor, CSRF/sesión y secretos árbol/historial; no se atribuyen otros controles al reel. La caracterización local del código publicado y preparado reproduce adopción de A sobre sesión B mediante fragmento sin intento. Corrección mínima en4fuentes: PKCE sólo para email web, rechazo de tokens URL y panel sin auto-adopción; default nativo conservado.9regresiones nuevas,21focales existentes, tipos API/storefront/admin y lint PASS. Enlaces implícitos anteriores requerirán nuevo enlace/código; OTP/password se conservan. Esto aún no protege el código publicado.
+
+Escaneo léxico local:4695blobs/610commits disponibles, árbolHEAD completo,1388objetos históricos faltantes.8ocurrenciasanon públicas;43candidatos revisados como expresiones/fixtures,0secretos confirmados, sin probar credenciales. No scanner especializado/CI; no declarar repositorio libre de secretos. Trabajo en curso: dos huecos focales de ownership (comprobantes HTTP por rol e IDsRPC ajenos) sólo en copia local, reutilizando servicios ya instalados, sin reset ni migración remota. Próxima acción: ejecutar esos casos si runner conservado permite aislamiento, cerrar informe y checkpoint; sin build/publicación/OTA/AAB, OAuth ni configuración hospedada. Cuota última38%restante; parar20%. [Informe y límites](SEGURIDAD_FOCAL_2026-11-08.md).
+
 ## 2026-11-08 — Tecnología web publicada con referencia vigente
 
 Publicación única completada desde la fuente aislada 064f4729 / árbol cef8efa7 sobre db41707, exactamente seis archivos. Se reconcilió sólo guard exacto, test y procedencia a da3eea0c…; máscara reutilizada y JPEG original conservado. No se modificaron categorías ni catálogo, Audio, textos, dimensiones, Google, cuotas o Android.

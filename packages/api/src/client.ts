@@ -8,8 +8,10 @@ export interface ClientOptions {
   /** Public anon key. Never pass the service role key to an app or browser bundle. */
   anonKey: string;
   storage?: SupportedStorage;
-  /** React Native needs detectSessionInUrl=false; the web admin keeps the default. */
+  /** URL session adoption is opt-in; native clients keep it disabled. */
   detectSessionInUrl?: boolean | ((url: URL, params: { [parameter: string]: string }) => boolean);
+  /** Web email links use a verifier bound to the browser that requested them. */
+  flowType?: 'implicit' | 'pkce';
   fetch?: typeof fetch;
   /**
    * Let supabase-js retry failed reads on its own (1 s, 2 s, 4 s). Off when the caller already retries, like
@@ -32,6 +34,7 @@ export function createKoraClient(opts: ClientOptions): KoraClient {
       autoRefreshToken: !opts.accessToken,
       persistSession: !opts.accessToken,
       detectSessionInUrl: opts.detectSessionInUrl ?? false,
+      ...(opts.flowType ? { flowType: opts.flowType } : {}),
     },
     db: { retry: opts.retryReads ?? true },
     global: opts.fetch ? { fetch: opts.fetch } : undefined,

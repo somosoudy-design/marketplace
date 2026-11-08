@@ -10,6 +10,7 @@ export function browser() {
       anonKey: env.anon,
       storage: window.localStorage,
       detectSessionInUrl: false,
+      flowType: 'pkce',
       retryReads: false,
     });
     connection = { client, api: createApi(client) };

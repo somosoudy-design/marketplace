@@ -11,7 +11,7 @@ export function kora(): { client: KoraClient; api: Api } {
   if (typeof window === 'undefined') throw new Error('kora() is browser-only');
   if (!client) {
     // react-query (lib/providers) retries transport failures; supabase-js retrying underneath would stack
-    client = createKoraClient({ url: env.supabaseUrl, anonKey: env.supabaseAnonKey, storage: window.localStorage, detectSessionInUrl: true, retryReads: false });
+    client = createKoraClient({ url: env.supabaseUrl, anonKey: env.supabaseAnonKey, storage: window.localStorage, detectSessionInUrl: false, retryReads: false });
     api = createApi(client);
   }
   return { client, api: api! };
