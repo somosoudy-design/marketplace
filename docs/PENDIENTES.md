@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Primer AAB · autorizado con límite $0, pendiente de ejecución · 8 de noviembre de 2026
+
+Package app.mayami.marketplace y clave exclusiva de producción autorizados; ya no falta aprobación genérica de esta acción. Preflight oficial confirma proyecto exacto, Free y 14 builds Android disponibles. Fuente bb3de958 aislada. Ejecutar una vez por EAS oficial y registrar ID/huella/estado; si hay incertidumbre, reconciliar antes de repetir. Firebase production no configurado, sin nuevas claves. Verificar AAB final sin declarar pruebas nativas o 16 KB por inferencia. Publicación y App Signing de Play fuera del alcance. [Seguimiento](PRIMER_AAB_MAYAMI_2026-11-08.md).
+
 ## Android/AAB · fuente lista localmente; decidir identidad y clave de carga · 8 de noviembre de 2026
 
 bb3de958 sobre 59e88a07 conserva el preview publicado y añade los enlaces legales nativos y la configuración AAB de producción, sin Google o cuotas. Pasaron tres pruebas Node, cinco Vitest, tipos, lint y revisión independiente. Preview y fingerprint local intactos. No volver a preparar los enlaces, publicar la web o cerrar la cuenta. El package propuesto app.mayami.marketplace no está confirmado.

@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-08 — autorización del primer AAB y preflight de sólo lectura
+
+Confirmación expresa de Oliver para app.mayami.marketplace, nueva clave de carga exclusiva custodiada en Expo EAS y primer AAB; gasto máximo $0. Fuente bb3de958 limpia. Metadata oficial del proyecto 9f629f10: sólo firma preview conocida y ninguna credencial del package nuevo observada; Free, 1/15 Android usados, 14 disponibles, coste 0. Sin GOOGLE_SERVICES_JSON de production en metadata. No se descargaron valores ni se generaron recursos en el preflight; no nuevos permisos o planes. Un error inicial de selección GraphQL de un objeto se corrigió sólo en lectura. Checkpoint previo a la creación y build, sin repetir pruebas válidas. [Seguimiento](PRIMER_AAB_MAYAMI_2026-11-08.md).
+
 ## 2026-11-08 — fuente Android de producción con enlaces legales, sin firma ni build
 
 Preview público 01a1b758 revalidado por lectura; la fuente 73fc75ef tiene los mismos inputs que 59e88a07. El integrador preparó bb3de958 con nueve archivos: cinco móviles y el test legal idénticos a da9085c, dos configuraciones de la propuesta y una prueba focal. La configuración Expo real sólo cambia identidad, dominio y soporte. Conserva scheme kora, retornos de pagos, permisos, seguridad, recursos y proyecto Expo. Pasaron tres pruebas Node, cinco Vitest, tipos y lint; revisión independiente favorable. Preview compartido intacto y fingerprint local ccbac2f5 idéntico antes y después, sin incluir el archivo Firebase. No acredita una nueva prueba nativa del APK.
