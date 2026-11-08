@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-07 — primera migración de seguridad activada, sin cierres
+
+Autorización humana limitada; fuente881/SQL33930…b58e ybatchf345…410da exactos, revisión independiente yguardasfresh7255…001e. Supautils existente/criterio oficialmanaged dehook acreditados. Un intento transaccional,67policies/67triggers+completion y23DEFINER/require_user comprobados antesCOMMIT; ownersACL/policies/requests/historial previo intactos. Lectura independiente confirma versión20261107213544 una vez yjobs0/RLStrue. Sin segunda migración/worker/hook/Cron/purga/publicaciones/fixtures/cargos; frontendcandidato sin publicar. [Resultado](ACTIVACION_SEGURIDAD_CUENTA_2026-11-07.md).
+
 ## 2026-11-07 — privacidad candidata y artefacto aislado del panel
 
 Dos preparaciones locales: copy limitado a privacidad/eliminación y acuse móvil;90d correctamente acotados, holds/marcador y límites externos explícitos. Preparador local con snapshot por SHA, dependencias offline, request estricto, inventario y manifiesto fijado. Fuente da9085c00f884f487a2ae4d35aed71a220d553a0,245archivos;28Node/5enlaces, tipos/lint panel, build/scan y dos tar del mismo export idénticos. Revisiones independientes corregidas y favorables. Sin cambios CI/request, backend/migraciones, Google/correos/cuotas, proveedores, planes o publicación. Un checkpoint final; artefactos ignorados locales. [Informe](PRIVACIDAD_PANEL_CANDIDATO_2026-11-07.md).
