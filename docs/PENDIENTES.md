@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Cierre hospedado · panel publicado; solicitud APK pendiente · 8 de noviembre de 2026
+
+El panel `da9085c`/`candidate.da9085c00f88` ya está recibido en `kora-panel.expo.app` (deployment `fzi7bsabfc`); no volver a publicarlo. Sesión administradora funciona y lista oficial indica «No hay solicitudes». Falta que Oliver envíe la solicitud desde la APK con la cuenta de prueba designada; entonces revalidar UID/requestId y completar sólo ese cierre autorizado por UI normal, reconciliando cualquier resultado antes de reintentar. No crear adaptadores, extraer sesiones, usar SQL mutante o eliminar sólo Auth. [Evidencia y alcance](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
+
 ## Retención de cuenta · segunda migración instalada; operación pendiente · 7 de noviembre de 2026
 
 Dos migraciones confirmadas, no repetir. Segunda20261107221337:17funciones/ACL,3RLS,5reemplazos,2índices ytriggerAuth;67controlesprevios/historia conservados yjobs0. Trigger futuro instalado; ejecutor no invocado/programado. Worker, cierres, retención periódica ypublicación fuera de esta autorización; próxima etapa separada. No Playready ni eliminación completa operativa. [Evidencia y límites](ACTIVACION_RETENCION_CUENTA_2026-11-07.md).

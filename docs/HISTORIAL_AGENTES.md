@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-08 — panel de cierre publicado, prueba de cuenta pendiente de solicitud
+
+Acceso del CLI oficial confirmado tras autorización humana específica: sólo marketplacebrand/Developer. Cuenta/proyecto exactos y plan Free/$0 verificados. Un export ya compilado, 245 archivos, manifiesto c4155e02…f184 y tar7535b9b0…5dcb; sin rebuild. CLI24.12.1 rechazó la ruta absoluta antes de upload; código oficial acreditó path.join y se corrigió únicamente a la ruta relativa del mismo export. Un despliegue subido/promovido: fzi7bsabfc, source da9085c00f884f487a2ae4d35aed71a220d553a0/build candidate.da9085c00f88. Gate HTTP22/22 e inspección independiente de fuente/build y hash del chunk account-close aprobados. UI oficial con admin válido y «No hay solicitudes»; cuenta de prueba visible como cliente sin tienda. No solicitud/aprobación/cierre ejecutado, ni otras cuentas o datos afectados. Falta solicitud del comprador por APK y prueba exacta posterior. Sin storefront/móvil/privacidad pública, backend, editor Aroma'top, Cron o cargos. [Resultado](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
+
 ## 2026-11-07 — segunda migración instalada sin procesamiento
 
 Aprobación específica; fuente881/SQL2b013…fd916 ybatch8164…efc1/editor exactos. Una transacción ycommitconfirmadoporlecturaindependiente:17funciones/ACL,3RLS,5reemplazos,2índices,trigger7/creatorEXECUTE,67primera preservados, ambasversionesuna yjobs/markers/holds/managedAudit0. Authmetadata/historialsolicitudes/auditoríavisible conservados sinpayloadpersonal. SinRPCclean/retention/worker/hook/Cron/fixtures/publicación/cargos; suitescerradasno repetidas. [Resultado](ACTIVACION_RETENCION_CUENTA_2026-11-07.md).

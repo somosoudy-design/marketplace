@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Panel de cierre publicado · 8 de noviembre de 2026
+
+Publicado sólo el panel limpio `da9085c00f884f487a2ae4d35aed71a220d553a0`, build `candidate.da9085c00f88`, deployment `fzi7bsabfc`. Export previo de 245 archivos revalidado; recepción exacta en URL inmutable y alias oficial, 22 comprobaciones HTTP y revisión independiente del chunk de usuarios con `account-close`. Sesión administradora oficial conservada. Expo Marketplace permanece Free, $0/mes y estimado $0; acceso permanente del CLI aprobado por Oliver sólo para marketplacebrand/Developer.
+
+Trabajo en curso: cierre de la cuenta de prueba designada, todavía **sin solicitud** según la pantalla oficial. No se llamó a `account-close`, ni se aprobó o borró una cuenta en esta tanda. Próxima acción: Oliver entra exclusivamente en esa cuenta desde la APK y envía Cuenta → Preferencias y privacidad → Solicitar eliminación; después cotejar UID/requestId y procesar una vez desde el panel nuevo. La web de compradores no dispone de ese formulario. No repetir el despliegue ni usar la operación antigua como prueba de cierre completo. Datos exactos y recibos locales bajo `.local/panel-publish-20261108/` y `.local/account-normal-flow-20261108/`.
+
+Sin publicación de storefront, APK/OTA/AAB o privacidad pública; sin editor Aroma'top, backend, hook/Cron, roles de Mayami ni planes de pago. No acredita aún cierre hospedado, invalidación de sesión previa o aceptación Play. [Resultado y límites](PANEL_CIERRE_PUBLICADO_2026-11-08.md).
+
 ## Segunda migración de retención · instalada y commit confirmado · 7 de noviembre de 2026
 
 20261107221337 de backend881/SHA2b013119…fd916 aplicada una vez con aprobación específica. Guardas5/5 yjobs0; batch8164…efc1 revisado yeditorSHAexacto.17funciones/ACL,3RLS,5reemplazos,2índices ytriggerAuth7 verificados antesCOMMIT yporlecturaindependiente;67controlesprevios, Authmetadata, solicitudes/auditoríavisible e historial conservados. Ambas versiones una vez; jobs/markers/holds/managedAudit0.
