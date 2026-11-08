@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Seguridad de cuenta · primera migración aplicada; siguiente etapa pendiente · 7 de noviembre de 2026
+
+20261107213544 confirmada en MIM por lectura independiente:67policies/67triggers+completion,23DEFINER/require_user, ownersACL/policies/historial conservados, jobs0. No repetir. Segunda migración, worker, configurarhook, Cron/retención/cierres y publicación no activados ni incluidos en esta autorización. Próximo alcance separado; frontendda9085c sigue candidato. [Recibo e integridad](ACTIVACION_SEGURIDAD_CUENTA_2026-11-07.md).
+
 ## Privacidad y panel · preparación local terminada; activación pendiente · 7 de noviembre de 2026
 
 Resueltos el texto candidato y el pin del artefacto aislado sin modificar CI/request.28Node/5enlaces, tipos/lint panel, build snapshot offline y hashes verificados;245archivos desde da9085c00f884f487a2ae4d35aed71a220d553a0. No publicar copy antes de backend881+guardas/worker+ejecutor activados y observados. Logs/backups externos mantienen plazo físico individual desconocido. Siguiente bloque: activación coordinada desde fuentes limpias, preservando hook/permisos y trabajo paralelo; no publicar HEAD combinado. No hay activación ni cargos en esta tanda. [Entrega local y comando de verificación](PRIVACIDAD_PANEL_CANDIDATO_2026-11-07.md).

@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## Primera migración de seguridad · aplicada y commit confirmado · 7 de noviembre de 2026
+
+Sólo20261107213544 de backend881, SHA33930eeb…b58e, aplicada una vez con autorización humana. Supautils administrado existente resuelve Storage; sin hook configurado según procedimiento oficial de Supabase administrado, sin afirmar dump del entorno.67policies/67triggers+completion,23DEFINER yrequire_user verificados antesCOMMIT; owners/ACL/policies e historial previo conservados. Lectura independiente confirma versiónuna vez, objetos yMD5finales, jobs0/RLStrue; segunda versión y ejecutor ausentes.
+
+No worker, hook nuevo, segunda migración, Cron, cierres/purgas, fixtures, publicaciones o cargos. Free yfrontendcandidato da9085c conservados. No eliminación completa/retención90d activa ni Playready. Trabajo de esta etapa cerrado; próxima acción: coordinar alcance separado, sin repetir primeraSQL. [Resultado y evidencia](ACTIVACION_SEGURIDAD_CUENTA_2026-11-07.md).
+
 ## Privacidad y panel · dos preparaciones locales cerradas · 7 de noviembre de 2026
 
 Textos de privacidad/eliminación alineados con backend881: datos diarios, auditoría de la cuenta cerrada90d desde evento, recibo90d desde cierre verificado, holds concretos y marcador mínimo seudónimo. Logs/backups externos separados con plazo físico individual desconocido. Sin rediseño ni otras páginas. Texto candidato: no publicar antes de activar/verificar backend, guardas/worker y ejecutor.
