@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Cuotas: preflight hospedado revisado; activación aún pendiente · 8 de noviembre de 2026
+
+La coordinación resolvió el acceso y ejecutó exactamente una vez PRECHECK_READONLY.sql a las 12:03 de Venezuela, en Marketplace/mimnotafmfasvwrclxan, main Production. Recibo SHA256 a9d7f838…49739 verificado; root revisó 171/171 metadatos y dos especialistas contrastaron permisos/cierre sin nuevas consultas. Versión de cuotas y helper ausentes, cuerpos/atributos/ACL y términos exactos. Ambas migraciones de cierre figuran una vez; require_user y los 17 ámbitos inspeccionados conservan sus guardas. Los timeouts previos ya no bloquean este frente.
+
+Trabajo en curso: ninguno de preflight o integración local. Activación sin ejecutar por alcance. Próxima acción delimitada: materializar/revisar el batch transaccional para aplicar una vez la migración exacta SHA5f929adb…d653, con guardas atómicas, preservación de ACL/cierre/plan/historial, registro estándar y confirmación READ ONLY independiente después del COMMIT. No repetir el preflight completo, pedir reconexión ni aplicar ahora.
+
+Limitación: las dos definition capturadas no conservan bytes de los MD5 del servidor; no usarlas como DDL o rollback. La excepción amplía mínimo y flujos de carritos íntegros válidos reservables/por encargo, incluso seller_shipping, sin nuevo permiso API. La fuente da803460 y sus 30 focales/tipos/lint siguen válidos; no hubo nuevas pruebas de producto, build, OTA, publicación, pago o cargo. [Resultado, evidencia y acción exacta](PREFLIGHT_CUOTAS_HOSPEDADO_2026-11-08.md).
+
 ## Cuotas integradas en production local; preflight remoto pendiente · 8 de noviembre de 2026
 
 Fuente aislada da803460 sobre bb3de958, árbol 8d6307c1: 17 archivos exactos de 1e8938ad, 9 de identidad/legal intactos y 3 archivos nuevos de pruebas. Tres pagos totales, primero hoy; importes, intervalos, recargos, historial y controles del servidor conservados. Pasaron 30 checks focales, tipos móvil/web y lint; revisión independiente favorable. Evidencia previa de 299 casos reutilizada y 20 hashes verificados, sin repetir matriz ni sumarlos como casos nuevos. Tres casos nuevos también pasan en la rama compartida.

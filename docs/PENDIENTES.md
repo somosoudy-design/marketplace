@@ -1,5 +1,13 @@
 # Pendientes de mayami
 
+## Cuotas: preflight resuelto; pendiente sólo la activación delimitada · 8 de noviembre de 2026
+
+Ya no falta acceso de navegador ni consulta completa: coordinación ejecutó una vez la lectura oficial a las 12:03 de Venezuela; recibo verificado y 171 comparaciones de metadatos aprobadas con revisión independiente. Migración/helper ausentes, guardas, términos y ACL exactos; cierre observado conservado. No pedir reconexión o credenciales ni repetir el preflight completo.
+
+Siguiente acción, todavía sin ejecutar: preparar y revisar el batch único para 20261107203116/SHA5f929adb…d653 mediante el mecanismo existente del SQL Editor. Guardas atómicas, fuente literal una vez, postaserciones de seguridad/cierre/plan/historial, fila estándar y COMMIT; después reconciliar con lectura focal independiente. No ampliar grants ni rebajar guardas. No usar las definition capturadas como respaldo literal; el cambio se toma del archivo original fijado por SHA.
+
+La excepción de preventa amplía mínimo y flujos, sin permisos API nuevos. Documentado el efecto sobre futuras llamadas al backend y el límite de los 17 ámbitos de cierre observados. La integración local no requiere rehacer UI/matriz; activación, actualización de app y storefront sobre legales actuales siguen etapas separadas. [Resultado y propuesta](PREFLIGHT_CUOTAS_HOSPEDADO_2026-11-08.md).
+
 ## Cuotas production: implementación local cerrada; lectura hospedada pendiente · 8 de noviembre de 2026
 
 Integración da803460 sobre bb3de958 terminada, 30/30 focales, tipos y lint aprobados. Los 17 blobs de cuotas y los 9 protegidos coinciden; tres pruebas móviles nuevas también pasan en shared. Evidencia de 299 pruebas anteriores reutilizada. No falta rehacer UI o repetir esa matriz para cerrar este bloque.

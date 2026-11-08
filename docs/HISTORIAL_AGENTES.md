@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — preflight de cuotas hospedado contrastado, sin activación
+
+Coordinación ejecutó PRECHECK_READONLY.sql exacto una vez a las 16:03 UTC/12:03 Venezuela tras verificar cuenta/proyecto/branch oficiales. Root validó recibo a9d7f838…49739 y 171/171 comparaciones de metadatos; dos especialistas revisaron ACL/defaults/RLS/cierre y acción propuesta. Versión/helper ausentes, seis guardas true, cuerpos/atributos/ACL y three_parts coincidentes. Cierre presente una vez y guardas preservadas en 17 tablas inspeccionadas. Sin consultas propias o repetición de preflight; timeouts previos superados como bloqueo.
+
+Detectada y documentada limitación: los dos textos definition capturados no conservan bytes coherentes con los hashes calculados en servidor; nunca usarlos para DDL o rollback. La fuente original y guardas servidor coinciden. Aclarada expansión de mínimo y flujo, incluso seller_shipping, para carritos íntegros válidos de preventa/encargo. Propuesta de activación exacta por batch único del SQL Editor, con preservación y reconciliación; ningún batch nuevo ejecutado o parseado. Sin migración aplicada, grants, publicación, nuevas pruebas/build/OTA, compras/pagos o cargos. Documentación/checkpoint actualizados para no dejar el preflight pendiente. [Resultado y límites](PREFLIGHT_CUOTAS_HOSPEDADO_2026-11-08.md).
+
 ## 2026-11-08 — integración de cuotas en fuente Android production aislada
 
 Integrador preparó da803460 sobre bb3de958, 20 archivos: 17 idénticos a cuotas 1e8938ad y 3 nuevos de pruebas focales. Nueve archivos de identidad/configuración/legal de production intactos. Tres pagos totales, primero hoy, sin cambios de importes, recargos, intervalos, historial, seguridad o plan remoto. Excluidos Google/correos/admin/cosmética. Core real, sólo puertos Expo Router simulados; 30/30 focales, tipos y lint aprobados. Tres casos nuevos pasan además en shared. Reutilizados 299 casos previos y verificados 20 hashes. Fallos iniciales del arnés y tipos generados conservados y corregidos sin cambiar producto para ponerlo en verde. Revisión independiente favorable.

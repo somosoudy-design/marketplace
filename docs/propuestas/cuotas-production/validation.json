@@ -1,6 +1,6 @@
 {
   "recordedAt": "2026-11-08T16:01:25.289565+00:00",
-  "status": "LOCAL_INTEGRATION_COMPLETE_REMOTE_PREFLIGHT_PENDING",
+  "status": "LOCAL_INTEGRATION_COMPLETE_HOSTED_PREFLIGHT_REVIEWED_NOT_APPLIED",
   "sharedParent": "0ec87049121258d595840a771ac6842228b9ef4d",
   "isolatedSource": "da803460fcc3f819b0bbd896de58438207ace5d7",
   "isolatedTree": "8d6307c16c04a18bd3fa3bc4be25da1c4598d853",
@@ -48,6 +48,13 @@
       "tree": "8d6307c16c04a18bd3fa3bc4be25da1c4598d853",
       "method": "Temporary ignored Git index; source unchanged; no test or remote action",
       "result": "EXACT"
+    },
+    "hostedMetadataReview": {
+      "passed": 171,
+      "total": 171,
+      "productTests": false,
+      "remoteQueriesRepeated": 0,
+      "capturedDefinitionsUsableAsDdl": false
     }
   },
   "toolingCorrections": [
@@ -56,32 +63,31 @@
   ],
   "paymentSemantics": "Three total payments, including first today, then days 15 and 30. No change to server amounts, surcharge, interval, historical rows, mixed-cart rules or other plan downpayments.",
   "remote": {
-    "recordedAt": "2026-11-08T16:01:25.289565+00:00",
+    "recordedAt": "2026-11-08T16:09:53.087902+00:00",
     "project": "mimnotafmfasvwrclxan",
-    "status": "PENDING_NOT_EXECUTED",
-    "metadataSelectsExecuted": 0,
-    "customerRowsRead": false,
+    "status": "PASS_METADATA_WITH_CAPTURE_LIMITATION_NOT_APPLIED",
+    "receiptObservedAt": "2026-11-08T16:03:17.333Z",
+    "receiptSha256": "a9d7f8386e252c1f9c99f5a3b6ad0271c69984016a7dde9883a7fe5c90849739",
+    "metadataSelectsExecuted": 1,
+    "queryExecutor": "Coordinator, official dashboard, one execution. Root reviewed local receipt only.",
+    "rootRemoteQueriesExecuted": 0,
     "sqlApplied": false,
-    "businessFunctionsInvoked": false,
-    "browserOutcome": "Chrome controller timed out before SQL. Explicit controller retry after reconnection also timed out. Coordinator closed browser scope; no further attempts.",
-    "authorizationMeaning": "Controller timeout is not evidence of a new Supabase permission denial. Account/project were not freshly observed in this task.",
-    "prohibitedFallbacksNotUsed": [
-      "denied connector retry",
-      "wrong CLI account",
-      "credential/cookie extraction",
-      "new grants or login"
-    ],
-    "querySha256": "e1b4ef64f775d7be26a5192fc49c439dc22ab95fd56bf6794ddb3691cdcbd47e",
-    "sqlSyntaxReview": "Manual source review only; not parsed or executed on PostgreSQL.",
-    "hostedMigrationState": "UNKNOWN",
-    "hostedFunctionDrift": "UNKNOWN",
-    "hostedPlanTerms": "UNKNOWN",
-    "nextStep": "When official controller is available, verify correct account and Marketplace project in UI, execute exact PRECHECK_READONLY.sql once, save result and obtain independent comparison. Do not apply migration in this scope.",
-    "decisionRules": {
-      "alreadyApplied": "If exactly one quota version, reviewed after hashes, helper, attributes, terms and closure guards match, do not reapply.",
-      "notApplied": "If zero quota versions, absent helper, exact before guards and expected attributes/terms with closure guards preserved, prepare separately bounded activation of unchanged migration; do not apply now.",
-      "driftOrPartial": "Stop on partial state, duplicates or mismatches. Do not modify hashes, grants, ownership or security to force acceptance."
-    }
+    "customerRowsRead": false,
+    "hostedMigrationState": "ABSENT_AT_RECEIPT_TIME",
+    "hostedHelperState": "ABSENT_AT_RECEIPT_TIME",
+    "hostedFunctionGuardState": "BEFORE_HASHES_MATCH",
+    "hostedPlanTerms": "MATCH_EXPECTATIONS",
+    "closureInspectedRelations": 17,
+    "closureControlsObserved": "PRESENT_AS_EXPECTED",
+    "metadataComparisonsPassed": 171,
+    "metadataComparisonsTotal": 171,
+    "definitionCaptureBytesReliable": false,
+    "definitionCaptureAction": "Never use captured definitions for DDL or rollback; use only pinned original source.",
+    "previousControllerTimeout": "Historical and superseded; not a current blocker or Supabase permission denial.",
+    "nextStep": "Prepare/review bounded transactional activation batch for exact migration when specifically authorized; do not repeat full preflight or apply now.",
+    "activationProposal": "ACTIVACION_PROPUESTA.md",
+    "applied": false,
+    "publicationPerformed": false
   },
   "artifacts": [
     {
@@ -152,9 +158,11 @@
     "Google/mail/admin integration"
   ],
   "releaseRisks": [
-    "Remote quota migration and plan state remain unverified; do not expose as active before preflight and separately scoped activation.",
+    "Hosted preflight reviewed: migration absent and before guards match at receipt time; activation remains a separately bounded action. Captured definitions are not byte-exact DDL backups.",
     "Preserve account closure require_user, restrictive account_open_only policies and account_00_open triggers; old quota snapshot must not overwrite them.",
     "Do not publish entire storefront from this older base; integrate web delta onto current published legal source first.",
-    "No fresh proof of native runtime compatibility, device receipt or hosted rendering. Existing AAB is unchanged."
-  ]
+    "No fresh proof of native runtime compatibility, device receipt or hosted rendering. Existing AAB is unchanged.",
+    "Exception expands both minimum and flow eligibility for wholly valid reservable/on_order carts; it may include seller_shipping. Do not describe all flow restrictions as unchanged."
+  ],
+  "updatedAt": "2026-11-08T16:09:53.087902+00:00"
 }
