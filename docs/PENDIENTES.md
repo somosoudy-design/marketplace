@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Tecnología: propuesta lista para revisar antes de publicar · 8 de noviembre de 2026
+
+Implementación local dcee73d9 terminada, sólo seis rutas visuales. Tres pruebas focales, tipos, lint y comparación real de 390/440 px en claro/oscuro, retina y fallback 404 aprobados. Audio y fallback idénticos; 147 originales e integraciones preparadas intactos. No hace falta repetir matrices, tocar categorías nativas u Odontología.
+
+Pendiente revisar el resultado: la máscara aproxima la silueta y afina parte del lápiz. Si se aprueba, revalidar la última base web publicada documentada db41707, aplicar sólo visual-only.patch y preparar build, gates y preview aislados. Árbol esperado 6f0b52c4. No publicar dcee/884/HEAD compartido ni sus integraciones pendientes. No hubo despliegue, configuración, permisos o gastos. [Resultado y ruta exacta](TECNOLOGIA_FONDO_CORREGIDO_2026-11-08.md).
+
 ## Google: código local conectado; falta configuración y prueba reales · 8 de noviembre de 2026
 
 Terminada integración 88461178 sobre da803460, con 97 focales, tipos/lint y cinco grupos reales de Provider/SDK/HTTP loopback. Incluye proveedor móvil y preservación de guest/actor. No falta conectar AuthProvider/UI ni volver a la auditoría general. Gate publicado y fuente normal false; sin nueva APK/OTA.

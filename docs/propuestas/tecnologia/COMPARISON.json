@@ -1,0 +1,64 @@
+{
+  "comparisons": [
+    {
+      "width": 390,
+      "theme": "light",
+      "geometryAndOriginalSrcIdentical": true,
+      "audioComparedRect": {
+        "left": 214,
+        "top": 12,
+        "width": 176,
+        "height": 88
+      },
+      "audioDifferentChannelValues": 0,
+      "originalAssetsUnchanged": true
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOriginalSrcIdentical": true,
+      "audioComparedRect": {
+        "left": 214,
+        "top": 12,
+        "width": 176,
+        "height": 88
+      },
+      "audioDifferentChannelValues": 0,
+      "originalAssetsUnchanged": true
+    },
+    {
+      "width": 440,
+      "theme": "light",
+      "geometryAndOriginalSrcIdentical": true,
+      "audioComparedRect": {
+        "left": 214,
+        "top": 12,
+        "width": 190,
+        "height": 88
+      },
+      "audioDifferentChannelValues": 0,
+      "originalAssetsUnchanged": true
+    },
+    {
+      "width": 440,
+      "theme": "dark",
+      "geometryAndOriginalSrcIdentical": true,
+      "audioComparedRect": {
+        "left": 214,
+        "top": 12,
+        "width": 190,
+        "height": 88
+      },
+      "audioDifferentChannelValues": 0,
+      "originalAssetsUnchanged": true
+    }
+  ],
+  "fallback": {
+    "mask404Expected": true,
+    "unexpectedErrors": 0,
+    "noLayoutShift": true,
+    "technologyPixelsIdenticalToOriginal": true,
+    "differentChannelValues": 0
+  },
+  "scope": "PNG pixel analysis only; no extra browser contexts or image modification"
+}

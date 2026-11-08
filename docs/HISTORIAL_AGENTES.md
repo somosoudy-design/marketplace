@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — fondo de Tecnología corregido con una máscara acotada
+
+La referencia IMG_1886 corresponde al Home web. La tablet usa un JPEG con fondo violeta; Audio, un fondo blanco integrado con multiply. Tras una búsqueda acotada sin alpha aprobado, se realizó una extracción con imagegen desde la portada limpia del mismo kit. Se descartó todo el RGB generado y se usó sólo su alfa sobre el JPEG original. Fuente dcee73d9, seis rutas; diseño, CSS, textos, navegación y otras categorías intactos. Revisión visual independiente favorable para la tarjeta; la silueta afina parte del lápiz y no se presenta como recorte exacto.
+
+Pasaron tres pruebas focales, tipos y lint; cuatro capturas de 390/440 px en ambos temas, retina y un 404 aislado. Audio y fallback coinciden por píxel; 147 originales y Google/cuotas preparados permanecen intactos. El patch aplicado sólo a un índice temporal sobre db41707 produce 6f0b52c4 con seis rutas, sin arrastrar otros deltas. Bundle y comparación HTML persistentes. Sin build, publicación, AAB, OTA, SQL, credenciales, permisos o cargos. Próximo paso: revisión y preparación aislada si se aprueba. [Entrega](TECNOLOGIA_FONDO_CORREGIDO_2026-11-08.md).
+
 ## 2026-11-08 — Google conectado a cliente, proveedores y UI, sin activar
 
 Integrador preparó 88461178/árbol e1ba22c9 sobre da803460: 35 archivos selectivos, sin WIP ajeno. Runtime compone SDK real; proveedores releen sesión confirmada antes de merges guest; navegación liga actor/intento/sello y montaje. Web commit final síncrono/lock/claim compartidos, cancelación obsoleta condicional dentro del lock; native journal y commit_uncertain sin falso cancelado. Un ensayo móvil de Provider descubrió fetch Window Illegal invocation y se corrigió ligando un único request al entorno. Fuente normal gatefalse.

@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## Tecnología web: propuesta mínima sin cuadrado, sin publicar · 8 de noviembre de 2026
+
+Fuente dcee73d9 sobre 8846117, seis archivos visuales. La tarjeta conserva el JPEG original y usa sólo una máscara alfa ligada a categoría y ruta exactas. Diseño, CSS, textos, navegación, Audio, Odontología y los 147 originales se conservan; también los 35 archivos de Google y los 17 de cuotas. Tres pruebas, tipos y lint aprobados; capturas reales en ambos temas, retina y fallback 404. Audio y fallback coinciden por píxel. Revisión independiente favorable para navegación, con límite: la máscara afina parte del lápiz.
+
+Trabajo en curso: ninguno de implementación. Próxima acción: revisar la propuesta antes de preparar una publicación aislada. El patch de seis rutas aplica a db41707 y produce el árbol 6f0b52c4 sin trasladar Google, cuotas o Android nuevos. Revalidar la base pública antes de usarlo; no desplegar dcee ni HEAD compartido. Sin build, Worker, AAB, OTA, configuración o cargos. [Comparación y vía aislada](TECNOLOGIA_FONDO_CORREGIDO_2026-11-08.md).
+
 ## Google integrado en fuente aislada; publicado sigue apagado · 8 de noviembre de 2026
 
 Fuente 884611780a1a3207aca9c3f3d8703b0324f65718 sobre da803460: runtime/SDK, AuthProvider móvil/proveedor web, controles y callbacks conectados. Identidad Android/config, legales y 17 archivos de cuotas conservados. 97 focales, tipos API/móvil/web y lint aprobados; cinco grupos React/SDK/HTTP local, 29 requests loopback, proveedor móvil real y guest merge por actor. Revisión visual independiente favorable en claro/oscuro. No OAuth real, Keystore o Android físico.
