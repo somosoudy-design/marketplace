@@ -1,0 +1,17 @@
+{
+  "reportedBy": "Coordinator; direct official dashboard read. Root did not repeat it.",
+  "observedAtUtcMinute": "2026-11-08T16:12Z",
+  "project": "mimnotafmfasvwrclxan",
+  "profile": "somosoudy-design",
+  "googleEnabled": false,
+  "clientIds": [],
+  "clientSecretRead": false,
+  "siteUrl": "https://mayami.app",
+  "redirectAllowlist": [
+    "https://mayami.app/auth/callback",
+    "https://mayami.app/auth/callback?tipo=recuperar"
+  ],
+  "confirmEmail": false,
+  "manualLinking": false,
+  "fieldsChanged": false
+}

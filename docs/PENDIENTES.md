@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Google: código local conectado; falta configuración y prueba reales · 8 de noviembre de 2026
+
+Terminada integración 88461178 sobre da803460, con 97 focales, tipos/lint y cinco grupos reales de Provider/SDK/HTTP loopback. Incluye proveedor móvil y preservación de guest/actor. No falta conectar AuthProvider/UI ni volver a la auditoría general. Gate publicado y fuente normal false; sin nueva APK/OTA.
+
+Pendientes delimitados: verificar cliente OAuth Web existente y custodia, decidir asociación por correo verificado, validar patrón nativo kora con nonce sin wildcard amplio, revisar/aprobar delta de proveedor y retorno, después prueba OAuth real con consentimiento autorizado. No crear credenciales, ampliar allowlist, cambiar linking/Confirm email/RLS ni activar ahora. HTTPS/IDs/Disabled ya fueron leídos por coordinación; no hay bloqueo de Chrome. No tocar cuotas remotas ni limpieza de pedidos. Web futura debe conservar los legales de la fuente publicada actual, no reemplazarlos desde la base Android. [Resultado y mínimo pendiente](GOOGLE_INTEGRADO_LOCAL_2026-11-08.md).
+
 ## Cuotas: preflight resuelto; pendiente sólo la activación delimitada · 8 de noviembre de 2026
 
 Ya no falta acceso de navegador ni consulta completa: coordinación ejecutó una vez la lectura oficial a las 12:03 de Venezuela; recibo verificado y 171 comparaciones de metadatos aprobadas con revisión independiente. Migración/helper ausentes, guardas, términos y ACL exactos; cierre observado conservado. No pedir reconexión o credenciales ni repetir el preflight completo.

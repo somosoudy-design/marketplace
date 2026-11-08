@@ -1,5 +1,7 @@
 # Acceso Google y correo Mayami · preparación sin activar
 
+> Actualización 8nov2026: el protocolo preparado ya está conectado en fuente aislada 88461178, con pruebas reales locales de Provider/SDK/HTTP. Google sigue sin activar/publicar. La lectura hospedada de coordinación superó los bloqueos históricos de acceso; no repetirlos. [Estado vigente y decisiones pendientes](GOOGLE_INTEGRADO_LOCAL_2026-11-08.md).
+
 ## Estado y límites
 
 Tanda acotada: registro Google, inicio Google y retorno a compra, conservando los contratos idempotentes

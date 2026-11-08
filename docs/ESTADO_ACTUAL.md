@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## Google integrado en fuente aislada; publicado sigue apagado · 8 de noviembre de 2026
+
+Fuente 884611780a1a3207aca9c3f3d8703b0324f65718 sobre da803460: runtime/SDK, AuthProvider móvil/proveedor web, controles y callbacks conectados. Identidad Android/config, legales y 17 archivos de cuotas conservados. 97 focales, tipos API/móvil/web y lint aprobados; cinco grupos React/SDK/HTTP local, 29 requests loopback, proveedor móvil real y guest merge por actor. Revisión visual independiente favorable en claro/oscuro. No OAuth real, Keystore o Android físico.
+
+Trabajo en curso: ninguno de integración local. La coordinación verificó Google Disabled/IDs vacío y redirects HTTPS a las 12:12; no repetir acceso ni pedir reconexión. Próxima acción delimitada: identificar cliente OAuth Web existente, resolver política de identidad y patrón nativo kora/nonce, revisar el delta remoto y pedir autorización específica de configuración/prueba real. Gate normal false, sin activar/publicar, cuotas remotas, pedidos de prueba, Firebase, APK/AAB/OTA o cargos. Patch/bundle recuperables; no desplegar HEAD compartido ni todo el storefront viejo. [Implementación, evidencia y decisiones](GOOGLE_INTEGRADO_LOCAL_2026-11-08.md).
+
 ## Cuotas: preflight hospedado revisado; activación aún pendiente · 8 de noviembre de 2026
 
 La coordinación resolvió el acceso y ejecutó exactamente una vez PRECHECK_READONLY.sql a las 12:03 de Venezuela, en Marketplace/mimnotafmfasvwrclxan, main Production. Recibo SHA256 a9d7f838…49739 verificado; root revisó 171/171 metadatos y dos especialistas contrastaron permisos/cierre sin nuevas consultas. Versión de cuotas y helper ausentes, cuerpos/atributos/ACL y términos exactos. Ambas migraciones de cierre figuran una vez; require_user y los 17 ámbitos inspeccionados conservan sus guardas. Los timeouts previos ya no bloquean este frente.

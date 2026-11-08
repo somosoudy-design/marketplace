@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — Google conectado a cliente, proveedores y UI, sin activar
+
+Integrador preparó 88461178/árbol e1ba22c9 sobre da803460: 35 archivos selectivos, sin WIP ajeno. Runtime compone SDK real; proveedores releen sesión confirmada antes de merges guest; navegación liga actor/intento/sello y montaje. Web commit final síncrono/lock/claim compartidos, cancelación obsoleta condicional dentro del lock; native journal y commit_uncertain sin falso cancelado. Un ensayo móvil de Provider descubrió fetch Window Illegal invocation y se corrigió ligando un único request al entorno. Fuente normal gatefalse.
+
+Pasaron 97 focales, tipos API/móvil/web, lint y cinco grupos React/SDK/HTTP con proveedor móvil real: 29 requests loopback, cero errores/red externa, 25 fuentes estables; cuatro capturas claro/oscuro con revisión independiente favorable. Sin prueba física/Keystore/Custom Tabs/GoTrue/Google reales. Identidad/legal/cuotas conservados. Coordinación aportó baseline hospedada GoogleDisabled/IDs vacío/HTTPS a las 12:12; no se repitió lectura ni se configuró proveedor/allowlist. Sin SQL/cuotas remotas, pedidos/pagos, credenciales, Firebase, APK/AAB/OTA, publicación o cargos. Delta externo y decisiones explícitos; patches/bundle/evidencia guardados. [Entrega](GOOGLE_INTEGRADO_LOCAL_2026-11-08.md).
+
 ## 2026-11-08 — preflight de cuotas hospedado contrastado, sin activación
 
 Coordinación ejecutó PRECHECK_READONLY.sql exacto una vez a las 16:03 UTC/12:03 Venezuela tras verificar cuenta/proyecto/branch oficiales. Root validó recibo a9d7f838…49739 y 171/171 comparaciones de metadatos; dos especialistas revisaron ACL/defaults/RLS/cierre y acción propuesta. Versión/helper ausentes, seis guardas true, cuerpos/atributos/ACL y three_parts coincidentes. Cierre presente una vez y guardas preservadas en 17 tablas inspeccionadas. Sin consultas propias o repetición de preflight; timeouts previos superados como bloqueo.

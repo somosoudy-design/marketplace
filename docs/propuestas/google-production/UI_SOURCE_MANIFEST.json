@@ -1,0 +1,31 @@
+{
+  "baseline": "da803460fcc3f819b0bbd896de58438207ace5d7",
+  "source": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace",
+  "files": {
+    "packages/api/src/google-auth.ts": "500173e0c94a182e24a7a9440e3f3e33c62dc93fd8858e49ab6a05cf9d3eed35",
+    "packages/api/src/google-auth-runtime.ts": "07b130ee807fcb869e891f9dce2c808e0ed51afe779894c867452f5112d393dd",
+    "packages/api/src/google-session-boundary.ts": "04bbd484dae4436cb7ba7edb6d22100873bf1a5790ad0fef002c2fff1a736e5d",
+    "packages/api/src/google-web-session.ts": "c109a3a9c90c2f3a36caf0a8059fd88b9426de5f293b0a40c9f36742ad77a980",
+    "packages/api/src/google-web-ports.ts": "8e6b5a274b87c5cbb58b8292a76ca07bf0b688003594dd3635e6d48c5da8285b",
+    "packages/api/src/client.ts": "8e9e676385a515afcbc3b272f1afe8dca454982cd9d052759e3b62099a7aab39",
+    "packages/api/src/api.ts": "d2db148f47b948a0d0966ccbe30fb737d8b16442c0dc9119e1cb31f87399610a",
+    "apps/storefront/src/lib/browser.ts": "d060bd267f55bfd14abb42750554993b585d8293e689cb12e649131d345f36ce",
+    "apps/storefront/src/lib/providers.tsx": "4c8a630e17215853f1ad0bae3a6c86bff5b2e839da7041b1efad97483ee9a382",
+    "apps/storefront/src/lib/actor-api.ts": "6de92f801976ebfcaf717c2a2d912c9efd71057955e203456880fcbc8816fc13",
+    "apps/storefront/src/lib/guest-storage.ts": "3eac44d7ddf7e6e1ff2b7e0d69b5f6ae33a43edd6c834ae7fff39b404a0ce34b",
+    "apps/storefront/src/lib/auth-return.ts": "3b80610566067a596c0153978596e74cb804647e31317d3296d11023b0406819",
+    "apps/storefront/src/components/google-access-button.tsx": "d2bee09c149cc2caaa3e00a0716c7975bb6a37c094b9b2463c77eeccb56dc362",
+    "apps/storefront/src/app/cuenta/page.tsx": "e7eb44cbfff0bb619d0f43438a27aea3d7f639aa159b115db60ccc8dfc37447b",
+    "apps/storefront/src/app/registro/page.tsx": "ec64c0408f2df591c148ee8201a27b2f480b7b72e6f24525a78f9a126885bc5f",
+    "apps/storefront/src/app/auth/callback/page.tsx": "169cfb47fa17550bddc0b93bbeb62370196260fa4d0788ce94363a067553352f",
+    "apps/mobile/src/lib/auth.tsx": "664a7b492e7d755862af0541ad4a135867ad405608c2bed21d8a81f4720eff11",
+    "apps/mobile/src/lib/google-runtime.ts": "0eb6bf8b5e33fb0d471c03a2b476ed8c13007d49a9a763e7b90c9a500943d030",
+    "apps/mobile/src/lib/google-auth-ports.ts": "3d9ca10c8443ce668d07f3ddba8f88ad40e0c74de8aff14ead68ff226f2349c8",
+    "apps/mobile/src/lib/supabase.ts": "a1da2c6f130e72ab776c5866786f78898983c4fa89c33bbdbeba9ce8eb558305",
+    "apps/mobile/src/lib/actor-api.ts": "f3b683655c2d2bb8c28c5f6e85cdeecaeea4aa4842f8d3ed9861376700948df0",
+    "apps/mobile/src/lib/guest-cart.ts": "eef847f4e62319f185945e77e8a0e31fa01e579b86c14f7c2f4b36a852318d2f",
+    "apps/mobile/src/lib/guest-favorites.ts": "6ad039505fc16991752381d064a1ad627fcbdf2c6befeca32a586dc0e206b7da",
+    "packages/core/src/guest-cart.ts": "cfc5723aeb37217e26842ed9c5524d2ebd389cb29743c1297780690891c220fe",
+    "packages/core/src/guest-favorites.ts": "7ed26ef9976f8c3879b0ce904b48bfafa768c89089788e725d44e6c03d3e8281"
+  }
+}
