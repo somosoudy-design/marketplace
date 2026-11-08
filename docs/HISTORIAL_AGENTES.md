@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-07 — segunda migración instalada sin procesamiento
+
+Aprobación específica; fuente881/SQL2b013…fd916 ybatch8164…efc1/editor exactos. Una transacción ycommitconfirmadoporlecturaindependiente:17funciones/ACL,3RLS,5reemplazos,2índices,trigger7/creatorEXECUTE,67primera preservados, ambasversionesuna yjobs/markers/holds/managedAudit0. Authmetadata/historialsolicitudes/auditoríavisible conservados sinpayloadpersonal. SinRPCclean/retention/worker/hook/Cron/fixtures/publicación/cargos; suitescerradasno repetidas. [Resultado](ACTIVACION_RETENCION_CUENTA_2026-11-07.md).
+
 ## 2026-11-07 — primera migración de seguridad activada, sin cierres
 
 Autorización humana limitada; fuente881/SQL33930…b58e ybatchf345…410da exactos, revisión independiente yguardasfresh7255…001e. Supautils existente/criterio oficialmanaged dehook acreditados. Un intento transaccional,67policies/67triggers+completion y23DEFINER/require_user comprobados antesCOMMIT; ownersACL/policies/requests/historial previo intactos. Lectura independiente confirma versión20261107213544 una vez yjobs0/RLStrue. Sin segunda migración/worker/hook/Cron/purga/publicaciones/fixtures/cargos; frontendcandidato sin publicar. [Resultado](ACTIVACION_SEGURIDAD_CUENTA_2026-11-07.md).

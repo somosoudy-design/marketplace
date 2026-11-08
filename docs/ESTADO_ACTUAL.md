@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## Segunda migración de retención · instalada y commit confirmado · 7 de noviembre de 2026
+
+20261107221337 de backend881/SHA2b013119…fd916 aplicada una vez con aprobación específica. Guardas5/5 yjobs0; batch8164…efc1 revisado yeditorSHAexacto.17funciones/ACL,3RLS,5reemplazos,2índices ytriggerAuth7 verificados antesCOMMIT yporlecturaindependiente;67controlesprevios, Authmetadata, solicitudes/auditoríavisible e historial conservados. Ambas versiones una vez; jobs/markers/holds/managedAudit0.
+
+Trigger instalado para INSERT futuros elegibles; ejecutor instalado SIN invocar/programar. No worker, cierres, minimización histórica/purgas, eventos/cuentasprueba, hook/planes/publicaciones/cargos. No cierre real/retención periódica90d/Playready acreditados. Trabajo cerrado; siguiente alcance separado, sin repetir migraciones. [Resultado y recibos](ACTIVACION_RETENCION_CUENTA_2026-11-07.md).
+
 ## Primera migración de seguridad · aplicada y commit confirmado · 7 de noviembre de 2026
 
 Sólo20261107213544 de backend881, SHA33930eeb…b58e, aplicada una vez con autorización humana. Supautils administrado existente resuelve Storage; sin hook configurado según procedimiento oficial de Supabase administrado, sin afirmar dump del entorno.67policies/67triggers+completion,23DEFINER yrequire_user verificados antesCOMMIT; owners/ACL/policies e historial previo conservados. Lectura independiente confirma versiónuna vez, objetos yMD5finales, jobs0/RLStrue; segunda versión y ejecutor ausentes.

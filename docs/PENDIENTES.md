@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## Retención de cuenta · segunda migración instalada; operación pendiente · 7 de noviembre de 2026
+
+Dos migraciones confirmadas, no repetir. Segunda20261107221337:17funciones/ACL,3RLS,5reemplazos,2índices ytriggerAuth;67controlesprevios/historia conservados yjobs0. Trigger futuro instalado; ejecutor no invocado/programado. Worker, cierres, retención periódica ypublicación fuera de esta autorización; próxima etapa separada. No Playready ni eliminación completa operativa. [Evidencia y límites](ACTIVACION_RETENCION_CUENTA_2026-11-07.md).
+
 ## Seguridad de cuenta · primera migración aplicada; siguiente etapa pendiente · 7 de noviembre de 2026
 
 20261107213544 confirmada en MIM por lectura independiente:67policies/67triggers+completion,23DEFINER/require_user, ownersACL/policies/historial conservados, jobs0. No repetir. Segunda migración, worker, configurarhook, Cron/retención/cierres y publicación no activados ni incluidos en esta autorización. Próximo alcance separado; frontendda9085c sigue candidato. [Recibo e integridad](ACTIVACION_SEGURIDAD_CUENTA_2026-11-07.md).
