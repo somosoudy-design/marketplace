@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Android/AAB · fuente lista localmente; decidir identidad y clave de carga · 8 de noviembre de 2026
+
+bb3de958 sobre 59e88a07 conserva el preview publicado y añade los enlaces legales nativos y la configuración AAB de producción, sin Google o cuotas. Pasaron tres pruebas Node, cinco Vitest, tipos, lint y revisión independiente. Preview y fingerprint local intactos. No volver a preparar los enlaces, publicar la web o cerrar la cuenta. El package propuesto app.mayami.marketplace no está confirmado.
+
+Siguiente paso mínimo: leer app, package y certificados en Play sin crear recursos. EAS sólo devolvió la identidad de preview; no inferir ausencia de producción. Después, confirmar package y clave de carga: reutilizar la existente exacta si corresponde, o autorizar una nueva exclusiva de producción en Expo EAS, organización marketplacebrand, proyecto marketplace, bajo custodia cifrada y sin tocar preview. Falta autorización específica de ese recurso y del primer AAB. No hubo build, firma, submit, nuevas credenciales o cargos. [Entrega y alcance de confirmación](propuestas/android-production/SOURCE_PREPARADA_2026-11-08.md).
+
 ## Privacidad pública · publicada; gestión externa por acreditar · 8 de noviembre de 2026
 
 Eliminación/privacidad/contacto200SSR en producción, navegación sinlogin verificada y Worker3fa586f2/BUILD_ID gXzoqz9BVz7a2MPxDrfwZ. Artefacto exacto db417 publicado una vez, sin rebuild o HEAD compartido. Ya no falta publicación de este bloque: no repetirla.

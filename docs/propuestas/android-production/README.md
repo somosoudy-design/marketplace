@@ -1,5 +1,7 @@
 # Android producción: propuesta aislada
 
+Actualización del 8 de noviembre: ya hay una [fuente Android aislada con enlaces legales, SHA y pruebas](SOURCE_PREPARADA_2026-11-08.md). Sólo esa copia usa app.mayami.marketplace como propuesta local explícita; estas plantillas históricas siguen desconectadas y con placeholder. Preview permanece intacto.
+
 8 de noviembre de 2026. Fuente limpia: `59e88a07a53338678c29aaf16a824daa7b31d58c`, última fuente Android publicada conocida. Este directorio **no está importado ni activado**. No se modifican `apps/mobile/app.config.ts`, `apps/mobile/eas.json`, `config/brand.json`, paquetes, canales o requests de publicación.
 
 ## Resultado y decisión pendiente

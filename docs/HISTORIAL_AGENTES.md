@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — fuente Android de producción con enlaces legales, sin firma ni build
+
+Preview público 01a1b758 revalidado por lectura; la fuente 73fc75ef tiene los mismos inputs que 59e88a07. El integrador preparó bb3de958 con nueve archivos: cinco móviles y el test legal idénticos a da9085c, dos configuraciones de la propuesta y una prueba focal. La configuración Expo real sólo cambia identidad, dominio y soporte. Conserva scheme kora, retornos de pagos, permisos, seguridad, recursos y proyecto Expo. Pasaron tres pruebas Node, cinco Vitest, tipos y lint; revisión independiente favorable. Preview compartido intacto y fingerprint local ccbac2f5 idéntico antes y después, sin incluir el archivo Firebase. No acredita una nueva prueba nativa del APK.
+
+Una consulta oficial de metadata de EAS, sin campos privados, sólo mostró com.example.kora.preview y la firma 86bf…df7f en el proyecto 9f629f10. No se observó producción allí; no se infiere inexistencia en Play. La consulta del navegador de Play agotó el tiempo y se detuvo. Sin nuevos accesos, permisos, asistentes, secretos, claves, builds, OTA, submit o cargos. app.mayami.marketplace sigue siendo propuesta local. Fuente, diff, bundle y pruebas entregados. Próxima acción: leer identidad en Play y decidir package y upload key exacta o nueva de producción en EAS; mantener separadas las decisiones de Play App Signing y primer build. El correo externo quedó fuera de esta tanda. [Entrega](propuestas/android-production/SOURCE_PREPARADA_2026-11-08.md).
+
 ## 2026-11-08 — publicación mínima de privacidad y eliminación, verificada en público
 
 Autorización ampliada para candidato exacto. Revalidación de fuente db417/base9916, tarSHAf838936a…f9c3/manifiesto7a0c46fe…ebca5,2290entradas y Worker previo sin cambios. Una publicación desde checkout limpio por ruta existente --keep-vars, sin rebuild/HEAD compartido; Worker3fa586f2-cf50-4ec1-a288-9171ae216591100%, deployment5a856939-a21d-4103-9e4e-ceb56f0b9f10. Runtime/bindings idénticos. Trespáginas200SSR/BUILD_ID gXzoqz9BVz7a2MPxDrfwZ, navegaciónfooter/eliminación/privacidad y correo visible sinlogin;390sin errores/overflow. Error de selector sólo en driver corregido antes dePASS; ningún cambio deproducto ni redeploy. Revisión independiente favorable; fuente/artefacto idénticos después.

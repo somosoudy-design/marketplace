@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Android producción · fuente aislada preparada; identidad y firma pendientes · 8 de noviembre de 2026
+
+Fuente bb3de95871419ac35afb213067d02c9e6cd02835 sobre 59e88a07, con los mismos inputs Android que la OTA de preview actual 01a1b758, publicada desde 73fc75ef. Nueve archivos: cinco fuentes móviles y el test legal de da9085c, dos configuraciones de la propuesta y una prueba focal. Prepara AAB para production; app.mayami.marketplace sigue siendo una propuesta local sin reserva confirmada. Conserva scheme kora, retornos de pagos, permisos, seguridad, recursos y proyecto. No integra Google, cuotas, backend o editor ni modifica las fuentes activas de preview.
+
+Pasaron tres pruebas Node de configuración Expo real, cinco Vitest de enlaces, tipos, lint y revisión independiente. La configuración resuelta sólo difiere en identidad, dominio y soporte. El fingerprint local de preview antes y después es ccbac2f55b3a72ea6cf04871d415813c4ff6690e, con 66 fuentes idénticas y sin incluir el archivo Firebase. No acredita el runtime literal del APK instalado. Patch, bundle y recibos conservados; patch y validación incluidos en la documentación compartida.
+
+La consulta oficial de metadata de EAS sólo mostró com.example.kora.preview en el proyecto 9f629f10 y su firma conocida 86bf…df7f. No demuestra ausencia de producción en Play u otras cuentas. El navegador de Play no respondió; no se iniciaron nuevos accesos, permisos o asistentes de credenciales. Implementación terminada. Próxima acción: leer identidad y certificados en Play, confirmar el package y autorizar el uso de una upload key existente exacta o la creación de una exclusiva de producción bajo custodia de EAS, organización marketplacebrand, proyecto marketplace. Después se autoriza el primer AAB por separado. Sin build, firma, OTA, submit o cargos en esta tanda. El correo soporte pertenece a otra investigación. [Fuente, diff y decisión concreta](propuestas/android-production/SOURCE_PREPARADA_2026-11-08.md).
+
 ## Privacidad pública · publicación mínima verificada · 8 de noviembre de 2026
 
 Publicado sólo artefacto db41707/9916 con autorización ampliada: tarSHA f838936a…f9c3/manifiesto7a0c46fe…ebca5 revalidados antes/después, sin rebuild/HEAD compartido. Worker3fa586f2-cf50-4ec1-a288-9171ae216591100%, deployment5a856939-a21d-4103-9e4e-ceb56f0b9f10, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ. Runtime/bindings idénticos; sin cargos, credenciales/permisos o servicios nuevos.
