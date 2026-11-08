@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — continuación autorizada de Tecnología con foto vigente
+
+Continuación explícitamente autorizada: guard exacto, prueba y procedencia actualizados a da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg. GET fresco confirma ruta/hash, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker3fa586f2 al100%, sin deriva. JPEG504851bytes/SHA0eb198ff… es idéntico al input limpio de la máscara; máscara046d5825… intacta, sin regeneración, catálogo ni categorías cambiados.
+
+Fuente aislada064f4729 sobre db41707 vía b9a09a0; árbolcef8efa7, seis paths. Nuevo patch SHA25627d5d459bd7547d567e5218300fc3af48119cf8b0ec02b66352f2ab26c45817b; no traslada Google/cuotas/Android de HEAD. Trabajo en curso: pruebas focales, build, revisión visual/artefacto y publicación con sesión Cloudflare existente. Próxima acción: verificar recorte real y gates; revalidar justo antes versión+ruta+hash y detener si cambian; un despliegue y cuatro vistas públicas390/440claro/oscuro, sin otra tanda. Cuota inicial59%consumida/41%restante, parada20%; no resets/servicios con cargos. [Entrega en curso](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
+
 ## 2026-11-08 — publicación Tecnología detenida por deriva de imagen
 
 No se ejecutó despliegue. La base pública/Worker siguen correctos (db41707 por recibos, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ, versión3fa586f2 al100%), pero el catálogo vivo usa la foto da3eea0c…jpg y el parche autorizado sólo enmascara c6dba434…jpg. Cuatro capturas públicas y el Worker local confirman que el candidato no quitaría el cuadro actual. No desplegar b9a09a0 ni su tar, tampoco HEAD compartido.
