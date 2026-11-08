@@ -1,16 +1,12 @@
 # Estado actual de mayami
 
-## Tecnología web: candidato vigente revisado, publicación en curso · 8 de noviembre de 2026
+## Tecnología web publicada: foto vigente sin cuadro · 8 de noviembre de 2026
 
-Guard exacto/test/procedencia reconciliados a da3eea0c…; misma máscara yRGB original. Fuente064f4729/treecef8efa7 sobre base db41707, seis paths sin Google/cuotas/Android.3focales/tipos/lint, build/gates y revisión de2294entradas PASS. BUILD_IDoRxefyBw9hH3OMgOr-mio, tar25c98ea7… y manifiesto406086db…. Cuatro vistasWorker390/440claro/oscuro correctas; Audio metadata/hash/CSS intactos,3crops exactos y440oscuro delta máximo1/255 sólo foto, fallo estricto conservado.
+Publicación única completada desde la fuente aislada 064f4729 / árbol cef8efa7 sobre db41707, exactamente seis archivos. Se reconcilió sólo guard exacto, test y procedencia a da3eea0c…; máscara reutilizada y JPEG original conservado. No se modificaron categorías ni catálogo, Audio, textos, dimensiones, Google, cuotas o Android.
 
-Trabajo en curso: publicación autorizada de este artefacto, sin otro bloque. Próxima acción: revalidar justo antes versión pública+ruta+hash y bytes del artefacto; detener si cambian; una ejecución deploy:cloudflare --keep-vars y cuatro vistas públicas. Sin catálogo/categorías, backend, OAuth, cuotas, credenciales, permisos, OTA/AAB o cargos. Cuota inicial41%restante, parada20%. [Recibo y límites](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
+Tres focales, tipos/lint, un build Cloudflare y gates aprobados. Artefacto y 2294 entradas verificados antes/después. Versión f6c9dfde al 100%, deployment 43e54f0e, BUILD_ID público oRxefyBw9hH3OMgOr-mio. Cuatro vistas públicas 390/440 px claro/oscuro: máscara aplicada, cuadro eliminado, src/hrefs/geometría/CSS conservados y cero errores inesperados. Revisión visual independiente favorable; Audio coincide por píxel a390 y tiene delta máximo1/255 sólo en su foto a440, sin afirmar igualdad exacta completa. Runtime/bindings conservados, sin cargos nuevos.
 
-## Tecnología web: propuesta mínima sin cuadrado, sin publicar · 8 de noviembre de 2026
-
-Fuente dcee73d9 sobre 8846117, seis archivos visuales. La tarjeta conserva el JPEG original y usa sólo una máscara alfa ligada a categoría y ruta exactas. Diseño, CSS, textos, navegación, Audio, Odontología y los 147 originales se conservan; también los 35 archivos de Google y los 17 de cuotas. Tres pruebas, tipos y lint aprobados; capturas reales en ambos temas, retina y fallback 404. Audio y fallback coinciden por píxel. Revisión independiente favorable para navegación, con límite: la máscara afina parte del lápiz.
-
-Trabajo en curso: ninguno de implementación. Próxima acción: revisar la propuesta antes de preparar una publicación aislada. El patch de seis rutas aplica a db41707 y produce el árbol 6f0b52c4 sin trasladar Google, cuotas o Android nuevos. Revalidar la base pública antes de usarlo; no desplegar dcee ni HEAD compartido. Sin build, Worker, AAB, OTA, configuración o cargos. [Comparación y vía aislada](TECNOLOGIA_FONDO_CORREGIDO_2026-11-08.md).
+Trabajo en curso: ninguno en esta tanda. Próxima acción: no iniciar otro bloque; Google/cuotas/Play conservan sus pendientes separados. No se probó Android físico ni se publicó APK/AAB/OTA. Última lectura de cuota: 60% usado /40% restante; umbral de parada20%, sin resets. [Publicación, hashes y evidencia](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
 
 ## Google integrado en fuente aislada; publicado sigue apagado · 8 de noviembre de 2026
 

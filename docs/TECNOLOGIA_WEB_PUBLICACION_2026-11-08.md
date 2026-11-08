@@ -1,5 +1,7 @@
 # Tecnología web: publicación detenida antes de desplegar · 8 de noviembre de 2026
 
+**Antecedente del intento detenido.** La continuación autorizada quedó publicada; ver [resultado vigente](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
+
 **No se publicó el candidato.** Oliver autorizó el parche exacto d53f464d89713d2af960f46f35ed5c7e90d089dc938d4fc1a79442e409f7b1c0, seis archivos. La comprobación del catálogo actual descubrió que ese guard no se aplicaría a la foto vigente. La tanda termina aquí; no se alteró el guard ni se inició otro bloque.
 
 ## Hallazgo decisivo

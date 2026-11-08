@@ -1,5 +1,13 @@
 # Historial de agentes
 
+## 2026-11-08 — Tecnología web publicada con referencia vigente
+
+Publicación única completada desde la fuente aislada 064f4729 / árbol cef8efa7 sobre db41707, exactamente seis archivos. Se reconcilió sólo guard exacto, test y procedencia a da3eea0c…; máscara reutilizada y JPEG original conservado. No se modificaron categorías ni catálogo, Audio, textos, dimensiones, Google, cuotas o Android.
+
+Tres focales, tipos/lint, un build Cloudflare y gates aprobados. Artefacto y 2294 entradas verificados antes/después. Versión f6c9dfde al 100%, deployment 43e54f0e, BUILD_ID público oRxefyBw9hH3OMgOr-mio. Cuatro vistas públicas 390/440 px claro/oscuro: máscara aplicada, cuadro eliminado, src/hrefs/geometría/CSS conservados y cero errores inesperados. Revisión visual independiente favorable; Audio coincide por píxel a390 y tiene delta máximo1/255 sólo en su foto a440, sin afirmar igualdad exacta completa. Runtime/bindings conservados, sin cargos nuevos.
+
+Trabajo en curso: ninguno en esta tanda. Próxima acción: no iniciar otro bloque; Google/cuotas/Play conservan sus pendientes separados. No se probó Android físico ni se publicó APK/AAB/OTA. Última lectura de cuota: 60% usado /40% restante; umbral de parada20%, sin resets. [Publicación, hashes y evidencia](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
+
 ## 2026-11-08 — continuación autorizada de Tecnología con foto vigente
 
 Continuación explícitamente autorizada: guard exacto, prueba y procedencia actualizados a da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg. GET fresco confirma ruta/hash, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker3fa586f2 al100%, sin deriva. JPEG504851bytes/SHA0eb198ff… es idéntico al input limpio de la máscara; máscara046d5825… intacta, sin regeneración, catálogo ni categorías cambiados.

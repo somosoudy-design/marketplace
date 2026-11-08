@@ -1,0 +1,96 @@
+{
+  "scope": "Web Technology navigation only; original image RGB/catalog/categories unchanged",
+  "source": {
+    "source": "064f4729dc8c2680859bb38c1338f274906465c3",
+    "tree": "cef8efa772bca94e28db4f49caa3591dda83fb0c",
+    "base": "db41707f0c35e7e4e50373321225b03a2fd6ade0",
+    "patchSha256": "27d5d459bd7547d567e5218300fc3af48119cf8b0ec02b66352f2ab26c45817b",
+    "bundleSha256": "5f6f68d5dcfb74b09f277e8a31b220942a520252c802022f73eaa26dc3bfc4ff",
+    "paths": [
+      "apps/storefront/public/category-art/tecnologia-mask-046d5825ab82a348.png",
+      "apps/storefront/public/category-art/tecnologia-mask.provenance.json",
+      "apps/storefront/src/app/page.tsx",
+      "apps/storefront/src/components/photo.tsx",
+      "apps/storefront/src/lib/category-navigation-art.ts",
+      "tests/storefront/category-navigation-art.test.ts"
+    ],
+    "technologyPath": "5afbabbf-0678-40ee-a5d8-540f53efe114/b1b4a794-c740-47e9-ae57-1c1e3089b80d/da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg",
+    "technologySha256": "0eb198ff2389e39568eff25de22c7ef0a4afe4898871c483584f53b713576ad8",
+    "maskSha256": "046d5825ab82a348b98b6c47cc7ff077851f06cdb623c55888aaacd129fa44a2",
+    "onlyThreeReconciledFilesFromPriorCandidate": true,
+    "deploymentStarted": false
+  },
+  "artifact": {
+    "source": "064f4729dc8c2680859bb38c1338f274906465c3",
+    "tree": "cef8efa772bca94e28db4f49caa3591dda83fb0c",
+    "base": "db41707f0c35e7e4e50373321225b03a2fd6ade0",
+    "buildId": "oRxefyBw9hH3OMgOr-mio",
+    "publishedBefore": {
+      "worker": "3fa586f2-cf50-4ec1-a288-9171ae216591",
+      "buildId": "gXzoqz9BVz7a2MPxDrfwZ",
+      "compiledSourceFromReceipts": "db41707f0c35e7e4e50373321225b03a2fd6ade0"
+    },
+    "archive": "storefront-candidate.tar.gz",
+    "archiveBytes": 20417415,
+    "archiveSha256": "25c98ea7b88dc52f285c7a6912c49f93028bffcf6f2e57da556b119dde035bea",
+    "lockSha256": "ca73ff5943dcbf0f875147622f02dd181fe1accc3ddab283aa95aa999fde91c4",
+    "operations": "Local build/preview only; no deployment or email sent"
+  },
+  "manifestSha256": "406086db3cd077b4009c6869aebcfe61541811f9133109f6513e9644903b07d6",
+  "deployment": {
+    "deploymentId": "43e54f0e-12be-431b-b921-d6c5e2782565",
+    "versionId": "f6c9dfde-10fe-4b3c-bb82-275ffc1d0c06",
+    "percentage": 100,
+    "createdOn": "2026-11-08T17:33:02.615737Z",
+    "bindingsUnchanged": true,
+    "runtimeUnchanged": true,
+    "bindings": [
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "environment": "production",
+        "name": "WORKER_SELF_REFERENCE",
+        "service": "mayami-storefront",
+        "type": "service"
+      }
+    ]
+  },
+  "publicHttp": {
+    "at": "2026-11-08T17:33:35.319764+00:00",
+    "homeStatus": 200,
+    "buildId": "oRxefyBw9hH3OMgOr-mio",
+    "technologyPathMatches": true,
+    "maskReferenceInSSR": true,
+    "maskStatus": 200,
+    "maskBytes": 19027,
+    "maskSha256": "046d5825ab82a348b98b6c47cc7ff077851f06cdb623c55888aaacd129fa44a2"
+  },
+  "publicVisual": {
+    "cases": 4,
+    "viewports": [
+      390,
+      440
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "maskApplied": true,
+    "metadataAndGeometryPassed": true,
+    "unexpectedErrors": 0,
+    "requests": 113,
+    "strictAudioPixelEquality": false,
+    "audioMaxChannelDifference": 1,
+    "audioDifferentChannelValuesOutsideImage": 0,
+    "publicManifestSha256": "eca2cb2ac96a9249fb2d8b83d7b5b0abdf0bee7bd2019773aa54578ea5d3de97"
+  },
+  "deploymentInvocations": 1,
+  "newBuildsThisContinuation": 1,
+  "newImageGenerations": 0,
+  "nativeAndroidTested": false,
+  "paidServicesActivated": false,
+  "lastQuotaReadUsedPercent": 60,
+  "lastQuotaReadRemainingPercent": 40
+}

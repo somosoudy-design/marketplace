@@ -1,16 +1,12 @@
 # Pendientes de mayami
 
-## Tecnología web: foto vigente reconciliada, publicación en curso · 8 de noviembre de 2026
+## Tecnología web publicada: foto vigente sin cuadro · 8 de noviembre de 2026
 
-Continuación explícitamente autorizada: guard exacto, prueba y procedencia actualizados a da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg. GET fresco confirma ruta/hash, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker3fa586f2 al100%, sin deriva. JPEG504851bytes/SHA0eb198ff… es idéntico al input limpio de la máscara; máscara046d5825… intacta, sin regeneración, catálogo ni categorías cambiados.
+Publicación única completada desde la fuente aislada 064f4729 / árbol cef8efa7 sobre db41707, exactamente seis archivos. Se reconcilió sólo guard exacto, test y procedencia a da3eea0c…; máscara reutilizada y JPEG original conservado. No se modificaron categorías ni catálogo, Audio, textos, dimensiones, Google, cuotas o Android.
 
-Fuente aislada064f4729 sobre db41707 vía b9a09a0; árbolcef8efa7, seis paths. Nuevo patch SHA25627d5d459bd7547d567e5218300fc3af48119cf8b0ec02b66352f2ab26c45817b; no traslada Google/cuotas/Android de HEAD. Trabajo en curso: pruebas focales, build, revisión visual/artefacto y publicación con sesión Cloudflare existente. Próxima acción: verificar recorte real y gates; revalidar justo antes versión+ruta+hash y detener si cambian; un despliegue y cuatro vistas públicas390/440claro/oscuro, sin otra tanda. Cuota inicial59%consumida/41%restante, parada20%; no resets/servicios con cargos. [Entrega en curso](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
+Tres focales, tipos/lint, un build Cloudflare y gates aprobados. Artefacto y 2294 entradas verificados antes/después. Versión f6c9dfde al 100%, deployment 43e54f0e, BUILD_ID público oRxefyBw9hH3OMgOr-mio. Cuatro vistas públicas 390/440 px claro/oscuro: máscara aplicada, cuadro eliminado, src/hrefs/geometría/CSS conservados y cero errores inesperados. Revisión visual independiente favorable; Audio coincide por píxel a390 y tiene delta máximo1/255 sólo en su foto a440, sin afirmar igualdad exacta completa. Runtime/bindings conservados, sin cargos nuevos.
 
-## Tecnología: propuesta lista para revisar antes de publicar · 8 de noviembre de 2026
-
-Implementación local dcee73d9 terminada, sólo seis rutas visuales. Tres pruebas focales, tipos, lint y comparación real de 390/440 px en claro/oscuro, retina y fallback 404 aprobados. Audio y fallback idénticos; 147 originales e integraciones preparadas intactos. No hace falta repetir matrices, tocar categorías nativas u Odontología.
-
-Pendiente revisar el resultado: la máscara aproxima la silueta y afina parte del lápiz. Si se aprueba, revalidar la última base web publicada documentada db41707, aplicar sólo visual-only.patch y preparar build, gates y preview aislados. Árbol esperado 6f0b52c4. No publicar dcee/884/HEAD compartido ni sus integraciones pendientes. No hubo despliegue, configuración, permisos o gastos. [Resultado y ruta exacta](TECNOLOGIA_FONDO_CORREGIDO_2026-11-08.md).
+Trabajo en curso: ninguno en esta tanda. Próxima acción: no iniciar otro bloque; Google/cuotas/Play conservan sus pendientes separados. No se probó Android físico ni se publicó APK/AAB/OTA. Última lectura de cuota: 60% usado /40% restante; umbral de parada20%, sin resets. [Publicación, hashes y evidencia](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
 
 ## Google: código local conectado; falta configuración y prueba reales · 8 de noviembre de 2026
 
