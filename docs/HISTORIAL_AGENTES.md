@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 2026-11-08 — clave exclusiva creada y primer AAB iniciado una vez
+
+Flujo oficial EAS CLI 24.12.1 desde bb3de958 limpio, non-interactive/no-wait y sin submit: exit 0, nueva clave de producción a869aa32/SHA256 b0d0254f…4af2a85. Metadata anterior/posterior conserva la firma preview y Free. Subida de 115 MB completada; build 44d230e2-fd34-4772-bf72-55c79f4ea69e creado, ANDROID/STORE/production/source/package exactos e IN_PROGRESS en lectura posterior. versionCode de 1 a 2 remoto. Sin reintentos, secretos exportados, nuevos permisos o planes, cambios de preview, OTA o Play. AAB aún no descargado ni verificado. Próximo paso: esperar el mismo build y comprobar el binario. [Seguimiento](PRIMER_AAB_MAYAMI_2026-11-08.md).
+
 ## 2026-11-08 — autorización del primer AAB y preflight de sólo lectura
 
 Confirmación expresa de Oliver para app.mayami.marketplace, nueva clave de carga exclusiva custodiada en Expo EAS y primer AAB; gasto máximo $0. Fuente bb3de958 limpia. Metadata oficial del proyecto 9f629f10: sólo firma preview conocida y ninguna credencial del package nuevo observada; Free, 1/15 Android usados, 14 disponibles, coste 0. Sin GOOGLE_SERVICES_JSON de production en metadata. No se descargaron valores ni se generaron recursos en el preflight; no nuevos permisos o planes. Un error inicial de selección GraphQL de un objeto se corrigió sólo en lectura. Checkpoint previo a la creación y build, sin repetir pruebas válidas. [Seguimiento](PRIMER_AAB_MAYAMI_2026-11-08.md).

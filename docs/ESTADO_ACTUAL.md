@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## Primer AAB en curso · clave exclusiva confirmada · 8 de noviembre de 2026
+
+Una única ejecución oficial desde bb3de958 creó la clave de carga exclusiva de app.mayami.marketplace, ID a869aa32 y SHA256 b0d0254f…4af2a85. Metadata posterior confirma preview intacto y Free sin cambios. Build 44d230e2-fd34-4772-bf72-55c79f4ea69e, URL oficial guardada, source/package/profile/store cotejados; IN_PROGRESS a las 10:42:59 de Venezuela. versionCode 2. Ningún reintento, cambio de preview, OTA, submit o publicación.
+
+Trabajo en curso: esperar y consultar sólo ese UUID. Próxima acción: descargar y verificar el AAB final; aún no hay binario aprobado. No generar otra clave, build o APK como atajo. Herramientas locales de manifiesto, firma y ELF preparadas sin instalar dependencias. [Seguimiento y recibos](PRIMER_AAB_MAYAMI_2026-11-08.md).
+
 ## Primer AAB autorizado · preflight gratuito aprobado · 8 de noviembre de 2026
 
 Oliver confirmó app.mayami.marketplace, nueva clave de carga exclusiva en Expo EAS y primer AAB, límite $0. Fuente aislada bb3de958 limpia; no se usa HEAD compartido ni se cambia preview. Proyecto @marketplacebrand/marketplace/9f629f10 confirmado; sólo firma preview 86bf…df7f, sin credencial del package nuevo en la lectura. Free, 1/15 builds Android usados y 14 disponibles; coste 0, EAS_BUILD no medido. No hay archivo Firebase configurado en production según metadata; no se crean credenciales adicionales.
