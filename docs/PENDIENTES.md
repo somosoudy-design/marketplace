@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Tecnología web: publicación aislada autorizada, pendiente de build · 8 de noviembre de 2026
+
+Oliver autorizó publicar sólo la corrección visual ya revisada. GET público y Cloudflare confirman la base db41707 / BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker 3fa586f2 al 100%, deployment 5a856939. Cuota semanal comprobada: 58% consumido, 42% restante; detener trabajo al 20% restante, sin créditos ni resets.
+
+Se reutiliza checkout limpio dedicado: fuente b9a09a0e1cc22e5bb7877d1e6713c9a54e4359f6 sobre db41707, árbol 6f0b52c4ec80fc4a5c86bb72fdb4146c6a803594. Sólo seis rutas de visual-only.patch SHA256 d53f464d89713d2af960f46f35ed5c7e90d089dc938d4fc1a79442e409f7b1c0; revisión independiente confirma exclusión de Google, cuotas y Android preparados. Fuente recuperable en bundle local. Próxima acción: pruebas focales/build/gates, artefacto inmutable revisado, una publicación con sesión Cloudflare existente y comprobación pública Tecnología/Audio claro/oscuro/móvil. Sin nuevo permiso, credencial, backend, OAuth, OTA/AAB ni cargos; no desplegar HEAD compartido. [Recibo de esta tanda](TECNOLOGIA_WEB_PUBLICACION_2026-11-08.md).
+
 ## Tecnología: propuesta lista para revisar antes de publicar · 8 de noviembre de 2026
 
 Implementación local dcee73d9 terminada, sólo seis rutas visuales. Tres pruebas focales, tipos, lint y comparación real de 390/440 px en claro/oscuro, retina y fallback 404 aprobados. Audio y fallback idénticos; 147 originales e integraciones preparadas intactos. No hace falta repetir matrices, tocar categorías nativas u Odontología.
