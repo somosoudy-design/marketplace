@@ -1,5 +1,11 @@
 # Historial de agentes
 
+## 2026-11-08 — publicación mínima de privacidad y eliminación, verificada en público
+
+Autorización ampliada para candidato exacto. Revalidación de fuente db417/base9916, tarSHAf838936a…f9c3/manifiesto7a0c46fe…ebca5,2290entradas y Worker previo sin cambios. Una publicación desde checkout limpio por ruta existente --keep-vars, sin rebuild/HEAD compartido; Worker3fa586f2-cf50-4ec1-a288-9171ae216591100%, deployment5a856939-a21d-4103-9e4e-ceb56f0b9f10. Runtime/bindings idénticos. Trespáginas200SSR/BUILD_ID gXzoqz9BVz7a2MPxDrfwZ, navegaciónfooter/eliminación/privacidad y correo visible sinlogin;390sin errores/overflow. Error de selector sólo en driver corregido antes dePASS; ningún cambio deproducto ni redeploy. Revisión independiente favorable; fuente/artefacto idénticos después.
+
+Sin email enviado ni recepción/gestión externa acreditada. No cargos/permisos/credenciales/bindings/DNS/servicios nuevos, Google/cuotas/móvil/panel/editor/backend/Cron o cuentas. No aceptaciónPlay ni JWT anterior verificados. Código/pruebas checkpoint0fb5c99 y resultado documentados; próxima acción sólo canal operativo y coordinación de etapa siguiente, no repetir publicación/cierre. [Resultado](PRIVACIDAD_PUBLICA_PUBLICADA_2026-11-08.md).
+
 ## 2026-11-08 — privacidad y enlace externo preparados en storefront aislado
 
 Verificación pública/Cloudflare de sólo lectura: eliminación404, privacidad/contacto200, Worker d875/BUILD_ID publicado9916 conservados. Delta db417 de cinco archivos, reuso de candidato anterior con corrección90d no automáticos/no máximo garantizado, límites externos y fechas por documento. Footer/rutaSSR sin rediseño ni compra/catalogo modificados. CincoNode/tipos/lint, un build, tresgates, tresHTTPSSR/cuatrocapturas/footerlocal PASS; paquete extraído pasa gates; revisiones independientes aprobadas. Tar20.378.099bytes/SHAf838936a…f9c3; manifiesto, diff y bundle recuperable guardados.

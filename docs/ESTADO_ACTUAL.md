@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## Privacidad pública · publicación mínima verificada · 8 de noviembre de 2026
+
+Publicado sólo artefacto db41707/9916 con autorización ampliada: tarSHA f838936a…f9c3/manifiesto7a0c46fe…ebca5 revalidados antes/después, sin rebuild/HEAD compartido. Worker3fa586f2-cf50-4ec1-a288-9171ae216591100%, deployment5a856939-a21d-4103-9e4e-ceb56f0b9f10, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ. Runtime/bindings idénticos; sin cargos, credenciales/permisos o servicios nuevos.
+
+TresURL públicas eliminación/privacidad/contacto200SSR; footer→eliminación→privacidad y correo visible comprobados sinlogin en390px, sin errores/overflow ni correo enviado. Revisión independiente favorable. CincoNode/tipos/lint/build/gates y cuatrocapturaslocales previos; seispruebasprivacidad en rama compartidaPASS. Sólo storefront legal/enlaces; diseño/compra/catalogo y móvil/panel/backend/Google/cuotas/editor intactos.
+
+Trabajo en curso: ninguno de publicación. Próxima acción: acreditar recepción/gestión manual real de soporte@mayami.app; DNS actual/regla6nov no prueban entrega/atención hoy. No activar envíos de prueba, retención/Cron o permisos para cerrar esta tanda.90d no automatizados/no máximo garantizado; no JWT literal/Play aceptado. No repetir despliegue o cierre de cuenta. [Resultado y evidencia](PRIVACIDAD_PUBLICA_PUBLICADA_2026-11-08.md).
+
 ## Privacidad pública · candidato aislado terminado, publicación pendiente · 8 de noviembre de 2026
 
 GET público confirma /eliminar-cuenta404; privacidad/contacto200 y Worker d8756e3b/BUILD_ID ZFY1G0Dw-qyRFOIV0IH7N sin cambios. Candidato limpio db41707 sobre fuente publicada9916d3e: cinco archivos, páginaSSR/enlaces/copy preciso sin rediseño o cambios de catálogo/compra.90d explícitamente sin purga automática ni máximo garantizado; logs/backups y JWT hospedado no acreditados. Fecha global6nov conservada; privacidad/eliminación/contacto8nov.

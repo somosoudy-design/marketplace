@@ -1,5 +1,11 @@
 # Pendientes de mayami
 
+## Privacidad pública · publicada; gestión externa por acreditar · 8 de noviembre de 2026
+
+Eliminación/privacidad/contacto200SSR en producción, navegación sinlogin verificada y Worker3fa586f2/BUILD_ID gXzoqz9BVz7a2MPxDrfwZ. Artefacto exacto db417 publicado una vez, sin rebuild o HEAD compartido. Ya no falta publicación de este bloque: no repetirla.
+
+Pendiente operativo: recepción y atención manual real de soporte@mayami.app; mailto/DNS/regla histórica no acreditan entrega. Sin correo de prueba ni automatizaciones nuevas en esta tanda. Google Play, JWT anterior y ejecutor90d no se declaran verificados. Android/Google/cuotas/editor siguen fuera de alcance. [Resultado y límites](PRIVACIDAD_PUBLICA_PUBLICADA_2026-11-08.md).
+
 ## Privacidad pública · sólo publicación y canal externo pendientes · 8 de noviembre de 2026
 
 Candidato db41707 aislado sobre9916 listo localmente: /eliminar-cuentaSSR, enlaces y copy sin prometer90d automáticos; pruebas focales, build/gates, paquete portable y revisión independiente aprobados. /eliminar-cuenta público sigue404. Antes de publicación posterior: confirmar recepción/gestión manual real de soporte@mayami.app; DNS actual+regla histórica no acreditan entrega. No mail de prueba/credenciales nuevas en esta tanda. Autorizar y consumir artefacto exacto, nunca HEAD compartido. No Play listo; sin Cron o nuevo cierre. [Entrega y pasos](PRIVACIDAD_PUBLICA_CANDIDATO_2026-11-08.md).
