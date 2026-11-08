@@ -1,10 +1,10 @@
 # Estado actual de mayami
 
-## Tecnología web: foto vigente reconciliada, publicación en curso · 8 de noviembre de 2026
+## Tecnología web: candidato vigente revisado, publicación en curso · 8 de noviembre de 2026
 
-Continuación explícitamente autorizada: guard exacto, prueba y procedencia actualizados a da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg. GET fresco confirma ruta/hash, BUILD_ID gXzoqz9BVz7a2MPxDrfwZ y Worker3fa586f2 al100%, sin deriva. JPEG504851bytes/SHA0eb198ff… es idéntico al input limpio de la máscara; máscara046d5825… intacta, sin regeneración, catálogo ni categorías cambiados.
+Guard exacto/test/procedencia reconciliados a da3eea0c…; misma máscara yRGB original. Fuente064f4729/treecef8efa7 sobre base db41707, seis paths sin Google/cuotas/Android.3focales/tipos/lint, build/gates y revisión de2294entradas PASS. BUILD_IDoRxefyBw9hH3OMgOr-mio, tar25c98ea7… y manifiesto406086db…. Cuatro vistasWorker390/440claro/oscuro correctas; Audio metadata/hash/CSS intactos,3crops exactos y440oscuro delta máximo1/255 sólo foto, fallo estricto conservado.
 
-Fuente aislada064f4729 sobre db41707 vía b9a09a0; árbolcef8efa7, seis paths. Nuevo patch SHA25627d5d459bd7547d567e5218300fc3af48119cf8b0ec02b66352f2ab26c45817b; no traslada Google/cuotas/Android de HEAD. Trabajo en curso: pruebas focales, build, revisión visual/artefacto y publicación con sesión Cloudflare existente. Próxima acción: verificar recorte real y gates; revalidar justo antes versión+ruta+hash y detener si cambian; un despliegue y cuatro vistas públicas390/440claro/oscuro, sin otra tanda. Cuota inicial59%consumida/41%restante, parada20%; no resets/servicios con cargos. [Entrega en curso](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
+Trabajo en curso: publicación autorizada de este artefacto, sin otro bloque. Próxima acción: revalidar justo antes versión pública+ruta+hash y bytes del artefacto; detener si cambian; una ejecución deploy:cloudflare --keep-vars y cuatro vistas públicas. Sin catálogo/categorías, backend, OAuth, cuotas, credenciales, permisos, OTA/AAB o cargos. Cuota inicial41%restante, parada20%. [Recibo y límites](TECNOLOGIA_WEB_ACTUAL_PUBLICACION_2026-11-08.md).
 
 ## Tecnología web: propuesta mínima sin cuadrado, sin publicar · 8 de noviembre de 2026
 
