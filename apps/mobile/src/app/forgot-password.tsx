@@ -13,7 +13,7 @@ import { finishAuth, useAuthReturn } from '@/lib/auth-navigation';
 
 type Step = 'email' | 'code' | 'password' | 'done';
 
-// Password recovery inside the app: email -> six-digit code -> new password. The code signs the user in for
+// Password recovery inside the app: email -> verification code -> new password. The code signs the user in for
 // this one change; nothing is saved until Supabase accepts it.
 export default function ForgotPasswordScreen() {
   const t = useTheme();
@@ -45,7 +45,7 @@ export default function ForgotPasswordScreen() {
           <>
             <View style={{ gap: 6 }}>
               <Text variant="displayL">Recupera tu acceso</Text>
-              <Text color="textSecondary">Te enviaremos un código de 6 dígitos para crear una contraseña nueva.</Text>
+              <Text color="textSecondary">Te enviaremos un código para crear una contraseña nueva.</Text>
             </View>
             {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
             <TextField testID="forgot-email" label="Correo" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoComplete="email" textContentType="emailAddress" returnKeyType="send" onSubmitEditing={send} />

@@ -1,4 +1,5 @@
 import { LegalLinks } from '@/components/account/LegalLinks';
+import { GoogleAccessButton } from '@/components/account/GoogleAccessButton';
 import { validatePassword } from '@kora/core';
 import { Link, router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
@@ -16,7 +17,7 @@ export default function SignUpScreen() {
   const returnTo = useAuthReturn();
   const mounted = useRef(false);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
-  const { signUp } = useAuth();
+  const { signUp, googleBusy } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +26,7 @@ export default function SignUpScreen() {
   const pwError = password ? validatePassword(password) : null;
 
   const submit = async () => {
+    if (busy || googleBusy) return;
     if (name.trim().length < 2) return setError('Escribe tu nombre.');
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) return setError('Escribe un correo válido.');
     if (validatePassword(password)) return setError(validatePassword(password));
@@ -55,7 +57,8 @@ export default function SignUpScreen() {
         <TextField testID="sign-up-name" label="Nombre y apellido" value={name} onChangeText={setName} autoComplete="name" textContentType="name" />
         <TextField testID="sign-up-email" label="Correo" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoComplete="email" textContentType="emailAddress" />
         <TextField testID="sign-up-password" label="Contraseña" value={password} onChangeText={setPassword} secureToggle autoComplete="new-password" textContentType="newPassword" helper="Mínimo 8 caracteres, con letras y números." error={pwError} />
-        <Button testID="sign-up-submit" title="Crear cuenta" size="lg" full loading={busy} onPress={submit} />
+        <Button testID="sign-up-submit" title="Crear cuenta" size="lg" full loading={busy} disabled={googleBusy} onPress={submit} />
+        <GoogleAccessButton purpose="register" returnTo={returnTo} disabled={busy} />
         <Text variant="caption" color="textMuted" align="center">
           Al crear tu cuenta aceptas los términos y la política de privacidad. Consulta los documentos antes de continuar. Puedes solicitar la eliminación de tu cuenta.
         </Text>

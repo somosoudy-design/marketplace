@@ -1,5 +1,5 @@
 import { authErrorKind } from '@kora/core';
-import { Link, router } from 'expo-router';
+import { Link, router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, TextInput, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
@@ -10,13 +10,15 @@ import { authErrorMessage, useAuth } from '@/lib/auth';
 import { haptics } from '@/lib/haptics';
 import { useTheme } from '@/theme';
 import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
+import { GoogleAccessButton } from '@/components/account/GoogleAccessButton';
 
 export default function SignInScreen() {
   const t = useTheme();
   const returnTo = useAuthReturn();
   const mounted = useRef(false);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
-  const { signIn } = useAuth();
+  const { signIn, googleBusy } = useAuth();
+  const { googleRetry } = useLocalSearchParams<{ googleRetry?: string }>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -24,6 +26,7 @@ export default function SignInScreen() {
   const pw = useRef<TextInput>(null);
 
   const submit = async () => {
+    if (busy || googleBusy) return;
     if (!email.includes('@') || password.length < 6) return setError('Escribe tu correo y tu contraseña.');
     setBusy(true);
     setError(null);
@@ -50,10 +53,12 @@ export default function SignInScreen() {
           <Text variant="displayL">Hola de nuevo</Text>
           <Text color="textSecondary">Entra para pagar, seguir tus pedidos y guardar tus favoritos en tu cuenta.</Text>
         </View>
+        {googleRetry === '1' && !error ? <Banner body="Se interrumpió el acceso. Vuelve a pulsar Continuar con Google." /> : null}
         {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
         <TextField testID="sign-in-email" label="Correo" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoComplete="email" textContentType="emailAddress" returnKeyType="next" onSubmitEditing={() => pw.current?.focus()} />
         <TextField testID="sign-in-password" ref={pw} label="Contraseña" value={password} onChangeText={setPassword} secureToggle autoComplete="current-password" textContentType="password" returnKeyType="go" onSubmitEditing={submit} />
-        <Button testID="sign-in-submit" title="Iniciar sesión" size="lg" full loading={busy} onPress={submit} />
+        <Button testID="sign-in-submit" title="Iniciar sesión" size="lg" full loading={busy} disabled={googleBusy} onPress={submit} />
+        <GoogleAccessButton purpose="login" returnTo={returnTo} disabled={busy} />
         <Link href={authTarget('/forgot-password', returnTo)} style={{ alignSelf: 'center', padding: 8 }}>
           <Text variant="label" color="brand">Olvidé mi contraseña</Text>
         </Link>

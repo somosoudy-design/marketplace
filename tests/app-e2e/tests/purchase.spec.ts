@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { emailCode } from './support/mail';
+import { enterEmailCode, emailCode } from './support/mail';
 import { checkoutToReview } from './support/checkout';
 
 // Full buyer journey: visitor cart -> sign up -> code from the email -> cart merge -> checkout with a new address ->
@@ -27,7 +27,7 @@ test('a new buyer completes checkout and submits a Pago Móvil payment for verif
 
   // 2b. the account becomes active with the six-digit code from the email
   await expect(page).toHaveURL(/verify-email/);
-  await page.getByTestId('code-input').fill(await emailCode(email, since));
+  await enterEmailCode(page, await emailCode(email, since));
   await expect(page.getByTestId('verify-done')).toBeVisible();
 
   // 3. back in the cart, the visitor line now lives in the account cart

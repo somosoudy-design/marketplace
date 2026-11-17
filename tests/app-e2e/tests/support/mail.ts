@@ -1,3 +1,4 @@
+import type { Page } from '@playwright/test';
 // Reads what Supabase Auth emailed on the local stack (tools/local-stack/mail.mjs keeps every message).
 const MAIL = process.env.KORA_MAIL_URL ?? 'http://127.0.0.1:2501';
 
@@ -19,4 +20,10 @@ export async function emailCode(email: string, since = 0, timeoutMs = 15_000): P
     await new Promise((r) => setTimeout(r, 250));
   }
   throw new Error(`no code emailed to ${email}`);
+}
+
+/** Eight digits submit automatically. Shorter codes from older Auth configurations use the same form. */
+export async function enterEmailCode(page: Page, text: string) {
+  await page.getByTestId('code-input').fill(text);
+  if (text.replace(/\D/g, '').length < 8) await page.getByTestId('code-submit').click();
 }

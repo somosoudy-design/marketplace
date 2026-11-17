@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { canSignIn, emailLink } from './support/auth';
 import { newBuyer } from './support/db';
-import { emailCode, inbox } from './support/mail';
+import { enterEmailCode, emailCode, inbox } from './support/mail';
 
-// Accounts are confirmed, and passwords recovered, with the six-digit code Supabase Auth emails: the buyer never
+// Accounts are confirmed, and passwords recovered, with the verification code Supabase Auth emails: the buyer never
 // leaves the app and no link can land on a page they cannot use. Older emails with links still open app screens.
 
 async function signUpForm(page: import('@playwright/test').Page, email: string) {
@@ -28,13 +28,13 @@ test('a new account is confirmed with the code from the email, and a wrong code 
   // nothing to resend yet: the countdown runs
   await expect(page.getByTestId('code-resend-wait')).toContainText(/Reenviar en 0:5\d|Reenviar en 1:00/);
 
-  const wrong = code === '000000' ? '111111' : '000000';
-  await page.getByTestId('code-input').fill(wrong);
+  const wrong = (code.startsWith('0') ? '1' : '0').repeat(code.length);
+  await enterEmailCode(page, wrong);
   await expect(page.getByTestId('code-error')).toContainText('El código no es válido o ya venció');
   expect(await canSignIn(email, 'Kora-prueba-2026')).toBe(false);
 
   // pasting the whole email line keeps only the digits and confirms the account
-  await page.getByTestId('code-input').fill(`Tu código: ${code.slice(0, 3)} ${code.slice(3)}`);
+  await enterEmailCode(page, `Tu código: ${code.slice(0, 3)} ${code.slice(3)}`);
   await expect(page.getByTestId('verify-done')).toBeVisible();
   await expect(page.getByText('Cuenta confirmada')).toBeVisible();
   expect(await canSignIn(email, 'Kora-prueba-2026')).toBe(true);
@@ -60,9 +60,9 @@ test('a new code can be asked for after the countdown, and only the newest one w
   await expect(page.getByTestId('code-resend-wait')).toBeVisible();
   const second = await emailCode(email, again);
   expect(second).not.toBe(first);
-  await page.getByTestId('code-input').fill(first);
+  await enterEmailCode(page, first);
   await expect(page.getByTestId('code-error')).toBeVisible();
-  await page.getByTestId('code-input').fill(second);
+  await enterEmailCode(page, second);
   await expect(page.getByTestId('verify-done')).toBeVisible();
 });
 
@@ -89,7 +89,7 @@ test('signing in before confirming sends a code and finishes the account', async
   await page.getByTestId('sign-in-submit').click();
   await expect(page).toHaveURL(/verify-email/);
   await expect(page.getByText(/Tu correo aún no está confirmado|Ya te enviamos un código hace poco/)).toBeVisible();
-  await page.getByTestId('code-input').fill(await emailCode(email, since));
+  await enterEmailCode(page, await emailCode(email, since));
   await expect(page.getByTestId('verify-done')).toBeVisible();
 });
 
@@ -104,7 +104,7 @@ test('a forgotten password is replaced with a code from the email', async ({ pag
   const [mail] = await inbox(b.email);
   expect(mail!.subject).toBe('Restablece tu contraseña de Mayami');
 
-  await page.getByTestId('code-input').fill(code);
+  await enterEmailCode(page, code);
   await page.getByTestId('reset-password').fill('corta1');
   await expect(page.getByText('Mínimo 8 caracteres').first()).toBeVisible();
   await page.getByTestId('reset-password').fill('Nueva-clave-2026');
@@ -117,36 +117,31 @@ test('a forgotten password is replaced with a code from the email', async ({ pag
   expect(await canSignIn(b.email, b.password)).toBe(false);
 });
 
-test('a reset link from an older email still lets the buyer choose a new password, once', async ({ page }) => {
+test('a legacy recovery link cannot replace a session or change its password', async ({ page }) => {
   const b = await newBuyer('ui-reset');
   const link = await emailLink('recovery', b.email, 'http://127.0.0.1:8089/reset-password');
-
-  await page.goto(link);
-  await expect(page).toHaveURL(/\/reset-password/);
-  await page.getByTestId('reset-password').fill('Nueva-clave-2026');
-  await page.getByTestId('reset-password-repeat').fill('Nueva-clave-2026');
-  await page.getByTestId('reset-submit').click();
-  await expect(page.getByTestId('reset-done')).toBeVisible();
-  expect(await canSignIn(b.email, 'Nueva-clave-2026')).toBe(true);
-
-  // the same link a second time is refused, and the screen offers a code instead
   await page.goto(link);
   await expect(page.getByTestId('reset-link-invalid')).toBeVisible();
+  await expect(page.getByTestId('reset-password')).toHaveCount(0);
   await page.getByText('Pedir un código').click();
   await expect(page).toHaveURL(/forgot-password/);
+  expect(await canSignIn(b.email, b.password)).toBe(true);
+  await page.goto('/account');
+  await expect(page.getByText('Iniciar sesión', { exact: true }).first()).toBeVisible();
 });
 
 test('opening the reset screen without a link points to the code', async ({ page }) => {
   await page.goto('/reset-password');
   await expect(page.getByTestId('reset-link-invalid')).toBeVisible();
-  await expect(page.getByText('pide un código de 6 dígitos')).toBeVisible();
+  await expect(page.getByText(/pide un código/i)).toBeVisible();
 });
 
-test('a confirmation link from an older email signs the buyer in and says the account is ready', async ({ page }) => {
+test('a legacy confirmation link directs the buyer to the code flow without adopting a session', async ({ page }) => {
   const b = await newBuyer('ui-confirm');
   await page.goto(await emailLink('magiclink', b.email, 'http://127.0.0.1:8089/auth-callback'));
-  await expect(page.getByTestId('confirm-done')).toBeVisible();
-  await page.getByText('Empezar a comprar').click();
+  await expect(page.getByTestId('confirm-invalid')).toBeVisible();
+  await page.getByText('Iniciar sesión', { exact: true }).click();
+  await expect(page).toHaveURL(/sign-in/);
   await page.goto('/account');
-  await expect(page.getByText(b.email).first()).toBeVisible();
+  await expect(page.getByText('Iniciar sesión', { exact: true }).first()).toBeVisible();
 });

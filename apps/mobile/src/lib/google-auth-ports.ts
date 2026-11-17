@@ -1,10 +1,7 @@
-// Prepared ports. No screen imports these while Google activation is pending.
 import * as Crypto from 'expo-crypto';
 import * as WebBrowser from 'expo-web-browser';
-import { GOOGLE_AUTH_ACTIVATED, type GoogleAttempt, type GoogleAttemptStore } from '@kora/api';
+import type { GoogleAttempt, GoogleAttemptStore } from '@kora/api';
 
-/** Production remains disabled until provider/policy/redirects are separately approved. */
-export const GOOGLE_ACCESS_ENABLED = GOOGLE_AUTH_ACTIVATED;
 export const GOOGLE_CALLBACK = 'kora://auth-callback' as const;
 export const GOOGLE_FLOW_PARAMETER = 'google_flow' as const;
 

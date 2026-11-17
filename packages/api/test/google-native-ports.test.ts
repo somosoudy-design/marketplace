@@ -13,7 +13,6 @@ function loadNative(random: () => Promise<Uint8Array> = async () => randomBytes(
   let browserResult: { type: string; url?: string } = { type: 'cancel' };
   const calls: string[] = [];
   const modules: Record<string, unknown> = {
-    '@kora/api': { GOOGLE_AUTH_ACTIVATED: false },
     'expo-crypto': { getRandomBytesAsync: random, CryptoDigestAlgorithm: { SHA256: 'SHA-256' },
       CryptoEncoding: { BASE64: 'base64' }, digestStringAsync: async (_: string, text: string) => createHash('sha256').update(text).digest('base64') },
     'expo-web-browser': { openAuthSessionAsync: async () => { calls.push('browser'); return browserResult; } },
@@ -25,8 +24,8 @@ function loadNative(random: () => Promise<Uint8Array> = async () => randomBytes(
   return { ports: module.exports as typeof NativePorts, calls, outcome: (value: typeof browserResult) => { browserResult = value; } };
 }
 describe('versioned native Google ports, mocked native modules only', () => {
-  it('has no browser effects on import, gate remains closed and uses existing scheme', () => {
-    const f = loadNative(); expect(f.calls).toEqual([]); expect(f.ports.GOOGLE_ACCESS_ENABLED).toBe(false);
+  it('preserves the installed callback scheme and opens the browser only on request', () => {
+    const f = loadNative(); expect(f.calls).toEqual([]);
     expect(f.ports.GOOGLE_CALLBACK).toBe('kora://auth-callback');
   });
   it('uses 32 secure bytes and agrees with the RFC7636 S256 example', async () => {

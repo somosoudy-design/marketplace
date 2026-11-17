@@ -1,6 +1,7 @@
-import { OTP_LENGTH, OTP_RESEND_SECONDS, OTP_VALID_MINUTES, authErrorKind, authErrorMessage } from '@kora/core';
+import { OTP_RESEND_SECONDS, OTP_VALID_MINUTES, authErrorKind, authErrorMessage } from '@kora/core';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, TextInput, View } from 'react-native';
+import { validEmailCode } from '@/lib/email-code';
 import { Button } from '@/components/ui/Button';
 import { CodeInput } from '@/components/ui/CodeInput';
 import { Icon } from '@/components/ui/Icon';
@@ -22,7 +23,7 @@ interface Props {
   onChangeEmail: () => void;
 }
 
-// The six-digit code Supabase Auth emails, checked against Supabase itself: the account (or the password
+// The code Supabase Auth emails, checked against Supabase itself: the account (or the password
 // change) is only confirmed when the server accepts the code.
 export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, onChangeEmail }: Props) {
   const { colors } = useTheme();
@@ -47,9 +48,11 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
     setResendAt(t + seconds * 1000);
   };
   const input = useRef<TextInput>(null);
+  const verifying = useRef(false);
 
   const verify = async (value = code) => {
-    if (value.length < OTP_LENGTH || busy) return;
+    if (!validEmailCode(value) || verifying.current) return;
+    verifying.current = true;
     setBusy(true);
     setError(null);
     try {
@@ -64,6 +67,7 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
       setError(expired ? 'Este código ya venció. Pide uno nuevo.' : authErrorMessage(e));
       setErrorKey((n) => n + 1);
     } finally {
+      verifying.current = false;
       if (mounted.current) setBusy(false);
     }
   };
@@ -115,7 +119,7 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
         </View>
         <Text variant="displayL">{title}</Text>
         <Text color="textSecondary">
-          Escribe el código de {OTP_LENGTH} dígitos que enviamos a <Text variant="subtitle">{email}</Text>
+          Escribe el código que enviamos a <Text variant="subtitle">{email}</Text>
         </Text>
       </View>
       {notice ? <Banner tone="brand" icon="mail-check" body={notice} /> : null}
@@ -129,7 +133,7 @@ export function EmailCodeStep({ email, purpose, title, sendOnMount, onVerified, 
           )}
         </View>
       </View>
-      <Button testID="code-submit" title={busy ? 'Verificando…' : purpose === 'signup' ? 'Confirmar cuenta' : 'Continuar'} size="lg" full loading={busy} disabled={code.length < OTP_LENGTH} onPress={() => verify()} />
+      <Button testID="code-submit" title={busy ? 'Verificando…' : purpose === 'signup' ? 'Confirmar cuenta' : 'Continuar'} size="lg" full loading={busy} disabled={!validEmailCode(code)} onPress={() => verify()} />
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6, minHeight: 32 }}>
         <Text color="textSecondary">¿No te llegó?</Text>
         {sending ? (

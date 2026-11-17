@@ -1,4 +1,4 @@
-import { OTP_LENGTH, otpDigits } from '@kora/core';
+import { EMAIL_CODE_LENGTH, nextEmailCode } from '@/lib/email-code';
 import { forwardRef, useEffect, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import Animated, { useAnimatedStyle, useReducedMotion, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
@@ -17,7 +17,7 @@ interface Props {
   testID?: string;
 }
 
-// One real text field stretched invisibly over six boxes: the keyboard, paste ("Tu código: 482 913"), the
+// One real text field stretched invisibly over the visible boxes: the keyboard, paste ("Tu código: 482 913"), the
 // keyboard's code suggestion and screen readers all work on the field, and the boxes only draw its value.
 export const CodeInput = forwardRef<TextInput, Props>(function CodeInput({ value, onChange, onComplete, errorKey = 0, disabled, autoFocus, testID }, ref) {
   const { colors, radii, typography } = useTheme();
@@ -41,20 +41,18 @@ export const CodeInput = forwardRef<TextInput, Props>(function CodeInput({ value
   const caretStyle = useAnimatedStyle(() => ({ opacity: caret.value }));
 
   const change = (text: string) => {
-    const digits = text.replace(/\D/g, '');
-    // typing or pasting into a full field starts a new code instead of being cut off
-    const code = otpDigits(digits.length > OTP_LENGTH && value && digits.startsWith(value) ? digits.slice(value.length) : digits);
+    const code = nextEmailCode(text, value);
     setShowError(false);
     onChange(code);
-    if (code.length === OTP_LENGTH && code !== value) onComplete?.(code);
+    if (code.length === EMAIL_CODE_LENGTH && code !== value) onComplete?.(code);
   };
 
   return (
     <View style={{ position: 'relative' }}>
-      <Animated.View style={[{ flexDirection: 'row', justifyContent: 'center', gap: 8 }, rowStyle]} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
-        {Array.from({ length: OTP_LENGTH }, (_, i) => {
+      <Animated.View style={[{ flexDirection: 'row', justifyContent: 'center', gap: 4 }, rowStyle]} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
+        {Array.from({ length: EMAIL_CODE_LENGTH }, (_, i) => {
           const digit = value[i];
-          const active = focused && !disabled && i === Math.min(value.length, OTP_LENGTH - 1) && value.length < OTP_LENGTH;
+          const active = focused && !disabled && i === Math.min(value.length, EMAIL_CODE_LENGTH - 1) && value.length < EMAIL_CODE_LENGTH;
           const borderColor = showError ? colors.danger : active ? colors.brand : digit ? colors.borderStrong : colors.border;
           return (
             <View
@@ -63,7 +61,7 @@ export const CodeInput = forwardRef<TextInput, Props>(function CodeInput({ value
                 flex: 1,
                 maxWidth: 52,
                 height: 60,
-                marginLeft: i === OTP_LENGTH / 2 ? 6 : 0,
+                marginLeft: i === EMAIL_CODE_LENGTH / 2 ? 6 : 0,
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: radii.md,
@@ -96,7 +94,7 @@ export const CodeInput = forwardRef<TextInput, Props>(function CodeInput({ value
         importantForAutofill="yes"
         caretHidden
         selectionColor="transparent"
-        accessibilityLabel={`Código de ${OTP_LENGTH} dígitos`}
+        accessibilityLabel={`Código de verificación`}
         accessibilityHint="Escribe o pega el código que te enviamos por correo"
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}

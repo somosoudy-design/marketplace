@@ -1,22 +1,12 @@
 import 'react-native-url-polyfill/auto';
-import { createApi, createKoraClient, isGoogleAuthCallback, publicImageUrl } from '@kora/api';
+import { createApi, createKoraClient, publicImageUrl } from '@kora/api';
 import { AppState, Platform } from 'react-native';
 import { env } from './env';
-import { sessionStorage } from './session-storage';
+import { googleRuntime } from './google-runtime';
 
 // Session tokens are sealed with a key from the device keystore (lib/session-storage). Only the public anon key
 // ships in the app; every permission is enforced by Row Level Security and database functions.
-export const supabase = createKoraClient({
-  // without configuration the app shows ConfigMissing; the placeholder only keeps the client constructible
-  url: env.supabaseUrl || 'https://not-configured.invalid',
-  anonKey: env.supabaseAnonKey || 'missing-anon-key',
-  storage: sessionStorage,
-  // Reserved Google callbacks must be consumed only by the reviewed attempt controller.
-  // Email link handling retains the existing SDK behavior on web.
-  detectSessionInUrl: Platform.OS === 'web' ? url => !isGoogleAuthCallback(url.toString()) : false,
-  // the query client (lib/query) owns retries and knows which errors are worth repeating
-  retryReads: false,
-});
+export const supabase = googleRuntime.client;
 
 export const api = createApi(supabase);
 

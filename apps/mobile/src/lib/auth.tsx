@@ -1,5 +1,8 @@
+import type { GoogleResult } from '@kora/api';
+import { googleRuntime, startGoogleAccess, cancelGoogleAccess } from './google-runtime';
 import type { Session, User } from '@supabase/supabase-js';
 import { useQueryClient } from '@tanstack/react-query';
+import { Platform } from 'react-native';
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { authRedirect } from './auth-link';
 import { guestCart } from './guest-cart';
@@ -12,6 +15,11 @@ import { intentKey } from './ids';
 
 interface AuthState {
   ready: boolean;
+  googleEnabled: boolean;
+  googleBusy: boolean;
+  signInWithGoogle(purpose: 'login' | 'register', returnTo: string): Promise<GoogleResult>;
+  cancelGoogle(): void;
+  claimGoogleNavigation(result: GoogleResult, stillCurrent?: () => boolean): Promise<boolean>;
   session: Session | null;
   user: User | null;
   /** Roles from the access token (set by the auth hook). Used only for navigation; the database authorizes. */
@@ -25,7 +33,7 @@ interface AuthState {
   favoritesSyncError: string | null;
   retryFavoritesSync: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
-  /** Creates the account. Unless the project skips confirmation, Supabase emails a six-digit code and there is no session yet. */
+  /** Creates the account. Unless the project skips confirmation, Supabase emails a verification code and there is no session yet. */
   signUp: (email: string, password: string, fullName: string) => Promise<{ needsConfirmation: boolean }>;
   /** Emails a new code: to confirm the account, or to choose a new password. */
   sendEmailCode: (email: string, purpose: EmailCodePurpose) => Promise<void>;
@@ -58,6 +66,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const qc = useQueryClient();
   const [session, setSession] = useState<Session | null>(null);
   const [ready, setReady] = useState(false);
+  const [googleBusy, setGoogleBusy] = useState(false);
+  const googleRun = useRef(0);
+  const googleActive = useRef(false);
   const [cartSyncing, setCartSyncing] = useState(false);
   const [cartSyncError, setCartSyncError] = useState<string | null>(null);
   const retrySync = useRef<() => void>(() => undefined);
@@ -155,25 +166,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (owner === undefined && id === null) clearAccountCache().catch(() => undefined);
       owner = id;
     };
-    const initialRun = cartRun;
-    supabase.auth.getSession().then(({ data }) => {
-      if (!active || cartRun !== initialRun) return;
-      ownedBy(data.session?.user.id ?? null);
-      setSession(data.session); setReady(true);
-      if (data.session) { scheduleCart(data.session.user.id); void scheduleFavorites(data.session.user.id); }
-    });
-    const { data } = supabase.auth.onAuthStateChange((event, next) => {
-      if (!active) return;
-      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') ownedBy(next?.user.id ?? null);
-      setSession(next); setReady(true);
-      if (event === 'SIGNED_IN' && next) { scheduleCart(next.user.id); void scheduleFavorites(next.user.id); }
-    });
+    let authRead = 0;
+    const refreshAuth = () => {
+      const revision = ++authRead;
+      // Ignore event payloads (including cross-tab broadcasts). Read confirmed primary storage outside SDK callbacks.
+      setTimeout(() => {
+        void supabase.auth.getSession().then(({ data, error }) => {
+          if (!active || authRead !== revision) return;
+          if (error) { setReady(true); return; }
+          const changed = owner !== (data.session?.user.id ?? null);
+          ownedBy(data.session?.user.id ?? null);
+          setSession(data.session); setReady(true);
+          if (changed && data.session) { scheduleCart(data.session.user.id); void scheduleFavorites(data.session.user.id); }
+        }).catch(() => { if (active && authRead === revision) setReady(true); });
+      }, 0);
+    };
+    refreshAuth();
+    const { data } = supabase.auth.onAuthStateChange(() => refreshAuth());
+    const stopGoogle = googleRuntime.subscribe(refreshAuth);
+    const storageChanged = () => refreshAuth();
+    if (Platform.OS === 'web' && typeof window !== 'undefined') window.addEventListener('storage', storageChanged);
     const sessionGone = (error: unknown) => {
       if ((error as { code?: string } | null)?.code !== 'auth_required') return;
-      supabase.auth.getSession().then(({ data: next }) => {
-        if (!active || next.session) return;
-        ownedBy(null); setSession(null);
-      });
+      refreshAuth();
     };
     const stopQueries = qc.getQueryCache().subscribe(event => {
       if (event.type === 'updated' && event.action.type === 'error') sessionGone(event.action.error);
@@ -182,7 +197,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (event.type === 'updated' && event.action.type === 'error') sessionGone(event.action.error);
     });
     return () => {
-      active = false; cartRun++; favoritesRun++;
+      active = false; authRead++; cartRun++; favoritesRun++;
+      stopGoogle();
+      if (Platform.OS === 'web' && typeof window !== 'undefined') window.removeEventListener('storage', storageChanged);
       retrySync.current = () => undefined; retryFavorites.current = async () => undefined;
       data.subscription.unsubscribe(); stopQueries(); stopMutations();
     };
@@ -192,6 +209,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const c = claims(session);
     return {
       ready,
+      googleEnabled: googleRuntime.enabled,
+      googleBusy,
+      signInWithGoogle: async (purpose, returnTo) => {
+        if (!ready || session || googleActive.current) throw new Error('Revisa tu sesión antes de continuar con Google.');
+        const run = ++googleRun.current;
+        googleActive.current = true; setGoogleBusy(true);
+        try { return await startGoogleAccess(purpose, returnTo); }
+        finally { if (googleRun.current === run) { googleActive.current = false; setGoogleBusy(false); } }
+      },
+      cancelGoogle: () => { googleRun.current++; cancelGoogleAccess(); googleActive.current = false; setGoogleBusy(false); },
+      claimGoogleNavigation: googleRuntime.claimNavigation,
       session,
       user: session?.user ?? null,
       roles: c.roles,
@@ -202,11 +230,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       favoritesSyncing,
       favoritesSyncError,
       retryFavoritesSync: () => retryFavorites.current(),
-      signIn: async (email, password) => {
+      signIn: async (email, password) => googleRuntime.primary(async () => {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
-      },
-      signUp: async (email, password, fullName) => {
+      }),
+      signUp: async (email, password, fullName) => googleRuntime.primary(async () => {
         const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
           password,
@@ -217,22 +245,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // a confirmed address comes back as a user without identities and no email is sent
         if (data.user && !data.session && data.user.identities?.length === 0) throw Object.assign(new Error('User already registered'), { code: 'user_already_exists' });
         return { needsConfirmation: !data.session };
-      },
-      sendEmailCode: async (email, purpose) => {
+      }),
+      sendEmailCode: async (email, purpose) => googleRuntime.primary(async () => {
         const { error } = purpose === 'signup'
           ? await supabase.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: authRedirect('/auth-callback') } })
           : await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: authRedirect('/reset-password') });
         if (error) throw error;
-      },
-      verifyEmailCode: async (email, code, purpose) => {
+      }),
+      verifyEmailCode: async (email, code, purpose) => googleRuntime.primary(async () => {
         const { data, error } = await supabase.auth.verifyOtp({ email: email.trim(), token: code, type: purpose });
         if (error) throw error;
         if (!data.session) throw Object.assign(new Error('Auth session missing'), { code: 'session_not_found' });
-      },
-      signOut: async () => {
+      }),
+      signOut: async () => googleRuntime.primary(async () => {
         await unregisterPush();
         await supabase.auth.signOut();
-      },
+      }),
       updatePassword: async (password, stillCurrent = () => true) => {
         // This closure belongs to the session exposed with this AuthState value.
         const actorId = session?.user.id;
@@ -240,7 +268,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await updateActorPassword(actorId, password, stillCurrent);
       },
     };
-  }, [session, ready, cartSyncing, cartSyncError, favoritesSyncing, favoritesSyncError]);
+  }, [session, ready, googleBusy, cartSyncing, cartSyncError, favoritesSyncing, favoritesSyncError]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
