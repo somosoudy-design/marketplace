@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Acceso de compradores
 
-Completar la validación pública de Google tras instalar la protección de cuentas anteriores a la confirmación obligatoria. Verificar retorno real con consentimiento y cuenta autorizada. Registrar por separado la recepción en un teléfono físico y el estado de presentación de marca en Google.
+Observar un alta o ingreso real después de que el titular autorice Google y verificar el recorrido en un Android físico. El proveedor, la marca, la web, la OTA, las plantillas y la protección de cuentas antiguas están publicados. [Estado y verificaciones](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
 

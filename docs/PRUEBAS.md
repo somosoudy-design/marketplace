@@ -248,7 +248,7 @@ Total: **179 pruebas automatizadas** en verde, más las 11 comprobaciones del ca
   entorno no tiene salida a esos dominios y no hay credenciales. Se probaron los lectores con respuestas de
   ejemplo y las integraciones con dobles de prueba que validan firma y forma de cada petición.
 - **Transacciones reales:** ninguna, por instrucción.
-- **Correo:** en local, Auth pide el código de 6 dígitos y los correos llegan a un buzón de prueba
+- **Correo:** en local, Auth pide el código de 8 dígitos y los correos llegan a un buzón de prueba
   (`pnpm stack:start`); el registro sin confirmación del entorno de pruebas se prueba con
   `AUTH_AUTOCONFIRM=true pnpm stack:start`. No hay SMTP real.
 - **Cron en Supabase:** `pg_cron`/`pg_net` no existen en el Postgres local; la migración lo detecta y no

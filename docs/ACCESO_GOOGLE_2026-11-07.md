@@ -1,5 +1,7 @@
 # Acceso Google y correo Mayami · preparación sin activar
 
+**Actualización del 17 de noviembre de 2026.** Google está activo en la web y la APK. [Publicación, versiones y verificaciones](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
+
 > Actualización 8nov2026: el protocolo preparado ya está conectado en fuente aislada 88461178, con pruebas reales locales de Provider/SDK/HTTP. Google sigue sin activar/publicar. La lectura hospedada de coordinación superó los bloqueos históricos de acceso; no repetirlos. [Estado vigente y decisiones pendientes](GOOGLE_INTEGRADO_LOCAL_2026-11-08.md).
 
 ## Estado y límites

@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Codex · Acceso Google y correo de Mayami
 
-Integración web y Android con PKCE, un solo uso del retorno y verificación del usuario. Conserva entrada por contraseña, recuperación y destino de la compra. Plantillas de correo con logotipo oficial y código de ocho dígitos. Entrega externa de recuperación comprobada en Gmail. Implementación de protección de primera vinculación y estado propio de recuperación, con verificación en GoTrue 2.198.0 y PostgreSQL locales.
+Se publicaron acceso y registro en la web y APK, con retorno correlacionado, protección de cuentas antiguas y correos de marca con código de ocho dígitos. Se comprobó entrega externa en Gmail. La cancelación observada en el servidor real incluía un marcador vacío específico de Supabase. Se corrigió, se volvió a publicar y se verificó el reintento en la web oficial. [Publicación y pruebas](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## 2026-11-08 — checkpoint de seguridad focal y login-CSRF local
 

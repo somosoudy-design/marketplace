@@ -1,8 +1,8 @@
 # Estado actual de mayami
 
-## 17 noviembre 2026 · Acceso con Google
+## 17 noviembre 2026 · Acceso con Google publicado
 
-La web de mayami.app y la actualización Android del canal preview incorporan Google. El botón comprueba la configuración efectiva de Marketplace. La confirmación por correo está activa, la web y la APK admiten los ocho dígitos y Gmail recibió la recuperación desde el remitente del dominio. El cliente web de Google y la audiencia externa están configurados. La activación de la vinculación en el servidor se registra por separado tras comprobar la protección de las cuentas antiguas. Ver [recuperación y reversión](GOOGLE_CUENTAS_HISTORICAS.md).
+Google está activo en Marketplace y su marca pública muestra Mayami. Se desplegaron la web, la actualización de la APK y las cuatro plantillas de correo. La última prueba en producción llegó al consentimiento de Google y comprobó cancelación, limpieza de URL y reintento. La protección de las cuentas históricas y el plazo de vinculación se verificaron en servidor. Próxima acción: completar un ingreso aceptado con una cuenta autorizada y probarlo en Android físico. [Versiones y resultados](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
 

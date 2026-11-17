@@ -1,5 +1,7 @@
 # Google conectado localmente, sin activar · 8 de noviembre de 2026
 
+**Actualización del 17 de noviembre de 2026.** Google está activo en la web y la APK. [Publicación, versiones y verificaciones](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
+
 La fuente aislada **`884611780a1a3207aca9c3f3d8703b0324f65718`**, árbol `e1ba22c96a3fba307edd295c72a840d132a776d0`, integra Google sobre `da803460` con 35 archivos. Conserva la identidad Android/configuración de production, los legales y los 17 blobs de cuotas. No se usó HEAD compartido como fuente de publicación ni se arrastraron plantillas/correos, administración, Firebase o limpieza de pedidos. La rama compartida conserva este delta recuperable sin sustituir su producto activo por una base antigua.
 
 ## Implementación y resultado
