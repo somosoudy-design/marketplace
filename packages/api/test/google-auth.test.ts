@@ -88,6 +88,13 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
   });
   it.each([
     ['&error=access_denied#error=access_denied', 'cancelled'],
+    ['&error=access_denied&error_description=#error=access_denied&sb=', 'cancelled'],
+    ['&error=server_error&error_code=unexpected_failure#error=server_error&error_code=unexpected_failure&sb=', 'failed'],
+    ['&error=access_denied#sb=', 'invalid'],
+    ['&error=access_denied#error=access_denied&sb=unexpected', 'invalid'],
+    ['&error=access_denied#error=access_denied&sb=&sb=', 'invalid'],
+    ['&error=access_denied&sb=#error=access_denied', 'invalid'],
+    ['&code=local#sb=', 'invalid'],
     ['&error=server_error&error_description=failed#error=server_error&error_description=failed', 'failed'],
     ['&error=server_error#error=access_denied', 'invalid'],
     ['&error=access_denied#access_token=foreign', 'invalid'],

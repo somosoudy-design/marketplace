@@ -123,7 +123,13 @@ function readCode(raw: string, a: GoogleAttempt): { code: string } | { failure: 
   // GoTrue copies its OAuth error fields into the fragment. Only accept that exact mirror.
   if (url.hash) {
     const mirror = new URLSearchParams(url.hash.slice(1));
-    if (!failed || !mirror.size) throw new Error('Unexpected fragment');
+    if (!failed) throw new Error('Unexpected fragment');
+    // GoTrue 2.198 appends one empty Supabase marker to mirrored error fragments.
+    if (mirror.has('sb')) {
+      if (mirror.getAll('sb').length !== 1 || mirror.get('sb') !== '') throw new Error('Ambiguous marker');
+      mirror.delete('sb');
+    }
+    if (!mirror.size) throw new Error('Missing error mirror');
     for (const [key, value] of mirror) {
       if (!['error', 'error_code', 'error_description'].includes(key) || mirror.getAll(key).length !== 1 ||
           value !== url.searchParams.get(key)) throw new Error('Ambiguous fragment');
