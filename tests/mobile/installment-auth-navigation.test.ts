@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const ports = vi.hoisted(() => ({
   dismissTo: vi.fn(), back: vi.fn(), replace: vi.fn(), canGoBack: vi.fn(), params: vi.fn(),
 }));
-vi.mock('expo-router', () => ({
+vi.mock('../../apps/mobile/node_modules/expo-router', () => ({
   router: { dismissTo: ports.dismissTo, back: ports.back, replace: ports.replace, canGoBack: ports.canGoBack },
   useLocalSearchParams: ports.params,
 }));

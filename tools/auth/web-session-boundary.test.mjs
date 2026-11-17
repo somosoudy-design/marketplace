@@ -131,7 +131,7 @@ test('foreign PKCE code with no local verifier fails before token request and pr
   try {
     const result = await runCallback(env);
     assert.equal(result.failed, true); assert.equal(result.actor, B); assert.equal(result.setCalls, 0);
-    assert.equal(result.exchangeCalls, 1); assert.deepEqual(env.calls, []); assert.deepEqual(result.routes, []);
+    assert.equal(result.exchangeCalls, 0); assert.deepEqual(env.calls, []); assert.deepEqual(result.routes, []);
     receipts.push({ case: 'foreign code without verifier', outcome: 'rejected; B preserved', authRequests: 0 });
   } finally { env.dispose(); }
 });
