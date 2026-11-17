@@ -1,5 +1,8 @@
 'use client';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { HeaderSearchInput } from './header-search-input';
+import { BrowseNavigation } from './browse-navigation';
 import { usePathname } from 'next/navigation';
 import { Search, Heart, ShoppingBag, UserRound, ArrowUpRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -34,7 +37,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
-            <input type="search" name="q" aria-label="Buscar productos" placeholder="Buscar productos" />
+            <Suspense fallback={<input type="search" name="q" aria-label="Buscar productos" placeholder="Buscar productos" />}>
+              <HeaderSearchInput />
+            </Suspense>
             <button type="submit" aria-label="Buscar">
               <ArrowUpRight size={20} />
             </button>
@@ -60,23 +65,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Link>
           </nav>
         </div>
-        <div hidden={focused} className="browse-row">
-          <nav className="browse-nav wrap" aria-label="Explorar">
-            <Link prefetch={false} aria-current={pathname === '/' ? 'page' : undefined} href="/">
-              Inicio
-            </Link>
-            <Link prefetch={false} aria-current={pathname === '/buscar' ? 'page' : undefined} href="/buscar">
-              Todo el catálogo
-            </Link>
-            <Link prefetch={false} href="/buscar?sort=newest">
-              Novedades
-            </Link>
-            <Link prefetch={false} href="/buscar?availability=on_order">
-              Por encargo
-            </Link>
-            <span className="nav-note">{brand.tagline}</span>
-          </nav>
-        </div>
+        <BrowseNavigation pathname={pathname} hidden={focused} />
       </header>
       <main id="contenido" tabIndex={-1}>
         {children}

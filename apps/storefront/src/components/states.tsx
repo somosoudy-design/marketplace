@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { SearchX, RefreshCw } from 'lucide-react';
+import { SearchX, RefreshCw, Heart, ShoppingBag, Store } from 'lucide-react';
 export function Failure({
   href = '/',
   message = 'No pudimos cargar esta página.',
@@ -32,15 +32,18 @@ export function Empty({
   text,
   href = '/buscar',
   action = 'Explorar productos',
+  kind = 'search',
 }: {
   title: string;
   text: string;
   href?: string;
   action?: string;
+  kind?: 'search' | 'favorites' | 'cart' | 'store';
 }) {
+  const Icon = { search: SearchX, favorites: Heart, cart: ShoppingBag, store: Store }[kind];
   return (
     <section className="state">
-      <SearchX size={30} />
+      <Icon size={30} aria-hidden="true" />
       <h2>{title}</h2>
       <p>{text}</p>
       <Link prefetch={false} className="button" href={href}>

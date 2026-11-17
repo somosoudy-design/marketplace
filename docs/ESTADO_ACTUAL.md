@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Catálogo web publicado
+
+La tienda oficial ya muestra los resultados junto al panel de filtros. El recuento y el orden comparten una fila, las subcategorías están agrupadas por departamento y el móvil conserva filtros y ordenación sin JavaScript. Worker `fc116898-bf5f-4581-b0c0-ca5e16005254` al 100 %. Marketplace aplicó la migración `20261117031000`. La búsqueda pública devolvió los 41 productos en dos páginas sin duplicados, en ambos órdenes. Los 41 precios coincidieron con la variante visible.
+
 ## 17 noviembre 2026 · Ingreso y registro de compradores
 
 Rediseño publicado en mayami.app y en la APK existente. El dominio sirve las dos pantallas y ambas abren el acceso oficial de Google. La APK firmada descargó la actualización del canal preview y mostró el diseño nuevo en Android 16 emulado. La verificación de Google en el Samsung físico sigue pendiente. [Versiones y pruebas](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).

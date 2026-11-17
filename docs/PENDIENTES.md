@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## 17 noviembre 2026 · Seguimiento de catálogo
+
+Catálogo y orden por precio visible publicados y verificados en el dominio. Para comprobar futuras publicaciones, comparar los filtros, la primera fila y la paginación en `/buscar` y los cargadores en ambos sentidos. Los demás bloques de la auditoría del 16 de noviembre conservan su estado independiente.
+
 ## 17 noviembre 2026 · Acceso de compradores
 
 Repetir el ingreso con Google en un Android físico con la APK actualizada. El emulador de Android 16 ya descargó la actualización del rediseño y mostró el ingreso y el registro. El alta, la persistencia, el segundo ingreso, la ausencia de duplicados y el retorno al checkout ya se comprobaron en la web oficial. [Estado y verificaciones](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).

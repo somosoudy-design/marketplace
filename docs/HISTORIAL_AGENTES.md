@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 17 noviembre 2026 · Codex · Catálogo y orden de precios publicados
+
+Se integró la corrección local del catálogo con la versión que ya servía el acceso de compradores. La primera fila subió de 402 a 255 px en la candidata a 1703 px de ancho. Pasaron 121 pruebas web, dos recorridos de escritorio y móvil (incluido móvil sin JavaScript), seis pruebas SQL y las verificaciones de compilación. En producción, el rango USD 25–49 devolvió los diez resultados esperados y Cargadores se ordenó 27–49 y 49–27. La función conserva sus permisos y su ejecución con los privilegios del usuario.
+
 ## 17 noviembre 2026 · Codex · Rediseño de ingreso y registro publicado
 
 Publicación de la web de compradores y actualización de la APK compatible. Se verificaron la web pública, la descarga oficial en emulador Android 16 y las pantallas en claro y oscuro. [Versiones, cobertura y pendiente físico](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).

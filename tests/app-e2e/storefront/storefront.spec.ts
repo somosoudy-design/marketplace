@@ -66,12 +66,11 @@ for (const colorScheme of ['light', 'dark'] as const)
 
 test('búsqueda, filtros, orden y paginación mantienen URL compartible', async ({ page }) => {
   await page.goto('/buscar');
-  await expect(page.locator('.search-page > .section-heading .muted')).toContainText('productos en esta página');
-  if (await page.getByRole('button', { name: 'Filtrar y ordenar' }).isVisible())
-    await page.getByRole('button', { name: 'Filtrar y ordenar' }).click();
-  await page.locator('.filter-form input[name=q]').fill('UGREEN');
-  await page.locator('select[name=sort]').selectOption('price_asc');
-  await page.getByRole('button', { name: 'Aplicar filtros' }).click();
+  await expect(page.locator('.results-count')).toContainText('productos en esta página');
+  await page.getByRole('searchbox', { name: 'Buscar productos', exact: true }).fill('UGREEN');
+  await page.getByRole('button', { name: 'Buscar', exact: true }).click();
+  await page.locator('.search-sort select[name=sort]').selectOption('price_asc');
+  await page.waitForURL(url => url.searchParams.get('sort') === 'price_asc');
   await expect(page).toHaveURL(/q=UGREEN/);
   await expect(page.getByTestId('product-card').first()).toBeVisible();
   const prices = await page.locator('.product-price strong:visible').allTextContents();
@@ -79,7 +78,7 @@ test('búsqueda, filtros, orden y paginación mantienen URL compartible', async 
   expect(nums).toEqual([...nums].sort((a, b) => a - b));
   await page.goto('/buscar?availability=on_order');
   await expect(page.getByTestId('product-card').first()).toBeVisible();
-  await expect(page.locator('.product-card:visible .availability').filter({ hasText: /^Por encargo$/ })).toHaveCount(
+  await expect(page.locator('.product-card:visible [data-testid=product-availability]').filter({ hasText: /^Por encargo$/ })).toHaveCount(
     await page.locator('.product-card:visible').count(),
   );
   await page.goto('/buscar');
@@ -195,14 +194,18 @@ test('teclado, movimiento reducido y filtros colapsados en móvil', async ({ pag
   await page.goto('/buscar');
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Ir al contenido' })).toBeFocused();
-  const toggle = page.getByRole('button', { name: 'Filtrar y ordenar' });
+  const toggle = page.getByRole('button', { name: /^Filtros/ });
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await expect(page.getByTestId('product-card').first()).toBeVisible();
-  expect((await page.getByTestId('product-card').first().boundingBox())!.y).toBeLessThan(500);
+  await expect(page.getByRole('dialog', { name: 'Filtros', exact: true })).not.toBeVisible();
+  await expect(page.getByTestId('product-card').first()).toBeInViewport();
   await toggle.click();
+  await expect(page.getByRole('dialog', { name: 'Filtros', exact: true })).toBeVisible();
+  await expect(page.getByRole('radio', { name: 'Todas las categorías' })).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(toggle).toBeFocused();
+  await expect(page.getByRole('dialog', { name: 'Filtros', exact: true })).not.toBeVisible();
   await expect(page.getByLabel('Ordenar por')).toBeVisible();
-  await toggle.click();
-  await expect(page.getByLabel('Ordenar por')).not.toBeVisible();
   await noOverflow(page);
 });
 
