@@ -29,7 +29,8 @@ export function NotificationLink() {
   if (!session) return null;
   const total = q.isError ? undefined : q.data;
   return (
-    <Link prefetch={false}
+    <Link
+      prefetch={false}
       href="/notificaciones"
       className="notification-link"
       aria-label={total ? `Notificaciones, ${total} sin leer` : 'Notificaciones'}
@@ -61,6 +62,11 @@ const date = (value: string) =>
   });
 async function destination(n: Notification): Promise<string | null> {
   const d = (n.data ?? {}) as Record<string, unknown>;
+  if (uuid(d.question_id) && uuid(d.product_id)) {
+    const product = await browser().api.catalog.product(d.product_id);
+    if (product?.slug) return `/p/${encodeURIComponent(product.slug)}?section=preguntas`;
+    throw new Error('Este producto ya no está disponible.');
+  }
   // Store notices must never open another buyer's order in the buyer surface.
   if (d.audience === 'store') return null;
   if (uuid(d.order_id)) return `/pedidos/${d.order_id}`;
@@ -91,7 +97,10 @@ export function Notifications({ buyerId }: { buyerId: string }) {
     refetchInterval: 30_000,
     refetchIntervalInBackground: false,
   });
-  const notices = useMemo(() => Array.from(new Map((q.data?.pages.flatMap((p) => p.items) ?? []).map(n => [n.id, n])).values()), [q.data]);
+  const notices = useMemo(
+    () => Array.from(new Map((q.data?.pages.flatMap((p) => p.items) ?? []).map((n) => [n.id, n])).values()),
+    [q.data],
+  );
   const ids = notices.filter((n) => !n.read_at).map((n) => n.id);
   const mark = useMutation({
     mutationFn: async ({ ids, open }: { ids: string[]; open?: Notification }) => {
@@ -174,7 +183,8 @@ export function Notifications({ buyerId }: { buyerId: string }) {
         {notices.map((n) => {
           const d = (n.data ?? {}) as Record<string, unknown>;
           const store = d.audience === 'store';
-          const actionable = !store && (uuid(d.order_id) || uuid(d.product_id));
+          const question = uuid(d.question_id) && uuid(d.product_id);
+          const actionable = question || (!store && (uuid(d.order_id) || uuid(d.product_id)));
           return (
             <article
               className={`inbox-row ${!n.read_at ? 'inbox-unread' : ''}`}
@@ -191,7 +201,13 @@ export function Notifications({ buyerId }: { buyerId: string }) {
                 </div>
                 <h2>{n.title}</h2>
                 <p>{n.body}</p>
-                {store && <p className="muted">Para tu tienda · disponible en Mi tienda de la app o en el panel.</p>}
+                {store && (
+                  <p className="muted">
+                    {question
+                      ? 'Para tu tienda · responde desde la ficha del producto.'
+                      : 'Para tu tienda · disponible en Mi tienda de la app o en el panel.'}
+                  </p>
+                )}
                 {actionable ? (
                   <button
                     className="text-link inbox-action"
@@ -199,7 +215,7 @@ export function Notifications({ buyerId }: { buyerId: string }) {
                     disabled={mark.isPending}
                     onClick={() => mark.mutate({ ids: n.read_at ? [] : [n.id], open: n })}
                   >
-                    {uuid(d.order_id) ? 'Ver pedido' : 'Ver producto'}
+                    {question ? 'Ver preguntas' : uuid(d.order_id) ? 'Ver pedido' : 'Ver producto'}
                     <ChevronRight size={16} />
                   </button>
                 ) : (

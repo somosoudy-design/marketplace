@@ -1,5 +1,7 @@
 # Preguntas y respuestas en la ficha
 
+> Estado vigente 17nov2026: implementado el flujo completo para la ficha web, con respuesta de tienda y moderación en la misma ficha. Backend y ficha web publicados y verificados. Véase [Ficha social web](FICHA_SOCIAL_WEB_2026-11-17.md). El diseño histórico siguiente explica el aplazamiento anterior; ya no es un bloqueo de autorización para la web. El menú dedicado del panel y la app nativa siguen fuera de esta publicación.
+
 > Evaluación del hito 4 de la mejora de UI/UX (pedido de Oliver del 2026-10-10). Estado: **no implementado en la
 > app, a propósito**. El diseño queda listo para la siguiente etapa.
 

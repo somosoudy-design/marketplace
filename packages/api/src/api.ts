@@ -36,6 +36,9 @@ import type {
   Profile,
   MyReview,
   ProductReviews,
+  ProductQuestion,
+  ProductQuestions,
+  QuestionInboxFilter,
   PricingSnapshot,
   PricingToday,
   ProductCosts,
@@ -160,6 +163,21 @@ export function createApi(client: KoraClient) {
     /** Recommendation impressions (batched) and clicks per slot, used to measure ranking changes. Best effort. */
     trackRecommendation: (slot: string, kind: 'impression' | 'click', productIds: string[]) =>
       run<void>(rpc('track_recommendation', { p_slot: slot, p_kind: kind, p_product_ids: productIds })).catch(() => undefined),
+  };
+
+  const questions = {
+    /** Public answered questions plus the current actor's authorized pending/hidden rows. */
+    list: (productId: string, limit = 10, offset = 0) =>
+      run<ProductQuestions>(rpc('product_questions', { p_product_id: productId, p_limit: limit, p_offset: offset })),
+    ask: (productId: string, body: string) =>
+      run<ProductQuestion>(rpc('ask_question', { p_product_id: productId, p_body: body })),
+    answer: (questionId: string, body: string) =>
+      run<ProductQuestion>(rpc('answer_question', { p_question_id: questionId, p_body: body })),
+    moderate: (questionId: string, hide: boolean, reason?: string) =>
+      run<ProductQuestion>(rpc('moderate_question', { p_question_id: questionId, p_hide: hide, p_reason: reason ?? null })),
+    /** Requires store membership or platform administration; never a client-side visibility filter. */
+    storeInbox: (storeId: string, status: QuestionInboxFilter = 'pending', limit = 20, offset = 0) =>
+      run<ProductQuestions>(rpc('store_questions', { p_store_id: storeId, p_status: status, p_limit: limit, p_offset: offset })),
   };
 
   const reviews = {
@@ -569,7 +587,7 @@ export function createApi(client: KoraClient) {
       ),
   };
 
-  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin, reviews };
+  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin, reviews, questions };
 }
 
 export type Api = ReturnType<typeof createApi>;

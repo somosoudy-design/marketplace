@@ -396,6 +396,34 @@ export type SellerFulfillment = Pick<Fulfillment, 'id' | 'store_id' | 'flow' | '
   items: Pick<OrderItem, 'id' | 'title' | 'variant_title' | 'quantity' | 'refunded_qty' | 'image_path'>[];
 };
 
+// ---------- public product questions ----------
+export interface ProductQuestion {
+  id: string;
+  product_id: string;
+  store_id: string;
+  body: string;
+  answer_body: string | null;
+  created_at: string;
+  answered_at: string | null;
+  status: 'published' | 'hidden';
+  author: string;
+  mine: boolean;
+  is_demo: boolean;
+  /** Visible only to its author or authorized store/admin. */
+  hidden_reason: string | null;
+  product_title: string;
+  product_slug: string;
+  store_name: string;
+}
+export interface ProductQuestions {
+  items: ProductQuestion[];
+  count: number;
+  can_ask: boolean;
+  can_answer: boolean;
+  can_moderate: boolean;
+}
+export type QuestionInboxFilter = 'pending' | 'answered' | 'hidden' | 'all';
+
 // ---------- reviews ----------
 export interface ReviewSummary {
   count: number;

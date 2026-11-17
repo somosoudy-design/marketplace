@@ -38,6 +38,7 @@ const detailPorts = {
  '@tanstack/react-query': { useQueryClient: () => ({}), useMutation: () => ({ reset() {}, isPending: false }) },
  './photo': { ProductPhoto: () => null }, './color-dot': { ColorDot: () => null }, './favorite': { Favorite: () => null },
  './product-share': { ProductShare: props => React.createElement('span', {'data-shared-variant':props.variantId}) },
+ './product-reviews': { ProductReviews: () => null }, './product-questions': { ProductQuestions: () => null }, './product-questions.css': {},
  './quantity-control': quantities, './offer': offers, './product-card': { ProductGrid: () => null },
  '@/lib/providers': { useAccount: () => ({ session: null, ready: true }) },
  '@/lib/format': { money: core.formatOfferPrice }, '@/lib/photos': { catalogText: x => x, catalogSample: () => false, photo: () => null },

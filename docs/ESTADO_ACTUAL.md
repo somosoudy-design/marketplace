@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
+
+La mejora UI/UX ya está publicada en mayami.app y www.mayami.app: Worker `5385cbd7-94fc-4f08-b777-18e8b1a07a9a`, fuente original `b9e3051`, árbol `99026f4490a6a9ab00aa6824e4b127e002883099`. La rama remota se sincronizó mediante el conector GitHub en `f636646`; árbol idéntico y commits originales conservados en `refs/checkpoints/ui-ux-original-20261117`, sin reescritura remota. La verificación pública aprobó 23 recorridos/comprobaciones y cuatro vistas NEEWER, claro y oscuro.
+
+Cierre: Compartir/Favoritos alineados, calificaciones verificadas y preguntas con respuesta/moderación en la ficha publicados en Worker `94d92e43-2031-46fb-988c-24d930622362` (fuente `cedeaea`). La migración `20261117185142` está aplicada en Marketplace. Cuatro vistas públicas 390/1440, claro/oscuro: botones 44 × 44 px con centros idénticos, secciones y retorno de acceso correctos, sin errores de aplicación. No se cargaron fixtures remotos ni se activaron servicios de pago. Trabajo en curso: ninguno de esta publicación. El siguiente encargo puede abordar los pendientes de APK/panel y la paridad del clon local de pruebas; no son funciones pendientes de esta ficha. [Detalle y pruebas](FICHA_SOCIAL_WEB_2026-11-17.md).
+
 ## 17 noviembre 2026 · Sistema UI/UX integrado y verificado localmente
 
 La entrega de mejora global está integrada en `/Users/brandeastudio/marketplace`. Ficha web con panel continuo y una barra inferior móvil, contratos comunes de precio, disponibilidad, condición, variante y cantidad, carrito con lectura vigente y recuperación, ayuda de compra y agrupación legal. Los consumidores de web, app y panel aplican la representación común. La fuente web publicada se concilió con las cuotas y autenticación más recientes de la rama.

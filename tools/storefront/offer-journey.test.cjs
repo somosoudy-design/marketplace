@@ -140,6 +140,7 @@ const productPorts = {
   './color-dot': { ColorDot: () => null },
   './favorite': { Favorite: () => null },
   './product-share': { ProductShare: () => null },
+  './product-reviews': { ProductReviews: () => null }, './product-questions': { ProductQuestions: () => null }, './product-questions.css': {},
   './product-card': { ProductGrid: () => null },
   '@/lib/photos': { catalogText: (x) => x, catalogSample: () => false, photo: () => null },
   '@/lib/catalog-selection': selection,

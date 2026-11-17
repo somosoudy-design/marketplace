@@ -17,7 +17,7 @@
     "preview:cloudflare": "pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare && opennextjs-cloudflare preview",
     "deploy:cloudflare": "pnpm verify:release && pnpm verify:commercial && pnpm verify:cloudflare && opennextjs-cloudflare deploy --keep-vars",
     "verify:commercial": "node ../../tools/storefront/check-commercial-catalog.mjs",
-    "test": "node --test ../../tools/storefront/offer-consumers.test.cjs ../../tools/storefront/offer-journey.test.cjs ../../tools/storefront/offer-components.test.cjs ../../tools/storefront/product-variant-state.test.cjs ../../tools/storefront/search-continuity.test.cjs ../../tools/storefront/home-categories.test.cjs ../../tools/storefront/product-badges.test.cjs ../../tools/storefront/guest-cart-pending.test.cjs ../../tools/storefront/product-photo.test.cjs ../../tools/storefront/product-share.test.cjs"
+    "test": "node --test ../../tools/storefront/product-community.test.cjs ../../tools/storefront/offer-consumers.test.cjs ../../tools/storefront/offer-journey.test.cjs ../../tools/storefront/offer-components.test.cjs ../../tools/storefront/product-variant-state.test.cjs ../../tools/storefront/search-continuity.test.cjs ../../tools/storefront/home-categories.test.cjs ../../tools/storefront/product-badges.test.cjs ../../tools/storefront/guest-cart-pending.test.cjs ../../tools/storefront/product-photo.test.cjs ../../tools/storefront/product-share.test.cjs"
   },
   "dependencies": {
     "@kora/api": "workspace:*",

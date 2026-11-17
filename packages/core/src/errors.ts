@@ -18,6 +18,8 @@ export const ERROR_MESSAGES: Record<string, string> = {
   invalid_state: 'Este registro ya no está en un estado que permita esa acción.',
   ledger_unbalanced: 'No pudimos registrar la operación contable. Intenta de nuevo o contacta a soporte.',
   method_automated: 'Este método se paga desde la pasarela del proveedor, no con referencia manual.',
+  account_closed: 'Esta cuenta está cerrada o en proceso de cierre. No puedes realizar esta acción.',
+  question_contact: 'No incluyas teléfonos, correos ni enlaces en tu pregunta o respuesta.',
   rate_limited: 'Demasiados intentos seguidos. Espera un momento y vuelve a intentarlo.',
   cart_empty: 'Tu carrito está vacío.',
   cart_has_issues: 'Algunos productos cambiaron de disponibilidad. Revisa tu carrito.',

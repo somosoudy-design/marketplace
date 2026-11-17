@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ShoppingBag, ArrowRight, Check } from 'lucide-react';
+import { ShoppingBag, ArrowRight, Check, Star, MessageCircle } from 'lucide-react';
 import type { CatalogMetadata, ProductDetail as Product } from '@kora/api';
 import {
   describeDispatchStage,
@@ -22,6 +22,9 @@ import { ProductPhoto } from './photo';
 import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
 import { ProductShare } from './product-share';
+import { ProductReviews } from './product-reviews';
+import { ProductQuestions } from './product-questions';
+import './product-questions.css';
 import { QuantityControl } from './quantity-control';
 import { OfferStatus, SellerLink, DeliveryStage, PurchaseHelp, ProductContent } from './offer';
 import { ProductGrid } from './product-card';
@@ -270,6 +273,10 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
             <span className="eyebrow">{p.brand_name || p.category_name}</span>
             <h1>{catalogText(p.title, p.is_demo, p.id)}</h1>
             <SellerLink name={p.store.name} slug={p.store.slug} />
+            <nav className="product-community-links" aria-label="Opiniones y consultas">
+              <a href="#opiniones"><Star size={15} aria-hidden="true" />Calificaciones</a>
+              <a href="#preguntas"><MessageCircle size={15} aria-hidden="true" />Preguntas</a>
+            </nav>
             {p.subtitle && <p className="product-subtitle">{p.subtitle}</p>}
           </header>
 
@@ -449,6 +456,8 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
         highlights={p.highlights?.map((h) => catalogText(h, p.is_demo) ?? h)}
         seller={p.store.name}
       />
+      <ProductReviews productId={p.id} slug={p.slug} storeName={p.store.name} />
+      <ProductQuestions productId={p.id} slug={p.slug} seller={p.store.name} />
       {p.related.length > 0 && (
         <section className="catalog-section">
           <div className="section-heading">
