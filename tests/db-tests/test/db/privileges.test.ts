@@ -15,7 +15,7 @@ const EXPOSED = {
   buyer: [
     'cart_add', 'cart_merge', 'cart_set_quantity', 'cart_summary', 'checkout_preview', 'place_order', 'cancel_order',
     'create_payment_quote', 'submit_payment', 'start_provider_payment', 'cancel_provider_payment', 'open_claim', 'post_claim_message', 'escalate_claim',
-    'mark_notifications_read', 'register_push_token', 'request_account_deletion', 'recently_viewed', 'clear_my_activity',
+    'my_google_link_recovery_status', 'mark_notifications_read', 'register_push_token', 'request_account_deletion', 'recently_viewed', 'clear_my_activity',
     'submit_review',
     // Existing guest merge migration: authenticated ownership, atomic replay protection.
     'favorites_merge_intent',
@@ -39,6 +39,12 @@ EXPOSED.seller.push('catalog_set_condition','catalog_set_variant_media','seller_
 afterAll(() => pool.end());
 
 describe('function privileges', () => {
+  it('recovery status is private to an active mailbox verification session', async () => {
+    const user = await createUser('google-recovery-status');
+    await expect(asUser(null, sql => sql('select public.my_google_link_recovery_status()'))).rejects.toMatchObject({ code: '42501' });
+    expect(await asUser(user.id, sql => sql('select public.my_google_link_recovery_status() as status'))).toEqual([{ status: null }]);
+    await expect(asUser(user.id, sql => sql('select * from mayami_auth_private.google_recovery'))).rejects.toMatchObject({ code: '42501' });
+  });
   it('only allowlisted functions are executable by API roles', async () => {
     const rows = await admin(`
       select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
