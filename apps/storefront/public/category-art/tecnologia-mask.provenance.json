@@ -1,0 +1,20 @@
+{
+  "kind": "navigation-only-alpha-mask",
+  "status": "local-candidate-not-published",
+  "targetCategory": "tecnologia",
+  "targetOriginalPath": "5afbabbf-0678-40ee-a5d8-540f53efe114/b1b4a794-c740-47e9-ae57-1c1e3089b80d/da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg",
+  "servedOriginalSha256": "0eb198ff2389e39568eff25de22c7ef0a4afe4898871c483584f53b713576ad8",
+  "cleanInputFileName": "Tablet negra · 01 Portada.jpg",
+  "cleanInputSha256": "0eb198ff2389e39568eff25de22c7ef0a4afe4898871c483584f53b713576ad8",
+  "generationTool": "built-in image_gen background-extraction with transparent_background=true",
+  "generationPrompt": "Edit type: background-extraction. The attached image is the exact edit target, a real supplied Mayami product composition. Change only the pale opaque background into genuinely transparent alpha. Preserve the existing tablet, black keyboard, black mouse and upright stylus exactly as supplied: original geometry, perspective, size, layout, positions, colour, edges, material, keyboard legends, screen artwork and existing icons/text. Do not regenerate, retouch, restage, sharpen, repaint or redesign any product or screen pixels. No new details, ports, accessories, objects, text or shadows. Keep every original subject and the same square canvas/framing with the original margins; no zoom, reposition or crop. Remove the entire pastel backdrop including empty spaces between all four objects, preserving fine stylus edges and the tablet kickstand. White areas inside the screen and product highlights are subject pixels and must stay opaque. Produce a faithful clean cutout with real transparent alpha, no coloured fringe, no halo, no residual square or replacement background. Intended use: this same small product silhouette on an existing violet category navigation card, not a new product photo or new design. Output one image only.",
+  "generationOutputSha256": "9d451f69ff738faa77d88e9f3fab12a186175b0867b1685405e37c3ef67a105a",
+  "assetFile": "tecnologia-mask-046d5825ab82a348.png",
+  "assetSha256": "046d5825ab82a348b98b6c47cc7ff077851f06cdb623c55888aaacd129fa44a2",
+  "width": 448,
+  "height": 448,
+  "bytes": 19027,
+  "preparation": "Resample generated RGBA to448square; retain alpha exactly from that resample; replace all RGB with white. Generated product RGB is never used by renderer.",
+  "rendering": "CSS alpha mask on original JPEG img src; no layout/text/navigation/CSS/product image changes",
+  "originalsModified": false
+}

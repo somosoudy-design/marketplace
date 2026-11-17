@@ -1,3 +1,4 @@
+import { formatOfferPrice } from '@kora/core';
 import type { Tone } from '@/components/ui';
 
 const TZ = 'America/Caracas';
@@ -23,6 +24,7 @@ export function money(v: string | number | null | undefined, currency: string) {
   const n = Number(v);
   if (currency === 'VES') return `Bs. ${n.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   if (currency === 'USDT') return `${n.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 6 })} USDT`;
+  if (currency === 'USD') return formatOfferPrice(v);
   return `$${n.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 

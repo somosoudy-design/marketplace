@@ -397,7 +397,7 @@ function PaymentForm({
         </p>
         <p>
           {sent.status === 'confirmed'
-            ? 'El servidor confirmó el pago.'
+            ? 'Tu pago está confirmado.'
             : 'Recibimos tu información. Confirmaremos el pago después de revisarlo.'}
         </p>
         <button className="button" onClick={() => onSent()}>

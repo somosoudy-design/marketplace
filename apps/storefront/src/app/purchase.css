@@ -598,7 +598,9 @@
 .cart-page .cart-line h3 { font-size: 14px; line-height: 1.45; }
 .cart-page .cart-line-copy p, .cart-page .cart-line-copy > .muted { font-size: 12px; }
 .cart-page .cart-line-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
-.cart-page .cart-line-total { font-size: 18px; margin: 0; font-variant-numeric: tabular-nums; }
+.cart-page .cart-line-price { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.cart-page .cart-line-price-label { display: block; font-size: 12px; color: var(--text-secondary); }
+.cart-page .cart-line-total { display: block; font-size: 18px; margin: 0; font-variant-numeric: tabular-nums; }
 .cart-page .quantity { margin: 0; gap: 4px; }
 .cart-page .quantity > span { min-width: 18px; text-align: center; }
 .cart-page .quantity button { border: 0; background: var(--surface-sunken); border-radius: 8px; }
@@ -620,10 +622,8 @@
 .checkout-page .checkout-products .review-copy p { margin-top: 2px; font-size: 12px; }
 .checkout-page .checkout-products .delivery-choice { margin-top: 8px; gap: 8px; }
 .favorite .favorite-glyph { display: grid; place-items: center; position: relative; }
-.favorite .favorite-glyph[data-pulse='true'] { animation: favorite-pop 240ms ease-out; }
-.favorite .favorite-burst { position: absolute; width: 30px; height: 30px; border: 1.5px solid currentColor; border-radius: 50%; pointer-events: none; opacity: 0; animation: favorite-ring 260ms ease-out; }
-@keyframes favorite-pop { 0% { transform: scale(.85); } 40% { transform: scale(1.23); } 100% { transform: scale(1); } }
-@keyframes favorite-ring { 0% { opacity: .5; transform: scale(.65); } 100% { opacity: 0; transform: scale(1.35); } }
+.favorite .favorite-glyph[data-pulse='true'] { animation: favorite-pop 180ms ease-out; }
+@keyframes favorite-pop { 0% { transform: scale(.96); } 45% { transform: scale(1.1); } 100% { transform: scale(1); } }
 .favorite-error-dialog { position: fixed; width: min(420px, calc(100% - 32px)); border: 1px solid var(--border); border-radius: 16px; padding: 24px; background: var(--surface); color: var(--text); }
 .favorite-error-dialog::backdrop { background: rgb(0 0 0 / .4); }
 .favorite-error-dialog h2 { font-size: 20px; padding-right: 32px; margin: 0 0 12px; }
@@ -645,5 +645,21 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .favorite .favorite-glyph, .favorite .favorite-burst { animation: none; }
+  .favorite .favorite-glyph { animation: none; }
 }
+
+/* Sharing stays separate from purchase actions and never exposes internal URLs. */
+.product-share-trigger { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 8px 12px; margin: -6px 0 12px; border: 1px solid var(--border-strong); border-radius: 10px; color: var(--text); background: var(--surface); font: inherit; font-size: 12px; }
+.product-share-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; position: fixed; padding: 24px; border: 1px solid var(--border-strong); border-radius: 16px; color: var(--text); background: var(--surface); }
+.product-share-dialog::backdrop { background: rgb(0 0 0 / .45); }
+.product-share-dialog .dialog-close { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: transparent; color: var(--text); }
+.product-share-dialog h2 { margin: 0 32px 12px 0; font-size: 20px; }
+.product-share-name { overflow-wrap: anywhere; line-height: 1.6; }
+.product-share-dialog label { display: block; margin: 16px 0 8px; font-size: 12px; font-weight: 600; }
+.product-share-dialog input { width: 100%; min-width: 0; min-height: 44px; font-size: 14px; }
+.product-share-actions { display: grid; gap: 10px; margin-top: 20px; }
+.product-share-actions .button { width: 100%; }
+.product-share-feedback { font-size: 12px; margin: 10px 0 0; }
+.product-share-feedback:empty { display: none; }
+.product-share-dialog .error { font-size: 13px; line-height: 1.6; }
+@media (max-width: 700px) { .product-share-dialog { margin: auto auto 16px; } }

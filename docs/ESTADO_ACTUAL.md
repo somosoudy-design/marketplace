@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Sistema UI/UX integrado y verificado localmente
+
+La entrega de mejora global está integrada en `/Users/brandeastudio/marketplace`. Ficha web con panel continuo y una barra inferior móvil, contratos comunes de precio, disponibilidad, condición, variante y cantidad, carrito con lectura vigente y recuperación, ayuda de compra y agrupación legal. Los consumidores de web, app y panel aplican la representación común. La fuente web publicada se concilió con las cuotas y autenticación más recientes de la rama.
+
+Verificación aprobada de tipos y lint globales, 190 pruebas core, 110 API, 180 web, 67 panel, 30 de cuotas y retorno, compilación web y export Expo web. Los recorridos incluyen 15 regresiones públicas, 21 casos de app, filtros con y sin JavaScript, compradores privados locales y estados de pago existentes. Capturas y cobertura detallada en [Adopción UI/UX](ADOPCION_UI_UX_2026-11-17.md).
+
+Trabajo local de implementación cerrado. Próxima acción concreta, revisar la candidata en `http://127.0.0.1:3287/p/ugreen-hitune-s3` y su evidencia en Descargas. La validación en APK física, lector de pantalla y zoom del navegador queda pendiente. La publicación y sincronización remota corresponden a un encargo posterior. El estado del sitio oficial está registrado a continuación.
+
 ## 17 noviembre 2026 · Catálogo web publicado
 
 La tienda oficial ya muestra los resultados junto al panel de filtros. El recuento y el orden comparten una fila, las subcategorías están agrupadas por departamento y el móvil conserva filtros y ordenación sin JavaScript. Worker `fc116898-bf5f-4581-b0c0-ca5e16005254` al 100 %. Marketplace aplicó la migración `20261117031000`. La búsqueda pública devolvió los 41 productos en dos páginas sin duplicados, en ambos órdenes. Los 41 precios coincidieron con la variante visible.
@@ -12,11 +20,49 @@ Rediseño publicado en mayami.app y en la APK existente. El dominio sirve las do
 
 Google está activo en Marketplace y su marca pública muestra Mayami. En la web oficial se completaron el alta con consentimiento, la persistencia al recargar y un segundo ingreso que volvió al checkout. El servidor confirmó un único usuario, identidad Google y perfil en los dos ingresos. Queda comprobar la APK en Android físico. [Versiones y resultados](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
-## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
+## UGC bloque2 local terminado; transición hospedada pendiente · 9 noviembre 2026
 
-Revisión limitada a ownership servidor, CSRF/sesión y secretos árbol/historial; no se atribuyen otros controles al reel. La caracterización local del código publicado y preparado reproduce adopción de A sobre sesión B mediante fragmento sin intento. Corrección mínima en4fuentes: PKCE sólo para email web, rechazo de tokens URL y panel sin auto-adopción; default nativo conservado.9regresiones nuevas,21focales existentes, tipos API/storefront/admin y lint PASS. Enlaces implícitos anteriores requerirán nuevo enlace/código; OTP/password se conservan. Esto aún no protege el código publicado.
+Fuente aislada `737839c939d8fc5a69be5027c868ae6c2da88876`, árbol `ba0cc9ef2d85e65b01d6943e3189702cee21e5a1`, sobre207c489. Implementados controles móviles de denuncia/bloqueo/reversión y consentimiento; panel con lectura staff paginada, cola y moderación separada; aislamiento por actor y saneo quirúrgico de caché/avisos. Nueva migraciónB2 SHA `754894b55a22d2cf93b1a093740f4ebfe6b8a576748eba3200a68f3a08ffb2e2`; B1 permanece intacta. No se integró código al HEAD compartido.
 
-Escaneo léxico local:4695blobs/610commits disponibles, árbolHEAD completo,1388objetos históricos faltantes.8ocurrenciasanon públicas;43candidatos revisados como expresiones/fixtures,0secretos confirmados, sin probar credenciales. No scanner especializado/CI; no declarar repositorio libre de secretos. Trabajo en curso: dos huecos focales de ownership (comprobantes HTTP por rol e IDsRPC ajenos) sólo en copia local, reutilizando servicios ya instalados, sin reset ni migración remota. Próxima acción: ejecutar esos casos si runner conservado permite aislamiento, cerrar informe y checkpoint; sin build/publicación/OTA/AAB, OAuth ni configuración hospedada. Cuota última38%restante; parar20%. [Informe y límites](SEGURIDAD_FOCAL_2026-11-08.md).
+Pruebas finales:29grupos PG/REST,7móvil,14panel,16cliente/caché/actor,9auth y6delta SQL PASS; tipos API/móvil/panel/DB y lint pertinentes PASS. Son pruebas locales con puertos controlados donde se indica: no certifican DOM, capturas, Android físico, Auth hospedado ni aceptación de Google. Privilegios generales4/5 por diferencia preexistente favorites_merge_intent, documentada sin relajar allowlist. Procesos detenidos; vc3 intacto por hash.
+
+Trabajo en curso: ninguno de implementación de bloque2. Próxima acción delimitada: preflight hospedado de lectura y revisión específica de preparación+snapshot; después clientes compatibles y revisión visual/nativa; activación requiere su propia verificación/aprobación. Las dos fases están materializadas y probadas sólo con fixtures locales. No aplicar toda la rama, ni activar con clientes antiguos sin consentimiento. Sin SQL hospedado, gate, build/OTA/panel/web/Play, cargos ni credenciales externas nuevas. Paquete420233bytes SHA `859bd8c8…51ccc0` enDescargas. [Fuente, entrega, pruebas, delta y límites](UGC_BLOQUE2_LOCAL_2026-11-09.md).
+
+## UGC bloque1 implementado sólo local, desactivado · 9nov2026
+
+Fuente aislada `207c489e198f2c78035526c3c95be5cd8f8c4ea7` sobre39ff, árbol1cf89fc9; no integra HEAD principal. Persistencia privada, consentimiento, diezRPC acotadas, denuncias idempotentes, bloqueo user/tienda reversible, moderación separada de respuesta y avisos/REST seguros preparados. Migración SHA `c94d0794…d8c97`; gatefalse preserva panel anterior. Activación sólo plantilla local, nunca aplicada hospedada.
+
+19gruposPG/REST +4concurrencia/ACL +3contratos PASS; tipos API/móvil/admin/DB ylintmóvil PASS, advisors local results[]. Privilegioslegacy4/5: falta preexistente favorites_merge_intent enallowlist, documentada sin relajarla; UGC exacto sí pasa. Revisión focal independiente conforme. NoAuthSDK/dispositivo/caché vieja/Play. Procesos locales cerrados yvc3conservado porhash.
+
+Trabajo en curso: ninguno de bloque1. Siguiente bloque: accionesUI yaceptación enapp/panel, lecturaoperativa/cola/moderación compatibles, caché poractor ypurga/reconciliación UGC antesactivar. No aplicar SQL/permisos hospedados sinaprobación específica, nopublicarHEADcombinado nirecompilar. Paquete completoconpatch/bundle/evidencias enDescargas. [Resultado,hashes,pruebasylímites](UGC_BLOQUE1_LOCAL_2026-11-09.md).
+
+## UGC para Play: diagnóstico y propuesta, corrección pendiente · 9 noviembre 2026
+
+Fuente aislada39ffbee/árbol46ec intacta. Falta denunciar reseña/respuesta/autor, bloquear/desbloquear con persistencia y aceptación UGC previa. Sí hay compra verificada y moderación admin. REST permite otra lectura pública; avisos guardan extractos; moderación actual no separa respuesta de reseña legítima. Atribución histórica sólo a tienda, sin inventar empleado.
+
+Se cerró diagnóstico y propuesta mínima antes de ampliar, como ordena esta tanda si el alcance crece: backend/ACL/lecturas/avisos, app+aceptación/editor/cola mínimos del panel y pruebas/despliegue posterior. **No hay corrección implementada ni migración preparada/aplicada**. Tres caracterizaciones TSX offline reproducen dos huecos y recuperación existente; cinco tests de enlaces legales pasan. No acreditan autorización/aislamiento/undo SQL aún inexistentes. Revisión independiente conforme con esos límites.
+
+Trabajo en curso: ninguno de esta tanda. Próxima acción concreta: delimitar primer bloque local de persistencia/contratos/ACL, identidad pública de respuesta y cluster nuevo fixture-only; conservar guarda de despliegue remoto. No clonar DB de procedencia mixta ni publicar HEAD combinado. Vc3 previo conserva hash eb824373…70f23, no contiene estos futuros controles y sigue sin subida desde este frente. Sin SQL remoto, navegador, build/OTA/web/Play o cargos; cuota31%restante, sin reserva20% ni resets. [Diagnóstico, evidencia y plan exacto](UGC_PLAY_DIAGNOSTICO_2026-11-09.md).
+
+## AAB de prueba 39ff entregado y validado · 9 de noviembre de 2026
+
+Único build `e25d3cdf-4652-462c-9cc1-16723c1739e0` FINISHED desde la fuente aislada limpia `39ffbee1e9bfbaaaba771da35bfa1479bf6044ce`, sin reconstruir ni mezclar HEAD compartido. Entrega: `/Users/brandeastudio/Downloads/Mayami-AAB-Prueba-2026-11-09/MAYAMI-0.1.0-vc3.aab`, 86.911.369 bytes, SHA256 `eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23`. Paquete `app.mayami.marketplace`, versión 0.1.0 / vc3, target36/min24, runtime b6cc conservado.
+
+Bundletool validate, CRC, firma de los 1546 payloads y 52 ELF64 LOAD/RELRO de 16 KB aprobados con las herramientas existentes. Empaquetado PAGE_ALIGNMENT_16K. Recibos ligan las cinco salidas al hash del AAB y exigen exit0; no se creó APK derivado. Free/coste observado0, Android3/15 y claves de upload/preview intactas. Una invocación con --freeze-credentials, sin nuevas credenciales ni exportación.
+
+Trabajo en curso: ninguno de esta tanda; entrega revisada de forma independiente, sin bloqueantes. Próxima acción externa: validar en dispositivo real y completar correo/OTP hospedado y cuenta de revisión con la coordinación; no relanzar el build ni publicar HEAD combinado. Este AAB es de prueba, no candidato público final. Sin Play/OTA/web, Google/cuotas remotas ni usuarios. Cuota final32% restante; parada20%, sin resets/créditos. [Registro y evidencia](AAB_PRUEBA_AUTH_2026-11-09.md).
+
+## Android: frontera de enlaces corregida en fuente aislada · 9 de noviembre de 2026
+
+Fuente39ffbee1 sobre la exacta del AABbb3de958:4fuentes+1regresión, OTP-only para admisiónURL. Ningún enlace, callbackvacío, replay o cambioURL inicia/confirma sesión; B se conserva. SDKauto-detect apagado también enExpoWeb. Password, registro con/sin confirmación, OTPsignup/recovery y guardado explícito de contraseña conservados en9casos finales conSDK/Provider/forms reales y puertos controlados; tipos/lintPASS. No se activaGoogle/cuotas ni cambia identidad/config/firma/legal.
+
+Tanda terminada localmente, sin nuevo binario ni publicación. El AAB anterior no contiene el arreglo y no se trata como final. La nueva fuente NO es aún candidato final: falta acreditarOTPvisible hospedado y validar en dispositivo; después decidir/autorizar el nuevoAAB desde esta fuente fijada, sin publicar HEAD combinado. Enlaces antiguos/cross-device requieren login o código nuevo; leer código en otro dispositivo y escribirlo en app se conserva. Cuota inicial36%, durante verificación35%; parada20%sin resets. [Fuente, patch, pruebas y condición de correo](ANDROID_AUTH_ENLACES_2026-11-09.md).
+
+## Seguridad focal: tanda cerrada, arreglo local sin publicar · 8 de noviembre de 2026
+
+Checkpoint de código2a54917 verificado. Login-CSRF corregido en4fuentes y una regresión:9casos nuevos+21focales existentes PASS, tipos API/storefront/admin y lint aprobados. Sin build ni despliegue; producción no recibe aún esta corrección. Enlaces implícitos antiguos requerirán enlace/código nuevo.
+
+Ownership: dos casos nuevos NO ejecutados. La guarda detuvo la copia antes de crear DB/fixtures porque7cuentas no tienen procedenciafixture acreditada. Storage/REST/JWT no iniciados; PG propio quedó apagado. Escaneo limitado:0secretos confirmados,1388objetos históricos faltantes y sin scannerCI; no se declara repo libre de secretos. Trabajo activo: ninguno. No repetir pruebas ni reabrir infraestructura en esta tanda. Otra decisión deberá delimitar publicación aislada del arreglo, fuente limpia para los2ensayos y scanner/historial/CI. Última cuota36%restante, parada20%sin resets. [Cierre y límites](SEGURIDAD_FOCAL_2026-11-08.md).
 
 ## Tecnología web publicada: foto vigente sin cuadro · 8 de noviembre de 2026
 

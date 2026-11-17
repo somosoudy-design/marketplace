@@ -1,4 +1,4 @@
-import { formatMoney } from '@kora/core';
+import { formatOfferPrice } from '@kora/core';
 export {
   confirmCheckout,
   recoverCheckout,
@@ -20,6 +20,6 @@ export function date(value: string | null | undefined) {
     : 'Por confirmar';
 }
 export function currency(value: number | string, code: string) {
-  if (code === 'USD' || code === 'VES' || code === 'USDT') return formatMoney(value, code);
+  if (code === 'USD' || code === 'VES' || code === 'USDT') return formatOfferPrice(value, code);
   return `${value} ${code}`;
 }

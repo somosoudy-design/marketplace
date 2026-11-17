@@ -1,3 +1,4 @@
+import { variantDisplayTitle } from '@kora/core';
 import type { MyReview, OrderItem } from '@kora/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -51,7 +52,7 @@ export function ReviewSheet({ item, existing, orderId, onClose }: { item: OrderI
             <ProductImage path={item.image_path} style={{ width: 44 }} radius={10} />
             <View style={{ flex: 1 }}>
               <Text variant="label" numberOfLines={2}>{item.title}</Text>
-              {item.variant_title ? <Text variant="caption" color="textMuted">{item.variant_title}</Text> : null}
+              {variantDisplayTitle(item.variant_title) ? <Text variant="caption" color="textMuted">{variantDisplayTitle(item.variant_title)}</Text> : null}
             </View>
           </View>
           <StarInput value={rating} onChange={setRating} />

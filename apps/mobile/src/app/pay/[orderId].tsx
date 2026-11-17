@@ -1,5 +1,5 @@
 import { ApiError, type Payment, type PaymentMethod, type PaymentQuote } from '@kora/api';
-import { D, formatMoney, formatRate, formatUSD, normalizeReference, OBLIGATION_KIND_LABEL, type Currency } from '@kora/core';
+import { D, formatOfferPrice, formatRate, normalizeReference, OBLIGATION_KIND_LABEL, type Currency } from '@kora/core';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as Clipboard from 'expo-clipboard';
 import * as ImagePicker from 'expo-image-picker';
@@ -97,13 +97,13 @@ export default function PayScreen() {
   }
 
   const orderSummary = <Card style={{ gap: 10 }}>
-    <SummaryRow label="Total del pedido" value={formatUSD(o.total_usd)} />
-    <SummaryRow label="Pagado y confirmado" value={formatUSD(o.paid_usd)} />
+    <SummaryRow label="Total del pedido" value={formatOfferPrice(o.total_usd)} />
+    <SummaryRow label="Pagado y confirmado" value={formatOfferPrice(o.paid_usd)} />
     <Divider />
-    <SummaryRow label="Saldo pendiente" value={formatUSD(outstanding)} strong testID="pay-outstanding" />
+    <SummaryRow label="Saldo pendiente" value={formatOfferPrice(outstanding)} strong testID="pay-outstanding" />
     {nextObligation && !pending.length ? (
       <Text variant="caption" color="textMuted">
-        Ahora pagas: {OBLIGATION_KIND_LABEL[nextObligation.kind] ?? 'pago'}{nextObligation.kind === 'installment' ? ` ${nextObligation.seq}` : ''} por {formatUSD(nextAmount!)}
+        Ahora pagas: {OBLIGATION_KIND_LABEL[nextObligation.kind] ?? 'pago'}{nextObligation.kind === 'installment' ? ` ${nextObligation.seq}` : ''} por {formatOfferPrice(nextAmount!)}
         {nextObligation.due_date ? ` · vence ${shortDate(nextObligation.due_date)}` : ''}
       </Text>
     ) : null}
@@ -115,7 +115,7 @@ export default function PayScreen() {
       <ScrollView testID="pay-scroll" contentContainerStyle={{ padding: 16, gap: 18, paddingBottom: picking ? barHeight + 24 : 60, width: '100%', maxWidth: MAX_W, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
         <StaleNotice q={order} />
         {fresh ? <Banner tone="success" icon="circle-check" title={`Pedido ${o.number} creado`} body="Apartamos tus productos. Completa el pago para que lo preparemos." /> : null}
-        {picking && nextAmount ? <View testID="pay-base-amount" style={{ borderBottomWidth: 1, borderColor: t.colors.border, paddingBottom: 12 }}><SummaryRow label="Base de este pago" value={formatUSD(nextAmount)} strong /></View> : null}
+        {picking && nextAmount ? <View testID="pay-base-amount" style={{ borderBottomWidth: 1, borderColor: t.colors.border, paddingBottom: 12 }}><SummaryRow label="Base de este pago" value={formatOfferPrice(nextAmount)} strong /></View> : null}
 
         {!picking ? orderSummary : null}
 
@@ -230,7 +230,7 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
                 const min = Number(m.min_usd);
                 const max = m.max_usd == null ? null : Number(m.max_usd);
                 // a limit stays on the row: it is why the method can't be chosen for this amount
-                const limit = min > 0 && amountUsd.lt(min) ? `Desde ${formatUSD(min)}` : max != null && amountUsd.gt(max) ? `Hasta ${formatUSD(max)}` : null;
+                const limit = min > 0 && amountUsd.lt(min) ? `Desde ${formatOfferPrice(min)}` : max != null && amountUsd.gt(max) ? `Hasta ${formatOfferPrice(max)}` : null;
                 const on = selected === m.code;
                 return (
                   <View key={m.code}>
@@ -253,9 +253,9 @@ function MethodPicker({ methods, selected, amountUsd, onSelect, error }: { metho
  * today's gap (docs/PRECIOS.md), plus its fee and its note. */
 function MethodDetail({ method: m, amountUsd, vesRate, divisas, rateStale }: { method: PaymentMethod; amountUsd: ReturnType<typeof D>; vesRate: ReturnType<typeof useVesRate>; divisas: ReturnType<typeof useDivisas>; rateStale: boolean }) {
   const t = useTheme();
-  const fee = Number(m.fee_pct) > 0 ? `${String(Number(m.fee_pct)).replace('.', ',')} %` : Number(m.fee_fixed_usd) > 0 ? formatUSD(m.fee_fixed_usd) : null;
+  const fee = Number(m.fee_pct) > 0 ? `${String(Number(m.fee_pct)).replace('.', ',')} %` : Number(m.fee_fixed_usd) > 0 ? formatOfferPrice(m.fee_fixed_usd) : null;
   const f = m.currency === 'VES' ? null : divisas?.factor(m.code);
-  const amount = m.currency === 'VES' ? (vesRate ? formatMoney(amountUsd.times(vesRate.rate), 'VES') : null) : formatMoney(f ? amountUsd.times(f) : amountUsd, m.currency as Currency);
+  const amount = m.currency === 'VES' ? (vesRate ? formatOfferPrice(amountUsd.times(vesRate.rate), 'VES') : null) : formatOfferPrice(f ? amountUsd.times(f) : amountUsd, m.currency as Currency);
   const saving = f ? D(1).minus(f).times(100).toDecimalPlaces(1).toNumber() : 0;
   return (
     <View testID="method-detail" style={{ paddingHorizontal: 16, paddingBottom: 16, gap: 10 }}>
@@ -269,9 +269,9 @@ function MethodDetail({ method: m, amountUsd, vesRate, divisas, rateStale }: { m
           <Text variant="bodySmall" color="textSecondary">El monto en bolívares lo calculamos en el siguiente paso con la tasa del momento.</Text>
         )}
         {m.currency === 'VES' && vesRate ? (
-          <Text variant="caption" color="textMuted">{formatUSD(amountUsd)} {vesRate.demo ? 'con tasa de demostración' : 'a la tasa BCV de hoy'} ({formatRate(vesRate.rate)})</Text>
+          <Text variant="caption" color="textMuted">{formatOfferPrice(amountUsd)} {vesRate.demo ? 'con tasa de demostración' : 'a la tasa BCV de hoy'} ({formatRate(vesRate.rate)})</Text>
         ) : null}
-        {saving >= 0.1 ? <Text variant="caption" color="success">{String(saving).replace('.', ',')} % menos que {formatUSD(amountUsd)} a tasa BCV</Text> : null}
+        {saving >= 0.1 ? <Text variant="caption" color="success">{String(saving).replace('.', ',')} % menos que {formatOfferPrice(amountUsd)} a tasa BCV</Text> : null}
         <Text variant="caption" color={fee ? 'warning' : 'textMuted'}>{fee ? `Más comisión del método de ${fee}` : 'Sin comisión'}</Text>
       </View>
       {m.description ? <Text variant="caption" color="textSecondary">{m.description}</Text> : null}
@@ -295,8 +295,8 @@ function PendingCard({ payment: p, methodName, onOrder }: { payment: Payment; me
       </View>
       <View style={{ gap: 8 }}>
         <SummaryRow label="Método" value={methodName} />
-        <SummaryRow label="Monto" value={formatMoney(p.amount, currency)} />
-        {currency !== 'USD' ? <SummaryRow label="Equivale a" value={formatUSD(p.base_usd)} /> : null}
+        <SummaryRow label="Monto" value={formatOfferPrice(p.amount, currency)} />
+        {currency !== 'USD' ? <SummaryRow label="Equivale a" value={formatOfferPrice(p.base_usd)} /> : null}
         {p.reference ? <SummaryRow label="Referencia" value={p.reference} /> : null}
       </View>
       <Text variant="bodySmall" color="textSecondary">
@@ -372,7 +372,7 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
     }
   };
 
-  const amount = useMemo(() => formatMoney(q.amount_due, currency), [q.amount_due, currency]);
+  const amount = useMemo(() => formatOfferPrice(q.amount_due, currency), [q.amount_due, currency]);
 
   return (
     <View style={{ gap: 16 }}>
@@ -390,17 +390,17 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
         </Pressable>
         {isVes ? (
           <Text variant="caption" color="textMuted" testID="quote-rate">
-            {formatUSD(D(q.base_usd).plus(q.fee_usd))} × {formatRate(q.rate_applied)} · {SOURCE_LABEL[q.rate_source] ?? q.rate_source}, {shortDateTime(q.rate_observed_at)}
+            {formatOfferPrice(D(q.base_usd).plus(q.fee_usd))} × {formatRate(q.rate_applied)} · {SOURCE_LABEL[q.rate_source] ?? q.rate_source}, {shortDateTime(q.rate_observed_at)}
           </Text>
         ) : q.divisas ? (
           // verifiable: the price at the BCV rate and the two rates of the day's gap that turn it into this amount
           <View style={{ gap: 4 }} testID="quote-divisas">
             <Text variant="bodySmall" color="success">
-              Precio en divisas: {String(D(1).minus(D(q.amount_due).div(q.divisas.main_usd)).times(100).toDecimalPlaces(1)).replace('.', ',')} % menos que {formatUSD(q.divisas.main_usd)} a tasa BCV
+              Precio en divisas: {String(D(1).minus(D(q.amount_due).div(q.divisas.main_usd)).times(100).toDecimalPlaces(1)).replace('.', ',')} % menos que {formatOfferPrice(q.divisas.main_usd)} a tasa BCV
             </Text>
             {showMath ? (
               <Text variant="caption" color="textMuted" testID="quote-divisas-math">
-                Brecha del día {String(D(q.divisas.gap_pct).toDecimalPlaces(2)).replace('.', ',')} %: dólar BCV a {formatMoney(q.divisas.bcv_rate, 'VES')} y USDT a {formatMoney(q.divisas.usdt_ves_rate, 'VES')} ({shortDateTime(q.divisas.taken_at)}){Number(q.fee_usd) > 0 ? ` · incluye comisión de ${formatUSD(q.fee_usd)}` : ''}
+                Brecha del día {String(D(q.divisas.gap_pct).toDecimalPlaces(2)).replace('.', ',')} %: dólar BCV a {formatOfferPrice(q.divisas.bcv_rate, 'VES')} y USDT a {formatOfferPrice(q.divisas.usdt_ves_rate, 'VES')} ({shortDateTime(q.divisas.taken_at)}){Number(q.fee_usd) > 0 ? ` · incluye comisión de ${formatOfferPrice(q.fee_usd)}` : ''}
               </Text>
             ) : (
               <Pressable testID="quote-divisas-more" onPress={() => setShowMath(true)} hitSlop={8} accessibilityRole="button" style={{ alignSelf: 'flex-start' }}>
@@ -409,7 +409,7 @@ function QuotePanel({ quote: q, onRequote, requoting, onChangeMethod, onSubmitte
             )}
           </View>
         ) : Number(q.fee_usd) > 0 ? (
-          <Text variant="bodySmall" color="textSecondary">Incluye comisión del método de {formatUSD(q.fee_usd)}</Text>
+          <Text variant="bodySmall" color="textSecondary">Incluye comisión del método de {formatOfferPrice(q.fee_usd)}</Text>
         ) : null}
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Icon name="clock" size={16} color={countdown.expired ? t.colors.danger : t.colors.textMuted} />

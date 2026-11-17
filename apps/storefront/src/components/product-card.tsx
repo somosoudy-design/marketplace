@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import type { CatalogMetadata, ProductCard as Product } from '@kora/api';
-import { presentAvailability, productColorSummaries, resolveProductSelection } from '@kora/core';
+import { productColorSummaries, resolveProductSelection } from '@kora/core';
 import { ProductPhoto } from './photo';
 import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
+import { OfferStatus } from './offer';
 import { money } from '@/lib/format';
 import { catalogText, catalogSample, localExhibition } from '@/lib/photos';
 import { reviewedSelectionInput } from '@/lib/catalog-selection';
 
 export function ProductCard({ product, metadata, priority = false }: { product: Product; metadata: CatalogMetadata; priority?: boolean }) {
-  const availability = presentAvailability(product.availability);
   const input = reviewedSelectionInput(product, metadata);
   const selected = resolveProductSelection(input);
   const colors = productColorSummaries(input.variants);
@@ -20,7 +20,10 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
   return (
     <article className="product-card" data-testid="product-card">
       <Link prefetch={false} href={href(selected.selectedVariantId)} className="product-link">
+        <div className="product-card-media">
         <ProductPhoto id={product.id} path={path} demo={product.is_demo} title={product.title} priority={priority} exact />
+          <OfferStatus overlay availability={product.availability} stock={selected.variant?.stock} issue={selected.variant?.active ? undefined : 'unavailable'} />
+        </div>
         <div className="product-copy">
           <span className="product-brand">{product.brand_name || product.store_name}</span>
           <h3>{catalogText(product.title, product.is_demo, product.id)}</h3>
@@ -29,7 +32,6 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
             {!product.is_demo && price != null && product.compare_at_usd != null && product.compare_at_usd > price && <del>{money(product.compare_at_usd)}</del>}
           </div>
           {selected.conditionLabel && <span className="availability" data-testid="product-condition">{selected.conditionLabel}</span>}
-          {selected.variant?.stock != null && selected.variant.stock <= 0 ? <span className="availability">Esta opción está agotada</span> : product.availability !== 'available' && <span className="availability">{availability.label}</span>}
           {catalogSample(product.id, product.is_demo) && !localExhibition && <span className="availability">Producto de muestra</span>}
         </div>
       </Link>
@@ -42,6 +44,6 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
 }
 
 /** Metadata may omit a product that became hidden after the first catalogue read. */
-export function ProductGrid({ products, metadata }: { products: Product[]; metadata: Record<string, CatalogMetadata> }) {
-  return <div className="product-grid">{products.map((p, i) => metadata[p.id] ? <ProductCard key={p.id} product={p} metadata={metadata[p.id]!} priority={i < 6} /> : null)}</div>;
+export function ProductGrid({ products, metadata, eager = true }: { products: Product[]; metadata: Record<string, CatalogMetadata>; eager?: boolean }) {
+  return <div className="product-grid">{products.map((p, i) => metadata[p.id] ? <ProductCard key={p.id} product={p} metadata={metadata[p.id]!} priority={eager && i < 6} /> : null)}</div>;
 }

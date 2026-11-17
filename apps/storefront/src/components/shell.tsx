@@ -10,11 +10,14 @@ import { brand } from '@/lib/format';
 import { captureBuyerApi } from '@/lib/actor-api';
 import { useAccount } from '@/lib/providers';
 import { NotificationLink } from './notifications';
+import { MobileNavigation } from './mobile-navigation';
 import { BrandMark } from './brand-mark';
 import { useGuestCartState } from '@/lib/guest-hooks';
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
+  const product = pathname.startsWith('/p/');
+  const mobileNavigation = !product && !focused && !['/auth','/registro','/recuperar','/eliminar-cuenta'].some(route => pathname === route || pathname.startsWith(route + '/'));
   const { session, ready, cartSyncing } = useAccount();
   const guest = useGuestCartState();
   const cart = useQuery({
@@ -26,7 +29,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
     session ? cart.data?.groups.reduce((n, g) => n + g.lines.reduce((count, line) => count + line.quantity, 0), 0) ?? 0
       : ready ? guest.data.reduce((count, line) => count + line.quantity, 0) : 0;
   return (
-    <>
+    <div className={`app-shell${mobileNavigation ? ' app-shell-mobile' : ''}${product ? ' app-shell-product' : ''}`}>
       <a className="skip" href="#contenido">
         Ir al contenido
       </a>
@@ -37,9 +40,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
             <Search size={21} />
-            <Suspense fallback={<input type="search" name="q" aria-label="Buscar productos" placeholder="Buscar productos" />}>
-              <HeaderSearchInput />
-            </Suspense>
+            <Suspense fallback={<input type="search" name="q" aria-label="Buscar productos" placeholder="Buscar productos" />}><HeaderSearchInput /></Suspense>
             <button type="submit" aria-label="Buscar">
               <ArrowUpRight size={20} />
             </button>
@@ -50,13 +51,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
               <span>Favoritos</span>
             </Link>
             <NotificationLink />
-            <Link prefetch={false} href="/cuenta" aria-label={session ? 'Mi cuenta' : 'Ingresar'}>
+            <Link prefetch={false} href="/cuenta" className="header-account" aria-label={session ? 'Mi cuenta' : 'Ingresar'}>
               <UserRound size={21} />
               <span>{session ? 'Mi cuenta' : 'Ingresar'}</span>
             </Link>
             <Link
               prefetch={false}
               href="/carrito"
+              className="header-cart"
               aria-label={`Carrito${(session ? !!cart.data : ready && guest.ready && !guest.error) ? `, ${cartUnits} ${cartUnits === 1 ? 'unidad' : 'unidades'}` : ''}`}
             >
               <ShoppingBag size={21} />
@@ -75,27 +77,21 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <BrandMark />
         </Link>
         <p>{brand.tagline}</p>
-        <nav className="legal-links" aria-label="Información de Mayami">
-          <Link prefetch={false} href="/terminos">
-            Términos
-          </Link>
-          <Link prefetch={false} href="/privacidad">
-            Privacidad
-          </Link>
-          <Link prefetch={false} href="/eliminar-cuenta">
-            Eliminar cuenta
-          </Link>
-          <Link prefetch={false} href="/devoluciones">
-            Devoluciones
-          </Link>
-          <Link prefetch={false} href="/contacto">
-            Contacto
-          </Link>
-        </nav>
+        <div className="footer-links">
+          <nav aria-label="Información legal"><h2>Legal</h2>
+            <Link prefetch={false} href="/terminos">Términos</Link>
+            <Link prefetch={false} href="/privacidad">Privacidad</Link>
+          </nav>
+          <nav aria-label="Atención al cliente"><h2>Ayuda</h2>
+            <Link prefetch={false} href="/devoluciones">Devoluciones</Link>
+            <Link prefetch={false} href="/contacto">Contacto</Link>
+          </nav>
+        </div>
         <Link prefetch={false} href="/buscar">
           Explorar el catálogo <ArrowUpRight size={16} />
         </Link>
       </footer>
-    </>
+      {mobileNavigation && <MobileNavigation pathname={pathname} cartUnits={cartUnits} cartKnown={session ? !!cart.data && !cartSyncing : ready && guest.ready && !guest.error} />}
+    </div>
   );
 }

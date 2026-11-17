@@ -1,5 +1,5 @@
 import type { Claim, Fulfillment, FulfillmentEvent, FulfillmentStep, MyReview, OrderItem } from '@kora/api';
-import { D, describeEtaDates, formatMoney, formatRate, formatUSD, productConditionLabel, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency } from '@kora/core';
+import { D, describeEtaDates, formatOfferPrice, formatRate, productConditionLabel, OBLIGATION_KIND_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, type Currency, variantDisplayTitle } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
@@ -96,11 +96,11 @@ export default function OrderScreen() {
       {/* payments */}
       <Card style={{ gap: 10 }}>
         <Text variant="title">Pagos</Text>
-        <SummaryRow label="Total" value={formatUSD(o.total_usd)} />
-        {Number(o.refunded_usd) > 0 ? <SummaryRow label={voided ? 'Anulado al cancelar' : 'Reembolsado'} value={`− ${formatUSD(o.refunded_usd)}`} /> : null}
-        <SummaryRow label="Pagado y confirmado" value={formatUSD(o.paid_usd)} />
+        <SummaryRow label="Total" value={formatOfferPrice(o.total_usd)} />
+        {Number(o.refunded_usd) > 0 ? <SummaryRow label={voided ? 'Anulado al cancelar' : 'Reembolsado'} value={`− ${formatOfferPrice(o.refunded_usd)}`} /> : null}
+        <SummaryRow label="Pagado y confirmado" value={formatOfferPrice(o.paid_usd)} />
         <Divider />
-        <SummaryRow label="Saldo pendiente" value={formatUSD(outstanding.isNegative() ? 0 : outstanding)} strong testID="order-outstanding" />
+        <SummaryRow label="Saldo pendiente" value={formatOfferPrice(outstanding.isNegative() ? 0 : outstanding)} strong testID="order-outstanding" />
         {o.payment_obligations.length > 1 ? (
           <View style={{ gap: 8, marginTop: 4 }}>
             {o.payment_obligations.map((x) => (
@@ -109,7 +109,7 @@ export default function OrderScreen() {
                 <Text variant="bodySmall" style={{ flex: 1 }}>
                   {OBLIGATION_KIND_LABEL[x.kind]}{x.kind === 'installment' ? ` ${x.seq}` : ''}{x.due_date ? ` · ${shortDate(x.due_date)}` : ''}
                 </Text>
-                <Text variant="label" tabular>{formatUSD(x.amount_usd)}</Text>
+                <Text variant="label" tabular>{formatOfferPrice(x.amount_usd)}</Text>
               </View>
             ))}
           </View>
@@ -118,11 +118,11 @@ export default function OrderScreen() {
         {o.payments.map((p) => (
           <View key={p.id} style={{ gap: 2 }} testID={`payment-${p.number}`}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 8 }}>
-              <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.number} · {formatMoney(p.amount, p.currency as Currency)}</Text>
+              <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{p.number} · {formatOfferPrice(p.amount, p.currency as Currency)}</Text>
               <Badge label={PAYMENT_RECORD_LABEL[p.status] ?? p.status} tone={paymentRecordTone(p.status)} />
             </View>
             <Text variant="caption" color="textMuted">
-              {shortDateTime(p.created_at)}{p.currency === 'VES' && p.rate_applied ? ` · ${formatRate(p.rate_applied)}` : ''}{p.usd_recognized ? ` · acreditado ${formatUSD(p.usd_recognized)}` : ''}
+              {shortDateTime(p.created_at)}{p.currency === 'VES' && p.rate_applied ? ` · ${formatRate(p.rate_applied)}` : ''}{p.usd_recognized ? ` · acreditado ${formatOfferPrice(p.usd_recognized)}` : ''}
             </Text>
             {p.rejection_reason ? <Text variant="caption" color="danger">{p.rejection_reason}</Text> : null}
           </View>
@@ -235,9 +235,9 @@ function FulfillmentCard({ f, index, total, items, steps, reviews, onReview, cla
               <View style={{ flex: 1, gap: 2 }}>
                 <Text variant="bodySmall" numberOfLines={2}>{it.title}</Text>
                 {productConditionLabel(it.product_condition)?<Text variant="caption">{productConditionLabel(it.product_condition)}</Text>:null}
-                <Text variant="caption" color="textMuted">{it.variant_title ? `${it.variant_title} · ` : ''}{it.quantity} × {formatUSD(it.unit_price_usd)}</Text>
+                <Text variant="caption" color="textMuted">{variantDisplayTitle(it.variant_title) ? `${variantDisplayTitle(it.variant_title)} · ` : ''}{it.quantity} × {formatOfferPrice(it.unit_price_usd)}</Text>
                 {it.refunded_qty > 0 ? (
-                  <Text variant="caption" color={voided ? 'textMuted' : 'info'}>{voided ? 'Cancelado' : `Reembolsado: ${it.refunded_qty} (${formatUSD(it.refunded_usd)})`}</Text>
+                  <Text variant="caption" color={voided ? 'textMuted' : 'info'}>{voided ? 'Cancelado' : `Reembolsado: ${it.refunded_qty} (${formatOfferPrice(it.refunded_usd)})`}</Text>
                 ) : null}
                 {review ? (
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>

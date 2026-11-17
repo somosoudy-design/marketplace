@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-11-09T18:19:08.532Z",
+  "results": [
+    "staff filters, server pagination and actor key",
+    "gateoff separates new reply moderation from existing review moderation",
+    "explicit current acceptance precedes reply",
+    "reply failure preserves draft and explicit retry",
+    "late reply completion produces no stale actor UI effects",
+    "restoring reply uses separate RPC",
+    "changed content cannot hide; uncertain resolution retries the same decision",
+    "cancel before sending a reply or decision performs no writes",
+    "gateoff queue decision stays disabled and handler performs zero writes",
+    "real panel useUgc + owner store/run fence reject batched A to B to A late reply without toast or invalidation",
+    "real MutationObserver double-click/cancel latch for reply",
+    "real MutationObserver double-click/cancel latch for moderate",
+    "real MutationObserver double-click/cancel latch for resolve",
+    "real owner mismatch fails closed: no cached A row, state, dialog or enabled action under B"
+  ],
+  "success": true,
+  "loadedSourceHashes": {
+    "apps/admin/src/components/Reviews.tsx": "7d813a317e2327cd8226795e6003849f2a0a2d88efb65bb3982f082a7f0265ac",
+    "apps/admin/src/components/UgcReports.tsx": "ce2405fdb688e9aeec7137661ec5cc469f0a1033c0541c69182037b3e73507a8",
+    "packages/api/src/ugc-state.ts": "355016f30c43b1ad6c270897a9d36168fc1c1e1c9e8d81fc40f88a0adff6c52b",
+    "apps/admin/src/lib/ugc-owner.ts": "feabd2c705a2992afd093232f304e6f2da8662ec40c2671712b8e6648b255cce",
+    "apps/admin/src/lib/ugc.ts": "5aebae034ef0b139f847b4a85a75b9333bb936598a3084c05295b22be7c7695a"
+  },
+  "limits": [
+    "Actual integrated TSX bodies; query/API/UI/hook ports controlled for nine groups. Two groups execute real panel useUgc/owner store/run fence; three groups use real MutationObserver with deliberately stale pre-render snapshots, captured-auth/React/query/UI ports remain controlled.",
+    "No rendering, browser/device, SQL, network, persistence or Play claim."
+  ],
+  "hookHashes": {
+    "packages/api/src/ugc-state.ts": "355016f30c43b1ad6c270897a9d36168fc1c1e1c9e8d81fc40f88a0adff6c52b",
+    "apps/admin/src/lib/ugc-owner.ts": "feabd2c705a2992afd093232f304e6f2da8662ec40c2671712b8e6648b255cce",
+    "apps/admin/src/lib/ugc.ts": "5aebae034ef0b139f847b4a85a75b9333bb936598a3084c05295b22be7c7695a"
+  },
+  "hashes": {
+    "Reviews.tsx": "7d813a317e2327cd8226795e6003849f2a0a2d88efb65bb3982f082a7f0265ac",
+    "UgcReports.tsx": "ce2405fdb688e9aeec7137661ec5cc469f0a1033c0541c69182037b3e73507a8"
+  }
+}

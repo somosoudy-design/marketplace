@@ -1,12 +1,12 @@
 'use client';
-import { emailWebCallbackUrl } from '@kora/api';
-import { env } from '@/lib/env';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { signUpSchema, toAppError } from '@kora/core';
 import { browser } from '@/lib/browser';
+import { emailWebCallbackUrl } from '@kora/api';
+import { env } from '@/lib/env';
 import { ArrowRight } from 'lucide-react';
 import { AccessHeading, AccessPassword, BuyerAccess } from '@/components/buyer-access';
 import { GoogleAccessButton } from '@/components/google-access-button';

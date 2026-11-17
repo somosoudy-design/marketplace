@@ -1,4 +1,5 @@
 'use client';
+import { variantDisplayTitle } from '@kora/core';
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { guestCart } from '@/lib/guest-storage';
@@ -34,7 +35,7 @@ export function PendingCartMerge() {
   return <div className="wrap"><section className="notice error" data-testid="cart-sync-pending">
     <h2>Productos por incorporar</h2><p role="alert">{cartSyncError}</p>
     {pending.isError && <p role="alert">{pending.error.message}</p>}
-    {pending.data?.lines.map(line => <div key={line.variant_id}><p>{typeof line.title === 'string' ? line.title : 'Producto guardado'}{typeof line.variant_title === 'string' && line.variant_title ? ` · ${line.variant_title}` : ''} · {line.quantity}</p><button type="button" className="text-button" disabled={busy || cartSyncing} onClick={() => setRemove(line.variant_id)}>Quitar de estos productos</button></div>)}
+    {pending.data?.lines.map(line => <div key={line.variant_id}><p>{typeof line.title === 'string' ? line.title : 'Producto guardado'}{typeof line.variant_title === 'string' && variantDisplayTitle(line.variant_title) ? ` · ${variantDisplayTitle(line.variant_title)}` : ''} · {line.quantity}</p><button type="button" className="text-button" disabled={busy || cartSyncing} onClick={() => setRemove(line.variant_id)}>Quitar de estos productos</button></div>)}
     {remove && <div className="remove-confirm"><p>Primero comprobaremos la incorporación anterior. Si ya se completó, actualizaremos tu carrito para que revises su cantidad.</p><button type="button" disabled={busy} onClick={() => setRemove(null)}>Conservar</button><button type="button" disabled={busy} onClick={() => void reconcile()}>Quitar</button></div>}
     {failure && <p role="alert">{failure}</p>}
     <button type="button" className="button secondary" disabled={busy || cartSyncing} onClick={retryCartSync}>Reintentar incorporación</button>

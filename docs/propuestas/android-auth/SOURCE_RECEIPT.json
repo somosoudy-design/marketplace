@@ -1,0 +1,32 @@
+{
+  "base": "bb3de95871419ac35afb213067d02c9e6cd02835",
+  "source": "39ffbee1e9bfbaaaba771da35bfa1479bf6044ce",
+  "tree": "46ec34e446545efab5e1e78b6d5e468e8054faad",
+  "changedFiles": [
+    "apps/mobile/src/app/auth-callback.tsx",
+    "apps/mobile/src/app/reset-password.tsx",
+    "apps/mobile/src/lib/auth-link.ts",
+    "apps/mobile/src/lib/supabase.ts",
+    "tools/auth/android-auth-boundary.test.mjs"
+  ],
+  "runtimeFileCount": 4,
+  "testFileCount": 1,
+  "patchSha256": "154c39cc20019db31b660b5b96d7369c0557166b0dda1da9a45bf85dd1c6043c",
+  "bundleSha256": "745c624d542881c30f1d6f28c5ca7ac4ca48e3b3727373e657c897ae99d2f0e9",
+  "filesSha256": {
+    "apps/mobile/src/app/auth-callback.tsx": "ef568faa7b3a597eeaa07c42006cd7195c3025279ed184d912045ddbe70da115",
+    "apps/mobile/src/app/reset-password.tsx": "926dfdc1b67482707162bc84c9b04133ff2c8ebda33c458301f503aa8e079315",
+    "apps/mobile/src/lib/auth-link.ts": "f0dfbb778f9399aaf872692f1966ddddef701f1209c714e409184263d9dd0062",
+    "apps/mobile/src/lib/supabase.ts": "f1a76c0fac204e664c9dcd9ecd062ca2c447f6a111d8b9988899b3bf1957fde1",
+    "tools/auth/android-auth-boundary.test.mjs": "deedef6468348d119b2b1cf733fc942fa188f1cffdabb07c8469aacab8dcbbc6"
+  },
+  "allOtherBlobsUnchanged": true,
+  "googleOrInstallmentOrNativeConfigOrLegalChanges": false,
+  "oldAabUpdated": false,
+  "newBuildOrPublication": false,
+  "newSignature": false,
+  "focalTestsPassed": 9,
+  "physicalDeviceTested": false,
+  "hostedOtpVisibleVerified": false,
+  "candidateDecision": "Local source boundary corrected; NOT a final Play candidate until hosted OTP delivery/device validation and a separately authorized fresh binary"
+}

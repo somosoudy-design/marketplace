@@ -22,11 +22,20 @@ export function safeReturnPath(input: string | null | undefined, fallback = '/cu
 export function authHref(path: '/cuenta' | '/registro' | '/recuperar', back: string) {
   return `${path}?volver=${encodeURIComponent(safeReturnPath(back))}`;
 }
+const guestPages = new Set([
+  '/', '/buscar', '/carrito', '/contacto', '/devoluciones', '/eliminar-cuenta',
+  '/favoritos', '/privacidad', '/terminos',
+]);
+
 export function guestReturnPath(back: string) {
   const safe = safeReturnPath(back);
-  const pathname = new URL(safe, base).pathname;
-  if (pathname === '/cuenta') return '/buscar';
-  return pathname === '/checkout' ? withPlan('/carrito', planFromSearch(new URL(safe, base).searchParams)) : safe;
+  const url = new URL(safe, base);
+  const pathname = url.pathname.replace(/\/$/, '') || '/';
+  if (pathname === '/checkout') return withPlan('/carrito', planFromSearch(url.searchParams));
+  if (guestPages.has(pathname)) return safe;
+  const slug = /^\/(?:p|tienda)\/([^/]+)$/.exec(pathname)?.[1];
+  if (slug && /^[\p{L}\p{N}\p{M}._~-]+$/u.test(decodeURIComponent(slug))) return safe;
+  return '/buscar';
 }
 export function callbackPath(back: string, recovery = false) {
   const params = new URLSearchParams({ volver: safeReturnPath(back) });

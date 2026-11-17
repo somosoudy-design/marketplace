@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 17 noviembre 2026 · Codex · Sistema de experiencia y oferta local
+
+Se integraron la presentación web vigente, el nuevo panel comercial y los contratos comunes en web, app y administración. La revisión conservó la compra invitada, selección de variante, planes ofrecidos y retorno autenticado. Se corrigieron cantidades tras cambios de stock, estado pendiente del carrito y confirmación de copiado. Pasaron tipos, lint, compilación web, export Expo, suites funcionales y recorridos visuales. La entrega local, fuentes, capturas y límites de validación se registran en [Adopción UI/UX](ADOPCION_UI_UX_2026-11-17.md). La publicación corresponde al siguiente encargo.
+
 ## 17 noviembre 2026 · Codex · Catálogo y orden de precios publicados
 
 Se integró la corrección local del catálogo con la versión que ya servía el acceso de compradores. La primera fila subió de 402 a 255 px en la candidata a 1703 px de ancho. Pasaron 121 pruebas web, dos recorridos de escritorio y móvil (incluido móvil sin JavaScript), seis pruebas SQL y las verificaciones de compilación. En producción, el rango USD 25–49 devolvió los diez resultados esperados y Cargadores se ordenó 27–49 y 49–27. La función conserva sus permisos y su ejecución con los privilegios del usuario.
@@ -11,6 +15,48 @@ Publicación de la web de compradores y actualización de la APK compatible. Se 
 ## 17 noviembre 2026 · Codex · Acceso Google y correo de Mayami
 
 Se publicaron acceso y registro en la web y APK, con retorno correlacionado, protección de cuentas antiguas y correos de marca con código de ocho dígitos. Se comprobó entrega externa en Gmail. La cancelación observada en el servidor real incluía un marcador vacío específico de Supabase. Se corrigió, se volvió a publicar y se verificó el reintento en la web oficial. Después se completaron el registro y el segundo ingreso de una cuenta real autorizada, con persistencia, retorno al checkout y una sola identidad en el servidor. [Publicación y pruebas](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
+
+## 2026-11-09 — cierre local UGC2 con fuente y evidencia recuperables
+
+Fuente aislada `737839c939d8fc5a69be5027c868ae6c2da88876`, árbol `ba0cc9ef2d85e65b01d6943e3189702cee21e5a1`, sobre207c489. Implementados controles móviles de denuncia/bloqueo/reversión y consentimiento; panel con lectura staff paginada, cola y moderación separada; aislamiento por actor y saneo quirúrgico de caché/avisos. Nueva migraciónB2 SHA `754894b55a22d2cf93b1a093740f4ebfe6b8a576748eba3200a68f3a08ffb2e2`; B1 permanece intacta. No se integró código al HEAD compartido.
+
+Pruebas finales:29grupos PG/REST,7móvil,14panel,16cliente/caché/actor,9auth y6delta SQL PASS; tipos API/móvil/panel/DB y lint pertinentes PASS. Son pruebas locales con puertos controlados donde se indica: no certifican DOM, capturas, Android físico, Auth hospedado ni aceptación de Google. Privilegios generales4/5 por diferencia preexistente favorites_merge_intent, documentada sin relajar allowlist. Procesos detenidos; vc3 intacto por hash.
+
+Trabajo en curso: ninguno de implementación de bloque2. Próxima acción delimitada: preflight hospedado de lectura y revisión específica de preparación+snapshot; después clientes compatibles y revisión visual/nativa; activación requiere su propia verificación/aprobación. Las dos fases están materializadas y probadas sólo con fixtures locales. No aplicar toda la rama, ni activar con clientes antiguos sin consentimiento. Sin SQL hospedado, gate, build/OTA/panel/web/Play, cargos ni credenciales externas nuevas. Paquete420233bytes SHA `859bd8c8…51ccc0` enDescargas. [Fuente, entrega, pruebas, delta y límites](UGC_BLOQUE2_LOCAL_2026-11-09.md).
+
+## UGC bloque1 implementado sólo local, desactivado · 9nov2026
+
+Fuente aislada `207c489e198f2c78035526c3c95be5cd8f8c4ea7` sobre39ff, árbol1cf89fc9; no integra HEAD principal. Persistencia privada, consentimiento, diezRPC acotadas, denuncias idempotentes, bloqueo user/tienda reversible, moderación separada de respuesta y avisos/REST seguros preparados. Migración SHA `c94d0794…d8c97`; gatefalse preserva panel anterior. Activación sólo plantilla local, nunca aplicada hospedada.
+
+19gruposPG/REST +4concurrencia/ACL +3contratos PASS; tipos API/móvil/admin/DB ylintmóvil PASS, advisors local results[]. Privilegioslegacy4/5: falta preexistente favorites_merge_intent enallowlist, documentada sin relajarla; UGC exacto sí pasa. Revisión focal independiente conforme. NoAuthSDK/dispositivo/caché vieja/Play. Procesos locales cerrados yvc3conservado porhash.
+
+Trabajo en curso: ninguno de bloque1. Siguiente bloque: accionesUI yaceptación enapp/panel, lecturaoperativa/cola/moderación compatibles, caché poractor ypurga/reconciliación UGC antesactivar. No aplicar SQL/permisos hospedados sinaprobación específica, nopublicarHEADcombinado nirecompilar. Paquete completoconpatch/bundle/evidencias enDescargas. [Resultado,hashes,pruebasylímites](UGC_BLOQUE1_LOCAL_2026-11-09.md).
+
+## 2026-11-09 — diagnóstico UGC acotado, sin implementar ni publicar
+
+Fuente aislada39ffbee/árbol46ec intacta. Falta denunciar reseña/respuesta/autor, bloquear/desbloquear con persistencia y aceptación UGC previa. Sí hay compra verificada y moderación admin. REST permite otra lectura pública; avisos guardan extractos; moderación actual no separa respuesta de reseña legítima. Atribución histórica sólo a tienda, sin inventar empleado.
+
+Se cerró diagnóstico y propuesta mínima antes de ampliar, como ordena esta tanda si el alcance crece: backend/ACL/lecturas/avisos, app+aceptación/editor/cola mínimos del panel y pruebas/despliegue posterior. **No hay corrección implementada ni migración preparada/aplicada**. Tres caracterizaciones TSX offline reproducen dos huecos y recuperación existente; cinco tests de enlaces legales pasan. No acreditan autorización/aislamiento/undo SQL aún inexistentes. Revisión independiente conforme con esos límites.
+
+Trabajo en curso: ninguno de esta tanda. Próxima acción concreta: delimitar primer bloque local de persistencia/contratos/ACL, identidad pública de respuesta y cluster nuevo fixture-only; conservar guarda de despliegue remoto. No clonar DB de procedencia mixta ni publicar HEAD combinado. Vc3 previo conserva hash eb824373…70f23, no contiene estos futuros controles y sigue sin subida desde este frente. Sin SQL remoto, navegador, build/OTA/web/Play o cargos; cuota31%restante, sin reserva20% ni resets. [Diagnóstico, evidencia y plan exacto](UGC_PLAY_DIAGNOSTICO_2026-11-09.md).
+
+## 2026-11-09 — AAB de prueba 39ff terminado y validado
+
+Único build `e25d3cdf-4652-462c-9cc1-16723c1739e0` FINISHED desde la fuente aislada limpia `39ffbee1e9bfbaaaba771da35bfa1479bf6044ce`, sin reconstruir ni mezclar HEAD compartido. Entrega: `/Users/brandeastudio/Downloads/Mayami-AAB-Prueba-2026-11-09/MAYAMI-0.1.0-vc3.aab`, 86.911.369 bytes, SHA256 `eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23`. Paquete `app.mayami.marketplace`, versión 0.1.0 / vc3, target36/min24, runtime b6cc conservado.
+
+Bundletool validate, CRC, firma de los 1546 payloads y 52 ELF64 LOAD/RELRO de 16 KB aprobados con las herramientas existentes. Empaquetado PAGE_ALIGNMENT_16K. Recibos ligan las cinco salidas al hash del AAB y exigen exit0; no se creó APK derivado. Free/coste observado0, Android3/15 y claves de upload/preview intactas. Una invocación con --freeze-credentials, sin nuevas credenciales ni exportación.
+
+Trabajo en curso: ninguno de esta tanda; entrega revisada de forma independiente, sin bloqueantes. Próxima acción externa: validar en dispositivo real y completar correo/OTP hospedado y cuenta de revisión con la coordinación; no relanzar el build ni publicar HEAD combinado. Este AAB es de prueba, no candidato público final. Sin Play/OTA/web, Google/cuotas remotas ni usuarios. Cuota final32% restante; parada20%, sin resets/créditos. [Registro y evidencia](AAB_PRUEBA_AUTH_2026-11-09.md).
+
+## 2026-11-09 — enlaces Android aislados sin adopción de sesión
+
+Fuente39ffbee1 sobre la exacta del AABbb3de958:4fuentes+1regresión, OTP-only para admisiónURL. Ningún enlace, callbackvacío, replay o cambioURL inicia/confirma sesión; B se conserva. SDKauto-detect apagado también enExpoWeb. Password, registro con/sin confirmación, OTPsignup/recovery y guardado explícito de contraseña conservados en9casos finales conSDK/Provider/forms reales y puertos controlados; tipos/lintPASS. No se activaGoogle/cuotas ni cambia identidad/config/firma/legal.
+
+Tanda terminada localmente, sin nuevo binario ni publicación. El AAB anterior no contiene el arreglo y no se trata como final. La nueva fuente NO es aún candidato final: falta acreditarOTPvisible hospedado y validar en dispositivo; después decidir/autorizar el nuevoAAB desde esta fuente fijada, sin publicar HEAD combinado. Enlaces antiguos/cross-device requieren login o código nuevo; leer código en otro dispositivo y escribirlo en app se conserva. Cuota inicial36%, durante verificación35%; parada20%sin resets. [Fuente, patch, pruebas y condición de correo](ANDROID_AUTH_ENLACES_2026-11-09.md).
+
+## 2026-11-08 — cierre acotado de seguridad sin más ejecuciones
+
+Coordinación revisó2a54917 y ordenó cerrar con9regresiones/21focales, escaneo limitado y guarda de7cuentas. Dos ensayos privados no ejecutados; no reconstruir/copiar esquema, repetir pruebas o cambiar remotos. El arreglo sigue sólo en fuente. Se registra este cierre documental local sinpush, por la acotación más reciente; evidencia y hashes previos conservados. [Informe](SEGURIDAD_FOCAL_2026-11-08.md).
 
 ## 2026-11-08 — checkpoint de seguridad focal y login-CSRF local
 

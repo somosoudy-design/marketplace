@@ -51,7 +51,7 @@ function Account() {
     return (
       <section className="state">
         <h1>Conexión pendiente</h1>
-        <p>Falta configurar el backend del sitio.</p>
+        <p>El acceso a tu cuenta no está disponible en este momento. Vuelve a intentarlo más tarde.</p>
       </section>
     );
   if (!ready)
@@ -113,6 +113,10 @@ function Account() {
             <ArrowRight />
           </Link>
         </div>
+        <section className="profile-management" aria-label="Perfil">
+          <h2>Perfil</h2>
+          <Link prefetch={false} href="/eliminar-cuenta">Eliminar cuenta</Link>
+        </section>
         <button className="button secondary" disabled={logout.isPending} onClick={() => logout.mutate()}>
           <LogOut size={17} />
           {logout.isPending ? 'Cerrando sesión…' : 'Cerrar sesión'}

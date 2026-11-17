@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { CatalogMetadata, ProductCard } from '@kora/api';
-import { bannerTitle, presentAvailability, resolveProductSelection } from '@kora/core';
+import { bannerTitle, presentAvailability, resolveProductSelection, variantDisplayTitle } from '@kora/core';
 import { reviewedSelectionInput } from '@/lib/catalog-selection';
 import { money } from '@/lib/format';
 import { ProductPhoto } from './photo';
+import './product-spotlight.css';
 
 /** Server-rendered merchandise, with one selected variant supplying price, photograph and destination. */
-export function ProductBanner({ products, metadata }: { products: ProductCard[]; metadata: Record<string, CatalogMetadata> }) {
+export function selectBannerProduct(products: ProductCard[], metadata: Record<string, CatalogMetadata>, previousCategory?: string | null) {
   const candidates = products.flatMap(product => {
     const details = metadata[product.id];
     if (!details) return [];
@@ -15,24 +16,39 @@ export function ProductBanner({ products, metadata }: { products: ProductCard[];
     const selection = resolveProductSelection(input);
     const path = selection.cover?.path ?? (selection.mediaState === 'unclassified' ? details.general_images?.[0]?.path : null);
     if (!selection.variant || !selection.canBuy || selection.price_usd == null || !path) return [];
-    return [{ product, selection, path, single: input.variants.filter(v => v.active).length === 1 }];
+    const selectedMetadata = details.variants.find(v => v.variant_id === selection.selectedVariantId);
+    const option = variantDisplayTitle(selectedMetadata?.title, selectedMetadata?.options);
+    return [{ product, selection, path, option, single: input.variants.filter(v => v.active).length === 1 }];
   });
-  const chosen = candidates.find(candidate => candidate.single) ?? candidates[0];
-  if (!chosen) return <section className="market-hero market-banner-empty" aria-label="Descubre Mayami"><div className="market-hero-copy"><span className="eyebrow">DESCUBRE MAYAMI</span><h1>Encuentra lo que va contigo</h1><Link prefetch={false} className="button" href="/buscar">Explorar catálogo <ArrowRight size={18} /></Link></div></section>;
-  const { product, selection, path } = chosen;
-  return <section className="market-hero market-product-hero" aria-label="Descubre Mayami" data-testid="storefront-product-banner">
-    <Link prefetch={false} className="market-banner-link" href={`/p/${product.slug}?variant=${encodeURIComponent(selection.selectedVariantId!)}`} aria-label={`${product.title}, ${money(selection.price_usd!)}, ver producto`}>
-      <div className="market-banner-media" aria-hidden="true">
-        <div className="market-banner-stage"><span className="market-banner-floor" /><ProductPhoto id={product.id} path={path} demo={product.is_demo} variant={selection.selectedVariantId!} exact title="" priority /></div>
-      </div>
-      <div className="market-hero-copy">
-        <span className="eyebrow">DESCUBRE MAYAMI</span>
-        <h1 data-testid="banner-product-title">{bannerTitle(product.title)}</h1>
-        {selection.mediaState === 'assigned' && !chosen.single && <span className="market-banner-option">{metadata[product.id]?.variants.find(v => v.variant_id === selection.selectedVariantId)?.title}</span>}
-        <strong className="market-banner-price" data-testid="banner-product-price">{money(selection.price_usd!)}</strong>
-        <p className="market-banner-availability">{presentAvailability(product.availability).label}</p>
-        <span className="button">Ver producto <ArrowRight size={18} /></span>
-      </div>
-    </Link>
-  </section>;
+  const singles = candidates.filter(candidate => candidate.single);
+  const eligible = singles.length ? singles : candidates;
+  return eligible.find(({ product }) => product.category_slug !== previousCategory) ?? eligible[0];
+}
+type Spotlight = NonNullable<ReturnType<typeof selectBannerProduct>>;
+
+export function ProductBanner({ chosen }: { chosen: Spotlight }) {
+  const { product, selection, path, option, single } = chosen;
+  const variant = selection.selectedVariantId!;
+  const availability = presentAvailability(product.availability).label;
+  const price = money(selection.price_usd!);
+  return (
+    <article className="feed-highlight" data-testid="storefront-product-banner">
+      <Link prefetch={false} className="feed-highlight-link"
+        href={`/p/${product.slug}?variant=${encodeURIComponent(variant)}`}>
+        <div className="feed-highlight-photo" aria-hidden="true">
+          <ProductPhoto id={product.id} path={path} demo={product.is_demo} variant={variant} exact title="" />
+        </div>
+        <div className="feed-highlight-name">
+          <h2 data-testid="banner-product-title" title={product.title}>{bannerTitle(product.title)}</h2>
+          {option && <span className="feed-highlight-option">{option}</span>}
+          {!single && selection.mediaState === 'unclassified' && <small>Foto general</small>}
+        </div>
+        <div className="feed-highlight-details">
+          <strong data-testid="banner-product-price">{price}</strong>
+          <span>{availability}</span>
+        </div>
+        <span className="feed-highlight-action"><span>Ver producto</span><ArrowRight size={18} aria-hidden="true" /></span>
+      </Link>
+    </article>
+  );
 }

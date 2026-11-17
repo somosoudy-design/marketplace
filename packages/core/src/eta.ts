@@ -1,3 +1,5 @@
+import type { Availability } from './availability';
+
 const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'];
 
 function addDays(d: Date, n: number) {
@@ -19,6 +21,31 @@ export function describeEtaDates(min: string | Date, max: string | Date): string
   const [da, ma] = a.split(' ');
   const [db, mb] = b.split(' ');
   return ma === mb ? `Llega entre el ${da} y el ${db} ${mb} (estimado)` : `Llega entre el ${a} y el ${b} (estimado)`;
+}
+
+/** Stage before carrier transit for a purchasable storefront selection. */
+export function describeDispatchStage(
+  availability: Availability,
+  minDays: number | null | undefined,
+  maxDays: number | null | undefined,
+): string | null {
+  if (minDays == null || maxDays == null || !Number.isSafeInteger(minDays) ||
+      !Number.isSafeInteger(maxDays) || minDays < 0 || maxDays < minDays) return null;
+
+  const range = minDays === maxDays
+    ? `${maxDays} ${maxDays === 1 ? 'día' : 'días'}`
+    : `${minDays}–${maxDays} días`;
+  switch (availability) {
+    case 'available':
+    case 'on_order':
+      return `Listo para despacho en ${range} (estimado)`;
+    case 'reservable':
+      return `Próximo lote estimado en ${range}`;
+    case 'in_transit':
+      return `Disponibilidad estimada en ${range}`;
+    default:
+      return null;
+  }
 }
 
 /** For product pages (ready time before shipping, from lead_time rules). */

@@ -1,0 +1,101 @@
+{
+  "startedAt": "2026-11-09T17:38:56.227Z",
+  "base": "39ffbee1e9bfbaaaba771da35bfa1479bf6044ce",
+  "sourceHead": "cc4764da6747e08dbf4607d45d88fbb5baec3e19",
+  "migrationSha256": "c94d0794e6b2a1954bbcc710900cb8af61c17031f537935697bd5dc34c9d8c97",
+  "activationSha256": "d0115afc6e289619a3ba56ad954da58827d810fcce5e87a973c0d09c78cdfd4f",
+  "syntheticOnly": true,
+  "results": [
+    {
+      "name": "Gateoff preserves legacy staff reads and refuses pretend report/block",
+      "result": "PASS"
+    },
+    {
+      "name": "Consent is versioned, idempotent, actor-bound and refuses anon",
+      "result": "PASS"
+    },
+    {
+      "name": "Activation closes raw reply privileges before enabling controls",
+      "result": "PASS"
+    },
+    {
+      "name": "Private tables/helpers and anonymous writes inaccessible",
+      "result": "PASS"
+    },
+    {
+      "name": "Submit/reply require consent while delivery/ownership remain enforced",
+      "result": "PASS"
+    },
+    {
+      "name": "Public projections expose no human UUID",
+      "result": "PASS"
+    },
+    {
+      "name": "Four report targets are private/idempotent and do not alter reputation",
+      "result": "PASS"
+    },
+    {
+      "name": "Absent/invalid/own/spoofed report subjects rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "Reviewer block is private to A, filters before paging, and keeps score global",
+      "result": "PASS"
+    },
+    {
+      "name": "REST closes replies and blocked foreign rows; six own columns stay readable",
+      "result": "PASS"
+    },
+    {
+      "name": "Block ownership and reversal isolate A/B",
+      "result": "PASS"
+    },
+    {
+      "name": "Staff operational endpoint preserves role/store isolation after raw star closed",
+      "result": "PASS"
+    },
+    {
+      "name": "Store block hides only reply, preserving review/catalog/order and a legitimate claim",
+      "result": "PASS"
+    },
+    {
+      "name": "UGC notices generic/allowlisted, blocked new reply suppressed, transactional notices intact",
+      "result": "PASS"
+    },
+    {
+      "name": "Store unblock restores reply without changing legitimate review or claim",
+      "result": "PASS"
+    },
+    {
+      "name": "Reply-only moderation stays admin-only and hidden through seller edit",
+      "result": "PASS"
+    },
+    {
+      "name": "Real review moderation retains reason/audit and server-derived global rating",
+      "result": "PASS"
+    },
+    {
+      "name": "Nonexistent and banned actors refused, including identical stale seller reply",
+      "result": "PASS"
+    },
+    {
+      "name": "Closing actor removes own private data but preserves another actor block on that subject",
+      "result": "PASS"
+    }
+  ],
+  "limits": [
+    "Explicit auth SQL stand-in; no GoTrue login, email or real issuance.",
+    "Synthetic paid/delivered rows are not a financial purchase-flow test.",
+    "No app/device/cache renderer or ability to recall delivered push.",
+    "No hosted access, build, OTA, web or Play."
+  ],
+  "boundary": {
+    "db": "ugc_guard_final",
+    "host": "127.0.0.1",
+    "port": 56439,
+    "datadir": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/ugc-block1-20261109/cluster/data"
+  },
+  "success": true,
+  "completedAt": "2026-11-09T17:38:56.395Z",
+  "groupsPassed": 19
+}

@@ -191,7 +191,7 @@ export function Shell({ area, children }: { area: 'admin' | 'seller'; children: 
       <aside ref={sidebar} id="panel-navigation" role={open ? 'dialog' : undefined} aria-modal={open || undefined} aria-label={open ? 'Menú de navegación' : undefined} className={cx('fixed inset-y-0 left-0 z-40 flex w-[min(272px,calc(100vw_-_44px))] flex-col border-r border-line bg-surface px-3 py-5 transition-transform motion-reduce:transition-none lg:visible lg:sticky lg:top-0 lg:h-dvh lg:w-[264px] lg:translate-x-0', open ? 'translate-x-0' : 'invisible -translate-x-full')}>
         <div className="mb-6 flex items-center justify-between gap-1">
           <Link href="/" onClick={() => { if (open) closeMenu(); }} className="flex min-h-[44px] min-w-0 items-center gap-2.5 px-3">
-            <span>
+            <span className="flex min-w-0 flex-col items-start gap-0.5">
               <BrandMark />
               <span className="text-[12px] font-semibold text-ink-3">{area === 'admin' ? 'Administración' : 'Panel de vendedor'}</span>
             </span>

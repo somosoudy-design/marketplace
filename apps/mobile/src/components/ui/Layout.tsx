@@ -1,3 +1,4 @@
+import { quantityControlState } from '@kora/core';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { useTheme } from '@/theme';
 import { Icon } from './Icon';
@@ -49,13 +50,15 @@ export function ListRow({ icon, title, subtitle, value, onPress, danger, testID 
 
 export function Stepper({ value, min = 1, max, onChange, disabled }: { value: number; min?: number; max: number; onChange: (v: number) => void; disabled?: boolean }) {
   const { colors, radii, layout } = useTheme();
+  const quantity = quantityControlState(value, max, !disabled);
+  const canRemove = min === 0 && value === 1 && !disabled;
   const btn = (icon: 'minus' | 'plus', next: number, label: string, enabled: boolean) => (
     <ScalePressable
       accessibilityRole="button"
       accessibilityLabel={label}
       aria-disabled={!enabled}
       disabled={!enabled}
-      onPress={() => onChange(next)}
+      onPress={() => { if (enabled) onChange(next); }}
       hitSlop={6}
       style={{ width: layout.minTouch, height: layout.minTouch, alignItems: 'center', justifyContent: 'center', opacity: enabled ? 1 : 0.35 }}
     >
@@ -64,9 +67,9 @@ export function Stepper({ value, min = 1, max, onChange, disabled }: { value: nu
   );
   return (
     <View accessible={false} style={{ flexDirection: 'row', alignItems: 'center', borderRadius: radii.pill, borderWidth: 1, borderColor: colors.borderStrong, backgroundColor: colors.surface }}>
-      {btn('minus', value - 1, 'Disminuir cantidad', !disabled && value > min)}
+      {btn('minus', value - 1, 'Disminuir cantidad', (quantity.canDecrease && value > min) || canRemove)}
       <Text variant="label" tabular style={{ minWidth: 24, textAlign: 'center' }} accessibilityLabel={`Cantidad ${value}`}>{value}</Text>
-      {btn('plus', value + 1, 'Aumentar cantidad', !disabled && value < max)}
+      {btn('plus', value + 1, 'Aumentar cantidad', quantity.canIncrease)}
     </View>
   );
 }

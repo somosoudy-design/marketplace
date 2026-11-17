@@ -1,3 +1,4 @@
+import '@/components/product-detail.css';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { publicProduct, publicCatalogMetadata } from '@/lib/server';

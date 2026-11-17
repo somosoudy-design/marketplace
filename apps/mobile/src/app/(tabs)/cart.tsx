@@ -1,7 +1,7 @@
 import type { CartLine, DeliveryGroup } from '@kora/api';
-import { D, formatUSD, presentAvailability, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription } from '@kora/core';
-import { router, useLocalSearchParams, type Href } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { formatOfferPrice, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, variantDisplayTitle, presentOfferAvailability } from '@kora/core';
+import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductImage } from '@/components/catalog/ProductImage';
@@ -26,6 +26,9 @@ import { useCart, useGuestCartState, useHome, useSetCartQuantity } from '@/lib/h
 import { ImpressionScope, TrackedSection, useViewportTracking } from '@/lib/impressions';
 import { useTheme } from '@/theme';
 import { authTarget } from '@/lib/auth-navigation';
+import { useGuestCartCatalog } from '@/lib/catalog-selection';
+import { guestCartOffer } from '@/lib/guest-cart-view';
+import { useOnline } from '@/lib/query';
 
 const ISSUE_TEXT: Record<string, string> = {
   sold_out: 'Se agotó. Quítalo para continuar.',
@@ -142,7 +145,7 @@ function GroupCard({ group: g, index, total, onQty, onRemove, disabled }: { grou
         <Icon name={g.flow === 'import_order' ? 'plane' : g.flow === 'seller_shipping' ? 'store' : 'package'} size={18} color={t.colors.textSecondary} />
         <View style={{ flex: 1 }}>
           <Text variant="label">{g.store.name}</Text>
-          <Text variant="caption" color="textSecondary">{total > 1 ? `Entrega ${index + 1} · ` : ''}{g.label}{g.ready_max_days > 1 ? ` · ${g.ready_min_days}–${g.ready_max_days} días` : ''}</Text>
+          <Text variant="caption" color="textSecondary">{total > 1 ? `Entrega ${index + 1} · ` : ''}{g.label}{g.ready_max_days > 1 ? ` · Preparación estimada de ${g.ready_min_days}–${g.ready_max_days} días` : ''}</Text>
         </View>
       </View>
       {g.lines.map((l, i) => (
@@ -155,9 +158,9 @@ function GroupCard({ group: g, index, total, onQty, onRemove, disabled }: { grou
   );
 }
 
-function LineRow({ line: l, onQty, onRemove, disabled }: { line: CartLine; onQty: (variantId: string, q: number) => void; onRemove: () => void; disabled?: boolean }) {
+function LineRow({ line: l, onQty, onRemove, disabled, priceKnown = true, dispatchStage }: { line: CartLine; onQty: (variantId: string, q: number) => void; onRemove: () => void; disabled?: boolean; priceKnown?: boolean; dispatchStage?: string | null }) {
   const { width } = useWindowDimensions();
-  const a = presentAvailability(l.availability);
+  const a = presentOfferAvailability(l.availability, undefined, l.issue);
   return (
     <View style={{ gap: 8, padding: 12 }} testID={`cart-line-${l.variant_id}`}>
       <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
@@ -167,15 +170,19 @@ function LineRow({ line: l, onQty, onRemove, disabled }: { line: CartLine; onQty
         <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
           <Text variant="bodySmall" numberOfLines={2} style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
           {productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}
-          {l.variant_title ? <Text variant="caption" color="textSecondary">{l.variant_title}</Text> : null}
-          {l.quantity > 1 ? <Text variant="caption" color="textSecondary" tabular testID={`cart-unit-${l.variant_id}`}>{formatUSD(l.unit_price_usd)} por unidad</Text> : null}
-          {l.availability !== 'available' ? <Badge label={a.label} tone={a.tone} /> : null}
+          {variantDisplayTitle(l.variant_title) ? <Text variant="caption" color="textSecondary">{variantDisplayTitle(l.variant_title)}</Text> : null}
+          {l.quantity > 1 && priceKnown ? <Text variant="caption" color="textSecondary" tabular testID={`cart-unit-${l.variant_id}`}>{formatOfferPrice(l.unit_price_usd)} por unidad</Text> : null}
+          {!priceKnown ? <Text variant="caption" color="textSecondary">Disponibilidad pendiente de comprobar</Text> : l.availability !== 'available' || l.issue ? <Badge label={a.label} tone={a.tone} /> : null}
+          {dispatchStage ? <Text variant="caption" color="textSecondary">{dispatchStage}</Text> : null}
         </View>
       </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
-        <ChangingText value={formatUSD(l.line_total_usd)}><Text variant="price" tabular testID={`cart-item-total-${l.variant_id}`}>{formatUSD(l.line_total_usd)}</Text></ChangingText>
+        <View style={{ gap: 2 }}>
+          {l.quantity > 1 && priceKnown ? <Text variant="caption" color="textSecondary">Subtotal</Text> : null}
+          <ChangingText value={priceKnown ? formatOfferPrice(l.line_total_usd) : "pending"}><Text variant="price" tabular testID={`cart-item-total-${l.variant_id}`}>{priceKnown ? formatOfferPrice(l.line_total_usd) : "Precio pendiente"}</Text></ChangingText>
+        </View>
         <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-          <Stepper value={l.quantity} min={0} max={Math.max(l.max_quantity, l.quantity)} disabled={disabled} onChange={(q) => q === 0 ? onRemove() : onQty(l.variant_id, q)} />
+          <Stepper value={l.quantity} min={0} max={l.max_quantity} disabled={disabled} onChange={(q) => q === 0 ? onRemove() : onQty(l.variant_id, q)} />
           <IconButton testID={`cart-remove-${l.variant_id}`} icon="trash" label={`Quitar ${l.title}`} disabled={disabled} onPress={onRemove} />
         </View>
       </View>
@@ -210,6 +217,11 @@ function GuestCartView({ header, requestedPlan }: { header: React.ReactNode; req
   const t = useTheme();
   const guest = useGuestCartState();
   const lines = guest.data;
+  const current = useGuestCartCatalog(lines.map(line => line.product_id));
+  const online = useOnline();
+  const refetchOffers = current.refetch;
+  const hasLines = lines.length > 0;
+  useFocusEffect(useCallback(() => { if (hasLines) void refetchOffers(); }, [hasLines, refetchOffers]));
   const setQty = useSetCartQuantity();
   const [removing, setRemoving] = useState<GuestLine | null>(null);
   const [barHeight, setBarHeight] = useState(180);
@@ -220,44 +232,47 @@ function GuestCartView({ header, requestedPlan }: { header: React.ReactNode; req
       <EmptyCart header={header} body="Agrega productos y continúa cuando quieras. Al iniciar sesión los guardamos en tu cuenta." />
     );
   }
-  const subtotal = lines.reduce((s, l) => s.plus(D(l.price_usd).times(l.quantity)), D(0));
-  const units = lines.reduce((sum, line) => sum + line.quantity, 0);
+  const reliable = online && !current.isError && !current.isFetching && !!current.data;
+  const view = guestCartOffer(lines, current.data, reliable);
+  const checkoutBlocked = !reliable || setQty.isPending || view.issues > 0;
   return (
     <>
       <ScrollView testID="cart-scroll" contentContainerStyle={{ paddingBottom: barHeight + 24, width: '100%', maxWidth: MAX_CONTENT, alignSelf: 'center' }}>
         {header}
         <View style={{ paddingHorizontal: 16, gap: 16 }}>
-          <Text variant="bodySmall" color="textSecondary" testID="cart-deliveries">{lines.length} {lines.length === 1 ? 'producto' : 'productos'} · {units} {units === 1 ? 'unidad' : 'unidades'}</Text>
-          {requestedPlan ? <View testID="guest-plan-preference"><Banner tone="info" body="Conservamos el plan que solicitaste. Verás las opciones disponibles después de iniciar sesión y revisar tu carrito." /></View> : null}
-          <Card padded={false}>
-            {lines.map((l: GuestLine, i) => (
-              <View key={l.variant_id}>
-                {i > 0 ? <Divider inset={14} /> : null}
-                <LineRow
-                  line={{ issue: null, title: l.title, quantity: l.quantity, image_path: l.image_path, product_id: l.product_id, variant_id: l.variant_id, availability: l.availability as CartLine['availability'], max_quantity: 20, variant_title: l.variant_title, line_total_usd: Number(D(l.price_usd).times(l.quantity)), unit_price_usd: l.price_usd,product_condition:l.product_condition }}
-                  onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })}
-                  onRemove={() => setRemoving(l)}
-                  disabled={setQty.isPending}
-                />
-              </View>
-            ))}
-          </Card>
+          <Text variant="bodySmall" color="textSecondary" testID="cart-deliveries">{view.lines.length} {view.lines.length === 1 ? 'producto' : 'productos'} · {view.units} {view.units === 1 ? 'unidad' : 'unidades'}</Text>
+          {!online || current.isError ? <View style={{ gap: 8 }}>
+            <Banner tone="warning" icon="circle-alert" body={!online ? 'Sin conexión. Tus productos siguen guardados. Actualizaremos precios y disponibilidad cuando vuelva la conexión.' : 'No pudimos actualizar precios y disponibilidad. Tus productos siguen guardados.'} />
+            <Button title="Actualizar productos" variant="secondary" onPress={() => void current.refetch()} />
+          </View> : current.isFetching ? <Text variant="bodySmall" color="textSecondary" accessibilityLiveRegion="polite">Actualizando precios y disponibilidad…</Text> : null}
+          {view.issues > 0 ? <Banner tone="warning" icon="circle-alert" title="Revisa tu carrito" body="Ajusta los productos marcados antes de continuar." /> : null}
+          {setQty.isError && setQty.variables?.quantity !== 0 ? <Banner tone="danger" icon="circle-alert" body="No pudimos guardar la cantidad. Intenta de nuevo." /> : null}
+          {view.groups.map(group => <Card key={group.key} padded={false}>
+            <View style={{ paddingHorizontal: 12, paddingVertical: 10 }}><Text variant="label">{group.storeName}</Text></View>
+            {group.lines.map((line, index) => <View key={line.variant_id}>
+              {index > 0 ? <Divider inset={14} /> : null}
+              <LineRow line={line} priceKnown={line.priceKnown} dispatchStage={line.dispatchStage}
+                onQty={(variantId, quantity) => setQty.mutate({ variantId, quantity })}
+                onRemove={() => setRemoving(lines.find(saved => saved.variant_id === line.variant_id) ?? null)}
+                disabled={setQty.isPending} />
+            </View>)}
+          </Card>)}
         </View>
       </ScrollView>
-      <CartFooter items={Number(subtotal)} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" onPress={() => router.push(authTarget('/sign-in', withPlan('/cart', requestedPlan)))} onHeightChange={setBarHeight} compact={false} />
+      <CartFooter items={view.itemsUsd} note="Inicia sesión o crea tu cuenta para ver envío y pagar." cta="Iniciar sesión para continuar" disabled={checkoutBlocked} onPress={() => { if (!checkoutBlocked) router.push(authTarget('/sign-in', withPlan('/cart', requestedPlan))); }} onHeightChange={setBarHeight} compact={false} />
       <ConfirmSheet visible={!!removing} testID="cart-remove-sheet" title="¿Quitar este producto?" body={removing?.title} confirm="Quitar producto" cancel="Conservar producto" loading={setQty.isPending} error={setQty.error && setQty.variables?.quantity === 0 && setQty.variables?.variantId === removing?.variant_id ? 'No pudimos quitarlo. Intenta de nuevo.' : null} onClose={() => { setRemoving(null); setQty.reset(); }} onConfirm={() => removing && setQty.mutate({ variantId: removing.variant_id, quantity: 0 }, { onSuccess: () => setRemoving(null) })} />
     </>
   );
 }
 
-function CartFooter({ items, note, cta, onPress, disabled, onHeightChange, compact = true }: { items: number; note: string; cta: string; onPress: () => void; disabled?: boolean; onHeightChange?: (height: number) => void; compact?: boolean }) {
+function CartFooter({ items, note, cta, onPress, disabled, onHeightChange, compact = true }: { items: number | null; note: string; cta: string; onPress: () => void; disabled?: boolean; onHeightChange?: (height: number) => void; compact?: boolean }) {
   const { fontScale } = useWindowDimensions();
   const stacked = !compact || fontScale > 1;
   const subtotal = (
     <View style={{ flexGrow: 1, flexShrink: 0, minWidth: 120, maxWidth: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', columnGap: 8 }}>
       <Text variant="subtitle">Subtotal</Text>
-      <ChangingText value={formatUSD(items)}>
-        <Text variant="priceLarge" style={{ fontSize: 22 }} tabular testID="cart-subtotal">{formatUSD(items)}</Text>
+      <ChangingText value={formatOfferPrice(items)}>
+        <Text variant="priceLarge" style={{ fontSize: 22 }} tabular testID="cart-subtotal">{items == null ? "Precio pendiente" : formatOfferPrice(items)}</Text>
       </ChangingText>
     </View>
   );

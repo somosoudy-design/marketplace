@@ -1,0 +1,49 @@
+{
+  "source": "39ffbee1e9bfbaaaba771da35bfa1479bf6044ce",
+  "buildId": "e25d3cdf-4652-462c-9cc1-16723c1739e0",
+  "file": "/Users/brandeastudio/Downloads/Mayami-AAB-Prueba-2026-11-09/MAYAMI-0.1.0-vc3.aab",
+  "bytes": 86911369,
+  "sha256": "eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23",
+  "identity": {
+    "package": "app.mayami.marketplace",
+    "versionName": "0.1.0",
+    "versionCode": 3,
+    "targetSdk": 36,
+    "minSdk": 24
+  },
+  "runtime": "b6ccf6e187d74e4c38c968346618a194df34d4df",
+  "certificateSha256": "b0d0254f2831caf26e73c2951b1aab1c0c5bb1e8adb5a47f02108d23a4af2a85",
+  "checks": {
+    "bundletool": "PASS",
+    "zipCrc": "PASS",
+    "allPayloadEntriesSigned": true,
+    "signedPayloadEntries": 1546,
+    "signatureMetadataEntries": 3,
+    "nativeLibraries": 104,
+    "elf64Libraries": 52,
+    "elf16KStatic": "PASS LOAD/RELRO",
+    "nativePackagingAlignment": "PAGE_ALIGNMENT_16K",
+    "deviceOr16KExecution": "NOT TESTED",
+    "derivedApkZipAlignment": "NOT TESTED"
+  },
+  "costGate": {
+    "free": true,
+    "price": 0,
+    "meteredBuilds": false,
+    "totalCost": 0,
+    "androidUsed": 3,
+    "androidLimit": 15,
+    "androidRemaining": 12
+  },
+  "existingKeysAndPreviewUnchanged": true,
+  "newCredentialsCreatedOrExported": false,
+  "buildInvocations": 1,
+  "playUpload": false,
+  "ota": false,
+  "webPublication": false,
+  "publicReady": false,
+  "pending": [
+    "Real-device validation",
+    "Hosted email/OTP end-to-end and review account handled separately by coordinator"
+  ]
+}

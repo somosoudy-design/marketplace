@@ -1,5 +1,5 @@
 'use client';
-import { OBLIGATION_KIND_LABEL, OBLIGATION_STATUS_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL } from '@kora/core';
+import { OBLIGATION_KIND_LABEL, OBLIGATION_STATUS_LABEL, ORDER_STATUS_LABEL, PAYMENT_RECORD_LABEL, PAYMENT_STATUS_LABEL, variantDisplayTitle } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -65,7 +65,7 @@ export default function OrderDetail() {
             <Table head={['Producto', 'Tienda', 'Cant.', 'Total', 'Comisión', 'Reembolsado', '']}>
               {o.order_items.map((i) => (
                 <tr key={i.id}>
-                  <Td><div className="flex items-center gap-3"><Thumb src={catalogImage(i.image_path)} alt={i.title} size={32} /><div><p className="font-semibold">{i.title}</p>{i.variant_title ? <p className="text-[12px] text-ink-3">{i.variant_title}</p> : null}</div></div></Td>
+                  <Td><div className="flex items-center gap-3"><Thumb src={catalogImage(i.image_path)} alt={i.title} size={32} /><div><p className="font-semibold">{i.title}</p>{variantDisplayTitle(i.variant_title) ? <p className="text-[12px] text-ink-3">{variantDisplayTitle(i.variant_title)}</p> : null}</div></div></Td>
                   <Td className="whitespace-nowrap">{stores.name(i.store_id)}</Td>
                   <Td className="tabular">{i.quantity}</Td>
                   <Td className="tabular whitespace-nowrap">{money(i.line_total_usd, 'USD')}</Td>

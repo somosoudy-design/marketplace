@@ -1,5 +1,5 @@
 import type { OrderItem, ProductDetail } from '@kora/api';
-import { describeLeadTime, describeLeadTimeShort, etaFromToday, formatUSD, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel, offeredAtQuantity, productBasePreview, presentServerSchedule, paymentPlanTitle, withPlan } from '@kora/core';
+import { describeDispatchStage, formatOfferPrice, presentAvailability, stockHint, photoChoiceNotice, resolveProductSelection, productColorSummaries, variantSwatchLabel, offeredAtQuantity, productBasePreview, presentServerSchedule, paymentPlanTitle, withPlan, quantityControlState, variantAttributeLabel, variantDisplayTitle, presentOfferAvailability, sourceDescriptionSections } from '@kora/core';
 import { router, useFocusEffect, useLocalSearchParams, type Href } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AccessibilityInfo, findNodeHandle, FlatList, Platform, StatusBar, useWindowDimensions, View } from 'react-native';
@@ -117,11 +117,9 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
   const imageLoaded = (key: string) => setFailedImageSources((old) => { if (!old.has(key)) return old; const next = new Set(old); next.delete(key); return next; });
   const availability = presentAvailability(p.availability);
   const imageWidth = Math.min(width, MAX_W);
-  const maxQty = Math.max(1, selection.maxQuantity);
-  if (qty > maxQty) setQty(maxQty);
-  const lead = describeLeadTime(p.lead_min_days, p.lead_max_days, p.availability);
-  const leadShort = describeLeadTimeShort(p.lead_min_days, p.lead_max_days, p.availability);
-  const eta = p.lead_min_days != null && p.lead_max_days != null && availability.purchasable ? etaFromToday(p.lead_min_days, p.lead_max_days) : null;
+  const maxQty = selection.maxQuantity;
+  const quantity = quantityControlState(qty, maxQty, true, pending !== null);
+  const lead = describeDispatchStage(p.availability, p.lead_min_days, p.lead_max_days);
   const hint = stockHint(variant ? variant.stock : null, p.availability);
   // An assigned gallery never falls through to another colour's general photographs.
   const assignedIds = new Set((p.variant_image_links ?? []).map(link => link.image_id));
@@ -138,14 +136,14 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
   const variantSoldOut = !!variant && variant.stock != null && variant.stock <= 0;
   // "Disponible" is the normal case and goes unsaid; anything else (agotado, por encargo, en camino) is shown
   const statusKey = !variant || !variant.active ? 'unavailable' : variantSoldOut ? 'sold_out' : p.availability;
-  const status = presentAvailability(statusKey);
-  const optionLabel = useMemo(() => (p.option_names?.length ? p.option_names.join(' / ') : 'Opción'), [p.option_names]);
+  const status = presentOfferAvailability(p.availability, variant?.stock, !variant?.active ? 'unavailable' : null);
+  const optionLabel = useMemo(() => variantAttributeLabel(p.option_names, p.variants), [p.option_names, p.variants]);
   // options with different prices say theirs, so nobody has to tap each one to compare
   const variantPrices = new Set(p.variants.map((v) => String(v.price_usd))).size > 1;
   const canBuy = selection.canBuy;
   const paymentOffer = p.installment_options?.find(offer => offer.variant_id === variant?.id && offer.basis === 'products_only_excludes_shipping');
   const threePayments = offeredAtQuantity(paymentOffer?.plans, qty).find(option => option.code === 'three_parts');
-  const offeredPreview = canBuy && paymentOffer && threePayments && qty <= paymentOffer.max_quantity
+  const offeredPreview = canBuy && quantity.valid && paymentOffer && threePayments && qty <= paymentOffer.max_quantity
     ? productBasePreview(paymentOffer.unit_price_usd, qty, threePayments) : null;
   const basePreview = offeredPreview?.schedule.length === 3 ? offeredPreview : null;
   const previewSchedule = basePreview ? presentServerSchedule(basePreview.schedule) : null;
@@ -190,7 +188,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
 
   // "Agregar" keeps the buyer here with a link to the cart; "Comprar" adds and opens the cart to pay
   const add = (buy: boolean, preferredPlan?: string) => {
-    if (!variant || !selection.canBuy || qty > selection.maxQuantity || submitting.current) return;
+    if (!variant || !selection.canBuy || !quantity.valid || submitting.current) return;
     const key = `${variant.id}:${qty}`;
     const target = withPlan('/cart', preferredPlan) as Href;
     if (buy && inCart === key) return router.navigate(target);
@@ -251,7 +249,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
               <ExhibitionNotice explain />
               <View style={{ gap: 4 }}>
                 {p.brand_name ? <Text variant="overline" color="textMuted" testID="product-brand">{p.brand_name}</Text> : null}
-                <Text variant="displayM" testID="product-title">{p.title}</Text>
+                <Text variant="displayM" style={{ fontSize: 23, lineHeight: 29 }} testID="product-title">{p.title}</Text>
                 {p.subtitle ? <Text color="textSecondary">{p.subtitle}</Text> : null}
               </View>
               <RatingInline avg={p.rating_avg} count={p.rating_count} onPress={() => scrollRef.current?.scrollTo({ y: reviewsY.current - 80, animated: !reduced })} />
@@ -262,11 +260,11 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
               <Text testID="product-condition" variant="bodySmall" color="textSecondary">{selection.conditionLabel ?? 'Condición sin especificar'}</Text>
               {variant && 'sku' in variant && typeof variant.sku === 'string' && variant.sku ? <Text testID="product-sku" variant="caption" color="textSecondary">SKU: {variant.sku}</Text> : null}
               {!variant ? <Text testID="product-missing-variant" variant="bodySmall" color="warning">La opción seleccionada ya no está disponible. Elige otra opción para continuar.</Text> : null}
-              {statusKey !== 'available' || hint ? (
+              {statusKey !== 'available' || hint || lead ? (
                 <View testID="product-status" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                   {/* sold out reads at a glance: a solid badge over a greyed price */}
                   {statusKey !== 'available' ? <Badge label={status.label} tone={status.tone} solid={!status.purchasable} /> : null}
-                  {status.purchasable && leadShort ? <Text variant="caption" color="textSecondary">{leadShort}</Text> : null}
+                  {status.purchasable && lead ? <Text variant="caption" color="textSecondary" style={{ flexShrink: 1 }}>{lead}</Text> : null}
                   {hint ? <Text variant="caption" color="warning">{hint}</Text> : null}
                 </View>
               ) : null}
@@ -279,23 +277,23 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
             </View>
 
             {/* One selection, shared with the persistent purchase summary. */}
-            {p.variants.length > 1 || canBuy ? <View testID="product-selection" style={{ gap: 14, paddingTop: 16, paddingBottom: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: t.colors.border }} onLayout={(event) => { selectionY.current = event.nativeEvent.layout.y; }}>
+            {p.variants.length > 1 || canBuy || (!!variant && qty > 1) ? <View testID="product-selection" style={{ gap: 14, paddingTop: 16, paddingBottom: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: t.colors.border }} onLayout={(event) => { selectionY.current = event.nativeEvent.layout.y; }}>
               <View ref={selectionHeading} testID="product-selection-heading" accessible accessibilityRole="header" accessibilityLabel="Tu selección" {...(Platform.OS === 'web' ? { tabIndex: -1 as const } : {})}>
                 <Text variant="subtitle">Tu selección</Text>
               </View>
               {colors.length ? <View testID="product-colors" style={{ gap: 8 }}><Text variant="label" color="textSecondary">Color: {selectedColor ?? 'Elige una opción'}</Text><View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>{colors.map(c => <Chip key={c.value} testID={`product-color-${c.value}`} swatch={c.value} label={`${c.value}${!c.available_variant_ids.length ? ' · agotado' : ''}`} selected={selectedColor === c.value} disabled={pending !== null} onPress={() => selectVariant(c.available_variant_ids[0] ?? c.variant_ids[0]!)} />)}</View></View> : null}
               {p.variants.length > 1 ? <View style={{ gap: 10 }}>
-                <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variant?.title}</Text></Text>
+                <Text variant="label" color="textSecondary">{optionLabel}: <Text variant="label">{variantDisplayTitle(variant?.title, variant?.options)}</Text></Text>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                   {p.variants.map((v) => {
                     const out = !v.active || (v.stock != null && v.stock <= 0);
-                    const label = `${v.title}${variantPrices ? ` · ${formatUSD(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
-                    return <Chip key={v.id} testID={`variant-${v.title}`} swatch={variantSwatchLabel(v)} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => selectVariant(v.id)} />;
+                    const label = `${variantDisplayTitle(v.title, v.options) ?? 'Opción'}${variantPrices ? ` · ${formatOfferPrice(v.price_usd)}` : ''}${out ? ' · agotado' : ''}`;
+                    return <Chip key={v.id} testID={`variant-${variantDisplayTitle(v.title, v.options) ?? 'Opción'}`} swatch={variantSwatchLabel(v)} label={label} selected={variant?.id === v.id} wrap disabled={pending !== null} onPress={() => selectVariant(v.id)} />;
                   })}
                 </View>
               </View> : null}
 
-            {canBuy ? (
+            {canBuy || (!!variant && qty > 1) ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text variant="label" color="textSecondary">Cantidad</Text>
                 <Stepper value={qty} max={maxQty} disabled={pending !== null} onChange={(value) => { setQty(value); setAdded(false); }} />
@@ -308,7 +306,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
               {previewSchedule.distribution ? <Text variant="bodySmall" color="textSecondary">{previewSchedule.distribution}</Text> : null}
               {previewSchedule.rows.map(({ item, label, due }) => <View key={item.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
                 <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{label} · {due}</Text>
-                <Text variant="label" tabular>{formatUSD(item.amount_usd)}</Text>
+                <Text variant="label" tabular>{formatOfferPrice(item.amount_usd)}</Text>
               </View>)}
               <Text variant="caption" color="textMuted">{basePreview.label}</Text>
               <Button testID="product-installments-buy" title="Comprar en 3 pagos" full loading={pending === 'buy'} disabled={pending === 'add'} onPress={() => add(true, threePayments.code)} />
@@ -320,7 +318,7 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
 
             {/* delivery, protection and payment in one card, below what the buyer decides on */}
             <Card style={{ gap: 14 }}>
-              <InfoRow icon="truck" title="Entrega" lead={lead ? `${lead}${eta ? ` · ${eta}` : ''}` : undefined} body={p.store.shipping_info ?? 'Verás las opciones y el costo exacto según tu dirección antes de pagar.'} />
+              <InfoRow icon="truck" title="Despacho y entrega" lead={lead ?? undefined} body={p.store.shipping_info ?? 'Verás las opciones, el plazo de llegada y el costo según tu dirección antes de pagar.'} />
               {p.availability === 'on_order' ? <InfoRow icon="wallet" title="Por encargo" body="Antes de confirmar verás los planes de pago disponibles para tu compra y el plazo estimado de llegada." /> : null}
               <InfoRow icon="shield-check" title="Compra protegida" body="Si algo no llega como esperabas, abre un reclamo desde tu pedido." />
               {methods.data?.length ? <InfoRow icon="banknote" title="Pagos" body={`${methods.data.map((m) => m.name).join(', ')}. Cada método muestra su monto exacto al pagar.`} /> : null}
@@ -341,9 +339,18 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
             {description ? (
               <View style={{ gap: 8 }}>
                 <Text variant="title">Descripción</Text>
-                <Text color="textSecondary" style={{ lineHeight: 24 }} numberOfLines={longText && !moreText ? 5 : undefined} testID="product-description">{description}</Text>
+                {longText && !moreText ? (
+                  <Text color="textSecondary" style={{ lineHeight: 24 }} numberOfLines={5} testID="product-description">{description}</Text>
+                ) : (
+                  <View testID="product-description" style={{ gap: 14 }}>
+                    {sourceDescriptionSections(description).map((section, index) => <View key={index} style={{ gap: 6 }}>
+                      {section.heading ? <Text variant="subtitle" accessibilityRole="header">{section.heading}</Text> : null}
+                      <Text color="textSecondary" style={{ lineHeight: 24 }}>{section.lines.join('\n')}</Text>
+                    </View>)}
+                  </View>
+                )}
                 {longText ? (
-                  <ScalePressable accessibilityRole="button" hitSlop={8} onPress={() => setMoreText((v) => !v)} style={{ alignSelf: 'flex-start' }}>
+                  <ScalePressable accessibilityRole="button" accessibilityState={{ expanded: moreText }} hitSlop={8} onPress={() => setMoreText((v) => !v)} style={{ alignSelf: 'flex-start', minHeight: 44, justifyContent: 'center' }}>
                     <Text variant="label" color="brand">{moreText ? 'Ver menos' : 'Ver más'}</Text>
                   </ScalePressable>
                 ) : null}
@@ -383,13 +390,13 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
 
       {/* sticky purchase bar */}
       <BottomBar testID="product-purchase-bar" maxWidth={MAX_W} onHeightChange={setBarHeight}>
-          {canBuy && variant && !added ? <ScalePressable testID="product-selection-summary" accessibilityRole="button" accessibilityLabel={`Editar selección: ${p.variants.length > 1 ? `${variant.title}, ` : ''}${qty} ${qty === 1 ? 'unidad' : 'unidades'}. ${formatUSD(variant.price_usd)} por unidad`} disabled={pending !== null} onPress={editSelection} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 44 }}>
+          {canBuy && variant && !added ? <ScalePressable testID="product-selection-summary" accessibilityRole="button" accessibilityLabel={`Editar selección: ${p.variants.length > 1 ? `${variantDisplayTitle(variant.title, variant.options) ?? ''}, ` : ''}${qty} ${qty === 1 ? 'unidad' : 'unidades'}. ${formatOfferPrice(variant.price_usd)} por unidad`} disabled={pending !== null} onPress={editSelection} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 44 }}>
             <View style={{ flex: 1, gap: 2 }}>
-              <Text variant="label" testID="product-selected-summary">{p.variants.length > 1 ? `${variant.title} · ` : ''}{qty} {qty === 1 ? 'unidad' : 'unidades'}</Text>
+              <Text variant="label" testID="product-selected-summary">{p.variants.length > 1 ? `${variantDisplayTitle(variant.title, variant.options) ?? ''} · ` : ''}{qty} {qty === 1 ? 'unidad' : 'unidades'}</Text>
               <Text variant="caption" color="brand">Editar selección</Text>
             </View>
             <View style={{ alignItems: 'flex-end', gap: 2 }}>
-              <Text variant="subtitle" tabular testID="product-selected-price">{formatUSD(variant.price_usd)}</Text>
+              <Text variant="subtitle" tabular testID="product-selected-price">{formatOfferPrice(variant.price_usd)}</Text>
               <Text variant="caption" color="textSecondary">por unidad</Text>
             </View>
             <Icon name="arrow-up" size={18} color={t.colors.brand} />
@@ -402,18 +409,19 @@ function ProductView({ product: p, requestedVariant }: { product: ProductDetail;
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text variant="label" color="success">Agregado al carrito</Text>
-                  <Text variant="caption" color="textMuted" numberOfLines={1}>{qty > 1 ? `${qty} × ` : ''}{p.title}{variant && p.variants.length > 1 ? ` · ${variant.title}` : ''}</Text>
+                  <Text variant="caption" color="textMuted" numberOfLines={1}>{qty > 1 ? `${qty} × ` : ''}{p.title}{variant && p.variants.length > 1 ? ` · ${variantDisplayTitle(variant.title, variant.options) ?? ''}` : ''}</Text>
                 </View>
                 <Text variant="label" color="brand">Ver carrito</Text>
                 <Icon name="chevron-right" size={16} color={t.colors.brand} />
               </ScalePressable>
             </Animated.View>
           ) : null}
+          {canBuy && !quantity.valid ? <Text testID="product-quantity-issue" variant="caption" color="danger" accessibilityLiveRegion="polite">Ahora puedes pedir hasta {maxQty} {maxQty === 1 ? 'unidad' : 'unidades'}. Ajusta la cantidad para continuar.</Text> : null}
           {addToCart.error ? <Text variant="caption" color="danger">{(addToCart.error as Error).message}</Text> : null}
           {canBuy ? (
             <View style={{ flexDirection: 'row', gap: 10 }}>
-              <Button testID="product-add" size="lg" variant="secondary" icon="shopping-bag" title="Agregar" accessibilityLabel="Agregar al carrito" loading={pending === 'add'} disabled={pending === 'buy'} onPress={() => add(false)} style={{ flex: 1 }} />
-              <Button testID="product-cta" size="lg" title={availability.action} loading={pending === 'buy'} disabled={pending === 'add'} onPress={() => add(true)} style={{ flex: 1.3 }} />
+              <Button testID="product-add" size="lg" variant="secondary" icon="shopping-bag" title="Agregar" accessibilityLabel="Agregar al carrito" loading={pending === 'add'} disabled={pending === 'buy' || !quantity.valid} onPress={() => add(false)} style={{ flex: 1 }} />
+              <Button testID="product-cta" size="lg" title={availability.action} loading={pending === 'buy'} disabled={pending === 'add' || !quantity.valid} onPress={() => add(true)} style={{ flex: 1.3 }} />
             </View>
           ) : (
             <Button testID="product-cta" size="lg" full variant="secondary" icon="bell" title={p.alert_requested ? 'Te avisaremos · Cancelar aviso' : 'Avisarme cuando vuelva'} onPress={toggleAlert} />

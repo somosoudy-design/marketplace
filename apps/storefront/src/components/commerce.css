@@ -1,0 +1,131 @@
+/* Reusable buyer controls and source-backed offer facts. */
+.quantity-control {
+  display: inline-grid;
+  grid-template-columns: 44px minmax(24px, auto) 44px;
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.quantity-control button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+}
+.quantity-control button:disabled {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+.quantity-control button:focus-visible {
+  outline-offset: -3px;
+}
+.quantity-control output {
+  text-align: center;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  padding-inline: 2px;
+}
+.dispatch-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.dispatch-stage svg {
+  flex: none;
+  margin-top: 3px;
+}
+.purchase-help {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 18px;
+  margin-top: 14px;
+}
+.purchase-help a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.purchase-help svg {
+  flex: none;
+}
+.cart-page .cart-availability {
+  margin-top: 8px;
+}
+.cart-page .cart-dispatch-stage,
+.cart-page .cart-quantity-limit,
+.cart-page .cart-availability-pending {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+.cart-page .cart-quantity-limit,
+.cart-page .cart-line-feedback {
+  flex-basis: 100%;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.cart-page .cart-line-feedback {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.cart-page .cart-line-feedback:empty {
+  display: none;
+}
+.cart-page .quantity {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.cart-page .quantity > .remove {
+  width: 44px;
+  height: 44px;
+}
+.footer .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+}
+.footer .footer-links nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.footer .footer-links h2 {
+  flex-basis: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+}
+.footer .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.profile-management {
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+.profile-management h2 {
+  font-size: 18px;
+}
+.profile-management a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}

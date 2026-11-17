@@ -4,6 +4,7 @@ import { Providers } from '@/lib/providers';
 import { Shell } from '@/components/shell';
 import { brand } from '@/lib/format';
 import './globals.css';
+import '@/components/commerce.css';
 const jakarta = localFont({
   variable: '--font-jakarta',
   display: 'swap',
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mayami.app'),
   robots: { index: true, follow: true },
 };
-export const viewport: Viewport = { themeColor: '#6D42E8' };
+export const viewport: Viewport = { themeColor: '#6D42E8', viewportFit: 'cover' };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html data-scroll-behavior="smooth" lang="es-VE" className={jakarta.variable}>

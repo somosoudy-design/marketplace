@@ -19,6 +19,7 @@ import { confirmCheckout, recoverCheckout, UnconfirmedCheckoutError } from '@/li
 import { AddressEditor } from './addresses';
 import { QueryError } from './buyer';
 import { ReviewLine } from './review-line';
+import { PurchaseHelp } from './offer';
 import { assertBuyerActor, captureBuyerApi } from '@/lib/actor-api';
 import { checkoutIntentKey, clearCheckoutIntent, restoreCheckoutIntent, persistCheckoutIntent, type CheckoutIntent } from '@/lib/checkout-intent';
 import { useAccount } from '@/lib/providers';
@@ -710,7 +711,8 @@ export function Checkout({ buyerId }: { buyerId: string }) {
               <ArrowLeft size={15} /> Volver al paso anterior
             </button>
           )}
-        </aside>
+        <PurchaseHelp />
+</aside>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Platform, Share, View } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { appOnlyLinks } from '@/lib/links';
@@ -17,23 +17,37 @@ export function ShareLinkSheet({ visible, title, name, link, onClose, testID }: 
   const t = useTheme();
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const pending = useRef(false);
+  const generation = useRef(0);
   const canShare = Platform.OS !== 'web' || (typeof navigator !== 'undefined' && typeof navigator.share === 'function');
-  const close = () => { setCopied(false); setError(false); onClose(); };
-  const share = async () => {
+  const close = () => { generation.current++; pending.current = false; setBusy(false); setCopied(false); setError(false); onClose(); };
+  const run = async (action: 'share' | 'copy') => {
+    if (pending.current) return;
+    pending.current = true; setBusy(true); setError(false); setCopied(false);
+    const current = generation.current;
     try {
-      const message = `${name} en ${brand.name}: ${link}`;
-      await Share.share(Platform.OS === 'ios' ? { url: link, message: name } : Platform.OS === 'web' ? { title: name, message, url: link } : { message });
-      close();
-    } catch { setError(true); }
-  };
-  const copy = async () => {
-    try { await Clipboard.setStringAsync(link); setCopied(true); setError(false); haptics.success(); }
-    catch { setError(true); }
+      if (action === 'copy') {
+        // Expo's web legacy fallback reports success even when execCommand returns false.
+        // Keep web confirmation tied to the browser's actual clipboard promise.
+        if (Platform.OS === 'web') {
+          if (!navigator.clipboard?.writeText) throw new Error('clipboard_unavailable');
+          await navigator.clipboard.writeText(link);
+        } else if (!await Clipboard.setStringAsync(link)) throw new Error('clipboard_unavailable');
+        if (generation.current === current) { setCopied(true); haptics.success(); }
+      } else {
+        const message = `${name} en ${brand.name}: ${link}`;
+        await Share.share(Platform.OS === 'ios' ? { url: link, message: name } : Platform.OS === 'web' ? { title: name, message, url: link } : { message });
+        if (generation.current === current) close();
+      }
+    } catch (failure) {
+      if (generation.current === current && !(action === 'share' && failure instanceof Error && failure.name === 'AbortError')) setError(true);
+    } finally { if (generation.current === current) { pending.current = false; setBusy(false); } }
   };
   return (
     <Sheet visible={visible} title={title} onClose={close} testID={`${testID}-sheet`} footer={<>
-      {canShare ? <Button title="Compartir" icon="share-2" full onPress={share} /> : null}
-      <Button testID={`${testID}-copy`} title={copied ? 'Enlace copiado' : 'Copiar enlace'} icon={copied ? 'check' : 'copy'} variant="secondary" full onPress={copy} />
+      {canShare ? <Button testID={`${testID}-native`} title="Compartir" icon="share-2" full disabled={busy} onPress={() => void run('share')} /> : null}
+      <Button testID={`${testID}-copy`} title={copied ? 'Enlace copiado' : 'Copiar enlace'} icon={copied ? 'check' : 'copy'} variant="secondary" full disabled={busy} onPress={() => void run('copy')} />
     </>}>
       <View style={{ gap: 8 }}>
         <View style={{ padding: 12, borderRadius: t.radii.sm, backgroundColor: t.colors.surfaceSunken }}>

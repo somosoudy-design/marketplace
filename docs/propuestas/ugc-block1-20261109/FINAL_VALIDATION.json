@@ -1,0 +1,56 @@
+{
+  "source": "207c489e198f2c78035526c3c95be5cd8f8c4ea7",
+  "tree": "1cf89fc9666fcb3b839bfabb161636e10b3dc7eb",
+  "base": "39ffbee1e9bfbaaaba771da35bfa1479bf6044ce",
+  "migration": "supabase/migrations/20261109172643_mayami_ugc_private_controls.sql",
+  "migrationSha256": "c94d0794e6b2a1954bbcc710900cb8af61c17031f537935697bd5dc34c9d8c97",
+  "activation": "tools/ugc/activate-reviewed.sql",
+  "activationSha256": "d0115afc6e289619a3ba56ad954da58827d810fcce5e87a973c0d09c78cdfd4f",
+  "preparedGateDefault": false,
+  "localTestsActivatedOnlySyntheticDatabases": true,
+  "tests": {
+    "pgRestGroups": 19,
+    "concurrencyAndAclGroups": 4,
+    "contractTests": 3,
+    "typecheck": [
+      "api",
+      "mobile",
+      "admin",
+      "db-tests"
+    ],
+    "lint": "mobile PASS",
+    "existingPrivileges": "4 PASS / 1 FAIL; baseline favorites_merge_intent allowlist discrepancy",
+    "advisors": "security/warn results[] against loopback"
+  },
+  "runtimeFiles": {
+    "packages/api/src/api.ts": "20d8c5eced997a2225a5b0e164fac8e2a819701fdb427668b8dddea3f21a6390",
+    "packages/api/src/index.ts": "918de14fcef19b1f0b0fc9dd97f8af2615d4fd3e5262ace76f8e288ff353b069",
+    "packages/api/src/ugc.ts": "10cb3d0876d05e45cc5b6d257d34ebf8b75051fe60339d8eae8d1dad3450f1cd",
+    "supabase/migrations/20261109172643_mayami_ugc_private_controls.sql": "c94d0794e6b2a1954bbcc710900cb8af61c17031f537935697bd5dc34c9d8c97",
+    "tools/ugc/activate-reviewed.sql": "d0115afc6e289619a3ba56ad954da58827d810fcce5e87a973c0d09c78cdfd4f"
+  },
+  "preservedVc3": {
+    "file": "/Users/brandeastudio/Downloads/Mayami-AAB-Prueba-2026-11-09/MAYAMI-0.1.0-vc3.aab",
+    "bytes": 86911369,
+    "sha256": "eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23"
+  },
+  "newBuild": false,
+  "hostedSqlOrPermissionChanges": false,
+  "browserUsed": false,
+  "otaWebPlay": false,
+  "processesStopped": true,
+  "limits": [
+    "Auth SQL stand-in, no SDK/GoTrue/live sign-in",
+    "No UI/device/cache execution",
+    "No recall of already sent push or disconnected old cache",
+    "UI/editor/panel/cache transition required before activation",
+    "Public store identity does not attribute historical employees",
+    "No Google acceptance guarantee"
+  ],
+  "runtimeVerifiedByContentHashes": true,
+  "testHarnessFinalGuard": "Accepts only exact loopback target and baseline descendant of39ff; same 19 cases as executed copy, path/ancestry guard adapted for repo.",
+  "executedTestScripts": {
+    "ugc-guard-final.test.cjs": "4d0038c88d2da76c86046c0e8b211d4bac8b30663ebd99ea531a76cbf599485a",
+    "concurrency.cjs": "f6e14d869781387badb6d89116797d14b113427a73cbf3880777a78d35e94464"
+  }
+}

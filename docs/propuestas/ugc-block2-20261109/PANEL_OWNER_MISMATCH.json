@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-11-09T18:03:27.923Z",
+  "resolved": true,
+  "isCurrent": false,
+  "actorReady": false,
+  "enabled": false,
+  "stateDataHidden": true,
+  "oldActorRowRendered": false,
+  "staffQueryEnabled": false,
+  "scope": "Actual integrated hook/core/owner store/component bodies with controlled auth-render lag and cached-query ports; no browser/live session claim.",
+  "hashes": {
+    "packages/api/src/ugc-state.ts": "355016f30c43b1ad6c270897a9d36168fc1c1e1c9e8d81fc40f88a0adff6c52b",
+    "apps/admin/src/lib/ugc-owner.ts": "feabd2c705a2992afd093232f304e6f2da8662ec40c2671712b8e6648b255cce",
+    "apps/admin/src/lib/ugc.ts": "5aebae034ef0b139f847b4a85a75b9333bb936598a3084c05295b22be7c7695a",
+    "apps/admin/src/components/Reviews.tsx": "0da15ee691ba2e50bf09b0eae7a13662ea148ceaf9677d8406e5a71fd3d2bc5e"
+  }
+}

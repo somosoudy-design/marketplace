@@ -40,3 +40,17 @@ export function useCommercialProduct(id: string | undefined) {
   const { user } = useAuth(); const actorId = user?.id ?? null;
   return useQuery({ queryKey: [...qk.product(id ?? ''), 'commercial', actorId], enabled: !!id, queryFn: async () => (await catalogFor(actorId)).productCommercial(id!) });
 }
+
+/** Guest checkout preparation always reads public offers without adopting a later signed-in token. */
+export function useGuestCartCatalog(ids: readonly string[]) {
+  const productIds = [...new Set(ids)].sort();
+  return useQuery({
+    queryKey: ['guest-cart-catalog', productIds], enabled: productIds.length > 0,
+    staleTime: 0, refetchOnMount: 'always',
+    queryFn: async () => {
+      const catalog = publicCatalog();
+      const rows = await Promise.all(productIds.map(async id => [id, await catalog.productCommercial(id)] as const));
+      return new Map(rows);
+    },
+  });
+}

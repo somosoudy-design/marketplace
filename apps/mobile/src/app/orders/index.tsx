@@ -1,4 +1,4 @@
-import { formatUSD, ORDER_STATUS_LABEL, PAYMENT_STATUS_LABEL } from '@kora/core';
+import { formatOfferPrice, ORDER_STATUS_LABEL, PAYMENT_STATUS_LABEL } from '@kora/core';
 import { router } from 'expo-router';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { ProductImage } from '@/components/catalog/ProductImage';
@@ -50,7 +50,7 @@ export default function OrdersScreen() {
           <View style={{ flex: 1, gap: 4 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text variant="label">{o.number}</Text>
-              <Text variant="label" tabular>{formatUSD(o.total_usd)}</Text>
+              <Text variant="label" tabular>{formatOfferPrice(o.total_usd)}</Text>
             </View>
             <Text variant="caption" color="textMuted" numberOfLines={1}>
               {shortDate(o.placed_at)} · {o.order_items.map((i) => i.title).join(', ')}

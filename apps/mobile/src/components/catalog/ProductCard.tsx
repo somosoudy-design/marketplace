@@ -1,5 +1,5 @@
 import type { ProductCard as Card } from '@kora/api';
-import { formatUSD, photoChoiceNotice, presentAvailability, stockHint, productConditionLabel, productColorSummaries, resolveProductSelection } from '@kora/core';
+import { formatOfferPrice, photoChoiceNotice, presentOfferAvailability, stockHint, productConditionLabel, productColorSummaries, resolveProductSelection } from '@kora/core';
 import { router } from 'expo-router';
 import { memo, useState } from 'react';
 import { Platform, ScrollView, View } from 'react-native';
@@ -39,7 +39,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
   const missingChoicePhoto = selectedVariantId !== null && !!photoChoiceNotice({ selectedVariantId: chosen?.id, variants, mediaState: selection.mediaState, imagePath: previewCover });
   const cover = missingChoicePhoto ? null : previewCover;
   const condition = productConditionLabel(metadata.data?.condition);
-  const availability = presentAvailability(unavailable || !chosen?.active ? 'unavailable' : chosen.stock != null && chosen.stock <= 0 ? 'sold_out' : p.availability);
+  const availability = presentOfferAvailability(p.availability, chosen?.stock, unavailable || !chosen?.active ? 'unavailable' : null);
   const hint = stockHint(chosen ? chosen.stock : null, p.availability);
   const discount = price != null && p.compare_at_usd && Number(p.compare_at_usd) > Number(price) ? Math.round((1 - Number(price) / Number(p.compare_at_usd)) * 100) : 0;
   const { name, brand } = splitCardBrand(p.title, p.brand_name);
@@ -51,7 +51,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, priori
         scaleTo={0.985}
         focusOutline={false}
         accessibilityRole="link"
-        accessibilityLabel={`${p.title}, ${price == null ? unavailable ? 'opción no disponible' : 'cargando opciones' : formatUSD(price)}, ${availability.label}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
+        accessibilityLabel={`${p.title}, ${price == null ? unavailable ? 'opción no disponible' : 'cargando opciones' : formatOfferPrice(price)}, ${availability.label}${p.is_demo && !isPrivateCatalogPresentation ? ', producto de demostración' : ''}`}
         onFocus={(event) => {
           if (Platform.OS === 'web') {
             const target = event.target as unknown as { matches?: (selector: string) => boolean };

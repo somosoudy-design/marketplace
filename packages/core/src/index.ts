@@ -16,3 +16,5 @@ export * from './option-swatch';
 
 export * from './guest-cart';
 export * from './guest-favorites';
+
+export * from './commerce-presentation';

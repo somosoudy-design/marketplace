@@ -1,0 +1,143 @@
+{
+  "startedAt": "2026-11-09T18:06:59.837Z",
+  "base": "207c489e198f2c78035526c3c95be5cd8f8c4ea7",
+  "sourceHead": "d01787be07fd8e9983948654e6196f58f1d21497",
+  "migrationSha256": "c94d0794e6b2a1954bbcc710900cb8af61c17031f537935697bd5dc34c9d8c97",
+  "activationSha256": "d0115afc6e289619a3ba56ad954da58827d810fcce5e87a973c0d09c78cdfd4f",
+  "block2MigrationSha256": "754894b55a22d2cf93b1a093740f4ebfe6b8a576748eba3200a68f3a08ffb2e2",
+  "syntheticOnly": true,
+  "results": [
+    {
+      "name": "Gateoff preserves legacy staff reads and refuses pretend report/block",
+      "result": "PASS"
+    },
+    {
+      "name": "Consent is versioned, idempotent, actor-bound and refuses anon",
+      "result": "PASS"
+    },
+    {
+      "name": "Activation closes raw reply privileges before enabling controls",
+      "result": "PASS"
+    },
+    {
+      "name": "Private tables/helpers and anonymous writes inaccessible",
+      "result": "PASS"
+    },
+    {
+      "name": "Submit/reply require consent while delivery/ownership remain enforced",
+      "result": "PASS"
+    },
+    {
+      "name": "Public projections expose no human UUID",
+      "result": "PASS"
+    },
+    {
+      "name": "Four report targets are private/idempotent and do not alter reputation",
+      "result": "PASS"
+    },
+    {
+      "name": "Absent/invalid/own/spoofed report subjects rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "Reviewer block is private to A, filters before paging, and keeps score global",
+      "result": "PASS"
+    },
+    {
+      "name": "REST closes replies and blocked foreign rows; six own columns stay readable",
+      "result": "PASS"
+    },
+    {
+      "name": "Block ownership and reversal isolate A/B",
+      "result": "PASS"
+    },
+    {
+      "name": "Staff operational endpoint preserves role/store isolation after raw star closed",
+      "result": "PASS"
+    },
+    {
+      "name": "Store block hides only reply, preserving review/catalog/order and a legitimate claim",
+      "result": "PASS"
+    },
+    {
+      "name": "UGC notices generic/allowlisted, blocked new reply suppressed, transactional notices intact",
+      "result": "PASS"
+    },
+    {
+      "name": "Store unblock restores reply without changing legitimate review or claim",
+      "result": "PASS"
+    },
+    {
+      "name": "Reply-only moderation stays admin-only and hidden through seller edit",
+      "result": "PASS"
+    },
+    {
+      "name": "Real review moderation retains reason/audit and server-derived global rating",
+      "result": "PASS"
+    },
+    {
+      "name": "Nonexistent and banned actors refused, including identical stale seller reply",
+      "result": "PASS"
+    },
+    {
+      "name": "Closing actor removes own private data but preserves another actor block on that subject",
+      "result": "PASS"
+    },
+    {
+      "name": "paged staff read keeps existing role/store boundary and refuses anon/banned actors",
+      "result": "PASS"
+    },
+    {
+      "name": "staff page preserves metadata and fields needed by the existing board",
+      "result": "PASS"
+    },
+    {
+      "name": "status, upper-star and unanswered filters use the same predicate for total and page",
+      "result": "PASS"
+    },
+    {
+      "name": "stable timestamp-plus-ID ordering pages without duplicate/missing rows or wrong empty totals",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded staff filters reject malformed input; null defaults remain well-defined",
+      "result": "PASS"
+    },
+    {
+      "name": "new read RPC adds no role or grant to the ten block1 contracts",
+      "result": "PASS"
+    },
+    {
+      "name": "exact review lookup respects the selected store and cannot bypass staff authorization",
+      "result": "PASS"
+    },
+    {
+      "name": "Store public ownership boolean hides self actions without exposing author UUID",
+      "result": "PASS"
+    },
+    {
+      "name": "Reported reply changed after snapshot is not hidden; dismissal is still recoverable",
+      "result": "PASS"
+    },
+    {
+      "name": "Concurrent buyer edit commits before report decision and stale hide is refused atomically",
+      "result": "PASS"
+    }
+  ],
+  "limits": [
+    "Explicit auth SQL stand-in; no GoTrue login, email or real issuance.",
+    "Synthetic paid/delivered rows are not a financial purchase-flow test.",
+    "No app/device/cache renderer or ability to recall delivered push.",
+    "No hosted access, build, OTA, web or Play."
+  ],
+  "boundary": {
+    "db": "ugc_block2",
+    "host": "127.0.0.1",
+    "port": 56539,
+    "datadir": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/ugc-block2-20261109/cluster/data"
+  },
+  "staffPageGroups": 7,
+  "success": true,
+  "completedAt": "2026-11-09T18:07:00.059Z",
+  "groupsPassed": 29
+}

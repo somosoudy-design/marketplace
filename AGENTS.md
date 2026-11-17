@@ -174,3 +174,7 @@ Al terminar (o si se te acaba el contexto o el crédito):
 | `docs/HISTORIAL_AGENTES.md` | Relevos y bitácora de lo hecho |
 | `docs/INFORME_FINAL.md` | Informe de la v1 inicial (histórico) |
 | `CLAUDE.md` | Notas extra para Claude; las reglas son estas |
+
+## Referencia de experiencia compartida
+
+Las pantallas de compradores, vendedores y administración aplican los contratos y componentes de [Sistema de interfaz y experiencia](docs/SISTEMA_UI_UX.md). El [inventario de adopción](docs/ADOPCION_UI_UX_2026-11-17.md) identifica consumidores, pruebas y pendientes por entorno. Registra el motivo y alcance de cualquier excepción y migra los consumidores antes de retirar implementaciones equivalentes.

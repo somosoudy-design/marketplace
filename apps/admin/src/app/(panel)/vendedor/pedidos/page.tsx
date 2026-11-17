@@ -1,4 +1,5 @@
 'use client';
+import { variantDisplayTitle } from '@kora/core';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { FulfillmentCard, type FulfillmentRow } from '@/components/Fulfillment';
@@ -38,7 +39,7 @@ export default function SellerOrders() {
                       <Thumb src={catalogImage(i.image_path)} alt={i.title} size={34} />
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-semibold">{i.title}</p>
-                        <p className="text-[12.5px] text-ink-3">{i.variant_title && i.variant_title !== 'Única' ? `${i.variant_title} · ` : ''}{i.quantity} × {money(i.unit_price_usd, 'USD')}{i.refunded_qty ? ` · ${i.refunded_qty} reembolsada${i.refunded_qty === 1 ? '' : 's'}` : ''}</p>
+                        <p className="text-[12.5px] text-ink-3">{variantDisplayTitle(i.variant_title) ? `${variantDisplayTitle(i.variant_title)} · ` : ''}{i.quantity} × {money(i.unit_price_usd, 'USD')}{i.refunded_qty ? ` · ${i.refunded_qty} reembolsada${i.refunded_qty === 1 ? '' : 's'}` : ''}</p>
                       </div>
                       <span className="tabular text-sm font-semibold">{money(i.line_total_usd, 'USD')}</span>
                     </li>

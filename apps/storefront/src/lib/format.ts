@@ -1,3 +1,3 @@
-import { formatUSD } from '@kora/core';
-export const money = (value: number) => formatUSD(value);
+import { formatOfferPrice } from '@kora/core';
+export const money = (value: number) => formatOfferPrice(value);
 export { brand } from '../../../../config/brand-presentation';

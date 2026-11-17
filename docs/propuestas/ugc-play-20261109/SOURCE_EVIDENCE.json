@@ -1,0 +1,33 @@
+{
+  "observedAt": "2026-11-09T17:17:11.085042+00:00",
+  "source": "39ffbee1e9bfbaaaba771da35bfa1479bf6044ce",
+  "tree": "46ec34e446545efab5e1e78b6d5e468e8054faad",
+  "versionedTreeUnchanged": true,
+  "files": {
+    "apps/mobile/src/components/reviews/Reviews.tsx": "f1b749de741454a8d9f569e0921759c0fac3ef8bd91dcc9e0f9e56e025181e41",
+    "apps/mobile/src/components/reviews/ReviewSheet.tsx": "3c5f35934fe0ce40861fe1470e4cd8d6039e687baed2adaba6e3e3579fe3aa57",
+    "apps/mobile/src/app/sign-up.tsx": "38647b44b7508043fe2185d4783aa63ea1e77ca8b57869a59af6ad2408288c7b",
+    "apps/mobile/src/lib/query.ts": "a258aa1c5f6a6a5a272741d0e2c8ec4afdebce70ccc70d93e3d4f6e61a55c3b8",
+    "apps/admin/src/components/Reviews.tsx": "016ef19583586f816f1bd2431a03354f77131637ce264f53370852e81f2f90df",
+    "apps/storefront/src/data/policies.json": "0637be35ef43ddec58840eee724788b373efa2afd96b407ec2aba8500770447f",
+    "packages/api/src/api.ts": "d2db148f47b948a0d0966ccbe30fb737d8b16442c0dc9119e1cb31f87399610a",
+    "packages/api/src/types.ts": "68f4c84d6264b5caae9d3923719199eb82ba1f5ecce0eae81cebff353cb7a364",
+    "supabase/migrations/20261009001700_reviews_engagement.sql": "4c01e7ce458f9f2d58a361baacc66f8eee98b585abc6dc718af3b8b90e539ca8",
+    "supabase/migrations/20261009153318_api_hardening.sql": "d719749d2eb348dbc24fac313347d287a53a0f9707a135171cfc5e8c073fbbfb",
+    "tools/local-stack/test-db.sh": "d624bc74becdb0f9d872be81d2d54258339378109c244e9c4335edae8b3ec9e8",
+    "tests/db-tests/src/db.ts": "02cba5e9808e77dc3517ff58aa8e68250396da11b099859dbe123c0e8089b1b4"
+  },
+  "runtimeImplementationChanged": false,
+  "sqlOrMigrationExecuted": false,
+  "hostedStateQueried": false,
+  "browserUsed": false,
+  "newBuild": false,
+  "otaOrWebOrPlayPublication": false,
+  "reasonForStoppingAtProposal": "All reporting/blocking/consent persistence absent; coordinated app/server/panel/REST/notification changes exceed a button-only correction. Task instructs diagnosis and minimal proposal before expanding.",
+  "preservedVc3": {
+    "file": "/Users/brandeastudio/Downloads/Mayami-AAB-Prueba-2026-11-09/MAYAMI-0.1.0-vc3.aab",
+    "bytes": 86911369,
+    "sha256": "eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23",
+    "containsProposedUgcControls": false
+  }
+}

@@ -1,6 +1,6 @@
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import { ApiError, type CheckoutSummary, type ReviewedCheckoutSummary, type DeliveryGroup, type PlaceOrderResult, type ShippingSelection } from '@kora/api';
-import { describeEtaDates, formatUSD, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, presentServerSchedule } from '@kora/core';
+import { describeEtaDates, formatOfferPrice, productConditionLabel, safePlanCode, withPlan, chooseOfferedPlan, paymentPlanTitle, paymentPlanDescription, presentServerSchedule, variantDisplayTitle } from '@kora/core';
 import { palette } from '@kora/design-tokens';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, Stack, useFocusEffect, useNavigation, useLocalSearchParams } from 'expo-router';
@@ -347,7 +347,9 @@ function CheckoutSession({ buyerId, requestedPlan }: { buyerId: string; requeste
     : step > 0 && (step === 1 ? !groupReady : s.needs_shipping) ? 'No hay envío disponible para esta entrega. Prueba con otra dirección.' : null;
   const canContinue = editable && !blocking && (step === 0 ? addressReady : step === 1 ? groupReady : !s.needs_shipping && planReady);
   const canPlace = editable && !blocking && s.can_place && planReady && reviewedToken === s.review_token;
-  const firstPayment = s.schedule.find((x) => x.due_in_days === 0)?.amount_usd ?? s.schedule[0]?.amount_usd;
+  const dueToday = presentServerSchedule(s.schedule).singlePaymentDueToday;
+  const actionAmount = s.schedule.length > 1 && dueToday ? dueToday.amount_usd : s.total_usd;
+  const actionAmountLabel = s.schedule.length > 1 && dueToday ? 'Pagas hoy' : 'Total del pedido';
   const productCount = s.groups.flatMap((g) => g.lines).length;
   const unitCount = s.groups.flatMap((g) => g.lines).reduce((sum, l) => sum + l.quantity, 0);
   const nextTitle = step === 0 ? 'Continuar a entregas' : step === 1 ? activeIndex < s.groups.length - 1 ? 'Siguiente entrega' : 'Continuar al plan de pago' : 'Revisar pedido';
@@ -463,15 +465,15 @@ function CheckoutSession({ buyerId, requestedPlan }: { buyerId: string; requeste
                 <ProductImage productId={l.product_id} variantId={l.variant_id} productIsDemo={false} path={l.image_path} aspect={1} fit="contain" radius={6} style={{ width: 48 }} />
                 <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
                   <Text variant="bodySmall" style={{ fontFamily: 'PlusJakartaSans_600SemiBold' }}>{l.title}</Text>
-                  <Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text>
+                  <Text variant="caption" color="textSecondary">{variantDisplayTitle(l.variant_title) ? `${variantDisplayTitle(l.variant_title)} · ` : ''}Cantidad: {l.quantity}</Text>
                   {productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}
-                  <Text variant="label" tabular>{formatUSD(l.line_total_usd)}</Text>
+                  <Text variant="label" tabular>{formatOfferPrice(l.line_total_usd)}</Text>
                 </View>
               </View>)}
               <View style={{ gap: 3, paddingTop: 4 }}>
                 <Text variant="caption" color="textSecondary">{g.label}</Text>
                 {g.selected_shipping ? <>
-                  <Text variant="bodySmall">{g.selected_shipping.name} · {Number(g.selected_shipping.cost_usd) === 0 ? 'Gratis' : formatUSD(g.selected_shipping.cost_usd)}</Text>
+                  <Text variant="bodySmall">{g.selected_shipping.name} · {Number(g.selected_shipping.cost_usd) === 0 ? 'Gratis' : formatOfferPrice(g.selected_shipping.cost_usd)}</Text>
                   <Text variant="caption" color="textSecondary">{describeEtaDates(g.selected_shipping.eta_min_date, g.selected_shipping.eta_max_date)}{g.selected_shipping.kind !== 'home_delivery' ? ' · retiras tú' : ''}{g.selected_shipping.is_demo && !isPrivateCatalogPresentation ? ' · tarifa de ejemplo' : ''}</Text>
                 </> : null}
               </View>
@@ -485,9 +487,9 @@ function CheckoutSession({ buyerId, requestedPlan }: { buyerId: string; requeste
             <PaymentSchedule summary={s} />
           </ReviewSection>
           <View testID="checkout-summary-detail" style={{ gap: 8 }}>
-            <SummaryRow label="Productos" value={formatUSD(s.items_usd)} />
-            <SummaryRow label="Envío" value={s.needs_shipping ? 'Por definir' : Number(s.shipping_usd) === 0 ? 'Gratis' : formatUSD(s.shipping_usd)} />
-            {Number(s.financing_usd) > 0 ? <SummaryRow label="Recargo por cuotas" value={formatUSD(s.financing_usd)} /> : null}
+            <SummaryRow label="Productos" value={formatOfferPrice(s.items_usd)} />
+            <SummaryRow label="Envío" value={s.needs_shipping ? 'Por definir' : Number(s.shipping_usd) === 0 ? 'Gratis' : formatOfferPrice(s.shipping_usd)} />
+            {Number(s.financing_usd) > 0 ? <SummaryRow label="Recargo por cuotas" value={formatOfferPrice(s.financing_usd)} /> : null}
             <Text variant="caption" color="textSecondary">Al confirmar se crea el pedido y se reservan tus productos. El pago viene después.</Text>
           </View>
         </View> : null}
@@ -497,13 +499,13 @@ function CheckoutSession({ buyerId, requestedPlan }: { buyerId: string; requeste
       <BottomBar testID="checkout-bottom-bar" maxWidth={MAX_W} onHeightChange={setBarHeight} tone={step === 3 ? 'brand' : 'default'}>
         {blocking ? <Text variant="caption" color="danger" style={step === 3 ? { color: palette.coral[100] } : undefined}>{blocking}</Text> : null}
         {step === 3 ? <>
-          <SummaryRow label="Total del pedido" value={formatUSD(s.total_usd)} strong inverse testID="checkout-total" />
-          {s.schedule.length > 1 ? <SummaryRow label="Pagas hoy" value={formatUSD(firstPayment ?? s.total_usd)} inverse /> : null}
+          <SummaryRow label="Total del pedido" value={formatOfferPrice(s.total_usd)} strong inverse testID="checkout-total" />
+          {s.schedule.length > 1 && dueToday ? <SummaryRow label="Pagas hoy" value={formatOfferPrice(dueToday.amount_usd)} inverse /> : null}
           <Button testID="checkout-place" title="Confirmar pedido" variant="inverse" size="lg" full loading={preparing || place.isPending || preview.isFetching} disabled={!canPlace} onPress={confirm} />
         </> : <>
           {step >= 2 ? <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
-            <Text variant="subtitle">{s.schedule.length > 1 ? 'Pagas hoy' : 'Total'}</Text>
-            <ChangingText value={formatUSD(firstPayment ?? s.total_usd)}><Text variant="priceLarge" style={{ fontSize: 22 }} tabular>{formatUSD(firstPayment ?? s.total_usd)}</Text></ChangingText>
+            <Text variant="subtitle">{actionAmountLabel}</Text>
+            <ChangingText value={formatOfferPrice(actionAmount)}><Text variant="priceLarge" style={{ fontSize: 22 }} tabular>{formatOfferPrice(actionAmount)}</Text></ChangingText>
           </View> : null}
           <Button testID="checkout-next" title={nextTitle} size="lg" full loading={preview.isFetching} disabled={!canContinue} onPress={advance} />
           <Text variant="caption" color="textMuted" align="center">Todavía no se crea el pedido ni se realiza ningún cobro.</Text>
@@ -532,7 +534,7 @@ function PaymentSchedule({ summary: s }: { summary: CheckoutSummary }) {
     {shown.distribution ? <Text variant="bodySmall" color="textSecondary">{shown.distribution}</Text> : null}
     {shown.rows.map(({ item: x, label, due }) => <View key={x.seq} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 }}>
       <Text variant="bodySmall" color="textSecondary" style={{ flexShrink: 1 }}>{label} · {due}</Text>
-      <Text variant="label" tabular>{formatUSD(x.amount_usd)}</Text>
+      <Text variant="label" tabular>{formatOfferPrice(x.amount_usd)}</Text>
     </View>)}
     <Text variant="caption" color="textMuted">Tu saldo pendiente queda en dólares. Si pagas en bolívares, el monto se calcula con la tasa del día de cada pago.</Text>
   </View>;
@@ -561,7 +563,7 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
         {(allProducts ? g.lines : g.lines.slice(0, 2)).map((l) => (
           <View key={l.variant_id} style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
             <ProductImage productId={l.product_id} variantId={l.variant_id} productIsDemo={false} path={l.image_path} aspect={1} style={{ width: 44 }} radius={4} />
-            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text>{productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}<Text variant="caption" color="textSecondary">{l.variant_title ? `${l.variant_title} · ` : ''}Cantidad: {l.quantity}</Text></View>
+            <View style={{ flex: 1, minWidth: 0, gap: 2 }}><Text variant="bodySmall" numberOfLines={2}>{l.title}</Text>{productConditionLabel(l.product_condition)?<Text variant="caption">{productConditionLabel(l.product_condition)}</Text>:null}<Text variant="caption" color="textSecondary">{variantDisplayTitle(l.variant_title) ? `${variantDisplayTitle(l.variant_title)} · ` : ''}Cantidad: {l.quantity}</Text></View>
           </View>
         ))}
         {g.lines.length > 2 ? <Button title={allProducts ? 'Ver menos productos' : `Ver los ${g.lines.length} productos`} variant="ghost" onPress={() => setAllProducts((x) => !x)} /> : null}
@@ -572,13 +574,13 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
       ) : g.shipping_options.length === 0 ? (
         <View style={{ padding: 14 }}><Text variant="bodySmall" color="danger">No hay envío disponible a esta dirección para esta entrega.</Text></View>
       ) : <>
-        <ScalePressable testID={`delivery-choice-${index}`} disabled={disabled} accessibilityRole="button" accessibilityLabel={`Cambiar envío de ${label}${sel ? `. ${sel.name}, ${Number(sel.cost_usd) === 0 ? 'gratis' : formatUSD(sel.cost_usd)}${sel.is_demo && !isPrivateCatalogPresentation ? ', tarifa de ejemplo' : ''}` : ''}`} onPress={() => setChoosing(true)} style={{ paddingHorizontal: 14, paddingVertical: 12, minHeight: 68, gap: 4, opacity: disabled ? 0.4 : 1 }}>
+        <ScalePressable testID={`delivery-choice-${index}`} disabled={disabled} accessibilityRole="button" accessibilityLabel={`Cambiar envío de ${label}${sel ? `. ${sel.name}, ${Number(sel.cost_usd) === 0 ? 'gratis' : formatOfferPrice(sel.cost_usd)}${sel.is_demo && !isPrivateCatalogPresentation ? ', tarifa de ejemplo' : ''}` : ''}`} onPress={() => setChoosing(true)} style={{ paddingHorizontal: 14, paddingVertical: 12, minHeight: 68, gap: 4, opacity: disabled ? 0.4 : 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <Icon name="truck" size={18} color={t.colors.brand} />
             <Text variant="label" style={{ flex: 1 }}>{sel?.name ?? 'Elegir envío'}</Text>
             <Icon name="chevron-right" size={18} color={t.colors.brand} />
           </View>
-          {sel ? <Text variant="caption" color="textSecondary">{Number(sel.cost_usd) === 0 ? 'Gratis' : formatUSD(sel.cost_usd)} · {describeEtaDates(sel.eta_min_date, sel.eta_max_date)}{sel.kind !== 'home_delivery' ? ' · retiras tú' : ''}</Text> : null}
+          {sel ? <Text variant="caption" color="textSecondary">{Number(sel.cost_usd) === 0 ? 'Gratis' : formatOfferPrice(sel.cost_usd)} · {describeEtaDates(sel.eta_min_date, sel.eta_max_date)}{sel.kind !== 'home_delivery' ? ' · retiras tú' : ''}</Text> : null}
           {sel?.is_demo && !isPrivateCatalogPresentation ? <Text variant="caption" color="textSecondary">Tarifa de ejemplo</Text> : null}
           <Text variant="caption" color="brand">Cambiar opciones de envío</Text>
         </ScalePressable>
@@ -592,7 +594,7 @@ function DeliveryCard({ group: g, index, total, onSelect, disabled }: { group: D
               disabled={disabled}
               title={o.name}
               subtitle={`${describeEtaDates(o.eta_min_date, o.eta_max_date)}${o.kind !== 'home_delivery' ? ' · retiras tú' : ''}`}
-              trailing={Number(o.cost_usd) === 0 ? 'Gratis' : formatUSD(o.cost_usd)}
+              trailing={Number(o.cost_usd) === 0 ? 'Gratis' : formatOfferPrice(o.cost_usd)}
               badge={o.is_demo && !isPrivateCatalogPresentation ? 'Tarifa de ejemplo' : undefined}
               onPress={() => { onSelect(o.method_id); setChoosing(false); }}
             />

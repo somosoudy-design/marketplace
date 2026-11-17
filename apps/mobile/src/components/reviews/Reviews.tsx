@@ -1,3 +1,4 @@
+import { variantDisplayTitle } from '@kora/core';
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { PublicReview, ReviewSummary } from '@kora/api';
 import { View } from 'react-native';
@@ -104,7 +105,7 @@ export function ReviewItem({ review: r, showProduct, storeName }: { review: Publ
         <Icon name="badge-check" size={13} color={t.colors.success} />
         <Text variant="caption" color="success">Compra verificada</Text>
         <Text variant="caption" color="textMuted">
-          {r.variant_title ? `· ${r.variant_title}` : ''}{showProduct && r.product_title ? ` · ${r.product_title}` : ''}{r.is_demo && !isPrivateCatalogPresentation ? ' · Demostración' : ''}
+          {variantDisplayTitle(r.variant_title) ? `· ${variantDisplayTitle(r.variant_title)}` : ''}{showProduct && r.product_title ? ` · ${r.product_title}` : ''}{r.is_demo && !isPrivateCatalogPresentation ? ' · Demostración' : ''}
         </Text>
       </View>
       {r.reply_body ? (

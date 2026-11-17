@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-11-09T17:43:55.546042+00:00",
+  "stoppedPostgrest": [
+    {
+      "pid": 50865,
+      "component": "postgrest.pid",
+      "alreadyExited": true
+    },
+    {
+      "pid": 51479,
+      "component": "postgrest-final.pid",
+      "alreadyExited": true
+    },
+    {
+      "pid": 51955,
+      "component": "postgrest-guard.pid",
+      "alreadyExited": true
+    }
+  ],
+  "postgresStopped": true,
+  "dataDir": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/ugc-block1-20261109/cluster/data",
+  "noOtherProcessesTargeted": true,
+  "reconciliation": "First pass stopped original REST; a later task REST PID had already exited. Reconciled known PIDs rather than relaunching or targeting other processes."
+}

@@ -21,6 +21,17 @@ describe('web payment preference through authentication', () => {
       expect(guestReturnPath(path)).toBe('/buscar');
     }
   });
+  it.each(['/pedidos', '/pedidos/order-id', '/direcciones', '/cuenta?foo=1', '/cuenta/', '/p/item/private', '/tienda/store/private', '/unknown'])('keeps guest navigation out of protected or unknown pages: %s', path => {
+    expect(guestReturnPath(path)).toBe('/buscar');
+  });
+  it.each(['/', '/buscar?q=audio', '/carrito?plan=three_parts', '/contacto', '/devoluciones', '/eliminar-cuenta', '/favoritos', '/privacidad', '/terminos', '/p/audifonos?variant=purple', '/tienda/mayami', '/p/audífonos', '/buscar/'])('preserves published guest routes and product selection: %s', path => {
+    const normalized = new URL(path, 'https://mayami.invalid');
+    expect(guestReturnPath(path)).toBe(normalized.pathname + normalized.search);
+  });
+  it('normalizes the checkout trailing slash while keeping only its valid plan', () => {
+    expect(guestReturnPath('/checkout/?plan=three_parts&variant=private')).toBe('/carrito?plan=three_parts');
+    expect(guestReturnPath('/checkout/?plan=three_parts&plan=full')).toBe('/carrito');
+  });
   it('keeps recovery purpose separate from the nested payment preference', () => {
     const url = new URL(callbackPath('/checkout?plan=three_parts', true), 'https://mayami.invalid');
     expect(url.searchParams.get('tipo')).toBe('recuperar');

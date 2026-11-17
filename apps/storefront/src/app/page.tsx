@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, ShoppingBag } from 'lucide-react';
-import { publicApi, publicCatalogMetadata } from '@/lib/server';
-import { ProductGrid } from '@/components/product-card';
-import { ProductBanner } from '@/components/product-banner';
+import { ArrowUpRight, ShoppingBag } from 'lucide-react';
+import { publicApi } from '@/lib/server';
+import { HomeCampaigns } from '@/components/home-campaigns';
 import { ProductPhoto } from '@/components/photo';
 import { Failure } from '@/components/states';
-import { catalogText } from '@/lib/photos';
+import { readDiscovery } from '@/lib/discovery-server';
+import { DiscoveryFeed } from '@/components/discovery-feed';
+import { categoryNavigationMask } from '@/lib/category-navigation-art';
 export const dynamic = 'force-dynamic';
 export default async function Home() {
   let home;
@@ -14,87 +15,52 @@ export default async function Home() {
   } catch {
     return <Failure />;
   }
-  const products = [
-    ...new Map([...home.recommended, ...home.collections.flatMap((c) => c.products)].map((p) => [p.id, p])).values(),
-  ];
-  const featured = products.slice(0, 6);
-  const seen = new Set(featured.map((p) => p.id));
-  const collections = home.collections
-    .filter((c) => c.products.length > 0)
-    .slice(0, 3)
-    .map((c) => {
-      const unique = c.products.filter((p) => !seen.has(p.id)).slice(0, 6);
-      unique.forEach((p) => seen.add(p.id));
-      return { ...c, unique };
-    });
-  let metadata;
-  try { metadata = await publicCatalogMetadata([...featured, ...collections.flatMap(c => c.unique)].map(p => p.id)); } catch { return <Failure message="No pudimos cargar las opciones del catálogo." />; }
+  const seed = crypto.randomUUID();
+  let discovery;
+  try {
+    discovery = await readDiscovery(seed, 0);
+  } catch {
+    return <Failure message="No pudimos cargar los productos." />;
+  }
+  const products = discovery.products;
   return (
     <>
       <div className="wrap market-home">
-        <section className="market-discovery" aria-label="Descubre Mayami">
-          <ProductBanner products={products} metadata={metadata} />
+        <HomeCampaigns categories={home.categories} />
+        <div className="home-categories">
           <nav className="market-category-feature" aria-label="Categorías">
             {home.categories.map((c) => {
-              const product = products.find(p => p.image_path && p.category_id === c.id);
-              const photoPath = product?.image_path ?? (c.image_path && !c.image_path.startsWith('demo/') ? c.image_path : null);
+              const product = products.find((p) => p.image_path && p.category_id === c.id);
+              const photoPath =
+                product?.image_path ?? (c.image_path && !c.image_path.startsWith('demo/') ? c.image_path : null);
               return (
-                <Link prefetch={false} key={c.id} className="market-category-tile" href={`/buscar?category=${c.slug}`}>
-                  <div>
-                    <h2>{c.name}</h2>
-                    <span>
-                      Ver productos <ArrowRight size={16} />
-                    </span>
+                <Link
+                  prefetch={false}
+                  key={c.id}
+                  className="market-category-tile"
+                  href={`/buscar?category=${encodeURIComponent(c.slug)}`}
+                >
+                  <div className="market-category-art" aria-hidden="true">
+                    {photoPath ? (
+                      <ProductPhoto
+                        id={product?.id ?? c.id}
+                        path={photoPath}
+                        demo={product?.is_demo ?? false}
+                        exact
+                        title=""
+                        alphaMask={categoryNavigationMask(c.slug, photoPath)}
+                      />
+                    ) : (
+                      <ShoppingBag className="market-category-icon" size={36} aria-hidden="true" />
+                    )}
                   </div>
-                  {photoPath ? (
-                    <ProductPhoto id={product?.id ?? c.id} path={photoPath} demo={product?.is_demo ?? false} exact title="" />
-                  ) : (
-                    <ShoppingBag className="market-category-icon" size={36} aria-hidden="true" />
-                  )}
+                  <h2>{c.name}</h2>
                 </Link>
               );
             })}
           </nav>
-        </section>
-        <nav className="market-category-nav" aria-label="Más categorías">
-          {home.categories.slice(4).map((c) => (
-            <Link prefetch={false} key={c.id} href={`/buscar?category=${c.slug}`}>
-              {c.name}
-              <ArrowUpRight size={15} />
-            </Link>
-          ))}
-        </nav>
-        <section className="catalog-section market-featured">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">SELECCIÓN MAYAMI</span>
-              <h2>Productos destacados</h2>
-            </div>
-            <Link prefetch={false} href="/buscar">
-              Ver todo <ArrowRight size={17} />
-            </Link>
-          </div>
-          <ProductGrid products={featured} metadata={metadata} />
-        </section>
-        <div className="market-collections">
-          {collections.map((c) => (
-            <section
-              className={`catalog-section market-collection${c.unique.length > 3 ? ' market-collection-wide' : ''}`}
-              key={c.id}
-            >
-              <div className="section-heading">
-                <div>
-                  <h2>{catalogText(c.title, true)}</h2>
-                  {c.subtitle && <p>{catalogText(c.subtitle, true)}</p>}
-                </div>
-                <Link prefetch={false} href={`/buscar?collection=${encodeURIComponent(c.slug)}`}>
-                  Ver colección <ArrowRight size={17} />
-                </Link>
-              </div>
-              {c.unique.length > 0 && <ProductGrid products={c.unique} metadata={metadata} />}
-            </section>
-          ))}
         </div>
+        <DiscoveryFeed key={seed} initial={discovery} seed={seed} />
         {home.stores.length > 0 && (
           <section className="catalog-section">
             <div className="section-heading">

@@ -5,10 +5,11 @@ import { planFromSearch, withPlan } from '@kora/core';
 import { authHref } from '@/lib/auth-return';
 import { useAccount } from '@/lib/providers';
 import { Empty } from './states';
-export function Buyer({ children }: { children: (buyerId: string) => ReactNode }) {
-  return <Suspense fallback={<section className="state" role="status">Cargando tu cuenta…</section>}><BuyerSession>{children}</BuyerSession></Suspense>;
+type BuyerProps = { children: (buyerId: string) => ReactNode; guestTitle?: string };
+export function Buyer({ children, guestTitle }: BuyerProps) {
+  return <Suspense fallback={<section className="state" role="status">Cargando tu cuenta…</section>}><BuyerSession guestTitle={guestTitle}>{children}</BuyerSession></Suspense>;
 }
-function BuyerSession({ children }: { children: (buyerId: string) => ReactNode }) {
+function BuyerSession({ children, guestTitle = 'Inicia sesión para continuar' }: BuyerProps) {
   const { session, ready } = useAccount();
   const path = usePathname();
   const search = useSearchParams();
@@ -23,7 +24,7 @@ function BuyerSession({ children }: { children: (buyerId: string) => ReactNode }
   if (!session)
     return (
       <Empty
-        title="Inicia sesión para continuar"
+        title={guestTitle}
         text="Accede con la cuenta con la que realizas tus compras."
         href={authHref('/cuenta', back)}
         action="Iniciar sesión"

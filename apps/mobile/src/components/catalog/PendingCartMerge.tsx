@@ -1,3 +1,4 @@
+import { variantDisplayTitle } from '@kora/core';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -30,7 +31,7 @@ export function PendingCartMerge() {
   };
   return <View testID="cart-sync-pending" style={{gap:10,marginTop:12}}>
     <Banner tone="warning" title="Productos por incorporar" body={cartSyncError} />
-    {pending.data?.lines.map(line=><View key={line.variant_id} style={{gap:4}}><Text variant="bodySmall">{line.title}{line.variant_title?` · ${line.variant_title}`:''} · {line.quantity}</Text><Button testID={`cart-sync-remove-${line.variant_id}`} title="Quitar de estos productos" variant="ghost" disabled={busy||cartSyncing} onPress={()=>setRemove(line)}/></View>)}
+    {pending.data?.lines.map(line=><View key={line.variant_id} style={{gap:4}}><Text variant="bodySmall">{line.title}{variantDisplayTitle(line.variant_title)?` · ${variantDisplayTitle(line.variant_title)}`:''} · {line.quantity}</Text><Button testID={`cart-sync-remove-${line.variant_id}`} title="Quitar de estos productos" variant="ghost" disabled={busy||cartSyncing} onPress={()=>setRemove(line)}/></View>)}
     {error?<Banner tone="danger" body={error}/>:null}
     <Button testID="cart-sync-retry" title="Reintentar incorporación" variant="secondary" disabled={busy||cartSyncing||pending.isFetching} onPress={()=>pending.data?void reconcilePending():retryCartSync()}/>
     <ConfirmSheet visible={!!remove} title="¿Quitar este producto?" body="Primero comprobaremos la operación anterior. Si ya se incorporó, actualizaremos tu carrito para que puedas revisar su cantidad." confirm="Quitar" loading={busy} error={error} onConfirm={()=>void reconcilePending(remove?.variant_id)} onClose={()=>!busy&&setRemove(null)}/>

@@ -1,3 +1,4 @@
+import { variantDisplayTitle } from '@kora/core';
 import type { FulfillmentStep, SellerFulfillment } from '@kora/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
@@ -91,7 +92,7 @@ function Delivery({ f, steps, refresh }: { f: SellerFulfillment; steps: Fulfillm
     <Badge label={label(f.status)} tone={f.status === 'delivered' ? 'success' : 'brand'} />
     <Badge label={f.payment_level === 'full' ? 'Pago confirmado' : f.payment_level === 'down_payment' ? 'Anticipo confirmado' : 'Esperando pago'} tone={f.payment_level === 'none' ? 'warning' : 'success'} />
     <Card style={{ gap:12 }}><Text variant="subtitle">Qué sigue</Text><Text testID="seller-next-action" color="textSecondary">{current?.is_terminal || f.order_status === 'cancelled' ? 'Esta entrega está cerrada. Puedes consultar su historial.' : options.length ? `Puedes actualizar a «${chosen!.label}» cuando completes esa tarea.` : next && !next.seller_can_set ? 'El siguiente paso lo gestiona la plataforma. No necesitas actualizarlo desde tu tienda.' : 'Espera a que la plataforma confirme el pago requerido. No prepares ni despaches todavía.'}</Text></Card>
-    <Card style={{ gap:12 }}><Text variant="subtitle">Productos de esta entrega</Text>{f.items.map((item) => <Text key={item.id}>{item.quantity} × {item.title}{item.variant_title && item.variant_title !== 'Única' ? ` · ${item.variant_title}` : ''}{item.refunded_qty ? ` · ${item.refunded_qty} reembolsadas` : ''}</Text>)}</Card>
+    <Card style={{ gap:12 }}><Text variant="subtitle">Productos de esta entrega</Text>{f.items.map((item) => <Text key={item.id}>{item.quantity} × {item.title}{variantDisplayTitle(item.variant_title) ? ` · ${variantDisplayTitle(item.variant_title)}` : ''}{item.refunded_qty ? ` · ${item.refunded_qty} reembolsadas` : ''}</Text>)}</Card>
     <Card style={{ gap:10 }}><Text variant="subtitle">Destino y transporte</Text><Text>{addr.anonymized ? `Datos anonimizados · ${String(addr.city ?? '')}` : [addr.recipient, addr.phone, addr.line1, addr.municipality, addr.city, addr.reference].filter(Boolean).join(' · ') || 'Sin dirección registrada'}</Text>
       <Text color="textSecondary">{f.shipping_method_name ?? 'Sin método de envío'}</Text><Text color="textSecondary">{f.carrier_name ?? 'Sin transportista registrado'}{f.tracking_number ? ` · guía ${f.tracking_number}` : ''}</Text>
     </Card>

@@ -1,5 +1,5 @@
 'use client';
-import { FLOW_LABEL } from '@kora/core';
+import { FLOW_LABEL, variantDisplayTitle } from '@kora/core';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useSteps } from '@/components/Fulfillment';
@@ -49,7 +49,7 @@ export default function SellerSales() {
               <tr key={s.id} className={s.order_status === 'cancelled' ? 'opacity-50' : undefined}>
                 <Td className="whitespace-nowrap text-ink-2">{date(s.placed_at)}</Td>
                 <Td className="whitespace-nowrap font-semibold">{s.order_number}</Td>
-                <Td className="max-w-[280px]"><span className="block truncate">{s.title}</span>{s.variant_title && s.variant_title !== 'Única' ? <span className="text-[12px] text-ink-3">{s.variant_title}</span> : null}</Td>
+                <Td className="max-w-[280px]"><span className="block truncate">{s.title}</span>{variantDisplayTitle(s.variant_title) ? <span className="text-[12px] text-ink-3">{variantDisplayTitle(s.variant_title)}</span> : null}</Td>
                 <Td className="tabular">{s.quantity}{s.refunded_qty ? <span className="text-ink-3"> (−{s.refunded_qty})</span> : null}</Td>
                 <Td className="tabular">{money(s.line_total_usd, 'USD')}</Td>
                 <Td className="tabular whitespace-nowrap">{money(s.commission_usd, 'USD')} <span className="text-ink-3">· {Number(s.commission_pct)} %</span></Td>

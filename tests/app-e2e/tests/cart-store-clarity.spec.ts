@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import pg from 'pg';
-import { formatUSD } from '../../../packages/core/src/money';
+import { formatOfferPrice as formatUSD } from '../../../packages/core/src/commerce-presentation';
 import { asOn, databaseUrl, newBuyer } from './support/db';
 import { testCartProduct, cleanupCartFixtures } from '../storefront/fixtures';
 test.afterEach(cleanupCartFixtures);
@@ -63,7 +63,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
       expect(subtotalBox).not.toBeNull();
       expect(continueBox).not.toBeNull();
       expect(continueBox!.height).toBeGreaterThanOrEqual(44);
-      expect(subtotalBox!.x + subtotalBox!.width).toBeLessThanOrEqual(continueBox!.x);
+      // Currency stays explicit; the footer may wrap on narrow screens without overlapping the action.
+      expect(subtotalBox!.x + subtotalBox!.width <= continueBox!.x || subtotalBox!.y + subtotalBox!.height <= continueBox!.y).toBe(true);
       expect(continueBox!.x + continueBox!.width).toBeLessThanOrEqual(320);
       await expect(page.getByTestId('buyer-tab-cart')).toHaveAccessibleName('Carrito, 3 unidades');
       await page.getByRole('tab', { name: 'Inicio', exact: true }).click();
@@ -142,7 +143,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
 }
 
 test('visitante distingue dos unidades del precio de una y continúa por acceso', async ({ page }) => {
-  const response = page.waitForResponse((r) => r.url().endsWith('/rpc/product_detail') && r.ok());
+  const response = page.waitForResponse((r) => r.url().endsWith('/rpc/product_detail_commercial') && r.ok());
   await page.goto('/p/ugreen-cable-usb-c-100w');
   const product = await (await response).json();
   const first = product.variants.find((v: { active: boolean; stock: number | null }) => v.active && (v.stock == null || v.stock > 0)) ?? product.variants[0];

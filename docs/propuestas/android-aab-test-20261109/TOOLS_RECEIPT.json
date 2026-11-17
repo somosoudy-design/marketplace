@@ -1,0 +1,62 @@
+{
+  "observedAt": "2026-11-09T16:43:41.013563+00:00",
+  "file": "/Users/brandeastudio/marketplace/.local/android-aab-test-20261109/MAYAMI-0.1.0-vc3.aab",
+  "aabSha256": "eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23",
+  "results": [
+    {
+      "output": "bundletool-validate.log",
+      "command": [
+        "python3",
+        "/Users/brandeastudio/marketplace/.local/android-aab-inspect-20261108/bundletool-read.py",
+        "validate",
+        "--bundle=/Users/brandeastudio/marketplace/.local/android-aab-test-20261109/MAYAMI-0.1.0-vc3.aab"
+      ],
+      "exitCode": 0,
+      "outputSha256": "c746ee15d276671f7fdab2a89ca07c0a7a0ab7bf525a03b7bf92b0afddfb8279"
+    },
+    {
+      "output": "AndroidManifest.xml",
+      "command": [
+        "python3",
+        "/Users/brandeastudio/marketplace/.local/android-aab-inspect-20261108/bundletool-read.py",
+        "dump",
+        "manifest",
+        "--bundle=/Users/brandeastudio/marketplace/.local/android-aab-test-20261109/MAYAMI-0.1.0-vc3.aab"
+      ],
+      "exitCode": 0,
+      "outputSha256": "f65bab95d07373bfc2ef33090d01818c29ee0ba72d1ff3cc20148c6552e540f4"
+    },
+    {
+      "output": "BundleConfig.json",
+      "command": [
+        "python3",
+        "/Users/brandeastudio/marketplace/.local/android-aab-inspect-20261108/bundletool-read.py",
+        "dump",
+        "config",
+        "--bundle=/Users/brandeastudio/marketplace/.local/android-aab-test-20261109/MAYAMI-0.1.0-vc3.aab"
+      ],
+      "exitCode": 0,
+      "outputSha256": "c050ac241584887c43e487f1225563de07bfd8c1617b8be3d75f51dadec1d646"
+    },
+    {
+      "output": "JAR_PAYLOAD_SIGNATURE.json",
+      "command": [
+        "/Applications/Android Studio.app/Contents/jbr/Contents/Home/bin/java",
+        "/Users/brandeastudio/marketplace/.local/android-aab-20261108/VerifyAab.java",
+        "/Users/brandeastudio/marketplace/.local/android-aab-test-20261109/MAYAMI-0.1.0-vc3.aab"
+      ],
+      "exitCode": 0,
+      "outputSha256": "162877a8c1f3762d8af3eacf609c131b056766ebf11f02b38552d78682ede687"
+    },
+    {
+      "output": "ELF_REPORT.json",
+      "command": [
+        "python3",
+        "/Users/brandeastudio/marketplace/.local/android-aab-20261108/relro-independent/inspect-aab-elf-v2.py",
+        "/Users/brandeastudio/marketplace/.local/android-aab-test-20261109/MAYAMI-0.1.0-vc3.aab"
+      ],
+      "exitCode": 0,
+      "outputSha256": "672ef7e1bd877cd39f415277af685378e8e2cbc6137a819e0cd4a5ff7c7955e1"
+    }
+  ]
+}

@@ -24,3 +24,14 @@ export async function catalogMetadataMap(ids: readonly string[], read: (ids: str
   for (let start = 0; start < unique.length; start += 100) rows.push(...await read(unique.slice(start, start + 100)));
   return Object.fromEntries(rows.map(row => [row.product_id, row]));
 }
+
+/** Hide only the already-selected generic option, never meaningful choices or URL recovery. */
+export function isRedundantSingleOption(variants: readonly { id: string; title: string; options?: Record<string, string>; color?: string | null }[], selectedId: string | undefined): boolean {
+  if (variants.length !== 1) return false;
+  const only = variants[0];
+  if (!only) return false;
+  return only.id === selectedId
+    && only.title.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() === 'unica'
+    && Object.keys(only.options ?? {}).length === 0
+    && !only.color?.trim();
+}

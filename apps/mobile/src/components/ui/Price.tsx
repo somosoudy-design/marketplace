@@ -1,4 +1,4 @@
-import { formatUSD, formatVES, D } from '@kora/core';
+import { formatOfferPrice, formatVES, D } from '@kora/core';
 import { View } from 'react-native';
 import { useTheme } from '@/theme';
 import { Badge } from './Badge';
@@ -33,13 +33,13 @@ export function Price({ usd, compareAt, size = 'md', vesRate, divisas, muted, on
   const ves = vesRate ? `≈ ${formatVES(D(usd).times(vesRate.rate))} ${vesRate.demo ? 'con tasa de demostración' : 'a la tasa de hoy'}` : null;
   return (
     <View style={{ gap: size === 'lg' ? 8 : 0 }}>
-      <View accessible accessibilityLabel={`Precio ${formatUSD(usd)}${showCompare ? `, antes ${formatUSD(compareAt)}` : ''}`} style={{ flexDirection: 'row', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
+      <View accessible accessibilityLabel={`Precio ${formatOfferPrice(usd)}${showCompare ? `, antes ${formatOfferPrice(compareAt)}` : ''}`} style={{ flexDirection: 'row', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
         <Text variant={size === 'lg' ? 'priceLarge' : 'price'} color={muted ? 'textMuted' : 'text'} tabular style={size === 'sm' ? { fontSize: 15 } : null}>
-          {formatUSD(usd)}
+          {formatOfferPrice(usd)}
         </Text>
         {showCompare ? (
           <Text variant="caption" color="textMuted" style={{ textDecorationLine: 'line-through' }} tabular>
-            {formatUSD(compareAt)}
+            {formatOfferPrice(compareAt)}
           </Text>
         ) : null}
         {showCompare && size === 'lg' && off >= 1 ? <Badge label={`−${off} %`} tone="danger" style={{ alignSelf: 'center' }} /> : null}
@@ -48,12 +48,12 @@ export function Price({ usd, compareAt, size = 'md', vesRate, divisas, muted, on
         <View
           testID="price-divisas"
           accessible
-          accessibilityLabel={`${formatUSD(inDivisas)} pagando con ${divisas!.label}, ${String(saving).replace('.', ',')} % menos`}
+          accessibilityLabel={`${formatOfferPrice(inDivisas)} pagando con ${divisas!.label}, ${String(saving).replace('.', ',')} % menos`}
           style={{ alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingLeft: 9, paddingRight: 11, paddingVertical: 5, borderRadius: t.radii.pill, backgroundColor: t.colors.successSoft }}
         >
           <Icon name="tag" size={14} color={t.colors.success} strokeWidth={2.2} />
           <Text variant="label" color="success" tabular>
-            {formatUSD(inDivisas)} con {divisas!.label}
+            {formatOfferPrice(inDivisas)} con {divisas!.label}
           </Text>
           <Text variant="caption" color="success" tabular>· {String(saving).replace('.', ',')} % menos</Text>
         </View>

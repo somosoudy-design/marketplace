@@ -116,7 +116,6 @@ function FavoriteControl({ id, title }: Props) {
       >
         <span key={pulse} className="favorite-glyph" data-pulse={pulse > 0} aria-hidden="true">
           <Heart size={19} fill={active ? 'currentColor' : 'none'} />
-          {pulse > 0 && active && <span className="favorite-burst" />}
         </span>
       </button>
       <dialog ref={dialog} className="favorite-error-dialog" aria-labelledby={titleId} onClose={() => setFailure(null)}>

@@ -14,6 +14,7 @@ import { date, currency } from '@/lib/purchase';
 import { QueryError } from './buyer';
 import { Empty } from './states';
 import { ReviewLine } from './review-line';
+import { PurchaseHelp } from './offer';
 export const ownOrderKey = (buyerId: string, id: string) => ['order', buyerId, id] as const;
 export function useOwnOrder(buyerId: string, id: string) {
   return useQuery({
@@ -252,7 +253,8 @@ export function Order({ buyerId, id }: { buyerId: string; id: string }) {
           <button className="text-button" disabled={order.isFetching} onClick={() => order.refetch()}>
             Actualizar estado
           </button>
-        </aside>
+        <PurchaseHelp />
+</aside>
       </div>
     </div>
   );

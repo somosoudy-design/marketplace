@@ -1,0 +1,11 @@
+{
+  "file": "/Users/brandeastudio/Downloads/Mayami-UGC-Bloque2-Local-2026-11-09/MAYAMI-UGC-Bloque2-Local-2026-11-09.tar.gz",
+  "bytes": 420233,
+  "sha256": "859bd8c80bd4eeeaf15754a3d2cad5c8ab75f0bf60c4ac35e2ab0b132651ccc0",
+  "source": "737839c939d8fc5a69be5027c868ae6c2da88876",
+  "tree": "ba0cc9ef2d85e65b01d6943e3189702cee21e5a1",
+  "base": "207c489e198f2c78035526c3c95be5cd8f8c4ea7",
+  "membersVerified": 77,
+  "bundleVerified": true,
+  "privateJwtConfigAndHostedSnapshotExcluded": true
+}

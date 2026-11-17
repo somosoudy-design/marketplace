@@ -1,5 +1,5 @@
 import type { ProductCard } from '@kora/api';
-import { bannerTitle, formatUSD } from '@kora/core';
+import { bannerTitle, formatOfferPrice } from '@kora/core';
 import { palette } from '@kora/design-tokens';
 import { View } from 'react-native';
 import { Icon } from '@/components/ui/Icon';
@@ -16,7 +16,7 @@ export function ProductEditorialOpening({ product, width, onOpen }: { product: P
   const metadata = useCardMetadata(product.id);
   const preview = reviewedEditorialPreview(product, metadata.data);
   const availability = preview.availability;
-  const priceLabel = preview.price == null ? metadata.isError ? 'Información no disponible' : metadata.isPending ? 'Cargando…' : 'Producto no disponible' : formatUSD(preview.price);
+  const priceLabel = preview.price == null ? metadata.isError ? 'Información no disponible' : metadata.isPending ? 'Cargando…' : 'Producto no disponible' : formatOfferPrice(preview.price);
   return (
     <TrackedSection slot="home_editorial_product" ids={[product.id]} visible={1} testID="home-hero">
       <ScalePressable

@@ -1,5 +1,5 @@
 import type { CatalogMetadata, ProductCard } from '@kora/api';
-import { presentAvailability, resolveProductSelection } from '@kora/core';
+import { presentOfferAvailability, resolveProductSelection, variantDisplayTitle } from '@kora/core';
 import { reviewedGeneralProductImages } from './selection-media';
 
 /** One explicit preview selection supplies hero price, image and destination together. */
@@ -13,7 +13,8 @@ export function reviewedEditorialPreview(product: ProductCard, metadata: Catalog
   const general = selection.mediaState === 'unclassified';
   const generalImages = reviewedGeneralProductImages(metadata ?? {}, images);
   const imagePath = !variant ? null : selection.cover?.path ?? (general ? generalImages[0]?.path ?? null : null);
-  return { variantId: price == null ? undefined : variant?.id, variantTitle: variant ? metadata?.variants.find(row => row.variant_id === variant.id)?.title ?? null : null,
+  const selectedMetadata = variant ? metadata?.variants.find(row => row.variant_id === variant.id) : undefined;
+  return { variantId: price == null ? undefined : variant?.id, variantTitle: variantDisplayTitle(selectedMetadata?.title, selectedMetadata?.options),
     price, imagePath, generalImage: general && !!imagePath, multipleVariants: variants.length > 1,
-    availability: presentAvailability(!variant || price == null ? 'unavailable' : variant.stock != null && variant.stock <= 0 ? 'sold_out' : product.availability) };
+    availability: presentOfferAvailability(product.availability, variant?.stock, !variant || price == null ? 'unavailable' : null) };
 }

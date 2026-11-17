@@ -1,8 +1,11 @@
 'use client';
-import { productConditionLabel, type ProductCondition } from '@kora/core';
+import { productConditionLabel, variantDisplayTitle, type Availability, type ProductCondition } from '@kora/core';
 import { money } from '@/lib/format';
 import { ProductPhoto } from './photo';
+import { OfferStatus } from './offer';
 type Line = {
+  availability?: Availability;
+  issue?: string | null;
   product_condition?: ProductCondition|null;
   image_scope?: 'general'|'variant';
   product_id: string;
@@ -28,8 +31,9 @@ export function ReviewLine({ line: l }: { line: Line }) {
         <h3>{l.title}</h3>
         {productConditionLabel(l.product_condition)?<p>{productConditionLabel(l.product_condition)}</p>:null}
         <p>
-          {l.variant_title} · Cantidad {l.quantity}
+          {variantDisplayTitle(l.variant_title) ? `${variantDisplayTitle(l.variant_title)} · ` : ''}Cantidad {l.quantity}
         </p>
+        {l.availability && <OfferStatus availability={l.availability} issue={l.issue} />}
         <strong>{money(l.line_total_usd)}</strong>
         {'issue' in l && l.issue ? <p className="error">Revisa la disponibilidad en tu carrito.</p> : null}
       </div>

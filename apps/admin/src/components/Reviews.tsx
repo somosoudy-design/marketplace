@@ -1,4 +1,5 @@
 'use client';
+import { variantDisplayTitle } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useToast } from './toast';
@@ -111,7 +112,7 @@ export function ReviewsBoard({ role, storeId }: { role: 'admin' | 'seller'; stor
                   </div>
                   {r.body ? <p className="text-[15px] text-ink">{r.body}</p> : <p className="text-[14px] italic text-ink-3">Sin comentario, solo calificación.</p>}
                   <p className="text-[13px] text-ink-3">
-                    {role === 'admin' ? `${name(r.user_id)} · ` : ''}Compra verificada{r.order_items?.variant_title ? ` · ${r.order_items.variant_title}` : ''} · {ago(r.created_at)}
+                    {role === 'admin' ? `${name(r.user_id)} · ` : ''}Compra verificada{variantDisplayTitle(r.order_items?.variant_title) ? ` · ${variantDisplayTitle(r.order_items?.variant_title)}` : ''} · {ago(r.created_at)}
                   </p>
                   {r.reply_body ? (
                     <div className="mt-1 border-l-2 border-line pl-3">
