@@ -100,7 +100,8 @@
           "heading": "Información que proporcionas",
           "paragraphs": [
             "Para crear y utilizar tu cuenta se procesa tu nombre, correo electrónico y la información necesaria para autenticarte. Para una entrega se solicitan destinatario, teléfono, dirección, localidad y referencias. La cédula o el RIF se recoge cuando lo proporcionas en el campo correspondiente.",
-            "También se guarda la información de tu carrito, favoritos, pedidos, entregas, pagos y comunicaciones de soporte. Cuando un método de pago requiere referencia, datos del pagador o comprobante, se procesa la información que envías para verificarlo. Evita incluir en un comprobante datos que no sean necesarios para acreditar el pago."
+            "También se guarda la información de tu carrito, favoritos, pedidos, entregas, pagos y comunicaciones de soporte. Cuando un método de pago requiere referencia, datos del pagador o comprobante, se procesa la información que envías para verificarlo. Evita incluir en un comprobante datos que no sean necesarios para acreditar el pago.",
+            "Si eliges continuar con Google, Google comparte con Mayami tu identificador de cuenta, tu correo verificado y los datos de perfil que suministre, como nombre y foto. Mayami utiliza esa información para crear o reconocer tu cuenta a través de su servicio de autenticación, Supabase. Los permisos solicitados se limitan a identificarte y leer ese perfil básico."
           ]
         },
         {
@@ -166,7 +167,7 @@
           ]
         }
       ],
-      "updatedAt": "8 de noviembre de 2026"
+      "updatedAt": "17 de noviembre de 2026"
     },
     {
       "slug": "devoluciones",

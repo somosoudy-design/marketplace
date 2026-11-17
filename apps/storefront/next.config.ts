@@ -17,6 +17,10 @@ const config: NextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
       },
+      {
+        source: '/auth/callback',
+        headers: [{ key: 'Referrer-Policy', value: 'no-referrer' }],
+      },
       ...['/cuenta', '/registro', '/recuperar', '/carrito', '/favoritos', '/checkout', '/direcciones',
         '/notificaciones', '/pedidos/:path*', '/pagar/:path*', '/auth/:path*'].map(source => ({
         source,
