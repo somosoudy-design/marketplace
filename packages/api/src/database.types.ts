@@ -3343,6 +3343,7 @@ export type Database = {
         };
         Returns: string;
       };
+      my_google_link_recovery_status: { Args: Record<PropertyKey, never>; Returns: Json };
       mark_notifications_read: { Args: { p_ids?: string[] }; Returns: number };
       mark_payout_paid: { Args: { p_method: string; p_payout_id: string; p_reference: string }; Returns: undefined };
       moderate_product: {
