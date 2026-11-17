@@ -45,11 +45,11 @@ subject = "Restablece tu contraseña de Mayami"
 content_path = "./supabase/templates/recovery.html"
 
 [auth.email.template.magic_link]
-subject = "Tu código para entrar a Kora"
+subject = "Tu código de acceso a Mayami"
 content_path = "./supabase/templates/magic_link.html"
 
 [auth.email.template.email_change]
-subject = "Confirma tu nuevo correo"
+subject = "Confirma el cambio de correo en Mayami"
 content_path = "./supabase/templates/email_change.html"
 
 # Adds app_metadata.roles / app_metadata.stores to every access token (see migrations).

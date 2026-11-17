@@ -48,9 +48,9 @@ export GOTRUE_SMTP_MAX_FREQUENCY="${AUTH_SMTP_MAX_FREQUENCY:-1s}"
 for tpl in confirmation recovery magic_link email_change; do
   export "GOTRUE_MAILER_TEMPLATES_${tpl^^}=http://127.0.0.1:2501/templates/$tpl.html"
 done
-export GOTRUE_MAILER_SUBJECTS_CONFIRMATION="Tu código de Kora" GOTRUE_MAILER_SUBJECTS_RECOVERY="Código para cambiar tu contraseña"
-export GOTRUE_MAILER_SUBJECTS_MAGIC_LINK="Tu código para entrar a Kora" GOTRUE_MAILER_SUBJECTS_EMAIL_CHANGE="Confirma tu nuevo correo"
-export GOTRUE_SMTP_HOST=127.0.0.1 GOTRUE_SMTP_PORT=2500 GOTRUE_SMTP_ADMIN_EMAIL=no-reply@example.com GOTRUE_SMTP_SENDER_NAME=Kora
+export GOTRUE_MAILER_SUBJECTS_CONFIRMATION="Confirma tu correo en Mayami" GOTRUE_MAILER_SUBJECTS_RECOVERY="Restablece tu contraseña de Mayami"
+export GOTRUE_MAILER_SUBJECTS_MAGIC_LINK="Tu código de acceso a Mayami" GOTRUE_MAILER_SUBJECTS_EMAIL_CHANGE="Confirma el cambio de correo en Mayami"
+export GOTRUE_SMTP_HOST=127.0.0.1 GOTRUE_SMTP_PORT=2500 GOTRUE_SMTP_ADMIN_EMAIL=no-reply@example.com GOTRUE_SMTP_SENDER_NAME=Mayami
 export GOTRUE_RATE_LIMIT_EMAIL_SENT=1000 GOTRUE_LOG_LEVEL=warn
 export GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED="${GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED:-false}"
 export GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_URI="pg-functions://postgres/public/custom_access_token_hook"

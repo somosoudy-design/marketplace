@@ -22,7 +22,7 @@ test('a new account is confirmed with the code from the email, and a wrong code 
   await expect(page.getByText(email)).toBeVisible();
   const code = await emailCode(email, since);
   const [mail] = await inbox(email);
-  expect(mail!.subject).toBe('Tu código de Kora');
+  expect(mail!.subject).toBe('Confirma tu correo en Mayami');
   expect(mail!.text).not.toMatch(/localhost|http/);
 
   // nothing to resend yet: the countdown runs
@@ -102,7 +102,7 @@ test('a forgotten password is replaced with a code from the email', async ({ pag
   await expect(page.getByText('Revisa tu correo')).toBeVisible();
   const code = await emailCode(b.email, since);
   const [mail] = await inbox(b.email);
-  expect(mail!.subject).toBe('Código para cambiar tu contraseña');
+  expect(mail!.subject).toBe('Restablece tu contraseña de Mayami');
 
   await page.getByTestId('code-input').fill(code);
   await page.getByTestId('reset-password').fill('corta1');

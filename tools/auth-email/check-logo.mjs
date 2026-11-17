@@ -9,7 +9,7 @@ const p = JSON.parse(await readFile(resolve(root, 'assets/brand/mayami/v3/email-
 const url = new URL(p.productionUrl);
 if (url.origin !== 'https://mayami.app' || url.pathname !== '/' + p.png.path.replace('apps/storefront/public/', '') || url.search || url.hash)
   throw new Error('Unexpected email logo destination');
-for (const name of ['confirmation', 'recovery']) {
+for (const name of ['confirmation', 'recovery', 'magic_link', 'email_change']) {
   const html = await readFile(resolve(root, `supabase/templates/${name}.html`), 'utf8');
   if (!html.includes(`src="${url}"`) || !html.includes('alt="Mayami"')) throw new Error('Email template/logo mismatch');
 }
