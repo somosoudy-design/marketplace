@@ -156,7 +156,7 @@ export default async function Search({
             <label className="filter-section" htmlFor="catalog-availability">
               <span id="catalog-availability-label">Disponibilidad</span>
               <select id="catalog-availability" aria-labelledby="catalog-availability-label" name="availability" defaultValue={availability ?? ''}>
-                <option value="">Cualquier disponibilidad</option>
+                <option value="">Todas</option>
                 {Object.entries(availabilities).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
               </select>
             </label>
@@ -211,13 +211,14 @@ export default async function Search({
                 text={page > 1 ? 'Vuelve a los resultados anteriores sin cambiar tu búsqueda.' : storeEmpty ? 'Puedes volver más adelante o explorar las otras tiendas de Mayami.' : canClear ? 'Prueba a quitar disponibilidad o precio conservando tu búsqueda y sección.' : 'Prueba otras palabras o explora otra categoría.'}
                 href={page > 1 ? pagination(page - 1) : storeEmpty ? '/' : canClear ? clearUrl : filteredUrl(['q', 'category'])}
                 action={page > 1 ? 'Volver a la página anterior' : storeEmpty ? 'Explorar Mayami' : canClear ? 'Limpiar filtros' : store ? 'Ver productos de la tienda' : collection ? 'Ver colección' : 'Ver todo el catálogo'}
-              />
-              {!storeEmpty && page === 1 && <form action="/buscar" className="empty-search">
-                {Object.entries({ store, category, collection, availability, min: single(s.min), max: single(s.max), sort })
-                  .filter(([, value]) => value).map(([name, value]) => <input key={name} type="hidden" name={name} value={value} />)}
-                <label htmlFor="empty-search-query">Editar búsqueda</label>
-                <div><input id="empty-search-query" type="search" name="q" defaultValue={q} placeholder="Busca otro producto" /><button type="submit" className="button">Buscar</button></div>
-              </form>}
+              >
+                {!storeEmpty && page === 1 && <form action="/buscar" className="empty-search">
+                  {Object.entries({ store, category, collection, availability, min: single(s.min), max: single(s.max), sort })
+                    .filter(([, value]) => value).map(([name, value]) => <input key={name} type="hidden" name={name} value={value} />)}
+                  <label htmlFor="empty-search-query">Editar búsqueda</label>
+                  <div><input id="empty-search-query" type="search" name="q" defaultValue={q} placeholder="Busca otro producto" /><button type="submit" className="button">Buscar</button></div>
+                </form>}
+              </Empty>
             </div>
           )}
         </section>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { ArrowUpRight, ShoppingBag } from 'lucide-react';
+import { ArrowUpRight, Cable, Cross, Headphones, House, Laptop, PawPrint, ShoppingBag, Sparkles, type LucideIcon } from 'lucide-react';
+import { StoreAvatar } from '@/components/store-avatar';
 import { publicApi } from '@/lib/server';
 import { HomeCampaigns } from '@/components/home-campaigns';
 import { ProductPhoto } from '@/components/photo';
@@ -7,6 +8,11 @@ import { Failure } from '@/components/states';
 import { readDiscovery } from '@/lib/discovery-server';
 import { DiscoveryFeed } from '@/components/discovery-feed';
 import { categoryNavigationMask } from '@/lib/category-navigation-art';
+const categoryIcons = new Map<string, LucideIcon>([
+  ['tecnologia', Laptop], ['audio', Headphones], ['belleza', Sparkles], ['odontologia', Cross],
+  ['hogar', House], ['mascotas', PawPrint], ['accesorios', Cable],
+]);
+
 export const dynamic = 'force-dynamic';
 export default async function Home() {
   let home;
@@ -30,6 +36,7 @@ export default async function Home() {
         <div className="home-categories">
           <nav className="market-category-feature" aria-label="Categorías">
             {home.categories.map((c) => {
+              const CategoryIcon = categoryIcons.get(c.slug) ?? ShoppingBag;
               const product = products.find((p) => p.image_path && p.category_id === c.id);
               const photoPath =
                 product?.image_path ?? (c.image_path && !c.image_path.startsWith('demo/') ? c.image_path : null);
@@ -51,7 +58,7 @@ export default async function Home() {
                         alphaMask={categoryNavigationMask(c.slug, photoPath)}
                       />
                     ) : (
-                      <ShoppingBag className="market-category-icon" size={36} aria-hidden="true" />
+                      <CategoryIcon className="market-category-icon" size={36} aria-hidden="true" />
                     )}
                   </div>
                   <h2>{c.name}</h2>
@@ -69,7 +76,7 @@ export default async function Home() {
             <div className="store-list">
               {home.stores.slice(0, 6).map((s) => (
                 <Link prefetch={false} key={s.id} href={`/buscar?store=${s.slug}`}>
-                  <span className="store-initial">{s.name.slice(0, 1)}</span>
+                  <StoreAvatar id={s.id} name={s.name} path={s.logo_path} />
                   <div>
                     <h3>{s.name}</h3>
                     {s.tagline && <p>{s.tagline}</p>}

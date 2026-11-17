@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 17 noviembre 2026 · Revisión visual de la tienda de compradores
+
+Codex integró la revisión de navegación, compra y acceso en la web adaptable. Se incorporaron pruebas de navegador para cuatro anchos, la búsqueda vacía, la ficha móvil y los formularios de cuenta. Las fotografías y los recorridos se revisaron por separado en Chrome. Seguimiento en el estado actual.
+
 ## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
 
 La mejora UI/UX ya está publicada en mayami.app y www.mayami.app: Worker `5385cbd7-94fc-4f08-b777-18e8b1a07a9a`, fuente original `b9e3051`, árbol `99026f4490a6a9ab00aa6824e4b127e002883099`. La rama remota se sincronizó mediante el conector GitHub en `f636646`; árbol idéntico y commits originales conservados en `refs/checkpoints/ui-ux-original-20261117`, sin reescritura remota. La verificación pública aprobó 23 recorridos/comprobaciones y cuatro vistas NEEWER, claro y oscuro.

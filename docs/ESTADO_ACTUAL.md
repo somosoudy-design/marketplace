@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Pulido visual de la tienda web
+
+Trabajo en curso. Revisión de portada, búsqueda, ficha, acceso, carrito, favoritos, soporte y pie en escritorio y móvil. La candidata compacta la cabecera y el acceso móvil, pone el nombre del producto sobre la galería, centra la fotografía en escritorio y reúne las acciones de búsqueda vacía. El formulario de correo conserva su posición mientras se comprueba Google. Las visitas de invitado, el artículo agregado al carrito, el cambio de color y los destinos de preguntas y opiniones se probaron en navegador. Próxima acción: compilar para el Worker Free y contrastar la versión pública con las capturas iniciales.
+
 ## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
 
 La mejora UI/UX ya está publicada en mayami.app y www.mayami.app: Worker `5385cbd7-94fc-4f08-b777-18e8b1a07a9a`, fuente original `b9e3051`, árbol `99026f4490a6a9ab00aa6824e4b127e002883099`. La rama remota se sincronizó mediante el conector GitHub en `f636646`; árbol idéntico y commits originales conservados en `refs/checkpoints/ui-ux-original-20261117`, sin reescritura remota. La verificación pública aprobó 23 recorridos/comprobaciones y cuatro vistas NEEWER, claro y oscuro.

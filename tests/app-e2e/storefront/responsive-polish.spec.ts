@@ -1,0 +1,55 @@
+import { expect, test } from '@playwright/test';
+
+for (const width of [320, 390, 820, 1440]) {
+  test(`búsqueda, navegación y pie se adaptan a ${width} px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/buscar?q=sincoincidenciamayami');
+    const edit = page.getByLabel('Editar búsqueda');
+    await expect(edit).toBeVisible();
+    const header = page.locator('.app-shell > header');
+    if (width <= 700) {
+      const logo = await header.locator('.wordmark').boundingBox();
+      const search = await header.getByRole('search').boundingBox();
+      expect(Math.abs(logo!.y - search!.y)).toBeLessThan(2);
+      const form = await edit.boundingBox();
+      const bottomNavigation = await page.getByRole('navigation', { name: 'Navegación principal' }).boundingBox();
+      expect(form!.y + form!.height).toBeLessThan(bottomNavigation!.y);
+    }
+    if (width <= 900) {
+      const filters = await page.getByRole('button', { name: /Filtros/ }).first().boundingBox();
+      const sort = await page.getByLabel('Ordenar por', { exact: true }).boundingBox();
+      expect(Math.abs(filters!.y + filters!.height / 2 - sort!.y - sort!.height / 2)).toBeLessThan(1);
+    }
+    const footer = page.locator('.app-shell > footer');
+    const legal = await footer.getByRole('heading', { name: 'Legal' }).boundingBox();
+    const help = await footer.getByRole('heading', { name: 'Ayuda' }).boundingBox();
+    expect(Math.abs(legal!.y - help!.y)).toBeLessThan(1);
+    await footer.getByRole('link', { name: 'Contacto' }).click();
+    await expect(page).toHaveURL(/\/contacto$/);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+}
+
+test('en móvil el título del producto queda sobre la galería y por encima de la compra fija', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto('/buscar');
+  await page.locator('.product-card .product-link').first().click();
+  const title = await page.getByRole('heading', { level: 1 }).boundingBox();
+  const gallery = await page.getByRole('region', { name: 'Fotografías' }).boundingBox();
+  const purchase = await page.locator('.purchase-action').boundingBox();
+  expect(title!.y + title!.height).toBeLessThan(gallery!.y);
+  expect(title!.y + title!.height).toBeLessThan(purchase!.y);
+});
+
+test('registro y recuperación conservan la cabecera compacta a 320 px', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  for (const route of ['/registro', '/recuperar']) {
+    await page.goto(route);
+    const header = page.locator('.app-shell > header');
+    const bounds = await header.boundingBox();
+    expect(bounds!.height).toBeLessThanOrEqual(70);
+    await expect(header.getByRole('link', { name: /inicio/i })).toBeVisible();
+    await expect(header.getByRole('link', { name: /carrito/i })).toBeVisible();
+    await expect(page.getByLabel('Correo electrónico')).toBeVisible();
+  }
+});

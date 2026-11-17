@@ -21,9 +21,9 @@ function GuestFavorites() {
   if (!guest.ready || (ids.length > 0 && !guest.error && saved.isPending && !offline)) return <section className="state" role="status">Cargando favoritos…</section>;
   if (guest.error) return <section className="state" role="alert"><h1>No pudimos cargar tus favoritos</h1><p>{guest.error.message}</p><button className="button" onClick={() => void guest.refresh()}>Volver a intentar</button></section>;
   const products = (saved.data?.products ?? []).filter(p => saved.data?.metadata[p.id]), missing = ids.filter(id => !products.some(p => p.id === id));
-  return <div className="wrap account-page"><div className="section-heading"><h1>Mis favoritos</h1><span className="muted">{ids.length} productos</span></div>
+  return <div className="wrap account-page"><div className="section-heading"><h1>Mis favoritos</h1><span className="muted">{ids.length} {ids.length === 1 ? 'producto' : 'productos'}</span></div>
     {(offline || saved.isError) && <div className="notice error" role="alert"><p>{offline ? 'Sin conexión. Tus favoritos siguen guardados en este dispositivo; precios y disponibilidad se actualizarán al recuperar la conexión.' : 'No pudimos actualizar tus favoritos. Siguen guardados en este dispositivo.'}</p><button type="button" className="button secondary" onClick={() => void saved.refetch()}>Volver a intentar</button></div>}
-    {products.length ? <ProductGrid products={products} metadata={saved.data!.metadata} /> : !ids.length ? <Empty title="Tus favoritos empiezan aquí" text="Toca el corazón de un producto para guardarlo y encontrarlo después." /> : null}
+    {products.length ? <ProductGrid products={products} metadata={saved.data!.metadata} /> : !ids.length ? <Empty kind="favorites" title="Tus favoritos empiezan aquí" text="Toca el corazón de un producto para guardarlo y encontrarlo después." /> : null}
     {missing.length > 0 && <div className="notice"><p>{offline || saved.isError ? 'Tus productos guardados se mostrarán cuando podamos actualizar el catálogo.' : 'Algunos productos guardados ya no están disponibles.'}</p>{missing.map((id, index) => <button key={id} type="button" className="text-button" disabled={remove.isPending} onClick={() => remove.mutate(id)}>Quitar producto guardado {index + 1}</button>)}</div>}
     {remove.isError && <p className="notice error" role="alert">{remove.error.message}</p>}
   </div>;
@@ -40,8 +40,8 @@ function BuyerFavorites({ buyerId }: { buyerId: string }) {
   const metadata = { ...products.data?.metadata, ...pendingProducts.data?.metadata };
   return <div className="wrap account-page"><FavoritesSyncNotice />
     {products.isError ? <section className="state" role="alert"><h1>No pudimos cargar tus favoritos</h1><button className="button" onClick={() => void products.refetch()}>Volver a intentar</button></section> : <>
-      <div className="section-heading"><h1>Mis favoritos</h1><span className="muted">{merged.length} productos</span></div>
-      {merged.length ? <ProductGrid products={merged} metadata={metadata} /> : <Empty title="Tus favoritos empiezan aquí" text="Toca el corazón de un producto para guardarlo y encontrarlo después." />}
+      <div className="section-heading"><h1>Mis favoritos</h1><span className="muted">{merged.length} {merged.length === 1 ? 'producto' : 'productos'}</span></div>
+      {merged.length ? <ProductGrid products={merged} metadata={metadata} /> : <Empty kind="favorites" title="Tus favoritos empiezan aquí" text="Toca el corazón de un producto para guardarlo y encontrarlo después." />}
     </>}
     {(reserved.isError || pendingProducts.isError) && <p className="notice error" role="alert">No pudimos mostrar los favoritos por incorporar. Siguen guardados; reintenta la incorporación.</p>}
   </div>;

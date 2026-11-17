@@ -26,6 +26,7 @@ const ports = {
   '@/lib/server': {
     publicApi: () => ({ catalog: { home: async () => ({ categories: homeCategories, stores: [] }) } }),
   },
+  '@/components/store-avatar': { StoreAvatar: () => null },
   '@/components/home-campaigns': { HomeCampaigns: () => null },
   '@/components/photo': {
     ProductPhoto: ({ id, path, alphaMask }) =>
@@ -66,6 +67,8 @@ test('every category appears once in the same navigation, including categories b
     assert.equal((html.match(new RegExp(`href="/buscar\\?category=${slug}"`, 'g')) || []).length, 1);
     assert.ok(html.includes(`<h2>${name}</h2>`));
   }
+  assert.match(html, /lucide-paw-print/);
+  assert.match(html, /lucide-headphones/);
   assert.doesNotMatch(html, /Más categorías|market-category-nav|Ver productos/);
 });
 test('category destinations are encoded without changing slugs or category names', async () => {

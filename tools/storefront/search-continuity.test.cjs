@@ -39,7 +39,10 @@ for (const [route, params, expected] of [['/buscar', 'q=aud%C3%ADfonos', 'audíf
   });
 }
 const Link = ({ children, href, prefetch: _prefetch, ...props }) => React.createElement('a', { href, ...props }, children);
-const Empty = ({ title, text, href, action }) => React.createElement('section', null, React.createElement('h2', null, title), React.createElement('p', null, text), React.createElement(Link, { href }, action));
+const { Empty } = load('components/states.tsx', {
+  'next/navigation': {}, 'next/link': { default: Link },
+  'lucide-react': Object.fromEntries(['SearchX', 'RefreshCw', 'Heart', 'ShoppingBag', 'Store'].map(name => [name, () => null])),
+});
 const searchCalls = [];
 let searchRows = [], categoryRows = [];
 const actualFilters = load('components/search-filters.tsx', { react: React, 'next/link': { default: Link }, 'lucide-react': { SlidersHorizontal: () => null, X: () => null } });
@@ -60,14 +63,15 @@ async function markup(params) { return renderToStaticMarkup(await Search({ searc
 test('empty first page offers catalog reset', async () => {
   const html = await markup({ q: 'nada' });
   assert.match(html, /No encontramos productos/);
-  assert.match(html, /href="\/buscar">Ver todo el catálogo/);
+  assert.match(html, /Editar búsqueda[\s\S]+type="submit"[\s\S]+Ver todo el catálogo/);
+  assert.match(html, /href="\/buscar"[^>]*>Ver todo el catálogo/);
   assert.doesNotMatch(html, /Volver a la página anterior/);
 });
 test('empty later page returns previous page preserving all filters', async () => {
   const params = { q: 'audio & video', page: '3', category: 'audio', store: 'mayami', collection: 'nueva', sort: 'price_asc', availability: 'on_order', min: '15', max: '150' };
   const html = await markup(params);
   assert.match(html, /No hay más productos en esta página/);
-  const href = html.match(/href="([^"]+)">Volver a la página anterior/)[1].replaceAll('&amp;', '&');
+  const href = html.match(/href="([^"]+)"[^>]*>Volver a la página anterior/)[1].replaceAll('&amp;', '&');
   const recovered = Object.fromEntries(new URL(href, 'http://localhost').searchParams);
   assert.deepEqual(recovered, { ...params, page: '2' });
 });
@@ -75,7 +79,7 @@ test('invalid or negative pages use first-page recovery', async () => {
   for (const page of ['0', '-4', 'bad']) assert.doesNotMatch(await markup({ page }), /Volver a la página anterior/);
 });
 test('page two recovery never yields page zero', async () => {
-  assert.match(await markup({ page: '2' }), /href="\/buscar\?page=1">Volver a la página anterior/);
+  assert.match(await markup({ page: '2' }), /href="\/buscar\?page=1"[^>]*>Volver a la página anterior/);
 });
 
 test('history restoration reads destination URL and removes listeners on unmount', () => {

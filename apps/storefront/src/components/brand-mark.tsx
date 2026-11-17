@@ -2,10 +2,11 @@ import artwork from '../../../../config/brand-artwork.json';
 import { brandMarkWidths } from '../../../../config/brand-presentation';
 
 /** Both files are original Work SVGs, served locally. The enclosing link supplies the accessible name. */
-export function BrandMark({ inverse = false }: { inverse?: boolean }) {
+export function BrandMark({ inverse = false, compact = false }: { inverse?: boolean; compact?: boolean }) {
   if (inverse)
     return (
-      <span className="brand-artwork">
+      <picture className="brand-artwork">
+        {compact && <source media="(max-width: 379px)" srcSet="/brand/mayami-v3/MAYAMI_Simbolo_Optico_Blanco.svg" />}
         <img
           src="/brand/mayami-v3/MAYAMI_Logotipo_Blanco.svg"
           alt=""
@@ -13,7 +14,7 @@ export function BrandMark({ inverse = false }: { inverse?: boolean }) {
           width={brandMarkWidths.navigation}
           height={(brandMarkWidths.navigation * artwork.height) / artwork.width}
         />
-      </span>
+      </picture>
     );
   return (
     <picture className="brand-artwork">

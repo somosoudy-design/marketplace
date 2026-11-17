@@ -17,6 +17,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
   const product = pathname.startsWith('/p/');
+  const accessForm = pathname === '/registro' || pathname === '/recuperar';
   const mobileNavigation = !product && !focused && !['/auth','/registro','/recuperar','/eliminar-cuenta'].some(route => pathname === route || pathname.startsWith(route + '/'));
   const { session, ready, cartSyncing } = useAccount();
   const guest = useGuestCartState();
@@ -33,16 +34,17 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <a className="skip" href="#contenido">
         Ir al contenido
       </a>
-      <header className={`header ${focused ? 'header-focused' : ''}`}>
+      <header className={`header${focused ? ' header-focused' : ''}${accessForm ? ' header-access' : ''}`}>
         <div className="header-inner">
           <Link prefetch={false} href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
-            <BrandMark inverse />
+            <BrandMark inverse compact={mobileNavigation} />
           </Link>
           <form hidden={focused} action="/buscar" role="search" className="searchbox">
-            <Search size={21} />
+            <Search size={21} aria-hidden="true" />
             <Suspense fallback={<input type="search" name="q" aria-label="Buscar productos" placeholder="Buscar productos" />}><HeaderSearchInput /></Suspense>
             <button type="submit" aria-label="Buscar">
-              <ArrowUpRight size={20} />
+              <ArrowUpRight size={20} aria-hidden="true" />
+              <Search className="compact-search-icon" size={20} aria-hidden="true" />
             </button>
           </form>
           <nav className="account-nav" aria-label="Tu cuenta">
@@ -73,10 +75,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <footer className="footer wrap">
-        <Link prefetch={false} className="wordmark" href="/" aria-label={`${brand.name}, inicio`}>
-          <BrandMark />
-        </Link>
-        <p>{brand.tagline}</p>
+        <div className="footer-brand">
+          <Link prefetch={false} className="wordmark" href="/" aria-label={`${brand.name}, inicio`}>
+            <BrandMark />
+          </Link>
+          <p>{brand.tagline}</p>
+        </div>
         <div className="footer-links">
           <nav aria-label="Información legal"><h2>Legal</h2>
             <Link prefetch={false} href="/terminos">Términos</Link>
@@ -87,7 +91,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <Link prefetch={false} href="/contacto">Contacto</Link>
           </nav>
         </div>
-        <Link prefetch={false} href="/buscar">
+        <Link prefetch={false} className="footer-catalog" href="/buscar">
           Explorar el catálogo <ArrowUpRight size={16} />
         </Link>
       </footer>
