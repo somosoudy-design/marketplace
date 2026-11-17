@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 17 noviembre 2026 · Codex · Acceso Google y correo de Mayami
+
+Integración web y Android con PKCE, un solo uso del retorno y verificación del usuario. Conserva entrada por contraseña, recuperación y destino de la compra. Plantillas de correo con logotipo oficial y código de ocho dígitos. Entrega externa de recuperación comprobada en Gmail. Implementación de protección de primera vinculación y estado propio de recuperación, con verificación en GoTrue 2.198.0 y PostgreSQL locales.
+
 ## 2026-11-08 — checkpoint de seguridad focal y login-CSRF local
 
 Revisión limitada a ownership servidor, CSRF/sesión y secretos árbol/historial; no se atribuyen otros controles al reel. La caracterización local del código publicado y preparado reproduce adopción de A sobre sesión B mediante fragmento sin intento. Corrección mínima en4fuentes: PKCE sólo para email web, rechazo de tokens URL y panel sin auto-adopción; default nativo conservado.9regresiones nuevas,21focales existentes, tipos API/storefront/admin y lint PASS. Enlaces implícitos anteriores requerirán nuevo enlace/código; OTP/password se conservan. Esto aún no protege el código publicado.

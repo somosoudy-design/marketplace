@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## 17 noviembre 2026 · Acceso de compradores
+
+Completar la validación pública de Google tras instalar la protección de cuentas anteriores a la confirmación obligatoria. Verificar retorno real con consentimiento y cuenta autorizada. Registrar por separado la recepción en un teléfono físico y el estado de presentación de marca en Google.
+
 ## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
 
 Revisión limitada a ownership servidor, CSRF/sesión y secretos árbol/historial; no se atribuyen otros controles al reel. La caracterización local del código publicado y preparado reproduce adopción de A sobre sesión B mediante fragmento sin intento. Corrección mínima en4fuentes: PKCE sólo para email web, rechazo de tokens URL y panel sin auto-adopción; default nativo conservado.9regresiones nuevas,21focales existentes, tipos API/storefront/admin y lint PASS. Enlaces implícitos anteriores requerirán nuevo enlace/código; OTP/password se conservan. Esto aún no protege el código publicado.

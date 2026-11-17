@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Acceso con Google
+
+La web de mayami.app y la actualización Android del canal preview incorporan Google. El botón comprueba la configuración efectiva de Marketplace. La confirmación por correo está activa, la web y la APK admiten los ocho dígitos y Gmail recibió la recuperación desde el remitente del dominio. El cliente web de Google y la audiencia externa están configurados. La activación de la vinculación en el servidor se registra por separado tras comprobar la protección de las cuentas antiguas. Ver [recuperación y reversión](GOOGLE_CUENTAS_HISTORICAS.md).
+
 ## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
 
 Revisión limitada a ownership servidor, CSRF/sesión y secretos árbol/historial; no se atribuyen otros controles al reel. La caracterización local del código publicado y preparado reproduce adopción de A sobre sesión B mediante fragmento sin intento. Corrección mínima en4fuentes: PKCE sólo para email web, rechazo de tokens URL y panel sin auto-adopción; default nativo conservado.9regresiones nuevas,21focales existentes, tipos API/storefront/admin y lint PASS. Enlaces implícitos anteriores requerirán nuevo enlace/código; OTP/password se conservan. Esto aún no protege el código publicado.
