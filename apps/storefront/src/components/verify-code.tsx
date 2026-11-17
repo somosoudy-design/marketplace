@@ -24,8 +24,9 @@ export function VerifyCode({
   const verify = useMutation({
     mutationFn: async (input: { email: string; token: string; type: 'signup' | 'recovery'; generation: number }) => {
       if (!alive.current || generation.current !== input.generation) throw new Error('La verificación se canceló.');
-      const { error } = await browser().client.auth.verifyOtp({ email: input.email, token: input.token, type: input.type });
+      const { error, data } = await browser().runtime.primary(() => browser().client.auth.verifyOtp({ email: input.email, token: input.token, type: input.type }));
       if (error) throw error;
+      if (!data.session?.user.id) throw new Error('No pudimos confirmar tu acceso.');
     },
     onSuccess: (_result, input) => { if (alive.current && generation.current === input.generation) onDone(); },
   });
@@ -40,15 +41,15 @@ export function VerifyCode({
     >
       <h2>Revisa tu correo</h2>
       <p>
-        Escribe el código de seis dígitos que enviamos a tu correo. Si no llega, revisa la carpeta de correo no deseado.
+        Escribe el código completo que enviamos a tu correo. Si no llega, revisa la carpeta de correo no deseado.
       </p>
       <label>
         Código de verificación
         <input
           autoComplete="one-time-code"
           inputMode="numeric"
-          pattern="[0-9]{6}"
-          maxLength={6}
+          pattern="[0-9]{6,8}"
+          maxLength={8}
           required
           value={code}
           disabled={verify.isPending || again.isPending}
@@ -65,7 +66,7 @@ export function VerifyCode({
           No pudimos reenviar el código. Espera un momento e intenta de nuevo.
         </p>
       )}
-      <button className="button" disabled={verify.isPending || again.isPending || code.length !== 6}>
+      <button className="button" disabled={verify.isPending || again.isPending || code.length < 6 || code.length > 8}>
         {verify.isPending ? 'Verificando…' : 'Verificar código'}
       </button>
       <button

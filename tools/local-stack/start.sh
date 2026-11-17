@@ -43,7 +43,7 @@ export GOTRUE_JWT_DEFAULT_GROUP_NAME=authenticated GOTRUE_JWT_ADMIN_ROLES=servic
 export GOTRUE_DISABLE_SIGNUP=false GOTRUE_EXTERNAL_EMAIL_ENABLED=true
 # Like production: a new account is confirmed with the 6-digit code from its email. AUTH_AUTOCONFIRM=true is the
 # test project while it has no SMTP ("Confirm email" off): sign-up returns a session and no email is sent
-export GOTRUE_MAILER_AUTOCONFIRM="${AUTH_AUTOCONFIRM:-false}" GOTRUE_MAILER_OTP_LENGTH=6 GOTRUE_MAILER_OTP_EXP=3600
+export GOTRUE_MAILER_AUTOCONFIRM="${AUTH_AUTOCONFIRM:-false}" GOTRUE_MAILER_OTP_LENGTH=8 GOTRUE_MAILER_OTP_EXP=3600
 export GOTRUE_SMTP_MAX_FREQUENCY="${AUTH_SMTP_MAX_FREQUENCY:-1s}"
 for tpl in confirmation recovery magic_link email_change; do
   export "GOTRUE_MAILER_TEMPLATES_${tpl^^}=http://127.0.0.1:2501/templates/$tpl.html"

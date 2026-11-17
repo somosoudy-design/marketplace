@@ -30,9 +30,9 @@ enable_signup = true
 
 [auth.email]
 enable_signup = true
-# Accounts are confirmed with a 6-digit code typed in the app (no links, so nothing depends on a web address).
+# Accounts are confirmed with an 8-digit code typed in the app (no links, so nothing depends on a web address).
 enable_confirmations = true
-otp_length = 6
+otp_length = 8
 otp_expiry = 3600
 max_frequency = "1m"
 

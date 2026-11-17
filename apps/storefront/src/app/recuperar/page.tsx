@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { validatePassword, toAppError } from '@kora/core';
+import { emailWebCallbackUrl } from '@kora/api';
+import { env } from '@/lib/env';
 import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 import { VerifyCode } from '@/components/verify-code';
@@ -33,9 +35,9 @@ function RecoveryForm() {
         if (invalid) throw Object.assign(new Error(invalid), { name: 'ValidationError' });
         await updateBuyerPassword(input.actorId, input.password, current);
       } else {
-        const { error } = await browser().client.auth.resetPasswordForEmail(input.email, {
+        const { error } = await browser().runtime.primary(() => browser().client.auth.resetPasswordForEmail(input.email, {
           redirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(input.back, true)),
-        });
+        }));
         if (error) throw error;
       }
     },
@@ -66,7 +68,7 @@ function RecoveryForm() {
           }}
           resend={async () => {
             if (!alive.current) throw new Error('El reenvío se canceló.');
-            const { error } = await browser().client.auth.resetPasswordForEmail(email.trim(), { redirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back, true)) });
+            const { error } = await browser().runtime.primary(() => browser().client.auth.resetPasswordForEmail(email.trim(), { redirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back, true)) }));
             if (error) throw error;
           }}
         />

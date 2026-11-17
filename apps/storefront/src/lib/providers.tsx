@@ -22,7 +22,7 @@ function Account({ children }: { children: ReactNode }) {
   const retry = useRef<{ cart: () => void; favorites: () => void }>({ cart: () => undefined, favorites: () => undefined });
   useEffect(() => {
     if (!configured) return;
-    let active = true, identity: string | null | undefined, authEpoch = 0, cartRun = 0, favoritesRun = 0;
+    let active = true, identity: string | null | undefined, cartRun = 0, favoritesRun = 0;
     const current = (actor: string, kind: 'cart' | 'favorites', run: number) => active && identity === actor && run === (kind === 'cart' ? cartRun : favoritesRun);
     const sync = async (actor: string, kind: 'cart' | 'favorites', run: number) => {
       const valid = () => current(actor, kind, run);
@@ -74,7 +74,7 @@ function Account({ children }: { children: ReactNode }) {
       if (!active) return;
       const actor = session?.user.id ?? null;
       if (identity !== actor) {
-        identity = actor; authEpoch++; cartRun++; favoritesRun++;
+        identity = actor; cartRun++; favoritesRun++;
         void qc.cancelQueries(); qc.clear();
         setState({ ...empty, session, ready: true, cartSyncing: !!actor, favoritesSyncing: !!actor });
         if (actor) { schedule(actor, 'cart'); schedule(actor, 'favorites'); }
@@ -91,10 +91,28 @@ function Account({ children }: { children: ReactNode }) {
       }).catch(error => { if (active && identity === actor) setState(old => kind === 'cart' ? { ...old, cartSyncError: (error as Error).message || 'No pudimos comprobar tu sesión. Intenta de nuevo.' } : { ...old, favoritesSyncError: (error as Error).message || 'No pudimos comprobar tu sesión. Intenta de nuevo.' }); });
     };
     retry.current = { cart: () => again('cart'), favorites: () => again('favorites') };
-    const { client } = browser(), epoch = authEpoch;
-    const { data } = client.auth.onAuthStateChange((_event, session) => accept(session));
-    client.auth.getSession().then(({ data }) => { if (active && epoch === authEpoch) accept(data.session); }).catch(() => { if (active && epoch === authEpoch) accept(null); });
-    return () => { active = false; cartRun++; favoritesRun++; retry.current = { cart: () => undefined, favorites: () => undefined }; data.subscription.unsubscribe(); };
+    const { client, runtime } = browser();
+    let authRead = 0;
+    const refreshAuth = () => {
+      const revision = ++authRead;
+      setTimeout(() => {
+        void client.auth.getSession().then(({ data, error }) => {
+          if (!active || authRead !== revision) return;
+          if (error) { setState(old => ({ ...old, ready: true })); return; }
+          accept(data.session);
+        }).catch(() => { if (active && authRead === revision) setState(old => ({ ...old, ready: true })); });
+      }, 0);
+    };
+    // Broadcast payloads are hints, never proof of the current account.
+    const { data } = client.auth.onAuthStateChange(() => refreshAuth());
+    const stopGoogle = runtime.subscribe(refreshAuth);
+    window.addEventListener('storage', refreshAuth);
+    refreshAuth();
+    return () => {
+      active = false; authRead++; cartRun++; favoritesRun++;
+      retry.current = { cart: () => undefined, favorites: () => undefined };
+      data.subscription.unsubscribe(); stopGoogle(); window.removeEventListener('storage', refreshAuth);
+    };
   }, [qc]);
   return <Context.Provider value={{ ...state, retryCartSync: () => retry.current.cart(), retryFavoritesSync: () => retry.current.favorites() }}>{children}</Context.Provider>;
 }

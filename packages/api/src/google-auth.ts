@@ -1,8 +1,9 @@
 import type { Session, User } from '@supabase/supabase-js';
 
-/** Prepared protocol only. Production callers must remain gated until the provider/identity review. */
-export const GOOGLE_AUTH_ACTIVATED = false;
+/** Client support. Each sign-in screen also checks the project's enabled Auth providers. */
+export const GOOGLE_AUTH_ACTIVATED = true;
 const MAX_AGE = 10 * 60_000;
+const EXCHANGE_TIMEOUT = 30_000;
 const opaque = /^[A-Za-z0-9_-]{43}$/;
 type Purpose = 'register' | 'login';
 export interface GoogleTicket { stamp: string; baseline: string | null }
@@ -21,7 +22,7 @@ export interface GoogleCrypto {
   sha256Base64(value: string): Promise<string>;
 }
 export interface GoogleBoundary {
-  invalidate(): void;
+  invalidate(expected?: GoogleTicket): void;
   isCurrent(ticket: GoogleTicket): boolean;
   capture(): Promise<GoogleTicket>;
   commit(ticket: GoogleTicket, session: string, current: () => boolean): Promise<boolean>;
@@ -32,13 +33,15 @@ export interface GoogleAuthOptions {
   supabaseUrl: string; anonKey: string; callbackBase: string;
   store: GoogleAttemptStore; crypto: GoogleCrypto; boundary: GoogleBoundary;
   safeReturn(input: string): string;
-  verifyUser(accessToken: string): Promise<User>;
+  verifyUser(accessToken: string, signal?: AbortSignal): Promise<User>;
   fetch: typeof fetch;
+  /** Shared one-use claim, before a copied tab can submit the same grant. */
+  claimAttempt?: (attempt: GoogleAttempt) => Promise<boolean>;
   now?: () => number;
 }
 export type GoogleResult =
-  | { status: 'accepted'; returnTo: string; purpose: Purpose }
-  | { status: 'cancelled' | 'unavailable' | 'invalid' | 'failed' };
+  | { status: 'accepted'; returnTo: string; purpose: Purpose; actorId: string; attemptId: string; intentStamp: string }
+  | { status: 'cancelled' | 'unavailable' | 'invalid' | 'failed' | 'uncertain' };
 
 const url64 = (value: string) => value.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 function encode(bytes: Uint8Array) {
@@ -58,6 +61,20 @@ function authBase(value: string) {
       url.pathname !== '/' || !/^[a-z0-9]+\.supabase\.co$/.test(url.hostname)) throw new Error('Invalid Auth origin');
   return url.origin + '/auth/v1';
 }
+/** Availability belongs to the Auth project and can change independently of an app release. */
+export async function googleProviderEnabled(url: string, anonKey: string, signal?: AbortSignal): Promise<boolean> {
+  const response = await fetch(authBase(url) + '/settings', {
+    headers: { apikey: anonKey },
+    credentials: 'omit',
+    cache: 'no-store',
+    redirect: 'error',
+    signal,
+  });
+  if (!response.ok) throw new Error('No pudimos comprobar el acceso con Google.');
+  const settings = await response.json();
+  return settings.external?.google === true;
+}
+
 export function isGoogleAuthCallback(value: string): boolean {
   try {
     const url = new URL(value);
@@ -82,19 +99,31 @@ export function readGoogleAttempt(value: unknown, base: string, now: number): Go
   } catch { return null; }
 }
 
-function readCode(raw: string, a: GoogleAttempt): string | null {
+function readCode(raw: string, a: GoogleAttempt): { code: string } | { failure: 'cancelled' | 'failed' } {
   if (raw.length > 16_384) throw new Error('Invalid callback');
   const url = new URL(raw), expected = new URL(a.callback);
   if (url.protocol !== expected.protocol || url.host !== expected.host || url.pathname !== expected.pathname ||
-      url.username || url.password || url.hash || url.searchParams.get('google_flow') !== a.id) throw new Error('Unrelated callback');
+      url.username || url.password || url.searchParams.get('google_flow') !== a.id) throw new Error('Unrelated callback');
   const keys = new Set(['google_flow', 'code', 'error', 'error_code', 'error_description']);
   for (const [key] of url.searchParams) if (!keys.has(key) || url.searchParams.getAll(key).length !== 1) throw new Error('Ambiguous callback');
   const code = url.searchParams.get('code');
   const failed = url.searchParams.has('error') || url.searchParams.has('error_code') || url.searchParams.has('error_description');
-  if (failed && code) throw new Error('Ambiguous result');
-  if (failed) return null;
+  // GoTrue copies its OAuth error fields into the fragment. Only accept that exact mirror.
+  if (url.hash) {
+    const mirror = new URLSearchParams(url.hash.slice(1));
+    if (!failed || !mirror.size) throw new Error('Unexpected fragment');
+    for (const [key, value] of mirror) {
+      if (!['error', 'error_code', 'error_description'].includes(key) || mirror.getAll(key).length !== 1 ||
+          value !== url.searchParams.get(key)) throw new Error('Ambiguous fragment');
+    }
+  }
+  if (failed && url.searchParams.has('code')) throw new Error('Ambiguous result');
+  if (failed) {
+    const refused = url.searchParams.get('error') === 'access_denied' && !url.searchParams.get('error_code');
+    return { failure: refused ? 'cancelled' : 'failed' };
+  }
   if (!code || code.length > 4096 || /[\u0000-\u0020\u007f]/.test(code)) throw new Error('Missing code');
-  return code;
+  return { code };
 }
 
 function freshSession(raw: unknown, user: User, now: number, issuer: string): Session {
@@ -118,8 +147,8 @@ function freshSession(raw: unknown, user: User, now: number, issuer: string): Se
 /** Public Auth /user validation, independent of the global SDK and its persistence/events. */
 export function createGoogleUserVerifier(supabaseUrl: string, anonKey: string, request: typeof fetch) {
   const endpoint = authBase(supabaseUrl) + '/user';
-  return async (accessToken: string): Promise<User> => {
-    const response = await request(endpoint, { method: 'GET', redirect: 'error', cache: 'no-store', credentials: 'omit',
+  return async (accessToken: string, signal?: AbortSignal): Promise<User> => {
+    const response = await request(endpoint, { method: 'GET', redirect: 'error', cache: 'no-store', credentials: 'omit', signal,
       headers: { apikey: anonKey, Authorization: `Bearer ${accessToken}` } });
     if (!response.ok) throw new Error('User verification failed');
     const user: unknown = await response.json();
@@ -133,7 +162,8 @@ export function createGoogleAuth(options: GoogleAuthOptions) {
   const o = options, now = o.now ?? Date.now;
   let epoch = 0;
   let invalidationFailed = false;
-  let flight: { raw: string; promise: Promise<GoogleResult> } | null = null;
+  let flight: { raw: string; promise: Promise<GoogleResult>; abort(): void } | null = null;
+  let ownedTicket: GoogleTicket | null = null;
   const current = (a: GoogleAttempt, run: number) => epoch === run && now() < a.expiresAt && o.boundary.isCurrent(a.ticket);
   const forget = (id?: string) => {
     try {
@@ -144,20 +174,38 @@ export function createGoogleAuth(options: GoogleAuthOptions) {
       // A surviving exchanging attempt remains one-use and fails closed on the next callback.
     }
   };
-  const cancel = () => {
-    epoch++; flight = null;
-    try { o.boundary.invalidate(); }
+  const cancel = (force = false) => {
+    epoch++; flight?.abort(); flight = null;
+    try {
+      // Cancelling an obsolete tab must not revoke a newer tab's unrelated intent.
+      if (force) o.boundary.invalidate();
+      else {
+        const pending = o.store.read() as Partial<GoogleAttempt> | null;
+        const ticket = pending?.ticket ?? ownedTicket;
+        if (ticket && o.boundary.isCurrent(ticket)) o.boundary.invalidate(ticket);
+      }
+    }
     catch { invalidationFailed = true; }
     finally { forget(); }
   };
   return {
-    cancel,
+    returnDestination(raw: string): string | null {
+      try {
+        const attempt = readGoogleAttempt(o.store.read(), o.callbackBase, now());
+        if (!attempt) return null;
+        readCode(raw, attempt);
+        return o.safeReturn(attempt.returnTo);
+      } catch { return null; }
+    },
+    cancel: () => cancel(),
+    invalidatePrimary: () => cancel(true),
     async begin(purpose: Purpose, returnTo: string): Promise<{ url: string; callback: string }> {
       if (!o.enabled) throw new Error('Google is not activated');
       if (invalidationFailed) throw new Error('Google attempt invalidation unavailable');
-      cancel(); const run = epoch;
+      cancel(true); const run = epoch;
       if (invalidationFailed) throw new Error('Google attempt invalidation unavailable');
       const ticket = await o.boundary.capture();
+      ownedTicket = ticket;
       if (run !== epoch || ticket.baseline !== null) throw new Error('Session changed');
       const verifier = encode(await o.crypto.randomBytes());
       const challenge = url64(await o.crypto.sha256Base64(verifier));
@@ -185,37 +233,62 @@ export function createGoogleAuth(options: GoogleAuthOptions) {
       catch { return Promise.resolve({ status: 'failed' }); }
       if (!a) { forget(); return Promise.resolve({ status: 'invalid' }); }
       if (!o.boundary.isCurrent(a.ticket)) { forget(a.id); return Promise.resolve({ status: 'cancelled' }); }
-      let code: string | null;
-      try { code = readCode(raw, a); } catch { return Promise.resolve({ status: 'invalid' }); }
-      if (!code) { cancel(); return Promise.resolve({ status: 'cancelled' }); }
+      let returned: ReturnType<typeof readCode>;
+      try { returned = readCode(raw, a); } catch { return Promise.resolve({ status: 'invalid' }); }
+      if ('failure' in returned) { cancel(); return Promise.resolve({ status: returned.failure }); }
+      const { code } = returned;
+      ownedTicket = a.ticket; // A callback after a full-page redirect belongs to this restored controller too.
       const run = epoch;
       // Persist consumption before sending the one-use code. Interrupted/uncertain exchanges require retry.
       try { o.store.write({ ...a, phase: 'exchanging' }); }
       catch { cancel(); return Promise.resolve({ status: 'failed' }); }
+      // Bound network/response parsing even if a transport ignores AbortSignal. The one-use code
+      // stays consumed; a timeout never retries it or leaves a late response able to promote a session.
+      const controller = new AbortController();
+      let abort!: () => void;
+      const stopped = new Promise<never>((_, reject) => {
+        abort = () => { controller.abort(); reject(new Error('Google exchange interrupted')); };
+      });
+      const timer = setTimeout(abort, Math.max(0, Math.min(EXCHANGE_TIMEOUT, a.expiresAt - now())));
+      const network = <T>(work: () => Promise<T>): Promise<T> => Promise.race([
+        Promise.resolve().then(() => {
+          if (controller.signal.aborted) throw new Error('Google exchange interrupted');
+          return work();
+        }), stopped,
+      ]);
       const promise = (async (): Promise<GoogleResult> => {
         try {
-          const response = await o.fetch(authBase(o.supabaseUrl) + '/token?grant_type=pkce', {
-            method: 'POST', redirect: 'error', cache: 'no-store', credentials: 'omit',
+          if (o.claimAttempt && !await network(() => o.claimAttempt!(a))) return { status: 'invalid' };
+          if (!current(a, run)) return { status: 'cancelled' };
+          const response = await network(() => o.fetch(authBase(o.supabaseUrl) + '/token?grant_type=pkce', {
+            method: 'POST', redirect: 'error', cache: 'no-store', credentials: 'omit', signal: controller.signal,
             headers: { apikey: o.anonKey, 'Content-Type': 'application/json' },
             body: JSON.stringify({ auth_code: code, code_verifier: a.verifier }),
-          });
+          }));
           if (!current(a, run)) return { status: 'cancelled' };
           if (!response.ok) throw new Error('Exchange failed');
-          const data: unknown = await response.json();
+          const data: unknown = await network(() => response.json());
           if (!current(a, run)) return { status: 'cancelled' };
           const token = (data as Partial<Session> | null)?.access_token;
           if (typeof token !== 'string' || !token) throw new Error('Missing token');
-          const user = await o.verifyUser(token);
+          const user = await network(() => o.verifyUser(token, controller.signal));
           if (!current(a, run)) return { status: 'cancelled' };
           const session = freshSession(data, user, now(), authBase(o.supabaseUrl));
-          const candidateCurrent = () => current(a, run) && session.expires_at! - Math.floor(now() / 1000) >= 60;
+          // Do not race durable commit against a timer: its own boundary reports uncertain outcomes.
+          clearTimeout(timer);
+          const candidateCurrent = () => !controller.signal.aborted && current(a, run) && session.expires_at! - Math.floor(now() / 1000) >= 60;
           const accepted = await o.boundary.commit(a.ticket, JSON.stringify(session), candidateCurrent);
-          if (!accepted || !candidateCurrent()) return { status: 'cancelled' };
-          return { status: 'accepted', returnTo: o.safeReturn(a.returnTo), purpose: a.purpose };
-        } catch { return { status: current(a, run) ? 'failed' : 'cancelled' }; }
-        finally { forget(a.id); }
+          // commit=true is the acceptance point. A later cancellation cannot undo a committed login.
+          // The caller separately rechecks actor ownership before navigating.
+          if (!accepted) return { status: 'cancelled' };
+          return { status: 'accepted', returnTo: o.safeReturn(a.returnTo), purpose: a.purpose, actorId: user.id, attemptId: a.id, intentStamp: a.ticket.stamp };
+        } catch (error) {
+          if ((error as { code?: string } | null)?.code === 'commit_uncertain') return { status: 'uncertain' };
+          return { status: current(a, run) ? 'failed' : 'cancelled' };
+        }
+        finally { clearTimeout(timer); forget(a.id); }
       })();
-      flight = { raw, promise };
+      flight = { raw, promise, abort };
       void promise.then(() => { if (flight?.promise === promise) flight = null; });
       return promise;
     },

@@ -54,8 +54,8 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
     expect(url).not.toContain(attempt.verifier); expect(url).not.toContain('offline');
     expect([...authorize.searchParams.keys()].sort()).toEqual(['code_challenge', 'code_challenge_method', 'provider', 'redirect_to', 'scopes']);
     expect(authorize.searchParams.get('scopes')).toBe('openid email profile');
-    expect(await f.flow.complete(raw)).toEqual({ status: 'accepted', returnTo: '/checkout', purpose });
-    expect(f.request).toHaveBeenCalledTimes(1); expect(f.verify).toHaveBeenCalledWith(jwt());
+    expect(await f.flow.complete(raw)).toEqual({ status: 'accepted', returnTo: '/checkout', purpose, actorId: user.id, attemptId: attempt.id, intentStamp: attempt.ticket.stamp });
+    expect(f.request).toHaveBeenCalledTimes(1); expect(f.verify).toHaveBeenCalledWith(jwt(), expect.any(AbortSignal));
     expect(JSON.parse(f.session()!)).not.toHaveProperty('provider_token');
     expect(f.session()).not.toContain('never-persist'); expect(f.saved()).toBeNull();
     expect(await f.flow.complete(raw)).toEqual({ status: 'invalid' });
@@ -85,6 +85,16 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
   it.each(['&code=second', '&access_token=not-accepted', '#access_token=not-accepted', '&error=access_denied', '&error_description=failed'])('rejects ambiguous/token callback %s', async suffix => {
     const f = fixture(); const { raw } = await start(f);
     expect(await f.flow.complete(raw + suffix)).toEqual({ status: 'invalid' }); expect(f.request).not.toHaveBeenCalled();
+  });
+  it.each([
+    ['&error=access_denied#error=access_denied', 'cancelled'],
+    ['&error=server_error&error_description=failed#error=server_error&error_description=failed', 'failed'],
+    ['&error=server_error#error=access_denied', 'invalid'],
+    ['&error=access_denied#access_token=foreign', 'invalid'],
+  ])('treats GoTrue error return %s as %s without exchanging a code', async (suffix, status) => {
+    const f = fixture(); const { callback } = await start(f);
+    expect(await f.flow.complete(callback + suffix)).toEqual({ status });
+    expect(f.request).not.toHaveBeenCalled(); expect(f.session()).toBeNull();
   });
   it('provider refusal and back/cancel do not install a session', async () => {
     const f = fixture(); const { callback } = await start(f);
@@ -116,6 +126,22 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
     const { raw } = await start(f), result = f.flow.complete(raw); await entered.promise;
     clock += 80_000; release.resolve(); expect(await result).toEqual({ status: 'cancelled' }); expect(f.session()).toBeNull();
   });
+  it('cancelling an obsolete controller cannot revoke a newer tab intent', async () => {
+    const a = fixture(); await start(a);
+    let saved: GoogleAttempt | null = null;
+    const b = createGoogleAuth({ ...a.options, store: { read: () => saved, write: value => { saved = value; }, clear: () => { saved = null; } } });
+    const opened = await b.begin('login', '/checkout'); const raw = new URL(opened.callback); raw.searchParams.set('code', 'new-tab-code');
+    a.flow.cancel();
+    expect((await b.complete(raw.toString())).status).toBe('accepted');
+    expect(a.request).toHaveBeenCalledTimes(1);
+  });
+  it('reports uncertain durable commit separately from cancellation or a retryable exchange failure', async () => {
+    const f = fixture(); const { raw } = await start(f);
+    f.options.boundary.commit = async () => { throw Object.assign(Error('Lost acknowledgement'), { code: 'commit_uncertain' }); };
+    expect(await f.flow.complete(raw)).toEqual({ status: 'uncertain' });
+    expect(f.request).toHaveBeenCalledTimes(1); expect(f.saved()).toBeNull();
+    expect(await f.flow.complete(raw)).toEqual({ status: 'invalid' });
+  });
   it('retry uses new verifier/nonce and a late first result cannot erase the newer attempt', async () => {
     const hold = deferred<Response>(); const f = fixture({ fetch: vi.fn(() => hold.promise) }); const first = await start(f);
     const old = f.saved()!, result = f.flow.complete(first.raw); await start(f); const next = f.saved()!;
@@ -131,8 +157,9 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
     await expect(start(f)).rejects.toThrow('invalidation unavailable'); expect(f.request).not.toHaveBeenCalled();
   });
   it('web reload can resume pending state; process death during exchange requires a new attempt', async () => {
-    const f = fixture(); const { raw } = await start(f); const restored = createGoogleAuth(f.options);
+    const f = fixture(); const { raw } = await start(f); const ticket = f.saved()!.ticket; const restored = createGoogleAuth(f.options);
     expect((await restored.complete(raw)).status).toBe('accepted');
+    restored.cancel(); expect(f.options.boundary.isCurrent(ticket)).toBe(false);
     const g = fixture(); const next = await start(g); g.options.store.write({ ...g.saved()!, phase: 'exchanging' });
     expect(await createGoogleAuth(g.options).complete(next.raw)).toEqual({ status: 'invalid' }); expect(g.request).not.toHaveBeenCalled();
   });
@@ -140,7 +167,8 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
     let clock = now; const f = fixture({ now: () => clock }); const { raw } = await start(f); clock += 600_001;
     expect(await f.flow.complete(raw)).toEqual({ status: 'invalid' }); expect(f.request).not.toHaveBeenCalled();
     const g = fixture(); const next = await start(g); g.options.store.write({ ...g.saved()!, returnTo: '//evil.invalid' });
-    expect(await g.flow.complete(next.raw)).toEqual({ status: 'accepted', purpose: 'login', returnTo: '/cuenta' });
+    const expected = g.saved()!;
+    expect(await g.flow.complete(next.raw)).toEqual({ status: 'accepted', purpose: 'login', returnTo: '/cuenta', actorId: user.id, attemptId: expected.id, intentStamp: expected.ticket.stamp });
   });
   it.each(['expired', 'actor', 'issuer', 'failure'] as const)('rejects %s candidate without changing primary session', async kind => {
     const response = token(); if (kind === 'expired') response.access_token = jwt(user.id, now / 1000 - 1);
@@ -165,5 +193,64 @@ describe('Google preparation: mocked protocol, no provider or real sessions', ()
     expect(isGoogleAuthCallback('https://mayami.app/auth/callback#google_flow=x&access_token=x')).toBe(true);
     expect(isGoogleAuthCallback('kora://auth-callback#access_token=x')).toBe(false);
     expect(readGoogleAttempt({}, 'https://mayami.app/auth/callback', now)).toBeNull();
+  });
+});
+
+
+describe('bounded Google network completion, without racing durable commit', () => {
+  it('times out a non-cooperative token request, rejects replay and ignores its late response', async () => {
+    vi.useFakeTimers();
+    try {
+      const hold = deferred<Response>();
+      const request = vi.fn(() => hold.promise);
+      const f = fixture({ fetch: request }); const { raw } = await start(f);
+      const result = f.flow.complete(raw);
+      await vi.advanceTimersByTimeAsync(30_000);
+      expect(await result).toEqual({ status: 'failed' });
+      expect((request.mock.calls[0] as unknown as [string, RequestInit])[1].signal?.aborted).toBe(true);
+      expect(f.saved()).toBeNull(); expect(f.session()).toBeNull();
+      expect(await f.flow.complete(raw)).toEqual({ status: 'invalid' });
+      await start(f); const next = f.saved();
+      hold.resolve(Response.json(token())); await Promise.resolve();
+      expect(f.session()).toBeNull(); expect(f.saved()).toEqual(next);
+      expect(f.verify).not.toHaveBeenCalled();
+    } finally { vi.useRealTimers(); }
+  });
+  it('also bounds a response body that never completes', async () => {
+    vi.useFakeTimers();
+    try {
+      const f = fixture({ fetch: vi.fn(async () => ({ ok: true, json: () => new Promise(() => {}) }) as Response) });
+      const { raw } = await start(f); const result = f.flow.complete(raw);
+      await vi.advanceTimersByTimeAsync(30_000);
+      expect(await result).toEqual({ status: 'failed' }); expect(f.session()).toBeNull();
+    } finally { vi.useRealTimers(); }
+  });
+  it('explicit cancellation releases a stuck user verifier without a late promotion', async () => {
+    const hold = deferred<User>(), entered = deferred<void>(); let signal: AbortSignal | undefined;
+    const f = fixture({ verifyUser: vi.fn((_token, input) => { signal = input; entered.resolve(); return hold.promise; }) });
+    const { raw } = await start(f), result = f.flow.complete(raw); await entered.promise;
+    f.flow.cancel(); expect(await result).toEqual({ status: 'cancelled' }); expect(signal?.aborted).toBe(true);
+    hold.resolve(user); await Promise.resolve(); expect(f.session()).toBeNull();
+  });
+  it('uses the remaining attempt lifetime when it is less than the network deadline', async () => {
+    vi.useFakeTimers();
+    try {
+      let clock = now; const f = fixture({ now: () => clock, fetch: vi.fn(() => new Promise<Response>(() => {})) });
+      const { raw } = await start(f); clock = now + 600_000 - 50;
+      const result = f.flow.complete(raw); clock += 50;
+      await vi.advanceTimersByTimeAsync(50);
+      expect(await result).toEqual({ status: 'cancelled' }); expect(f.session()).toBeNull();
+    } finally { vi.useRealTimers(); }
+  });
+  it('does not report timeout after a durable commit has begun', async () => {
+    vi.useFakeTimers();
+    try {
+      const entered = deferred<void>(), release = deferred<void>(); const f = fixture();
+      const commit = f.options.boundary.commit;
+      f.options.boundary.commit = async (...args) => { entered.resolve(); await release.promise; return commit(...args); };
+      const { raw } = await start(f), result = f.flow.complete(raw); await entered.promise;
+      await vi.advanceTimersByTimeAsync(31_000); release.resolve();
+      expect((await result).status).toBe('accepted'); expect(f.session()).not.toBeNull();
+    } finally { vi.useRealTimers(); }
   });
 });

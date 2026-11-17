@@ -7,6 +7,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { signUpSchema, toAppError } from '@kora/core';
 import { browser } from '@/lib/browser';
+import { emailWebCallbackUrl } from '@kora/api';
+import { env } from '@/lib/env';
+import { GoogleAccessButton } from '@/components/google-access-button';
 import { VerifyCode } from '@/components/verify-code';
 import { authHref, callbackPath, safeReturnPath } from '@/lib/auth-return';
 function Registration() {
@@ -19,16 +22,17 @@ function Registration() {
     [email, setEmail] = useState(''),
     [password, setPassword] = useState(''),
     [sent, setSent] = useState(false);
+  const [googleBusy, setGoogleBusy] = useState(false);
   const signup = useMutation({
     mutationFn: async () => {
       if (!alive.current) throw new Error('El registro se canceló.');
       const p = signUpSchema.safeParse({ full_name: name, email, password });
-      if (!p.success) throw Object.assign(new Error(p.error.issues[0]?.message), { name: 'ValidationError' });
-      const { data, error } = await browser().client.auth.signUp({
+      if (!p.success) throw Object.assign(new Error(p.error.issues[0]?.message), { name: 'ValidationError', field: p.error.issues[0]?.path[0] });
+      const { data, error } = await browser().runtime.primary(() => browser().client.auth.signUp({
         email: p.data.email,
         password: p.data.password,
         options: { data: { full_name: p.data.full_name }, emailRedirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back)) },
-      });
+      }));
       if (error) throw error;
       return data;
     },
@@ -47,7 +51,7 @@ function Registration() {
           type="signup"
           onDone={() => router.replace(back)}
           resend={async () => {
-            const { error } = await browser().client.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back)) } });
+            const { error } = await browser().runtime.primary(() => browser().client.auth.resend({ type: 'signup', email: email.trim(), options: { emailRedirectTo: emailWebCallbackUrl(env.url, window.location.origin, callbackPath(back)) } }));
             if (error) throw error;
           }}
         />
@@ -68,7 +72,7 @@ function Registration() {
         className="login-form"
         onSubmit={(e) => {
           e.preventDefault();
-          if (!signup.isPending) signup.mutate();
+          if (!signup.isPending && !googleBusy) signup.mutate();
         }}
       >
         <h2>Crear cuenta</h2>
@@ -121,9 +125,10 @@ function Registration() {
           Consulta los <Link prefetch={false} href="/terminos">términos</Link> y la{' '}
           <Link prefetch={false} href="/privacidad">política de privacidad</Link> antes de crear tu cuenta.
         </p>
-        <button className="button" disabled={signup.isPending}>
+        <button className="button" aria-busy={signup.isPending} disabled={signup.isPending || googleBusy}>
           {signup.isPending ? 'Creando cuenta…' : 'Crear cuenta'}
         </button>
+        <GoogleAccessButton purpose="register" returnTo={back} disabled={signup.isPending} onBusyChange={setGoogleBusy} />
         <Link prefetch={false} href={authHref('/cuenta', back)} className="text-link">
           Ya tengo cuenta
         </Link>

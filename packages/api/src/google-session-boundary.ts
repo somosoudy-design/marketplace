@@ -10,13 +10,15 @@ export interface GoogleIntentStamp { read(): string | null; write(value: string)
 export type GoogleSessionLock = <T>(work: () => Promise<T>) => Promise<T>;
 // One owner per storage object/key in this module/process. Aliases and other realms remain a caller contract.
 const owners = new WeakMap<GoogleSessionStorage, Set<string>>();
-type BoundaryCode = 'guest_required' | 'boundary_changed' | 'rollback_pending';
+type BoundaryCode = 'guest_required' | 'boundary_changed' | 'rollback_pending' | 'commit_uncertain';
 export class GoogleSessionBoundaryError extends Error {
   readonly code: BoundaryCode;
   readonly cause: unknown;
   constructor(code: BoundaryCode, cause?: unknown) {
     super(code === 'guest_required'
       ? 'La cuenta cambió. Revisa tu sesión antes de continuar.'
+      : code === 'commit_uncertain'
+        ? 'No pudimos confirmar el resultado del acceso. Revisa tu cuenta antes de repetir.'
       : code === 'rollback_pending'
         ? 'No pudimos recuperar la sesión del navegador. Intenta de nuevo.'
         : 'El acceso se canceló porque la sesión cambió.');
@@ -39,7 +41,9 @@ export function createGoogleSessionBoundary(
   intent: GoogleIntentStamp,
   newIntentId: () => string,
   withLock?: GoogleSessionLock,
+  options: { durable?: boolean } = {},
 ) {
+  const journalKey = key + '.google-promotion.v1';
   const keys = owners.get(underlying) ?? new Set<string>();
   if (keys.has(key)) throw new Error('Primary storage already has a Google session boundary owner');
   keys.add(key); owners.set(underlying, keys);
@@ -47,7 +51,8 @@ export function createGoogleSessionBoundary(
   let rejected: { candidate: string } | null = null;
   const listeners = new Set<() => void>();
 
-  function invalidate(): void {
+  function invalidate(expected?: GoogleSessionTicket): void {
+    if (expected && !isCurrent(expected)) return;
     const stamp = newIntentId();
     if (typeof stamp !== 'string' || !stamp || stamp === intent.read()) throw new Error('Invalid intent identifier');
     // This must happen in the caller's synchronous turn, before queue/lock/storage awaits.
@@ -75,15 +80,30 @@ export function createGoogleSessionBoundary(
     }
   }
   async function repairRejected(): Promise<void> {
+    if (options.durable && !rejected) {
+      try {
+        const raw = await underlying.getItem(journalKey);
+        if (raw !== null) {
+          const record: unknown = JSON.parse(raw);
+          if (!record || typeof record !== 'object' || (record as { version?: number }).version !== 1 ||
+            typeof (record as { candidate?: string }).candidate !== 'string') throw new Error('Invalid promotion journal');
+          rejected = { candidate: (record as { candidate: string }).candidate };
+        }
+      } catch (error) { throw new GoogleSessionBoundaryError('rollback_pending', error); }
+    }
     const pending = rejected;
     if (!pending) return;
     try {
       const value = await underlying.getItem(key);
-      if (value !== pending.candidate) { if (rejected === pending) rejected = null; return; }
+      if (value !== pending.candidate) {
+        if (options.durable) await underlying.removeItem(journalKey);
+        if (rejected === pending) rejected = null; return;
+      }
       // capture/commit only permit a null guest baseline. Never remove a different session.
       await underlying.removeItem(key);
       const remaining = await underlying.getItem(key);
       if (remaining === pending.candidate) throw new Error('Rejected candidate remains');
+      if (options.durable) await underlying.removeItem(journalKey);
       if (rejected === pending) rejected = null;
     } catch (error) {
       // Retain the barrier: later reads retry cleanup or reject, and cannot return this candidate.
@@ -105,13 +125,14 @@ export function createGoogleSessionBoundary(
       return primary(async () => {
         // An explicit later SDK writer can supersede a failed promotion cleanup.
         await underlying.setItem(key, value);
+        if (options.durable) await underlying.removeItem(journalKey);
         rejected = null;
       });
     },
     removeItem(requested) {
       if (requested !== key) return underlying.removeItem(requested);
       invalidate();
-      return primary(async () => { await underlying.removeItem(key); rejected = null; });
+      return primary(async () => { await underlying.removeItem(key); if (options.durable) await underlying.removeItem(journalKey); rejected = null; });
     },
   };
 
@@ -145,6 +166,10 @@ export function createGoogleSessionBoundary(
         if (!valid() || baseline !== expected.baseline) return false;
         // Set before starting a possibly deferred/uncertain native write.
         rejected = { candidate: sessionJson };
+        if (options.durable) {
+          await underlying.setItem(journalKey, JSON.stringify({ version: 1, candidate: sessionJson }));
+          if (!valid()) { await repairRejected(); return false; }
+        }
         try { await underlying.setItem(key, sessionJson); }
         catch (error) {
           // A rejecting setItem may already have written. Inspect before any conditional cleanup.
@@ -157,6 +182,24 @@ export function createGoogleSessionBoundary(
         catch (error) { await repairRejected(); throw error; }
         if (!valid() || saved !== sessionJson) { await repairRejected(); return false; }
         // Linearization point: no await remains before notification/return from this transaction.
+        if (options.durable) {
+          // Starting the final journal clear is the irreversible acceptance point on async native storage.
+          // Late cancellation cannot turn an accepted write into a contradictory cancelled response.
+          try { await underlying.removeItem(journalKey); }
+          catch (error) {
+            let marker: string | null, value: string | null;
+            try { marker = await underlying.getItem(journalKey); value = await underlying.getItem(key); }
+            catch (readError) {
+              // Recovery now follows the durable marker, not an in-memory rejected flag.
+              // A removed marker means the final acceptance operation completed; a surviving marker repairs closed.
+              rejected = null;
+              throw new GoogleSessionBoundaryError('commit_uncertain', readError);
+            }
+            if (marker !== null || value !== sessionJson) {
+              await repairRejected(); throw error;
+            }
+          }
+        }
         rejected = null;
         notifyConfirmed();
         return true;

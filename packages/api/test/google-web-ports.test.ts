@@ -1,8 +1,8 @@
 import { webcrypto } from 'node:crypto';
-import { describe, expect, it } from 'vitest';
-import { createGoogleAuth, type GoogleAuthOptions } from '../src/google-auth';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createGoogleAuth, googleProviderEnabled, type GoogleAuthOptions } from '../src/google-auth';
 import { createWebAttemptRepository, createWebCryptoPorts, googleAttemptCodec, GOOGLE_ACCESS_ENABLED,
-  GOOGLE_ATTEMPT_STORAGE_KEY } from '../../../apps/storefront/src/lib/google-auth-ports';
+  GOOGLE_ATTEMPT_STORAGE_KEY } from '../src/google-web-ports';
 
 const callbackBase = 'https://mayami.app/auth/callback';
 function storage() {
@@ -20,7 +20,22 @@ function options(store = createWebAttemptRepository(storage(), googleAttemptCode
   } satisfies GoogleAuthOptions;
 }
 describe('prepared web ports with real WebCrypto and per-tab storage, no network', () => {
-  it('production gate remains closed', () => { expect(GOOGLE_ACCESS_ENABLED).toBe(false); });
+  afterEach(() => vi.unstubAllGlobals());
+  it.each([true, false, undefined])('offers Google only when Auth explicitly enables it: %s', async google => {
+    expect(GOOGLE_ACCESS_ENABLED).toBe(true);
+    const send = vi.fn(async () => Response.json({ external: { google } }));
+    vi.stubGlobal('fetch', send);
+    expect(await googleProviderEnabled('https://testonly.supabase.co', 'anon')).toBe(google === true);
+    expect(send).toHaveBeenCalledWith('https://testonly.supabase.co/auth/v1/settings',
+      expect.objectContaining({ credentials: 'omit', redirect: 'error' }));
+  });
+  it('does not forward the public key to another origin or offer Google during an outage', async () => {
+    const send = vi.fn(async () => new Response('', { status: 503 }));
+    vi.stubGlobal('fetch', send);
+    await expect(googleProviderEnabled('https://outside.example', 'anon')).rejects.toThrow();
+    expect(send).not.toHaveBeenCalled();
+    await expect(googleProviderEnabled('https://testonly.supabase.co', 'anon')).rejects.toThrow();
+  });
   it('persists S256 before redirect, keeps tabs separate, and rejects a consumed attempt after reload', async () => {
     const disk = storage(), repo = createWebAttemptRepository(disk, googleAttemptCodec(callbackBase));
     const o = options(repo); const result = await createGoogleAuth(o).begin('register', '/checkout');

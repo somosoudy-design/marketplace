@@ -32,7 +32,7 @@ async function message(to, subject, since = 0) {
     if (messages.length) {
       assert.equal(messages.length, 1, 'Expected one email for this action');
       const m = messages[0];
-      assert.match(m.code || '', /^\d{6}$/);
+      assert.match(m.code || '', /^\d{6,8}$/);
       assert.ok(m.text.includes(m.code));
       assert.ok(m.html.includes('src="' + logo + '"'));
       assert.ok(m.html.includes('alt="Mayami"'));
@@ -47,7 +47,7 @@ async function message(to, subject, since = 0) {
 
 await request('/signup', { email, password });
 const confirmation = await message(email, 'Confirma tu correo en Mayami');
-const wrong = confirmation.code === '000000' ? '111111' : '000000';
+const wrong = (confirmation.code[0] === '0' ? '1' : '0') + confirmation.code.slice(1);
 await request('/verify', { email, token: wrong, type: 'signup' }, { expectSuccess: false });
 const account = await request('/verify', { email, token: confirmation.code, type: 'signup' });
 assert.equal(account.user.email, email);

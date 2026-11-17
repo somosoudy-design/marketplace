@@ -8,6 +8,7 @@ export interface ClientOptions {
   /** Public anon key. Never pass the service role key to an app or browser bundle. */
   anonKey: string;
   storage?: SupportedStorage;
+  storageKey?: string;
   /** URL session adoption is opt-in; native clients keep it disabled. */
   detectSessionInUrl?: boolean | ((url: URL, params: { [parameter: string]: string }) => boolean);
   /** Web email links use a verifier bound to the browser that requested them. */
@@ -31,6 +32,7 @@ export function createKoraClient(opts: ClientOptions): KoraClient {
     ...(accessToken ? { accessToken: async () => accessToken } : {}),
     auth: {
       storage: opts.storage,
+      ...(opts.storageKey ? { storageKey: opts.storageKey } : {}),
       autoRefreshToken: !opts.accessToken,
       persistSession: !opts.accessToken,
       detectSessionInUrl: opts.detectSessionInUrl ?? false,

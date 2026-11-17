@@ -2093,3 +2093,6 @@ legend {
 .variant-picker button[data-color-choice] { display: inline-flex; align-items: center; gap: 8px; text-align: start; }
 .variant-picker button[aria-pressed='true'] .variant-color-dot { outline: 2px solid var(--brand); outline-offset: 2px; }
 .product-colors a { gap: 6px; }
+
+.google-access .button { width: 100%; gap: 12px; border-color: var(--border-strong); }
+.google-access .error { margin-top: 8px; }

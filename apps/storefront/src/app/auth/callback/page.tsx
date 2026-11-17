@@ -1,59 +1,59 @@
 'use client';
+
 import { useEffect, useRef, useState } from 'react';
-import { isGoogleAuthCallback } from '@kora/api';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { isGoogleAuthCallback, type GoogleResult } from '@kora/api';
 import { browser } from '@/lib/browser';
 import { authHref, safeReturnPath } from '@/lib/auth-return';
+
 export default function Callback() {
   const router = useRouter();
-  const attempt = useRef<Promise<{ destination: string; recovery: boolean; success: boolean }> | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [state, setState] = useState<'loading' | 'email' | 'cancelled' | 'error'>('loading');
   const [back, setBack] = useState('/cuenta');
+  const result = useRef<Promise<GoogleResult> | null>(null);
+  const initialBack = useRef('/cuenta');
+  const inspected = useRef(false);
+
   useEffect(() => {
     let active = true;
-    if (!attempt.current)
-      attempt.current = (async () => {
-        const url = new URL(window.location.href);
-        const destination = safeReturnPath(url.searchParams.get('volver'));
-        const fragment = new URLSearchParams(url.hash.slice(1));
-        const recovery = url.searchParams.get('tipo') === 'recuperar' || fragment.get('type') === 'recovery';
-        // Remove credentials while this callback is still mounted, before the first await.
-        history.replaceState(null, '', '/auth/callback');
-        try {
-          // Google remains gated. Never exchange its code through the uncorrelated email callback.
-          if (isGoogleAuthCallback(url.toString())) throw new Error('Google no está activado');
-          // Implicit tokens are not bound to this browser and can replace another actor's session.
-          // Only PKCE codes can prove possession of the verifier created by this email flow.
-          if (fragment.has('access_token') || fragment.has('refresh_token')) throw new Error('Enlace sin verificación local');
-          const auth = browser().client.auth; let error: unknown;
-          if (url.searchParams.get('code')) ({ error } = await auth.exchangeCodeForSession(url.searchParams.get('code')!));
-          else throw new Error('Enlace inválido');
-          return { destination, recovery, success: !error };
-        } catch { return { destination, recovery, success: false }; }
-      })();
-    attempt.current.then(result => {
+    if (!inspected.current) {
+      inspected.current = true;
+      const url = new URL(window.location.href);
+      history.replaceState(history.state, '', '/auth/callback');
+      if (isGoogleAuthCallback(url.href)) {
+        const runtime = browser().runtime;
+        // Only use the saved destination when the callback matches this tab's pending flow.
+        const dest = runtime.google.returnDestination(url.href);
+        if (dest) initialBack.current = dest;
+        result.current = runtime.google.complete(url.href);
+      } else {
+        initialBack.current = safeReturnPath(url.searchParams.get('volver'));
+      }
+    }
+    const completion = result.current;
+    Promise.resolve(completion).then(async outcome => {
       if (!active) return;
-      setBack(result.destination);
-      if (!result.success) { setFailed(true); return; }
-      router.replace(result.recovery ? `/recuperar?cambiar=1&volver=${encodeURIComponent(result.destination)}` : result.destination);
-    }).catch(() => { if (active) setFailed(true); });
-    return () => {
-      active = false;
-    };
+      setBack(initialBack.current);
+      if (outcome === null) {
+        setState('email');
+        return;
+      }
+      if (outcome.status === 'accepted' && await browser().runtime.claimNavigation(outcome, () => active)) {
+        router.replace(outcome.returnTo);
+      } else if (active) {
+        setState(outcome.status === 'cancelled' ? 'cancelled' : 'error');
+      }
+    }).catch(() => { if (active) setState('error'); });
+    return () => { active = false; };
   }, [router]);
-  return (
-    <section className="state" role={failed ? 'alert' : 'status'}>
-      <h1>{failed ? 'Este enlace no está disponible' : 'Confirmando tu cuenta…'}</h1>
-      {failed && (
-        <>
-          <p>El enlace puede haber vencido. Solicita uno nuevo para continuar.</p>
-          <Link prefetch={false} className="button" href={authHref('/recuperar', back)}>
-            Recuperar acceso
-          </Link>
-          <Link prefetch={false} href={authHref('/cuenta', back)}>Iniciar sesión</Link>
-        </>
-      )}
-    </section>
-  );
+
+  return <section className="state" aria-live="polite">
+    <h1>{state === 'email' ? 'Confirma con tu código' : state === 'loading' ? 'Confirmando tu acceso…'
+      : state === 'cancelled' ? 'El acceso con Google se canceló' : 'No pudimos completar el acceso con Google'}</h1>
+    {state === 'email' && <p>Introduce el código que recibiste en la pantalla donde lo solicitaste.</p>}
+    {state === 'error' && <p>Intenta de nuevo. Si ya tenías una cuenta con contraseña, puedes recuperar el acceso con tu correo.</p>}
+    {state !== 'loading' && <Link prefetch={false} className="button" href={authHref('/cuenta', back)}>Volver al acceso</Link>}
+    {(state === 'error' || state === 'email') && <Link prefetch={false} href={authHref('/recuperar', back)}>Recuperar acceso</Link>}
+  </section>;
 }

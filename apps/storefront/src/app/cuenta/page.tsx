@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Heart, ShoppingBag, LogOut, ArrowRight, UserRound, Bell, MapPin } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { browser } from '@/lib/browser';
+import { GoogleAccessButton } from '@/components/google-access-button';
 import { configured } from '@/lib/env';
 import { useAccount } from '@/lib/providers';
 import { toAppError } from '@kora/core';
@@ -15,6 +16,7 @@ function Account() {
   const params = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [googleBusy, setGoogleBusy] = useState(false);
   const alive = useRef(false);
   useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
   const requested = params.get('volver') ?? '/cuenta';
@@ -23,7 +25,7 @@ function Account() {
   const login = useMutation({
     mutationFn: async () => {
       if (!alive.current) throw new Error('El inicio de sesión se canceló.');
-      const { error } = await browser().client.auth.signInWithPassword({ email: email.trim(), password });
+      const { error } = await browser().runtime.primary(() => browser().client.auth.signInWithPassword({ email: email.trim(), password }));
       if (error) throw error;
     },
     onSuccess: () => {
@@ -35,7 +37,7 @@ function Account() {
   });
   const logout = useMutation({
     mutationFn: async () => {
-      const { error } = await browser().client.auth.signOut();
+      const { error } = await browser().runtime.primary(() => browser().client.auth.signOut());
       if (error) throw error;
     },
     onSuccess: () => {
@@ -147,7 +149,7 @@ function Account() {
         className="login-form"
         onSubmit={(e) => {
           e.preventDefault();
-          if (!login.isPending) login.mutate();
+          if (!login.isPending && !googleBusy) login.mutate();
         }}
       >
         <h2>Iniciar sesión</h2>
@@ -178,9 +180,10 @@ function Account() {
             {error}
           </p>
         )}
-        <button className="button" disabled={login.isPending}>
+        <button className="button" aria-busy={login.isPending} disabled={login.isPending || googleBusy}>
           {login.isPending ? 'Ingresando…' : 'Ingresar'}
         </button>
+        <GoogleAccessButton purpose="login" returnTo={back} disabled={login.isPending} onBusyChange={setGoogleBusy} />
         <div className="auth-links">
           <Link prefetch={false} href={authHref('/registro', back)}>Crear una cuenta</Link>
           <Link prefetch={false} href={authHref('/recuperar', back)}>¿Olvidaste tu contraseña?</Link>
