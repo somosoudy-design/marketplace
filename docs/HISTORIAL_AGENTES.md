@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Codex · Acceso Google y correo de Mayami
 
-Se publicaron acceso y registro en la web y APK, con retorno correlacionado, protección de cuentas antiguas y correos de marca con código de ocho dígitos. Se comprobó entrega externa en Gmail. La cancelación observada en el servidor real incluía un marcador vacío específico de Supabase. Se corrigió, se volvió a publicar y se verificó el reintento en la web oficial. [Publicación y pruebas](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
+Se publicaron acceso y registro en la web y APK, con retorno correlacionado, protección de cuentas antiguas y correos de marca con código de ocho dígitos. Se comprobó entrega externa en Gmail. La cancelación observada en el servidor real incluía un marcador vacío específico de Supabase. Se corrigió, se volvió a publicar y se verificó el reintento en la web oficial. Después se completaron el registro y el segundo ingreso de una cuenta real autorizada, con persistencia, retorno al checkout y una sola identidad en el servidor. [Publicación y pruebas](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## 2026-11-08 — checkpoint de seguridad focal y login-CSRF local
 

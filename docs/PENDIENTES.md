@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Acceso de compradores
 
-Observar un alta o ingreso real después de que el titular autorice Google y verificar el recorrido en un Android físico. El proveedor, la marca, la web, la OTA, las plantillas y la protección de cuentas antiguas están publicados. [Estado y verificaciones](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
+Repetir el ingreso con Google en un Android físico con la APK actualizada. El alta, la persistencia, el segundo ingreso, la ausencia de duplicados y el retorno al checkout ya se comprobaron en la web oficial. [Estado y verificaciones](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
 

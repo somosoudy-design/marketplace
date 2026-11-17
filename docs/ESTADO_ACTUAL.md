@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Acceso con Google publicado
 
-Google está activo en Marketplace y su marca pública muestra Mayami. Se desplegaron la web, la actualización de la APK y las cuatro plantillas de correo. La última prueba en producción llegó al consentimiento de Google y comprobó cancelación, limpieza de URL y reintento. La protección de las cuentas históricas y el plazo de vinculación se verificaron en servidor. Próxima acción: completar un ingreso aceptado con una cuenta autorizada y probarlo en Android físico. [Versiones y resultados](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
+Google está activo en Marketplace y su marca pública muestra Mayami. En la web oficial se completaron el alta con consentimiento, la persistencia al recargar y un segundo ingreso que volvió al checkout. El servidor confirmó un único usuario, identidad Google y perfil en los dos ingresos. Queda comprobar la APK en Android físico. [Versiones y resultados](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## Seguridad focal: corrección local de login-CSRF, sin publicar · 8 de noviembre de 2026
 
