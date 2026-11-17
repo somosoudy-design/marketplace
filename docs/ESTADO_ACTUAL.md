@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Ingreso y registro de compradores
 
-Trabajo en curso. Diseño integrado en la web y en la app, con Google antes de los campos, recuperación junto a la contraseña y vuelta al destino de compra. Se revisaron ambas pantallas en claro y oscuro, siete anchos de navegador y Android 16 emulado. Próxima acción: comprobar la publicación del Worker y la recepción de la actualización por la APK existente.
+Rediseño publicado en mayami.app y en la APK existente. El dominio sirve las dos pantallas y ambas abren el acceso oficial de Google. La APK firmada descargó la actualización del canal preview y mostró el diseño nuevo en Android 16 emulado. La verificación de Google en el Samsung físico sigue pendiente. [Versiones y pruebas](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).
 
 ## 17 noviembre 2026 · Acceso con Google publicado
 

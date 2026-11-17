@@ -2,7 +2,15 @@
 
 El 17 de noviembre de 2026 se activaron el registro y el ingreso de compradores con Google. Las entradas públicas son [Ingresar](https://mayami.app/cuenta) y [Crear cuenta](https://mayami.app/registro). Google verificó la marca Mayami. La pantalla pública muestra ese nombre y el cliente solicita únicamente OpenID, correo y perfil básico.
 
-## Publicación
+## Diseño de ingreso y registro publicado
+
+El 17 de noviembre se publicó el rediseño para compradores. Google aparece antes de los campos y el formulario de correo tiene una acción para revisar la contraseña. Desde el checkout, los enlaces entre registro, ingreso y recuperación conservan el destino. La imagen de escritorio es una composición ilustrativa creada para Mayami, comprimida en WebP de 62.856 bytes y excluida de la vista móvil.
+
+- **Web**. Worker `a445f8a7-2ed7-4508-87f8-2b91e6553ef0` al 100 %, fuente `6a30ae5`. En el dominio oficial se verificaron ingreso y registro con HTTP 200, la visibilidad de la contraseña y la llegada de ambos botones a Google con la marca Mayami. En la versión compilada se comprobaron ambas pantallas en siete anchos de 320 a 1440 px y dos temas. Pasaron los 14 recorridos de Google y recuperación en Chrome y WebKit con proveedor controlado, cuatro recorridos de correo con error, reintento y acceso, dos pruebas de formulario y 115 pruebas del storefront.
+- **APK**. Actualización Android `01a1e9a3-c20b-7fe1-bad2-600cdeed166e`, grupo `75c0f3b7-9e41-4246-b458-a73654c1f580`, fuente `cf4dc96`, canal preview, mismo runtime. La APK oficial firmada descargó esa versión y mostró ingreso y registro en Android 16 emulado. El paquete final pasó 13 pruebas de interacción, entre ellas teclado, campos inválidos, apertura de Google, recuperación y letra al 130 %. Pasaron también tipos, lint y 197 pruebas de la app y los contratos de Google. Sigue pendiente el inicio completo en un Samsung físico.
+- **Servicios**. La publicación utilizó el Worker y el canal de actualización existentes. Los cambios se limitaron a presentación, ayudas de formulario y pruebas. Las plantillas de correo y la configuración de autenticación son las de la activación inicial.
+
+## Publicación inicial de Google
 
 | Destino | Versión comprobada |
 |---|---|
