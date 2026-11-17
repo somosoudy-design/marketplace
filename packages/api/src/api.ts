@@ -324,6 +324,7 @@ export function createApi(client: KoraClient) {
   const favoriteCards = (favs: { product_id: string; created_at: string }[]) => productCardsByIds(favs.map(f => f.product_id));
 
   const account = {
+    googleRecoveryStatus: () => run<{ allow_after: string; other_sessions_open: boolean } | null>(rpc('my_google_link_recovery_status')),
     profile: (userId: string) => run<Profile | null>(from('profiles').select('*').eq('id', userId).maybeSingle()),
     updateProfile: (userId: string, patch: Partial<Pick<Profile, 'full_name' | 'phone' | 'preferences' | 'personalization_enabled' | 'marketing_opt_in'>>) =>
       run<Profile>(from('profiles').update(patch).eq('id', userId).select().single()),

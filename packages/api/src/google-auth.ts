@@ -75,6 +75,18 @@ export async function googleProviderEnabled(url: string, anonKey: string, signal
   return settings.external?.google === true;
 }
 
+/** Shown only after a verified recovery for this session and this account. */
+export function googleRecoveryMessage(status: { allow_after: string; other_sessions_open: boolean } | null | undefined, now = Date.now()): string | null {
+  if (!status) return null;
+  if (status.other_sessions_open) return 'Para vincular Google, cierra tus otras sesiones de Mayami. Puedes seguir usando tu contraseña.';
+  const after = Date.parse(status.allow_after);
+  if (!Number.isFinite(after)) return null;
+  if (after <= now) return 'Ya puedes cerrar sesión y volver a entrar con Google.';
+  const time = new Intl.DateTimeFormat('es-VE', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })
+    .format(new Date(Math.ceil(after / 60000) * 60000));
+  return `Puedes seguir comprando con tu contraseña. Por seguridad, podrás vincular Google a partir del ${time}, hora de este dispositivo.`;
+}
+
 export function isGoogleAuthCallback(value: string): boolean {
   try {
     const url = new URL(value);

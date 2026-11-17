@@ -52,7 +52,7 @@ export function GoogleAccessButton({ purpose, returnTo, disabled }: {
       } else if (result.status === 'uncertain') {
         setError('No pudimos confirmar el acceso. Revisa tu cuenta antes de repetirlo.');
       } else if (result.status !== 'cancelled') {
-        setError('No pudimos continuar con Google. Inténtalo de nuevo o usa tu correo.');
+        setError('No pudimos continuar con Google. Si ya usabas contraseña, puedes recuperarla con tu correo.');
       }
     } catch {
       if (mounted.current) setError('No pudimos continuar con Google. Revisa tu conexión e inténtalo de nuevo.');

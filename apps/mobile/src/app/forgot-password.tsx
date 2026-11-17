@@ -1,5 +1,8 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { googleRecoveryMessage } from '@kora/api';
+import { captureActorApi } from '@/lib/actor-api';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { EmailCodeStep } from '@/components/auth/EmailCodeStep';
 import { NewPasswordForm } from '@/components/auth/NewPasswordForm';
@@ -18,11 +21,23 @@ type Step = 'email' | 'code' | 'password' | 'done';
 export default function ForgotPasswordScreen() {
   const t = useTheme();
   const returnTo = useAuthReturn();
-  const { sendEmailCode } = useAuth();
+  const { sendEmailCode, user } = useAuth();
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  const actor = step === 'done' ? user?.id : undefined;
+  const recoveryStatus = useQuery({
+    queryKey: ['google-link-recovery', actor], enabled: !!actor, retry: false,
+    queryFn: async () => {
+      const account = await captureActorApi(actor!);
+      const status = await account.api.account.googleRecoveryStatus();
+      await account.assertCurrent();
+      return status;
+    },
+  });
+  const googleNotice = actor ? googleRecoveryMessage(recoveryStatus.data) : null;
 
   const send = async () => {
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) return setError('Escribe un correo válido.');
@@ -65,6 +80,7 @@ export default function ForgotPasswordScreen() {
         ) : (
           <View testID="reset-done" style={{ gap: 16 }}>
             <Banner tone="success" icon="circle-check" title="Contraseña actualizada" body="Ya entraste con tu contraseña nueva. Úsala la próxima vez que inicies sesión." />
+            {googleNotice && <Text accessibilityLiveRegion="polite" color="textSecondary">{googleNotice}</Text>}
             <Button title="Continuar" size="lg" full onPress={() => finishAuth(returnTo)} />
           </View>
         )}

@@ -1,7 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 import type { User } from '@supabase/supabase-js';
 import { describe, expect, it, vi } from 'vitest';
-import { createGoogleAuth, createGoogleUserVerifier, isGoogleAuthCallback, readGoogleAttempt, type GoogleAttempt, type GoogleAuthOptions } from '../src/google-auth';
+import { createGoogleAuth, googleRecoveryMessage, createGoogleUserVerifier, isGoogleAuthCallback, readGoogleAttempt, type GoogleAttempt, type GoogleAuthOptions } from '../src/google-auth';
 
 const now = 1_800_000_000_000;
 const user = { id: 'buyer-a', identities: [{ provider: 'google' }] } as User;
@@ -252,5 +252,17 @@ describe('bounded Google network completion, without racing durable commit', () 
       await vi.advanceTimersByTimeAsync(31_000); release.resolve();
       expect((await result).status).toBe('accepted'); expect(f.session()).not.toBeNull();
     } finally { vi.useRealTimers(); }
+  });
+});
+
+describe('notice after verified account recovery', () => {
+  it('shows the local eligibility time only for the current recovery and keeps ordinary resets quiet', () => {
+    const time = Date.UTC(2026, 10, 17, 8);
+    const status = { allow_after: new Date(time).toISOString(), other_sessions_open: false };
+    expect(googleRecoveryMessage(null)).toBeNull();
+    expect(googleRecoveryMessage({ ...status, allow_after: 'invalid' })).toBeNull();
+    expect(googleRecoveryMessage(status, time - 10)).toContain('hora de este dispositivo');
+    expect(googleRecoveryMessage(status, time)).toContain('volver a entrar con Google');
+    expect(googleRecoveryMessage({ ...status, other_sessions_open: true })).toContain('otras sesiones');
   });
 });

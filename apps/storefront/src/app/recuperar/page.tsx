@@ -1,16 +1,16 @@
 'use client';
-import { emailWebCallbackUrl } from '@kora/api';
+import { emailWebCallbackUrl, googleRecoveryMessage } from '@kora/api';
 import { env } from '@/lib/env';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { validatePassword, toAppError } from '@kora/core';
 import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 import { VerifyCode } from '@/components/verify-code';
 import { authHref, callbackPath, safeReturnPath } from '@/lib/auth-return';
-import { updateBuyerPassword } from '@/lib/actor-api';
+import { captureBuyerApi, updateBuyerPassword } from '@/lib/actor-api';
 type RecoveryInput = { generation: number; back: string } & ({ mode: 'change'; actorId: string; password: string } | { mode: 'request'; email: string });
 function RecoveryForm() {
   const params = useSearchParams();
@@ -41,6 +41,19 @@ function RecoveryForm() {
     },
     onSuccess: (_result, input) => { if (alive.current && generation.current === input.generation) setPassword(''); },
   });
+  const recoveredActor = change && action.isSuccess ? session?.user.id : undefined;
+  const recoveryStatus = useQuery({
+    queryKey: ['google-link-recovery', recoveredActor],
+    enabled: !!recoveredActor,
+    queryFn: async () => {
+      const account = await captureBuyerApi(recoveredActor!);
+      const status = await account.api.account.googleRecoveryStatus();
+      await account.assertCurrent();
+      return status;
+    },
+    retry: false,
+  });
+  const googleNotice = recoveredActor ? googleRecoveryMessage(recoveryStatus.data) : null;
   if (!ready)
     return (
       <section className="state" role="status">
@@ -78,6 +91,7 @@ function RecoveryForm() {
               ? 'Ya puedes seguir comprando.'
               : 'Si existe una cuenta con ese correo, recibirás un enlace para restablecer tu contraseña.'}
           </p>
+          {googleNotice && <p role="status">{googleNotice}</p>}
           <Link prefetch={false} className="button" href={back}>
             {back === '/cuenta' ? 'Volver a mi cuenta' : 'Continuar'}
           </Link>
