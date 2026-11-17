@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Pulido visual de la tienda web
 
-Trabajo en curso. Revisión de portada, búsqueda, ficha, acceso, carrito, favoritos, soporte y pie en escritorio y móvil. La candidata compacta la cabecera y el acceso móvil, pone el nombre del producto sobre la galería, centra la fotografía en escritorio y reúne las acciones de búsqueda vacía. El formulario de correo conserva su posición mientras se comprueba Google. Las visitas de invitado, el artículo agregado al carrito, el cambio de color y los destinos de preguntas y opiniones se probaron en navegador. Próxima acción: compilar para el Worker Free y contrastar la versión pública con las capturas iniciales.
+La primera entrega ya está publicada en el Worker Free `f9db86a6-5d43-4b13-99ef-e0cfbc25b55e`. En el dominio oficial se comprobó la cabecera móvil de 64 px, la edición de búsquedas vacías, el título visible antes de la galería y la posición estable del campo de correo al habilitarse Google. Las capturas antes y después están en Descargas, carpeta `MAYAMI-pulido-web-20261117`. Tipos y lint del repositorio, 194 pruebas de la tienda, 190 compartidas y seis recorridos nuevos de navegador pasaron. Trabajo en curso: las pantallas privadas vistas como invitado mostraban la lupa de búsqueda; el icono de cuenta y el título principal ya se comprobaron en la candidata. Próxima acción: publicar ese último ajuste y repetir la prueba de retorno en el dominio oficial.
 
 ## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
 

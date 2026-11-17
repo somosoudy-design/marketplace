@@ -2,7 +2,7 @@
 import type { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { SearchX, RefreshCw, Heart, ShoppingBag, Store } from 'lucide-react';
+import { SearchX, RefreshCw, Heart, ShoppingBag, Store, UserRound } from 'lucide-react';
 export function Failure({
   href = '/',
   message = 'No pudimos cargar esta página.',
@@ -41,10 +41,10 @@ export function Empty({
   href?: string;
   action?: string;
   children?: ReactNode;
-  kind?: 'search' | 'favorites' | 'cart' | 'store';
+  kind?: 'search' | 'favorites' | 'cart' | 'store' | 'account';
 }) {
-  const Icon = { search: SearchX, favorites: Heart, cart: ShoppingBag, store: Store }[kind];
-  const Heading = kind === 'cart' ? 'h1' : 'h2';
+  const Icon = { search: SearchX, favorites: Heart, cart: ShoppingBag, store: Store, account: UserRound }[kind];
+  const Heading = kind === 'cart' || kind === 'account' ? 'h1' : 'h2';
   return (
     <section className="state state-empty">
       <span className="state-icon"><Icon size={26} aria-hidden="true" /></span>

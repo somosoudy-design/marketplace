@@ -24,6 +24,7 @@ function BuyerSession({ children, guestTitle = 'Inicia sesión para continuar' }
   if (!session)
     return (
       <Empty
+        kind="account"
         title={guestTitle}
         text="Accede con la cuenta con la que realizas tus compras."
         href={authHref('/cuenta', back)}

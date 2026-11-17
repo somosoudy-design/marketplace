@@ -53,3 +53,14 @@ test('registro y recuperación conservan la cabecera compacta a 320 px', async (
     await expect(page.getByLabel('Correo electrónico')).toBeVisible();
   }
 });
+
+test('los accesos privados identifican la cuenta y conservan el destino del comprador', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['/checkout', '/pedidos', '/direcciones']) {
+    await page.goto(route);
+    await expect(page.getByRole('heading', { level: 1, name: /Inicia sesión/ })).toBeVisible();
+    await expect(page.locator('main .state-icon .lucide-user-round')).toBeVisible();
+    const href = await page.getByRole('link', { name: 'Iniciar sesión', exact: true }).getAttribute('href');
+    expect(new URL(href!, page.url()).searchParams.get('volver')).toBe(route);
+  }
+});
