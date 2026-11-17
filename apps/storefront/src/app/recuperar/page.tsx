@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { validatePassword, toAppError } from '@kora/core';
-import { emailWebCallbackUrl } from '@kora/api';
-import { env } from '@/lib/env';
 import { browser } from '@/lib/browser';
 import { useAccount } from '@/lib/providers';
 import { VerifyCode } from '@/components/verify-code';

@@ -37,6 +37,10 @@ function compile(text, modules, fileName = 'module.ts') {
   return module.exports;
 }
 const apiClient = compile(source('packages/api/src/client.ts'), { '@supabase/supabase-js': sdk });
+const googleAuth = compile(source('packages/api/src/google-auth.ts'), {});
+const googleSessions = compile(source('packages/api/src/google-session-boundary.ts'), {});
+const googleWebSessions = compile(source('packages/api/src/google-web-session.ts'), { './google-session-boundary': googleSessions });
+const googlePorts = compile(source('packages/api/src/google-web-ports.ts'), { './google-auth': googleAuth });
 const authReturn = compile(source('apps/storefront/src/lib/auth-return.ts'), { '@kora/core': {} });
 const jsx = { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) };
 const googleMarker = url => new URL(url).searchParams.has('google_flow');
@@ -66,8 +70,13 @@ async function setup(href, initial = B, type = 'web') {
   replace('document', { visibilityState: 'visible', addEventListener() {}, removeEventListener() {} });
   replace('history', history); replace('BroadcastChannel', undefined); replace('fetch', request);
   const create = options => { const client = apiClient.createKoraClient({ ...options, fetch: request }); clients.push(client); return client; };
+  const wrappedApi = { ...apiClient, createKoraClient: create };
+  const googleRuntime = compile(source('packages/api/src/google-auth-runtime.ts'), {
+    './client': wrappedApi, './google-auth': googleAuth, './google-session-boundary': googleSessions, './google-web-session': googleWebSessions,
+  });
   const factory = compile(source(type === 'panel' ? 'apps/admin/src/lib/kora.ts' : 'apps/storefront/src/lib/browser.ts'), {
-    '@kora/api': { ...apiClient, createKoraClient: create, createApi: () => ({}), run: work => work },
+    '@kora/api': { ...wrappedApi, ...googlePorts, ...googleRuntime, createApi: () => ({}), run: work => work },
+    './auth-return': authReturn,
     './env': { env: { url: issuer, anon: 'synthetic-public-anon', supabaseUrl: issuer, supabaseAnonKey: 'synthetic-public-anon' } },
   });
   const connection = type === 'panel' ? factory.kora() : factory.browser();
@@ -85,16 +94,16 @@ async function runCallback(env) {
   env.client.auth.setSession = (...args) => { setCalls++; return realSet(...args); };
   env.client.auth.exchangeCodeForSession = (...args) => { exchangeCalls++; return realExchange(...args); };
   const component = compile(source('apps/storefront/src/app/auth/callback/page.tsx'), {
-    react: { useRef: () => ({ current: null }), useState: initial => { const index = calls++; states[index] = initial; return [initial, next => { states[index] = next; }]; }, useEffect: fn => effects.push(fn) },
+    react: { useRef: initial => ({ current: initial }), useState: initial => { const index = calls++; states[index] = initial; return [initial, next => { states[index] = next; }]; }, useEffect: fn => effects.push(fn) },
     'react/jsx-runtime': jsx, 'next/link': { default: () => null },
     'next/navigation': { useRouter: () => ({ replace: path => routes.push(path) }) },
     '@/lib/browser': { browser: () => env }, '@/lib/auth-return': authReturn,
     '@kora/api': { isGoogleAuthCallback: googleMarker },
   }, 'callback.tsx');
   component.default(); const disposals = effects.map(fn => fn());
-  for (let count = 0; count < 100 && states[0] !== true && routes.length === 0; count++) await new Promise(done => setTimeout(done, 2));
+  for (let count = 0; count < 100 && states[0] === 'loading' && routes.length === 0; count++) await new Promise(done => setTimeout(done, 2));
   disposals.forEach(fn => fn?.());
-  return { failed: states[0] === true, routes, setCalls, exchangeCalls, actor: (await env.client.auth.getSession()).data.session?.user.id ?? null };
+  return { failed: states[0] === 'email' || states[0] === 'error', routes, setCalls, exchangeCalls, actor: (await env.client.auth.getSession()).data.session?.user.id ?? null };
 }
 function verifier(values) { return JSON.parse(values.get(storageKey + '-code-verifier')).split('/')[0]; }
 function checkS256(body, expectedVerifier) {
@@ -127,7 +136,7 @@ test('foreign PKCE code with no local verifier fails before token request and pr
   } finally { env.dispose(); }
 });
 
-for (const purpose of ['signup', 'recovery']) test(purpose + ' emits S256 and its own verifier exchanges into the expected destination', async () => {
+for (const purpose of ['signup', 'recovery']) test(purpose + ' emits S256 but requires entering the email code in the official form', async () => {
   const env = await setup(origin + '/cuenta', null);
   try {
     let started = null, exchanges = 0;
@@ -148,20 +157,20 @@ for (const purpose of ['signup', 'recovery']) test(purpose + ' emits S256 and it
     assert.equal(start.error, null); assert(started); started.expectedVerifier = verifier(env.values); checkS256(started.body, started.expectedVerifier);
     const callback = new URL(started.redirect); callback.searchParams.set('code', 'synthetic-own-code');
     env.navigate(callback.href); const result = await runCallback(env);
-    assert.equal(result.failed, false); assert.equal(result.actor, A); assert.equal(result.setCalls, 0); assert.equal(exchanges, 1);
-    assert.deepEqual(result.routes, [purpose === 'recovery' ? '/recuperar?cambiar=1&volver=' + encodeURIComponent(back) : back]);
-    receipts.push({ case: purpose + ' own PKCE', outcome: 'S256 verifier validated by synthetic Auth transport; correct destination', tokenRequests: 1 });
+    assert.equal(result.failed, true); assert.equal(result.actor, null); assert.equal(result.setCalls, 0); assert.equal(exchanges, 0);
+    assert.deepEqual(result.routes, []); assert.equal(result.exchangeCalls, 0);
+    receipts.push({ case: purpose + ' correlated email link', outcome: 'S256 challenge retained; email requires explicit OTP', tokenRequests: 0 });
   } finally { env.dispose(); }
 });
 
-for (const purpose of ['signup', 'recovery']) test('existing VerifyCode form still submits six digits with ' + purpose + ' purpose', async () => {
+for (const purpose of ['signup', 'recovery']) for (const code of ['123456', '01234567']) test('VerifyCode submits ' + code.length + ' digits with ' + purpose + ' purpose', async () => {
   const env = await setup(origin + '/cuenta', null);
   try {
     let done = 0, verification = 0, stateIndex = 0, refIndex = 0, pending;
     const states = [], refs = [], effects = [], disposals = [];
     env.setHandler((url, init, body) => {
       assert.equal(url.pathname, '/auth/v1/verify'); assert.equal(init.method, 'POST');
-      assert.equal(body.email, 'actor-a@example.com'); assert.equal(body.token, '123456'); assert.equal(body.type, purpose);
+      assert.equal(body.email, 'actor-a@example.com'); assert.equal(body.token, code); assert.equal(body.type, purpose);
       verification++; return Response.json(session(A));
     });
     const component = compile(source('apps/storefront/src/components/verify-code.tsx'), {
@@ -175,12 +184,12 @@ for (const purpose of ['signup', 'recovery']) test('existing VerifyCode form sti
     const props = { email: 'actor-a@example.com', type: purpose, onDone: () => { done++; }, resend: async () => {} };
     let tree = component.VerifyCode(props); effects.splice(0).forEach(fn => disposals.push(fn()));
     const find = (node, type) => { if (!node || typeof node !== 'object') return null; if (node.type === type) return node; return [node.props?.children].flat(Infinity).map(child => find(child, type)).find(Boolean); };
-    find(tree, 'input').props.onChange({ target: { value: '123456' } });
+    find(tree, 'input').props.onChange({ target: { value: code } });
     stateIndex = 0; refIndex = 0; tree = component.VerifyCode(props);
     tree.props.onSubmit({ preventDefault() {} }); await pending;
     assert.equal(done, 1); assert.equal(verification, 1); assert.equal((await env.client.auth.getSession()).data.session?.user.id, A);
     disposals.forEach(fn => fn?.());
-    receipts.push({ case: purpose + ' six digit form', outcome: 'actual form mutation and SDK verifyOtp accepted explicit purpose', verifyRequests: 1 });
+    receipts.push({ case: purpose + ' ' + code.length + '-digit form', outcome: 'actual form mutation and SDK verifyOtp accepted explicit purpose', verifyRequests: 1 });
   } finally { env.dispose(); }
 });
 

@@ -7,8 +7,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { signUpSchema, toAppError } from '@kora/core';
 import { browser } from '@/lib/browser';
-import { emailWebCallbackUrl } from '@kora/api';
-import { env } from '@/lib/env';
 import { GoogleAccessButton } from '@/components/google-access-button';
 import { VerifyCode } from '@/components/verify-code';
 import { authHref, callbackPath, safeReturnPath } from '@/lib/auth-return';
