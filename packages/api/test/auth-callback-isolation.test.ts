@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { isGoogleAuthCallback } from '../src/google-auth';
-import { redirectSystemPath } from '../../../apps/mobile/src/app/+native-intent';
 
 function sourceModule(file: string, modules: Record<string, unknown>) {
   const js = ts.transpileModule(readFileSync(new URL('../../../' + file, import.meta.url), 'utf8'), {
@@ -13,6 +12,8 @@ function sourceModule(file: string, modules: Record<string, unknown>) {
     if (!(name in modules)) throw Error('Unexpected import ' + name); return modules[name];
   }, module.exports, module); return module.exports;
 }
+const redirectSystemPath = sourceModule('apps/mobile/src/app/+native-intent.tsx', {}).redirectSystemPath as
+  (intent: { path: string; initial: boolean }) => string | null;
 afterEach(() => vi.unstubAllGlobals());
 describe('Google callbacks are isolated from existing email access', () => {
   it.each(['auth-callback', 'reset-password'])('legacy native %s screen requires an explicit code for every credential-bearing URL', screen => {
