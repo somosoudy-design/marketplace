@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { signUpSchema, toAppError } from '@kora/core';
 import { browser } from '@/lib/browser';
+import { ArrowRight } from 'lucide-react';
+import { AccessHeading, AccessPassword, BuyerAccess } from '@/components/buyer-access';
 import { GoogleAccessButton } from '@/components/google-access-button';
 import { VerifyCode } from '@/components/verify-code';
 import { authHref, callbackPath, safeReturnPath } from '@/lib/auth-return';
@@ -43,7 +45,7 @@ function Registration() {
   });
   if (sent)
     return (
-      <div className="wrap commerce-page">
+      <BuyerAccess>
         <VerifyCode
           email={email.trim()}
           type="signup"
@@ -53,85 +55,42 @@ function Registration() {
             if (error) throw error;
           }}
         />
-      </div>
+      </BuyerAccess>
     );
   return (
-    <div className="wrap login-layout">
-      <section className="login-intro">
-        <span className="eyebrow">BIENVENIDO</span>
-        <h1>
-          Tus próximos hallazgos
-          <br />
-          empiezan aquí.
-        </h1>
-        <p>Una cuenta para comprar en la web y en la aplicación.</p>
-      </section>
-      <form method="post"
-        className="login-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!signup.isPending && !googleBusy) signup.mutate();
-        }}
-      >
-        <h2>Crear cuenta</h2>
-        <label>
+    <BuyerAccess>
+      <AccessHeading title="Crear cuenta">
+        {back.split('?')[0] === '/checkout'
+          ? 'Crea tu cuenta para continuar con tu compra.'
+          : 'Usa tu cuenta tanto en la web como en la app.'}
+      </AccessHeading>
+      <GoogleAccessButton purpose="register" returnTo={back} disabled={signup.isPending} onBusyChange={setGoogleBusy} />
+      <form method="post" className="buyer-access-form" onSubmit={(event) => {
+        event.preventDefault();
+        if (!signup.isPending && !googleBusy) signup.mutate();
+      }}>
+        <label className="access-field">
           Nombre y apellido
-          <input
-            value={name}
-            autoComplete="name"
-            required
-            minLength={3}
-            maxLength={120}
-            disabled={signup.isPending}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <input autoComplete="name" required minLength={3} maxLength={120} value={name}
+            disabled={signup.isPending || googleBusy} onChange={(event) => setName(event.target.value)} />
         </label>
-        <label>
+        <label className="access-field">
           Correo electrónico
-          <input
-            type="email"
-            autoComplete="email"
-            required
-            disabled={signup.isPending}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input type="email" autoComplete="email" required value={email}
+            disabled={signup.isPending || googleBusy} onChange={(event) => setEmail(event.target.value)} />
         </label>
-        <label>
-          Contraseña
-          <input
-            type="password"
-            aria-label="Contraseña"
-            aria-describedby="signup-password-help"
-            autoComplete="new-password"
-            minLength={8}
-            required
-            disabled={signup.isPending}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <small id="signup-password-help" className="muted">
-            Mínimo 8 caracteres con letras y números.
-          </small>
-        </label>
-        {signup.isError && (
-          <p role="alert" className="error">
-            {signup.error.name === 'ValidationError' ? signup.error.message : toAppError(signup.error).message}
-          </p>
-        )}
-        <p className="legal-note">
-          Consulta los <Link prefetch={false} href="/terminos">términos</Link> y la{' '}
-          <Link prefetch={false} href="/privacidad">política de privacidad</Link> antes de crear tu cuenta.
-        </p>
-        <button className="button" aria-busy={signup.isPending} disabled={signup.isPending || googleBusy}>
-          {signup.isPending ? 'Creando cuenta…' : 'Crear cuenta'}
+        <AccessPassword creating value={password} onChange={setPassword} disabled={signup.isPending || googleBusy} />
+        {signup.isError && <p role="alert" className="error">
+          {signup.error.name === 'ValidationError' ? signup.error.message : toAppError(signup.error).message}
+        </p>}
+        <button className="button access-submit" aria-busy={signup.isPending} disabled={signup.isPending || googleBusy}>
+          {signup.isPending ? 'Creando cuenta…' : 'Crear cuenta'} <ArrowRight size={17} aria-hidden="true" />
         </button>
-        <GoogleAccessButton purpose="register" returnTo={back} disabled={signup.isPending} onBusyChange={setGoogleBusy} />
-        <Link prefetch={false} href={authHref('/cuenta', back)} className="text-link">
-          Ya tengo cuenta
-        </Link>
       </form>
-    </div>
+      <p className="access-legal">Consulta los <Link prefetch={false} href="/terminos">términos</Link> y la{' '}
+        <Link prefetch={false} href="/privacidad">política de privacidad</Link> de Mayami.</p>
+      <p className="access-switch">¿Ya tienes cuenta? <Link prefetch={false} href={authHref('/cuenta', back)}>Iniciar sesión</Link></p>
+    </BuyerAccess>
   );
 }
 

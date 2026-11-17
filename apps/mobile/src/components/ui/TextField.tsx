@@ -1,3 +1,4 @@
+import { palette } from '@kora/design-tokens';
 import { forwardRef, useId, useState } from 'react';
 import { Platform, TextInput, View, type TextInputProps } from 'react-native';
 import { useTheme } from '@/theme';
@@ -9,14 +10,16 @@ interface Props extends TextInputProps {
   error?: string | null;
   helper?: string;
   secureToggle?: boolean;
+  strongOutline?: boolean;
 }
 
-export const TextField = forwardRef<TextInput, Props>(function TextField({ label, error, helper, secureToggle, style, secureTextEntry, ...rest }, ref) {
+export const TextField = forwardRef<TextInput, Props>(function TextField({ label, error, helper, secureToggle, strongOutline, style, secureTextEntry, ...rest }, ref) {
   const { colors, radii, typography } = useTheme();
   const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(true);
   const messageId = `${useId()}-message`;
-  const borderColor = error ? colors.danger : focused ? colors.brand : colors.border;
+  const idleBorder = strongOutline ? palette.ink[500] : colors.border;
+  const borderColor = error ? colors.danger : focused ? colors.brand : idleBorder;
   return (
     <View style={{ gap: 6 }}>
       <Text variant="label" color="textSecondary">{label}</Text>

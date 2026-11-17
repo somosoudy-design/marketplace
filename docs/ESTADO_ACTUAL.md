@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Ingreso y registro de compradores
+
+Trabajo en curso. Diseño integrado en la web y en la app, con Google antes de los campos, recuperación junto a la contraseña y vuelta al destino de compra. Se revisaron ambas pantallas en claro y oscuro, siete anchos de navegador y Android 16 emulado. Próxima acción: comprobar la publicación del Worker y la recepción de la actualización por la APK existente.
+
 ## 17 noviembre 2026 · Acceso con Google publicado
 
 Google está activo en Marketplace y su marca pública muestra Mayami. En la web oficial se completaron el alta con consentimiento, la persistencia al recargar y un segundo ingreso que volvió al checkout. El servidor confirmó un único usuario, identidad Google y perfil en los dos ingresos. Queda comprobar la APK en Android físico. [Versiones y resultados](ACCESO_GOOGLE_PUBLICADO_2026-11-17.md).

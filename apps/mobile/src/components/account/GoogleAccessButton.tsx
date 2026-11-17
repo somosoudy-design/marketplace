@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
+import { Text as AppText } from '@/components/ui/Text';
+import { useTheme } from '@/theme';
 import { Banner } from '@/components/ui/States';
 import { useAuth } from '@/lib/auth';
 import { finishAuth } from '@/lib/auth-navigation';
@@ -12,6 +14,7 @@ export function GoogleAccessButton({ purpose, returnTo, disabled }: {
   purpose: 'login' | 'register'; returnTo?: string; disabled: boolean;
 }) {
   const auth = useAuth();
+  const { colors } = useTheme();
   const [error, setError] = useState('');
   const mounted = useRef(false);
   const pending = useRef(false);
@@ -69,13 +72,20 @@ export function GoogleAccessButton({ purpose, returnTo, disabled }: {
         <Image accessibilityIgnoresInvertColors source={require('../../../assets/images/auth/google-g.png')} style={styles.logo} />}
       <Text style={styles.label}>Continuar con Google</Text>
     </Pressable>
+    <View style={styles.divider}>
+      <View style={[styles.line, { backgroundColor: colors.border }]} />
+      <AppText variant="caption" color="textSecondary">O con tu correo</AppText>
+      <View style={[styles.line, { backgroundColor: colors.border }]} />
+    </View>
   </View>;
 }
 
 const styles = StyleSheet.create({
-  group: { gap: 10 },
+  group: { gap: 14 },
   button: { minHeight: 48, paddingVertical: 10, paddingHorizontal: 16, flexDirection: 'row', gap: 12,
     alignItems: 'center', justifyContent: 'center', borderRadius: 24, backgroundColor: '#fff', borderWidth: 1, borderColor: '#747775' },
+  divider: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  line: { flex: 1, height: StyleSheet.hairlineWidth },
   dimmed: { opacity: 0.68 },
   logo: { width: 20, height: 20 },
   label: { color: '#1f1f1f', fontSize: 16, fontWeight: '500' },

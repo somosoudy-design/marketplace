@@ -33,17 +33,24 @@ export function VerifyCode({
   const again = useMutation({ mutationFn: (version: number) => { if (!alive.current || generation.current !== version) throw new Error('El reenvío se canceló.'); return resend(); }, onSuccess: (_result, version) => { if (alive.current && generation.current === version) setCooldown(30); } });
   return (
     <form method="post"
-      className="login-form"
+      className={type === 'signup' ? 'buyer-access-form access-verification' : 'login-form'}
       onSubmit={(e) => {
         e.preventDefault();
         if (!verify.isPending) verify.mutate({ email, token: code.trim(), type, generation: generation.current });
       }}
     >
-      <h2>Revisa tu correo</h2>
-      <p>
-        Escribe el código completo que enviamos a tu correo. Si no llega, revisa la carpeta de correo no deseado.
-      </p>
-      <label>
+      {type === 'signup' ? (
+        <div className="buyer-access-heading">
+          <h1>Revisa tu correo</h1>
+          <p>Enviamos un código a <strong>{email}</strong>. Escríbelo para confirmar tu cuenta.</p>
+        </div>
+      ) : (
+        <>
+          <h2>Revisa tu correo</h2>
+          <p>Escribe el código completo que enviamos a tu correo. Si no llega, revisa la carpeta de correo no deseado.</p>
+        </>
+      )}
+      <label className={type === 'signup' ? 'access-field' : undefined}>
         Código de verificación
         <input
           autoComplete="one-time-code"
@@ -69,6 +76,7 @@ export function VerifyCode({
       <button className="button" disabled={verify.isPending || again.isPending || code.length < 6 || code.length > 8}>
         {verify.isPending ? 'Verificando…' : 'Verificar código'}
       </button>
+      {type === 'signup' && <small>Si el correo tarda, revisa la carpeta de correo no deseado.</small>}
       <button
         className="text-button"
         type="button"

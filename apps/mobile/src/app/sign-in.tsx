@@ -1,19 +1,19 @@
 import { authErrorKind } from '@kora/core';
 import { Link, router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
 import { Banner } from '@/components/ui/States';
 import { Text } from '@/components/ui/Text';
+import { ScalePressable } from '@/components/ui/Pressable';
 import { TextField } from '@/components/ui/TextField';
 import { authErrorMessage, useAuth } from '@/lib/auth';
 import { haptics } from '@/lib/haptics';
-import { useTheme } from '@/theme';
+import { AuthScreen, authStyles } from '@/components/auth/AuthScreen';
 import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
 import { GoogleAccessButton } from '@/components/account/GoogleAccessButton';
 
 export default function SignInScreen() {
-  const t = useTheme();
   const returnTo = useAuthReturn();
   const mounted = useRef(false);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
@@ -23,13 +23,19 @@ export default function SignInScreen() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const emailInput = useRef<TextInput>(null);
   const pw = useRef<TextInput>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const emailError = email.includes('@') ? null : 'Escribe tu correo electrónico.';
+  const passwordError = password.length >= 6 ? null : 'Escribe tu contraseña completa.';
 
   const submit = async () => {
     if (busy || googleBusy) return;
-    if (!email.includes('@') || password.length < 6) return setError('Escribe tu correo y tu contraseña.');
-    setBusy(true);
+    setSubmitted(true);
     setError(null);
+    if (emailError) return emailInput.current?.focus();
+    if (passwordError) return pw.current?.focus();
+    setBusy(true);
     try {
       await signIn(email, password);
       if (!mounted.current) return;
@@ -47,25 +53,30 @@ export default function SignInScreen() {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: t.colors.background }}>
-      <ScrollView contentContainerStyle={{ padding: 24, gap: 18, width: '100%', maxWidth: 480, alignSelf: 'center' }} keyboardShouldPersistTaps="handled">
-        <View style={{ gap: 6, marginBottom: 6 }}>
-          <Text variant="displayL">Hola de nuevo</Text>
-          <Text color="textSecondary">Entra para pagar, seguir tus pedidos y guardar tus favoritos en tu cuenta.</Text>
+    <AuthScreen title="Inicia sesión"
+      description={returnTo?.split('?')[0] === '/checkout' ? 'Entra para continuar con tu compra.' : 'Entra para ver tus pedidos y favoritos.'}
+      footer={
+        <View style={authStyles.switchRow}>
+          <Text variant="bodySmall" color="textSecondary">¿Primera vez en Mayami?</Text>
+          <Button title="Crear una cuenta" variant="ghost" size="sm" onPress={() => router.replace(authTarget('/sign-up', returnTo))} />
         </View>
-        {googleRetry === '1' && !error ? <Banner body="Se interrumpió el acceso. Vuelve a pulsar Continuar con Google." /> : null}
-        {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
-        <TextField testID="sign-in-email" label="Correo" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoComplete="email" textContentType="emailAddress" returnKeyType="next" onSubmitEditing={() => pw.current?.focus()} />
-        <TextField testID="sign-in-password" ref={pw} label="Contraseña" value={password} onChangeText={setPassword} secureToggle autoComplete="current-password" textContentType="password" returnKeyType="go" onSubmitEditing={submit} />
-        <Button testID="sign-in-submit" title="Iniciar sesión" size="lg" full loading={busy} disabled={googleBusy} onPress={submit} />
-        <GoogleAccessButton purpose="login" returnTo={returnTo} disabled={busy} />
-        <Link href={authTarget('/forgot-password', returnTo)} style={{ alignSelf: 'center', padding: 8 }}>
-          <Text variant="label" color="brand">Olvidé mi contraseña</Text>
+      }>
+      {googleRetry === '1' && !error ? <Banner body="Se interrumpió el acceso. Vuelve a pulsar Continuar con Google." /> : null}
+      <GoogleAccessButton purpose="login" returnTo={returnTo} disabled={busy} />
+      {error ? <Banner tone="danger" icon="circle-alert" body={error} /> : null}
+      <TextField strongOutline ref={emailInput} testID="sign-in-email" label="Correo electrónico" value={email} onChangeText={setEmail}
+        error={submitted ? emailError : null} keyboardType="email-address" autoCapitalize="none" autoCorrect={false}
+        autoComplete="email" textContentType="emailAddress" returnKeyType="next" onSubmitEditing={() => pw.current?.focus()} />
+      <View>
+        <TextField strongOutline ref={pw} testID="sign-in-password" label="Contraseña" value={password} onChangeText={setPassword}
+          error={submitted ? passwordError : null} secureToggle autoCorrect={false} autoCapitalize="none" autoComplete="current-password" textContentType="password" returnKeyType="go" onSubmitEditing={submit} />
+        <Link href={authTarget('/forgot-password', returnTo)} asChild>
+          <ScalePressable accessibilityRole="link" style={authStyles.recovery}>
+            <Text variant="label" color="brand">Olvidé mi contraseña</Text>
+          </ScalePressable>
         </Link>
-        <View style={{ height: 1, backgroundColor: t.colors.border, marginVertical: 6 }} />
-        <Text align="center" color="textSecondary">¿Primera vez aquí?</Text>
-        <Button title="Crear una cuenta" variant="secondary" full onPress={() => router.replace(authTarget('/sign-up', returnTo))} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+      <Button testID="sign-in-submit" title="Iniciar sesión" size="lg" full loading={busy} disabled={googleBusy} onPress={submit} />
+    </AuthScreen>
   );
 }

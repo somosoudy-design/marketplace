@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Heart, ShoppingBag, LogOut, ArrowRight, UserRound, Bell, MapPin } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { browser } from '@/lib/browser';
+import { AccessHeading, AccessPassword, BuyerAccess } from '@/components/buyer-access';
 import { GoogleAccessButton } from '@/components/google-access-button';
 import { configured } from '@/lib/env';
 import { useAccount } from '@/lib/providers';
@@ -131,65 +132,34 @@ function Account() {
         : toAppError(login.error).message
     : '';
   return (
-    <div className="wrap login-layout">
-      <section className="login-intro">
-        <span className="eyebrow">TU CUENTA, DONDE ESTÉS</span>
-        <h1>
-          Todo lo que te gusta.
-          <br />
-          En un mismo lugar.
-        </h1>
-        <p>Entra con la misma cuenta que utilizas en la aplicación.</p>
-        <Link prefetch={false} href={guestReturnPath(back)}>
-          Explorar sin iniciar sesión <ArrowRight size={17} />
-        </Link>
-      </section>
-      <form
-        method="post"
-        className="login-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!login.isPending && !googleBusy) login.mutate();
-        }}
-      >
-        <h2>Iniciar sesión</h2>
-        <label>
+    <BuyerAccess>
+      <AccessHeading title="Iniciar sesión">
+        {back.split('?')[0] === '/checkout'
+          ? 'Ingresa para continuar con tu compra.'
+          : 'Accede a tus pedidos y favoritos de Mayami.'}
+      </AccessHeading>
+      <GoogleAccessButton purpose="login" returnTo={back} disabled={login.isPending} onBusyChange={setGoogleBusy} />
+      <form method="post" className="buyer-access-form" onSubmit={(event) => {
+        event.preventDefault();
+        if (!login.isPending && !googleBusy) login.mutate();
+      }}>
+        <label className="access-field">
           Correo electrónico
-          <input
-            type="email"
-            autoComplete="username"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={login.isPending}
-          />
+          <input type="email" autoComplete="username" required value={email}
+            disabled={login.isPending || googleBusy} onChange={(event) => setEmail(event.target.value)} />
         </label>
-        <label>
-          Contraseña
-          <input
-            type="password"
-            autoComplete="current-password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={login.isPending}
-          />
-        </label>
-        {error && (
-          <p role="alert" className="error">
-            {error}
-          </p>
-        )}
-        <button className="button" aria-busy={login.isPending} disabled={login.isPending || googleBusy}>
-          {login.isPending ? 'Ingresando…' : 'Ingresar'}
+        <AccessPassword value={password} onChange={setPassword} disabled={login.isPending || googleBusy}
+          recovery={<Link prefetch={false} href={authHref('/recuperar', back)}>¿Olvidaste tu contraseña?</Link>} />
+        {error && <p className="error" role="alert">{error}</p>}
+        <button className="button access-submit" aria-busy={login.isPending} disabled={login.isPending || googleBusy}>
+          {login.isPending ? 'Ingresando…' : 'Ingresar'} <ArrowRight size={17} aria-hidden="true" />
         </button>
-        <GoogleAccessButton purpose="login" returnTo={back} disabled={login.isPending} onBusyChange={setGoogleBusy} />
-        <div className="auth-links">
-          <Link prefetch={false} href={authHref('/registro', back)}>Crear una cuenta</Link>
-          <Link prefetch={false} href={authHref('/recuperar', back)}>¿Olvidaste tu contraseña?</Link>
-        </div>
       </form>
-    </div>
+      <p className="access-switch">¿Aún no tienes cuenta? <Link prefetch={false} href={authHref('/registro', back)}>Crear una cuenta</Link></p>
+      <Link prefetch={false} className="access-guest" href={guestReturnPath(back)}>
+        Explorar sin iniciar sesión <ArrowRight size={15} aria-hidden="true" />
+      </Link>
+    </BuyerAccess>
   );
 }
 export default function Page() {

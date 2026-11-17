@@ -73,6 +73,7 @@ export function GoogleAccessButton({ purpose, returnTo, disabled, onBusyChange }
         {busy ? 'Abriendo Google…' : 'Continuar con Google'}
       </button>
       {error && <p className="error" role="alert">{error}</p>}
+      <p className="access-divider">o continúa con tu correo</p>
     </div>
   );
 }
