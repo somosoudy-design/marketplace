@@ -2819,6 +2819,21 @@ export type Database = {
           },
         ];
       };
+      store_follows: {
+        Row: { store_id: string; user_id: string };
+        ComputedFields: never;
+        Insert: { store_id: string; user_id: string };
+        Update: { store_id?: string; user_id?: string };
+        Relationships: [
+          {
+            foreignKeyName: 'store_follows_store_id_fkey';
+            columns: ['store_id'];
+            isOneToOne: false;
+            referencedRelation: 'stores';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       store_members: {
         Row: {
           created_at: string;

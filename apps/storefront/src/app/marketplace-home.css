@@ -86,11 +86,11 @@
   .market-home .market-collections { grid-template-columns: 1fr; gap: 12px; margin-bottom: 35px; }
   .market-home .market-collection-wide { grid-column: auto; }
   .market-home .market-collection .product-grid, .market-home .market-collection-wide .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .market-home .product-link, .search-results .product-link { display: flex; flex-direction: column; }
+  .market-home .product-card-content, .search-results .product-card-content { display: flex; flex-direction: column; }
   .market-home .product-copy, .search-results .product-copy { display: flex; flex: 1; flex-direction: column; }
   .market-home .product-price, .search-results .product-price { margin-top: auto; padding-top: 9px; }
 }
-.market-home .market-collection .product-link { display: flex; flex-direction: column; }
+.market-home .market-collection .product-card-content { display: flex; flex-direction: column; }
 .market-home .market-collection .product-copy { display: flex; flex: 1; flex-direction: column; }
 .market-home .market-collection .product-price { margin-top: auto; padding-top: 9px; }
 @media (max-width: 700px) {
@@ -99,7 +99,7 @@
   .header .browse-nav::-webkit-scrollbar-thumb { background: var(--brand); border-radius: 8px; }
 }
 @media (max-width: 1100px) {
-  .market-home .product-link, .search-results .product-link { display: flex; flex-direction: column; }
+  .market-home .product-card-content, .search-results .product-card-content { display: flex; flex-direction: column; }
   .market-home .product-copy, .search-results .product-copy { display: flex; flex: 1; flex-direction: column; }
   .market-home .product-price, .search-results .product-price { margin-top: auto; padding-top: 9px; }
 }
@@ -180,8 +180,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 8px;
-  padding: 12px 8px;
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
@@ -194,22 +193,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 100%;
+  aspect-ratio: 5 / 4;
   flex: none;
   overflow: hidden;
-  border-radius: 10px;
-  background: #f4f1fa;
-  color: #5932b4;
+  background: var(--brand-soft);
+  color: var(--brand);
 }
-.market-home .market-category-art .product-photo { width: 100%; height: 100%; border-radius: 0; background: transparent; }
+.market-home .market-category-art .product-photo { width: 100%; height: 100%; padding: 3px; border-radius: 0; background: transparent; }
 /* Photo failures are decorative here; the category label remains visible below. */
 .market-home .market-category-art .photo-missing { width: 100%; height: 100%; justify-content: center; gap: 0; padding: 0; font-size: 0; color: inherit; }
 .market-home .market-category-art .photo-missing svg { flex-shrink: 0; }
-.market-home .market-category-icon { width: 24px; height: 24px; }
-.market-home .market-category-tile h2 { margin: 0; max-width: 100%; font-size: 13px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.market-home .market-category-icon { width: 32px; height: 32px; }
+.market-home .market-category-tile h2 {
+  display: grid; place-items: center; flex: 1; width: 100%; min-height: 40px;
+  margin: 0; padding: 7px 4px; font-size: 13px; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere;
+}
 @media (max-width: 700px) {
-  .market-home .market-category-tile { flex-basis: 104px; padding-block: 10px; }
+  .market-home .market-category-tile { flex: 0 0 clamp(93px, 28vw, 118px); }
+  .market-home .market-category-art { aspect-ratio: 1; }
 }
 
 .compact-search-icon { display: none; }

@@ -1,4 +1,6 @@
 'use client';
+import type { StoreIdentityData } from '@/lib/store-presentation';
+import { StoreIdentity } from './store-badge';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -33,7 +35,7 @@ function Rating({ value }: { value: number }) {
     </span>
   );
 }
-function ReviewEntry({ review: r, storeName }: { review: PublicReview; storeName: string }) {
+function ReviewEntry({ review: r, store }: { review: PublicReview; store: StoreIdentityData }) {
   const variant = variantDisplayTitle(r.variant_title);
   return (
     <article className="review-entry" data-testid={`product-review-${r.id}`}>
@@ -54,14 +56,14 @@ function ReviewEntry({ review: r, storeName }: { review: PublicReview; storeName
       </p>
       {r.reply_body && (
         <div className="review-reply">
-          <strong>Respuesta de {storeName}</strong>
+          <StoreIdentity store={store} as="strong" caption="Respuesta de" />
           <p>{r.reply_body}</p>
         </div>
       )}
     </article>
   );
 }
-type Props = { productId: string; slug: string; routePath?: string; storeName: string };
+type Props = { productId: string; slug: string; routePath?: string; store: StoreIdentityData };
 export function ProductReviews(props: Props) {
   const { session, ready } = useAccount();
   return (
@@ -77,7 +79,7 @@ function ProductReviewsSession({
   productId,
   slug,
   routePath,
-  storeName,
+  store,
   buyerId,
   ready,
 }: Props & { buyerId: string | null; ready: boolean }) {
@@ -279,7 +281,7 @@ function ProductReviewsSession({
       )}
       <div className="review-list">
         {items.map((review) => (
-          <ReviewEntry key={review.id} review={review} storeName={storeName} />
+          <ReviewEntry key={review.id} review={review} store={store} />
         ))}
       </div>
       {opinions.isError && opinions.data && !opinions.isFetchNextPageError && (

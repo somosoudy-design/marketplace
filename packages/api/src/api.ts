@@ -395,6 +395,16 @@ export function createApi(client: KoraClient) {
       else await run(from('favorites').delete().eq('user_id', userId).eq('product_id', productId));
       if (on) void catalog.track('favorite', { productId });
     },
+    followsStore: async (userId: string, storeId: string) => {
+      const rows = await run<{ store_id: string }[]>(
+        from('store_follows').select('store_id').eq('user_id', userId).eq('store_id', storeId),
+      );
+      return rows.length > 0;
+    },
+    setStoreFollow: async (userId: string, storeId: string, on: boolean) => {
+      if (on) await run(from('store_follows').upsert({ user_id: userId, store_id: storeId }, { ignoreDuplicates: true }));
+      else await run(from('store_follows').delete().eq('user_id', userId).eq('store_id', storeId));
+    },
     setStockAlert: async (userId: string, productId: string, on: boolean) => {
       if (on) await run(from('stock_alerts').upsert({ user_id: userId, product_id: productId }, { ignoreDuplicates: true }));
       else await run(from('stock_alerts').delete().eq('user_id', userId).eq('product_id', productId));

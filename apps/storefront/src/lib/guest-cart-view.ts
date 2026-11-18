@@ -1,11 +1,13 @@
 import type { CartLine, CatalogMetadata, ProductDetail } from '@kora/api';
 import { D, describeDispatchStage, resolveProductSelection, type GuestLine } from '@kora/core';
 import { reviewedSelectionInput } from './catalog-selection';
+import type { StoreIdentityData } from './store-presentation';
 export interface GuestCartLine extends CartLine {
   slug: string | null;
   priceKnown: boolean;
   storeId: string;
   storeName: string;
+  store?: StoreIdentityData;
   dispatchStage?: string | null;
   maxPerOrder?: number;
   stock?: number | null;
@@ -69,13 +71,14 @@ export function guestCartView(
       priceKnown,
       storeId: p?.store_id ?? 'unavailable',
       storeName: p?.store_name ?? 'Productos guardados',
+      store: p ? { id: p.store_id, name: p.store_name, kind: p.store_kind, status: p.store_status } : undefined,
     };
   });
-  const groups = [...new Set(lines.map((line) => line.storeId))].map((id) => ({
-    key: id,
-    storeName: lines.find((line) => line.storeId === id)!.storeName,
-    lines: lines.filter((line) => line.storeId === id),
-  }));
+  const groups = [...new Set(lines.map((line) => line.storeId))].map((id) => {
+    const items = lines.filter((line) => line.storeId === id);
+    const { store, storeName } = items[0]!;
+    return { key: id, store, storeName, lines: items };
+  });
   return {
     lines,
     groups,

@@ -48,7 +48,7 @@ const ports = {
   '@/lib/photos': { catalogText: (x) => x, catalogSample: () => false, photo: () => null },
   '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
   './catalog-price': { CatalogPrice: ({ usd }) => React.createElement('strong', null, usd == null ? 'Precio no disponible' : '$' + usd) },
-  './store-badge': { OfficialStoreSeal: () => React.createElement('span', { role: 'img', 'aria-label': 'Tienda oficial' }) },
+  './store-badge': { StoreIdentity: () => null },
   '@/lib/catalog-selection': selection,
   '@/lib/cart-intents': {},
   '@/lib/guest-storage': {},

@@ -1,16 +1,33 @@
-import { BadgeCheck } from 'lucide-react';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { StoreSeal } from './store-seal';
+import { storeDisplayName, storeVerification, type StoreIdentityData } from '@/lib/store-presentation';
 import './store-badge.css';
 
-export function OfficialStoreSeal({ explain = false }: { explain?: boolean }) {
-  const symbol = <BadgeCheck size={22} aria-hidden="true" />;
-  if (!explain) return <span className="store-seal" role="img" aria-label="Tienda oficial">{symbol}</span>;
+export function StoreIdentity({
+  store,
+  href,
+  linkClassName,
+  as: Name = 'span',
+  caption,
+  trailing,
+}: {
+  store: StoreIdentityData;
+  href?: string;
+  linkClassName?: string;
+  as?: 'span' | 'h1' | 'h2' | 'h3' | 'strong';
+  caption?: ReactNode;
+  trailing?: ReactNode;
+}) {
+  const name = storeDisplayName(store);
+  const verification = storeVerification(store);
+  const label = <>{caption && <span className="store-identity-caption">{caption}</span>}<Name className="store-identity-name">{name}</Name></>;
   return (
-    <details className="store-seal-details">
-      <summary className="store-seal" aria-label="Tienda oficial. Qué significa">{symbol}</summary>
-      <div className="store-seal-note">
-        <strong>Tienda oficial</strong>
-        <p>La opera directamente MAYAMI.</p>
-      </div>
-    </details>
+    <div className="store-identity">
+      {href ? <Link prefetch={false} className={`store-identity-label ${linkClassName ?? ''}`} href={href}>{label}</Link>
+        : <div className="store-identity-label">{label}</div>}
+      {verification && <StoreSeal name={name} {...verification} />}
+      {trailing}
+    </div>
   );
 }

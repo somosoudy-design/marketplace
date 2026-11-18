@@ -1,4 +1,4 @@
-import { storeDisplayName } from '@/lib/store-presentation';
+import { StoreIdentity } from './store-badge';
 import Link from 'next/link';
 import type { CatalogMetadata, ProductCard as Product } from '@kora/api';
 import { productColorSummaries, resolveProductSelection } from '@kora/core';
@@ -18,23 +18,27 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
   const price = selected.price_usd;
   const general = selected.mediaState === 'unclassified';
   const path = !selected.variant ? null : selected.cover?.path ?? (general ? metadata.general_images?.[0]?.path ?? null : null);
+  const title = catalogText(product.title, product.is_demo, product.id);
+  const store = { id: product.store_id, name: product.store_name, kind: product.store_kind, status: product.store_status };
   return (
     <article className="product-card" data-testid="product-card">
-      <Link prefetch={false} href={href(selected.selectedVariantId)} className="product-link">
+      <div className="product-card-content">
         <div className="product-card-media">
-        <ProductPhoto id={product.id} path={path} demo={product.is_demo} title={product.title} priority={priority} exact />
+          <ProductPhoto id={product.id} path={path} demo={product.is_demo} title={product.title} priority={priority} exact />
           <OfferStatus overlay availability={product.availability} stock={selected.variant?.stock} issue={selected.variant?.active ? undefined : 'unavailable'} />
         </div>
         <div className="product-copy">
-          <span className="product-brand">{product.brand_name || storeDisplayName({ id: product.store_id, name: product.store_name })}</span>
-          <h3>{catalogText(product.title, product.is_demo, product.id)}</h3>
+          <h3><Link prefetch={false} href={href(selected.selectedVariantId)} className="product-link">{title}</Link></h3>
+          <div className="product-brand">
+            <StoreIdentity store={store} href={product.store_slug ? `/tienda/${encodeURIComponent(product.store_slug)}` : undefined} />
+          </div>
           <div className="product-price">
             <CatalogPrice usd={price} compareAt={product.is_demo ? null : product.compare_at_usd} />
           </div>
           {selected.conditionLabel && <span className="availability" data-testid="product-condition">{selected.conditionLabel}</span>}
           {catalogSample(product.id, product.is_demo) && !localExhibition && <span className="availability">Producto de muestra</span>}
         </div>
-      </Link>
+      </div>
       {colors.length > 0 && <nav className="product-colors" aria-label={`Colores de ${product.title}`}>
         {colors.map(color => <Link prefetch={false} key={color.value} href={href(color.available_variant_ids[0] ?? color.variant_ids[0])} aria-label={`Color ${color.value}${color.available_variant_ids.length ? '' : ', agotado'}`}><ColorDot label={color.value} />{color.value}{!color.available_variant_ids.length && <span> · Agotado</span>}</Link>)}
       </nav>}

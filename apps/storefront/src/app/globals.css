@@ -426,9 +426,8 @@ main:focus {
 .product-card:hover {
   border-color: var(--border-strong);
 }
-.product-link {
+.product-card-content {
   display: block;
-  height: 100%;
   padding: 7px;
 }
 .product-photo {
@@ -462,6 +461,8 @@ main:focus {
   padding: 12px;
 }
 .product-copy {
+  display: flex;
+  flex-direction: column;
   padding: 13px 6px 10px;
 }
 .product-brand {
@@ -531,16 +532,19 @@ main:focus {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-block: 1px solid var(--border-strong);
 }
-.store-list > a {
+.store-list-entry {
+  position: relative;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 15px;
   padding: 22px 18px;
   border-right: 1px solid var(--border);
 }
-.store-list > a:last-child {
+.store-list-entry:last-child {
   border-right: 0;
 }
+.store-list-entry > div:not(.store-initial) { min-width: 0; }
 .store-list h3 {
   font-size: 14px;
 }
@@ -548,8 +552,9 @@ main:focus {
   font-size: 11px;
   margin-top: 5px;
 }
-.store-list svg {
-  margin-left: auto;
+.store-list-arrow {
+  flex: none;
+  margin-inline-start: auto;
   color: var(--brand);
 }
 .store-initial {
@@ -752,6 +757,7 @@ legend {
   right: 0;
 }
 .seller-link {
+  position: relative;
   font-size: 11px;
   color: var(--text-secondary);
   display: flex;
@@ -1327,7 +1333,7 @@ legend {
   .product-brand {
     font-size: 9px;
   }
-  .product-link {
+  .product-card-content {
     padding: 5px;
   }
   .favorite {
@@ -1340,12 +1346,12 @@ legend {
   .store-list {
     grid-template-columns: 1fr;
   }
-  .store-list > a {
+  .store-list-entry {
     border-right: 0;
     border-bottom: 1px solid var(--border);
     padding-inline: 0;
   }
-  .store-list > a:last-child {
+  .store-list-entry:last-child {
     border-bottom: 0;
   }
   .footer {
@@ -1589,6 +1595,7 @@ legend {
 }
 /* Photo actions keep a quiet, light backing in both themes, rather than a dark disc over the product. */
 .product-card .favorite {
+  z-index: 1;
   background: rgba(255, 255, 255, 0.94);
   color: #55516a;
 }
@@ -2144,7 +2151,22 @@ legend {
 
 /* Explicit variant navigation keeps colour names readable without painting colours onto product photos. */
 .product-card { display: flex; flex-direction: column; }
-.product-link { height: auto; flex: 1; }
+.product-card-content { flex: 1; }
+.product-link::after, .store-list-link::after, .seller-profile-link::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+}
+.product-link:focus-visible::after, .store-list-link:focus-visible::after, .seller-profile-link:focus-visible::after {
+  outline: 2px solid var(--brand); outline-offset: 2px;
+}
+.product-card .store-identity-label, .product-card .store-seal, .store-list-entry .store-seal, .product-colors a {
+  position: relative; z-index: 1;
+}
+.product-card .product-brand { order: -1; margin-bottom: 3px; font-size: 11px; min-height: 24px; }
+.product-brand .store-identity { min-height: 24px; }
+.product-brand .store-identity-label:hover, .seller-link .store-identity-label:hover { text-decoration: underline; }
+.seller-link .store-identity-label { min-height: 44px; align-items: center; }
+.seller-link .store-seal { --store-seal-size: 19px; min-height: 32px; position: relative; z-index: 1; }
+
 .product-colors { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 12px 12px; }
 .product-colors a { display: inline-flex; align-items: center; min-height: 44px; padding: 7px 9px; border: 1px solid var(--border-strong); border-radius: 6px; font-size: 11px; color: var(--text); }
 .product-colors a:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }

@@ -40,6 +40,7 @@ function fixture(kind = 'session') {
   };
   const api = { questions: Object.fromEntries(Object.keys(methods).map(method => [method, async (...args) => { calls.push({ method, args }); return methods[method](...args); }])) };
   const ports = {
+    './store-badge': { StoreIdentity: 'StoreIdentity' },
     react: hooks, 'react/jsx-runtime': { jsx, jsxs: jsx, Fragment: 'fragment' }, 'next/link': { default: 'Link' },
     'next/navigation': { useSearchParams: () => new URLSearchParams('variant=purple') }, 'lucide-react': { MessageCircle: 'MessageCircle' },
     '@tanstack/react-query': {
@@ -62,7 +63,7 @@ function fixture(kind = 'session') {
     '@/lib/auth-return': { authHref: (route, back) => route + '?next=' + encodeURIComponent(back) }, '@/lib/env': { env: { url: 'http://local.invalid', anon: 'local-only' } },
   };
   const mod = load('product-questions', ports, '\nexport { QuestionsSession as TestSession, QuestionRow as TestRow };\n');
-  props = kind === 'row' ? { question: { ...question }, actor, canAnswer: true, canModerate: true, editable: true, refresh: async () => { invalidations++; } } : { productId, slug: 'producto local', seller: 'Mayami', actor };
+  props = kind === 'row' ? { store: { name: 'Mayami' }, question: { ...question }, actor, canAnswer: true, canModerate: true, editable: true, refresh: async () => { invalidations++; } } : { productId, slug: 'producto local', seller: 'Mayami', actor };
   function render() { index = 0; tree = (kind === 'row' ? mod.TestRow : mod.TestSession)(props); return tree; }
   function nodes(node) { if (!arguments.length) node = tree; if (!node || typeof node !== 'object') return []; if (Array.isArray(node)) return node.flatMap(nodes); return [node, ...nodes(node.props?.children)]; }
   function button(label) { const node = nodes().find(n => n.type === 'button' && textOf(n) === label); assert(node, 'Missing button: ' + label); return node; }

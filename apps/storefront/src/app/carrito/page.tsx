@@ -1,4 +1,5 @@
 'use client';
+import { StoreIdentity } from '@/components/store-badge';
 import Link from 'next/link';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -193,7 +194,7 @@ function BuyerCart({ buyerId, preference }: { buyerId: string; preference?: stri
         <div className="cart-products">
           {cart.data.groups.map((g) => (
             <section className="cart-group" key={g.key}>
-              <header className="cart-group-heading"><h2>{g.store.name}</h2><p>{g.label}</p></header>
+              <header className="cart-group-heading"><StoreIdentity store={g.store} as="h2" /><p>{g.label}</p></header>
               {g.lines.map((l) => (
                 <Line key={l.variant_id} line={l} buyerId={buyerId} />
               ))}
@@ -257,7 +258,7 @@ function GuestCart({ preference }: { preference?: string } = {}) {
       image_path: typeof old.image_path === 'string' ? old.image_path : null, availability: 'unavailable', issue: null, max_quantity: 0,
       unit_price_usd: unit, line_total_usd: D(unit).times(old.quantity).toNumber(), priceKnown, slug: null, storeId: 'guest', storeName: 'Productos guardados' };
   });
-  const view = current.data ? guestCartView(guest.data, current.data) : { lines: fallback, groups: [{ key: 'guest', storeName: 'Productos guardados', lines: fallback }], units: fallback.reduce((n, line) => n + line.quantity, 0), issues: 0,
+  const view = current.data ? guestCartView(guest.data, current.data) : { lines: fallback, groups: [{ key: 'guest', store: undefined, storeName: 'Productos guardados', lines: fallback }], units: fallback.reduce((n, line) => n + line.quantity, 0), issues: 0,
     items_usd: fallback.every(line => line.priceKnown) ? fallback.reduce((sum, line) => sum.plus(line.line_total_usd), D(0)).toNumber() : null };
   const checkoutBlocked = updating || offline || current.isError || current.isFetching;
   const guardCheckout = (event: { preventDefault(): void }) => {
@@ -266,7 +267,7 @@ function GuestCart({ preference }: { preference?: string } = {}) {
   return <div className="wrap cart-page">
     <div className="section-heading"><h1>Mi carrito</h1><span className="muted">{view.lines.length} {view.lines.length === 1 ? 'producto' : 'productos'} · {view.units} {view.units === 1 ? 'unidad' : 'unidades'}</span></div>
     {(current.isError || offline) && <div className="notice error" role="alert"><p>{offline ? 'Sin conexión. Tus productos siguen guardados; actualizaremos precios y disponibilidad al recuperar la conexión.' : 'No pudimos actualizar precios y disponibilidad. Tus productos siguen guardados.'}</p><button type="button" className="button secondary" onClick={() => void current.refetch()}>Volver a intentar</button></div>}
-    <div className="cart-layout"><div className="cart-products">{view.groups.map(group => <section className="cart-group" key={group.key}><header className="cart-group-heading"><h2>{group.storeName}</h2></header>{group.lines.map(line => <Line key={line.variant_id} line={line} priceKnown={line.priceKnown && !offline && !current.isError} href={line.slug ? `/p/${line.slug}?variant=${encodeURIComponent(line.variant_id)}` : undefined} dispatchStage={line.dispatchStage} maxPerOrder={line.maxPerOrder} stock={line.stock} guestQuantity={quantity => guestCart.setQuantity(line.variant_id, quantity)} />)}</section>)}</div>
+    <div className="cart-layout"><div className="cart-products">{view.groups.map(group => <section className="cart-group" key={group.key}><header className="cart-group-heading"><StoreIdentity store={group.store ?? { name: group.storeName }} as="h2" /></header>{group.lines.map(line => <Line key={line.variant_id} line={line} priceKnown={line.priceKnown && !offline && !current.isError} href={line.slug ? `/p/${line.slug}?variant=${encodeURIComponent(line.variant_id)}` : undefined} dispatchStage={line.dispatchStage} maxPerOrder={line.maxPerOrder} stock={line.stock} guestQuantity={quantity => guestCart.setQuantity(line.variant_id, quantity)} />)}</section>)}</div>
       <aside className="cart-summary"><h2>Resumen</h2><div><span>Productos</span><strong>{view.items_usd == null || offline || current.isError ? 'Precio no disponible' : money(view.items_usd)}</strong></div><p>El envío se calcula con tu dirección. Revisarás el total antes de confirmar el pedido.</p>
         <p className="cart-identification">Al continuar, ingresa o crea tu cuenta para comprar estos productos.</p>
         {preference && <p className="notice" role="status" data-testid="guest-plan-preference">{preference === 'three_parts' ? 'Preferencia: 3 pagos en total.' : 'Conservamos tu preferencia de pago.'} Confirmaremos los planes disponibles para tu carrito al iniciar sesión.</p>}

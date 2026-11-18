@@ -12,11 +12,11 @@ export function HomeCampaigns({ categories, tabletHref }: { categories: Readonly
     <section className="campaigns" aria-label="Descubre MAYAMI">
       <div className={tabletHref ? "campaign-lead campaign-tablet-feature" : "campaign-lead"}>
         <div className="campaign-copy">
-          <span className="campaign-label">{tabletHref ? 'Tablet destacada' : 'Descubre MAYAMI'}</span>
-          <h1>{tabletHref ? 'Tu tablet con kit completo' : <>Tus favoritos,<br />a un toque.</>}</h1>
-          <p>{tabletHref ? 'Pantalla de 10,1″ y 128 GB. Incluye teclado, mouse, lápiz y funda.' : 'Tecnología, belleza y mucho más, en un solo lugar.'}</p>
+          <span className="campaign-label">{tabletHref ? 'Destacado MAYAMI' : 'Descubre MAYAMI'}</span>
+          <h1>{tabletHref ? 'De tus clases a tu serie favorita.' : <>Tus favoritos,<br />a un toque.</>}</h1>
+          <p>{tabletHref ? 'Tablet con teclado y accesorios incluidos.' : 'Tecnología, belleza y mucho más, en un solo lugar.'}</p>
           <Link href={tabletHref ?? '/buscar'} prefetch={false} className="campaign-button">
-            {tabletHref ? 'Ver tablet' : 'Explorar productos'} <ArrowRight size={19} aria-hidden="true" />
+            {tabletHref ? 'Ver el kit' : 'Explorar productos'} <ArrowRight size={19} aria-hidden="true" />
           </Link>
         </div>
         <div className="campaign-studio" aria-hidden="true">

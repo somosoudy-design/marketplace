@@ -28,7 +28,7 @@ const ports = {
     publicApi: () => ({ catalog: { home: async () => ({ categories: homeCategories, stores: [] }), cardsByIds: async () => [] } }),
   },
   '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
-  '@/components/store-badge': { OfficialStoreSeal: () => null },
+  '@/components/store-badge': { StoreIdentity: () => null },
   '@/components/store-avatar': { StoreAvatar: () => null },
   '@/components/home-campaigns': { HomeCampaigns: () => null },
   '@/components/photo': {

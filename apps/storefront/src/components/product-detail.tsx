@@ -281,7 +281,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
           </header>
           <div className="product-offer-panel">
             <div className="product-summary">
-              <SellerLink id={p.store.id} name={p.store.name} slug={p.store.slug} kind={p.store.kind} />
+              <SellerLink id={p.store.id} name={p.store.name} slug={p.store.slug} kind={p.store.kind} status={p.store_status} />
               <nav className="product-community-links" aria-label="Opiniones y consultas">
                 <a href="#opiniones"><Star size={15} aria-hidden="true" />Calificaciones</a>
                 <a href="#preguntas"><MessageCircle size={15} aria-hidden="true" />Preguntas</a>
@@ -464,8 +464,8 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
         highlights={p.highlights?.map((h) => catalogText(h, p.is_demo) ?? h)}
         seller={storeDisplayName(p.store)}
       />
-      <ProductReviews productId={p.id} slug={p.slug} routePath={routePath} storeName={storeDisplayName(p.store)} />
-      <ProductQuestions productId={p.id} slug={p.slug} routePath={routePath} seller={storeDisplayName(p.store)} />
+      <ProductReviews productId={p.id} slug={p.slug} routePath={routePath} store={{ ...p.store, status: p.store_status }} />
+      <ProductQuestions productId={p.id} slug={p.slug} routePath={routePath} seller={storeDisplayName(p.store)} store={{ ...p.store, status: p.store_status }} />
       {p.related.length > 0 && (
         <section className="catalog-section">
           <div className="section-heading">

@@ -27,7 +27,7 @@
   opacity: .33;
 }
 .store-profile[data-official] .store-profile-cover { background: linear-gradient(115deg, #21143f, #5c19be); }
-.store-profile-identity, .store-profile-title, .store-profile-shipping {
+.store-profile-identity, .store-profile-shipping {
   display: flex; align-items: center; gap: 12px; min-width: 0;
 }
 .store-profile-identity .store-initial {
@@ -35,36 +35,50 @@
   flex: none; overflow: hidden; border-radius: 15px; font-size: 25px;
 }
 .store-profile-name { min-width: 0; }
-.store-profile-title h1 {
-  font-size: clamp(24px, 4vw, 45px); line-height: 1.12; overflow-wrap: anywhere;
+.store-profile-name h1 {
+  font-size: clamp(24px, 4vw, 45px); line-height: 1.12;
   margin: 0; letter-spacing: -.045em;
 }
+.store-profile-name .store-identity { gap: 6px; }
+.store-profile-name .store-seal { --store-seal-size: clamp(22px, 3vw, 28px); min-height: 44px; }
 .store-profile-name p, .store-profile-shipping { margin: 3px 0 0; color: #f1eaf9; }
+.store-profile-name p { font-size: clamp(13px, 1.5vw, 17px); line-height: 1.4; }
 .store-profile-shipping { align-items: flex-start; font-size: 13px; }
 .store-profile-shipping svg { flex: none; margin-top: 2px; }
 .store-profile-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .store-profile-actions .button {
   display: inline-flex; justify-content: center; align-items: center; gap: 7px;
-  min-height: 44px; font-size: 13px;
+  min-height: 44px; min-width: 155px; font-size: 13px;
 }
 .store-profile-actions .store-share-trigger { color: #fff; background: #1d132ee0; border-color: #ae9cc6; }
+.store-follow-trigger { background: #6d42e8; color: #fff; }
+.store-follow-trigger:hover:not(:disabled) { background: #5932ba; }
+.store-follow-trigger[aria-pressed=true] { background: #332453; border-color: #ae9cc6; }
+.store-profile-actions .store-follow-feedback { flex: 0 0 100%; color: #f3d4b4; margin: 2px 0 0; font-size: 13px; }
 .store-profile-actions .store-share-trigger:hover { background: #302143; }
-.store-profile-actions :focus-visible, .store-seal-details summary:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-.store-profile-about { margin-top: 8px; border-bottom: 1px solid var(--border); color: var(--text); }
-.store-profile-about summary {
-  display: flex; align-items: center; gap: 8px; padding-inline: 3px;
-  min-height: 44px; cursor: pointer; font-weight: 650; list-style: none;
+.store-profile-hero :focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.store-profile-tabs {
+  display: flex; margin-top: 5px; border-bottom: 1px solid var(--border);
 }
-.store-profile-about summary::-webkit-details-marker, .store-seal-details summary::-webkit-details-marker { display: none; }
-.store-profile-about summary::after { content: '+'; margin-inline-start: auto; }
-.store-profile-about[open] summary::after { content: '−'; }
-.store-profile-about > div { max-width: 75ch; padding: 2px 4px 14px; }
-.store-profile-about h2 { margin-top: 10px; font-size: 15px; }
-.store-profile-about p { margin: 2px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.store-profile-tabs a {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 49px; padding: 0 20px; border-bottom: 3px solid transparent;
+  color: var(--text-secondary); font-size: 14px; font-weight: 650;
+}
+.store-profile-tabs [aria-current=page] { border-color: var(--brand); color: var(--text); }
+.store-profile-tabs a:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.store-profile-about { max-width: 75ch; padding: 23px 0 18px; color: var(--text); }
+.store-profile-about h2 { margin: 0 0 12px; font-size: 24px; }
+.store-profile-about h3 { margin: 16px 0 4px; font-size: 15px; }
+.store-profile-about p { margin: 3px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (max-width: 700px) {
   .store-profile { margin-bottom: 14px; }
-  .store-profile-hero { gap: 11px; padding: 16px; }
+  .store-profile-hero { gap: 12px; padding: 16px; }
   .store-profile-identity { gap: 10px; }
-  .store-profile-name p { font-size: 12px; }
-  .store-profile-actions .button { flex: 1; padding-inline: 8px; }
+  .store-profile-actions .button { flex: 1 1 0; min-width: 0; padding-inline: 7px; }
+  .store-profile-tabs a { flex: 1; padding-inline: 5px; font-size: 13px; }
+}
+
+@media (max-width: 359px) {
+  .store-profile-actions .button { gap: 5px; padding-inline: 4px; white-space: nowrap; }
 }

@@ -42,6 +42,7 @@ export default async function Search({
   const category = single(s.category);
   const store = single(s.store);
   const collection = single(s.collection);
+  const showStoreAbout = Boolean(store) && single(s.vista) === 'tienda';
   const sort = Object.hasOwn(sorts, single(s.sort)) ? (single(s.sort) as SearchSort) : 'relevance';
   const availability = Object.hasOwn(availabilities, single(s.availability))
     ? (single(s.availability) as keyof typeof availabilities)
@@ -54,7 +55,7 @@ export default async function Search({
   try {
     const api = publicApi();
     [products, categories, storeDetails] = await Promise.all([
-      invalidRange ? Promise.resolve([]) : api.catalog.search({
+      invalidRange || showStoreAbout ? Promise.resolve([]) : api.catalog.search({
         query: q,
         category: category || null,
         store: store || null,
@@ -66,13 +67,21 @@ export default async function Search({
         limit: 25,
         offset: (page - 1) * 24,
       }),
-      api.catalog.categories(),
+      showStoreAbout ? Promise.resolve([]) : api.catalog.categories(),
       store ? api.catalog.store(store) : Promise.resolve(null),
     ]);
   } catch {
     return <Failure href="/buscar" message="No pudimos cargar los productos." />;
   }
   if (store && (!storeDetails || storeDetails.status !== 'active')) return <Empty kind="store" title="Esta tienda no está disponible" text="Puedes seguir explorando otras ofertas de MAYAMI." href="/" action="Ir al inicio" />;
+  const storeParams = new URLSearchParams(Object.entries(s).flatMap(([key, value]) =>
+    key !== 'vista' && typeof value === 'string' ? [[key, value]] : []));
+  const catalogHref = `/buscar?${storeParams}`;
+  if (showStoreAbout && storeDetails) return (
+    <div className="wrap search-page">
+      <StoreProfile store={storeDetails} catalogHref={catalogHref} aboutHref={`${catalogHref}&vista=tienda`} showAbout />
+    </div>
+  );
   const hasMore = products.length > 24;
   products = products.slice(0, 24);
   let metadata;
@@ -109,7 +118,7 @@ export default async function Search({
   ];
   return (
     <div className="wrap search-page" data-catalog-root={!q && !category && !collection && !store && !availability && sort === 'relevance' || undefined}>
-      {storeDetails ? <StoreProfile store={storeDetails} hasCatalog={!storeEmpty} /> : <nav className="breadcrumbs" aria-label="Ruta de navegación">
+      {storeDetails ? <StoreProfile store={storeDetails} catalogHref={catalogHref} aboutHref={`${catalogHref}&vista=tienda`} showAbout={false} /> : <nav className="breadcrumbs" aria-label="Ruta de navegación">
         <Link prefetch={false} href="/">
           Inicio
         </Link>
@@ -120,10 +129,10 @@ export default async function Search({
         <header className="search-heading">
           <div>
             <ResultsTitle>{title}</ResultsTitle>
-            <p className="results-count" role="status">
+            {!storeDetails && <p className="results-count" role="status">
               {count} {count === 1 ? 'producto' : 'productos'}{hasMore || page > 1 ? ' en esta página' : ''}{page > 1 ? ` · Página ${page}` : ''}
               {q && contextTitle !== 'Catálogo' && <span> · {contextTitle}</span>}
-            </p>
+            </p>}
           </div>
         </header>
         {!storeEmpty && <SearchFilters key={`filters-${JSON.stringify(s)}`} active={activeFilters.length} clearHref={canClear ? clearUrl : undefined} applied={[category, availability ?? '', single(s.min), single(s.max)]}>

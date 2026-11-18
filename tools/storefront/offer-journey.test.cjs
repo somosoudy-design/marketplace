@@ -86,7 +86,8 @@ const Link = ({ children, prefetch, ...props }) => React.createElement('a', prop
 const icons = new Proxy({}, { get: () => () => null });
 const base = {
   '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
-  './store-badge': { OfficialStoreSeal: () => React.createElement('span', { role: 'img', 'aria-label': 'Tienda oficial' }) },
+  './store-badge': { StoreIdentity: () => null },
+  '@/components/store-badge': { StoreIdentity: () => null },
 
   'react/jsx-runtime': req('react/jsx-runtime'),
   react: hookReact,

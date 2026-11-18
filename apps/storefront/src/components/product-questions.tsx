@@ -9,8 +9,10 @@ import { useAccount } from '@/lib/providers';
 import { captureBuyerApi } from '@/lib/actor-api';
 import { authHref } from '@/lib/auth-return';
 import { env } from '@/lib/env';
+import type { StoreIdentityData } from '@/lib/store-presentation';
+import { StoreIdentity } from './store-badge';
 
-type Props = { productId: string; slug: string; routePath?: string; seller: string };
+type Props = { productId: string; slug: string; routePath?: string; seller: string; store: StoreIdentityData };
 const pageSize = 10;
 const questionDate = (date: string) =>
   new Intl.DateTimeFormat('es-VE', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(date));
@@ -22,7 +24,7 @@ export function ProductQuestions(props: Props) {
   );
 }
 
-function QuestionsSession({ productId, slug, routePath, seller, actor }: Props & { actor?: string }) {
+function QuestionsSession({ productId, slug, routePath, seller, store, actor }: Props & { actor?: string }) {
   const { ready } = useAccount();
   const params = useSearchParams();
   const qc = useQueryClient();
@@ -200,6 +202,7 @@ function QuestionsSession({ productId, slug, routePath, seller, actor }: Props &
             <QuestionRow
               key={question.id}
               question={question}
+              store={store}
               actor={actor}
               canAnswer={questions.data.can_answer}
               canModerate={questions.data.can_moderate}
@@ -252,6 +255,7 @@ function QuestionsSession({ productId, slug, routePath, seller, actor }: Props &
 
 function QuestionRow({
   question: q,
+  store,
   actor,
   canAnswer,
   canModerate,
@@ -259,6 +263,7 @@ function QuestionRow({
   refresh,
 }: {
   question: ProductQuestion;
+  store: StoreIdentityData;
   actor?: string;
   canAnswer: boolean;
   canModerate: boolean;
@@ -312,7 +317,7 @@ function QuestionRow({
       <p className="question-body">{q.body}</p>
       {q.answer_body ? (
         <div className="question-answer">
-          <strong>Respuesta de {q.store_name}</strong>
+          <StoreIdentity store={q.store_id === store.id ? store : { name: q.store_name }} as="strong" caption="Respuesta de" />
           <p>{q.answer_body}</p>
           {q.answered_at && <time dateTime={q.answered_at}>{questionDate(q.answered_at)}</time>}
         </div>

@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · Campaña de tablet e identidad de tienda
+
+La candidata web presenta el kit YQ10S MAX, amplía las fotos de categorías y reorganiza los perfiles con navegación de Productos y Sobre la tienda. El nombre y sello oficial se usan en los recorridos de compra. El seguimiento usa datos privados de la cuenta y se limpia con el cierre de cuenta.
+
+Pruebas locales aprobadas en Chrome y WebKit con dos cuentas de prueba. Se verificaron ingreso con retorno, seguir, persistencia, aislamiento, dejar de seguir y recarga. También se comprobaron permisos SQL y cierre contra un clon. Trabajo en curso: verificar la migración hospedada, compilar la versión para Cloudflare y comprobar los recorridos públicos antes de cerrar la publicación.
+
 ## 18 noviembre 2026 · PWA, catálogo y perfiles de tiendas
 
 Publicado en mayami.app con el Worker Free `fcc0abca-dc90-40e6-a6a3-1dafd5560c4f`, fuente `bc3e189`. Los enlaces de Compartir identifican el producto de forma inequívoca y conservan la variante cuando hay más de una. La ficha anterior sigue disponible. Metadatos de título, descripción e imagen de cada variante verificados con los agentes de usuario de WhatsApp y Twitter. Galería 1:1 con imagen completa, portada de la tablet YQ10S MAX con destino verificado y cabecera opaca durante el desplazamiento en Safari y PWA de iOS 27 simulada.

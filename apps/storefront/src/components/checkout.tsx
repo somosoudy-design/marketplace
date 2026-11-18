@@ -1,4 +1,5 @@
 'use client';
+import { StoreIdentity } from './store-badge';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -499,7 +500,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                       <span className="step-caption">
                         Entrega {index + 1} de {s.groups.length}
                       </span>
-                      <h2>{g.store.name}</h2>
+                      <StoreIdentity store={g.store} as="h2" />
                     </div>
                   </div>
                   {g.lines.map((l) => (
@@ -561,7 +562,7 @@ export function Checkout({ buyerId }: { buyerId: string }) {
                         <span className="step-caption">
                           Entrega {index + 1} de {s.groups.length}
                         </span>
-                        <h2>{g.store.name}</h2>
+                        <StoreIdentity store={g.store} as="h2" />
                       </div>
                       <button
                         className="text-button"
