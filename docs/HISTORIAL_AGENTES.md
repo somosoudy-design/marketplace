@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Revisión visual de la tienda de compradores
 
-Codex integró la revisión de navegación, compra y acceso en la web adaptable. Se incorporaron pruebas de navegador para cuatro anchos, la búsqueda vacía, la ficha móvil y los formularios de cuenta. Las fotografías y los recorridos se revisaron por separado en Chrome. Seguimiento en el estado actual.
+Codex integró la revisión de navegación, compra y acceso en la web adaptable. Se incorporaron pruebas de navegador para cuatro anchos, la búsqueda vacía, la ficha móvil y los formularios de cuenta. Las fotografías y los recorridos se revisaron por separado en Chrome. Publicación comprobada en Workers Free, fuente `a5c3d6f`. Pasaron los siete recorridos de navegador de la nueva suite frente al sitio oficial. Comparaciones y mediciones en el estado actual.
 
 ## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
 

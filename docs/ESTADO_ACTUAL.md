@@ -2,7 +2,9 @@
 
 ## 17 noviembre 2026 · Pulido visual de la tienda web
 
-La primera entrega ya está publicada en el Worker Free `f9db86a6-5d43-4b13-99ef-e0cfbc25b55e`. En el dominio oficial se comprobó la cabecera móvil de 64 px, la edición de búsquedas vacías, el título visible antes de la galería y la posición estable del campo de correo al habilitarse Google. Las capturas antes y después están en Descargas, carpeta `MAYAMI-pulido-web-20261117`. Tipos y lint del repositorio, 194 pruebas de la tienda, 190 compartidas y seis recorridos nuevos de navegador pasaron. Trabajo en curso: las pantallas privadas vistas como invitado mostraban la lupa de búsqueda; el icono de cuenta y el título principal ya se comprobaron en la candidata. Próxima acción: publicar ese último ajuste y repetir la prueba de retorno en el dominio oficial.
+Publicado y comprobado en mayami.app, Worker Free `2a3bf66a-9faa-4427-8c2c-be8595f7295c`, fuente `a5c3d6f`. La cabecera de navegación móvil pasa de 120 a 64 px. En la ficha de NEEWER de 390 px el título pasa de y=668 a y=229 y la foto queda centrada en escritorio. En la búsqueda vacía se edita la consulta antes de salir al catálogo. En móvil y tableta, filtros y orden miden 44 px y sus centros coinciden. La recuperación y el registro conservan la cabecera compacta. En seis cargas públicas, el correo mantuvo su posición cuando se habilitó Google. Los accesos de visitante a pedidos, direcciones y checkout identifican la cuenta y preservan la ruta de retorno.
+
+Tipos y lint globales, 194 pruebas de la tienda y 190 compartidas aprobados. Siete pruebas de navegador pasaron sobre la versión pública final. También se comprobaron anclas, compartir, miniaturas y selección de color en dos productos, con revisión independiente de capturas en claro y oscuro. El informe con ocho comparaciones está en `~/Downloads/MAYAMI-pulido-web-20261117/Revision-visual.html`. Trabajo en curso de esta entrega: cerrado. Próxima acción de validación adicional: contrastar el recorrido con Safari en un iPhone físico. Esta revisión cubrió el sitio adaptable en Chrome.
 
 ## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
 
