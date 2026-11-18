@@ -2,7 +2,7 @@
 
 ## 17 noviembre 2026 · Galería primero en la ficha móvil
 
-La candidata recupera el orden galería y título en un solo bloque de información y oculta la ruta «Catálogo / categoría» en móvil. En 320 × 700, la fotografía conserva su proporción y el título queda a 23 px de la barra de compra. Se aprobaron 194 pruebas de la tienda, lint y las comprobaciones de composición a 320 y 390 px. La revisión independiente cubrió Chrome y WebKit, incluidos escritorio, miniaturas y Compartir. Próxima acción, compilar para el Worker Free y verificar el resultado en mayami.app.
+Publicado en mayami.app, Worker Free `c5660bfd-972a-4a07-bb4a-020e3d479f1d`, fuente `e90ae15`. En móvil la galería aparece primero y el título único queda debajo, sin ruta «Catálogo / categoría». En 320 × 700 la foto conserva su proporción y el título de UGREEN queda a 23 px de la barra de compra. Pasaron 194 pruebas de la tienda, lint y las dos pruebas de composición en el sitio oficial. Chrome y WebKit verificaron la galería, Compartir y los accesos a Calificaciones y Preguntas. La revisión de escritorio confirmó las dos columnas y la ruta visible. Capturas en `~/Downloads/MAYAMI-ficha-movil-20261117/publicado`. Corrección cerrada.
 
 ## 17 noviembre 2026 · Pulido visual de la tienda web
 

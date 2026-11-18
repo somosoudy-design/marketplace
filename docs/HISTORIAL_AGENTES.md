@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 17 noviembre 2026 · Ficha móvil con galería primero
+
+Codex restableció el título bajo la galería de la ficha y ocultó la ruta de categorías en móvil. Publicación verificada en Chrome y WebKit a 320 y 390 px, con comprobación de escritorio a 1440 px. Se actualizó la comparación móvil del informe visual.
+
 ## 17 noviembre 2026 · Revisión visual de la tienda de compradores
 
 Codex integró la revisión de navegación, compra y acceso en la web adaptable. Se incorporaron pruebas de navegador para cuatro anchos, la búsqueda vacía, la ficha móvil y los formularios de cuenta. Las fotografías y los recorridos se revisaron por separado en Chrome. Publicación comprobada en Workers Free, fuente `a5c3d6f`. Pasaron los siete recorridos de navegador de la nueva suite frente al sitio oficial. Comparaciones y mediciones en el estado actual.
