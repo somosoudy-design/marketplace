@@ -2,6 +2,7 @@
 import { MODERATION_LABEL, presentAvailability } from '@kora/core';
 import { useQuery } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 import { ProductReview, type ProductRow } from '@/components/ProductReview';
 import { Badge, Card, Empty, ErrorBox, Input, Loading, PageHeader, Select, Table, Tabs, Td, Thumb } from '@/components/ui';
@@ -61,7 +62,7 @@ export default function ProductsPage() {
         {list.isPending ? <Loading /> : list.isError ? <ErrorBox error={list.error} onRetry={() => list.refetch()} /> : !list.data.length ? (
           <Empty title={status === 'pending' ? 'Nada por moderar' : 'Sin productos en este estado'} />
         ) : (
-          <Table head={['Producto', 'Tienda', 'Categoría', 'Precio', 'Disponibilidad', 'Estado', 'Actualizado']}>
+          <Table head={['Producto', 'Tienda', 'Categoría', 'Precio', 'Disponibilidad', 'Estado', 'Actualizado', 'Ficha']}>
             {list.data.map((p) => {
               const img = [...p.product_images].sort((a, b) => a.sort - b.sort)[0];
               const c = cat(p.category_id);
@@ -82,6 +83,7 @@ export default function ProductsPage() {
                   <Td className="whitespace-nowrap">{presentAvailability(p.availability as never).label}</Td>
                   <Td><Badge tone={moderationTone[p.moderation_status]}>{MODERATION_LABEL[p.moderation_status]}</Badge></Td>
                   <Td className="whitespace-nowrap text-ink-3">{ago(p.updated_at)}</Td>
+                  <Td><Link href={`/admin/productos/editar?id=${encodeURIComponent(p.id)}&store=${encodeURIComponent(p.store_id)}`} onClick={event => event.stopPropagation()} className="inline-flex min-h-[44px] items-center font-semibold text-brand">Editar ficha</Link></Td>
                 </tr>
               );
             })}

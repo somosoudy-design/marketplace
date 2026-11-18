@@ -2,6 +2,8 @@
 import { STORE_STATUS_LABEL } from '@kora/core';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
+import Link from 'next/link';
+import { isOfficialStoreAlias } from '@kora/core';
 import { useState } from 'react';
 import { useToast } from '@/components/toast';
 import { Badge, Button, Card, Dialog, Empty, ErrorBox, Field, Input, Loading, Notice, PageHeader, Select, Table, Td, Thumb } from '@/components/ui';
@@ -34,7 +36,7 @@ export default function StoresPage() {
           <Table head={['Tienda', 'Tipo', 'Productos', 'Equipo', 'Comisión', 'Alta', 'Estado', '']}>
             {q.data.map((s) => (
               <tr key={s.id}>
-                <Td><div className="flex items-center gap-3"><Thumb src={storeImage(s.logo_path)} alt={s.name} size={32} /><div><p className="font-semibold">{s.name}{s.is_demo ? <Badge tone="editorial" className="ml-2">Demo</Badge> : null}</p><p className="text-[12px] text-ink-3">{s.slug}</p></div></div></Td>
+                <Td><div className="flex items-center gap-3"><Thumb src={storeImage(s.logo_path)} alt={s.name} size={32} /><div><p className="font-semibold"><Link href={'/admin/tiendas/perfil?id=' + encodeURIComponent(s.id)} className="text-brand hover:underline" aria-label={'Configurar tienda ' + s.name}>{s.name}</Link>{s.is_demo ? <Badge tone="editorial" className="ml-2">Demo</Badge> : null}</p><p className="text-[12px] text-ink-3">{s.slug}</p></div></div></Td>
                 <Td>{s.kind === 'platform' ? 'Propia' : 'Vendedor'}</Td>
                 <Td className="tabular">{s.products?.[0]?.count ?? 0}</Td>
                 <Td><button className="font-semibold text-brand" onClick={() => setTeam(s)}>{s.store_members.length} {s.store_members.length === 1 ? 'persona' : 'personas'}</button></Td>
@@ -64,6 +66,7 @@ function CreateStore({ open, onClose }: { open: boolean; onClose: () => void }) 
   const m = useMutation({
     mutationFn: async () => {
       const slug = (f.slug || f.name).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (isOfficialStoreAlias(slug)) throw new Error('Esta dirección está reservada para la tienda MAYAMI. Elige otra.');
       const [s] = await run<{ id: string }[]>(db('stores').insert({ name: f.name.trim(), slug, tagline: f.tagline.trim() || null, contact_email: f.email.trim() || null, kind: f.kind, status: 'pending' }).select('id'));
       if (f.owner.trim()) await rpc('add_store_member', { p_store_id: s!.id, p_email: f.owner.trim(), p_role: 'owner' });
     },

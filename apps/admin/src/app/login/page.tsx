@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button, Field, Input, Notice } from '@/components/ui';
 import { authErrorMessage, useAuth } from '@/lib/auth';
+import { safePanelReturn } from '@/lib/panel-navigation';
 import { isConfigured } from '@/lib/env';
 import { BrandMark } from '@/components/BrandMark';
 
@@ -15,7 +16,7 @@ export default function LoginPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (ready && session) router.replace('/');
+    if (ready && session) router.replace(safePanelReturn(new URLSearchParams(window.location.search).get('returnTo')) ?? '/');
   }, [ready, session, router]);
 
   const submit = async (e: React.FormEvent) => {

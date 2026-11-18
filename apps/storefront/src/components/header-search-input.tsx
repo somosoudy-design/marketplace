@@ -6,13 +6,13 @@ import { usePathname, useSearchParams } from 'next/navigation';
 export function HeaderSearchInput() {
   const pathname = usePathname();
   const params = useSearchParams();
-  const query = pathname === '/buscar' ? params.get('q') ?? '' : '';
+  const query = (pathname === '/buscar' || pathname.startsWith('/tienda/')) ? params.get('q') ?? '' : '';
   const input = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const restoreSubmittedQuery = () => {
       if (!input.current) return;
       const url = new URL(window.location.href);
-      input.current.value = url.pathname === '/buscar' ? url.searchParams.get('q') ?? '' : '';
+      input.current.value = (url.pathname === '/buscar' || url.pathname.startsWith('/tienda/')) ? url.searchParams.get('q') ?? '' : '';
     };
     let timer: ReturnType<typeof setTimeout> | undefined;
     const afterHistoryRestoration = () => {

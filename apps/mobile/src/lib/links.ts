@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { publicStorePath } from '@kora/core';
 import { brand } from './brand';
 import { publicBrandLink } from '../../../../config/brand-presentation';
 
@@ -10,8 +11,8 @@ export const webDomainReady = brand.publicWebOrigin !== null;
  * Until the storefront origin is activated: the current web address, or the installed app's scheme.
  * Adopting the mayami name must not change native intent filters or authentication returns.
  */
-export function storeLink(slug: string): string {
-  return publicLink(`/tienda/${encodeURIComponent(slug)}`);
+export function storeLink(store: { id: string; slug: string }): string {
+  return publicLink(publicStorePath(store));
 }
 
 export function productLink(slug: string): string {

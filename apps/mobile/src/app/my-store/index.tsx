@@ -1,6 +1,6 @@
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { ModerationStatus } from '@kora/api';
-import { MODERATION_LABEL, STORE_STATUS_LABEL } from '@kora/core';
+import { MODERATION_LABEL, STORE_STATUS_LABEL, publicStoreSlug } from '@kora/core';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { View } from 'react-native';
@@ -58,6 +58,7 @@ function Dashboard() {
       <ListRow testID="seller-orders-link" icon="receipt" title="Pedidos" subtitle="Entregas recibidas y seguimiento" onPress={() => router.push('/my-store/orders')} /><Divider inset={68} />
       <ListRow testID="seller-settings-link" icon="settings" title="Configuración de tienda" subtitle="Datos y políticas de tu negocio" onPress={() => router.push('/my-store/settings')} />
     </Card>
+    {s.status === 'active' ? <Button testID="seller-public-store" title="Ver tienda pública" variant="secondary" full onPress={() => router.push({ pathname: '/tienda/[slug]', params: { slug: publicStoreSlug(s) } })} /> : null}
     <AdvancedPanel />
     <Button testID="seller-buy" title="Volver a comprar" variant="ghost" full onPress={() => router.dismissTo('/account')} />
   </SellerScroll>;

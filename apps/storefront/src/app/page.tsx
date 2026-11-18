@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { publicStorePath } from '@kora/core';
 import type { Metadata } from 'next';
 import { ArrowUpRight, Cable, Cross, Headphones, House, Laptop, PawPrint, ShoppingBag, Sparkles, type LucideIcon } from 'lucide-react';
 import { StoreIdentity } from '@/components/store-badge';
@@ -94,7 +95,7 @@ export default async function Home() {
               <div className="store-list-entry" key={s.id}>
                 <StoreAvatar id={s.id} name={storeDisplayName(s)} path={s.logo_path} />
                 <div>
-                  <StoreIdentity store={s} as="h3" href={`/buscar?store=${encodeURIComponent(s.slug)}`} linkClassName="store-list-link" />
+                  <StoreIdentity store={s} as="h3" href={publicStorePath(s)} linkClassName="store-list-link" />
                   {s.tagline && <p>{s.tagline}</p>}
                 </div>
                 <ArrowUpRight className="store-list-arrow" size={16} aria-hidden="true" />

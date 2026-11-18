@@ -2,6 +2,8 @@
 // All business rules (prices, stock, rates, balances, permissions) are enforced in the database; this layer only
 // shapes requests and turns database hints into friendly errors (AppError from @kora/core).
 import { toAppError, sellerNumericChangesSchema, type AppError } from '@kora/core';
+import { createClaimUgcApi } from './claim-ugc';
+import { createUgcApi } from './ugc';
 import type { KoraClient } from './client';
 import type {
   CatalogMetadata,
@@ -597,7 +599,9 @@ export function createApi(client: KoraClient) {
       ),
   };
 
-  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin, reviews, questions };
+  const ugc = createUgcApi(<T>(name: string, args?: Record<string, unknown>) => run<T>(rpc(name, args)));
+  const claimUgc = createClaimUgcApi(<T>(name: string, args?: Record<string, unknown>) => run<T>(rpc(name, args)));
+  return { client, catalog, cart, checkout, payments, orders, account, claims, seller, admin, reviews, questions, ugc, claimUgc };
 }
 
 export type Api = ReturnType<typeof createApi>;

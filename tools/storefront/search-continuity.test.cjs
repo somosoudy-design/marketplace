@@ -28,7 +28,7 @@ const { HeaderSearchInput } = load('components/header-search-input.tsx', {
   react: { useRef: () => fieldRef, useEffect: fn => { restoreEffect = fn; } },
   'next/navigation': { usePathname: () => pathname, useSearchParams: () => new URLSearchParams(query) },
 });
-for (const [route, params, expected] of [['/buscar', 'q=aud%C3%ADfonos', 'audífonos'], ['/buscar', 'q=tablet+roja', 'tablet roja'], ['/buscar', '', ''], ['/', 'q=otra', ''], ['/carrito', 'q=otra', '']]) {
+for (const [route, params, expected] of [['/tienda/mayami', 'q=audio', 'audio'], ['/buscar', 'q=aud%C3%ADfonos', 'audífonos'], ['/buscar', 'q=tablet+roja', 'tablet roja'], ['/buscar', '', ''], ['/', 'q=otra', ''], ['/carrito', 'q=otra', '']]) {
   test(`header reflects only catalog query: ${route} ${params}`, () => {
     pathname = route; query = params;
     const element = HeaderSearchInput();
@@ -48,7 +48,8 @@ let searchRows = [], categoryRows = [];
 const actualFilters = load('components/search-filters.tsx', { react: React, 'next/link': { default: Link }, 'lucide-react': { SlidersHorizontal: () => null, X: () => null } });
 const actualSort = load('components/search-sort.tsx', { react: React });
 const taxonomy = load('lib/catalog-taxonomy.ts', {});
-const Search = load('app/buscar/page.tsx', {
+const Search = load('app/buscar/catalog-results.tsx', {
+  '@kora/core': require('../../packages/core/src/store-link.ts'),
   './search.css': {}, 'next/link': { default: Link },
   'lucide-react': { ArrowRight: () => null, ChevronDown: () => null, SlidersHorizontal: () => null, X: () => null },
   '@/lib/server': { publicApi: () => ({ catalog: { search: async args => { searchCalls.push(args); return searchRows; }, categories: async () => categoryRows, store: async slug => ({ id: slug, slug, name: slug === 'milyedent' ? 'MilyeDent' : 'Tienda conocida', status: 'active', logo_path: null }) } }), publicCatalogMetadata: async ids => Object.fromEntries(ids.map(id => [id, {}])) },
@@ -60,7 +61,7 @@ const Search = load('app/buscar/page.tsx', {
   '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
   '@/components/store-profile': { StoreProfile: ({ store }) => React.createElement('h1', null, store.name) },
 }).default;
-async function markup(params) { return renderToStaticMarkup(await Search({ searchParams: Promise.resolve(params) })); }
+async function markup(params) { return renderToStaticMarkup(await Search({ query: params })); }
 test('empty first page offers catalog reset', async () => {
   const html = await markup({ q: 'nada' });
   assert.match(html, /No encontramos productos/);

@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { SlidersHorizontal, X } from 'lucide-react';
 
 const fields = ['category', 'availability', 'min', 'max'] as const;
-export function SearchFilters({ children, active, clearHref, applied }: {
+export function SearchFilters({ children, active, clearHref, applied, action = '/buscar' }: {
+  action?: string;
   children: ReactNode;
   active: number;
   clearHref?: string;
@@ -86,7 +87,7 @@ export function SearchFilters({ children, active, clearHref, applied }: {
           if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
         }}
         onClose={() => { if (!panel.current?.open && mobile.current && open) close(); }}>
-        <form ref={form} action="/buscar" className="filter-form" onSubmit={validateRange} aria-busy={pending}
+        <form ref={form} action={action} className="filter-form" onSubmit={validateRange} aria-busy={pending}
           onInput={event => {
             const element = event.currentTarget.elements.namedItem('max') as HTMLInputElement | null;
             element?.setCustomValidity('');

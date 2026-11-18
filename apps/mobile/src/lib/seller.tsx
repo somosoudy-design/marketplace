@@ -26,12 +26,17 @@ const SellerContext = createContext<{
   selectStore: (id: string) => void;
 } | null>(null);
 
-export function SellerProvider({ children }: { children: ReactNode }) {
+export function SellerProvider({ children, requestedId }: { children: ReactNode; requestedId?: string | string[] }) {
   const access = useSellerAccess();
   const [selected, setSelected] = useState<string | null>(null);
   const stores = access.data?.stores ?? [];
   // No arbitrary URL/store id can select an unauthorized store. Errors fail closed, even with cached rows.
-  const store = access.isError ? null : stores.find((s) => s.id === selected) ?? stores[0] ?? null;
+  let store: Store | null = null;
+  if (!access.isError) {
+    store = requestedId === undefined
+      ? stores.find((s) => s.id === selected) ?? stores[0] ?? null
+      : stores.find((s) => s.id === requestedId) ?? null;
+  }
   return <SellerContext.Provider value={{ access, store, selectStore: setSelected }}>{children}</SellerContext.Provider>;
 }
 

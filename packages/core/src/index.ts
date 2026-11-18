@@ -18,3 +18,4 @@ export * from './guest-cart';
 export * from './guest-favorites';
 
 export * from './commerce-presentation';
+export * from './store-link';

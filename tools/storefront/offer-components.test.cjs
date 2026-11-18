@@ -25,7 +25,7 @@ function load(relative, ports = {}) {
   }});
   return out.exports;
 }
-const core = Object.assign({}, ...['money', 'availability', 'product-selection', 'eta', 'catalog-presentation', 'option-swatch', 'commerce-presentation', 'payment-presentation'].map(name => load('packages/core/src/' + name + '.ts')));
+const core = Object.assign({}, ...['store-link', 'money', 'availability', 'product-selection', 'eta', 'catalog-presentation', 'option-swatch', 'commerce-presentation', 'payment-presentation'].map(name => load('packages/core/src/' + name + '.ts')));
 const selection = load('apps/storefront/src/lib/catalog-selection.ts');
 const Link = ({ children, prefetch, ...props }) => React.createElement('a', props, children);
 const icons = new Proxy({}, { get: () => () => null });
@@ -57,9 +57,9 @@ function productProps({availability = 'on_order', stock = null, active = true, v
  return { product: { id:'product', slug:'prueba', title:'Producto real', store_id:'shop', store_name:'Mayami', store:{id:'5afbabbf-0678-40ee-a5d8-540f53efe114',name:'Mayami',slug:'kora',kind:'platform',status:'active'}, category_slug:'audio', category_name:'Audio', availability, max_per_order:10, lead_min_days:5, lead_max_days:10, related:[], description:'Qué incluye la caja\n• Trípode con pinza\nProducto nuevo. Entrega estimada: 15 a 23 días.' }, metadata: { condition:null,variants:[{variant_id:'variant',sku:'SKU',title:'Única',options:{},active,stock,price_usd:38.6,images:[]}],general_images:[] },relatedMetadata:{},initialVariantId:variantId };
 }
 const render = element => renderToStaticMarkup(element);
-test('seller link exposes commercial name and preserves the existing slug', () => {
+test('seller link exposes the official name and canonical path', () => {
  const html=render(React.createElement(offers.SellerLink,{id:'5afbabbf-0678-40ee-a5d8-540f53efe114',name:'Mayami',slug:'kora',kind:'platform',status:'active'}));
- assert.match(html, /href="\/tienda\/kora"/); assert.match(html, /MAYAMI/); assert.doesNotMatch(html,/Vendido por kora/);
+ assert.match(html, /href="\/tienda\/mayami"/); assert.match(html, /MAYAMI/); assert.doesNotMatch(html,/Vendido por kora/);
  assert.match(html, /data-tier="official"[^>]+aria-controls="[^"]+"/i);
  assert.match(html, /<dialog/);
 });

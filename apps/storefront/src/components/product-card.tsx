@@ -1,7 +1,7 @@
 import { StoreIdentity } from './store-badge';
 import Link from 'next/link';
 import type { CatalogMetadata, ProductCard as Product } from '@kora/api';
-import { productColorSummaries, resolveProductSelection } from '@kora/core';
+import { productColorSummaries, publicStorePath, resolveProductSelection } from '@kora/core';
 import { ProductPhoto } from './photo';
 import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
@@ -30,7 +30,7 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
         <div className="product-copy">
           <h3><Link prefetch={false} href={href(selected.selectedVariantId)} className="product-link">{title}</Link></h3>
           <div className="product-brand">
-            <StoreIdentity store={store} href={product.store_slug ? `/tienda/${encodeURIComponent(product.store_slug)}` : undefined} />
+            <StoreIdentity store={store} href={product.store_slug ? publicStorePath({ id: product.store_id, slug: product.store_slug }) : undefined} />
           </div>
           <div className="product-price">
             <CatalogPrice usd={price} compareAt={product.is_demo ? null : product.compare_at_usd} />

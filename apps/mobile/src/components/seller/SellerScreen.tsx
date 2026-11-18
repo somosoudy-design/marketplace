@@ -11,6 +11,7 @@ import { useAuth } from '@/lib/auth';
 import { useOnline } from '@/lib/query';
 import { useSeller } from '@/lib/seller';
 import { useTheme } from '@/theme';
+import { panelOrigin } from '@/lib/panel-url';
 
 export function SellerLoading() {
   return <View testID="seller-loading" accessibilityRole="progressbar" accessibilityLabel="Cargando tu tienda" style={{ gap: 14, padding: 16 }}><Skeleton height={96} /><Skeleton height={140} /><Skeleton height={180} /></View>;
@@ -38,7 +39,7 @@ export function SellerScroll({ children, refresh, refreshing = false }: { childr
 }
 
 export function AdvancedPanel({ path = '/vendedor' }: { path?: string }) {
-  const url = process.env.EXPO_PUBLIC_PANEL_URL;
+  const url = panelOrigin;
   const [error, setError] = useState(false);
   const [opening, setOpening] = useState(false);
   return <View style={{ gap: 10 }}>

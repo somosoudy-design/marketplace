@@ -7,8 +7,10 @@ export function MobileNavigation({pathname,cartUnits,cartKnown}:{pathname:string
     {destinations.map(({href,label,Icon})=>{
       const current=pathname===href;
       const account=href==='/cuenta'&&['/pedidos','/direcciones','/favoritos','/notificaciones'].some(route=>pathname===route||pathname.startsWith(route+'/'));
+      const store=href==='/buscar' && pathname.startsWith('/tienda/');
+      const section=account||store;
       const isCart=href==='/carrito';
-      return <Link key={href} prefetch={false} href={href} aria-current={current?'page':account?'location':undefined} data-active={current||account?true:undefined} aria-label={isCart&&cartKnown?`Carrito, ${cartUnits} ${cartUnits===1?'unidad':'unidades'}`:label} onClick={event=>{if(current && event.button===0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey)event.preventDefault();}}>
+      return <Link key={href} prefetch={false} href={href} aria-current={current?'page':section?'location':undefined} data-active={current||section?true:undefined} aria-label={isCart&&cartKnown?`Carrito, ${cartUnits} ${cartUnits===1?'unidad':'unidades'}`:label} onClick={event=>{if(current && event.button===0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey)event.preventDefault();}}>
         <span className="mobile-navigation-icon"><Icon size={23} aria-hidden="true"/>{isCart&&cartKnown&&cartUnits>0&&<b className="mobile-navigation-count" aria-hidden="true">{cartUnits>99?'99+':cartUnits}</b>}</span>
         <span>{label}</span>
       </Link>;

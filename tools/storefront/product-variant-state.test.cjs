@@ -27,7 +27,7 @@ function real(relative, bindings = {}) {
 }
 const core = Object.assign(
   {},
-  ...['product-selection', 'availability', 'eta', 'catalog-presentation', 'option-swatch', 'commerce-presentation', 'payment-presentation'].map((name) =>
+  ...['store-link', 'product-selection', 'availability', 'eta', 'catalog-presentation', 'option-swatch', 'commerce-presentation', 'payment-presentation'].map((name) =>
     real('packages/core/src/' + name + '.ts'),
   ),
 );

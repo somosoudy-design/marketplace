@@ -1,16 +1,19 @@
 'use client';
 import type { Session } from '@supabase/supabase-js';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { isConfigured } from './env';
-import { kora } from './kora';
+import { kora, koraForActor, run } from './kora';
+import { ugcOwner } from './ugc-owner';
 
 interface AuthState {
   ready: boolean;
   session: Session | null;
   userId: string | null;
   email: string | null;
-  /** From the access token; used for navigation only. The database authorizes every read and write. */
+  accessError: unknown;
+  retryAccess: () => void;
+  /** From RLS-protected role and membership rows for the current actor. */
   roles: string[];
   storeIds: string[];
   isAdmin: boolean;
@@ -23,16 +26,6 @@ interface AuthState {
 
 const Ctx = createContext<AuthState | null>(null);
 
-function claims(session: Session | null): { roles: string[]; stores: string[] } {
-  if (!session) return { roles: [], stores: [] };
-  try {
-    const payload = JSON.parse(atob(session.access_token.split('.')[1]!.replace(/-/g, '+').replace(/_/g, '/')));
-    return { roles: payload.app_metadata?.roles ?? [], stores: payload.app_metadata?.stores ?? [] };
-  } catch {
-    return { roles: [], stores: [] };
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const qc = useQueryClient();
   const [session, setSession] = useState<Session | null>(null);
@@ -41,23 +34,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!isConfigured) return;
     const { client } = kora();
+    const initialOwner = ugcOwner.snapshot();
     client.auth.getSession().then(({ data }) => {
+      if (ugcOwner.snapshot() !== initialOwner && ugcOwner.snapshot().actor !== (data.session?.user.id ?? null)) return;
+      ugcOwner.update(data.session?.user.id ?? null);
       setSession(data.session);
       setReady(true);
     });
     const { data } = client.auth.onAuthStateChange((event, s) => {
+      const previousActor = ugcOwner.snapshot().actor;
+      ugcOwner.update(s?.user.id ?? null);
       setSession(s);
-      if (event === 'SIGNED_OUT') qc.clear();
+      setReady(true);
+      if (event === 'SIGNED_OUT' || (previousActor && previousActor !== s?.user.id)) qc.clear();
     });
     return () => data.subscription.unsubscribe();
   }, [qc]);
 
+  const actor = session?.user.id ?? null;
+  const accessKey = ['panel-access', actor, ugcOwner.snapshot().revision] as const;
+  const access = useQuery({
+    queryKey: accessKey,
+    enabled: !!actor,
+    queryFn: async () => {
+      const bound = await koraForActor(actor!);
+      const [roles, memberships] = await Promise.all([
+        bound.api.account.roles(actor!),
+        run<{ store_id: string }[]>(bound.client.from('store_members').select('store_id').eq('user_id', actor!)),
+      ]);
+      await bound.assertCurrent();
+      return { roles: roles.map(row => row.role), stores: memberships.map(row => row.store_id) };
+    },
+  });
+  const { data, error, isPending, refetch } = access;
   const value = useMemo<AuthState>(() => {
-    const c = claims(session);
+    const c = (actor && !error ? data : null) ?? { roles: [], stores: [] };
     const isSuperadmin = c.roles.includes('superadmin');
     const isAdmin = isSuperadmin || c.roles.includes('admin');
     return {
-      ready,
+      ready: ready && (!actor || !isPending),
+      accessError: actor ? error : null,
+      retryAccess: () => { void refetch(); },
       session,
       userId: session?.user.id ?? null,
       email: session?.user.email ?? null,
@@ -73,13 +90,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signOut: async () => {
         await kora().client.auth.signOut();
       },
-      // roles and stores live in the token: refresh it after they change
+      // Preserve token refresh and reread current database memberships.
       refresh: async () => {
         const { data } = await kora().client.auth.refreshSession();
         setSession(data.session);
+        await refetch();
       },
     };
-  }, [session, ready]);
+  }, [session, ready, actor, error, data, isPending, refetch]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

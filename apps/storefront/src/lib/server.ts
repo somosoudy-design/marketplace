@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { resolvePublicStore } from '@kora/core';
 import { createApi, createKoraClient } from '@kora/api';
 import { env, configured } from './env';
 import { catalogMetadataMap } from './catalog-selection';
@@ -28,3 +29,5 @@ export const publicProduct = cache(async (slug: string) => {
 export const publicCatalogMetadata = (ids: readonly string[]) => catalogMetadataMap(ids, publicApi().catalog.metadata);
 
 export const publicProductById = cache((id: string) => publicApi().catalog.productCommercial(id));
+
+export const publicStore = cache((slug: string) => resolvePublicStore(slug, publicApi().catalog.store));

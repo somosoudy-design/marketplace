@@ -2,6 +2,7 @@ import { newIdempotencyKey } from '@kora/api';
 import { STORE_STATUS_LABEL } from '@kora/core';
 import { storeAccents } from '@kora/design-tokens';
 import { useQueryClient } from '@tanstack/react-query';
+import { useLocalSearchParams } from 'expo-router';
 import { useRef, useState } from 'react';
 import { AdvancedPanel, SellerScreen, SellerScroll } from '@/components/seller/SellerScreen';
 import { IMAGE_TYPES, imageBytes, pickSellerImage, SellerImage, type PickedImage } from '@/components/seller/SellerImage';
@@ -14,10 +15,14 @@ import { TextField } from '@/components/ui/TextField';
 import { haptics } from '@/lib/haptics';
 import { useAuth } from '@/lib/auth';
 import { brand } from '@/lib/brand';
-import { useSeller } from '@/lib/seller';
+import { SellerProvider, useSeller } from '@/lib/seller';
 import { api, storeImage } from '@/lib/supabase';
 
-export default function SellerSettingsScreen() { return <SellerScreen><Settings /></SellerScreen>; }
+export default function SellerSettingsScreen() {
+  const { storeId } = useLocalSearchParams<{ storeId?: string | string[] }>();
+  const editor = <SellerScreen><Settings /></SellerScreen>;
+  return storeId === undefined ? editor : <SellerProvider requestedId={storeId}>{editor}</SellerProvider>;
+}
 const accents = { jade: 'Jade', amber: 'Ámbar', coral: 'Coral', plum: 'Ciruela', ink: 'Tinta', sky: 'Cielo' };
 function Settings() {
   const { store, access } = useSeller();

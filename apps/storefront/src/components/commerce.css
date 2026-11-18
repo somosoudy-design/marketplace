@@ -125,3 +125,18 @@
   color: var(--text-secondary);
   font-size: 14px;
 }
+
+.account-stores { max-width: 850px; margin-block: 22px; }
+.account-stores h2 { font-size: 18px; }
+.account-stores > p { margin-block: 7px; color: var(--text-secondary); }
+.account-stores a { color: var(--brand); font-weight: 650; }
+.account-store-row, .account-platform {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px; margin-top: 8px;
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface);
+}
+.account-store-row svg, .account-platform svg { flex: none; }
+.account-store-row > div { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.account-store-row a, .account-platform { min-height: 44px; }
+.account-store-row a { display: inline-flex; align-items: center; gap: 3px; }
+.account-store-row strong { display: block; }
+.account-platform svg:last-child { margin-inline-start: auto; }

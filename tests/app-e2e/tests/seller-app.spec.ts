@@ -132,6 +132,20 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByTestId('account-favorites')).toBeVisible();
     });
 
+    test('public store opens its exact native editor and rejects unrelated store IDs', async ({ page }) => {
+      await signIn(page, seller);
+      await openStore(page);
+      await page.getByTestId('seller-public-store').click();
+      await expect(page.getByTestId('store-name')).toHaveText(seller.name);
+      await page.getByTestId('store-manage').click();
+      await expect(page.getByRole('textbox', { name: 'Nombre comercial', exact: true })).toHaveValue(seller.name);
+      await page.goto(`/my-store/settings?storeId=${seller.secondStoreId}`);
+      await expect(page.getByTestId('store-email')).toHaveValue('');
+      await page.goto(`/my-store/settings?storeId=${empty.storeId}`);
+      await expect(page.getByTestId('store-save')).toHaveCount(0);
+      await expect(page.getByText('No tienes una tienda asignada', { exact: true })).toBeVisible();
+    });
+
     test('empty catalogue, deliveries and store policies show useful states', async ({ page }) => {
       await signIn(page, empty); await openStore(page);
       await expect(page.getByTestId('seller-product-count')).toHaveText('0');

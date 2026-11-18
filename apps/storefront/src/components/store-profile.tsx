@@ -1,7 +1,9 @@
 import type { Store } from '@kora/api';
+import { publicStoreSlug } from '@kora/core';
 import Link from 'next/link';
 import { Info, Package, Truck } from 'lucide-react';
 import { hasOfficialSeal, isLegacyOfficialCover, storeDisplayName } from '@/lib/store-presentation';
+import { ManageStoreLink } from './store-account-links';
 import { StoreAvatar } from './store-avatar';
 import { StoreCover } from './store-cover';
 import { StoreFollow } from './store-follow';
@@ -37,10 +39,11 @@ export function StoreProfile({ store, catalogHref, aboutHref, showAbout }: {
               {store.tagline && <p><em>{store.tagline}</em></p>}
             </div>
           </div>
+          <ManageStoreLink id={store.id} />
           {shipping && <p className="store-profile-shipping"><Truck size={18} aria-hidden="true" />{shipping}</p>}
           <div className="store-profile-actions">
             <StoreFollow storeId={store.id} returnTo={showAbout ? aboutHref : catalogHref} />
-            <ShareLink kind="store" slug={store.slug} title={name} />
+            <ShareLink kind="store" slug={publicStoreSlug(store)} title={name} />
           </div>
         </div>
       </section>

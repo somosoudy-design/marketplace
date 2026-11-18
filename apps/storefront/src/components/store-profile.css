@@ -130,3 +130,9 @@
 @media (max-width: 359px) {
   .store-profile-actions .button { gap: 5px; padding-inline: 4px; }
 }
+
+.store-manage {
+  display: inline-flex; align-items: center; gap: 7px; justify-self: start;
+  min-height: 44px; padding-inline: 12px; border: 1px solid #aa99bf;
+  border-radius: 8px; color: white; background: #21143f; font-size: 14px;
+}

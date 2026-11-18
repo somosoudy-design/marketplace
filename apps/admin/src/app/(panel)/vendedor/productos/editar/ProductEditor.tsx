@@ -12,7 +12,7 @@ import { Badge, Button, Card, ErrorBox, Field, Input, Loading, Notice, PageHeade
 import { dateTime, moderationTone } from '@/lib/format';
 import { useCategoriesIndex, useQueryId } from '@/lib/hooks';
 import { catalogImage, koraForActor, run } from '@/lib/kora';
-import { useStore } from '@/lib/store';
+import { useStore, type StoreRow } from '@/lib/store';
 import { CatalogMetadataEditor } from '@/components/CatalogMetadataEditor';
 
 type Variant = { id?: string; title: string; sku: string; price: string; stock: string; active: boolean };
@@ -37,24 +37,32 @@ type Backup = { id: string; base: SellerProductReview; fields: Fields; variants:
 type Pending = { revision: string; key: string; changes: SellerProductChanges };
 
 export default function ProductEditor() {
-  const id = useQueryId();
   const { store } = useStore();
-  const { userId } = useAuth();
+  return <ReviewedProductEditor store={store} />;
+}
+
+export type EditorStore = Pick<StoreRow, 'id' | 'name' | 'kind' | 'status'>;
+
+/** Explicit store context; the reviewed RPC remains the authorization boundary. */
+export function ReviewedProductEditor({ store, admin = false }: { store: EditorStore | null; admin?: boolean }) {
+  const id = useQueryId();
+  const { userId, isAdmin } = useAuth();
+  const allowed = !!userId && !!store && (!admin || (isAdmin && !!id));
   const isNew = !id;
   const q = useQuery({
     queryKey: ['seller-product-reviewed', userId, store?.id, id],
     queryFn: async () => { const bound=await koraForActor(userId!); const row=await bound.api.seller.productReviewed(store!.id,id!); await bound.assertCurrent(); return row; },
-    enabled: !isNew && !!store && !!userId,
+    enabled: !isNew && allowed,
     staleTime: Infinity, refetchOnWindowFocus: false, refetchOnReconnect: false,
   });
+  if (!allowed) return <Notice tone="warning">No hay acceso a este editor.</Notice>;
   if (!isNew && q.isPending) return <Loading rows={6} />;
   if (!isNew && q.isError) return <ErrorBox error={q.error} onRetry={() => q.refetch()} />;
   if (!isNew && !q.data) return <Notice tone="warning">No encontramos este producto en la tienda seleccionada.</Notice>;
-  return <Editor key={`${userId}:${store!.id}:${id || 'nuevo'}`} initialReview={isNew ? null : q.data!} />;
+  return <Editor key={`${admin}:${userId}:${store!.id}:${id || 'nuevo'}`} store={store!} admin={admin} initialReview={isNew ? null : q.data!} />;
 }
 
-function Editor({ initialReview }: { initialReview: SellerProductReview | null }) {
-  const { store } = useStore();
+function Editor({ initialReview, store, admin }: { initialReview: SellerProductReview | null; store: EditorStore; admin: boolean }) {
   const { userId } = useAuth();
   const s = store!;
   const [review, setReview] = useState(initialReview);
@@ -64,6 +72,7 @@ function Editor({ initialReview }: { initialReview: SellerProductReview | null }
   // Keep completed writes when a later step fails, so retry updates the same product and rows.
   const savedProductId = useRef<string | null>(p?.id ?? null);
   const activeEditor = useRef(true);
+  const saving = useRef(false);
   const uploadedImages = useRef(new Map<string, string>());
   const previewUrls = useRef(new Set<string>());
   const cats = useCategoriesIndex();
@@ -134,113 +143,122 @@ function Editor({ initialReview }: { initialReview: SellerProductReview | null }
 
   const save = useMutation({
     mutationFn: async () => {
-      const operation = await koraForActor(userId!);
-      const { client, api } = operation;
-      const assertCurrent = async () => {
-        await operation.assertCurrent();
-        if (!activeEditor.current) throw new Error('El editor se cerró. Vuelve a abrirlo antes de guardar.');
-      };
-      // The legacy creation path is also bound to the captured actor, never the global client.
-      const db = (table: string) => (client.from as unknown as (table: string) => any)(table); // eslint-disable-line @typescript-eslint/no-explicit-any
-      await assertCurrent();
-      if (review) {
-        if (!pending.current) {
-          const original = fieldsFrom(review.product);
-          const current = { title: f.title.trim(), subtitle: f.subtitle.trim() || null, description: f.description.trim() || null,
-            highlights: f.highlights.split('\n').map(h => h.trim()).filter(Boolean).slice(0,6), category_id: f.category_id, availability: f.availability,
-            compare_at_usd: f.compare_at.trim() ? Number(n(f.compare_at)) : null, weight_kg: Number(n(f.weight)), max_per_order: Number(f.max_per_order) };
-          const names: Record<keyof Fields, keyof typeof current> = { title:'title',subtitle:'subtitle',description:'description',highlights:'highlights',category_id:'category_id',availability:'availability',compare_at:'compare_at_usd',weight:'weight_kg',max_per_order:'max_per_order' };
-          const fields: NonNullable<SellerProductChanges['fields']> = {};
-          for (const key of Object.keys(names) as (keyof Fields)[]) if (f[key] !== original[key]) Object.assign(fields, { [names[key]]: current[names[key]] });
-          const before = variantsFrom(review.product);
-          const changedVariants: NonNullable<SellerProductChanges['variants']> = [];
-          for (const [sort,v] of variants.entries()) {
-            const old = before.find(x => x.id === v.id); const row: NonNullable<SellerProductChanges['variants']>[number] = { id: v.id ?? crypto.randomUUID() };
-            if (!old || old.title !== v.title) row.title = v.title.trim();
-            if (!old || old.sku !== v.sku) row.sku = v.sku.trim() || null;
-            if (!old || old.price !== v.price) row.price_usd = Number(n(v.price));
-            if (!old || old.stock !== v.stock) row.stock = v.stock.trim() ? Number(v.stock) : null;
-            if (!old || old.active !== v.active) row.active = v.active;
-            const oldSort = review.product.product_variants.find(x => x.id === v.id)?.sort;
-            if (oldSort !== sort) row.sort = sort;
-            if (Object.keys(row).length > 1) changedVariants.push(row);
-          }
-          const changedImages: NonNullable<SellerProductChanges['images']> = removedImages.map(id => ({ id, remove: true }));
-          for (const [sort,img] of images.entries()) {
-            if (img.file) {
-              let path = uploadedImages.current.get(img.preview);
-              if (!path) {
-                const ext = img.file.type === 'image/png' ? 'png' : img.file.type === 'image/webp' ? 'webp' : 'jpg';
-                path = `${s.id}/${review.product.id}/${crypto.randomUUID()}.${ext}`;
-                await api.seller.uploadImage('catalog', path, await img.file.arrayBuffer(), img.file.type);
-                await assertCurrent();
-                uploadedImages.current.set(img.preview, path);
-              }
-              changedImages.push({ id: img.id ?? crypto.randomUUID(), path, sort, alt: f.title.trim() });
-            } else if (img.id && review.product.product_images.find(x => x.id === img.id)?.sort !== sort) changedImages.push({ id: img.id, sort });
-          }
-          const costs = costsDraft ? productCostsPatch(review.pricing, costsDraft) : {};
-          const changes: SellerProductChanges = { fields, variants: changedVariants, images: changedImages, ...costs };
-          if (costsReviewed && !changes.costs) changes.costs = {};
-          pending.current = { revision: review.revision, key: crypto.randomUUID(), changes };
-          setRequestPending(true);
-        }
-        const intent = pending.current;
+      if (saving.current) throw new Error('Ya se está guardando este cambio.');
+      saving.current = true;
+      try {
+        const operation = await koraForActor(userId!);
+        const { client, api } = operation;
+        const assertCurrent = async () => {
+          await operation.assertCurrent();
+          if (!activeEditor.current) throw new Error('El editor se cerró. Vuelve a abrirlo antes de guardar.');
+        };
+        // The legacy creation path is also bound to the captured actor, never the global client.
+        const db = (table: string) => (client.from as unknown as (table: string) => any)(table); // eslint-disable-line @typescript-eslint/no-explicit-any
         await assertCurrent();
-        await api.seller.saveProductReviewed(s.id, review.product.id, intent.revision, intent.key, intent.changes);
-        // A replay is a historical result. Re-read the current product before accepting another edit.
-        const fresh = await api.seller.productReviewed(s.id, review.product.id);
-        await assertCurrent();
-        if (!fresh) throw new Error('Se guardó el cambio, pero falta volver a leer el producto. Reintenta para recuperar el resultado.');
-        return { id: fresh.product.id, moderation_status: fresh.product.moderation_status, reviewed: fresh };
-      }
-      const fields = {
-        title: f.title.trim(), subtitle: f.subtitle.trim() || null, description: f.description.trim() || null,
-        highlights: f.highlights.split('\n').map((h) => h.trim()).filter(Boolean).slice(0, 6), category_id: f.category_id, availability: f.availability,
-        compare_at_usd: f.compare_at.trim() ? n(f.compare_at) : null, weight_kg: n(f.weight), max_per_order: Number(f.max_per_order),
-      };
-      const saved = savedProductId.current
-        ? await run<{ id: string; moderation_status: string }>(db('products').update(fields).eq('id', savedProductId.current).eq('store_id', s.id).select('id, moderation_status').single())
-        : await run<{ id: string; moderation_status: string }>(db('products').insert({ ...fields, store_id: s.id, origin: s.kind === 'seller' ? 'seller' : 'local' }).select('id, moderation_status').single());
-      savedProductId.current = saved.id;
-
-      for (const [i, v] of variants.entries()) {
-        const row = { title: v.title.trim(), sku: v.sku.trim() || null, price_usd: n(v.price), stock: v.stock.trim() ? Number(v.stock) : null, active: v.active, sort: i };
-        if (v.id) await run(db('product_variants').update(row).eq('id', v.id).eq('product_id', saved.id).select('id').single());
-        else {
-          const created = await run<{ id: string }>(db('product_variants').insert({ ...row, product_id: saved.id }).select('id').single());
-          setVariants((rows) => rows.map((variant, j) => j === i ? { ...variant, id: created.id } : variant));
-        }
-      }
-
-      if (removedImages.length) {
-        await run(db('product_images').delete().eq('product_id', saved.id).in('id', removedImages));
-        setRemovedImages([]);
-      }
-      for (const [i, img] of images.entries()) {
-        if (img.file) {
-          let path = uploadedImages.current.get(img.preview);
-          if (!path) {
-            const ext = img.file.type === 'image/png' ? 'png' : img.file.type === 'image/webp' ? 'webp' : 'jpg';
-            path = `${s.id}/${saved.id}/${crypto.randomUUID()}.${ext}`;
-            const { error } = await client.storage.from('catalog').upload(path, await img.file.arrayBuffer(), { contentType: img.file.type, upsert: false });
-            if (error) throw new Error(`No se pudo subir la imagen ${i + 1}: ${error.message}`);
-            uploadedImages.current.set(img.preview, path);
+        if (review) {
+          if (!pending.current) {
+            const original = fieldsFrom(review.product);
+            const current = { title: f.title.trim(), subtitle: f.subtitle.trim() || null, description: f.description.trim() || null,
+              highlights: f.highlights.split('\n').map(h => h.trim()).filter(Boolean).slice(0,6), category_id: f.category_id, availability: f.availability,
+              compare_at_usd: f.compare_at.trim() ? Number(n(f.compare_at)) : null, weight_kg: Number(n(f.weight)), max_per_order: Number(f.max_per_order) };
+            const names: Record<keyof Fields, keyof typeof current> = { title:'title',subtitle:'subtitle',description:'description',highlights:'highlights',category_id:'category_id',availability:'availability',compare_at:'compare_at_usd',weight:'weight_kg',max_per_order:'max_per_order' };
+            const fields: NonNullable<SellerProductChanges['fields']> = {};
+            for (const key of Object.keys(names) as (keyof Fields)[]) if (f[key] !== original[key]) Object.assign(fields, { [names[key]]: current[names[key]] });
+            const before = variantsFrom(review.product);
+            const changedVariants: NonNullable<SellerProductChanges['variants']> = [];
+            const variantOrderChanged = JSON.stringify(before.map(v => v.id)) !== JSON.stringify(variants.map(v => v.id));
+            for (const [sort,v] of variants.entries()) {
+              const old = before.find(x => x.id === v.id); const row: NonNullable<SellerProductChanges['variants']>[number] = { id: v.id ?? crypto.randomUUID() };
+              if (!old || old.title !== v.title) row.title = v.title.trim();
+              if (!old || old.sku !== v.sku) row.sku = v.sku.trim() || null;
+              if (!old || old.price !== v.price) row.price_usd = Number(n(v.price));
+              if (!old || old.stock !== v.stock) row.stock = v.stock.trim() ? Number(v.stock) : null;
+              if (!old || old.active !== v.active) row.active = v.active;
+              const oldSort = review.product.product_variants.find(x => x.id === v.id)?.sort;
+              if (variantOrderChanged && oldSort !== sort) row.sort = sort;
+              if (Object.keys(row).length > 1) changedVariants.push(row);
+            }
+            const changedImages: NonNullable<SellerProductChanges['images']> = removedImages.map(id => ({ id, remove: true }));
+            const imageOrderChanged = JSON.stringify(imagesFrom(review.product).map(img => img.id)) !== JSON.stringify(images.map(img => img.id));
+            for (const [sort,img] of images.entries()) {
+              if (img.file) {
+                let path = uploadedImages.current.get(img.preview);
+                if (!path) {
+                  const ext = img.file.type === 'image/png' ? 'png' : img.file.type === 'image/webp' ? 'webp' : 'jpg';
+                  path = `${s.id}/${review.product.id}/${crypto.randomUUID()}.${ext}`;
+                  const bytes = await img.file.arrayBuffer();
+                  await assertCurrent();
+                  await api.seller.uploadImage('catalog', path, bytes, img.file.type);
+                  await assertCurrent();
+                  uploadedImages.current.set(img.preview, path);
+                }
+                changedImages.push({ id: img.id ?? crypto.randomUUID(), path, sort, alt: f.title.trim() });
+              } else if (imageOrderChanged && img.id && review.product.product_images.find(x => x.id === img.id)?.sort !== sort) changedImages.push({ id: img.id, sort });
+            }
+            const costs = costsDraft ? productCostsPatch(review.pricing, costsDraft) : {};
+            const changes: SellerProductChanges = { fields, variants: changedVariants, images: changedImages, ...costs };
+            if (costsReviewed && !changes.costs) changes.costs = {};
+            pending.current = { revision: review.revision, key: crypto.randomUUID(), changes };
+            setRequestPending(true);
           }
-          const created = await run<{ id: string }>(db('product_images').insert({ product_id: saved.id, path, alt: f.title.trim(), sort: i }).select('id').single());
-          setImages((rows) => rows.map((image) => image.preview === img.preview ? { ...image, id: created.id, path, file: undefined } : image));
-        } else if (img.id) {
-          await run(db('product_images').update({ sort: i }).eq('id', img.id).eq('product_id', saved.id).select('id').single());
+          const intent = pending.current;
+          await assertCurrent();
+          await api.seller.saveProductReviewed(s.id, review.product.id, intent.revision, intent.key, intent.changes);
+          // A replay is a historical result. Re-read the current product before accepting another edit.
+          const fresh = await api.seller.productReviewed(s.id, review.product.id);
+          await assertCurrent();
+          if (!fresh) throw new Error('Se guardó el cambio, pero falta volver a leer el producto. Reintenta para recuperar el resultado.');
+          return { id: fresh.product.id, moderation_status: fresh.product.moderation_status, reviewed: fresh };
         }
-      }
-      const created = await run<{ id: string; moderation_status: string }>(db('products').select('id, moderation_status').eq('id', saved.id).single());
-      await assertCurrent();
-      return { ...created, reviewed: null };
+        const fields = {
+          title: f.title.trim(), subtitle: f.subtitle.trim() || null, description: f.description.trim() || null,
+          highlights: f.highlights.split('\n').map((h) => h.trim()).filter(Boolean).slice(0, 6), category_id: f.category_id, availability: f.availability,
+          compare_at_usd: f.compare_at.trim() ? n(f.compare_at) : null, weight_kg: n(f.weight), max_per_order: Number(f.max_per_order),
+        };
+        const saved = savedProductId.current
+          ? await run<{ id: string; moderation_status: string }>(db('products').update(fields).eq('id', savedProductId.current).eq('store_id', s.id).select('id, moderation_status').single())
+          : await run<{ id: string; moderation_status: string }>(db('products').insert({ ...fields, store_id: s.id, origin: s.kind === 'seller' ? 'seller' : 'local' }).select('id, moderation_status').single());
+        savedProductId.current = saved.id;
+
+        for (const [i, v] of variants.entries()) {
+          const row = { title: v.title.trim(), sku: v.sku.trim() || null, price_usd: n(v.price), stock: v.stock.trim() ? Number(v.stock) : null, active: v.active, sort: i };
+          if (v.id) await run(db('product_variants').update(row).eq('id', v.id).eq('product_id', saved.id).select('id').single());
+          else {
+            const created = await run<{ id: string }>(db('product_variants').insert({ ...row, product_id: saved.id }).select('id').single());
+            setVariants((rows) => rows.map((variant, j) => j === i ? { ...variant, id: created.id } : variant));
+          }
+        }
+
+        if (removedImages.length) {
+          await run(db('product_images').delete().eq('product_id', saved.id).in('id', removedImages));
+          setRemovedImages([]);
+        }
+        for (const [i, img] of images.entries()) {
+          if (img.file) {
+            let path = uploadedImages.current.get(img.preview);
+            if (!path) {
+              const ext = img.file.type === 'image/png' ? 'png' : img.file.type === 'image/webp' ? 'webp' : 'jpg';
+              path = `${s.id}/${saved.id}/${crypto.randomUUID()}.${ext}`;
+              const { error } = await client.storage.from('catalog').upload(path, await img.file.arrayBuffer(), { contentType: img.file.type, upsert: false });
+              if (error) throw new Error(`No se pudo subir la imagen ${i + 1}: ${error.message}`);
+              uploadedImages.current.set(img.preview, path);
+            }
+            const created = await run<{ id: string }>(db('product_images').insert({ product_id: saved.id, path, alt: f.title.trim(), sort: i }).select('id').single());
+            setImages((rows) => rows.map((image) => image.preview === img.preview ? { ...image, id: created.id, path, file: undefined } : image));
+          } else if (img.id) {
+            await run(db('product_images').update({ sort: i }).eq('id', img.id).eq('product_id', saved.id).select('id').single());
+          }
+        }
+        const created = await run<{ id: string; moderation_status: string }>(db('products').select('id, moderation_status').eq('id', saved.id).single());
+        await assertCurrent();
+        return { ...created, reviewed: null };
+      } finally { saving.current = false; }
     },
     onSuccess: (r) => {
       if (!activeEditor.current) return;
       if (r.reviewed) acceptReview(r.reviewed);
       qc.invalidateQueries({ queryKey: ['seller-products'] });
+      if (admin) qc.invalidateQueries({ queryKey: ['admin-products'] });
       qc.invalidateQueries({ queryKey: ['seller-product', r.id] });
       qc.invalidateQueries({ queryKey: ['stock'] });
       if (!activeEditor.current) return;
@@ -266,7 +284,7 @@ function Editor({ initialReview }: { initialReview: SellerProductReview | null }
 
   return (
     <>
-      <Link href="/vendedor/productos" className="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-2 hover:text-ink"><ArrowLeft size={16} /> Productos</Link>
+      <Link href={admin ? "/admin/productos" : "/vendedor/productos"} className="mb-3 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-2 hover:text-ink"><ArrowLeft size={16} /> Productos</Link>
       <PageHeader
         eyebrow={s.name}
         title={p ? p.title : 'Nuevo producto'}

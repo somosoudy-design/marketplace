@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · Tienda y panel bajo MAYAMI
+
+Trabajo en curso. La dirección canónica se resuelve por el identificador estable de la tienda. Se preparó el panel publicado a partir de fb352af y se conservaron sus recorridos de moderación, edición y reclamaciones. El storefront consulta membresías y roles actuales y enlaza a los editores de tienda y al área global según el acceso efectivo. Oliver autorizó panel.mayami.app en Cloudflare Free.
+
+Próxima acción: compilar y verificar los dos destinos, el editor exacto tras iniciar sesión y el artefacto del runtime Android preview. La restricción stores_mayami_public_address ya está validada en Marketplace como migración 20261118213559, sin modificar tiendas ni asignaciones.
+
 ## 18 noviembre 2026 · Cabecera de tienda publicada
 
 Publicada en mayami.app con el Worker Free `36bdc578-422e-4d0f-a04e-4b343a376ba9`, fuente `644c39b`. La portada de borde a borde queda unida a la navegación superior, con el logo a la izquierda, título y lema agrupados y check junto al final del nombre. Las vistas Productos y Sobre la tienda conservan sus enlaces y filtros.

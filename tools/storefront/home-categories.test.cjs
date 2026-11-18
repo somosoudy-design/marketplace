@@ -20,6 +20,7 @@ const categories = ['Tecnología', 'Audio', 'Belleza', 'Odontología', 'Hogar', 
 let homeCategories = categories;
 let products = [];
 const ports = {
+  '@kora/core': require('../../packages/core/src/store-link.ts'),
   'react/jsx-runtime': req('react/jsx-runtime'),
   'next/link': { default: ({ children, prefetch, ...props }) => React.createElement('a', props, children) },
   'lucide-react': req('lucide-react'),

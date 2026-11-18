@@ -7,7 +7,7 @@ import { browseSection, type BrowseSection } from '@/lib/navigation-context';
 import { brand } from '@/lib/format';
 
 export function BrowseLinks({ pathname, section, hidden }: { pathname: string; section: BrowseSection | null; hidden: boolean }) {
-  const searching = pathname === '/buscar';
+  const searching = pathname === '/buscar' || pathname.startsWith('/tienda/');
   const current = (key: BrowseSection) => searching && section === key ? 'page' as const : undefined;
   return <>
     <nav hidden={hidden || !searching} className="mobile-explore-links" aria-label="Descubrir">

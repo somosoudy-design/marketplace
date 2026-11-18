@@ -11,7 +11,7 @@ const ReferenceRate = createContext<number | null>(null);
 
 /** One current reference for all merchandise prices on the page. The server still quotes payments. */
 export function CatalogRateProvider({ children, ready, pathname }: { children: ReactNode; ready: boolean; pathname: string }) {
-  const catalog = pathname === '/' || pathname === '/buscar' || pathname === '/favoritos' || pathname.startsWith('/p/');
+  const catalog = pathname === '/' || pathname === '/buscar' || pathname.startsWith('/tienda/') || pathname === '/favoritos' || pathname.startsWith('/p/');
   const status = useQuery({
     queryKey: ['public-usd-ves'],
     enabled: configured && ready && catalog,

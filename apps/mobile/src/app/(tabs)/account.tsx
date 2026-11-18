@@ -20,7 +20,7 @@ import { useOnline } from '@/lib/query';
 import { useTheme } from '@/theme';
 import { authTarget } from '@/lib/auth-navigation';
 
-const PANEL_URL = process.env.EXPO_PUBLIC_PANEL_URL ?? '';
+import { panelOrigin as PANEL_URL } from '@/lib/panel-url';
 // Builds made before the web panel is published say so instead of a row that does nothing.
 const PANEL_PENDING = 'El panel web todavía no está publicado para esta versión';
 
@@ -84,7 +84,7 @@ export default function AccountScreen() {
                 <ListRow testID="account-my-store" icon="store" title="Mi tienda" subtitle={`Tu negocio dentro de ${brand.name}`} onPress={() => router.push('/my-store')} />
               ) : null}
               {hasStores && isAdmin ? <Divider inset={68} /> : null}
-              {isAdmin ? <ListRow testID="account-admin" icon="shield-check" title="Administración" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
+              {isAdmin ? <ListRow testID="account-admin" icon="shield-check" title="Administración de MAYAMI" subtitle={PANEL_URL ? 'Panel web de operaciones' : PANEL_PENDING} onPress={PANEL_URL ? () => openPanel('/admin') : undefined} /> : null}
             </Card>
             </View>
           ) : null}

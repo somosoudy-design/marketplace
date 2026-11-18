@@ -1,6 +1,7 @@
 import { commercialCatalogText } from '@/lib/catalog-exhibition-policy';
 import { isPrivateCatalogPresentation } from '@/lib/catalog-exhibition';
 import type { StoreProfile } from '@kora/api';
+import { resolvePublicStore } from '@kora/core';
 import { storeAccents } from '@kora/design-tokens';
 import { useQuery } from '@tanstack/react-query';
 import * as Clipboard from 'expo-clipboard';
@@ -31,6 +32,9 @@ import { haptics } from '@/lib/haptics';
 import { appOnlyLinks, storeLink } from '@/lib/links';
 import { qk } from '@/lib/query';
 import { api, storeImage } from '@/lib/supabase';
+import { useSellerAccess } from '@/lib/seller';
+import { panelOrigin } from '@/lib/panel-url';
+import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '@/theme';
 import { ScreenErrorBoundary } from '@/components/ErrorBoundary';
 
@@ -43,7 +47,7 @@ export default function StoreScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
-  const q = useQuery({ queryKey: qk.store(slug), queryFn: () => api.catalog.storeProfile(slug) });
+  const q = useQuery({ queryKey: qk.store(slug), queryFn: () => resolvePublicStore(slug, api.catalog.storeProfile) });
   const s = q.data;
   const scroll = useScrollY();
   const coverHeight = Math.min(width, MAX_CONTENT) * (9 / 16);
@@ -71,9 +75,9 @@ export default function StoreScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.background }}>
       <Catalog
-        key={slug}
+        key={s?.slug ?? slug}
         testID="store-catalog"
-        initial={{ store: slug }}
+        initial={{ store: s?.slug ?? slug }}
         locked={['store']}
         header={<StoreHeader store={s} coverHeight={coverHeight} />}
         showSearch
@@ -96,6 +100,8 @@ export default function StoreScreen() {
 function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | undefined; coverHeight: number }) {
   const t = useTheme();
   const description = commercialCatalogText(isPrivateCatalogPresentation, s?.description, s?.is_demo);
+  const access = useSellerAccess();
+  const [panelError, setPanelError] = useState(false);
   const [info, setInfo] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const accent = s ? (storeAccents[s.accent as keyof typeof storeAccents] ?? t.colors.brand) : t.colors.surfaceSunken;
@@ -129,6 +135,18 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
               </View>
             </View>
 
+            {access.isSuccess && access.data.stores.some((store) => store.id === s.id) ? (
+              <Button testID="store-manage" title="Administrar tienda" icon="settings" variant="secondary"
+                onPress={() => router.push({ pathname: '/my-store/settings', params: { storeId: s.id } })} />
+            ) : access.isSuccess && access.data.isAdmin && panelOrigin ? (
+              <Button testID="store-manage" title="Administrar tienda" icon="settings" variant="secondary"
+                onPress={async () => {
+                  setPanelError(false);
+                  try { await WebBrowser.openBrowserAsync(`${panelOrigin}/admin/tiendas/perfil?id=${encodeURIComponent(s.id)}`); }
+                  catch { setPanelError(true); }
+                }} />
+            ) : null}
+            {panelError ? <Text accessibilityRole="alert" color="danger">No pudimos abrir el panel. Intenta de nuevo.</Text> : null}
             {s.tagline ? <Text variant="subtitle" color="textSecondary">{s.tagline}</Text> : null}
             {description ? (
               <ScalePressable scaleTo={1} accessibilityRole="button" accessibilityLabel={expanded ? 'Mostrar menos' : 'Leer descripción completa'} onPress={() => setExpanded((v) => !v)}>
@@ -194,7 +212,7 @@ function StoreHeader({ store: s, coverHeight }: { store: StoreProfile | null | u
 function ShareStoreSheet({ store: s, visible, onClose }: { store: StoreProfile; visible: boolean; onClose: () => void }) {
   const t = useTheme();
   const [copied, setCopied] = useState(false);
-  const link = storeLink(s.slug);
+  const link = storeLink(s);
   const canShare = Platform.OS !== 'web' || (typeof navigator !== 'undefined' && typeof navigator.share === 'function');
 
   const share = async () => {

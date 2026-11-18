@@ -4,6 +4,7 @@ import { ArrowRight, CircleHelp, Package, Store, Undo2 } from 'lucide-react';
 import {
   describeDispatchStage,
   presentOfferAvailability,
+  publicStorePath,
   sourceDescriptionSections,
   type Availability,
 } from '@kora/core';
@@ -35,7 +36,7 @@ export function SellerLink({ id, name, slug, kind, status }: { id?: string; name
   return (
     <div className="seller-link">
       <Store size={17} aria-hidden="true" />
-      <StoreIdentity store={{ id, name, kind, status }} href={`/tienda/${encodeURIComponent(slug)}`}
+      <StoreIdentity store={{ id, name, kind, status }} href={publicStorePath({ id, slug })}
         caption="Vendido por" as="strong" linkClassName="seller-profile-link" trailing={<ArrowRight className="seller-profile-arrow" size={15} aria-hidden="true" />} />
     </div>
   );

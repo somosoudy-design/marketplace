@@ -1,13 +1,13 @@
 'use client';
 import { useEffect, useState, type ReactNode } from 'react';
-export function SearchSortControl({ value, children }: { value: string; children: ReactNode }) {
+export function SearchSortControl({ value, children, action = '/buscar' }: { value: string; children: ReactNode; action?: string }) {
   const [pending, setPending] = useState(false);
   useEffect(() => {
     const restore = () => setPending(false);
     window.addEventListener('pageshow', restore);
     return () => window.removeEventListener('pageshow', restore);
   }, []);
-  return <form action="/buscar" className="search-sort" aria-busy={pending} onSubmit={() => setPending(true)}>
+  return <form action={action} className="search-sort" aria-busy={pending} onSubmit={() => setPending(true)}>
     {children}
     <label htmlFor="catalog-sort"><span id="catalog-sort-label">Ordenar por</span>
       <select id="catalog-sort" aria-labelledby="catalog-sort-label" name="sort" defaultValue={value} onChange={event => event.currentTarget.form?.requestSubmit()}>

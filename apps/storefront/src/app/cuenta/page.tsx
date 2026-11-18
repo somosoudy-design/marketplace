@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { browser } from '@/lib/browser';
 import { AccessHeading, AccessPassword, BuyerAccess } from '@/components/buyer-access';
 import { GoogleAccessButton } from '@/components/google-access-button';
+import { StoreAccountLinks } from '@/components/store-account-links';
 import { configured } from '@/lib/env';
 import { useAccount } from '@/lib/providers';
 import { toAppError } from '@kora/core';
@@ -71,6 +72,7 @@ function Account() {
           </div>
           <UserRound size={30} />
         </div>
+        <StoreAccountLinks />
         <div className="account-options">
           <Link prefetch={false} href="/pedidos">
             <ShoppingBag />

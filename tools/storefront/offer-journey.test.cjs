@@ -58,7 +58,7 @@ function load(relative, bindings = {}, sourceRoot = root, extra = '') {
 }
 const core = Object.assign(
   {},
-  ...['availability', 'product-selection', 'eta', 'catalog-presentation', 'option-swatch', 'commerce-presentation'].map(
+  ...['store-link', 'availability', 'product-selection', 'eta', 'catalog-presentation', 'option-swatch', 'commerce-presentation'].map(
     (n) => load('packages/core/src/' + n + '.ts'),
   ),
   load('packages/core/src/payment-presentation.ts', {}, root),
