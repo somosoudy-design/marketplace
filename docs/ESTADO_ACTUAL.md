@@ -14,7 +14,9 @@ En producción se verificaron la cuenta de Oliver en el storefront (propietario 
 | Panel, Cloudflare Free | `4e74b4f` | `3f6aaf0b-a97e-42a2-b104-fe887b1e58d4` |
 | Android, canal preview | `159b176`, sobre el runtime instalado | Grupo `d2eb892b-9dfd-4783-8c68-083e325fbaef`, actualización `01a1f0a3-3e14-7488-a4ba-6932a0790c9b` |
 
-La APK firmada instalada en el emulador Android 16 confirmó en Diagnóstico el identificador de actualización publicado, el runtime previsto y el canal preview. Su fuente exacta está fijada en el checkpoint local `refs/checkpoints/android-preview-store-admin-20261118`.
+La PWA instalada de producción en un iPhone 18 Pro simulado (iOS 27) abrió la tienda desde el vendedor de la ficha, mostró el enlace canónico al compartir y llevó al invitado a Cuenta al pulsar Seguir. Safari mostró un fallo transitorio de portada recuperado con «Volver a intentar». Durante la ventana de observación de 17:41 a 17:53 de Caracas, Cloudflare registró 407 ejecuciones correctas, seis desconexiones de cliente y cero errores del Worker. No se identificó la causa de esa respuesta puntual.
+
+La APK firmada instalada en el emulador Android 16 confirmó en Diagnóstico el identificador de actualización publicado, el runtime previsto y el canal preview. La APK abrió los tres slugs en el perfil oficial, compartió el vínculo nuevo y solicitó sesión al invitado que abrió directamente el editor. Su fuente exacta está fijada en el checkpoint local `refs/checkpoints/android-preview-store-admin-20261118`.
 
 Para reversión del storefront se conserva la versión `36bdc578-422e-4d0f-a04e-4b343a376ba9`. El respaldo del panel está en https://kora-panel.expo.app y el grupo Android preview anterior es `75c0f3b7-9e41-4246-b458-a73654c1f580`. Las instrucciones del panel se encuentran en [Entorno](ENTORNO.md).
 
