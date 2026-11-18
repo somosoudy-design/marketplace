@@ -33,8 +33,7 @@ function Account() {
     onSuccess: () => {
       if (!alive.current) return;
       setPassword('');
-      router.replace(back);
-      router.refresh();
+      if (back !== window.location.pathname + window.location.search) router.replace(back);
     },
   });
   const logout = useMutation({
@@ -44,8 +43,7 @@ function Account() {
     },
     onSuccess: () => {
       if (!alive.current) return;
-      router.replace('/cuenta');
-      router.refresh();
+      if (window.location.pathname + window.location.search !== '/cuenta') router.replace('/cuenta');
     },
   });
   if (!configured)

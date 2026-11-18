@@ -86,6 +86,6 @@ function Settings() {
     {error ? <Banner tone="danger" body={error} /> : null}
     {saved ? <Banner tone="success" body="Perfil guardado. Los datos de tu tienda quedaron actualizados." /> : null}
     <Button testID="store-save" title={error ? 'Reintentar guardado' : 'Guardar cambios'} full loading={busy} disabled={!dirty || !!nameError || !!emailError} onPress={save} />
-    <AdvancedPanel path="/vendedor/tienda" />
+    <AdvancedPanel path={`/vendedor/tienda?id=${encodeURIComponent(s.id)}`} />
   </SellerScroll></>;
 }
