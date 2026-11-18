@@ -29,6 +29,8 @@ for (const account of ['comprador', 'tiendas', 'admin'] as const) {
     } else {
       const prefix = account === 'admin' ? '/admin/tiendas/perfil?id=' : '/vendedor/tienda?id=';
       await expect(manage).toHaveAttribute('href', new RegExp('^https://panel\\.mayami\\.app' + prefix.replace('?', '\\?') + '[a-f0-9-]{36}$'));
+      await expect(page.locator('.store-profile-identity').getByRole('link', { name: 'Administrar tienda' })).toBeVisible();
+      await expect(manage).toHaveText('');
     }
     await page.goto('/cuenta');
     await page.getByRole('button', { name: 'Cerrar sesión' }).click();

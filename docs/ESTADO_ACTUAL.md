@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · Cabeceras de carrito y tienda en revisión
+
+La candidata local muestra «Carrito (N)» en una sola línea. El conteo de invitado y comprador suma unidades y la primera línea de producto empieza unos 49 px antes en Chrome y WebKit móvil. En la portada de tienda, el engranaje comparte la fila del nombre y mantiene el destino y permisos de «Administrar tienda». El área táctil ocupa 44 × 44 px CSS. Seguir y Compartir conservan sus acciones.
+
+Se comprobaron Chrome móvil a 412 px, WebKit móvil a 390 px y el nombre largo a 320 px en ambos. Ocho recorridos de roles y carrito pasaron en Chrome y WebKit, junto con 197 pruebas del storefront, typecheck y lint. La PWA instalada en un iPhone 18 Pro simulado comprobó el carrito de invitado y el engranaje con una cuenta autorizada local. Capturas en `~/Downloads/MAYAMI-cabeceras-20261118`.
+
+Próxima acción. Recibir la revisión de Oliver antes de desplegar el storefront.
+
 ## 18 noviembre 2026 · Tienda y panel bajo MAYAMI
 
 La tienda oficial está publicada en https://mayami.app/tienda/mayami. Se identificó la tienda por su UUID estable. Marketplace conserva el slug interno `kora`, el historial, propietarios y membresías. Las rutas `/tienda/kora` y `/tienda/cora` y las búsquedas anteriores por esa tienda devuelven 308 y conservan filtros, orden y pestaña. Se verificaron el destino canónico, metadatos, compartir y dos tiendas independientes. La migración `20261118213559` reserva los alias de MAYAMI frente a futuras colisiones.

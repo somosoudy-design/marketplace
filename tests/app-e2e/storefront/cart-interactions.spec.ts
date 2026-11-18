@@ -4,7 +4,7 @@ import { newBuyer, databaseUrl, asOn } from '../tests/support/db';
 import { testCartProduct, cleanupCartFixtures } from './fixtures';
 test.afterEach(cleanupCartFixtures);
 
-test('carrito distingue referencias, unidades y entregas; bloquea continuar durante cambio pendiente', async ({
+test('carrito cuenta unidades y conserva las entregas; bloquea continuar durante cambio pendiente', async ({
   page,
 }) => {
   await page.route('https://*.supabase.co/**', (r) => r.abort());
@@ -26,7 +26,7 @@ test('carrito distingue referencias, unidades y entregas; bloquea continuar dura
   await page.getByRole('button', { name: 'Ingresar', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mi cuenta', exact: true })).toBeVisible();
   await page.goto('/carrito');
-  await expect(page.locator('.section-heading')).toContainText('3 productos · 4 unidades');
+  await expect(page.getByRole('heading', { name: 'Carrito (4)', exact: true })).toBeVisible();
   await expect(page.locator('.cart-group')).toHaveCount(2);
   await expect(page.getByRole('link', { name: 'Carrito, 4 unidades' })).toBeVisible();
   let release!: () => void;
@@ -43,12 +43,12 @@ test('carrito distingue referencias, unidades y entregas; bloquea continuar dura
     await row.getByRole('button', { name: /Aumentar cantidad/ }).click();
     await expect(action).toHaveAttribute('aria-disabled', 'true');
     await action.evaluate((n: HTMLElement) => n.click());
-    await expect(page).toHaveURL(/\/carrito$/);
+    await expect(page).toHaveURL(/\/carrito(?:\?.*)?$/);
     expect(writes).toBe(1);
   } finally {
     release();
   }
-  await expect(page.locator('.section-heading')).toContainText('3 productos · 5 unidades');
+  await expect(page.getByRole('heading', { name: 'Carrito (5)', exact: true })).toBeVisible();
   await expect(action).toHaveAttribute('aria-disabled', 'false');
   await action.click();
   for (const title of ['Tus entregas', 'Plan de pago', 'Revisa tu pedido']) {

@@ -38,8 +38,8 @@ export function StoreProfile({ store, catalogHref, aboutHref, showAbout }: {
               <StoreIdentity as="h1" store={store} />
               {store.tagline && <p><em>{store.tagline}</em></p>}
             </div>
+            <ManageStoreLink id={store.id} />
           </div>
-          <ManageStoreLink id={store.id} />
           {shipping && <p className="store-profile-shipping"><Truck size={18} aria-hidden="true" />{shipping}</p>}
           <div className="store-profile-actions">
             <StoreFollow storeId={store.id} returnTo={showAbout ? aboutHref : catalogHref} />

@@ -38,7 +38,7 @@ export function ManageStoreLink({ id }: { id: string }) {
   if (access.isError || !access.data) return null;
   const member = access.data.stores.some(store => store.id === id);
   if (!member && !access.data.admin) return null;
-  return <a href={editor(id, member)} className="store-manage"><Settings size={16} aria-hidden="true" />Administrar tienda</a>;
+  return <a href={editor(id, member)} className="store-manage" aria-label="Administrar tienda"><Settings size={18} aria-hidden="true" /></a>;
 }
 
 export function StoreAccountLinks() {

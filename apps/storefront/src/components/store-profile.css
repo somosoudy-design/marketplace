@@ -36,16 +36,30 @@
 .store-profile-identity, .store-profile-shipping {
   display: flex; align-items: center; gap: 12px; min-width: 0;
 }
-.store-profile-identity { align-items: flex-start; }
+.store-profile-identity {
+  --store-title-size: clamp(24px, 3.4vw, 40px);
+  --store-title-line: calc(var(--store-title-size) * 1.15);
+  align-items: flex-start;
+}
 .store-profile-identity .store-initial {
   width: clamp(54px, 13vw, 80px); height: auto; aspect-ratio: 1;
   flex: none; overflow: hidden; border-radius: 15px; font-size: 25px;
 }
 .store-profile-name {
-  --store-title-size: clamp(24px, 3.4vw, 40px);
-  --store-title-line: calc(var(--store-title-size) * 1.15);
+  flex: 1;
   min-width: 0;
 }
+.store-profile-identity .store-manage {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  min-height: 44px;
+  margin-block-start: calc((var(--store-title-line) - 44px) / 2);
+  border-radius: 50%;
+  background: #ffffff14;
+  color: #fff;
+}
+.store-profile-identity .store-manage:hover { background: #ffffff26; }
 .store-profile-name .store-identity {
   display: block;
   font-size: var(--store-title-size);
@@ -65,6 +79,12 @@
 .store-profile-name .store-identity:has(.store-seal) {
   --profile-seal-width: 24px;
   max-inline-size: calc(100% - var(--profile-seal-width) - 4px);
+}
+.store-profile-identity:has(> .store-manage) .store-identity:has(.store-seal) {
+  max-inline-size: none;
+}
+.store-profile-identity:has(> .store-manage) h1 {
+  hyphens: auto;
 }
 .store-profile-name .store-identity:has(.store-seal) h1 {
   padding-inline-end: calc(var(--profile-seal-width) + 4px);
@@ -104,6 +124,7 @@
 .store-profile-actions .store-follow-feedback { flex: 0 0 100%; color: #f3d4b4; margin: 2px 0 0; font-size: 13px; }
 .store-profile-actions .store-share-trigger:hover { background: #302143; }
 .store-profile-hero .store-seal:focus-visible,
+.store-profile-identity .store-manage:focus-visible,
 .store-profile-actions > .button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .store-profile-tabs {
   display: flex; margin-top: 5px; border-bottom: 1px solid var(--border);
@@ -129,10 +150,4 @@
 
 @media (max-width: 359px) {
   .store-profile-actions .button { gap: 5px; padding-inline: 4px; }
-}
-
-.store-manage {
-  display: inline-flex; align-items: center; gap: 7px; justify-self: start;
-  min-height: 44px; padding-inline: 12px; border: 1px solid #aa99bf;
-  border-radius: 8px; color: white; background: #21143f; font-size: 14px;
 }

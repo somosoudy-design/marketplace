@@ -23,6 +23,11 @@ import { authHref } from '@/lib/auth-return';
 import { matchingCartProduct, quantityLimitLabel } from '@/lib/purchase-context';
 import { guestError } from '@/lib/guest-errors';
 const guestCartWrites = ['cart-write', 'guest'] as const;
+
+function CartHeading({ units }: { units: number }) {
+  return <h1 className="cart-heading">Carrito <span>({units})</span></h1>;
+}
+
 function Line({ line, buyerId, guestQuantity, href, priceKnown = true, dispatchStage, maxPerOrder, stock }: { line: CartLine; buyerId?: string; guestQuantity?: (quantity: number) => Promise<void>; href?: string; priceKnown?: boolean; dispatchStage?: string | null; maxPerOrder?: number; stock?: number | null }) {
   const conditionLabel = productConditionLabel(line.product_condition);
   const qc = useQueryClient();
@@ -186,10 +191,7 @@ function BuyerCart({ buyerId, preference }: { buyerId: string; preference?: stri
   };
   return (
     <div className="wrap cart-page">
-      <div className="section-heading">
-        <h1>Mi carrito</h1>
-        <span className="muted">{lines.length} {lines.length === 1 ? 'producto' : 'productos'} · {units} {units === 1 ? 'unidad' : 'unidades'}</span>
-      </div>
+      <CartHeading units={units} />
       <div className="cart-layout">
         <div className="cart-products">
           {cart.data.groups.map((g) => (
@@ -269,7 +271,7 @@ function GuestCart({ preference }: { preference?: string } = {}) {
     if (qc.isMutating({ mutationKey: guestCartWrites, exact: true }) || offline || current.isError || current.isFetching) event.preventDefault();
   };
   return <div className="wrap cart-page">
-    <div className="section-heading"><h1>Mi carrito</h1><span className="muted">{view.lines.length} {view.lines.length === 1 ? 'producto' : 'productos'} · {view.units} {view.units === 1 ? 'unidad' : 'unidades'}</span></div>
+    <CartHeading units={view.units} />
     {(current.isError || offline) && <div className="notice error" role="alert"><p>{offline ? 'Sin conexión. Tus productos siguen guardados; actualizaremos precios y disponibilidad al recuperar la conexión.' : 'No pudimos actualizar precios y disponibilidad. Tus productos siguen guardados.'}</p><button type="button" className="button secondary" onClick={() => void current.refetch()}>Volver a intentar</button></div>}
     <div className="cart-layout"><div className="cart-products">{view.groups.map(group => <section className="cart-group" key={group.key}><header className="cart-group-heading"><StoreIdentity store={group.store ?? { name: group.storeName }} as="h2" /></header>{group.lines.map(line => <Line key={line.variant_id} line={line} priceKnown={line.priceKnown && !offline && !current.isError} href={line.slug ? `/p/${line.slug}?variant=${encodeURIComponent(line.variant_id)}` : undefined} dispatchStage={line.dispatchStage} maxPerOrder={line.maxPerOrder} stock={line.stock} guestQuantity={quantity => guestCart.setQuantity(line.variant_id, quantity)} />)}</section>)}</div>
       <aside className="cart-summary" aria-label="Resumen del carrito">

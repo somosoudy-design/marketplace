@@ -939,6 +939,9 @@ legend {
   padding-block: 48px;
   min-height: 500px;
 }
+.cart-page {
+  padding-block-start: 24px;
+}
 .account-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1439,9 +1442,11 @@ legend {
   .detail-description {
     margin-top: 24px;
   }
-  .account-page,
-  .cart-page {
+  .account-page {
     padding-top: 30px;
+  }
+  .cart-page {
+    padding-block-start: 14px;
   }
   .account-options {
     grid-template-columns: 1fr;
