@@ -143,6 +143,7 @@ const productPorts = {
   './product-reviews': { ProductReviews: () => null }, './product-questions': { ProductQuestions: () => null }, './product-questions.css': {},
   './product-card': { ProductGrid: () => null },
   '@/lib/photos': { catalogText: (x) => x, catalogSample: () => false, photo: () => null },
+  '@/lib/product-link': require('../../apps/storefront/src/lib/product-link.ts'),
   '@/lib/catalog-selection': selection,
   '@/lib/cart-intents': {},
 };

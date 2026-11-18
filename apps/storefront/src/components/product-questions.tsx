@@ -10,7 +10,7 @@ import { captureBuyerApi } from '@/lib/actor-api';
 import { authHref } from '@/lib/auth-return';
 import { env } from '@/lib/env';
 
-type Props = { productId: string; slug: string; seller: string };
+type Props = { productId: string; slug: string; routePath?: string; seller: string };
 const pageSize = 10;
 const questionDate = (date: string) =>
   new Intl.DateTimeFormat('es-VE', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(date));
@@ -22,7 +22,7 @@ export function ProductQuestions(props: Props) {
   );
 }
 
-function QuestionsSession({ productId, slug, seller, actor }: Props & { actor?: string }) {
+function QuestionsSession({ productId, slug, routePath, seller, actor }: Props & { actor?: string }) {
   const { ready } = useAccount();
   const params = useSearchParams();
   const qc = useQueryClient();
@@ -65,9 +65,12 @@ function QuestionsSession({ productId, slug, seller, actor }: Props & { actor?: 
     }
   }, [returned, ready]);
   const back = new URLSearchParams();
-  if (params?.get('variant')) back.set('variant', params.get('variant')!);
+  for (const key of ['variant', 'v']) {
+    const value = params?.get(key);
+    if (value) back.set(key, value);
+  }
   back.set('section', 'preguntas');
-  const login = authHref('/cuenta', `/p/${encodeURIComponent(slug)}?${back}`);
+  const login = authHref('/cuenta', (routePath ?? '/p/' + encodeURIComponent(slug)) + '?' + back);
   const ask = useMutation({
     mutationFn: async (text: string) => {
       if (!actor || !mounted.current) throw new Error('Inicia sesión para enviar tu pregunta.');

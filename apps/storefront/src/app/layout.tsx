@@ -19,11 +19,15 @@ const jakarta = localFont({
 export const metadata: Metadata = {
   title: { default: `${brand.name} · Encuentra lo que buscas`, template: `%s · ${brand.name}` },
   description: brand.tagline,
-  icons: { icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' } },
+  icons: {
+    icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
+    apple: { url: '/brand/pwa/icon-180.png', sizes: '180x180', type: 'image/png' },
+  },
+  appleWebApp: { capable: true, title: 'Mayami', statusBarStyle: 'black' },
   metadataBase: new URL('https://mayami.app'),
   robots: { index: true, follow: true },
 };
-export const viewport: Viewport = { themeColor: '#6D42E8', viewportFit: 'cover' };
+export const viewport: Viewport = { themeColor: '#5700d9', viewportFit: 'cover' };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html data-scroll-behavior="smooth" lang="es-VE" className={jakarta.variable}>

@@ -35,14 +35,16 @@ import { isRedundantSingleOption, reviewedSelectionInput } from '@/lib/catalog-s
 import { addReviewedCart } from '@/lib/cart-intents';
 import { guestCart } from '@/lib/guest-storage';
 import { useGuestCartState } from '@/lib/guest-hooks';
+import { requestedProductVariant } from '@/lib/product-link';
 import { guestError } from '@/lib/guest-errors';
 type DetailProps = {
   product: Product;
   metadata: CatalogMetadata;
   relatedMetadata: Record<string, CatalogMetadata>;
   initialVariantId?: string;
+  routePath?: string;
 };
-export function ProductDetail({ product, metadata, relatedMetadata, initialVariantId }: DetailProps) {
+export function ProductDetail({ product, metadata, relatedMetadata, initialVariantId, routePath }: DetailProps) {
   const { session } = useAccount();
   return (
     <DetailSession
@@ -51,10 +53,11 @@ export function ProductDetail({ product, metadata, relatedMetadata, initialVaria
       metadata={metadata}
       relatedMetadata={relatedMetadata}
       initialVariantId={initialVariantId}
+      routePath={routePath}
     />
   );
 }
-function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId }: DetailProps) {
+function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId, routePath }: DetailProps) {
   const { session, ready, retryCartSync } = useAccount();
   const guest = useGuestCartState();
   const qc = useQueryClient();
@@ -63,8 +66,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
   const variants = metadata.variants.filter((v) => v.active).map((v) => ({ ...v, id: v.variant_id }));
   // The router can restore a cached page while the history entry holds a newer variant.
   const params = useSearchParams();
-  const values = params?.getAll('variant');
-  const requested = values ? (values.length === 1 ? values[0] : undefined) : initialVariantId;
+  const requested = params ? requestedProductVariant(params.getAll('variant'), params.getAll('v')) : initialVariantId;
   const selected = requested ?? resolveProductSelection(input).selectedVariantId ?? '';
   const [quantity, setQuantity] = useState(1);
   const [imageIndex, setImageIndex] = useState(0);
@@ -104,6 +106,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
     setImageIndex(0);
     add.reset();
     const url = new URL(window.location.href);
+    url.searchParams.delete('v');
     url.searchParams.set('variant', id);
     window.history.replaceState(null, '', url.pathname + url.search + url.hash);
   };
@@ -201,9 +204,10 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
             {p.slug && (
               <ProductShare
                 key={selected}
-                variantId={variant?.active ? variant.id : undefined}
+                variantId={variants.length > 1 && variant?.active ? variant.id : undefined}
                 slug={p.slug}
-                title={p.title}
+                productId={p.id}
+                title={catalogText(p.title, p.is_demo, p.id) ?? p.title}
               />
             )}
             <Favorite id={p.id} title={p.title} />
@@ -460,8 +464,8 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
         highlights={p.highlights?.map((h) => catalogText(h, p.is_demo) ?? h)}
         seller={p.store.name}
       />
-      <ProductReviews productId={p.id} slug={p.slug} storeName={p.store.name} />
-      <ProductQuestions productId={p.id} slug={p.slug} seller={p.store.name} />
+      <ProductReviews productId={p.id} slug={p.slug} routePath={routePath} storeName={p.store.name} />
+      <ProductQuestions productId={p.id} slug={p.slug} routePath={routePath} seller={p.store.name} />
       {p.related.length > 0 && (
         <section className="catalog-section">
           <div className="section-heading">

@@ -42,6 +42,7 @@ const detailPorts = {
  './quantity-control': quantities, './offer': offers, './product-card': { ProductGrid: () => null },
  '@/lib/providers': { useAccount: () => ({ session: null, ready: true }) },
  '@/lib/format': { money: core.formatOfferPrice }, '@/lib/photos': { catalogText: x => x, catalogSample: () => false, photo: () => null },
+  '@/lib/product-link': require('../../apps/storefront/src/lib/product-link.ts'),
  '@/lib/catalog-selection': selection, '@/lib/cart-intents': {}, '@/lib/guest-storage': {}, '@/lib/guest-errors': {},
  '@/lib/guest-hooks': { useGuestCartState: () => ({ ready: true }) },
 };
@@ -66,7 +67,7 @@ test('dispatch component is absent for unavailable or incomplete estimates', () 
 test('detail preserves USD, modality, seller source and technical variant identity', () => {
  const html=render(React.createElement(ProductDetail,productProps()));
  assert.match(html,/\$38,60 USD/); assert.match(html,/Por encargo/); assert.match(html,/Listo para despacho en 5–10 días/); assert.match(html,/Entrega estimada: 15 a 23 días/);
- assert.match(html,/data-shared-variant="variant"/); assert.doesNotMatch(html,/>Única</); assert.doesNotMatch(html,/Condición: Nuevo/);
+ assert.doesNotMatch(html,/data-shared-variant=/); assert.doesNotMatch(html,/>Única</); assert.doesNotMatch(html,/Condición: Nuevo/);
 });
 test('unavailable product with positive variant stock keeps purchase disabled', () => {
  const html=render(React.createElement(ProductDetail,productProps({availability:'unavailable',stock:1})));

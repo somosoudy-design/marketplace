@@ -1,10 +1,11 @@
 'use client';
 import { useId, useRef, useState } from 'react';
 import { Check, Copy, Share2, X } from 'lucide-react';
+import { productSharePath } from '@/lib/product-link';
 import { publicBrandLink } from '../../../../config/brand-presentation';
 
 /** Keep a selectable public link available even when sharing or clipboard access is denied. */
-export function ProductShare({ slug, title, variantId }: { slug: string; title: string; variantId?: string }) {
+export function ProductShare({ slug, title, productId, variantId }: { slug: string; title: string; productId?: string; variantId?: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const session = useRef(0);
   const pending = useRef(false);
@@ -14,7 +15,7 @@ export function ProductShare({ slug, title, variantId }: { slug: string; title: 
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
-  const link = publicBrandLink(`/p/${encodeURIComponent(slug)}${variantId ? `?variant=${encodeURIComponent(variantId)}` : ''}`);
+  const link = publicBrandLink(productSharePath(slug, variantId, productId));
   const reset = () => { session.current++; pending.current = false; setBusy(false); setCopied(false); setError(''); };
   const close = () => { reset(); dialog.current?.close(); };
   const run = async (action: 'copy' | 'share') => {

@@ -1,5 +1,5 @@
 /* Storefront navigation and commercial discovery. Product content comes from the existing SSR feed. */
-.header.header { background: #5700d9; border-bottom: 0; }
+.header.header { background: var(--header-surface); border-bottom: 0; }
 .header .header-inner { min-height: 72px; gap: 32px; }
 .header .account-nav a { color: #fff; font-size: 12px; }
 .header .account-nav a:hover { color: #eee6ff; }

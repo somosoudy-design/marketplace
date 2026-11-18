@@ -23,8 +23,9 @@ const ports = {
   'react/jsx-runtime': req('react/jsx-runtime'),
   'next/link': { default: ({ children, prefetch, ...props }) => React.createElement('a', props, children) },
   'lucide-react': req('lucide-react'),
+  '@/lib/product-link': require('../../apps/storefront/src/lib/product-link.ts'),
   '@/lib/server': {
-    publicApi: () => ({ catalog: { home: async () => ({ categories: homeCategories, stores: [] }) } }),
+    publicApi: () => ({ catalog: { home: async () => ({ categories: homeCategories, stores: [] }), cardsByIds: async () => [] } }),
   },
   '@/components/store-avatar': { StoreAvatar: () => null },
   '@/components/home-campaigns': { HomeCampaigns: () => null },

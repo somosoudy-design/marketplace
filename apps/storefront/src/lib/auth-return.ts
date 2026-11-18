@@ -32,7 +32,7 @@ export function guestReturnPath(back: string) {
   const url = new URL(safe, base);
   const pathname = url.pathname.replace(/\/$/, '') || '/';
   if (pathname === '/checkout') return withPlan('/carrito', planFromSearch(url.searchParams));
-  if (guestPages.has(pathname)) return safe;
+  if (guestPages.has(pathname) || /^\/p\/i\/[A-Za-z0-9_-]{21}[AQgw]$/.test(pathname)) return safe;
   const slug = /^\/(?:p|tienda)\/([^/]+)$/.exec(pathname)?.[1];
   if (slug && /^[\p{L}\p{N}\p{M}._~-]+$/u.test(decodeURIComponent(slug))) return safe;
   return '/buscar';

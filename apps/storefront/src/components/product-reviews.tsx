@@ -61,7 +61,7 @@ function ReviewEntry({ review: r, storeName }: { review: PublicReview; storeName
     </article>
   );
 }
-type Props = { productId: string; slug: string; storeName: string };
+type Props = { productId: string; slug: string; routePath?: string; storeName: string };
 export function ProductReviews(props: Props) {
   const { session, ready } = useAccount();
   return (
@@ -76,6 +76,7 @@ export function ProductReviews(props: Props) {
 function ProductReviewsSession({
   productId,
   slug,
+  routePath,
   storeName,
   buyerId,
   ready,
@@ -161,7 +162,7 @@ function ProductReviewsSession({
           <Link
             prefetch={false}
             className="button secondary"
-            href={authHref('/cuenta', `/p/${encodeURIComponent(slug)}?${back}`)}
+            href={authHref('/cuenta', (routePath ?? '/p/' + encodeURIComponent(slug)) + '?' + back)}
           >
             Calificar mi compra
           </Link>

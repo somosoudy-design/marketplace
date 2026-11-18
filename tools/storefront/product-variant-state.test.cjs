@@ -50,6 +50,7 @@ const ports = {
   '@/lib/providers': { useAccount: () => ({ session: null, ready: true }) },
   '@/lib/format': { money: (x) => '$' + x },
   '@/lib/photos': { catalogText: (x) => x, catalogSample: () => false, photo: () => null },
+  '@/lib/product-link': require('../../apps/storefront/src/lib/product-link.ts'),
   '@/lib/catalog-selection': selection,
   '@/lib/cart-intents': {},
   '@/lib/guest-storage': {},

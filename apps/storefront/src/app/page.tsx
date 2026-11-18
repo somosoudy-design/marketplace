@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight, Cable, Cross, Headphones, House, Laptop, PawPrint, ShoppingBag, Sparkles, type LucideIcon } from 'lucide-react';
 import { StoreAvatar } from '@/components/store-avatar';
 import { publicApi } from '@/lib/server';
+import { productSharePath } from '@/lib/product-link';
 import { HomeCampaigns } from '@/components/home-campaigns';
 import { ProductPhoto } from '@/components/photo';
 import { Failure } from '@/components/states';
@@ -13,11 +14,18 @@ const categoryIcons = new Map<string, LucideIcon>([
   ['hogar', House], ['mascotas', PawPrint], ['accesorios', Cable],
 ]);
 
+const featuredTabletId = 'b1b4a794-c740-47e9-ae57-1c1e3089b80d';
+
 export const dynamic = 'force-dynamic';
 export default async function Home() {
   let home;
+  let tablet;
   try {
-    home = await publicApi().catalog.home();
+    const catalog = publicApi().catalog;
+    [home, tablet] = await Promise.all([
+      catalog.home(),
+      catalog.cardsByIds([featuredTabletId]).then(([product]) => product).catch(() => undefined),
+    ]);
   } catch {
     return <Failure />;
   }
@@ -29,10 +37,13 @@ export default async function Home() {
     return <Failure message="No pudimos cargar los productos." />;
   }
   const products = discovery.products;
+  const tabletHref = tablet?.moderation_status === 'published' && tablet.store_status === 'active'
+    ? productSharePath(tablet.slug, undefined, tablet.id)
+    : undefined;
   return (
     <>
       <div className="wrap market-home">
-        <HomeCampaigns categories={home.categories} />
+        <HomeCampaigns categories={home.categories} tabletHref={tabletHref} />
         <div className="home-categories">
           <nav className="market-category-feature" aria-label="Categorías">
             {home.categories.map((c) => {

@@ -26,3 +26,5 @@ export const publicProduct = cache(async (slug: string) => {
 
 /** Reviewed, anonymous SSR enrichment; failures propagate instead of hiding an absent RPC. */
 export const publicCatalogMetadata = (ids: readonly string[]) => catalogMetadataMap(ids, publicApi().catalog.metadata);
+
+export const publicProductById = cache((id: string) => publicApi().catalog.productCommercial(id));

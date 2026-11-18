@@ -338,8 +338,9 @@
     padding: 10px;
   }
   .product-page .product-gallery > .product-photo {
-    aspect-ratio: 4 / 3;
-    max-height: min(360px, 55svh);
+    /* Limit the square by its side so the fixed purchase bar leaves room for the title. */
+    width: min(100%, 36svh);
+    max-height: none;
   }
   .product-page .product-auxiliary {
     top: 18px;
@@ -405,7 +406,7 @@
 }
 @media (max-width: 359px) {
   .product-page .product-gallery > .product-photo {
-    aspect-ratio: 3 / 2;
+    width: min(100%, 27svh);
   }
 }
 @media (max-height: 460px) and (max-width: 1000px) {

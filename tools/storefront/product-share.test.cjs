@@ -1,6 +1,7 @@
 const { test } = require('node:test'), assert = require('node:assert/strict');
 const fs = require('node:fs'), vm = require('node:vm'), path = require('node:path');
 const root = path.resolve(__dirname, '../..'), req = require('node:module').createRequire(root + '/apps/storefront/package.json');
+const links = require('../../apps/storefront/src/lib/product-link.ts');
 const ts = req('typescript'), sourceRoot = process.env.MAYAMI_SHARE_SOURCE_ROOT || root;
 // Exercise the real component handlers with deterministic hook slots and explicit platform boundaries.
 // This is not DOM, native device, focus or visual QA. The separate .ui.cjs covers those browser checks.
@@ -18,6 +19,7 @@ function fixture(kind = 'web', os = 'web') {
   const ports = {
     react: hooks, 'react/jsx-runtime': { jsx, jsxs: jsx, Fragment: 'fragment' },
     'lucide-react': { Check: 'Check', Copy: 'Copy', Share2: 'Share2', X: 'X' },
+    '@/lib/product-link': links,
     '../../../../config/brand-presentation': { publicBrandLink: p => 'https://mayami.app' + p },
     'react-native': { Platform: { OS: os }, Share: { share: p => share(p) }, View: 'View' },
     'expo-clipboard': { setStringAsync: p => copy(p) }, '@/lib/links': { appOnlyLinks: false }, '@/lib/brand': { brand: { name: 'mayami' } },
@@ -76,6 +78,7 @@ test('web: real React SSR renders a named dialog, labelled read-only URL and non
   const React=req('react'), {renderToStaticMarkup}=req('react-dom/server'), exports={};
   const source=fs.readFileSync(root+'/apps/storefront/src/components/product-share.tsx','utf8');
   vm.runInNewContext(ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText,{exports,require:n=>{
+    if(n==='@/lib/product-link')return links;
     if(n==='../../../../config/brand-presentation')return {publicBrandLink:p=>'https://mayami.app'+p};
     return req(n);
   }});
@@ -103,4 +106,18 @@ test('web: a delayed close event preserves the pending copy in the reopened dial
   await f.settle();
   f.render();
   assert.equal(f.success, true);
+});
+
+test('web compact links distinguish products with equal slugs and preserve full variant IDs', () => {
+  const first = '77badb5f-b0cd-42fe-8381-7109a6cf079e';
+  const second = '29197a9f-deba-44e4-9ec6-6dc30cf72c3b';
+  const url = new URL(links.productSharePath('same-slug', second, first), 'https://mayami.app');
+  assert.notEqual(url.pathname, links.productSharePath('same-slug', undefined, second));
+  assert.equal(links.decodeProductId(url.pathname.split('/').at(-1)), first);
+  assert.equal(url.searchParams.get('v').length, 22);
+  assert.equal(links.requestedProductVariant(undefined, url.searchParams.get('v')), second);
+  assert.equal(links.requestedProductVariant(first, url.searchParams.get('v')), first);
+  assert.equal(links.requestedProductVariant(undefined, ['invalid', 'duplicate']), '');
+  assert.equal(links.requestedProductVariant(undefined, 'a'.repeat(22)), '');
+  assert.equal(links.productSharePath('same-slug', undefined, first), url.pathname);
 });
