@@ -1,10 +1,10 @@
 # Estado actual de mayami
 
-## 18 noviembre 2026 · Cabecera de tienda para revisión
+## 18 noviembre 2026 · Cabecera de tienda publicada
 
-La candidata local une la portada de borde a borde con la navegación superior y conserva el ancho interior del perfil. El logo queda a la izquierda del nombre y su lema, con el check junto al final del título incluso cuando se parte en varias líneas. Ajuste visual de la cabecera en las vistas Productos y Sobre la tienda.
+Publicada en mayami.app con el Worker Free `36bdc578-422e-4d0f-a04e-4b343a376ba9`, fuente `644c39b`. La portada de borde a borde queda unida a la navegación superior, con el logo a la izquierda, título y lema agrupados y check junto al final del nombre. Las vistas Productos y Sobre la tienda conservan sus enlaces y filtros.
 
-Verificada en Chrome y WebKit a 320, 390 y 1440 px, en claro y oscuro, con nombres largos de prueba. Se probaron el foco y cierre de los diálogos, el enlace compartido, las pestañas con filtros y Seguir tienda con invitado y con dos cuentas aisladas en local. Pasaron las 196 pruebas web, ocho recorridos responsive, tipos y lint. Comparación en `~/Downloads/MAYAMI-cabecera-tienda-20261118/Revision.html` y candidata en `http://127.0.0.1:3288/tienda/kora`. Próxima acción: revisión de Oliver antes de publicar.
+Se verificó en producción con WebKit móvil y Chrome de escritorio a 320, 390 y 1440 px en claro y oscuro. Medidas de ancho completo y hueco superior de 0 px. Pasaron el sello por teclado, compartir y copiar, el retorno de Seguir tienda para invitados y las pestañas con filtros. El seguimiento autenticado se había comprobado con dos cuentas aisladas en local. Pasaron 196 pruebas web y la compilación para Cloudflare. Capturas públicas en `~/Downloads/MAYAMI-cabecera-tienda-20261118/publicada`. Entrega cerrada.
 
 ## 18 noviembre 2026 · Siete ajustes de la web y PWA
 

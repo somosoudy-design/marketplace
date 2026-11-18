@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Cabecera de tienda publicada
+
+Se desplegó la candidata aprobada en el Worker Free `36bdc578-422e-4d0f-a04e-4b343a376ba9`. La revisión pública de móvil y escritorio confirmó el fondo de borde a borde, la unión con la navegación y los recorridos de sello, compartir, seguimiento de invitado y pestañas. [Estado y evidencia](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · Codex · Cabecera de tienda para revisión
 
 Se preparó una candidata local con portada de ancho completo, identidad compacta y check junto al nombre. Se verificaron claro y oscuro, nombres largos, seguimiento con cuentas de prueba, compartir por teclado y retorno a los filtros. Comparación en Descargas entregada para revisión previa a publicación.
