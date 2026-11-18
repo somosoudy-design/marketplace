@@ -1,5 +1,9 @@
 # Pendientes de mayami
 
+## 18 noviembre 2026 · Chequeo opcional en iPhone físico
+
+Verificar una instalación nueva desde Safari en el iPhone de Oliver. La publicación HTTPS muestra nombre y logo oficiales y abre en modo de aplicación en el iPhone 18 Pro simulado. Queda por distinguir el acceso ya guardado en el teléfono del instalado con los recursos vigentes.
+
 ## 17 noviembre 2026 · Publicación de ficha y cierre de preguntas/calificaciones
 
 La mejora UI/UX ya está publicada en mayami.app y www.mayami.app: Worker `5385cbd7-94fc-4f08-b777-18e8b1a07a9a`, fuente original `b9e3051`, árbol `99026f4490a6a9ab00aa6824e4b127e002883099`. La rama remota se sincronizó mediante el conector GitHub en `f636646`; árbol idéntico y commits originales conservados en `refs/checkpoints/ui-ux-original-20261117`, sin reescritura remota. La verificación pública aprobó 23 recorridos/comprobaciones y cuatro vistas NEEWER, claro y oscuro.

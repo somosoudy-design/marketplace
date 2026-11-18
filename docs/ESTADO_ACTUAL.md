@@ -2,9 +2,11 @@
 
 ## 18 noviembre 2026 · Siete ajustes de la web y PWA
 
-La candidata ordena el resumen del carrito, amplía la galería cuadrada con carrusel táctil, ajusta la proporción del sello, compacta la navegación por categorías, simplifica sus encabezados y extiende las franjas intercaladas de borde a borde. El icono oficial ya cargaba desde su ruta explícita; se añadió el respaldo en `/apple-touch-icon.png`, nombre corto para el título de inicio y la declaración iOS heredada.
+Publicado en mayami.app con Worker Free `c80ecaba-85e3-4fad-ae56-5f33318941f8`, fuente `64e0d5a`. Resumen del carrito con acción y ayudas separadas, galería táctil 1:1 con paginación según fotos reales, sello más pequeño y próximo al nombre, categorías compactas, encabezados de categoría en una fila y franjas intercaladas de borde a borde con ancho de lectura. El enfoque vuelve a intentar una foto fallida al seleccionarla de nuevo. El icono de instalación tiene respaldo en `/apple-touch-icon.png` y el inicio usa MAYAMI como título.
 
-El simulador iPhone 18 Pro reprodujo la «M» genérica y el nombre largo con los metadatos históricos. Una instalación nueva de la versión publicada anterior y de la candidata mostró MAYAMI y abrió como aplicación. Los restantes ajustes se comprobaron en Chrome y WebKit antes de preparar el Worker. Trabajo en curso: compilar, publicar tras comprobar y repetir la revisión en mayami.app.
+Una reproducción del HTML histórico en el simulador iPhone 18 Pro con iOS 27 produjo el monograma y el título largo. Instalar desde la publicación HTTPS final propuso MAYAMI, mostró el logo oficial y abrió como aplicación. Se confirmaron los recursos y metadatos publicados. Falta contrastar una instalación nueva en iPhone físico.
+
+Pasaron 196 pruebas web, 190 de core, tipos, lint y compilación del Worker. Producción verificada con ocho pruebas responsive, ocho combinaciones de galería en pantallas bajas y cuatro configuraciones de carrito, categorías, sellos y franjas. La validación de carrito fue de invitado hasta el acceso con retorno a checkout. Capturas y comparación en `~/Downloads/MAYAMI-siete-ajustes-20261118/Revision.html`. Ajustes web cerrados.
 
 ## 18 noviembre 2026 · Campaña de tablet e identidad de tienda
 

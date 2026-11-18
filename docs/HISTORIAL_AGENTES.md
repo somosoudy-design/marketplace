@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Pulido de siete puntos web y PWA
+
+Se publicó el Worker Free `c80ecaba-85e3-4fad-ae56-5f33318941f8` con ajustes de carrito, instalación iOS, galería, sello y descubrimiento. Se reprodujo la identidad genérica con el HTML histórico y se instaló el sitio nuevo desde HTTPS en el simulador. Las verificaciones web contrastaron temas, tamaños, variantes y acciones reales. [Estado y evidencia](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · Codex · Campaña, perfiles y seguimiento de tiendas
 
 Se publicó el Worker Free `348cb1a9-55fa-4464-ae7b-bee6a1002348` con campaña de tablet, categorías fotográficas, perfiles y sello oficial reutilizable. Se aplicó solo `20261118144000_store_follows` en Marketplace y se verificó el registro, RLS y cierre de cuenta. Las pruebas de seguimiento autenticado se realizaron con dos compradores locales. Recorridos y capturas de escritorio y móvil, en claro y oscuro, confirmados en mayami.app. [Estado y validación](ESTADO_ACTUAL.md).
