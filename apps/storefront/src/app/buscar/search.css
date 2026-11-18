@@ -16,8 +16,20 @@
 
 .search-page .search-results { min-width: 0; align-self: start; }
 .search-page .search-sort { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
-.search-page .search-sort label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 14px; }
-.search-page .search-sort select { width: auto; min-height: 44px; font-size: 16px; }
+.search-page .search-sort label { position: relative; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 14px; }
+.search-page .search-sort label::after {
+  content: '';
+  position: absolute;
+  inset-inline-end: 14px;
+  bottom: 19px;
+  width: 7px;
+  height: 7px;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.search-page .search-sort select { appearance: none; width: auto; min-height: 44px; padding-inline-end: 32px; font-size: 16px; }
 .sort-feedback { font-size: 12px; color: var(--text-muted); }
 .sort-feedback:empty { display: none; }
 .search-page .search-results .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 16px 12px; }
