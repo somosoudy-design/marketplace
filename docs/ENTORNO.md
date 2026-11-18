@@ -114,11 +114,18 @@ pnpm --filter @kora/admin dev                        # http://127.0.0.1:3100
 pnpm --filter @kora/admin build && pnpm --filter @kora/admin start   # producción
 ```
 
-**Publicado:** https://kora-panel.expo.app (EAS Hosting, plan sin costo, mismo proyecto de Expo que la app). El
-workflow `panel-deploy.yml` lo exporta como sitio estático (`KORA_PANEL_EXPORT=1 pnpm --filter @kora/admin build`,
-carpeta `apps/admin/out`) con el backend y la clave `anon` del perfil `preview`, y lo publica con `eas deploy`
-sólo mediante un commit que cambia `.github/panel-deploy-request`, separado del código ya aprobado. No necesita ningún secreto aparte de
-`EXPO_TOKEN`. Detalles:
+El panel principal está en https://panel.mayami.app. El Worker `mayami-panel` sirve la exportación estática de `apps/admin` en Cloudflare Free. La aplicación usa el proyecto Supabase Marketplace y el mismo servicio `panel-api` que el despliegue anterior. La sesión del panel se guarda en el origen en el que se inició. Los enlaces de la tienda usan el nuevo dominio. Un enlace directo conserva el editor y el identificador de tienda al pasar por el login.
+
+Para publicar el panel, compilar desde el commit aprobado con `KORA_PANEL_EXPORT=1`, `NEXT_PUBLIC_SUPABASE_URL`, la clave pública `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_STORE_URL=https://mayami.app` y `NEXT_PUBLIC_PANEL_API` apuntando a `/functions/v1/panel-api` de Marketplace. Desde la raíz:
+
+```bash
+pnpm --filter @kora/admin build
+node tools/panel/release-marker.mjs apps/admin/out "$(git rev-parse HEAD)" "panel.$(git rev-parse --short HEAD)"
+node tools/panel/check-export.mjs apps/admin/out
+pnpm --filter @kora/storefront exec wrangler deploy --config ../admin/wrangler.jsonc
+```
+
+Validar el certificado, `/release.json`, los recursos de la nueva compilación y el retorno desde `/login` al editor de la tienda. Para volver a una versión ya publicada, usar su identificador de despliegue de `mayami-panel`. Como alternativa inmediata sigue disponible https://kora-panel.expo.app, con su propia sesión. Su workflow `panel-deploy.yml` despliega el mismo proyecto de código en EAS Hosting cuando cambia `.github/panel-deploy-request`. Ese workflow sólo actualiza la dirección de Expo.
 
 - Las tres acciones de servidor del panel (`/api/import`, `/api/import/publish`, `/api/rates/sync`) corren, en
   la versión publicada, en la función `panel-api` de Supabase (como el administrador que llama). En local las
@@ -128,7 +135,7 @@ sólo mediante un commit que cambia `.github/panel-deploy-request`, separado del
 - Probar la versión publicada en local: exportar con `NEXT_PUBLIC_PANEL_API=http://127.0.0.1:54321/functions/v1/panel-api`,
   `node tools/panel/eas-routes.mjs apps/admin/out`, `node tools/panel/serve-static.mjs apps/admin/out 3100` y
   `cd tests/app-e2e && npx playwright test --project=panel` (usa el servidor que ya está en :3100).
-- La dirección de producción tarda un momento en pasar a la versión nueva; `tools/panel/check-deploy.mjs`
+- En EAS, el alias de producción tarda un momento en pasar a la versión nueva; `tools/panel/check-deploy.mjs`
   comprueba primero la dirección propia de la publicación (`kora-panel--<id>.expo.app`).
 - Si el repositorio pasa a privado, el panel sigue publicado (no depende de GitHub Pages).
 

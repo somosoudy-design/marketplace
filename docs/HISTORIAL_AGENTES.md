@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Dirección oficial y administración de tienda
+
+Publicadas la dirección canónica de la tienda, la administración en el subdominio de MAYAMI y la actualización compatible con el APK Android preview. Checkout y seguimiento se probaron en local, y el recorrido público se repitió sobre el despliegue. [Versiones, recorridos y reversión](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · Codex · Cabecera de tienda publicada
 
 Se desplegó la candidata aprobada en el Worker Free `36bdc578-422e-4d0f-a04e-4b343a376ba9`. La revisión pública de móvil y escritorio confirmó el fondo de borde a borde, la unión con la navegación y los recorridos de sello, compartir, seguimiento de invitado y pestañas. [Estado y evidencia](ESTADO_ACTUAL.md).

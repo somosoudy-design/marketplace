@@ -2,9 +2,21 @@
 
 ## 18 noviembre 2026 · Tienda y panel bajo MAYAMI
 
-Trabajo en curso. La dirección canónica se resuelve por el identificador estable de la tienda. Se preparó el panel publicado a partir de fb352af y se conservaron sus recorridos de moderación, edición y reclamaciones. El storefront consulta membresías y roles actuales y enlaza a los editores de tienda y al área global según el acceso efectivo. Oliver autorizó panel.mayami.app en Cloudflare Free.
+La tienda oficial está publicada en https://mayami.app/tienda/mayami. Se identificó la tienda por su UUID estable. Marketplace conserva el slug interno `kora`, el historial, propietarios y membresías. Las rutas `/tienda/kora` y `/tienda/cora` y las búsquedas anteriores por esa tienda devuelven 308 y conservan filtros, orden y pestaña. Se verificaron el destino canónico, metadatos, compartir y dos tiendas independientes. La migración `20261118213559` reserva los alias de MAYAMI frente a futuras colisiones.
 
-Próxima acción: compilar y verificar los dos destinos, el editor exacto tras iniciar sesión y el artefacto del runtime Android preview. La restricción stores_mayami_public_address ya está validada en Marketplace como migración 20261118213559, sin modificar tiendas ni asignaciones.
+El panel de vendedores y administración de plataforma se sirve en https://panel.mayami.app desde la misma fuente que el panel de Expo. La exportación conserva moderación y edición ya disponibles en Expo. El dominio de Expo sigue operativo para enlaces y sesiones anteriores. El nuevo origen solicita su propio inicio de sesión y conserva la ruta y tienda al autenticar. No hacen falta cambios de callback ni cookies de dominio compartido. Los permisos se resuelven en Marketplace con las membresías, RLS y funciones existentes. El perfil de la tienda enlaza a su página pública.
+
+En producción se verificaron la cuenta de Oliver en el storefront (propietario y superadmin), la navegación a la tienda, el estado de seguimiento, los dos enlaces de administración y la protección del editor para invitados. En Chrome y WebKit se verificaron las rutas públicas y el recorrido de invitado hasta el acceso al checkout. En el stack local se comprobaron comprador, dueño, administrador, acceso entre tiendas, expiración de sesión y cambio de cuenta, además de checkout y seguimiento. Pasaron typecheck y lint del monorepo, 195 pruebas de core, 197 del storefront, 77 del panel, 11 de moderación/edición conservadas, 6 recorridos de roles del storefront, 11 pruebas de checkout/seguimiento en PostgreSQL y 12 de API extremo a extremo.
+
+| Publicación | Fuente | Identificador |
+|---|---|---|
+| Storefront, Cloudflare Free | `37f1831` | `e83c2367-17d2-4ca0-a7ae-3ee0f0df3586` |
+| Panel, Cloudflare Free | `4e74b4f` | `3f6aaf0b-a97e-42a2-b104-fe887b1e58d4` |
+| Android, canal preview | `159b176`, sobre el runtime instalado | Grupo `d2eb892b-9dfd-4783-8c68-083e325fbaef`, actualización `01a1f0a3-3e14-7488-a4ba-6932a0790c9b` |
+
+La APK firmada instalada en el emulador Android 16 confirmó en Diagnóstico el identificador de actualización publicado, el runtime previsto y el canal preview. Su fuente exacta está fijada en el checkpoint local `refs/checkpoints/android-preview-store-admin-20261118`.
+
+Para reversión del storefront se conserva la versión `36bdc578-422e-4d0f-a04e-4b343a376ba9`. El respaldo del panel está en https://kora-panel.expo.app y el grupo Android preview anterior es `75c0f3b7-9e41-4246-b458-a73654c1f580`. Las instrucciones del panel se encuentran en [Entorno](ENTORNO.md).
 
 ## 18 noviembre 2026 · Cabecera de tienda publicada
 
