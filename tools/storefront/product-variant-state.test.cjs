@@ -197,3 +197,20 @@ test('multiple or unselected variants are never treated as redundant', () => {
   assert.equal(selection.isRedundantSingleOption([generic, { ...generic, id: 'v2' }], 'v'), false);
   assert.equal(selection.isRedundantSingleOption([generic], undefined), false);
 });
+
+test('gallery shows page controls only when the selected variant has multiple photographs', () => {
+  for (const count of [0, 1, 3]) {
+    const images = Array.from({ length: count }, (_, index) => ({
+      id: `photo-${index}`, path: `catalog/photo-${index}.webp`, alt: null, width: 700, height: 700, sort: index,
+    }));
+    const html = render(2, 'available', true, undefined, { media_classified: true, images });
+    assert.equal(html.includes('Aún no hay fotos de esta opción.'), count === 0);
+    assert.equal(html.includes('class="product-gallery-pagination"'), count > 1);
+    assert.equal((html.match(/class="product-gallery-slide"/g) ?? []).length, Math.max(1, count));
+    if (count > 1) {
+      const pager = html.match(/class="product-gallery-pagination"[\s\S]*?role="status">/)[0];
+      assert.match(pager, /aria-label="Ver imagen 1 de 3" aria-current="true"/);
+      assert.equal((pager.match(/aria-label="Ver imagen /g) ?? []).length, count);
+    }
+  }
+});

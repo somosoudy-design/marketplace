@@ -19,11 +19,13 @@ const jakarta = localFont({
 export const metadata: Metadata = {
   title: { default: `${brand.name} · Encuentra lo que buscas`, template: `%s · ${brand.name}` },
   description: brand.tagline,
+  applicationName: 'MAYAMI',
   icons: {
     icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
-    apple: { url: '/brand/pwa/icon-180.png', sizes: '180x180', type: 'image/png' },
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
   },
   appleWebApp: { capable: true, title: 'MAYAMI', statusBarStyle: 'black' },
+  other: { 'apple-mobile-web-app-capable': 'yes' },
   metadataBase: new URL('https://mayami.app'),
   robots: { index: true, follow: true },
 };

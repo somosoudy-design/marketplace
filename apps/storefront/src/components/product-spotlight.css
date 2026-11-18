@@ -1,21 +1,35 @@
+.feed-highlight {
+  margin-left: calc(-1 * env(safe-area-inset-left));
+  margin-right: calc(-1 * env(safe-area-inset-right));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  overflow: hidden;
+  overflow: clip;
+  background: linear-gradient(105deg, #33264b, #261939 64%, #422657);
+}
 .feed-highlight-link {
   --photo-width: clamp(144px, 18vw, 220px);
   display: grid;
   grid-template-columns: var(--photo-width) minmax(0, 1fr) auto auto;
   align-items: center;
   gap: clamp(16px, 2.8vw, 40px);
-  padding-right: clamp(18px, 3vw, 44px);
-  border-radius: 16px;
-  overflow: hidden;
+  min-width: 0;
   color: #fff;
-  background: linear-gradient(105deg, #33264b, #261939 64%, #422657);
 }
-.feed-highlight-link:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.feed-highlight-link:focus-visible { outline: 3px solid #fff; outline-offset: -3px; position: relative; z-index: 1; }
 .feed-highlight-photo {
+  position: relative;
+  isolation: isolate;
   align-self: stretch;
   display: grid;
   place-items: center;
-  background: linear-gradient(115deg, #f7f3ef, #ece5df);
+}
+.feed-highlight-photo::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 -100vw;
+  background: #f4eee9;
 }
 .feed-highlight-photo .product-photo {
   width: 100%;
@@ -72,8 +86,6 @@
     grid-template-columns: clamp(84px, 27vw, 148px) minmax(0, 1fr) auto;
     grid-template-rows: auto auto;
     gap: 5px clamp(9px, 2.6vw, 17px);
-    padding-right: clamp(10px, 2.6vw, 17px);
-    border-radius: 12px;
   }
   .feed-highlight-photo { grid-row: 1 / 3; }
   .feed-highlight-photo .product-photo { height: clamp(96px, 28vw, 122px); }

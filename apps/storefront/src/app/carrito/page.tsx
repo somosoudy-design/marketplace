@@ -201,13 +201,15 @@ function BuyerCart({ buyerId, preference }: { buyerId: string; preference?: stri
             </section>
           ))}
         </div>
-        <aside className="cart-summary">
+        <aside className="cart-summary" aria-label="Resumen del carrito">
           <h2>Resumen</h2>
-          <div>
+          <div className="cart-summary-subtotal">
             <span>Productos</span>
             <strong>{money(cart.data.items_usd)}</strong>
           </div>
-          <p>El envío se calcula con tu dirección. Revisarás el total antes de confirmar el pedido.</p>
+          <div className="cart-summary-guide">
+            <p>El envío se calcula con tu dirección. Revisarás el total antes de confirmar el pedido.</p>
+          </div>
           <fieldset className="variant-picker" disabled={updating || cart.isFetching || !!cartSyncError}>
             <legend>Plan de pago</legend>
             {cart.data.plans.map(option => (
@@ -219,18 +221,20 @@ function BuyerCart({ buyerId, preference }: { buyerId: string; preference?: stri
           </fieldset>
           {(selectedPlan.notice || planNotice.text) && <p className="notice" role="status">{selectedPlan.notice || planNotice.text}</p>}
           {!selectedPlan.code && <p className="notice error" role="alert">{cart.data.plans.length ? 'Selecciona un plan de pago disponible antes de continuar.' : 'No hay un plan de pago disponible para este carrito. Actualiza el carrito antes de continuar.'}</p>}
-          {cart.data.issues > 0 ? (
-            <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
-          ) : checkoutBlocked ? (
-            <button type="button" className="button" data-testid="cart-checkout" disabled aria-disabled="true">Continuar con la compra</button>
-          ) : (
-            <Link prefetch={false} className="button" data-testid="cart-checkout" href={withPlan('/checkout', selectedPlan.code)} aria-disabled={false} onClick={guardCheckout} onAuxClick={guardCheckout} onContextMenu={guardCheckout}>
-              Continuar con la compra
+          <div className="cart-summary-actions">
+            {cart.data.issues > 0 ? (
+              <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
+            ) : checkoutBlocked ? (
+              <button type="button" className="button" data-testid="cart-checkout" disabled aria-disabled="true">Continuar con la compra</button>
+            ) : (
+              <Link prefetch={false} className="button" data-testid="cart-checkout" href={withPlan('/checkout', selectedPlan.code)} aria-disabled={false} onClick={guardCheckout} onAuxClick={guardCheckout} onContextMenu={guardCheckout}>
+                Continuar con la compra
+              </Link>
+            )}
+            <Link prefetch={false} className="text-link" href="/buscar">
+              Seguir explorando <ArrowRight size={16} />
             </Link>
-          )}
-          <Link prefetch={false} className="text-link" href="/buscar">
-            Seguir explorando <ArrowRight size={16} />
-          </Link>
+          </div>
           <PurchaseHelp />
         </aside>
       </div>
@@ -268,15 +272,27 @@ function GuestCart({ preference }: { preference?: string } = {}) {
     <div className="section-heading"><h1>Mi carrito</h1><span className="muted">{view.lines.length} {view.lines.length === 1 ? 'producto' : 'productos'} · {view.units} {view.units === 1 ? 'unidad' : 'unidades'}</span></div>
     {(current.isError || offline) && <div className="notice error" role="alert"><p>{offline ? 'Sin conexión. Tus productos siguen guardados; actualizaremos precios y disponibilidad al recuperar la conexión.' : 'No pudimos actualizar precios y disponibilidad. Tus productos siguen guardados.'}</p><button type="button" className="button secondary" onClick={() => void current.refetch()}>Volver a intentar</button></div>}
     <div className="cart-layout"><div className="cart-products">{view.groups.map(group => <section className="cart-group" key={group.key}><header className="cart-group-heading"><StoreIdentity store={group.store ?? { name: group.storeName }} as="h2" /></header>{group.lines.map(line => <Line key={line.variant_id} line={line} priceKnown={line.priceKnown && !offline && !current.isError} href={line.slug ? `/p/${line.slug}?variant=${encodeURIComponent(line.variant_id)}` : undefined} dispatchStage={line.dispatchStage} maxPerOrder={line.maxPerOrder} stock={line.stock} guestQuantity={quantity => guestCart.setQuantity(line.variant_id, quantity)} />)}</section>)}</div>
-      <aside className="cart-summary"><h2>Resumen</h2><div><span>Productos</span><strong>{view.items_usd == null || offline || current.isError ? 'Precio no disponible' : money(view.items_usd)}</strong></div><p>El envío se calcula con tu dirección. Revisarás el total antes de confirmar el pedido.</p>
-        <p className="cart-identification">Al continuar, ingresa o crea tu cuenta para comprar estos productos.</p>
+      <aside className="cart-summary" aria-label="Resumen del carrito">
+        <h2>Resumen</h2>
+        <div className="cart-summary-subtotal">
+          <span>Productos</span>
+          <strong>{view.items_usd == null || offline || current.isError ? 'Precio no disponible' : money(view.items_usd)}</strong>
+        </div>
+        <div className="cart-summary-guide">
+          <p>El envío se calcula con tu dirección. Revisarás el total antes de confirmar el pedido.</p>
+          <p className="cart-identification">Al continuar, ingresa o crea tu cuenta para comprar estos productos.</p>
+        </div>
         {preference && <p className="notice" role="status" data-testid="guest-plan-preference">{preference === 'three_parts' ? 'Preferencia: 3 pagos en total.' : 'Conservamos tu preferencia de pago.'} Confirmaremos los planes disponibles para tu carrito al iniciar sesión.</p>}
         {updating && <p className="muted">Guardando cambios del carrito…</p>}
-        {view.issues > 0 ? <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
-          : checkoutBlocked ? <button type="button" className="button" data-testid="cart-checkout" disabled aria-disabled="true">Continuar con la compra</button>
-          : <Link prefetch={false} className="button" data-testid="cart-checkout" href={authHref('/cuenta', withPlan('/checkout', preference))} aria-disabled={false} onClick={guardCheckout} onAuxClick={guardCheckout} onContextMenu={guardCheckout}>Continuar con la compra</Link>}
-        <Link prefetch={false} className="text-link" href="/buscar">Seguir explorando <ArrowRight size={16} /></Link>
-      <PurchaseHelp /></aside></div>
+        <div className="cart-summary-actions">
+          {view.issues > 0 ? <p className="notice error">Revisa los productos no disponibles antes de continuar.</p>
+            : checkoutBlocked ? <button type="button" className="button" data-testid="cart-checkout" disabled aria-disabled="true">Continuar con la compra</button>
+            : <Link prefetch={false} className="button" data-testid="cart-checkout" href={authHref('/cuenta', withPlan('/checkout', preference))} aria-disabled={false} onClick={guardCheckout} onAuxClick={guardCheckout} onContextMenu={guardCheckout}>Continuar con la compra</Link>}
+          <Link prefetch={false} className="text-link" href="/buscar">Seguir explorando <ArrowRight size={16} /></Link>
+        </div>
+        <PurchaseHelp />
+      </aside>
+    </div>
   </div>;
 }
 function CartContent() {

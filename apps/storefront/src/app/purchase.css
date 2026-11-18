@@ -585,7 +585,27 @@
 
 /* Product identity and purchase actions share a continuous surface across web and app. */
 .cart-page .cart-layout { gap: 32px; align-items: start; }
-.cart-page .cart-summary { align-self: start; }
+.cart-page .cart-summary {
+  align-self: start; display: grid; gap: 16px; min-width: 0;
+}
+.cart-summary-subtotal {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+.cart-summary-subtotal strong { text-align: end; overflow-wrap: anywhere; }
+.cart-summary-guide { display: grid; gap: 8px; color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
+.cart-summary-guide p, .cart-summary > .notice, .cart-summary > .muted { margin: 0; }
+.cart-summary-actions { display: grid; gap: 6px; }
+.cart-summary-actions .button { width: 100%; text-align: center; }
+.cart-summary-actions .notice { margin: 0; }
+.cart-summary-actions .text-link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; font-size: 13px;
+}
+.cart-summary .purchase-help {
+  display: grid; gap: 0; padding-top: 8px; margin: 0; border-top: 1px solid var(--border);
+}
+.cart-summary .purchase-help a { gap: 9px; }
 .cart-page .cart-products { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); overflow: hidden; }
 .cart-page .cart-group { margin: 0; }
 .cart-page .cart-group + .cart-group { border-top: 1px solid var(--border-strong); }
@@ -632,6 +652,7 @@
 .favorite-error-dialog .dialog-close { position: absolute; right: 8px; top: 8px; width: 44px; height: 44px; display: grid; place-items: center; color: var(--text); background: transparent; border: 0; }
 @media (max-width: 700px) {
   .cart-page .cart-layout { gap: 20px; }
+  .cart-page .cart-summary { padding: 18px; }
   .cart-page .section-heading { align-items: start; flex-direction: column; gap: 4px; }
   .cart-page .section-heading h1 { font-size: 26px; }
   .cart-page .cart-line { grid-template-columns: 64px minmax(0, 1fr); padding: 12px; gap: 8px 12px; }

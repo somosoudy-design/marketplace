@@ -41,9 +41,13 @@ for (const [width, height] of [[320, 700], [390, 844]]) {
     const title = page.getByRole('heading', { level: 1 });
     await expect(title).toHaveCount(1);
     await expect(page.locator('.product-page .breadcrumbs')).toBeHidden();
-    const photo = page.locator('.product-gallery > .product-photo');
+    const photo = page.locator('.product-gallery-slide[data-current] > .product-photo');
     const frame = await photo.boundingBox();
     expect(Math.abs(frame!.width - frame!.height)).toBeLessThan(1);
+    const gallery = page.locator('.product-gallery');
+    const galleryBounds = await gallery.boundingBox();
+    expect(frame!.width).toBeGreaterThan(galleryBounds!.width * 0.9);
+    await expect(gallery.locator('.thumbnails')).toBeHidden();
     const layout = await title.evaluate((heading) => ({
       title: heading.getBoundingClientRect().toJSON(),
       galleryBottom: document.querySelector('.product-gallery')!.getBoundingClientRect().bottom,

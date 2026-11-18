@@ -1,7 +1,7 @@
 .store-identity {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
 }
 .store-identity-label {
@@ -24,7 +24,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 2px;
+  padding: 0;
   min-width: 24px;
   min-height: 24px;
   flex: none;
@@ -35,7 +35,7 @@
 }
 .store-seal[data-tier=verified] { --store-seal-fill: var(--brand); --store-seal-mark: var(--surface); }
 .store-seal[data-tier=partner] { --store-seal-fill: var(--text-muted); --store-seal-mark: var(--surface); }
-.store-seal svg { width: var(--store-seal-size, 17px); height: var(--store-seal-size, 17px); }
+.store-seal svg { width: var(--store-seal-size, clamp(13px, 1.08em, 21px)); height: var(--store-seal-size, clamp(13px, 1.08em, 21px)); }
 .store-seal svg > path:first-child { fill: var(--store-seal-fill); stroke: var(--store-seal-fill); }
 .store-seal svg > path:last-child { stroke: var(--store-seal-mark); }
 .store-seal:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }

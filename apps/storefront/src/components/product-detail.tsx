@@ -71,21 +71,39 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
   const requested = params ? requestedProductVariant(params.getAll('variant'), params.getAll('v')) : initialVariantId;
   const selected = requested ?? resolveProductSelection(input).selectedVariantId ?? '';
   const [quantity, setQuantity] = useState(1);
-  const [imageIndex, setImageIndex] = useState(0);
+  const [viewedPhoto, setViewedPhoto] = useState({ variant: selected, index: 0 });
+  const imageIndex = viewedPhoto.variant === selected ? viewedPhoto.index : 0;
+  const setImageIndex = (index: number) => setViewedPhoto(previous =>
+    previous.variant === selected && previous.index === index ? previous : { variant: selected, index });
+  const galleryTrack = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 760px)');
+    const alignGallery = () => {
+      const track = galleryTrack.current;
+      if (mobile.matches && track) track.scrollLeft = track.clientWidth * imageIndex;
+    };
+    mobile.addEventListener('change', alignGallery);
+    return () => mobile.removeEventListener('change', alignGallery);
+  }, [imageIndex]);
   const adding = useRef(false);
   const purchaseAction = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const action = purchaseAction.current;
     const shell = action?.closest<HTMLElement>('.app-shell');
     if (!action || !shell) return;
-    const measure = () =>
+    const header = shell.querySelector(':scope > header');
+    const measure = () => {
       shell.style.setProperty('--purchase-action-height', `${action.getBoundingClientRect().height}px`);
+      if (header) shell.style.setProperty('--product-header-height', `${header.getBoundingClientRect().height}px`);
+    };
     const observer = new ResizeObserver(measure);
     observer.observe(action);
+    if (header) observer.observe(header);
     measure();
     return () => {
       observer.disconnect();
       shell.style.removeProperty('--purchase-action-height');
+      shell.style.removeProperty('--product-header-height');
     };
   }, []);
   const resolved = resolveProductSelection(input, selected);
@@ -94,7 +112,8 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
   const max = resolved.maxQuantity;
   const general = resolved.mediaState === 'unclassified';
   const gallery = !variant ? [] : general ? (metadata.general_images ?? []) : resolved.gallery;
-  const image = gallery[Math.min(imageIndex, Math.max(0, gallery.length - 1))]?.path ?? null;
+  const activeImage = Math.min(imageIndex, Math.max(0, gallery.length - 1));
+  const image = gallery[activeImage]?.path ?? null;
   const choicePhotoNotice = photoChoiceNotice({
     selectedVariantId: variant?.id,
     variants,
@@ -214,15 +233,36 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
             )}
             <Favorite id={p.id} title={p.title} />
           </div>
-          <ProductPhoto
-            key={`${selected}:${image ?? 'none'}`}
-            id={p.id}
-            path={image}
-            demo={p.is_demo}
-            title={p.title}
-            priority
-            exact
-          />
+          <div className="product-gallery-stage">
+            <div className="product-gallery-track" key={selected} ref={galleryTrack}
+              onScroll={(event) => {
+                const track = event.currentTarget;
+                if (!track.clientWidth || track.scrollWidth <= track.clientWidth) return;
+                setImageIndex(Math.min(gallery.length - 1, Math.max(0, Math.round(track.scrollLeft / track.clientWidth))));
+              }}>
+              {gallery.length ? gallery.map((i, index) => (
+                <div className="product-gallery-slide" key={`${i.path}:${index}`}
+                  data-current={activeImage === index || undefined} aria-hidden={activeImage !== index || undefined}>
+                  {/* Reopening a photo permits a fresh load after a temporary image error. */}
+                  <ProductPhoto key={activeImage === index ? 'viewed' : 'preview'} id={p.id} path={i.path}
+                    demo={p.is_demo} title={i.alt || p.title} priority={index === 0} exact />
+                </div>
+              )) : <div className="product-gallery-slide" data-current><ProductPhoto id={p.id} path={null} demo={p.is_demo} title={p.title} exact /></div>}
+            </div>
+            {gallery.length > 1 && (
+              <div className="product-gallery-pagination" role="group" aria-label="Elegir fotografía">
+                {gallery.map((i, index) => (
+                  <button key={`${i.path}:${index}`} type="button" aria-label={`Ver imagen ${index + 1} de ${gallery.length}`}
+                    aria-current={activeImage === index || undefined}
+                    onClick={() => {
+                      const track = galleryTrack.current;
+                      if (track) track.scrollLeft = track.clientWidth * index;
+                    }} />
+                ))}
+                <span className="sr-only" role="status">Imagen {activeImage + 1} de {gallery.length}</span>
+              </div>
+            )}
+          </div>
           {choicePhotoNotice && (
             <p className="muted" data-testid="product-photo-notice">
               {choicePhotoNotice}
@@ -236,7 +276,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
                   key={i.path}
                   type="button"
                   aria-label={`Ver imagen ${index + 1} de ${gallery.length}`}
-                  aria-pressed={imageIndex === index}
+                  aria-pressed={activeImage === index}
                   onClick={() => setImageIndex(index)}
                 >
                   <ProductPhoto id={p.id} path={i.path} demo={p.is_demo} title={i.alt || p.title} exact />

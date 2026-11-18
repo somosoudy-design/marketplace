@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · Siete ajustes de la web y PWA
+
+La candidata ordena el resumen del carrito, amplía la galería cuadrada con carrusel táctil, ajusta la proporción del sello, compacta la navegación por categorías, simplifica sus encabezados y extiende las franjas intercaladas de borde a borde. El icono oficial ya cargaba desde su ruta explícita; se añadió el respaldo en `/apple-touch-icon.png`, nombre corto para el título de inicio y la declaración iOS heredada.
+
+El simulador iPhone 18 Pro reprodujo la «M» genérica y el nombre largo con los metadatos históricos. Una instalación nueva de la versión publicada anterior y de la candidata mostró MAYAMI y abrió como aplicación. Los restantes ajustes se comprobaron en Chrome y WebKit antes de preparar el Worker. Trabajo en curso: compilar, publicar tras comprobar y repetir la revisión en mayami.app.
+
 ## 18 noviembre 2026 · Campaña de tablet e identidad de tienda
 
 Publicado en mayami.app con el Worker Free `348cb1a9-55fa-4464-ae7b-bee6a1002348`, fuente `f29874a`. El primer banner abre la ficha YQ10S MAX y anuncia accesorios comprobados en la ficha. Las categorías muestran fotos amplias con títulos alineados. Los perfiles tienen portada, logo, lema, despacho, acciones de seguir y compartir y pestañas de Productos y Sobre la tienda. La identidad reutilizable muestra el sello oficial dorado junto a MAYAMI y explica su significado. Las tiendas independientes conservan sus nombres. Los niveles verificado y asociado siguen reservados para cuando haya datos de administración que los respalden.

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { ArrowUpRight, Cable, Cross, Headphones, House, Laptop, PawPrint, ShoppingBag, Sparkles, type LucideIcon } from 'lucide-react';
 import { StoreIdentity } from '@/components/store-badge';
 import { storeDisplayName } from '@/lib/store-presentation';
@@ -19,6 +20,7 @@ const categoryIcons = new Map<string, LucideIcon>([
 const featuredTabletId = 'b1b4a794-c740-47e9-ae57-1c1e3089b80d';
 
 export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: { absolute: 'MAYAMI' } };
 export default async function Home() {
   let home;
   let tablet;
@@ -43,8 +45,8 @@ export default async function Home() {
     ? productSharePath(tablet.slug, undefined, tablet.id)
     : undefined;
   return (
-    <>
-      <div className="wrap market-home">
+    <div className="market-home">
+      <div className="wrap">
         <HomeCampaigns categories={home.categories} tabletHref={tabletHref} />
         <div className="home-categories">
           <nav className="market-category-feature" aria-label="Categorías">
@@ -80,27 +82,27 @@ export default async function Home() {
             })}
           </nav>
         </div>
-        <DiscoveryFeed key={seed} initial={discovery} seed={seed} />
-        {home.stores.length > 0 && (
-          <section className="catalog-section">
-            <div className="section-heading">
-              <h2>Descubre nuestras tiendas</h2>
-            </div>
-            <div className="store-list">
-              {home.stores.slice(0, 6).map((s) => (
-                <div className="store-list-entry" key={s.id}>
-                  <StoreAvatar id={s.id} name={storeDisplayName(s)} path={s.logo_path} />
-                  <div>
-                    <StoreIdentity store={s} as="h3" href={`/buscar?store=${encodeURIComponent(s.slug)}`} linkClassName="store-list-link" />
-                    {s.tagline && <p>{s.tagline}</p>}
-                  </div>
-                  <ArrowUpRight className="store-list-arrow" size={16} aria-hidden="true" />
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
       </div>
-    </>
+      <DiscoveryFeed key={seed} initial={discovery} seed={seed} />
+      {home.stores.length > 0 && (
+        <section className="wrap catalog-section">
+          <div className="section-heading">
+            <h2>Descubre nuestras tiendas</h2>
+          </div>
+          <div className="store-list">
+            {home.stores.slice(0, 6).map((s) => (
+              <div className="store-list-entry" key={s.id}>
+                <StoreAvatar id={s.id} name={storeDisplayName(s)} path={s.logo_path} />
+                <div>
+                  <StoreIdentity store={s} as="h3" href={`/buscar?store=${encodeURIComponent(s.slug)}`} linkClassName="store-list-link" />
+                  {s.tagline && <p>{s.tagline}</p>}
+                </div>
+                <ArrowUpRight className="store-list-arrow" size={16} aria-hidden="true" />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
   );
 }

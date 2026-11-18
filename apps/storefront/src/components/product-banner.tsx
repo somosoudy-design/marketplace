@@ -32,7 +32,7 @@ export function ProductBanner({ chosen }: { chosen: Spotlight }) {
   const availability = presentAvailability(product.availability).label;
   return (
     <article className="feed-highlight" data-testid="storefront-product-banner">
-      <Link prefetch={false} className="feed-highlight-link"
+      <Link prefetch={false} className="wrap feed-highlight-link"
         href={`/p/${product.slug}?variant=${encodeURIComponent(variant)}`}>
         <div className="feed-highlight-photo" aria-hidden="true">
           <ProductPhoto id={product.id} path={path} demo={product.is_demo} variant={variant} exact title="" />

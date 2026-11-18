@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import type { CatalogMetadata, ProductCard } from '@kora/api';
 import { discoveryGroups } from '@/lib/discovery';
 import { ProductGrid } from './product-card';
@@ -56,8 +57,15 @@ export function DiscoveryFeed({initial,seed,exclude=[]}:{initial:Batch;seed:stri
     {sections.map(({ batch, banner, groups }, index) => {
       return <div className="discovery-batch" key={index}>
         {banner&&<div className="discovery-spotlight" data-discovery-id={banner.product.id}><ProductBanner chosen={banner} /></div>}
-        {groups.map(group=><section className="catalog-section discovery-group" key={group.slug || 'mixed'}>
-          <div className="section-heading"><div><span className="eyebrow">{index===0?'EXPLORA MAYAMI':'SIGUE DESCUBRIENDO'}</span><h2>{group.title}</h2></div>{group.slug&&<Link prefetch={false} href={`/buscar?category=${encodeURIComponent(group.slug)}`}>Ver categoría →</Link>}</div>
+        {groups.map(group=><section className="wrap catalog-section discovery-group" key={group.slug || 'mixed'}>
+          <div className="section-heading">
+            <h2>{group.title}</h2>
+            {group.slug && <Link prefetch={false} className="discovery-category-link"
+              href={`/buscar?category=${encodeURIComponent(group.slug)}`}
+              aria-label={`Ver categoría ${group.title}`}>
+              <span>Ver categoría</span><ArrowRight size={16} aria-hidden="true" />
+            </Link>}
+          </div>
           <ProductGrid products={group.products} metadata={batch.metadata} eager={false}/>
         </section>)}
       </div>;

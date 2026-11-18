@@ -53,7 +53,7 @@ for (const colorScheme of ['light', 'dark'] as const)
         '/devoluciones',
       );
       await noOverflow(page);
-      const images = page.locator('.product-gallery>.product-photo img');
+      const images = page.locator('.product-gallery-slide[data-current]>.product-photo img');
       await expect(images).toBeVisible();
       expect(await images.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth > 0)).toBe(true);
       await page.screenshot({ path: info.outputPath('ficha.png'), fullPage: true });
