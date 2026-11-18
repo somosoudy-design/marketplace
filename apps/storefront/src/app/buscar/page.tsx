@@ -78,7 +78,7 @@ export default async function Search({
     key !== 'vista' && typeof value === 'string' ? [[key, value]] : []));
   const catalogHref = `/buscar?${storeParams}`;
   if (showStoreAbout && storeDetails) return (
-    <div className="wrap search-page">
+    <div className="search-page" data-store-page>
       <StoreProfile store={storeDetails} catalogHref={catalogHref} aboutHref={`${catalogHref}&vista=tienda`} showAbout />
     </div>
   );
@@ -117,7 +117,7 @@ export default async function Search({
     }] : []),
   ];
   return (
-    <div className="wrap search-page" data-catalog-root={!q && !category && !collection && !store && !availability && sort === 'relevance' || undefined}>
+    <div className={storeDetails ? 'search-page' : 'wrap search-page'} data-store-page={!!storeDetails || undefined} data-catalog-root={!q && !category && !collection && !store && !availability && sort === 'relevance' || undefined}>
       {storeDetails ? <StoreProfile store={storeDetails} catalogHref={catalogHref} aboutHref={`${catalogHref}&vista=tienda`} showAbout={false} /> : <nav className="breadcrumbs" aria-label="Ruta de navegación">
         <Link prefetch={false} href="/">
           Inicio
@@ -125,7 +125,7 @@ export default async function Search({
         <span>/</span>
         <span aria-current="page">{q ? 'Búsqueda' : contextTitle}</span>
       </nav>}
-      <div id={storeDetails ? "productos" : undefined} className="search-layout" data-store-empty={storeEmpty || undefined}>
+      <div id={storeDetails ? "productos" : undefined} className={storeDetails ? 'wrap search-layout' : 'search-layout'} data-store-empty={storeEmpty || undefined}>
         <header className="search-heading">
           <div>
             <ResultsTitle>{title}</ResultsTitle>

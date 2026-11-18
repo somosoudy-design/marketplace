@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Cabecera de tienda para revisión
+
+Se preparó una candidata local con portada de ancho completo, identidad compacta y check junto al nombre. Se verificaron claro y oscuro, nombres largos, seguimiento con cuentas de prueba, compartir por teclado y retorno a los filtros. Comparación en Descargas entregada para revisión previa a publicación.
+
 ## 18 noviembre 2026 · Codex · Pulido de siete puntos web y PWA
 
 Se publicó el Worker Free `c80ecaba-85e3-4fad-ae56-5f33318941f8` con ajustes de carrito, instalación iOS, galería, sello y descubrimiento. Se reprodujo la identidad genérica con el HTML histórico y se instaló el sitio nuevo desde HTTPS en el simulador. Las verificaciones web contrastaron temas, tamaños, variantes y acciones reales. [Estado y evidencia](ESTADO_ACTUAL.md).

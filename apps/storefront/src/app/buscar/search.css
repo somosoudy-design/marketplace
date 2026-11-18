@@ -1,6 +1,7 @@
 .search-page {
   padding-block: 20px 48px;
 }
+.search-page[data-store-page] { padding-block-start: 0; }
 .search-page > .breadcrumbs { margin: 0 0 12px; font-size: 12px; min-height: 24px; }
 .search-page .search-heading {
   align-items: center;

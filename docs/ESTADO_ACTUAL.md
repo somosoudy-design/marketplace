@@ -1,5 +1,11 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · Cabecera de tienda para revisión
+
+La candidata local une la portada de borde a borde con la navegación superior y conserva el ancho interior del perfil. El logo queda a la izquierda del nombre y su lema, con el check junto al final del título incluso cuando se parte en varias líneas. Ajuste visual de la cabecera en las vistas Productos y Sobre la tienda.
+
+Verificada en Chrome y WebKit a 320, 390 y 1440 px, en claro y oscuro, con nombres largos de prueba. Se probaron el foco y cierre de los diálogos, el enlace compartido, las pestañas con filtros y Seguir tienda con invitado y con dos cuentas aisladas en local. Pasaron las 196 pruebas web, ocho recorridos responsive, tipos y lint. Comparación en `~/Downloads/MAYAMI-cabecera-tienda-20261118/Revision.html` y candidata en `http://127.0.0.1:3288/tienda/kora`. Próxima acción: revisión de Oliver antes de publicar.
+
 ## 18 noviembre 2026 · Siete ajustes de la web y PWA
 
 Publicado en mayami.app con Worker Free `c80ecaba-85e3-4fad-ae56-5f33318941f8`, fuente `64e0d5a`. Resumen del carrito con acción y ayudas separadas, galería táctil 1:1 con paginación según fotos reales, sello más pequeño y próximo al nombre, categorías compactas, encabezados de categoría en una fila y franjas intercaladas de borde a borde con ancho de lectura. El enfoque vuelve a intentar una foto fallida al seleccionarla de nuevo. El icono de instalación tiene respaldo en `/apple-touch-icon.png` y el inicio usa MAYAMI como título.
