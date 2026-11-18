@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Campaña, perfiles y seguimiento de tiendas
+
+Se publicó el Worker Free `348cb1a9-55fa-4464-ae7b-bee6a1002348` con campaña de tablet, categorías fotográficas, perfiles y sello oficial reutilizable. Se aplicó solo `20261118144000_store_follows` en Marketplace y se verificó el registro, RLS y cierre de cuenta. Las pruebas de seguimiento autenticado se realizaron con dos compradores locales. Recorridos y capturas de escritorio y móvil, en claro y oscuro, confirmados en mayami.app. [Estado y validación](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · PWA y perfiles de tiendas publicados
 
 Codex verificó enlaces cortos propios, galería cuadrada, banner YQ10S MAX, cabecera de iOS, cuadrícula de dos líneas, precios referenciales en Bs. y USD y perfiles de MAYAMI, Aroma’top y MilyeDent. El sello oficial se basa en el tipo de tienda registrado. Fuente `bc3e189`, Worker `fcc0abca-dc90-40e6-a6a3-1dafd5560c4f`. El estado actual registra las pruebas y capturas.

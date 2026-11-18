@@ -2,9 +2,11 @@
 
 ## 18 noviembre 2026 · Campaña de tablet e identidad de tienda
 
-La candidata web presenta el kit YQ10S MAX, amplía las fotos de categorías y reorganiza los perfiles con navegación de Productos y Sobre la tienda. El nombre y sello oficial se usan en los recorridos de compra. El seguimiento usa datos privados de la cuenta y se limpia con el cierre de cuenta.
+Publicado en mayami.app con el Worker Free `348cb1a9-55fa-4464-ae7b-bee6a1002348`, fuente `f29874a`. El primer banner abre la ficha YQ10S MAX y anuncia accesorios comprobados en la ficha. Las categorías muestran fotos amplias con títulos alineados. Los perfiles tienen portada, logo, lema, despacho, acciones de seguir y compartir y pestañas de Productos y Sobre la tienda. La identidad reutilizable muestra el sello oficial dorado junto a MAYAMI y explica su significado. Las tiendas independientes conservan sus nombres. Los niveles verificado y asociado siguen reservados para cuando haya datos de administración que los respalden.
 
-Pruebas locales aprobadas en Chrome y WebKit con dos cuentas de prueba. Se verificaron ingreso con retorno, seguir, persistencia, aislamiento, dejar de seguir y recarga. También se comprobaron permisos SQL y cierre contra un clon. Trabajo en curso: verificar la migración hospedada, compilar la versión para Cloudflare y comprobar los recorridos públicos antes de cerrar la publicación.
+La migración `20261118144000_store_follows` está registrada en Marketplace. Se comprobaron cuatro políticas, acceso del comprador limitado a su cuenta, rechazo de lectura anónima y los disparadores de escritura y limpieza de cierre. Chrome y WebKit verificaron seguir, recargar, ver otra cuenta y dejar de seguir con dos cuentas de prueba en un clon aislado. Producción no recibió cuentas o filas de prueba.
+
+Pasaron 195 pruebas web, 190 de core, dos pruebas SQL de seguimiento, tipos y lint de la tienda y compilación de Cloudflare. Se verificaron ocho casos responsive y seis combinaciones de anchura y tema en producción, incluidos compartir, apertura del sello y navegación de tienda. Safari del simulador iPhone 18 Pro revisó inicio y perfil antes de publicar. Capturas en `~/Downloads/MAYAMI-tienda-y-portada-20261118`. Entrega web cerrada; verificación física de iPhone queda pendiente.
 
 ## 18 noviembre 2026 · PWA, catálogo y perfiles de tiendas
 
