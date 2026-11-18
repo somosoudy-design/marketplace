@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · PWA y perfiles de tiendas publicados
+
+Codex verificó enlaces cortos propios, galería cuadrada, banner YQ10S MAX, cabecera de iOS, cuadrícula de dos líneas, precios referenciales en Bs. y USD y perfiles de MAYAMI, Aroma’top y MilyeDent. El sello oficial se basa en el tipo de tienda registrado. Fuente `bc3e189`, Worker `fcc0abca-dc90-40e6-a6a3-1dafd5560c4f`. El estado actual registra las pruebas y capturas.
+
 ## 17 noviembre 2026 · Ficha móvil con galería primero
 
 Codex restableció el título bajo la galería de la ficha y ocultó la ruta de categorías en móvil. Publicación verificada en Chrome y WebKit a 320 y 390 px, con comprobación de escritorio a 1440 px. Se actualizó la comparación móvil del informe visual.

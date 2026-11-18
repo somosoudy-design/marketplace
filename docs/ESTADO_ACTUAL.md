@@ -2,11 +2,11 @@
 
 ## 18 noviembre 2026 · PWA, catálogo y perfiles de tiendas
 
-Candidata para publicar en el Worker Free tras verificar el conjunto. Los enlaces de Compartir identifican el producto de forma inequívoca y conservan la variante cuando hay más de una. La ficha anterior sigue disponible. Metadatos de título, descripción e imagen de cada variante verificados con los agentes de usuario de WhatsApp y Twitter. Galería 1:1 con imagen completa, portada de la tablet YQ10S MAX con destino verificado y cabecera opaca durante el desplazamiento en Safari y PWA de iOS 27 simulada.
+Publicado en mayami.app con el Worker Free `fcc0abca-dc90-40e6-a6a3-1dafd5560c4f`, fuente `bc3e189`. Los enlaces de Compartir identifican el producto de forma inequívoca y conservan la variante cuando hay más de una. La ficha anterior sigue disponible. Metadatos de título, descripción e imagen de cada variante verificados con los agentes de usuario de WhatsApp y Twitter. Galería 1:1 con imagen completa, portada de la tablet YQ10S MAX con destino verificado y cabecera opaca durante el desplazamiento en Safari y PWA de iOS 27 simulada.
 
 La cuadrícula reserva dos líneas para el título. Se ajustaron la separación de las secciones y la etiqueta del destacado. Los precios de catálogo muestran Bs. con la tasa vigente de `rate_status` y USD debajo. Si la tasa falta, se muestra USD. La cotización del pago conserva sus reglas. El perfil lee la foto de portada, el logo y las políticas de la tienda pública. MAYAMI muestra el sello oficial dorado por `kind=platform`, con explicación al tocarlo. Las tiendas independientes mantienen sus nombres y sus niveles vigentes. No se añadieron campos de verificación ni funciones de seguimiento.
 
-Comprobado en candidata con tests de tienda y core, navegador y simulador iPhone. Próxima acción, compilar, publicar la fuente revisada y repetir los recorridos en el dominio. Evidencia en `~/Downloads/MAYAMI-PWA-20261118/`.
+Pasaron 195 pruebas de la tienda y 190 de core, tipos y lint de tienda y compilación para Cloudflare. Ocho pruebas de navegador pasaron contra producción. Se verificaron enlaces legados y cortos, retornos de cuenta, previews para rastreadores, portada de tablet en cuatro tamaños, perfiles de tres tiendas, filtros y precios. Safari y PWA instalados se comprobaron también en el simulador iPhone 18 Pro con iOS 27. Comparaciones en `~/Downloads/MAYAMI-PWA-20261118/Revision-PWA-y-tiendas.html`. Entrega cerrada. Queda fuera de esta prueba el iPhone físico y el envío real en WhatsApp.
 
 ## 17 noviembre 2026 · Galería primero en la ficha móvil
 
