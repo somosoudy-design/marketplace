@@ -2,7 +2,7 @@
 
 ## 18 noviembre 2026 · Codex · Dirección oficial y administración de tienda
 
-Publicadas la dirección canónica de la tienda, la administración en el subdominio de MAYAMI y la actualización compatible con el APK Android preview. Checkout y seguimiento se probaron en local, y el recorrido público se repitió sobre el despliegue. [Versiones, recorridos y reversión](ESTADO_ACTUAL.md).
+Publicadas la dirección canónica de la tienda, la administración en el subdominio de MAYAMI y la actualización compatible con el APK Android preview. Checkout y seguimiento se probaron en local, y el recorrido público se repitió sobre el despliegue. Oliver confirmó el primer ingreso. En Chrome se verificaron el editor de la tienda oficial, el panel global y el regreso a la tienda pública. [Versiones, recorridos y reversión](ESTADO_ACTUAL.md).
 
 ## 18 noviembre 2026 · Codex · Cabecera de tienda publicada
 

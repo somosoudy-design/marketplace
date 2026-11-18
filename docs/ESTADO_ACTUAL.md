@@ -8,6 +8,8 @@ El panel de vendedores y administración de plataforma se sirve en https://panel
 
 En producción se verificaron la cuenta de Oliver en el storefront (propietario y superadmin), la navegación a la tienda, el estado de seguimiento, los dos enlaces de administración y la protección del editor para invitados. En Chrome y WebKit se verificaron las rutas públicas y el recorrido de invitado hasta el acceso al checkout. En el stack local se comprobaron comprador, dueño, administrador, acceso entre tiendas, expiración de sesión y cambio de cuenta, además de checkout y seguimiento. Pasaron typecheck y lint del monorepo, 195 pruebas de core, 197 del storefront, 77 del panel, 11 de moderación/edición conservadas, 6 recorridos de roles del storefront, 11 pruebas de checkout/seguimiento en PostgreSQL y 12 de API extremo a extremo.
 
+Oliver confirmó su ingreso al editor de MAYAMI. En su sesión de producción en Chrome se observaron «Resumen de hoy» en la administración global y «Perfil de la tienda» en el editor de la tienda oficial. Se abrió el destino de «Ver tienda pública» en otra pestaña y se comprobó que muestra MAYAMI en https://mayami.app/tienda/mayami.
+
 | Publicación | Fuente | Identificador |
 |---|---|---|
 | Storefront, Cloudflare Free | `37f1831` | `e83c2367-17d2-4ca0-a7ae-3ee0f0df3586` |

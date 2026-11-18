@@ -1,9 +1,5 @@
 # Pendientes de mayami
 
-## 18 noviembre 2026 · Primer acceso de Oliver al nuevo panel
-
-La web autenticada de Oliver ya muestra su tienda y el acceso global, y el panel acepta los recorridos de acceso y salida con cuentas aisladas en pruebas. Para cerrar la comprobación personal en producción falta introducir las credenciales en https://panel.mayami.app, comprobar que abre el editor de MAYAMI y usar «Ver tienda pública» para volver. El inicio de sesión del panel anterior sigue disponible. La sesión y los permisos son independientes de publicar código.
-
 ## 18 noviembre 2026 · Chequeo opcional en iPhone físico
 
 Verificar una instalación nueva desde Safari en el iPhone de Oliver. La publicación HTTPS muestra nombre y logo oficiales y abre en modo de aplicación en el iPhone 18 Pro simulado. Queda por distinguir el acceso ya guardado en el teléfono del instalado con los recursos vigentes.
