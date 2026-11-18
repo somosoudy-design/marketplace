@@ -339,7 +339,7 @@
   }
   .product-page .product-gallery > .product-photo {
     /* Limit the square by its side so the fixed purchase bar leaves room for the title. */
-    width: min(100%, 36svh);
+    width: min(100%, 32svh, max(170px, calc(100svh - 550px)));
     max-height: none;
   }
   .product-page .product-auxiliary {
@@ -406,7 +406,7 @@
 }
 @media (max-width: 359px) {
   .product-page .product-gallery > .product-photo {
-    width: min(100%, 27svh);
+    width: min(100%, 25svh);
   }
 }
 @media (max-height: 460px) and (max-width: 1000px) {

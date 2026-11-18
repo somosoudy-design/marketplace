@@ -140,7 +140,7 @@ function Account() {
       <AccessHeading title="Iniciar sesión">
         {back.split('?')[0] === '/checkout'
           ? 'Ingresa para continuar con tu compra.'
-          : 'Accede a tus pedidos y favoritos de Mayami.'}
+          : 'Accede a tus pedidos y favoritos de MAYAMI.'}
       </AccessHeading>
       <GoogleAccessButton purpose="login" returnTo={back} disabled={login.isPending} onBusyChange={setGoogleBusy} />
       <form method="post" className="buyer-access-form" onSubmit={(event) => {

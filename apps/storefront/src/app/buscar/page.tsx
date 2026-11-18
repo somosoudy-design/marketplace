@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { ArrowRight, ChevronDown, X } from 'lucide-react';
 import type { SearchSort } from '@kora/api';
 import { catalogCategoryGroups } from '@/lib/catalog-taxonomy';
-import { StoreAvatar } from '@/components/store-avatar';
+import { StoreProfile } from '@/components/store-profile';
+import { storeDisplayName } from '@/lib/store-presentation';
 import { publicApi, publicCatalogMetadata } from '@/lib/server';
 import { ProductGrid } from '@/components/product-card';
 import { Failure, Empty } from '@/components/states';
@@ -71,7 +72,7 @@ export default async function Search({
   } catch {
     return <Failure href="/buscar" message="No pudimos cargar los productos." />;
   }
-  if (store && (!storeDetails || storeDetails.status !== 'active')) return <Empty kind="store" title="Esta tienda no está disponible" text="Puedes seguir explorando otras ofertas de Mayami." href="/" action="Ir al inicio" />;
+  if (store && (!storeDetails || storeDetails.status !== 'active')) return <Empty kind="store" title="Esta tienda no está disponible" text="Puedes seguir explorando otras ofertas de MAYAMI." href="/" action="Ir al inicio" />;
   const hasMore = products.length > 24;
   products = products.slice(0, 24);
   let metadata;
@@ -80,8 +81,10 @@ export default async function Search({
   const count = visibleProducts.length;
   const selectedCategory = categories.find(c => c.slug === category);
   const sectionTitle = selectedCategory?.name || (collection ? 'Colección' : availability === 'on_order' ? 'Por encargo' : sort === 'newest' ? 'Novedades' : 'Catálogo');
-  const title = q ? `Resultados para “${q}”` : storeDetails?.name || sectionTitle;
-  const contextTitle = storeDetails?.name || sectionTitle;
+  const storeName = storeDetails && storeDisplayName(storeDetails);
+  const title = q ? `Resultados para “${q}”` : storeName ? `Productos de ${storeName}` : sectionTitle;
+  const contextTitle = storeName || sectionTitle;
+  const ResultsTitle = storeDetails ? 'h2' : 'h1';
   const groups = catalogCategoryGroups(categories);
   const pagination = (n: number) => {
     const params = new URLSearchParams(Object.entries(s).flatMap(([k, v]) => (typeof v === 'string' ? [[k, v]] : [])));
@@ -106,23 +109,21 @@ export default async function Search({
   ];
   return (
     <div className="wrap search-page" data-catalog-root={!q && !category && !collection && !store && !availability && sort === 'relevance' || undefined}>
-      <nav className="breadcrumbs" aria-label="Ruta de navegación">
+      {storeDetails ? <StoreProfile store={storeDetails} hasCatalog={!storeEmpty} /> : <nav className="breadcrumbs" aria-label="Ruta de navegación">
         <Link prefetch={false} href="/">
           Inicio
         </Link>
         <span>/</span>
         <span aria-current="page">{q ? 'Búsqueda' : contextTitle}</span>
-      </nav>
-      <div className="search-layout" data-store-empty={storeEmpty || undefined}>
+      </nav>}
+      <div id={storeDetails ? "productos" : undefined} className="search-layout" data-store-empty={storeEmpty || undefined}>
         <header className="search-heading">
-          {storeDetails && <StoreAvatar id={storeDetails.id} name={storeDetails.name} path={storeDetails.logo_path} />}
           <div>
-            <h1>{title}</h1>
+            <ResultsTitle>{title}</ResultsTitle>
             <p className="results-count" role="status">
               {count} {count === 1 ? 'producto' : 'productos'}{hasMore || page > 1 ? ' en esta página' : ''}{page > 1 ? ` · Página ${page}` : ''}
               {q && contextTitle !== 'Catálogo' && <span> · {contextTitle}</span>}
             </p>
-            {storeDetails && !q && (storeDetails.description || storeDetails.tagline) && <p className="search-store-description">{storeDetails.description || storeDetails.tagline}</p>}
           </div>
         </header>
         {!storeEmpty && <SearchFilters key={`filters-${JSON.stringify(s)}`} active={activeFilters.length} clearHref={canClear ? clearUrl : undefined} applied={[category, availability ?? '', single(s.min), single(s.max)]}>
@@ -207,10 +208,10 @@ export default async function Search({
           ) : (
             <div className="search-empty">
               <Empty kind={storeEmpty ? 'store' : 'search'}
-                title={page > 1 ? 'No hay más productos en esta página' : storeEmpty ? `${storeDetails!.name} aún no tiene productos publicados` : 'No encontramos productos'}
-                text={page > 1 ? 'Vuelve a los resultados anteriores sin cambiar tu búsqueda.' : storeEmpty ? 'Puedes volver más adelante o explorar las otras tiendas de Mayami.' : canClear ? 'Prueba a quitar disponibilidad o precio conservando tu búsqueda y sección.' : 'Prueba otras palabras o explora otra categoría.'}
+                title={page > 1 ? 'No hay más productos en esta página' : storeEmpty ? `${storeName} aún no tiene productos publicados` : 'No encontramos productos'}
+                text={page > 1 ? 'Vuelve a los resultados anteriores sin cambiar tu búsqueda.' : storeEmpty ? 'Puedes volver más adelante o explorar las otras tiendas de MAYAMI.' : canClear ? 'Prueba a quitar disponibilidad o precio conservando tu búsqueda y sección.' : 'Prueba otras palabras o explora otra categoría.'}
                 href={page > 1 ? pagination(page - 1) : storeEmpty ? '/' : canClear ? clearUrl : filteredUrl(['q', 'category'])}
-                action={page > 1 ? 'Volver a la página anterior' : storeEmpty ? 'Explorar Mayami' : canClear ? 'Limpiar filtros' : store ? 'Ver productos de la tienda' : collection ? 'Ver colección' : 'Ver todo el catálogo'}
+                action={page > 1 ? 'Volver a la página anterior' : storeEmpty ? 'Explorar MAYAMI' : canClear ? 'Limpiar filtros' : store ? 'Ver productos de la tienda' : collection ? 'Ver colección' : 'Ver todo el catálogo'}
               >
                 {!storeEmpty && page === 1 && <form action="/buscar" className="empty-search">
                   {Object.entries({ store, category, collection, availability, min: single(s.min), max: single(s.max), sort })

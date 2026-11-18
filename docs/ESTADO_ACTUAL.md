@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · PWA, catálogo y perfiles de tiendas
+
+Candidata para publicar en el Worker Free tras verificar el conjunto. Los enlaces de Compartir identifican el producto de forma inequívoca y conservan la variante cuando hay más de una. La ficha anterior sigue disponible. Metadatos de título, descripción e imagen de cada variante verificados con los agentes de usuario de WhatsApp y Twitter. Galería 1:1 con imagen completa, portada de la tablet YQ10S MAX con destino verificado y cabecera opaca durante el desplazamiento en Safari y PWA de iOS 27 simulada.
+
+La cuadrícula reserva dos líneas para el título. Se ajustaron la separación de las secciones y la etiqueta del destacado. Los precios de catálogo muestran Bs. con la tasa vigente de `rate_status` y USD debajo. Si la tasa falta, se muestra USD. La cotización del pago conserva sus reglas. El perfil lee la foto de portada, el logo y las políticas de la tienda pública. MAYAMI muestra el sello oficial dorado por `kind=platform`, con explicación al tocarlo. Las tiendas independientes mantienen sus nombres y sus niveles vigentes. No se añadieron campos de verificación ni funciones de seguimiento.
+
+Comprobado en candidata con tests de tienda y core, navegador y simulador iPhone. Próxima acción, compilar, publicar la fuente revisada y repetir los recorridos en el dominio. Evidencia en `~/Downloads/MAYAMI-PWA-20261118/`.
+
 ## 17 noviembre 2026 · Galería primero en la ficha móvil
 
 Publicado en mayami.app, Worker Free `c5660bfd-972a-4a07-bb4a-020e3d479f1d`, fuente `e90ae15`. En móvil la galería aparece primero y el título único queda debajo, sin ruta «Catálogo / categoría». En 320 × 700 la foto conserva su proporción y el título de UGREEN queda a 23 px de la barra de compra. Pasaron 194 pruebas de la tienda, lint y las dos pruebas de composición en el sitio oficial. Chrome y WebKit verificaron la galería, Compartir y los accesos a Calificaciones y Preguntas. La revisión de escritorio confirmó las dos columnas y la ruta visible. Capturas en `~/Downloads/MAYAMI-ficha-movil-20261117/publicado`. Corrección cerrada.

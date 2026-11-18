@@ -1,0 +1,11 @@
+.store-seal { display: inline-flex; align-items: center; justify-content: center; color: #e5af44; vertical-align: middle; flex: none; }
+.store-seal svg { fill: currentColor; }
+.store-seal svg > path:last-child { stroke: #271a0d; }
+.store-seal-details { position: relative; flex: none; }
+.store-seal-details summary { width: 44px; height: 44px; cursor: pointer; list-style: none; border-radius: 8px; }
+.store-seal-note {
+  position: absolute; inset-inline-end: 0; top: 100%; z-index: 2; width: min(220px, 56vw);
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 12px; box-shadow: 0 10px 30px #110b2340;
+}
+.store-seal-note p { color: var(--text-secondary); font-size: 12px; }

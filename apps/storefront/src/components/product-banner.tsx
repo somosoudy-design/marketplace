@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import type { CatalogMetadata, ProductCard } from '@kora/api';
 import { bannerTitle, presentAvailability, resolveProductSelection, variantDisplayTitle } from '@kora/core';
 import { reviewedSelectionInput } from '@/lib/catalog-selection';
-import { money } from '@/lib/format';
+import { CatalogPrice } from './catalog-price';
 import { ProductPhoto } from './photo';
 import './product-spotlight.css';
 
@@ -30,7 +30,6 @@ export function ProductBanner({ chosen }: { chosen: Spotlight }) {
   const { product, selection, path, option, single } = chosen;
   const variant = selection.selectedVariantId!;
   const availability = presentAvailability(product.availability).label;
-  const price = money(selection.price_usd!);
   return (
     <article className="feed-highlight" data-testid="storefront-product-banner">
       <Link prefetch={false} className="feed-highlight-link"
@@ -39,13 +38,13 @@ export function ProductBanner({ chosen }: { chosen: Spotlight }) {
           <ProductPhoto id={product.id} path={path} demo={product.is_demo} variant={variant} exact title="" />
         </div>
         <div className="feed-highlight-name">
+          <span className="feed-highlight-availability">{availability}</span>
           <h2 data-testid="banner-product-title" title={product.title}>{bannerTitle(product.title)}</h2>
           {option && <span className="feed-highlight-option">{option}</span>}
           {!single && selection.mediaState === 'unclassified' && <small>Foto general</small>}
         </div>
         <div className="feed-highlight-details">
-          <strong data-testid="banner-product-price">{price}</strong>
-          <span>{availability}</span>
+          <div data-testid="banner-product-price"><CatalogPrice usd={selection.price_usd} /></div>
         </div>
         <span className="feed-highlight-action"><span>Ver producto</span><ArrowRight size={18} aria-hidden="true" /></span>
       </Link>

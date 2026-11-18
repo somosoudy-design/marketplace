@@ -57,7 +57,8 @@ const Search = load('app/buscar/page.tsx', {
   '@/components/search-filters': actualFilters,
   '@/components/search-sort': actualSort,
   '@/lib/catalog-taxonomy': taxonomy,
-  '@/components/store-avatar': { StoreAvatar: () => null },
+  '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
+  '@/components/store-profile': { StoreProfile: ({ store }) => React.createElement('h1', null, store.name) },
 }).default;
 async function markup(params) { return renderToStaticMarkup(await Search({ searchParams: Promise.resolve(params) })); }
 test('empty first page offers catalog reset', async () => {

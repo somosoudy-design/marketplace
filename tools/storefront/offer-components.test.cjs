@@ -29,7 +29,10 @@ const core = Object.assign({}, ...['money', 'availability', 'product-selection',
 const selection = load('apps/storefront/src/lib/catalog-selection.ts');
 const Link = ({ children, prefetch, ...props }) => React.createElement('a', props, children);
 const icons = new Proxy({}, { get: () => () => null });
-const basePorts = { 'react/jsx-runtime': req('react/jsx-runtime'), react: React, '@kora/core': core, 'next/link': { default: Link }, 'lucide-react': icons };
+const basePorts = {
+  '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
+  './store-badge': { OfficialStoreSeal: () => React.createElement('span', { role: 'img', 'aria-label': 'Tienda oficial' }) },
+ 'react/jsx-runtime': req('react/jsx-runtime'), react: React, '@kora/core': core, 'next/link': { default: Link }, 'lucide-react': icons };
 const offers = load('apps/storefront/src/components/offer.tsx', basePorts);
 const quantities = load('apps/storefront/src/components/quantity-control.tsx', basePorts);
 const detailPorts = {
@@ -43,6 +46,7 @@ const detailPorts = {
  '@/lib/providers': { useAccount: () => ({ session: null, ready: true }) },
  '@/lib/format': { money: core.formatOfferPrice }, '@/lib/photos': { catalogText: x => x, catalogSample: () => false, photo: () => null },
   '@/lib/product-link': require('../../apps/storefront/src/lib/product-link.ts'),
+  './catalog-price': { CatalogPrice: ({ usd }) => React.createElement('strong', null, usd == null ? 'Precio no disponible' : core.formatOfferPrice(usd)) },
  '@/lib/catalog-selection': selection, '@/lib/cart-intents': {}, '@/lib/guest-storage': {}, '@/lib/guest-errors': {},
  '@/lib/guest-hooks': { useGuestCartState: () => ({ ready: true }) },
 };

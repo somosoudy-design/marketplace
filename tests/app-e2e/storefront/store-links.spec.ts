@@ -16,7 +16,7 @@ test('enlace compartido de tienda abre su catálogo y conserva el filtro', async
   await page.route('https://mimnotafmfasvwrclxan.supabase.co/**', route => route.abort('blockedbyclient'));
   await page.goto(`/tienda/${encodeURIComponent(slug)}`);
   await expect(page).toHaveURL(new RegExp(`/buscar\\?store=${encodeURIComponent(slug)}$`));
-  await expect(page.getByRole('heading', { name: 'Productos de la tienda' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /^Productos de / })).toBeVisible();
   await expect(page.locator('input[name=store]')).toHaveValue(slug);
   await page.reload();
   await expect(page.locator('input[name=store]')).toHaveValue(slug);

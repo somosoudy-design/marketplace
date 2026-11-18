@@ -1,3 +1,4 @@
+import { storeDisplayName } from '@/lib/store-presentation';
 import Link from 'next/link';
 import type { CatalogMetadata, ProductCard as Product } from '@kora/api';
 import { productColorSummaries, resolveProductSelection } from '@kora/core';
@@ -5,7 +6,7 @@ import { ProductPhoto } from './photo';
 import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
 import { OfferStatus } from './offer';
-import { money } from '@/lib/format';
+import { CatalogPrice } from './catalog-price';
 import { catalogText, catalogSample, localExhibition } from '@/lib/photos';
 import { reviewedSelectionInput } from '@/lib/catalog-selection';
 
@@ -25,11 +26,10 @@ export function ProductCard({ product, metadata, priority = false }: { product: 
           <OfferStatus overlay availability={product.availability} stock={selected.variant?.stock} issue={selected.variant?.active ? undefined : 'unavailable'} />
         </div>
         <div className="product-copy">
-          <span className="product-brand">{product.brand_name || product.store_name}</span>
+          <span className="product-brand">{product.brand_name || storeDisplayName({ id: product.store_id, name: product.store_name })}</span>
           <h3>{catalogText(product.title, product.is_demo, product.id)}</h3>
           <div className="product-price">
-            <strong>{price == null ? 'Precio no disponible' : money(price)}</strong>
-            {!product.is_demo && price != null && product.compare_at_usd != null && product.compare_at_usd > price && <del>{money(product.compare_at_usd)}</del>}
+            <CatalogPrice usd={price} compareAt={product.is_demo ? null : product.compare_at_usd} />
           </div>
           {selected.conditionLabel && <span className="availability" data-testid="product-condition">{selected.conditionLabel}</span>}
           {catalogSample(product.id, product.is_demo) && !localExhibition && <span className="availability">Producto de muestra</span>}

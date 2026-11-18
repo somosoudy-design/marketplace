@@ -72,7 +72,7 @@ const shellSource=fs.readFileSync(root+'/apps/storefront/src/components/shell.ts
 let shellSession=null,shellGroups=[];
 const shellPorts=Object.fromEntries([...shellSource.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>[m[1],{}]));
 Object.assign(shellPorts,{
-  'react/jsx-runtime':req('react/jsx-runtime'),react:{},
+  'react/jsx-runtime':req('react/jsx-runtime'),react:{useRef:value=>({current:value}),useEffect:()=>{}},
   'next/navigation':{usePathname:()=>'/carrito'},
   '@tanstack/react-query':{useQuery:()=>({data:{groups:shellGroups}})},
   '@/lib/providers':{useAccount:()=>({session:shellSession,ready:true,cartSyncing:false})},

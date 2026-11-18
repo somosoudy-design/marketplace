@@ -12,7 +12,7 @@ export function InformationPage({ slug }: { slug: InformationSlug }) {
   const updatedAt = ('updatedAt' in page && page.updatedAt) || policies.updatedAt;
   return (
     <article className="wrap information-page">
-      <Link prefetch={false} className="text-link" href="/">Volver a Mayami</Link>
+      <Link prefetch={false} className="text-link" href="/">Volver a MAYAMI</Link>
       <header className="information-heading">
         <span className="eyebrow">MAYAMI</span>
         <h1>{page.title}</h1>

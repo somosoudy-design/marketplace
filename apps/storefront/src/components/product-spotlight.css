@@ -46,7 +46,19 @@
 }
 .feed-highlight-details { display: grid; gap: 3px; }
 .feed-highlight-details strong { font-size: clamp(20px, 2vw, 28px); line-height: 1.15; letter-spacing: -.04em; }
-.feed-highlight-details span { font-size: 13px; color: #ebdfef; }
+.feed-highlight-details .catalog-price-usd { color: #ebdfef; }
+.feed-highlight-availability {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 2px 7px;
+  border-radius: 7px;
+  background: #ffffff18;
+  color: #f7efff;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
 .feed-highlight-action {
   display: inline-flex;
   align-items: center;
@@ -69,7 +81,7 @@
   .feed-highlight-name h2 { font-size: clamp(14px, 4vw, 19px); }
   .feed-highlight-details { align-self: start; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 8px; padding-bottom: 10px; }
   .feed-highlight-details strong { font-size: clamp(16px, 4.4vw, 21px); }
-  .feed-highlight-details span { font-size: 12px; line-height: 1.25; }
+  .feed-highlight-availability { font-size: 11px; line-height: 1.25; }
   .feed-highlight-action { align-self: start; padding-top: 1px; }
   .feed-highlight-action span {
     position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);

@@ -5,7 +5,7 @@ import { productSharePath } from '@/lib/product-link';
 import { publicBrandLink } from '../../../../config/brand-presentation';
 
 /** Keep a selectable public link available even when sharing or clipboard access is denied. */
-export function ProductShare({ slug, title, productId, variantId }: { slug: string; title: string; productId?: string; variantId?: string }) {
+export function ShareLink({ slug, title, productId, variantId, kind = 'product' }: { slug: string; title: string; productId?: string; variantId?: string; kind?: 'product' | 'store' }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const session = useRef(0);
   const pending = useRef(false);
@@ -15,7 +15,9 @@ export function ProductShare({ slug, title, productId, variantId }: { slug: stri
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
-  const link = publicBrandLink(productSharePath(slug, variantId, productId));
+  const isStore = kind === 'store';
+  const label = isStore ? 'Compartir tienda' : 'Compartir producto';
+  const link = publicBrandLink(isStore ? '/tienda/' + encodeURIComponent(slug) : productSharePath(slug, variantId, productId));
   const reset = () => { session.current++; pending.current = false; setBusy(false); setCopied(false); setError(''); };
   const close = () => { reset(); dialog.current?.close(); };
   const run = async (action: 'copy' | 'share') => {
@@ -28,7 +30,7 @@ export function ProductShare({ slug, title, productId, variantId }: { slug: stri
         await navigator.clipboard.writeText(link);
         if (session.current === current) setCopied(true);
       } else {
-        await navigator.share({ title, text: `${title} en mayami`, url: link });
+        await navigator.share({ title, text: isStore ? title : `${title} en MAYAMI`, url: link });
         if (session.current === current) close();
       }
     } catch (failure) {
@@ -37,7 +39,7 @@ export function ProductShare({ slug, title, productId, variantId }: { slug: stri
     } finally { if (session.current === current) { pending.current = false; setBusy(false); } }
   };
   return <>
-    <button type="button" className="product-share-trigger" aria-label="Compartir producto" aria-haspopup="dialog" onClick={() => { reset(); setCanShare(typeof navigator.share === 'function'); dialog.current?.showModal(); }}>
+    <button type="button" className={isStore ? "button secondary store-share-trigger" : "product-share-trigger"} aria-label={label} aria-haspopup="dialog" onClick={() => { reset(); setCanShare(typeof navigator.share === 'function'); dialog.current?.showModal(); }}>
       <Share2 size={18} aria-hidden="true" /><span>Compartir</span>
     </button>
     <dialog ref={dialog} className="product-share-dialog" aria-labelledby={titleId} onClose={event => {
@@ -45,9 +47,9 @@ export function ProductShare({ slug, title, productId, variantId }: { slug: stri
       if (!event.currentTarget.open) reset();
     }}>
       <button type="button" className="dialog-close" aria-label="Cerrar opciones de compartir" onClick={close}><X size={20} aria-hidden="true" /></button>
-      <h2 id={titleId}>Compartir producto</h2>
+      <h2 id={titleId}>{label}</h2>
       <p className="product-share-name">{title}</p>
-      <label htmlFor={linkId}>Enlace del producto</label>
+      <label htmlFor={linkId}>{isStore ? 'Enlace de la tienda' : 'Enlace del producto'}</label>
       <input id={linkId} type="text" readOnly value={link} onFocus={event => event.currentTarget.select()} />
       <div className="product-share-actions">
         {canShare && <button type="button" className="button" disabled={busy} aria-busy={busy} onClick={() => void run('share')}><Share2 size={18} aria-hidden="true" />Compartir</button>}
@@ -60,3 +62,5 @@ export function ProductShare({ slug, title, productId, variantId }: { slug: stri
     </dialog>
   </>;
 }
+
+export const ProductShare = ShareLink;

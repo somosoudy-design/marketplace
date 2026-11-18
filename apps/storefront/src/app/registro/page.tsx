@@ -88,7 +88,7 @@ function Registration() {
         </button>
       </form>
       <p className="access-legal">Consulta los <Link prefetch={false} href="/terminos">términos</Link> y la{' '}
-        <Link prefetch={false} href="/privacidad">política de privacidad</Link> de Mayami.</p>
+        <Link prefetch={false} href="/privacidad">política de privacidad</Link> de MAYAMI.</p>
       <p className="access-switch">¿Ya tienes cuenta? <Link prefetch={false} href={authHref('/cuenta', back)}>Iniciar sesión</Link></p>
     </BuyerAccess>
   );

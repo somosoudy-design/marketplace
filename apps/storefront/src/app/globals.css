@@ -471,15 +471,16 @@ main:focus {
   margin-bottom: 5px;
 }
 .product-copy h3 {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.5;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
   letter-spacing: -0.01em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 36px;
+  block-size: 2.7em;
+  overflow-wrap: anywhere;
 }
 .product-price {
   display: flex;
@@ -1319,10 +1320,6 @@ legend {
   }
   .product-copy {
     padding: 10px 3px 8px;
-  }
-  .product-copy h3 {
-    font-size: 11px;
-    min-height: 34px;
   }
   .product-price strong {
     font-size: 16px;
@@ -2267,4 +2264,27 @@ button[aria-busy='true'] { cursor: progress; }
   }
   .header .mobile-explore-links a[aria-current='page'] { color: var(--brand); border-color: var(--brand); }
   .header .mobile-explore-links a:focus-visible { outline-color: var(--brand); outline-offset: -3px; }
+}
+
+.catalog-price { display: inline-grid; justify-items: start; gap: 3px; min-width: 0; line-height: 1.25; }
+.catalog-price-ves { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.catalog-price-usd { color: var(--text-secondary); font-size: 12px; font-weight: 550; }
+.catalog-price del { margin-inline-start: 6px; font-size: 11px; font-weight: 500; }
+.detail-price .catalog-price { font-size: inherit; }
+
+/* A pinned opaque masthead keeps mobile browser chrome from sampling scrolling content. */
+@media (max-width: 760px) and (min-height: 520px) and (pointer: coarse) {
+  .app-shell > .header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .app-shell #contenido,
+  .app-shell .search-page #productos,
+  .app-shell .product-page :is(.product-questions, .product-reviews) {
+    scroll-margin-top: calc(var(--sticky-header-height, 165px) + 8px);
+  }
+  .app-shell main :focus-visible {
+    scroll-margin-top: calc(var(--sticky-header-height, 165px) + 8px);
+  }
 }

@@ -6,6 +6,7 @@ import { publicCatalogMetadata } from '@/lib/server';
 import { ProductDetail } from '@/components/product-detail';
 import { Failure } from '@/components/states';
 import { catalogText } from '@/lib/photos';
+import { storeDisplayName } from '@/lib/store-presentation';
 import { env } from '@/lib/env';
 import { reviewedSelectionInput } from '@/lib/catalog-selection';
 import { productSharePath, requestedProductVariant } from '@/lib/product-link';
@@ -28,7 +29,7 @@ export async function productMetadata(load: LoadProduct, query: ProductQuery): P
       ?.replace(/\s+/g, ' ').trim();
     const description = details && details.length > 155
       ? details.slice(0, 152).replace(/\s+\S*$/, '') + '…'
-      : details || `${p.category_name} · Vendido por ${p.store.name} en Mayami.`;
+      : details || `${p.category_name} · Vendido por ${storeDisplayName(p.store)} en MAYAMI.`;
     const image = selection?.variant?.active
       ? selection.mediaState === 'unclassified' ? metadata?.general_images?.[0] : selection.cover
       : undefined;
@@ -41,7 +42,7 @@ export async function productMetadata(load: LoadProduct, query: ProductQuery): P
       alternates: { canonical },
       openGraph: {
         type: 'website',
-        siteName: 'Mayami',
+        siteName: 'MAYAMI',
         locale: 'es_VE',
         title: shareTitle,
         description,

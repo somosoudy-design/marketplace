@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next';
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: '/',
-    name: 'Mayami',
-    short_name: 'Mayami',
+    name: 'MAYAMI',
+    short_name: 'MAYAMI',
     lang: 'es-VE',
     start_url: '/',
     scope: '/',

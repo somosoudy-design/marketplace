@@ -85,6 +85,9 @@ const account = () => ({ session, ready: true, retryCartSync() {}, cartSyncing, 
 const Link = ({ children, prefetch, ...props }) => React.createElement('a', props, children);
 const icons = new Proxy({}, { get: () => () => null });
 const base = {
+  '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
+  './store-badge': { OfficialStoreSeal: () => React.createElement('span', { role: 'img', 'aria-label': 'Tienda oficial' }) },
+
   'react/jsx-runtime': req('react/jsx-runtime'),
   react: hookReact,
   'next/link': { default: Link },
@@ -144,6 +147,7 @@ const productPorts = {
   './product-card': { ProductGrid: () => null },
   '@/lib/photos': { catalogText: (x) => x, catalogSample: () => false, photo: () => null },
   '@/lib/product-link': require('../../apps/storefront/src/lib/product-link.ts'),
+  './catalog-price': { CatalogPrice: ({ usd }) => React.createElement('strong', null, usd == null ? 'Precio no disponible' : core.formatOfferPrice(usd)) },
   '@/lib/catalog-selection': selection,
   '@/lib/cart-intents': {},
 };

@@ -58,6 +58,9 @@ const banner = load('apps/storefront/src/components/product-banner.tsx', {
   'lucide-react': { ArrowRight: () => null },
   './photo': { ProductPhoto: () => null },
   './product-spotlight.css': {},
+  '@/lib/store-presentation': require('../../apps/storefront/src/lib/store-presentation.ts'),
+  './catalog-price': { CatalogPrice: ({ usd }) => React.createElement('strong', null, usd == null ? 'Precio no disponible' : core.formatOfferPrice(usd)) },
+  './store-badge': { OfficialStoreSeal: () => React.createElement('span', { role: 'img', 'aria-label': 'Tienda oficial' }) },
   '@/lib/catalog-selection': selection,
   '@/lib/format': { money: core.formatOfferPrice },
 });

@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { HeaderSearchInput } from './header-search-input';
 import { BrowseNavigation } from './browse-navigation';
 import { usePathname } from 'next/navigation';
@@ -13,8 +13,20 @@ import { NotificationLink } from './notifications';
 import { MobileNavigation } from './mobile-navigation';
 import { BrandMark } from './brand-mark';
 import { useGuestCartState } from '@/lib/guest-hooks';
+import { CatalogRateProvider } from './catalog-price';
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const header = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const element = header.current;
+    const shell = element?.parentElement;
+    if (!element || !shell) return;
+    const measure = () => shell.style.setProperty('--sticky-header-height', `${element.offsetHeight}px`);
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    measure();
+    return () => observer.disconnect();
+  }, []);
   const focused = pathname === '/checkout' || pathname.startsWith('/pagar/');
   const product = pathname.startsWith('/p/');
   const accessForm = pathname === '/registro' || pathname === '/recuperar';
@@ -34,7 +46,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <a className="skip" href="#contenido">
         Ir al contenido
       </a>
-      <header className={`header${focused ? ' header-focused' : ''}${accessForm ? ' header-access' : ''}`}>
+      <header ref={header} className={`header${focused ? ' header-focused' : ''}${accessForm ? ' header-access' : ''}`}>
         <div className="header-inner">
           <Link prefetch={false} href="/" className="wordmark" aria-label={`${brand.name}, inicio`}>
             <BrandMark inverse compact={mobileNavigation} />
@@ -72,7 +84,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <BrowseNavigation pathname={pathname} hidden={focused} />
       </header>
       <main id="contenido" tabIndex={-1}>
-        {children}
+        <CatalogRateProvider pathname={pathname} ready={ready}>{children}</CatalogRateProvider>
       </main>
       <footer className="footer wrap">
         <div className="footer-brand">

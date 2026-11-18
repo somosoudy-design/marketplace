@@ -19,6 +19,8 @@ import {
   withPlan,
 } from '@kora/core';
 import { ProductPhoto } from './photo';
+import { storeDisplayName } from '@/lib/store-presentation';
+import { CatalogPrice } from './catalog-price';
 import { ColorDot } from './color-dot';
 import { Favorite } from './favorite';
 import { ProductShare } from './product-share';
@@ -279,7 +281,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
           </header>
           <div className="product-offer-panel">
             <div className="product-summary">
-              <SellerLink name={p.store.name} slug={p.store.slug} />
+              <SellerLink id={p.store.id} name={p.store.name} slug={p.store.slug} kind={p.store.kind} />
               <nav className="product-community-links" aria-label="Opiniones y consultas">
                 <a href="#opiniones"><Star size={15} aria-hidden="true" />Calificaciones</a>
                 <a href="#preguntas"><MessageCircle size={15} aria-hidden="true" />Preguntas</a>
@@ -289,9 +291,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
 
             <div className="detail-purchase">
               <div className="detail-price">
-                {resolved.price_usd == null || !Number.isFinite(resolved.price_usd)
-                  ? 'Precio no disponible'
-                  : money(resolved.price_usd)}
+                <CatalogPrice usd={resolved.price_usd} />
               </div>
               {resolved.conditionLabel && (
                 <p className="detail-condition" data-testid="product-condition">
@@ -399,7 +399,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
               )}
               <div className="purchase-action" ref={purchaseAction}>
                 <div className="purchase-context" role="group" aria-label="Oferta seleccionada">
-                  <strong>{resolved.price_usd == null ? 'Precio no disponible' : money(resolved.price_usd)}</strong>
+                  <CatalogPrice usd={resolved.price_usd} />
                   <OfferStatus
                     availability={p.availability}
                     stock={variant?.stock}
@@ -462,10 +462,10 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
       <ProductContent
         description={catalogText(p.description ?? '', p.is_demo, p.id)}
         highlights={p.highlights?.map((h) => catalogText(h, p.is_demo) ?? h)}
-        seller={p.store.name}
+        seller={storeDisplayName(p.store)}
       />
-      <ProductReviews productId={p.id} slug={p.slug} routePath={routePath} storeName={p.store.name} />
-      <ProductQuestions productId={p.id} slug={p.slug} routePath={routePath} seller={p.store.name} />
+      <ProductReviews productId={p.id} slug={p.slug} routePath={routePath} storeName={storeDisplayName(p.store)} />
+      <ProductQuestions productId={p.id} slug={p.slug} routePath={routePath} seller={storeDisplayName(p.store)} />
       {p.related.length > 0 && (
         <section className="catalog-section">
           <div className="section-heading">

@@ -1,3 +1,5 @@
+import { hasOfficialSeal, storeDisplayName } from '@/lib/store-presentation';
+import { OfficialStoreSeal } from './store-badge';
 import Link from 'next/link';
 import { ArrowRight, CircleHelp, Package, Store, Undo2 } from 'lucide-react';
 import {
@@ -30,12 +32,12 @@ export function OfferStatus({
   );
 }
 
-export function SellerLink({ name, slug }: { name: string; slug: string }) {
+export function SellerLink({ id, name, slug, kind }: { id?: string; name: string; slug: string; kind?: string }) {
   return (
     <Link prefetch={false} className="seller-link" href={`/tienda/${encodeURIComponent(slug)}`}>
       <Store size={17} aria-hidden="true" />
       <span>
-        Vendido por <strong>{name}</strong>
+        Vendido por <strong>{storeDisplayName({ id, name })}</strong> {hasOfficialSeal({ kind }) && <OfficialStoreSeal />}
       </span>
       <ArrowRight size={15} aria-hidden="true" />
     </Link>

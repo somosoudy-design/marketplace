@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     icon: { url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
     apple: { url: '/brand/pwa/icon-180.png', sizes: '180x180', type: 'image/png' },
   },
-  appleWebApp: { capable: true, title: 'Mayami', statusBarStyle: 'black' },
+  appleWebApp: { capable: true, title: 'MAYAMI', statusBarStyle: 'black' },
   metadataBase: new URL('https://mayami.app'),
   robots: { index: true, follow: true },
 };

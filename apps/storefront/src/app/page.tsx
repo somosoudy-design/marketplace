@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { ArrowUpRight, Cable, Cross, Headphones, House, Laptop, PawPrint, ShoppingBag, Sparkles, type LucideIcon } from 'lucide-react';
+import { OfficialStoreSeal } from '@/components/store-badge';
+import { hasOfficialSeal, storeDisplayName } from '@/lib/store-presentation';
 import { StoreAvatar } from '@/components/store-avatar';
 import { publicApi } from '@/lib/server';
 import { productSharePath } from '@/lib/product-link';
@@ -87,9 +89,9 @@ export default async function Home() {
             <div className="store-list">
               {home.stores.slice(0, 6).map((s) => (
                 <Link prefetch={false} key={s.id} href={`/buscar?store=${s.slug}`}>
-                  <StoreAvatar id={s.id} name={s.name} path={s.logo_path} />
+                  <StoreAvatar id={s.id} name={storeDisplayName(s)} path={s.logo_path} />
                   <div>
-                    <h3>{s.name}</h3>
+                    <h3>{storeDisplayName(s)} {hasOfficialSeal(s) && <OfficialStoreSeal />}</h3>
                     {s.tagline && <p>{s.tagline}</p>}
                   </div>
                   <ArrowUpRight size={16} />

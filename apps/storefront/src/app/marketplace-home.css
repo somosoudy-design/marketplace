@@ -26,7 +26,6 @@
 .market-home .market-hero-photos .product-photo { background: #fff; border-radius: 10px; }
 .market-home .market-featured .section-heading { margin-bottom: 16px; }
 .market-home .market-featured .eyebrow { color: var(--brand); }
-.market-home .product-copy h3 { font-size: 14px; line-height: 1.35; font-weight: 600; min-height: 38px; }
 .market-home .product-brand { font-size: 11px; }
 .market-home .product-price strong { font-size: 18px; }
 @media (prefers-color-scheme: dark) {
@@ -53,11 +52,9 @@
   .market-home .market-hero .button { font-size: 12px; padding-inline: 12px; white-space: nowrap; }
   .market-home .market-featured .section-heading h2 { font-size: 18px; }
   .market-home .market-hero-photos { padding: 8px; }
-  .market-home .product-copy h3 { font-size: 14px; min-height: 38px; }
 }
 
 /* Catalog and product detail use the same commercial hierarchy. */
-.search-results .product-copy h3 { font-size: 14px; line-height: 1.35; font-weight: 600; min-height: 38px; }
 .search-results .product-brand { font-size: 11px; }
 .search-results .product-price strong { font-size: 18px; }
 .product-page .detail-policies { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 0; }
@@ -89,14 +86,12 @@
   .market-home .market-collections { grid-template-columns: 1fr; gap: 12px; margin-bottom: 35px; }
   .market-home .market-collection-wide { grid-column: auto; }
   .market-home .market-collection .product-grid, .market-home .market-collection-wide .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .market-home .product-copy h3, .search-results .product-copy h3 { display: block; -webkit-line-clamp: unset; overflow: visible; min-height: 0; overflow-wrap: anywhere; }
   .market-home .product-link, .search-results .product-link { display: flex; flex-direction: column; }
   .market-home .product-copy, .search-results .product-copy { display: flex; flex: 1; flex-direction: column; }
   .market-home .product-price, .search-results .product-price { margin-top: auto; padding-top: 9px; }
 }
 .market-home .market-collection .product-link { display: flex; flex-direction: column; }
 .market-home .market-collection .product-copy { display: flex; flex: 1; flex-direction: column; }
-.market-home .market-collection .product-copy h3 { display: block; -webkit-line-clamp: unset; overflow: visible; min-height: 0; overflow-wrap: anywhere; }
 .market-home .market-collection .product-price { margin-top: auto; padding-top: 9px; }
 @media (max-width: 700px) {
   .header .browse-nav { scrollbar-width: thin; scrollbar-color: var(--brand) transparent; }
@@ -104,7 +99,6 @@
   .header .browse-nav::-webkit-scrollbar-thumb { background: var(--brand); border-radius: 8px; }
 }
 @media (max-width: 1100px) {
-  .market-home .product-copy h3, .search-results .product-copy h3 { display: block; -webkit-line-clamp: unset; overflow: visible; min-height: 0; overflow-wrap: anywhere; }
   .market-home .product-link, .search-results .product-link { display: flex; flex-direction: column; }
   .market-home .product-copy, .search-results .product-copy { display: flex; flex: 1; flex-direction: column; }
   .market-home .product-price, .search-results .product-price { margin-top: auto; padding-top: 9px; }
@@ -158,6 +152,7 @@
 
 /* Finite, progressively loaded discovery; cards preserve the existing Mayami language. */
 .discovery-group { margin-block: 28px; }
+.market-home .discovery-batch:first-child > .discovery-group:first-child { margin-block-start: 16px; }
 .discovery-group .eyebrow { color: var(--brand); }
 .discovery-spotlight { margin-block: 32px; }
 .market-home .discovery-spotlight .market-hero h2 { font-size: clamp(24px,3vw,38px); line-height:1.15; }
@@ -167,7 +162,7 @@
 .discovery-more button { min-width:180px; }
 
 /* One compact navigation for every category, with the same presentation at every width. */
-.market-home .home-categories { margin-block: 20px 24px; }
+.market-home .home-categories { margin-block: 12px 0; }
 .market-home .market-category-feature {
   display: flex;
   gap: 8px;
@@ -214,7 +209,6 @@
 .market-home .market-category-icon { width: 24px; height: 24px; }
 .market-home .market-category-tile h2 { margin: 0; max-width: 100%; font-size: 13px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
 @media (max-width: 700px) {
-  .market-home .home-categories { margin-block: 14px 20px; }
   .market-home .market-category-tile { flex-basis: 104px; padding-block: 10px; }
 }
 
