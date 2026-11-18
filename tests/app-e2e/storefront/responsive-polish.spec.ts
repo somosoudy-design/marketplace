@@ -30,16 +30,26 @@ for (const width of [320, 390, 820, 1440]) {
   });
 }
 
-test('en móvil el título del producto queda sobre la galería y por encima de la compra fija', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 700 });
-  await page.goto('/buscar');
-  await page.locator('.product-card .product-link').first().click();
-  const title = await page.getByRole('heading', { level: 1 }).boundingBox();
-  const gallery = await page.getByRole('region', { name: 'Fotografías' }).boundingBox();
-  const purchase = await page.locator('.purchase-action').boundingBox();
-  expect(title!.y + title!.height).toBeLessThan(gallery!.y);
-  expect(title!.y + title!.height).toBeLessThan(purchase!.y);
-});
+for (const [width, height] of [[320, 700], [390, 844]]) {
+  test(`ficha móvil a ${width} px muestra la galería antes del título y esconde la ruta`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.goto('/buscar');
+    const productHref = await page.locator('.product-card .product-link').first().getAttribute('href');
+    await page.goto(new URL(productHref!, page.url()).href);
+    await page.evaluate(() => document.fonts.ready);
+
+    const title = page.getByRole('heading', { level: 1 });
+    await expect(title).toHaveCount(1);
+    await expect(page.locator('.product-page .breadcrumbs')).toBeHidden();
+    const layout = await title.evaluate((heading) => ({
+      title: heading.getBoundingClientRect().toJSON(),
+      galleryBottom: document.querySelector('.product-gallery')!.getBoundingClientRect().bottom,
+      purchaseTop: document.querySelector('.purchase-action')!.getBoundingClientRect().top,
+    }));
+    expect(layout.galleryBottom).toBeLessThan(layout.title.top);
+    expect(layout.title.bottom).toBeLessThan(layout.purchaseTop);
+  });
+}
 
 test('registro y recuperación conservan la cabecera compacta a 320 px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });

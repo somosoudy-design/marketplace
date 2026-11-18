@@ -1,5 +1,9 @@
 # Estado actual de mayami
 
+## 17 noviembre 2026 · Galería primero en la ficha móvil
+
+La candidata recupera el orden galería y título en un solo bloque de información y oculta la ruta «Catálogo / categoría» en móvil. En 320 × 700, la fotografía conserva su proporción y el título queda a 23 px de la barra de compra. Se aprobaron 194 pruebas de la tienda, lint y las comprobaciones de composición a 320 y 390 px. La revisión independiente cubrió Chrome y WebKit, incluidos escritorio, miniaturas y Compartir. Próxima acción, compilar para el Worker Free y verificar el resultado en mayami.app.
+
 ## 17 noviembre 2026 · Pulido visual de la tienda web
 
 Publicado y comprobado en mayami.app, Worker Free `2a3bf66a-9faa-4427-8c2c-be8595f7295c`, fuente `a5c3d6f`. La cabecera de navegación móvil pasa de 120 a 64 px. En la ficha de NEEWER de 390 px el título pasa de y=668 a y=229 y la foto queda centrada en escritorio. En la búsqueda vacía se edita la consulta antes de salir al catálogo. En móvil y tableta, filtros y orden miden 44 px y sus centros coinciden. La recuperación y el registro conservan la cabecera compacta. En seis cargas públicas, el correo mantuvo su posición cuando se habilitó Google. Los accesos de visitante a pedidos, direcciones y checkout identifican la cuenta y preservan la ruta de retorno.
