@@ -1,12 +1,14 @@
 # Estado actual de mayami
 
-## 18 noviembre 2026 · Cabeceras de carrito y tienda en revisión
+## 18 noviembre 2026 · Cabeceras de carrito y tienda publicadas
 
-La candidata local muestra «Carrito (N)» en una sola línea. El conteo de invitado y comprador suma unidades y la primera línea de producto empieza unos 49 px antes en Chrome y WebKit móvil. En la portada de tienda, el engranaje comparte la fila del nombre y mantiene el destino y permisos de «Administrar tienda». El área táctil ocupa 44 × 44 px CSS. Seguir y Compartir conservan sus acciones.
+El storefront muestra «Carrito (N)» en una sola línea. El conteo de invitado y comprador suma unidades y la primera línea de producto empieza unos 49 px antes en Chrome y WebKit móvil. En la portada de tienda, el engranaje comparte la fila del nombre y mantiene el destino y permisos de «Administrar tienda». El área táctil ocupa 44 × 44 px CSS. Seguir y Compartir conservan sus acciones.
 
 Se comprobaron Chrome móvil a 412 px, WebKit móvil a 390 px y el nombre largo a 320 px en ambos. Ocho recorridos de roles y carrito pasaron en Chrome y WebKit, junto con 197 pruebas del storefront, typecheck y lint. La PWA instalada en un iPhone 18 Pro simulado comprobó el carrito de invitado y el engranaje con una cuenta autorizada local. Capturas en `~/Downloads/MAYAMI-cabeceras-20261118`.
 
-Próxima acción. Recibir la revisión de Oliver antes de desplegar el storefront.
+Oliver autorizó desplegar la candidata. Cloudflare Free sirve la versión `9e8d5664-6be9-40d9-8e5d-78e5d71913fb` al 100 % desde la fuente `a906469`. La versión anterior para reversión es `e83c2367-17d2-4ca0-a7ae-3ee0f0df3586`.
+
+En la PWA oficial instalada en iPhone 18 Pro simulado, el carrito mostró «Carrito (1)» con una tablet del catálogo y volvió al estado vacío al quitarla. Como visitante en la tienda pública se comprobó el sello y el acceso a Seguir tienda, con el engranaje oculto. En Chrome con la sesión real de Oliver, el engranaje reabrió el editor de MAYAMI y se verificó el retorno a la tienda pública. En Chrome y WebKit móvil pasó el cambio de una a dos unidades y el regreso a una. También se comprobó el enlace canónico al compartir como visitante. Evidencia de producción en `~/Downloads/MAYAMI-cabeceras-20261118/publicada`.
 
 ## 18 noviembre 2026 · Tienda y panel bajo MAYAMI
 

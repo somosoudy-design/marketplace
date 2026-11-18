@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Cabeceras publicadas
+
+Publicada la candidata `a906469` en Cloudflare Free. El carrito y la portada se comprobaron en la PWA oficial instalada en simulador. En el Chrome de Oliver se comprobó el engranaje y el perfil de tienda en el panel. [Estado y pruebas](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · Codex · Dos cabeceras para revisión
 
 Se compactó el título del carrito y se integró el acceso de gestión en la fila del nombre de la tienda. La candidata se probó en móvil y PWA instalada y quedó pendiente de revisión antes de desplegar. [Estado y pruebas](ESTADO_ACTUAL.md).
