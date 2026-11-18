@@ -18,6 +18,8 @@ La PWA instalada de producción en un iPhone 18 Pro simulado (iOS 27) abrió la 
 
 La APK firmada instalada en el emulador Android 16 confirmó en Diagnóstico el identificador de actualización publicado, el runtime previsto y el canal preview. La APK abrió los tres slugs en el perfil oficial, compartió el vínculo nuevo y solicitó sesión al invitado que abrió directamente el editor. Su fuente exacta está fijada en el checkpoint local `refs/checkpoints/android-preview-store-admin-20261118`.
 
+En Expo Go sobre iOS simulado, una cuenta propietaria de prueba abrió el editor del perfil correcto desde su tienda y el invitado tuvo que autenticarse. No se publicó un binario iOS.
+
 Para reversión del storefront se conserva la versión `36bdc578-422e-4d0f-a04e-4b343a376ba9`. El respaldo del panel está en https://kora-panel.expo.app y el grupo Android preview anterior es `75c0f3b7-9e41-4246-b458-a73654c1f580`. Las instrucciones del panel se encuentran en [Entorno](ENTORNO.md).
 
 ## 18 noviembre 2026 · Cabecera de tienda publicada
