@@ -1,0 +1,106 @@
+# Public reads and device-only visitor cart. No remote account, order, quote or payment.
+appId: com.example.kora.preview
+name: Catálogo — cinco referencias con edición de estudio
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-recommended
+    timeout: 60000
+- takeScreenshot: catalogo-estudio-01-inicio
+- tapOn:
+    id: home-search
+- extendedWaitUntil:
+    visible:
+      id: catalog-search
+    timeout: 20000
+- tapOn:
+    id: catalog-search
+- eraseText
+- inputText: UGREEN
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: product-card-ugreen-cable-usb-c-100w
+    timeout: 20000
+- assertVisible:
+    id: exhibition-photo-22516bf2-7283-45c1-a3a5-2449797a25db
+- takeScreenshot: catalogo-estudio-02-buscar
+- openLink: kora://p/ugreen-cable-usb-c-100w
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-22516bf2-7283-45c1-a3a5-2449797a25db
+    timeout: 20000
+- takeScreenshot: catalogo-estudio-03-lector
+- openLink: kora://p/ugreen-nexode-65w
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-e7a91cd8-d3a2-4436-986c-71d1d95da813
+    timeout: 20000
+- takeScreenshot: catalogo-estudio-04-samsung-kit
+- tapOn:
+    id: product-selection-summary
+- extendedWaitUntil:
+    visible:
+      id: variant-Solo cargador · Negro
+    timeout: 15000
+- tapOn:
+    id: variant-Solo cargador · Negro
+- swipe:
+    start: 50%, 25%
+    end: 50%, 85%
+- takeScreenshot: catalogo-estudio-05-samsung-solo
+- tapOn:
+    id: product-add
+- extendedWaitUntil:
+    visible:
+      id: added-to-cart
+    timeout: 15000
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-line-03c25cc2-2186-466f-a3a5-0f0201dfad81
+    timeout: 20000
+- assertVisible: .*Solo cargador.*
+- assertVisible:
+    id: exhibition-photo-e7a91cd8-d3a2-4436-986c-71d1d95da813
+- takeScreenshot: catalogo-estudio-06-carrito-solo
+- tapOn:
+    id: cart-remove-03c25cc2-2186-466f-a3a5-0f0201dfad81
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- tapOn:
+    id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- openLink: kora://p/ugreen-power-bank-20000
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-01a43334-e485-41cc-a12a-c049e933665d
+    timeout: 20000
+- takeScreenshot: catalogo-estudio-07-anker
+- openLink: kora://p/ugreen-revodok-hub-6-en-1
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-910cdfb7-9a3e-48e5-bd40-99269aea332a
+    timeout: 20000
+- takeScreenshot: catalogo-estudio-08-startech
+- openLink: kora://p/ugreen-nexode-30w
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-6209f8ff-aeab-40e3-9168-9528a30ca55d
+    timeout: 20000
+- takeScreenshot: catalogo-estudio-09-car30
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a16b56-46a9-7960-a239-4b2271e68d5a.*
+- takeScreenshot: catalogo-estudio-10-recepcion

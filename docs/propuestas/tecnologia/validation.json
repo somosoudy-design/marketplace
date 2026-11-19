@@ -1,0 +1,96 @@
+{
+  "source": "dcee73d95d1b818a25a9d34a5e97c6f1f248b7fd",
+  "tree": "aaf5caaf4293b9f9d34fa637543d4c31fc97da98",
+  "parent": "884611780a1a3207aca9c3f3d8703b0324f65718",
+  "paths": [
+    "apps/storefront/src/app/page.tsx",
+    "apps/storefront/src/components/photo.tsx",
+    "apps/storefront/src/lib/category-navigation-art.ts",
+    "apps/storefront/public/category-art/tecnologia-mask-046d5825ab82a348.png",
+    "apps/storefront/public/category-art/tecnologia-mask.provenance.json",
+    "tests/storefront/category-navigation-art.test.ts"
+  ],
+  "publicationBaseLastVerified": "db41707f0c35e7e4e50373321225b03a2fd6ade0",
+  "publicationTree": "6f0b52c4ec80fc4a5c86bb72fdb4146c6a803594",
+  "publicationPatchApplies": true,
+  "publicationDeltaOnlySixPaths": true,
+  "publicationBuildPerformed": false,
+  "published": false,
+  "rootSourceContainsPendingGoogleAndQuota": "Backup only; never publish whole source. Use visual-only.patch on the last verified published base after revalidation.",
+  "recordedAt": "2026-11-08T17:08:52.798827+00:00",
+  "status": "LOCAL_VISUAL_CANDIDATE_FOR_REVIEW_NOT_PUBLISHED",
+  "asset": {
+    "input": "/Users/brandeastudio/.codex/generated_images/01a1ad26-4d08-7501-83b9-0dc14fe8567c/exec-338a30e3-06e2-475f-8266-0b88f858b50e.png",
+    "inputSha256": "9d451f69ff738faa77d88e9f3fab12a186175b0867b1685405e37c3ef67a105a",
+    "asset": "apps/storefront/public/category-art/tecnologia-mask-046d5825ab82a348.png",
+    "sha256": "046d5825ab82a348b98b6c47cc7ff077851f06cdb623c55888aaacd129fa44a2",
+    "bytes": 19027,
+    "width": 448,
+    "height": 448,
+    "alphaPreservedFromResizedToolOutput": true,
+    "maskRgb": "constant white; generated product RGB discarded",
+    "usage": "CSS alpha mask only; original served JPEG remains img src"
+  },
+  "checks": {
+    "scopedUnitTests": {
+      "passed": 3,
+      "total": 3,
+      "command": "pnpm exec vitest run tests/storefront/category-navigation-art.test.ts"
+    },
+    "storefrontTypecheck": "PASS",
+    "focalLint": "PASS",
+    "diffCheck": "PASS",
+    "normalBrowserContexts": 4,
+    "retinaContext": 1,
+    "expectedMask404Context": 1,
+    "audioDifferentPixelChannelValues": 0,
+    "fallbackDifferentPixelChannelValues": 0,
+    "originalsIntact": 147,
+    "googleSourceBlobsIntact": 35,
+    "quotaSourceBlobsIntact": 17,
+    "independentMontageReview": "Favorable for navigation; approximate matte partially thins stylus",
+    "independentPublicationReview": {
+      "result": "Favorable",
+      "source": "dcee73d95d1b818a25a9d34a5e97c6f1f248b7fd",
+      "base": "db41707f0c35e7e4e50373321225b03a2fd6ade0",
+      "tree": "6f0b52c4ec80fc4a5c86bb72fdb4146c6a803594",
+      "paths": 6,
+      "testFiles": 1,
+      "testCases": 3,
+      "allOtherBaseBlobsPreserved": true
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/tecnologia-fix-20261108/visual-only.patch",
+      "sha256": "d53f464d89713d2af960f46f35ed5c7e90d089dc938d4fc1a79442e409f7b1c0",
+      "bytes": 30646
+    },
+    {
+      "path": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/tecnologia-fix-20261108/source.bundle",
+      "sha256": "06ef2d033392a5757e668a333a5dd4f4b0e2464477c6a54110893b5887f0f2cc",
+      "bytes": 105663
+    }
+  ],
+  "visualEvidenceManifest": {
+    "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/EVIDENCE_MANIFEST.json",
+    "sha256": "51f07f45adf184c779f4a49fc97d93fbc193795fb699c7402a0c00460e1363be"
+  },
+  "limits": [
+    "Alpha silhouette is approximate and partially thins the stylus; no perfect cutout claim",
+    "Original JPEG still supplies all displayed RGB; generated product RGB was discarded",
+    "Local Home/ProductPhoto React+CSS renderer with data/Next bindings, not full Next SSR or native Android",
+    "Historical public image paths used as local fixture, not a fresh inventory assertion",
+    "Last documented published web base must be revalidated before building/deploying",
+    "No new Cloudflare build/artifact prepared or published in this task"
+  ],
+  "notPerformed": [
+    "Google/financial tests repeated",
+    "147 originals edited",
+    "Odontologia or other category changes",
+    "native renderer or identity changes",
+    "remote changes, credentials or permissions",
+    "AAB/APK/OTA, service activation or charges",
+    "publication"
+  ]
+}

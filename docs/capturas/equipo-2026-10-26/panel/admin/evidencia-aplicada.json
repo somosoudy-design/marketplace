@@ -1,0 +1,80 @@
+{
+  "source_sha256": "7196ed958bc732101231fc492e25201c0af9057beca145c7a4d9720c4e739aed",
+  "context": "Código real integrado por root sobre 743bb7c, Next dev localhost3100, backend localhost54321",
+  "inspected_accepted": [
+    {
+      "file": "applied-01-detail-390-light.png",
+      "sha256": "fa60c568180cfe4efed4337cc193be72d265eff5441d02c81c655d5fdf5f469c",
+      "bytes": 49559
+    },
+    {
+      "file": "applied-01-detail-1360-light.png",
+      "sha256": "51cc0bab4b15d01805ceae5a30747d96d6ce159710756e7182431bd37cf089c6",
+      "bytes": 165289
+    },
+    {
+      "file": "applied-01-detail-390-dark.png",
+      "sha256": "3681d817f9627110d675fc34bbce759472f385f4d7b6a05426be64acc3fa0dee",
+      "bytes": 51129
+    },
+    {
+      "file": "applied-01-detail-1360-dark.png",
+      "sha256": "0a6edd6dce922b3415d1579a6ffea3725d3a6756ef6ea680e93e3f30e8837270",
+      "bytes": 168818
+    },
+    {
+      "file": "applied-04-ledger-error-390-light.png",
+      "sha256": "0c6eb372580b6a720e3c2044b3478d36ac3942701183dd72f5c0d00cb74a91b5",
+      "bytes": 47123
+    },
+    {
+      "file": "applied-04-ledger-error-1360-light.png",
+      "sha256": "735b5dfd2e2b8e5890c407f9be764ca0ed172cbfec4942157ceb380c4e527b52",
+      "bytes": 159822
+    },
+    {
+      "file": "applied-04-ledger-error-390-dark.png",
+      "sha256": "e7d93d72ed915083efb9ff29c40f5f2863c99977ce21061b9e26042d43210678",
+      "bytes": 49227
+    },
+    {
+      "file": "applied-04-ledger-error-1360-dark.png",
+      "sha256": "e9287eef7a85f6f6ce7e427b946f3140b11a9fb70e1460c75828ecb3f3fdd85c",
+      "bytes": 162793
+    },
+    {
+      "file": "applied-03-ledger-loading-390-light.png",
+      "sha256": "9cbc4060066bc023a88afaa1fa9016186494153cf0815c41be9dd046a760eac0",
+      "bytes": 34837
+    },
+    {
+      "file": "applied-03-ledger-loading-1360-dark.png",
+      "sha256": "8a992cd0ed9660871b042c1691d6f21c4bf11292be663d618429aa70bee364e0",
+      "bytes": 154330
+    },
+    {
+      "file": "applied-05-ledger-recovered-390-dark.png",
+      "sha256": "e279a7f828239d60ef8a9e16ec2debd2ad85d07c16c7efc44a4b0afbe94cb288",
+      "bytes": 51782
+    },
+    {
+      "file": "applied-05-ledger-recovered-1360-light.png",
+      "sha256": "1d761ce7c01de485600e6dfa7a38a3ca99466d408bcacb2a8ada708ef7a45258",
+      "bytes": 165233
+    }
+  ],
+  "test_results": {
+    "pass": 3,
+    "fail": 0,
+    "seconds": 10.0
+  },
+  "baseline": {
+    "pass": 0,
+    "fail": 3
+  },
+  "limits": [
+    "No revisión ni escritura financiera",
+    "Shell móvil y su teclado quedan fuera del lote"
+  ],
+  "static_verification": "evidencia-estatica.json: 3/3 tests pasan en3101; dos capturas inspeccionadas/aceptadas; navegación de roles correcta"
+}

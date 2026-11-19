@@ -1,0 +1,147 @@
+{
+  "observedAtUTC": "2026-10-26T22:14:05.967575+00:00",
+  "server": "http://127.0.0.1:8102",
+  "sourceExport": ".local/equipo-20261026/mobile-final",
+  "observedServedHtmlMatchesExportBytes": true,
+  "observedHtmlSha256": "820b47d8e157d55930629e0e5d4ef9cdd99414d769c43d4c9e8a440c1fbff847",
+  "observedBundle": ".local/equipo-20261026/mobile-final/_expo/static/js/web/entry-43ca32ecf1b1f42a95b5b52537002e3d.js",
+  "observedBundleSha256": "cad3baec08d259b1d403945352d7c1adb78045c6721a78838a7dc9c3780157e1",
+  "testedSpec": ".local/equipo-20261026/catalog_verify/commercial-qa/commercial-gallery.spec.ts",
+  "testedSpecSha256": "f82ec4fb2fcef38fc6cad4a513c133239081b0ad11cf4763f06e4296a55b031f",
+  "report": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final.json",
+  "reportSha256": "5aa8dd170f8b07a93fafdc228b69bc495b6b293f5d1569280eac64eb65344a12",
+  "stats": {
+    "startTime": "2026-10-26T22:13:03.825Z",
+    "duration": 13960.645,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "screenshots": [
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/attributed-fallback-no-credit.png",
+      "sha256": "f386891eb6f4aacae243e147012ff4f610c9c33c169c0c46c26ae60200a05e6a",
+      "bytes": 140383,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/variant-credit-recovery-sheet.png",
+      "sha256": "f91029e33ccc4ac3d2fa57c10baee6708ff6e5101ff3d4aa30969b132f8d69c7",
+      "bytes": 53921,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/variant-credit-recovery.png",
+      "sha256": "279abab217a97ada36588a08aa58de330f5f60cf56fa37eaebc54439356bd8b0",
+      "bytes": 62939,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-1e668-low-the-active-gallery-page/mapped-photo-sources-sheet.png",
+      "sha256": "8d081d7c7e7f8f7db5aee88e342b83ed60190349885ff40f8c6102c80323b3e1",
+      "bytes": 52581,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-1e668-low-the-active-gallery-page/own-storage-photo-active.png",
+      "sha256": "eeb6d7eddfdfbeade52e3f806a02f5e0cffcb046751b6d822c9daf738ea67709",
+      "bytes": 140955,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-4dde0--opens-and-closes-on-demand/commercial-cart.png",
+      "sha256": "228d74df71117dd89989dfcc9a6a812544660308806f0bd523fc50f12aec6376",
+      "bytes": 38934,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-4dde0--opens-and-closes-on-demand/commercial-info-keyboard.png",
+      "sha256": "7a2e94c4df33f654b99267dc9fd7dd1e65203f125816f55726d9fea3b72f24d3",
+      "bytes": 54130,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-5d0d2-low-the-active-gallery-page/mapped-photo-sources-sheet.png",
+      "sha256": "ff92555eb37aa7d681d79cc3990e5615343dcab40f4c354421310968d3138499",
+      "bytes": 53907,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-5d0d2-low-the-active-gallery-page/own-storage-photo-active.png",
+      "sha256": "e35658e1e55085dd0a9ad412c8a43ffee6a7fa02dd6b47814c3c4a59b5ee2a89",
+      "bytes": 140524,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/attributed-fallback-no-credit.png",
+      "sha256": "53f4598c0473efcbf572dbbe7c37be3fa9e68f2782ff79be9cdce3891e0aaf14",
+      "bytes": 140780,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/variant-credit-recovery-sheet.png",
+      "sha256": "6ff0eda07a98802a9478751ba7c9cde6d9d954bbc548b0f0769b4af188f13668",
+      "bytes": 52594,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/variant-credit-recovery.png",
+      "sha256": "eb935592d0c713aa792d7cb600925a624ce5fda2c3585eb05aac1d6dd39f28ef",
+      "bytes": 64084,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-bdc70--opens-and-closes-on-demand/commercial-cart.png",
+      "sha256": "44b8818cfcc71dda7f37d22da14533a182f08e5b5dc67e3dc93a47651f71687f",
+      "bytes": 40476,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    },
+    {
+      "path": ".local/equipo-20261026/catalog_verify/commercial-qa/results-final/commercial-gallery-commerc-bdc70--opens-and-closes-on-demand/commercial-info-keyboard.png",
+      "sha256": "b042af6d43e8bc49ca3548e865e30de3e7977aed30cd5200ed25bd7122d94433",
+      "bytes": 52160,
+      "width": 320,
+      "height": 892,
+      "unalteredPlaywrightCapture": true
+    }
+  ],
+  "safety": "All browser API/Storage requests intercepted locally, foreign hosts aborted, no login or mutations; no test rerun against remote sources.",
+  "runtimeScope": "Exported Expo web, Chromium320px,light/dark; real horizontal wheel, keyboardEnter/Escape, pointer controls. NotAndroidnative.",
+  "verifiedBehaviors": [
+    "No repeated Demo or environment notices across Home, search, detail and guest cart",
+    "Private description removes known demo boilerplate while preserving product description meaning",
+    "Image information opens with keyboard Enter and closes with Escape",
+    "Author, CC license and Samsung additional source are visible in the Sheet",
+    "Fresh Storage path remains the second gallery slide and is selected with a real horizontal wheel action",
+    "No override credit appears on the fresh Storage path; mapped source credits return on the previous page",
+    "Attributed override failure removes all override credits; an unaffected variant recovers its own source credits"
+  ],
+  "representativeVisualInspection": "Four of fourteen raw captures viewed directly: mapped source Sheet, new Storage slide, keyboard-created-image Sheet, attributed fallback without override credit."
+}

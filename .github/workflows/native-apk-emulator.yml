@@ -1,0 +1,91 @@
+# Exact native build verification; never publishes an OTA or builds another APK.
+name: mayami · APK nativo en emulador
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/native-apk-emulator-request.json']
+permissions:
+  contents: write
+concurrency:
+  group: mayami-native-android-verification
+  cancel-in-progress: false
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 155
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          package-manager-cache: false
+      - name: Identidad explícita de la compilación terminada
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const r=JSON.parse(readFileSync('.github/native-apk-emulator-request.json','utf8'));
+          const fields={MAYAMI_BUILD_ID:[r.buildId,/^[a-f0-9-]{36}$/],MAYAMI_BUILD_COMMIT:[r.commit,/^[a-f0-9]{40}$/],MAYAMI_RUNTIME:[r.runtime,/^[a-f0-9]{40}$/]};
+          for(const [k,[v,re]] of Object.entries(fields)){if(!re.test(v??''))throw new Error('Invalid expected identity: '+k);appendFileSync(process.env.GITHUB_ENV,`${k}=${v}\n`);}
+          JS
+      - name: Esperar a que EAS termine el build existente
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: node tools/eas/wait-native-build.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Referencia pública de firma existente y APK exacto
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          mkdir -p shots/native
+          node tools/eas/signing-reference.mjs --output shots/native/signing-reference.json
+          node tools/eas/download-native-preview.mjs "$MAYAMI_BUILD_ID" "$MAYAMI_BUILD_COMMIT" "$MAYAMI_RUNTIME" shots/native/signing-reference.json
+      - name: Firma, paquete, label, versión, runtime y canal del binario
+        run: |
+          certificate=$(node -p "JSON.parse(require('fs').readFileSync('shots/native/signing-reference.json','utf8')).certificateSha256")
+          node tools/eas/verify-native-apk.mjs --build-json apks/native-build.json --source "$MAYAMI_BUILD_COMMIT" --runtime "$MAYAMI_RUNTIME" --certificate "$certificate" --apk apks/mayami-preview.apk --output apks
+          cp apks/native-apk-receipt.json shots/native/
+      - name: Conservar APK verificado para próximas migraciones
+        uses: actions/upload-artifact@v4
+        with:
+          name: mayami-preview-apk
+          path: |
+            apks/mayami-preview.apk
+            apks/native-apk-receipt.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Herramientas existentes y KVM
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          curl -fsSL --retry 3 https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+      - name: Arranque real, launcher, navegación y datos conservados
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: '1'
+          MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/eas/native-identity-emulator.sh
+      - name: PNG y videos originales, logs acotados y manifiesto
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mayami-native-android-evidence
+          path: shots/native/
+          if-no-files-found: warn
+      - name: Evidencia original para revisión independiente
+        if: always()
+        run: bash tools/eas/publish-native-evidence.sh

@@ -1,0 +1,20 @@
+{
+  "source": "064f4729dc8c2680859bb38c1338f274906465c3",
+  "tree": "cef8efa772bca94e28db4f49caa3591dda83fb0c",
+  "base": "db41707f0c35e7e4e50373321225b03a2fd6ade0",
+  "patchSha256": "27d5d459bd7547d567e5218300fc3af48119cf8b0ec02b66352f2ab26c45817b",
+  "bundleSha256": "5f6f68d5dcfb74b09f277e8a31b220942a520252c802022f73eaa26dc3bfc4ff",
+  "paths": [
+    "apps/storefront/public/category-art/tecnologia-mask-046d5825ab82a348.png",
+    "apps/storefront/public/category-art/tecnologia-mask.provenance.json",
+    "apps/storefront/src/app/page.tsx",
+    "apps/storefront/src/components/photo.tsx",
+    "apps/storefront/src/lib/category-navigation-art.ts",
+    "tests/storefront/category-navigation-art.test.ts"
+  ],
+  "technologyPath": "5afbabbf-0678-40ee-a5d8-540f53efe114/b1b4a794-c740-47e9-ae57-1c1e3089b80d/da3eea0c-d7cc-4afb-bb73-2ad29bfb3184.jpg",
+  "technologySha256": "0eb198ff2389e39568eff25de22c7ef0a4afe4898871c483584f53b713576ad8",
+  "maskSha256": "046d5825ab82a348b98b6c47cc7ff077851f06cdb623c55888aaacd129fa44a2",
+  "onlyThreeReconciledFilesFromPriorCandidate": true,
+  "deploymentStarted": false
+}

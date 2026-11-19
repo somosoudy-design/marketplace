@@ -1,0 +1,2 @@
+# Cambiar este archivo en la rama de trabajo revisa Firebase y las credenciales de Expo para push (workflow firebase-check).
+# Revisión 1: google-services.json, clave FCM V1 y firma del paquete preview antes del APK 5.

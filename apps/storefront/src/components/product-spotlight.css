@@ -1,0 +1,101 @@
+.feed-highlight {
+  margin-left: calc(-1 * env(safe-area-inset-left));
+  margin-right: calc(-1 * env(safe-area-inset-right));
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  overflow: hidden;
+  overflow: clip;
+  background: linear-gradient(105deg, #33264b, #261939 64%, #422657);
+}
+.feed-highlight-link {
+  --photo-width: clamp(144px, 18vw, 220px);
+  display: grid;
+  grid-template-columns: var(--photo-width) minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(16px, 2.8vw, 40px);
+  min-width: 0;
+  color: #fff;
+}
+.feed-highlight-link:focus-visible { outline: 3px solid #fff; outline-offset: -3px; position: relative; z-index: 1; }
+.feed-highlight-photo {
+  position: relative;
+  isolation: isolate;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+}
+.feed-highlight-photo::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 -100vw;
+  background: #f4eee9;
+}
+.feed-highlight-photo .product-photo {
+  width: 100%;
+  height: clamp(104px, 9vw, 136px);
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: transparent;
+}
+.feed-highlight-photo img { object-fit: contain; mix-blend-mode: multiply; }
+.feed-highlight-name { min-width: 0; padding-block: 12px; }
+.feed-highlight-name h2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: clamp(17px, 1.8vw, 26px);
+  line-height: 1.22;
+  letter-spacing: -.025em;
+}
+.feed-highlight-option, .feed-highlight-name small {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #e5d9f0;
+  font-size: 12px;
+  line-height: 1.3;
+  margin-top: 3px;
+}
+.feed-highlight-details { display: grid; gap: 3px; }
+.feed-highlight-details strong { font-size: clamp(20px, 2vw, 28px); line-height: 1.15; letter-spacing: -.04em; }
+.feed-highlight-details .catalog-price-usd { color: #ebdfef; }
+.feed-highlight-availability {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 2px 7px;
+  border-radius: 7px;
+  background: #ffffff18;
+  color: #f7efff;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.feed-highlight-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 650;
+}
+.feed-highlight-link:hover .feed-highlight-action { text-decoration: underline; }
+@media (max-width: 760px) {
+  .feed-highlight-link {
+    grid-template-columns: clamp(84px, 27vw, 148px) minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    gap: 5px clamp(9px, 2.6vw, 17px);
+  }
+  .feed-highlight-photo { grid-row: 1 / 3; }
+  .feed-highlight-photo .product-photo { height: clamp(96px, 28vw, 122px); }
+  .feed-highlight-name { grid-column: 2 / 4; align-self: end; padding: 10px 0 0; }
+  .feed-highlight-name h2 { font-size: clamp(14px, 4vw, 19px); }
+  .feed-highlight-details { align-self: start; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 8px; padding-bottom: 10px; }
+  .feed-highlight-details strong { font-size: clamp(16px, 4.4vw, 21px); }
+  .feed-highlight-availability { font-size: 11px; line-height: 1.25; }
+  .feed-highlight-action { align-self: start; padding-top: 1px; }
+  .feed-highlight-action span {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);
+  }
+}

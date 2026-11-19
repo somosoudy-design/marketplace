@@ -1,0 +1,80 @@
+{
+  "base": "08c3f7a5d995c9845c3230b4bd7a497f99ed4a92",
+  "runtimeFiles": [
+    "packages/api/src/client.ts",
+    "apps/storefront/src/lib/browser.ts",
+    "apps/storefront/src/app/auth/callback/page.tsx",
+    "apps/admin/src/lib/kora.ts"
+  ],
+  "regressionFile": "tools/auth/web-session-boundary.test.mjs",
+  "filesSha256": {
+    "packages/api/src/client.ts": "4003637ec02d0912f7a631838ecb9e0336fe214ccb219009e9b8e0fff0559243",
+    "apps/storefront/src/lib/browser.ts": "52f133ca1963118ff7cafb11adf9053b92e7f63b71766b0bb5617077719d5e10",
+    "apps/storefront/src/app/auth/callback/page.tsx": "f4f8139e5291b7319258b7f5e742c54af9fce7e895b6510f1d27f1ecd835daf8",
+    "apps/admin/src/lib/kora.ts": "932f6beae6bfe548ca5b507c1270bbaefde49ecbcf1041b92b3e3e8dc552d1a7",
+    "tools/auth/web-session-boundary.test.mjs": "f561dc34f5b6716a7fb0fa7795647f4711be315ecf236d3a9e97d4ec379d3cde"
+  },
+  "patchSha256": "5059eaa398ffb4116a3a9d60cdcdc05bb946b09223bfc423471a5e0727c103ad",
+  "newRegressionsPassed": 9,
+  "existingFocusedTestsPassed": 21,
+  "typecheck": [
+    "api",
+    "storefront",
+    "admin"
+  ],
+  "lint": [
+    "storefront callback/browser",
+    "admin kora"
+  ],
+  "deployed": false,
+  "built": false,
+  "ownershipNewCases": "not yet executed",
+  "scan": {
+    "baselineHead": "08c3f7a5d995c9845c3230b4bd7a497f99ed4a92",
+    "headTreeEntries": 2627,
+    "headMissingObjects": 0,
+    "availableCommits": 610,
+    "refsCount": 7,
+    "refs": [
+      "refs/codex/turn-diffs/checkpoints/35d3f5bf462aad4e9eb6afaae21efaed/9503933225c83d5bc7c569f763b9fa77/1791691269622/780d2fd5-afd0-47cc-8487-b60dabdf958a",
+      "refs/heads/claude/marketplace-v1",
+      "refs/remotes/origin/HEAD",
+      "refs/remotes/origin/ci/capturas",
+      "refs/remotes/origin/ci/evidencia-40007057660",
+      "refs/remotes/origin/claude/marketplace-v1",
+      "refs/remotes/origin/main"
+    ],
+    "fetchRefspecs": [
+      "+refs/heads/*:refs/remotes/origin/*"
+    ],
+    "scannedBlobs": 4695,
+    "scannedBytes": 195709234,
+    "historyMissingObjects": 1388,
+    "legacyAnonPublicOccurrences": 8,
+    "candidateOccurrences": 43,
+    "reviewedNonSecretOccurrences": 43,
+    "confirmedSecretValues": 0,
+    "candidateClassifications": {
+      "variable-or-shell-expression": 31,
+      "synthetic-fixture": 10,
+      "loopback-or-test-url": 2
+    },
+    "knownPatternSanityTests": {
+      "PEM-header": true,
+      "GitHub-synthetic-format": true,
+      "Supabase-secret-synthetic-format": true,
+      "No-provider-token-in-placeholder": true
+    },
+    "specialistScannerAvailable": false,
+    "historyOrRepoSecretsFreeClaim": false,
+    "limits": [
+      "Missing historical objects; only locally available refs/objects",
+      "Lexical formats only; no entropy or compressed archive decoding",
+      "Generic candidate review by expression and fixture provenance; no credential attempted",
+      "No CI tree/history secret gate found"
+    ],
+    "valuesSavedOrPrinted": false,
+    "scannerSha256": "6eadca39029c06cb1feacf01ac8d461b63cfe3bf14c5c1c6c7edd676b52f05c8"
+  },
+  "quotaLastReadRemainingPercent": 38
+}

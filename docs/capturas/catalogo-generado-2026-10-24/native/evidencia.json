@@ -1,0 +1,192 @@
+{
+  "publicationRun": 40043643824,
+  "publicationSource": "04b384c35ef072c0949dbaff5ecacf74a2021005",
+  "publicationConclusion": "success",
+  "platform": "android",
+  "channel": "preview",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "updateId": "01a16b40-71a9-7bce-9e05-29cf30866e11",
+  "publishedDateObserved": "2026-10-24 00:12 UTC",
+  "observedIn": "diagnostics from both actual emulator themes, not owner phone",
+  "nativeRun": 40043939016,
+  "nativeSource": "b4d70b9bf4c8aab2c844f2d59cb07fb7953fa9f2",
+  "nativeConclusion": "success",
+  "journeys": 4,
+  "retries": 0,
+  "sourceBranch": "ci/capturas",
+  "sourceSha": "d62dc88792a85c7214166c2933b88932378b307e",
+  "backendObservedResponseMs": [
+    126,
+    152
+  ],
+  "files": [
+    {
+      "file": "light/12-catalogo-original-06-hogar.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-06-hogar.jpg",
+      "sha256": "8b2c18e65e676f0974a48080db335943ef2e498228d3ae4ce2a59ed773aec2f8",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-05-carrito-arena.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-05-carrito-arena.jpg",
+      "sha256": "296f2a6efb641887b1110a491278baf565540d30dd14b76f8a861638b019ed7d",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-07-dental.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-07-dental.jpg",
+      "sha256": "f01ce00a46cbfcdbf9d4012ac9a6d574017345042a495aef2c508e0b69138fa3",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-03-salvia.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-03-salvia.jpg",
+      "sha256": "5f6220a0108322df5b2af46cf5b5c5175afd7b0762b6e87872304753ee571df7",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-04-arena.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-04-arena.jpg",
+      "sha256": "4bad66690c86fdb6597a4030a33a70c170a0b632053486b882ead4b4d754a6a6",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-02-buscar.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-02-buscar.jpg",
+      "sha256": "ccc12c42192ffabf610638a51939422ab18f77bdda90028287c6fd95c7962373",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-01-inicio.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-01-inicio.jpg",
+      "sha256": "0fb698cc969b2601b09eadb22e90cc4298e61350d0c790222866ef552815f093",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/12-catalogo-original-08-recepcion.jpg",
+      "source": "flujos_maestro_2026-10-24_001811_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-08-recepcion.jpg",
+      "sha256": "647c756560d72f3007c3fb29e31d41ed8c0481b3445c28ad867e4c07ed82a680",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/09-inicio-v2-texto-03-diagnostico.jpg",
+      "source": "flujos_maestro_2026-10-24_001924_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-03-diagnostico.jpg",
+      "sha256": "f56af2022bda46268ac5565fde27326f375ad43733103f2899c8546ec3b1e4f5",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/09-inicio-v2-texto-01-portada.jpg",
+      "source": "flujos_maestro_2026-10-24_001924_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-01-portada.jpg",
+      "sha256": "c151a810b0a21e1d0426e586d0706fdd91f171bedb2d99d1468dcf3971e7903c",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/09-inicio-v2-texto-02-producto-editorial.jpg",
+      "source": "flujos_maestro_2026-10-24_001924_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-02-producto-editorial.jpg",
+      "sha256": "078efb5ad693434c773e2750b3d4a5ab225f3a986aa311acda839d4bac35820d",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "light/09-inicio-v2-texto-02-comparacion.jpg",
+      "source": "flujos_maestro_2026-10-24_001924_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-02-comparacion.jpg",
+      "sha256": "43f68097f81da50950c0f06b8aef5a679a29a558e1c363ef51ee7e9582b10c16",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-04-arena.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-04-arena.jpg",
+      "sha256": "cd3c83897022bd43fc45a39ced03b60845b9101db23e08c558b215be332caba8",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-06-hogar.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-06-hogar.jpg",
+      "sha256": "71677d8a5495955715f945ccb7550a9ad24eab8390e130b40c2a01c84f67b04d",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-02-buscar.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-02-buscar.jpg",
+      "sha256": "992a4677705e43c5af263325c51b1c118c82ef57051d6fca4ca87a1ec4685df0",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-01-inicio.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-01-inicio.jpg",
+      "sha256": "4a78e126b731f3acc8779ed86c11fc36a3d087743f6516acb72d8a25a6c8f8e7",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-08-recepcion.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-08-recepcion.jpg",
+      "sha256": "cfe4509866abda5eaca158033adceef6ca751320f5b603e23351ac680db95ae0",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-05-carrito-arena.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-05-carrito-arena.jpg",
+      "sha256": "cf41c2e1477de5a75074202e884ed9996f59a18a6babcc03dd564768279f08a2",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-03-salvia.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-03-salvia.jpg",
+      "sha256": "9602997f84e9e92547c40094ff00acf664a04e1a5a055baa54cf6cccc95b5bb7",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/12-catalogo-original-07-dental.jpg",
+      "source": "flujos_maestro_2026-10-24_002001_Catálogo_original_—_imágenes_nuevas,_color_y_carrito_takeScreenshot_catalogo-original-07-dental.jpg",
+      "sha256": "fc6ae12a5f96441b06b2663b4715b9b8a0ad7bcf01801d82b90510c21d8dd812",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/09-inicio-v2-texto-03-diagnostico.jpg",
+      "source": "flujos_maestro_2026-10-24_002110_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-03-diagnostico.jpg",
+      "sha256": "4752ec630881d703aee43e6b44ad5d69e38f97a60f1fd535c2094e3c0ebc0de6",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/09-inicio-v2-texto-02-producto-editorial.jpg",
+      "source": "flujos_maestro_2026-10-24_002110_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-02-producto-editorial.jpg",
+      "sha256": "728a6b3c47a30e2d6a6312b773373c949f37b500c0d31d4efde2be92e4c9a1f1",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/09-inicio-v2-texto-01-portada.jpg",
+      "source": "flujos_maestro_2026-10-24_002110_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-01-portada.jpg",
+      "sha256": "fac09f9b2034ed544377892193965cb0ee8eda9c8494ed6b94dfc330bba1df27",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    },
+    {
+      "file": "dark/09-inicio-v2-texto-02-comparacion.jpg",
+      "source": "flujos_maestro_2026-10-24_002110_Inicio_V2_—_fuente_Android_ampliada_takeScreenshot_inicio-v2-texto-02-comparacion.jpg",
+      "sha256": "b836a11b0fe4988367144a023f71facf9b177c023d443f5f44dc1f973dd4525b",
+      "copiedWithoutFurtherEditing": true,
+      "format": "JPEG derivative resized by existing CI publisher"
+    }
+  ]
+}

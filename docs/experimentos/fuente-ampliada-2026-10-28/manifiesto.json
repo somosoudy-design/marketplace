@@ -1,0 +1,12 @@
+{
+  "contexto": "Experimento aislado NO APROBADO; navegador, datos sintéticos, fuente CSS ampliada; no Android ni cambio publicado",
+  "sha256": {
+    "candidata-light-320-f1.6.png": "778a57f53be5cae1d2169129b8610893e12f1d132d83b06825d031121a2ce050",
+    "antes-light-320-f1.6.png": "054a13a8a4ff5351182ff139d64e6fb746bc991ea2d79ee93872146fdf9bf697",
+    "LEEME.md": "95c7d2d7c25193181e2fb335f0be379941f4813d59e46ff9cd64b5f6419a7054",
+    "antes-dark-320-f1.6.png": "a31488df97287d378ccb391a8182e7f6cf08426fe44580b0e37544a4f11a66ca",
+    "propuesta-no-aplicar.patch.gz": "6485346ae04b6d88e81794effa762eb4fce742bd16b00998e8eace77328e6c86",
+    "candidata-dark-320-f1.6.png": "29e9c44fb222a3bb9ba144d28295db63762fce2b1381fd8f8dd326786068ad06",
+    "resultado-ancla.json": "908a9cc6a3302e43ef0e2f343637aadc3b385eca96a1f499710872d304d45439"
+  }
+}

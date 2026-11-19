@@ -1,0 +1,24 @@
+# Guest-only navigation; no account, order or payment writes.
+appId: com.example.kora.preview
+name: mayami store mark on Home
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- scrollUntilVisible:
+    element:
+      id: store-kora
+    direction: DOWN
+    timeout: 30000
+- assertVisible: Mayami
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-store
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Runtime
+    timeout: 15000
+- extendedWaitUntil:
+    visible: responde en .*
+    timeout: 30000

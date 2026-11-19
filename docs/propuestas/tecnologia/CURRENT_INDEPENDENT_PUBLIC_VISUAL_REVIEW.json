@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-11-08T17:35:25.130769+00:00",
+  "reviewer": "android_identity_audit",
+  "scope": "Independent visual reading of exactly four provided public-after PNGs with view_image. No browser/network/request/test/source inspection or additional capture.",
+  "publicationContextReportedByCoordinator": {
+    "buildId": "oRxefyBw9hH3OMgOr-mio",
+    "notIndependentlyEstablishedByPngs": true
+  },
+  "conclusion": "Favorable for the four visible Technology navigation crops; no blocking visual defect observed. Audio complete in440both themes;390coverage partial due crop bounds.",
+  "images": [
+    {
+      "file": "390-light.png",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-publish-current-20261108/public-after/390-light.png",
+      "sha256": "55b03ee4aecb4dcba47734adce51caae8bc3a9f2b33145d46ff17bb03aa05743",
+      "pixels": [
+        358,
+        88
+      ],
+      "technology": "favorable within visible crop; no opaque rectangular backdrop, gross cut or rectangular halo observed",
+      "audio": "right side exceeds crop/viewport; visible portion coherent; hidden portions not assessed"
+    },
+    {
+      "file": "390-dark.png",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-publish-current-20261108/public-after/390-dark.png",
+      "sha256": "f52275f0391936ad57fc628f16273383774e7eb84d63c7f41afdf5e70e505d7b",
+      "pixels": [
+        358,
+        88
+      ],
+      "technology": "favorable within visible crop; no opaque rectangular backdrop, gross cut or rectangular halo observed",
+      "audio": "right side exceeds crop/viewport; visible portion coherent; hidden portions not assessed"
+    },
+    {
+      "file": "440-light.png",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-publish-current-20261108/public-after/440-light.png",
+      "sha256": "c4af3940c97217146461fb0926e1d53ba5db978aa5ca47ccca42ba0d4f9e7749",
+      "pixels": [
+        408,
+        88
+      ],
+      "technology": "favorable within visible crop; no opaque rectangular backdrop, gross cut or rectangular halo observed",
+      "audio": "complete visible tile/photo; no visible unexpected change"
+    },
+    {
+      "file": "440-dark.png",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-publish-current-20261108/public-after/440-dark.png",
+      "sha256": "741b3a9e1e165bd73f0f598d7fb5cf9e85362402a16448802fea4b96c08ce11b",
+      "pixels": [
+        408,
+        88
+      ],
+      "technology": "favorable within visible crop; no opaque rectangular backdrop, gross cut or rectangular halo observed",
+      "audio": "complete visible tile/photo; no visible unexpected change"
+    }
+  ],
+  "observations": [
+    "Technology rectangle removed in light/dark at both labeled viewports",
+    "Tablet, keyboard, mouse and thin stylus remain recognizable at the reviewed tile scale; no gross object loss observed",
+    "Title, Ver productos link, spacing and category card shape remain coherent",
+    "No visible unexpected Audio change in complete440captures; no claim of pixel-identical Audio based solely on visual review"
+  ],
+  "limits": [
+    "Small static category crops, not full page/browser/device or fine1600pixel silhouette proof",
+    "No source identity, actual RGB URL, mask load or deployment version independently verified by this visual-only review",
+    "No measured WCAG contrast, focus/interaction, hardware, performance or load/fallback assertions",
+    "An optional one-channel1/255 Audio difference was reported by coordinator; this review does not rerun comparison or infer changed asset from it"
+  ]
+}

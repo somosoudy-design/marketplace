@@ -1,0 +1,170 @@
+[
+  {
+    "capture": "habitual-oscuro-06-search-320.png",
+    "mode": "habitual",
+    "theme": "oscuro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      320,
+      892
+    ],
+    "source": ".local/catalog-exhibition/standard-results-final/catalog-exhibition-catalog-7aeb3-line-names-without-overflow/06-search-320.png",
+    "sha256": "8cf6ce317b70e5b39e90baafce34d6d62da8e32aeb650bce3852a854bd25fcb3",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "habitual-oscuro-01-home.png",
+    "mode": "habitual",
+    "theme": "oscuro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/standard-results-final/catalog-exhibition-catalog-86a11-le-semantics-and-navigation/01-home.png",
+    "sha256": "7fd908b0604be7f3729eb68ba11d31ad1108884713f8340d74d650ead03a36ac",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "habitual-claro-06-search-320.png",
+    "mode": "habitual",
+    "theme": "claro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      320,
+      892
+    ],
+    "source": ".local/catalog-exhibition/standard-results-final/catalog-exhibition-catalog-b2f82-line-names-without-overflow/06-search-320.png",
+    "sha256": "a841bafbbd039d6051aca8c7b613457b93dac06d49db75017e65fb2b9b74c4d5",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "habitual-claro-04-cart.png",
+    "mode": "habitual",
+    "theme": "claro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/standard-results-final/catalog-exhibition-catalog-bbe75--photo-and-exact-9-subtotal/04-cart.png",
+    "sha256": "8a36aec64481edb11ce2facfaab6046382485d23d42c70f9c7abe660727efab0",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "habitual-claro-01-home.png",
+    "mode": "habitual",
+    "theme": "claro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/standard-results-final/catalog-exhibition-catalog-bd0a9-le-semantics-and-navigation/01-home.png",
+    "sha256": "f6022f9108c7d2c0320b624f7fdb29939e91a09a13844706a31ba5706d70dcff",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "habitual-oscuro-03-product.png",
+    "mode": "habitual",
+    "theme": "oscuro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/standard-results-final/catalog-exhibition-catalog-e8627--photo-and-exact-9-subtotal/03-product.png",
+    "sha256": "71aa5aff69daa5ac0ed6fe38ea8535f512eeb087cc2d0e894e72d047be8bf0d0",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "privada-oscuro-01-home.png",
+    "mode": "privada",
+    "theme": "oscuro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/private-results/catalog-exhibition-catalog-72fd7-le-semantics-and-navigation/01-home.png",
+    "sha256": "f8421b53e535a8b9af9e90dc950486c848338e0b9f955f5c600603ede74e6869",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "privada-oscuro-06-search-320.png",
+    "mode": "privada",
+    "theme": "oscuro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      320,
+      892
+    ],
+    "source": ".local/catalog-exhibition/private-results/catalog-exhibition-catalog-7b678-line-names-without-overflow/06-search-320.png",
+    "sha256": "ada1bd96065c6f3d5a72f24eb4de71773fc125727fc7d9b53af4e25438dcec19",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "privada-claro-06-search-320.png",
+    "mode": "privada",
+    "theme": "claro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      320,
+      892
+    ],
+    "source": ".local/catalog-exhibition/private-results/catalog-exhibition-catalog-8c1a8-line-names-without-overflow/06-search-320.png",
+    "sha256": "843015276ac3d612347847490886f2c8fc20d6b3764723f5ce4d73f5e7f6e66d",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "privada-claro-01-home.png",
+    "mode": "privada",
+    "theme": "claro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/private-results/catalog-exhibition-catalog-c2052-le-semantics-and-navigation/01-home.png",
+    "sha256": "735523c3de6ef71d68a982a6a2baeffab6e209c3f30190779b3a4ad7fc2af6bd",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "privada-oscuro-03-product.png",
+    "mode": "privada",
+    "theme": "oscuro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/private-results/catalog-exhibition-catalog-c3812--photo-and-exact-9-subtotal/03-product.png",
+    "sha256": "9b3f358d5881d5ab1ea30e27bac3a32ab902512f30ec06cca4308b05d68fc24f",
+    "authenticPhotographs": 0
+  },
+  {
+    "capture": "privada-claro-04-cart.png",
+    "mode": "privada",
+    "theme": "claro",
+    "platform": "web local, Chromium",
+    "backend": "stack local 127.0.0.1:54321",
+    "size": [
+      412,
+      892
+    ],
+    "source": ".local/catalog-exhibition/private-results/catalog-exhibition-catalog-cbf12--photo-and-exact-9-subtotal/04-cart.png",
+    "sha256": "8e50a6cd661f46b7ba201fd3a5615786068bf4d4ca7df94f194ff662a457e08b",
+    "authenticPhotographs": 0
+  }
+]

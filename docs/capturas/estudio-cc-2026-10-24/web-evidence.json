@@ -1,0 +1,611 @@
+{
+  "scope": "Real Expo web app; same routes,widths,themes before/after; PNG copied byte-for-byte, no manipulation",
+  "beforeCode": "7025f23",
+  "afterAppCode": "69dcac5",
+  "screenshots": 56,
+  "allHorizontalOverflows": 0,
+  "androidProof": false,
+  "rejectedInitialCapture": "after/dark/320-inicio.png from30ac4ad was premature; replaced after networkidle, loaded visible photo per active region and final opacity. All28after also refreshed for final two-source Samsung credit. Hidden inactive stack excluded from capture helper only; no app changes to hide a failure.",
+  "files": [
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-inicio.png",
+      "url": "http://127.0.0.1:8096/",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "e64941112a04d8f215083c23ec09c147e1d86fad2eedd335274e56bb13bfc6e5"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8096/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "63a35137d9af8a3b60e5dcf1ba621e83235d3e843d6f5873450d041400368d4c"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-ficha-1.png",
+      "url": "http://127.0.0.1:8096/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "f91d8a0ea128414e358d46bfd59fd4c35f20767ec2fa803df513207db109173f"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-ficha-2.png",
+      "url": "http://127.0.0.1:8096/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "451f13f2beba20c8d045a7de4a8003b2f3f3d6304306d41dba09edd3a39dabf1"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-ficha-3.png",
+      "url": "http://127.0.0.1:8096/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "2f764c8bb4bdef1138f7d371dc67d2526337a320e381b3c50c87ebac95310d6d"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-ficha-4.png",
+      "url": "http://127.0.0.1:8096/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "da37e258e16f8b6438d1f36601e504b7ea33f26219b28301931021caed8e69bf"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 412,
+      "file": "before/light/412-ficha-5.png",
+      "url": "http://127.0.0.1:8096/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "395974906b20e23d2be2796e26a18ed1a1a16d36ac9b589bb19f6a5c4c454532"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-inicio.png",
+      "url": "http://127.0.0.1:8096/",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "8ac2fb50d8b50b31663a969518226b5b2a501cddadf1676df198e257b0105ce2"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8096/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "8182065962d97b87530b5c72275f41e65a114e73c8b2a972135a19f84b490c5b"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-ficha-1.png",
+      "url": "http://127.0.0.1:8096/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "839a138fbdb9a11c30b970ab4d4971a81d2a87c607551413a2dc184e9b5bfcdb"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-ficha-2.png",
+      "url": "http://127.0.0.1:8096/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "7b990f79aa84e1c60c0037a008b807d6ee19f0046a63b57774cc7d087f9c8a3d"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-ficha-3.png",
+      "url": "http://127.0.0.1:8096/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "12419010715a4babb8604dd5b4764e148a1a89fcb96f9be2e595fa90663b98b4"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-ficha-4.png",
+      "url": "http://127.0.0.1:8096/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "12c0d08b4922842c8af10435d5e8c299375156f97c5986b6d6f8217cea1b175a"
+    },
+    {
+      "stage": "before",
+      "theme": "light",
+      "width": 320,
+      "file": "before/light/320-ficha-5.png",
+      "url": "http://127.0.0.1:8096/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "a35c77cbe9ec528f3ede875a25d3a14d4b7391ba4d760a2d014d874d1cbe7fbd"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-inicio.png",
+      "url": "http://127.0.0.1:8096/",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "b5bda445eebcf4c65064511d84488dd94807e049753216d475209a68e874ebba"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8096/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "aaaaf787ec2b5753c9ac7cfd70cef4f19bf4ae09ed99f3d25045d686cc69d309"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-ficha-1.png",
+      "url": "http://127.0.0.1:8096/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "ff9d6a007a148059a036a644b52fbbd9a7209d951e07449f83e5104a15395488"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-ficha-2.png",
+      "url": "http://127.0.0.1:8096/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "4a2ba450463f2095fa323a64b99cbd5fafecb13b14521aea8c81d5dbf3c3854e"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-ficha-3.png",
+      "url": "http://127.0.0.1:8096/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "fe01583eb11755e2adbdaa16cdce6d5f64e74e748bf92312f1ca5d4e6cffb8b4"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-ficha-4.png",
+      "url": "http://127.0.0.1:8096/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "7cd72dc31cab014fc6037dd8195e55b5f814e0e67489676342eea382c5c00b11"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 412,
+      "file": "before/dark/412-ficha-5.png",
+      "url": "http://127.0.0.1:8096/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "4f2df260f441c90111e2dcb0af4ddf0a75709e272d21ed9c88d3087beeed889c"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-inicio.png",
+      "url": "http://127.0.0.1:8096/",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "26f91b8d3e67a69034d6d471df9c65beb9cdeea304e00466ad7c240d81ee464d"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8096/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "8917f658a4e5baab314187177380b89288142942b801824727f35bbaae1cc1a2"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-ficha-1.png",
+      "url": "http://127.0.0.1:8096/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "69abdf6ec29f99e1927554834666cfadf2cfca06049d42ef1fdc708f17713de3"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-ficha-2.png",
+      "url": "http://127.0.0.1:8096/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "5af581aef6e5ff172abfe8aaa1d41acbbefb2359775b28392a4ec6c5f36bc36c"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-ficha-3.png",
+      "url": "http://127.0.0.1:8096/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "6e525d1a69faa1b0cf98dc0d750aae668cf8f9c7567e6e3a67b6bccadb4e57e6"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-ficha-4.png",
+      "url": "http://127.0.0.1:8096/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "865790f5fa4826df18a07c34a6487f238c7948af6d26fa6c21b0520344c50d30"
+    },
+    {
+      "stage": "before",
+      "theme": "dark",
+      "width": 320,
+      "file": "before/dark/320-ficha-5.png",
+      "url": "http://127.0.0.1:8096/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "7025f23",
+      "sha256": "793803d47c9960d2cdb6916bbdcc955af5add3c98e5abd414b698733d69acd0b"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-inicio.png",
+      "url": "http://127.0.0.1:8097/",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "9b839616c5ca13414377689ead20218e992579b5dadf09aaf47dd607f09603df"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8097/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "09edd527a8d00b390adb4cb666e156f426f7aea93c86f373c3b3c5cd62f73e30"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-ficha-1.png",
+      "url": "http://127.0.0.1:8097/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "35790bdbaf0912cd8f7fcbe03d77fb02baa0ff21d58356743206487650b47fbe"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-ficha-2.png",
+      "url": "http://127.0.0.1:8097/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "2686bfd887cb3dd1b4cd783ee11eb003d12fd2cadf8e9ebd27796ca7d90d3044"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-ficha-3.png",
+      "url": "http://127.0.0.1:8097/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "4f5ae8bf43ef951d84fde9dc5b43b842e28a8f5bf3104b9360a54930cea03941"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-ficha-4.png",
+      "url": "http://127.0.0.1:8097/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "39296d9490d4ed16b51e0698c1767d7f529e5b205c871eddcc09b750044257ce"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 412,
+      "file": "after/light/412-ficha-5.png",
+      "url": "http://127.0.0.1:8097/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "053ce826356f9feb3f4131a51969c445c1c4af30ea8f24c23d54678b7afc3d43"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-inicio.png",
+      "url": "http://127.0.0.1:8097/",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "8595cba9f0e22b5a8b1d50ca46d474eefe601c53e14083a47a26629e200e8d2f"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8097/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "752bc3c898f5227ab68b2105730e6375e89fa504b521f70351aa1cebc71d2366"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-ficha-1.png",
+      "url": "http://127.0.0.1:8097/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "5ea80ac261b075e1b9c7c4b6ccc01e66d8854ddbbfb1fac222a36a2040e36cef"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-ficha-2.png",
+      "url": "http://127.0.0.1:8097/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "f27070c5018cdd49faa13f63946d09f0b8883e8cd72f5e18e7f0605e303a11b1"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-ficha-3.png",
+      "url": "http://127.0.0.1:8097/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "c0befe56ff90eafd17441125f59d1eb8c0888f6501858a0ba128c14be7b34285"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-ficha-4.png",
+      "url": "http://127.0.0.1:8097/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "814d89d55629f38ec6c9dd1aaee4852cba1bdfc11ff83afdfa3bf2f418dca0cd"
+    },
+    {
+      "stage": "after",
+      "theme": "light",
+      "width": 320,
+      "file": "after/light/320-ficha-5.png",
+      "url": "http://127.0.0.1:8097/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "7e5ad4a83db364642d5146427526fb4eea5bf386e3a0366b2dbb22472a0a0ed4"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-inicio.png",
+      "url": "http://127.0.0.1:8097/",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "189dabe7f1702d8db3a96346bdccd16d31d70f755406b216d272bd3888cd694e"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8097/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "fa8391f7abee2b4c9311f9d35fa4ef668748ba8793ecd5b6fe52766963130be2"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-ficha-1.png",
+      "url": "http://127.0.0.1:8097/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "cfc8d7d8beb3b453830a7141818041911a0eef081e3db24af2f6c8138618716b"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-ficha-2.png",
+      "url": "http://127.0.0.1:8097/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "1b6eaa0eed03f2e8978d66e5e0efc8bb226a0a71c2a0f6158fb4ddc476b50b4a"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-ficha-3.png",
+      "url": "http://127.0.0.1:8097/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "21ed571dee7ed5b656c2fce02c47e561691fd8695c2b5b7330f5664b3df3c614"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-ficha-4.png",
+      "url": "http://127.0.0.1:8097/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "98df0bd9c56c4a8982d775e80872d168b32b6b3c76a210d0fe4929693b5889f5"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 412,
+      "file": "after/dark/412-ficha-5.png",
+      "url": "http://127.0.0.1:8097/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "9e03a403152811086b1114eb9c6dcbbcc430cbbaba570b0e89e9ced9a429a406"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-inicio.png",
+      "url": "http://127.0.0.1:8097/",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "69fd05c260d5cb180a53f4104a44cb7bbe1b8ffc36878b654904df3fcdbed205"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-buscar-ugreen.png",
+      "url": "http://127.0.0.1:8097/explore",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "28c00c2da7081f0bca364edd1bf994dff355e02551f7ccf17f577f5dd855435f"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-ficha-1.png",
+      "url": "http://127.0.0.1:8097/product/e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "e7d69c8c3c7013c22b0880fe6c5c9bf9084d0857193f22d87ee8f364d7b17c04"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-ficha-2.png",
+      "url": "http://127.0.0.1:8097/product/01a43334-e485-41cc-a12a-c049e933665d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "e556b515430c5d924a990c3635f0363a1f16f018378c22f62ec156b7a10356d3"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-ficha-3.png",
+      "url": "http://127.0.0.1:8097/product/22516bf2-7283-45c1-a3a5-2449797a25db",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "8e1044fa004a8b873ddc078ca8a1d442b93191d6abe1b8416101a5922172c015"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-ficha-4.png",
+      "url": "http://127.0.0.1:8097/product/910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "f8aac892512dd65784bfe55db7edaada3542e956005f903b34bb4b8958605a79"
+    },
+    {
+      "stage": "after",
+      "theme": "dark",
+      "width": 320,
+      "file": "after/dark/320-ficha-5.png",
+      "url": "http://127.0.0.1:8097/product/6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "horizontalOverflow": false,
+      "sourceCode": "69dcac5",
+      "sha256": "45810f1cf952ddbc7000a0c60bb800ee59c1ee5847b0c50f4cd3ab98fa2a3ccc"
+    }
+  ],
+  "validation": [
+    {
+      "file": "validation/dark-carrito-solo.png",
+      "theme": "dark",
+      "width": 320,
+      "height": 892,
+      "sourceCode": "69dcac5",
+      "sha256": "a0cbf956f4eb096e8fd2c2ff8051bb8c3344b7edd39655d28b53056c3105b7c0",
+      "sourceFile": ".local/catalogo-marca-20261024/validation/dark-carrito-solo.png"
+    },
+    {
+      "file": "validation/light-carrito-solo.png",
+      "theme": "light",
+      "width": 320,
+      "height": 892,
+      "sourceCode": "69dcac5",
+      "sha256": "dae839f4a642394b7d9d7b503c5cff35f8c402b01c2c3fec99f50b31f8aa003c",
+      "sourceFile": ".local/catalogo-marca-20261024/validation/light-carrito-solo.png"
+    },
+    {
+      "file": "validation/light-samsung-solo.png",
+      "theme": "light",
+      "width": 320,
+      "height": 892,
+      "sourceCode": "69dcac5",
+      "sha256": "c6caed4bf77ac0173f729679672e15ae5d6ee951f9fb3dad2ecee4ed8c89199a",
+      "sourceFile": ".local/catalogo-marca-20261024/validation/light-samsung-solo.png"
+    },
+    {
+      "file": "validation/dark-samsung-solo.png",
+      "theme": "dark",
+      "width": 320,
+      "height": 892,
+      "sourceCode": "69dcac5",
+      "sha256": "f5ded65f90e433c4de93a124b08eafe3a28a4e6be7c303a01abdb4fd855733b0",
+      "sourceFile": ".local/catalogo-marca-20261024/validation/dark-samsung-solo.png"
+    }
+  ],
+  "totalPng": 60,
+  "rejectedExtraCaptures": "Initial snapshots showed selector rather than gallery, and photo in transition. Excluded. Final four recaptures require measured gallery position, exact asset hash, fully visible image rectangle, decode(), two painted frames and final opacity. App code unchanged."
+}

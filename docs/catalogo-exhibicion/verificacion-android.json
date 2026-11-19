@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "4225185",
+  "platform": "Android Hermes export; no ejecución nativa",
+  "configuration": "APP_VARIANT y variables públicas del perfil preview existente; presentación privada opt-in",
+  "backendOrigin": "https://mimnotafmfasvwrclxan.supabase.co",
+  "bundleBytes": 5924679,
+  "bundleSha256": "41ad7ec175956d98cb8e9ad3cb0f4b41bd6f6c1a3adfa31810d874b2fd3b7096",
+  "assetCount": 41,
+  "exhibitionPhotographs": 0,
+  "runtimeExactVerified": false,
+  "targetRuntimeAPK5": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "easPublished": false,
+  "nativeConfigChanged": false
+}

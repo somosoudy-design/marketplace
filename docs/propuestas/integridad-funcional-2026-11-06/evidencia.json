@@ -1,0 +1,40 @@
+{
+  "base_commit": "eee8d4d9dcdc89b6e33ba8d9f21b2b0b710b1ebd",
+  "execution": "local isolated PostgreSQL clone, SET ROLE/RLS; no remote calls",
+  "unit_tests": 66,
+  "db_tests": 82,
+  "logs": {
+    "before.log": {
+      "sha256": "1558a527fb966f80f4b2fe0d38000679dda4761ec3f1dc611c35a27a40af5fb5"
+    },
+    "final-db.log": {
+      "sha256": "c80637d531a47860979134b190ac6c82145952d3ab4ab56799fd2ca530787f61"
+    },
+    "final-core.log": {
+      "sha256": "087a67839071178b053edf501397a19a82062ee49a569a9e99950440921b8341"
+    },
+    "main-core.log": {
+      "sha256": "297237781161306c805f204e7b0e59f03e0ec689a9eeef2a56efdaacca97e97d"
+    },
+    "fresh-db.log": {
+      "sha256": "a651ff23ab68414f855c9f5a430143260858d5e2f9d1d1a25d35ac5908eddb06"
+    },
+    "fresh-apply.log": {
+      "sha256": "469f95c4b180ce3fc0ce573f96717b1607162ce8308ccbac18b3275de8cdef47"
+    }
+  },
+  "fresh_clone_db_tests": 82,
+  "independent_review": "Approved for core/API preparation and INACTIVE SQL proposals only. No activation/UI/deployment approval.",
+  "files_sha256": {
+    "packages/api/src/api.ts": "85360dc27b70281cd8e8c2f353bbd4fb5fa5c5889786fb6f2046f4f76cc1419c",
+    "packages/api/src/types.ts": "7aeea2cd819fb383e6b593c63960f1fc18612ac708fe920d4a2b63de5e2b815b",
+    "packages/core/src/errors.ts": "0ea56817459a936a72b6306063f0068a6ad985056799e8f1fae517c6af3d720f",
+    "packages/core/src/index.ts": "8c928d6bdeceb907b141353a2ce70783f3f727dc704c4c368ca05056d5823558",
+    "packages/core/src/product-selection.ts": "30549a69fde20d002360d3be28d6b00c8f2ea101fdad781153176539cd001153",
+    "packages/core/test/functional-api.test.ts": "5caf090131aa15b53d4b0cea3a2dd8f8d791cc07c2a92edfa859514948b180a7",
+    "packages/core/test/product-selection.test.ts": "2e9fc04d4eb2c1c91b4ebeeb397d1f5aad5e6f9779a4792c8704db3e6a6f36f8",
+    "sql/01-functional-integrity.sql": "b37b2cc8a5d82b3732568268fa7c2f10b2c70a6fbd48d10c59a8812a247e5324",
+    "sql/02-catalog-metadata.sql": "abd0196449364ca5626817af73ddd59b81a636a8f95dc1b5d91551fee95fb29f",
+    "sql/03-checkout-intents.sql": "0f657fda1ed1965614918c5d6a37d274fabc02a7eb56d0269730c365e2dd97e1"
+  }
+}

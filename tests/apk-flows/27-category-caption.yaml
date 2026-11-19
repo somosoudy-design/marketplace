@@ -1,0 +1,50 @@
+# Read-only Home/caption check. System font scale/theme are set by the existing harness.
+# No auth, favorites/cart changes, order, quote, payment or catalog writes.
+appId: com.example.kora.preview
+name: mayami category caption remains complete
+---
+# native-ota-receipt.sh already cold-started after applying font scale.
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+- scrollUntilVisible:
+    element:
+      id: home-categories-scroll
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- assertVisible:
+    id: home-categories-scroll
+# A horizontal fragment need not intersect the screen centre. Start each bounded
+# swipe inside the rail itself, rather than swiping the whole screen blindly.
+- repeat:
+    times: 6
+    commands:
+      - runFlow:
+          when:
+            notVisible:
+              id: category-odontologia
+          commands:
+            - swipe:
+                from:
+                  id: home-categories-scroll
+                  point: "85%, 50%"
+                direction: LEFT
+                duration: 600
+- assertVisible:
+    id: category-odontologia
+    text: Odontología
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-odontologia
+# Refresh current-process diagnostics so verify_theme_process binds this caption
+# receipt to the exact published UUID/runtime and guest account state.
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Runtime
+    timeout: 15000
+- extendedWaitUntil:
+    visible: responde en .*
+    timeout: 30000

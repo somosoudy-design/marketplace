@@ -1,0 +1,89 @@
+# Guest-only verification of the three banner/copy corrections; no cart, order, quote or payment writes.
+appId: com.example.kora.preview
+name: mayami banners and customer photo copy
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-editorial-price
+    timeout: 60000
+- extendedWaitUntil:
+    visible:
+      id: home-banner-photo-loaded
+    timeout: 60000
+- assertNotVisible: Imagen general del producto
+- assertVisible: Inicio
+- assertVisible: Buscar
+- assertVisible: Carrito
+- assertVisible: Cuenta
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-banner
+- openLink: kora://product/5fcfa67e-3bda-4421-bbc9-7af6f89cdbf4
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 30000
+- assertNotVisible:
+    id: product-general-photos
+- assertNotVisible: Imagen general del producto
+- extendedWaitUntil:
+    visible:
+      id: product-photo-loaded
+    timeout: 60000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-juovi
+- openLink: kora://product/4494aeac-8514-4ccc-b115-045d6c8771f8
+- extendedWaitUntil:
+    visible: Micrófono dinámico FIFINE AmpliGame AM8
+    timeout: 30000
+- assertNotVisible:
+    id: product-general-photos
+- extendedWaitUntil:
+    visible:
+      id: product-photo-loaded
+    timeout: 60000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-am8
+- openLink: kora://product/d303f5d1-b256-4f5f-a3c0-ecbad5861389
+- extendedWaitUntil:
+    visible: Brazo de micrófono FIFINE BM88 de perfil bajo
+    timeout: 30000
+- assertNotVisible:
+    id: product-general-photos
+- extendedWaitUntil:
+    visible:
+      id: product-photo-loaded
+    timeout: 60000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-bm88
+- openLink: kora://product/8ce01c8b-232b-4bba-a0ff-94c739b4d3bc
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 30000
+- assertNotVisible:
+    id: product-general-photos
+- assertVisible: Preventa
+- extendedWaitUntil:
+    visible:
+      id: product-photo-loaded
+    timeout: 60000
+- scrollUntilVisible:
+    element:
+      id: variant-Negro
+    direction: DOWN
+    # Native visibility includes content behind the sticky purchase bar. Bring the target above it.
+    centerElement: true
+- tapOn:
+    id: variant-Negro
+- assertVisible:
+    id: variant-Negro
+    selected: true
+- assertNotVisible:
+    id: product-general-photos
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-photo-choice
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Runtime
+    timeout: 15000
+- extendedWaitUntil:
+    visible: responde en .*
+    timeout: 30000
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-copy-receipt

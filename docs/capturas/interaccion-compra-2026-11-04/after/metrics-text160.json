@@ -1,0 +1,14 @@
+{
+  "width": 320,
+  "scroll": 320,
+  "bar": {
+    "x": 0,
+    "y": 561,
+    "width": 320,
+    "height": 179,
+    "top": 561,
+    "right": 320,
+    "bottom": 740,
+    "left": 0
+  }
+}

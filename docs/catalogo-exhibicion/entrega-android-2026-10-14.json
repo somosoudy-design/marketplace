@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-14",
+  "status": "published_and_received",
+  "platform": "android",
+  "channel": "preview",
+  "apk": "APK5 / build d1d10c28",
+  "sourceCommit": "69f1c459c12b88e18a30f77d233d33bcdacac04d",
+  "updateId": "01a13c5e-f303-7822-acda-7ce771cf4db2",
+  "groupId": "72ffe95f-d27a-481a-889c-9de9a4c1305c",
+  "publishedAt": "2026-10-14T21:43:38Z",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "publicationRun": 38642215601,
+  "emulatorRun": 38642731907,
+  "emulatorSource": "8fd3d380edf258f4377bf05cf26f173739aa9e73",
+  "emulator": "Android15/API35",
+  "flows": {
+    "light": "passed_first_attempt",
+    "dark": "passed_first_attempt"
+  },
+  "checks": [
+    "Home C real photograph",
+    "Search photographs for all five models",
+    "All five details real photographs and matching titles/colors",
+    "Visible author/license credits",
+    "Test notice retained, repetitive Demo badges hidden",
+    "Diagnostics exact OTA/channel/runtime received"
+  ],
+  "resources": {
+    "products": 5,
+    "files": 6,
+    "manifest": "lote-02-autorizado.json",
+    "licenses": [
+      "CC BY 4.0",
+      "CC BY-SA 4.0",
+      "CC0"
+    ],
+    "substitutions": [
+      "Samsung EP-T4510",
+      "Anker PowerCore10000",
+      "UGREEN SD reader USB-A/USB-C",
+      "StarTech ST7300U3M",
+      "UGREEN car charger25845"
+    ]
+  },
+  "regressions": {
+    "mobileTypes": "passed",
+    "mobileLint": "passed",
+    "assetTests": "4/4",
+    "preparerTests": "3/3",
+    "webFocusedLightDark": "2/2",
+    "androidHermesExport": "passed, six WebP bundled",
+    "financialCode": "unchanged",
+    "pricesStockActive": "unchanged per guarded SQL comparison",
+    "is_demo": "retained true"
+  },
+  "screenshots": {
+    "branch": "ci/capturas",
+    "commit": "8497754a36dc72b85bef86adeb915ba564f91a63",
+    "count": 24,
+    "hashes": [
+      {
+        "file": "dark-exhibicion-01-inicio.jpg",
+        "sha256": "36e0b231e72f93a232d46ffcb716afebb3a831e3699eca07bc31e3181f61e7f4"
+      },
+      {
+        "file": "dark-exhibicion-02-buscar.jpg",
+        "sha256": "f1a2f24baee8b2ed4d69e4ac5f7461663e2e01aaa06368768496741d473544c4"
+      },
+      {
+        "file": "dark-exhibicion-02-ficha.jpg",
+        "sha256": "b91539e00849a6edc92a7e6832f946dc6ae47f89a747493d1b4de92611653968"
+      },
+      {
+        "file": "dark-exhibicion-03-buscar.jpg",
+        "sha256": "f223ea30b81c9adbecb57fe083cf127ec7fcf52dd6e1e73f91897cf33b7bd48a"
+      },
+      {
+        "file": "dark-exhibicion-03-ficha.jpg",
+        "sha256": "d286e3a9f69a468636c9e089f92cc87abf103a29d9a2b918e96f50ff3b589d97"
+      },
+      {
+        "file": "dark-exhibicion-04-buscar.jpg",
+        "sha256": "fa3eda2e1a9b51374355cb56dfa9dd84a7f8c67bfeedf169a50d85ff991434a2"
+      },
+      {
+        "file": "dark-exhibicion-04-ficha.jpg",
+        "sha256": "b2ec18e522fe66ecd232b7d65a8cf83f9acc0acfaff662000390982f70ab6349"
+      },
+      {
+        "file": "dark-exhibicion-05-buscar.jpg",
+        "sha256": "a9c7a40e17980f4fc9d50829186bd8112aec81aca5dca22f5ad5cbb1134c9e86"
+      },
+      {
+        "file": "dark-exhibicion-05-ficha.jpg",
+        "sha256": "07b8a0229312f08360a16dcbca288fd8c41c7d31bba46da1a920cf74e69c6e50"
+      },
+      {
+        "file": "dark-exhibicion-06-buscar.jpg",
+        "sha256": "dc9986021aad3e18a3708d090860f80f9192a5b43dfba360bccd522915b5edb8"
+      },
+      {
+        "file": "dark-exhibicion-06-ficha.jpg",
+        "sha256": "46f6d02bb4a0ffa300e08422a9af1a14b1832b44ea67aeb64ac125982e656608"
+      },
+      {
+        "file": "dark-exhibicion-07-recepcion.jpg",
+        "sha256": "a7a1666fc2a2e62b850e3e4e1be0a9e1ccf1ede34d24984fa15908dfd823a424"
+      },
+      {
+        "file": "light-exhibicion-01-inicio.jpg",
+        "sha256": "a4a3f7b80b6c23e7897528397e175f9f9c0bfcc30cd710c98d31fb7e763772f5"
+      },
+      {
+        "file": "light-exhibicion-02-buscar.jpg",
+        "sha256": "fc9a4447470efe6700dd265e49c80df2b98ecd97f262a7281cfbf001c75e381c"
+      },
+      {
+        "file": "light-exhibicion-02-ficha.jpg",
+        "sha256": "8d8c4801ff362f0c0f3f1459ee55b6139a0e7c0c6738c32f0aaddd15afd9a277"
+      },
+      {
+        "file": "light-exhibicion-03-buscar.jpg",
+        "sha256": "d1ccfa4e95b209ceec97db0520cf2b38e09a2a0dfbe7b5759a54e4c4e1e04953"
+      },
+      {
+        "file": "light-exhibicion-03-ficha.jpg",
+        "sha256": "143cd01ac2e827fbdc91adcac99fe6074ab4f8aa06cae79f0a0dacd86f7120a9"
+      },
+      {
+        "file": "light-exhibicion-04-buscar.jpg",
+        "sha256": "5d4eeec206b28f64fd011e418fe0f1aacd2db7631bfe6cca42da4414449baf93"
+      },
+      {
+        "file": "light-exhibicion-04-ficha.jpg",
+        "sha256": "e02e4c7ac9f1e3d2ecd59f1a9da0094e3f2e71382f0f2ea2c35fa5ca6c3b106d"
+      },
+      {
+        "file": "light-exhibicion-05-buscar.jpg",
+        "sha256": "a6a44ca7b326c0ce63aca666d12df3c5085f57c7c47920bd958ce7f1d3e4bc46"
+      },
+      {
+        "file": "light-exhibicion-05-ficha.jpg",
+        "sha256": "f503b354da7a00ca3eddc5dc54d194e9c8ae78e9bc397231fb8f4af23546dde6"
+      },
+      {
+        "file": "light-exhibicion-06-buscar.jpg",
+        "sha256": "391e83d56c6b3cbcbb04a16157c1791252435e33a0167108beb76980c8d35bac"
+      },
+      {
+        "file": "light-exhibicion-06-ficha.jpg",
+        "sha256": "424b6ffd37f8dcf873e69bb56636ef74835048b4796dd6c707eb4406a57c03f9"
+      },
+      {
+        "file": "light-exhibicion-07-recepcion.jpg",
+        "sha256": "9e9d5dfdae4820ed1f41b9cbe390d966b8d39014d766c80ec85384ecb10b42ba"
+      }
+    ]
+  },
+  "limits": [
+    "Physical Samsung reception not observed",
+    "Other catalogue products retain earlier images",
+    "No production/iOS/new APK/accounts/orders/payments"
+  ]
+}

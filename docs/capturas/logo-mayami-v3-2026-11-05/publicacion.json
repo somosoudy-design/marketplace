@@ -1,0 +1,32 @@
+{
+  "publishedBy": {
+    "run": 42066926888,
+    "source": "478246b09b0cba2df8901e426894eb12d85e2387",
+    "runtimeGuard": "passed"
+  },
+  "observedBy": {
+    "run": 42067593386,
+    "readOnly": true
+  },
+  "update": {
+    "branch": "preview",
+    "channel": "preview",
+    "commit": "478246b09b0cba2df8901e426894eb12d85e2387",
+    "createdAt": "2026-11-05T16:42:47.059Z",
+    "group": "06e50097-a777-4714-bddb-44337f28ae48",
+    "id": "01a1ac97-6b93-78c5-b24c-e9a64731b476",
+    "isGitWorkingTreeDirty": false,
+    "isRollBackToEmbedded": false,
+    "latestCompatibleInBranch": true,
+    "matchingUpdates": 1,
+    "platform": "android",
+    "rollbackFlagPresent": true,
+    "rollbackState": "standard_update",
+    "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+    "workingTreeFlagPresent": true,
+    "workingTreeState": "clean"
+  },
+  "physicalReceptionVerified": false,
+  "nativeApkGenerated": false,
+  "webAndPanelDeployed": false
+}

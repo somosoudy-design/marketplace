@@ -1,0 +1,16 @@
+{
+  "width": 320,
+  "placeholder": {
+    "x": 16,
+    "y": 164,
+    "width": 138,
+    "height": 200
+  },
+  "product": {
+    "x": 16,
+    "y": 164,
+    "width": 138,
+    "height": 200
+  },
+  "heightDifference": 0
+}

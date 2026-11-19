@@ -1,0 +1,41 @@
+{
+  "source": {
+    "path": "assets/brand/mayami/v3/SVG/MAYAMI_Logotipo_Violeta.svg",
+    "sha256": "2659eca6c7be633d86998f45635adcbfc14cbf418fb0fdf3ef5791de4662074e",
+    "viewBox": "0 0 1476 280",
+    "originalArchive": "MAYAMI_Kit_Vectorial_v3.zip",
+    "archiveSha256": "22574beeae113122dfb669149b86e4729dcf87122674a3d54523bc09aae307d1",
+    "origin": "Original de Work suministrado por Oliver, descargado desde su enlace Drive"
+  },
+  "renderer": {
+    "library": "sharp",
+    "version": "0.35.5",
+    "operation": "SVG rasterization; original-color full logo; white opaque clear-space extension only"
+  },
+  "png": {
+    "path": "apps/storefront/public/brand/email/mayami-v3-violet-whiteplate-78ede630b3696d6c.png",
+    "sha256": "78ede630b3696d6cab2c3839e13917fd7f1d2847ffedd2643d035c7a0c74a8b0",
+    "width": 1600,
+    "height": 404,
+    "bytes": 21190,
+    "alpha": false
+  },
+  "fidelity": {
+    "originalPreserved": true,
+    "logoCorePixelsEqualWhiteFlattenedMaster": true,
+    "logoCoreSHA256": "b7bc7e0bfcc5e536897628b8e1ee2a3b96eb00ab352a82cffbde996aa7d9e0e0",
+    "sourcePathsUnchanged": true
+  },
+  "display": {
+    "plateWidth": 160,
+    "plateHeight": 40.4,
+    "logoWidth": 147.6,
+    "logoHeight": 28,
+    "logoAspectRatio": 5.271428571428571,
+    "clearSpacePerSide": 6.2,
+    "identicalAssetBothThemes": true
+  },
+  "productionUrl": "https://mayami.app/brand/email/mayami-v3-violet-whiteplate-78ede630b3696d6c.png",
+  "published": false,
+  "publishRequirement": "Before installing email templates, verify hosted URL HTTP200/image/png/exact SHA256. Local previews intercept only this exact URL."
+}

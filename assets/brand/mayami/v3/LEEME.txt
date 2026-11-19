@@ -1,0 +1,40 @@
+MAYAMI | ARCO COMÚN | v3 | 05.11.2026
+
+CONTENIDO
+SVG/       Logotipo y símbolo en violeta, tinta, negro y blanco. Trazados reales.
+PNG/       Transparencias: palabra a 2952 px y símbolo a 1200 px.
+App/       Máster cuadrado, iconos 16-1024 px y favicon ICO con fotogramas exactos.
+Pruebas/   Rásteres de reducción a tamaño nativo. Ver al 100 %, sin reescalado.
+Guia/      Brief, competencia, moodboard, decisiones, usos, pruebas y fuentes.
+Fuente/    Geometría, script generador y registro de fuentes.
+
+USO
+Logotipo: mínimo recomendado 144 px en pantalla y 30 mm en impresión.
+Símbolo: mínimo propuesto 7 mm en impresión; iconos digitales desde 16 px.
+App a 16, 24 y 32 px: usar el máster óptico (aperturas interiores ampliadas).
+App a 48 px o más: máster estándar. No cambiar la silueta ni deformar.
+Área de respeto: 1x por lado; x es el ancho del asta exterior de la M (62 u).
+SVG ajustados al arte; el espacio de respeto debe añadirse en la composición.
+
+COLOR RGB
+Firma #6D42E8. Tinta #1C1928. Blanco #FFFFFF.
+Apoyo: lavanda #EDE6FF y superficie #F8F7FC.
+Impresión: negro puro o conversión según el perfil del proveedor. No se fija un
+CMYK o Pantone sin prueba física.
+
+ALCANCE
+Revisión digital del diseñador, no estudio de reconocimiento con usuarios.
+Mínimos impresos propuestos: requieren prueba en el material y técnica elegidos.
+El nombre tiene usos en otros sectores. No se ha realizado validación registral.
+No se implementó ni publicó la identidad en la aplicación.
+
+REFERENCIAS
+Los logos y casos ajenos del dossier se muestran para análisis atribuido.
+No forman parte de los activos gráficos MAYAMI ni del sistema que se debe usar.
+Los bocetos de lettering se exploraron con generación de imágenes; el máster
+se redibujó en curvas de Bézier definidas explícitamente, sin autocalco raster.
+
+REGENERACIÓN (opcional)
+Fuente/build_vectors.py contiene las curvas exactas; puede leerse y editarse.
+Para ejecutar requiere Python 3, Pillow e Inkscape. Ejecútese en un directorio
+de trabajo, no dentro de una instalación del producto.

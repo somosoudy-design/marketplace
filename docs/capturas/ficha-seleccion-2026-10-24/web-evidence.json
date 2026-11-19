@@ -1,0 +1,195 @@
+{
+  "beforeCode": "04b384c (same catalogue assets25/32)",
+  "afterCode": "f195f8a normal compositions;73be557 final optional long-variant reflow in validation screenshots",
+  "platform": "Chromium web, not physical Android",
+  "screens": [
+    {
+      "file": "before/dark/320-decision.png",
+      "sha256": "8e1fd44578925162623686cc294f18b30cdb26c80091b6a850f5e9845d293e77",
+      "edited": false
+    },
+    {
+      "file": "before/dark/320-ficha.png",
+      "sha256": "a4393e98a1ec772f4481fc5b4ebd32504ec98a459cfc48c8c40b11c51abec2ea",
+      "edited": false
+    },
+    {
+      "file": "before/dark/412-decision.png",
+      "sha256": "610fabfdd1f82e7f6d21e5a7df88cdb663065a5425e65f86233ad32e907cd63c",
+      "edited": false
+    },
+    {
+      "file": "before/dark/412-ficha.png",
+      "sha256": "7db76d90c3fa3ac07f57e0db3fc864bca9d54e88c7a32fe7b682060c2d9bf1b0",
+      "edited": false
+    },
+    {
+      "file": "before/light/320-decision.png",
+      "sha256": "8b93b45eb303d9ff6d49b393cc6cba2d62d3aa5e36bc8b16e98257ac84a7ba71",
+      "edited": false
+    },
+    {
+      "file": "before/light/320-ficha.png",
+      "sha256": "f13f54f4cd8e03f27612b69c6b9b15786ae76562b490a1be02b64275e498f01f",
+      "edited": false
+    },
+    {
+      "file": "before/light/412-decision.png",
+      "sha256": "5807f82601d64a23fe0f756a6cfb4588636524b813b2313a1ff31ef65e4bc03e",
+      "edited": false
+    },
+    {
+      "file": "before/light/412-ficha.png",
+      "sha256": "e0df3a80350828cb0aa95b2dc1dd835567c5ee5e5a11da58bc34d9b8bdf257c8",
+      "edited": false
+    },
+    {
+      "file": "after/dark/320-decision.png",
+      "sha256": "d5b7f4de7b27860ef1b20b2c1b554e413435e0903570a5c9ac0309eec3f5b76f",
+      "edited": false
+    },
+    {
+      "file": "after/dark/320-ficha.png",
+      "sha256": "5b346d1b32241476850bd0533c5be7c9bc4ac2e56dfabd839e975a9491a0f41e",
+      "edited": false
+    },
+    {
+      "file": "after/dark/412-decision.png",
+      "sha256": "8fe7dda9da9fd1d2bd275dccb00f8340d9fecb5ca51c5db4d4d04904ef78bd5a",
+      "edited": false
+    },
+    {
+      "file": "after/dark/412-ficha.png",
+      "sha256": "3aa309c8536b719ae2b208860f85f2f95288f2a098f4cdff08d87b8d0f5f78a3",
+      "edited": false
+    },
+    {
+      "file": "after/light/320-decision.png",
+      "sha256": "0fecebe7d070aab9479fefdc8cc105012c9ac357b5513c4e20faaa2ceff29939",
+      "edited": false
+    },
+    {
+      "file": "after/light/320-ficha.png",
+      "sha256": "42186f6350136931e3e14c467656b4ad18fd28a88f7489e6fdea2829dff1bee0",
+      "edited": false
+    },
+    {
+      "file": "after/light/412-decision.png",
+      "sha256": "b2ab2b04561dae52f4dba5ad42ed26f271ac2e89579859cc0b51a717d02cda04",
+      "edited": false
+    },
+    {
+      "file": "after/light/412-ficha.png",
+      "sha256": "7da4dcf55ddcdb88a042983b06634154a18a6f04dcc76020de10e44368a95e16",
+      "edited": false
+    },
+    {
+      "file": "validation/light-seleccion-estres-web.png",
+      "source": "browser-output/product-selection-purchase-2557c-t-price-and-action-readable/seleccion-estres-web.png",
+      "sourceCommit": "73be557",
+      "themeVerifiedByVisualInspection": true,
+      "sha256": "eeaf03b16726329d2005813e8298e4e015b2fccca803677ad6bd3153722ddeac",
+      "edited": false,
+      "fixture": true
+    },
+    {
+      "file": "validation/light-selector-destino.png",
+      "source": "browser-output/product-selection-purchase-76ad4-cted-color-quantity-to-cart/selector-destino.png",
+      "sourceCommit": "73be557",
+      "themeVerifiedByVisualInspection": true,
+      "sha256": "2ce47180beace1ff04704c507a47e5d2b99164b4db7912ae41ce918c7f1f953e",
+      "edited": false,
+      "fixture": false
+    },
+    {
+      "file": "validation/dark-seleccion-estres-web.png",
+      "source": "browser-output/product-selection-purchase-93563-t-price-and-action-readable/seleccion-estres-web.png",
+      "sourceCommit": "73be557",
+      "themeVerifiedByVisualInspection": true,
+      "sha256": "4ba074cafe1899030f849a90c349fcb5fa18438821e64814ac97d1f2a06b5612",
+      "edited": false,
+      "fixture": true
+    },
+    {
+      "file": "validation/dark-selector-destino.png",
+      "source": "browser-output/product-selection-purchase-9d748-cted-color-quantity-to-cart/selector-destino.png",
+      "sourceCommit": "73be557",
+      "themeVerifiedByVisualInspection": true,
+      "sha256": "1ffb55bc9fb6592857b71d44d739c2fa10e63194d27ed35bb463ce5368cc5bfb",
+      "edited": false,
+      "fixture": false
+    }
+  ],
+  "measurements": [
+    {
+      "colorScheme": "light",
+      "width": 412,
+      "bar": {
+        "x": 0,
+        "y": 761,
+        "width": 412,
+        "height": 131
+      },
+      "selection": {
+        "x": 20,
+        "y": 68,
+        "width": 372,
+        "height": 198
+      },
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "width": 320,
+      "bar": {
+        "x": 0,
+        "y": 761,
+        "width": 320,
+        "height": 131
+      },
+      "selection": {
+        "x": 20,
+        "y": 68,
+        "width": 280,
+        "height": 198
+      },
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "width": 412,
+      "bar": {
+        "x": 0,
+        "y": 761,
+        "width": 412,
+        "height": 131
+      },
+      "selection": {
+        "x": 20,
+        "y": 68,
+        "width": 372,
+        "height": 198
+      },
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "width": 320,
+      "bar": {
+        "x": 0,
+        "y": 761,
+        "width": 320,
+        "height": 131
+      },
+      "selection": {
+        "x": 20,
+        "y": 68,
+        "width": 280,
+        "height": 198
+      },
+      "overflow": false
+    }
+  ],
+  "stressDisclaimer": "The two stress screenshots intentionally alter only browser fixture variant title/unit price and scale web text1.6; no commercial data or remote record changed. They are not Android OS font evidence.",
+  "qaCorrection": "Commerce reviewer detected incorrect theme inference from truncated Playwright directory names. Root visually identified all four originals and corrected explicit theme mapping and hashes. No screenshot was modified."
+}

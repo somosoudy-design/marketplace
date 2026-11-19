@@ -1,0 +1,466 @@
+{
+  "date": "2026-10-23",
+  "status": "published_and_received_in_android_emulator",
+  "functionalSource": "058cb7b",
+  "channel": "preview",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "nativeConfigChanged": false,
+  "newApk": false,
+  "remoteCommercialDataChanged": false,
+  "newPhotographsAddedToBundle": 0,
+  "heroSource": "Existing backend product photo; not newly licensed or redistributed as a bundled asset",
+  "browserTests": {
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "source": "tests/app-e2e/tests/home-published.spec.ts and exhibition-photos.spec.ts",
+    "scope": "Chromium web; public reads plus controlled failure/empty fixtures; not physical Android",
+    "analytics": "intercepted locally; not sent to backend"
+  },
+  "unitTests": 22,
+  "independentReview": "Web and Android Home increment approved after visual review; no new Home P1/P2; catalog not completed",
+  "measurements": {
+    "before": [
+      {
+        "colorScheme": "light",
+        "width": 412,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 412,
+          "height": 201
+        },
+        "bridge": {
+          "x": 0,
+          "y": 319,
+          "width": 412,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 424,
+          "width": 412,
+          "height": 291.5
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 388,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "/assets/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.008cc366705cb717ac09f9bb46226fd8.webp",
+        "text": "COLECCIÓN\nEsenciales para cargar todo\nProducto mostrado\nSamsung cargador USB-C 45 W · EP-T4510\n$42,00\nVer colección",
+        "blockedMutations": 0
+      },
+      {
+        "colorScheme": "light",
+        "width": 320,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 320,
+          "height": 201
+        },
+        "bridge": {
+          "x": 0,
+          "y": 319,
+          "width": 320,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 424,
+          "width": 320,
+          "height": 234
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 296,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "/assets/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.008cc366705cb717ac09f9bb46226fd8.webp",
+        "text": "COLECCIÓN\nEsenciales para cargar todo\nProducto mostrado\nSamsung cargador USB-C 45 W · EP-T4510\n$42,00\nVer colección",
+        "blockedMutations": 0
+      },
+      {
+        "colorScheme": "dark",
+        "width": 412,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 412,
+          "height": 201
+        },
+        "bridge": {
+          "x": 0,
+          "y": 319,
+          "width": 412,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 424,
+          "width": 412,
+          "height": 291.5
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 388,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "/assets/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.008cc366705cb717ac09f9bb46226fd8.webp",
+        "text": "COLECCIÓN\nEsenciales para cargar todo\nProducto mostrado\nSamsung cargador USB-C 45 W · EP-T4510\n$42,00\nVer colección",
+        "blockedMutations": 0
+      },
+      {
+        "colorScheme": "dark",
+        "width": 320,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 320,
+          "height": 201
+        },
+        "bridge": {
+          "x": 0,
+          "y": 319,
+          "width": 320,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 424,
+          "width": 320,
+          "height": 234
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 296,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "/assets/assets/catalog-exhibition/e7a91cd8-d3a2-4436-986c-71d1d95da813-c3b0a254f1c9.008cc366705cb717ac09f9bb46226fd8.webp",
+        "text": "COLECCIÓN\nEsenciales para cargar todo\nProducto mostrado\nSamsung cargador USB-C 45 W · EP-T4510\n$42,00\nVer colección",
+        "blockedMutations": 0
+      }
+    ],
+    "after": [
+      {
+        "colorScheme": "light",
+        "width": 412,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 412,
+          "height": 202
+        },
+        "bridge": {
+          "x": 0,
+          "y": 320,
+          "width": 412,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 425,
+          "width": 412,
+          "height": 291.5
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 388,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+        "text": "DEL CATÁLOGO\nDJI Mic 3 (2 TX + 1 RX + Charging Case), Wireless Microphone\n$343,00\nPor encargo\nVer producto",
+        "blockedMutations": 0
+      },
+      {
+        "colorScheme": "light",
+        "width": 320,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 320,
+          "height": 188
+        },
+        "bridge": {
+          "x": 0,
+          "y": 306,
+          "width": 320,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 411,
+          "width": 320,
+          "height": 234
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 296,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+        "text": "DEL CATÁLOGO\nDJI Mic 3 (2 TX + 1 RX + Charging Case), Wireless Microphone\n$343,00\nPor encargo\nVer producto",
+        "blockedMutations": 0
+      },
+      {
+        "colorScheme": "dark",
+        "width": 412,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 412,
+          "height": 202
+        },
+        "bridge": {
+          "x": 0,
+          "y": 320,
+          "width": 412,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 425,
+          "width": 412,
+          "height": 291.5
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 388,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+        "text": "DEL CATÁLOGO\nDJI Mic 3 (2 TX + 1 RX + Charging Case), Wireless Microphone\n$343,00\nPor encargo\nVer producto",
+        "blockedMutations": 0
+      },
+      {
+        "colorScheme": "dark",
+        "width": 320,
+        "hero": {
+          "x": 0,
+          "y": 118,
+          "width": 320,
+          "height": 188
+        },
+        "bridge": {
+          "x": 0,
+          "y": 306,
+          "width": 320,
+          "height": 57
+        },
+        "first": {
+          "x": 0,
+          "y": 411,
+          "width": 320,
+          "height": 234
+        },
+        "nav": {
+          "x": 12,
+          "y": 820,
+          "width": 296,
+          "height": 64
+        },
+        "visibleCards": 2,
+        "photoSrc": "https://mimnotafmfasvwrclxan.supabase.co/storage/v1/object/public/catalog/5afbabbf-0678-40ee-a5d8-540f53efe114/imports/d900b878-7b98-47a1-9a27-eb2262a32fbb/propia-1791588870738-0.jpg",
+        "text": "DEL CATÁLOGO\nDJI Mic 3 (2 TX + 1 RX + Charging Case), Wireless Microphone\n$343,00\nPor encargo\nVer producto",
+        "blockedMutations": 0
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/before/light/320-inicio.png",
+      "sha256": "f28dce521a5c344640d77aafee34c9a8f58d0f78d69f393da2be4ee9e5f0c819",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/before/light/412-inicio.png",
+      "sha256": "99dcdb7c77940466d9bb151ecd9b9dedff1ab5e6cb375ad49a3e765c2ac5b4c2",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/before/dark/320-inicio.png",
+      "sha256": "c5eb4b293f726661a628775fc34d4f8043803690ecf9e8fe6d5919871114d4fd",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/before/dark/412-inicio.png",
+      "sha256": "b7579aef594a594e53c2e485030e46159929370939263d8305b8ddde814a6327",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/light/320-inicio.png",
+      "sha256": "7746632b452e0998cfcf313c0561ffefc404b3d97d5a595de7e90e92d1675bb2",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/light/320-ficha.png",
+      "sha256": "69cc92832ac6fdacc91c0e36e3b69247e02f66449575ac710ddd69d480db1aaf",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/light/412-inicio.png",
+      "sha256": "317d38b854fd5cccd61860af1540b9b4ed66e44e57eaafba024a215c565ddb41",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/light/412-ficha.png",
+      "sha256": "98227ad26c00da5e6976479fb667b78bc075022e8e8a00e8f19e68a2ca2872ad",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/dark/320-inicio.png",
+      "sha256": "0358852772e3f477ddd79008403df3a24524bfc26a450259a5c81ea1005a70a3",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/dark/320-ficha.png",
+      "sha256": "fd7964fc59058f7842dabcf4a5cdf53caa275201d8dd9da5a45f6c7ec023f5b5",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/dark/412-inicio.png",
+      "sha256": "5205265a1ec155c95704f7170fa65dbeb49da54787bb27026c0d458c790d0d03",
+      "edited": false
+    },
+    {
+      "file": "docs/capturas/inicio-real-2026-10-23/after/dark/412-ficha.png",
+      "sha256": "be23c7304d4d7c7603f711fe20ad90735223958c69cdb48689da59ebc8575ffb",
+      "edited": false
+    }
+  ],
+  "limitations": [
+    "This is a Home increment, not a completed professional catalog. Existing CC/documentary photos and illustrations remain in comparison.",
+    "Web320/412 and Android OS font-scale1.6 were tested separately; no physical Samsung receipt of this update observed.",
+    "Original emulator workflow cancelled only after its evidence publisher stalled; native test step success and4/4 report were recovered from its sealed artifact.",
+    "Pre-existing P2 on dark product detail: white status-bar icons/clock lose contrast over light images; not corrected by this Home increment."
+  ],
+  "publicationSource": "e6fccbd34461078052274dfbd0364d67c54863ff",
+  "publicationRun": 40003745928,
+  "publicationResult": "success",
+  "exactRuntimeGuard": "passed",
+  "updateId": "01a16a08-5900-7324-83c5-8f833e369d19",
+  "emulatorReceipt": "confirmed_by_four_diagnostics_and_visible_new_opening",
+  "publishedTimeFromDiagnostics": "2026-10-23 18:31 UTC",
+  "publishedTimeCaracas": "2026-10-23 14:31",
+  "emulatorRun": 40004177228,
+  "emulatorSource": "f9fe1a1d589f6c0233ea08bf451e5cd3224a61c7",
+  "emulator": "Android15 / API35 / Pixel6",
+  "emulatorNativeStepResult": "success",
+  "emulatorOverallWorkflow": "cancelled only after its post-test evidence publisher stalled; native step success and original4/4 report recovered without rerunning tests or OTA",
+  "emulatorResults": {
+    "light-08-inicio-v2": "passed_first_attempt",
+    "light-09-inicio-v2-texto": "passed_first_attempt_OS_font_scale1.6",
+    "dark-08-inicio-v2": "passed_first_attempt",
+    "dark-09-inicio-v2-texto": "passed_first_attempt_OS_font_scale1.6"
+  },
+  "physicalSamsungReceiptOfThisUpdate": "not_observed",
+  "recovery": {
+    "run": 40007057660,
+    "result": "success",
+    "artifact": 12524101560,
+    "branch": "ci/evidencia-40007057660",
+    "commit": "589fc143ec7fd0436e1c92eb37c098a8fb01a7e5",
+    "screenshots": 24,
+    "hashesVerified": 24,
+    "newJourneysExecuted": false,
+    "newUpdatePublished": false,
+    "filesCopiedToDocs": [
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.0/inicio-v2-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-01-portada.png",
+        "sha256": "57ec235047835cca1f31bed6778f0322663a661290a28829ca09da6ba6542e31",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.0/inicio-v2-07-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-07-diagnostico.png",
+        "sha256": "b9e96fba1b86128559e6f88982a0c9bbebc4a47470bc5bff44fb382b7a53e778",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.0/inicio-v2-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_183826__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-02-producto-editorial.png",
+        "sha256": "469f9efeb56b8500adb2ec0fab172a237bcdeb12d873aceaba3760096afdd13c",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.6/inicio-v2-texto-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-01-portada.png",
+        "sha256": "494cef972205b358f1424ad1a167c6bd5fcae38da49f575894fa31c42dd47e00",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.6/inicio-v2-texto-03-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-03-diagnostico.png",
+        "sha256": "6f123cd2e12e20f1bb74376c28908f5f31e9d882605a302c3369eea24e3a5a85",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/light/font-1.6/inicio-v2-texto-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_183944__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-producto-editorial.png",
+        "sha256": "c214dee6250e7151768a213c399d73d2c794aabdc8a77bbca4b368c52b821b0c",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.0/inicio-v2-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-01-portada.png",
+        "sha256": "64f8adbf00fcb4605331cb0453ea4e5ebd389c8f69b8ed0cd5a31f0501061768",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.0/inicio-v2-07-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-07-diagnostico.png",
+        "sha256": "ff4e4de4d2fcc86a825ae6c8b0bd1a5fb6749139b05aaa25e57652b3e4fd5bd7",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.0/inicio-v2-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_184022__Inicio V2 — apertura, comparación y destinos__takeScreenshot__inicio-v2-02-producto-editorial.png",
+        "sha256": "5b85f5f66c74048c8c7c2b9cefba34fc2f4b90c5cc5e6dcbb4d7f183c2f09258",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.6/inicio-v2-texto-01-portada.png",
+        "originalFile": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-01-portada.png",
+        "sha256": "1fa11ffd1dfeb53c812080c85f6d2334bd2469ab6a80c2b0f9aee3e5eab4b605",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.6/inicio-v2-texto-03-diagnostico.png",
+        "originalFile": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-03-diagnostico.png",
+        "sha256": "134704d7b369d5294b2b3ac65cfbca3a43e7c60ff50de78019c16dd738c0bf94",
+        "edited": false
+      },
+      {
+        "file": "docs/capturas/inicio-real-2026-10-23/native/dark/font-1.6/inicio-v2-texto-02-producto-editorial.png",
+        "originalFile": "flujos__maestro__2026-10-23_184138__Inicio V2 — fuente Android ampliada__takeScreenshot__inicio-v2-texto-02-producto-editorial.png",
+        "sha256": "38744f324d93bedf16aae98a2d84dab8739a5aa795062df2734c679c404c3949",
+        "edited": false
+      }
+    ]
+  },
+  "independentNativeReview": {
+    "verdict": "approved_for_Home_increment",
+    "originalScreenshotsViewed": 24,
+    "hashesVerified": 24,
+    "newHomeP1P2": 0,
+    "existingOutsideHomeP2": "Dark product detail: white status-bar clock/icons lose contrast over light photos; already documented, still pending",
+    "physicalSamsungReceiptConfirmed": false
+  }
+}

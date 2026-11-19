@@ -1,0 +1,172 @@
+{
+  "marker": {
+    "schemaVersion": 1,
+    "sourceSha": "14802742ef1dfe7d327cc60adcdbb14293107e36",
+    "buildVersion": "40410656172.1"
+  },
+  "deployment": "https://kora-panel--5zogil9zbb.expo.app",
+  "production": "https://kora-panel.expo.app",
+  "rows": [
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/admin/pedidos",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/vendedor",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/admin",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/vendedor/productos/nuevo",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/login",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/admin/tasas",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/no-existe-esta-pagina",
+      "status": 404,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/_next/static/chunks/1d8azkz3b89al.js",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/login",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin/pedidos/ver?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin/tasas",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/vendedor",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/vendedor/productos/editar?id=00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/vendedor/productos/nuevo",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/admin/pedidos",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/no-existe-esta-pagina",
+      "status": 404,
+      "ok": true
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/_next/static/chunks/1d8azkz3b89al.js",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "security": [
+    {
+      "base": "https://kora-panel--5zogil9zbb.expo.app",
+      "path": "/login",
+      "headers": {
+        "x-frame-options": null,
+        "content-security-policy": "frame-ancestors 'none'",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-robots-tag": "noindex, nofollow"
+      }
+    },
+    {
+      "base": "https://kora-panel.expo.app",
+      "path": "/login",
+      "headers": {
+        "x-frame-options": null,
+        "content-security-policy": "frame-ancestors 'none'",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-robots-tag": "noindex, nofollow"
+      }
+    }
+  ],
+  "evidence": {
+    "publicationRun": "https://github.com/somosoudy-design/marketplace/actions/runs/40410656172",
+    "strictReadOnlyVerificationRun": "https://github.com/somosoudy-design/marketplace/actions/runs/40414613732",
+    "method": "GitHub check-run public annotation Panel receipt verified; no redeploy or alias mutation"
+  }
+}

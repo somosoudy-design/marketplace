@@ -1,0 +1,169 @@
+{
+  "observedAtCaracas": "2026-10-14T16:12:11.263113-04:00",
+  "status": "LOCAL_EVALUATION_APPROVED_NOT_FOR_DISTRIBUTION",
+  "projectRef": "mimnotafmfasvwrclxan",
+  "images": [
+    {
+      "productId": "e7a91cd8-d3a2-4436-986c-71d1d95da813",
+      "slug": "ugreen-nexode-65w",
+      "originalPath": "demo/ugreen-nexode-65w-1.webp",
+      "reference": "65w",
+      "file": ".local/catalog-exhibition/evaluacion-cinco-20261014/65w.png",
+      "sourceUrl": "https://us.ugreen.com/products/65w-3-ports-gan-fast-charger",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-nexode-65w-usb-c-gan-charger-3-ports-wall-charger-276386.png?v=1764234605",
+      "sha256": "81fe87534944e1087ebf1cb50dd0c348006a7bb7d5a934077fbe201d1a92eab0",
+      "width": 600,
+      "height": 600,
+      "bytes": 44639,
+      "skuCandidates": [
+        "10334",
+        "10334+10232"
+      ],
+      "rights": "local-evaluation-only; redistribution not granted",
+      "catalogModelCorrespondence": "reference candidate only",
+      "photographicCapture": "unconfirmed; official packshot",
+      "includedInGit": false,
+      "includedInOTA": false,
+      "catalogMismatch": "SKU10334 gris/negro; no respalda la variante Blanco demo.",
+      "localFileVerified": true
+    },
+    {
+      "productId": "01a43334-e485-41cc-a12a-c049e933665d",
+      "slug": "ugreen-power-bank-20000",
+      "originalPath": "demo/ugreen-power-bank-20000-1.webp",
+      "reference": "powerbank100w",
+      "file": ".local/catalog-exhibition/evaluacion-cinco-20261014/powerbank100w.png",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-100w-20000mah-power-bank",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/files/ugreen-100w-20000mah-power-bank-402622.png?v=1745609459",
+      "sha256": "6c7e3f3099d3b4b19a2e41799f98882bb0643a009cedc2404c3298fd520dffda",
+      "width": 2048,
+      "height": 2048,
+      "bytes": 636930,
+      "skuCandidates": [
+        "25188"
+      ],
+      "rights": "local-evaluation-only; redistribution not granted",
+      "catalogModelCorrespondence": "reference candidate only",
+      "photographicCapture": "unconfirmed; official packshot",
+      "includedInGit": false,
+      "includedInOTA": false,
+      "catalogMismatch": "SKU25188/100W candidato; catálogo no fija potencia; composición incluye cable.",
+      "localFileVerified": true
+    },
+    {
+      "productId": "22516bf2-7283-45c1-a3a5-2449797a25db",
+      "slug": "ugreen-cable-usb-c-100w",
+      "originalPath": "demo/ugreen-cable-usb-c-100w-1.webp",
+      "reference": "cable",
+      "file": ".local/catalog-exhibition/evaluacion-cinco-20261014/cable.png",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-usb-c-to-usb-c-cable-3ft-6ft-10ft",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-usb-c-to-usb-c-100w-fast-cable-2-pack-131955.png?v=1692873952",
+      "sha256": "b79de52a9a3f4ae9727994a42e8796354183640856f35a865125ab7ec2c1d27c",
+      "width": 600,
+      "height": 600,
+      "bytes": 92731,
+      "skuCandidates": [
+        "70427P",
+        "10232",
+        "90120P"
+      ],
+      "rights": "local-evaluation-only; redistribution not granted",
+      "catalogModelCorrespondence": "reference candidate only",
+      "photographicCapture": "unconfirmed; official packshot",
+      "includedInGit": false,
+      "includedInOTA": false,
+      "catalogMismatch": "SKU70427P/10232, foto paquete2; catálogo no declara2 ni valida longitud por imagen.",
+      "localFileVerified": true
+    },
+    {
+      "productId": "910cdfb7-9a3e-48e5-bd40-99269aea332a",
+      "slug": "ugreen-revodok-hub-6-en-1",
+      "originalPath": "demo/ugreen-revodok-hub-6-en-1-1.webp",
+      "reference": "hub206",
+      "file": ".local/catalog-exhibition/evaluacion-cinco-20261014/hub206.png",
+      "sourceUrl": "https://us.ugreen.com/products/ugreen-revodok-pro-6-in-1-usb-c-hub",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-revodok-pro-6-in-1-usb-c-hub-950904.png?v=1700755895",
+      "sha256": "a94ab9cef0b9def4b97534f79683f4a4c693de553071edcef85eeba8c39344b1",
+      "width": 1600,
+      "height": 1600,
+      "bytes": 531540,
+      "skuCandidates": [
+        "15852"
+      ],
+      "rights": "local-evaluation-only; redistribution not granted",
+      "catalogModelCorrespondence": "reference candidate only",
+      "photographicCapture": "unconfirmed; official packshot",
+      "includedInGit": false,
+      "includedInOTA": false,
+      "catalogMismatch": "Revodok206/15852 candidato; verificar puertos/especificaciones originales.",
+      "localFileVerified": true
+    },
+    {
+      "productId": "6209f8ff-aeab-40e3-9168-9528a30ca55d",
+      "slug": "ugreen-nexode-30w",
+      "originalPath": "demo/ugreen-nexode-30w-1.webp",
+      "reference": "30w",
+      "file": ".local/catalog-exhibition/evaluacion-cinco-20261014/30w.png",
+      "sourceUrl": "https://uk.ugreen.com/products/ugreen-nexode-30w-gan-wall-charger",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0697/8207/7746/products/ugreen-nexode-30w-gan-wall-charger-90878-324403.png?v=1702000456",
+      "sha256": "0bf8c36ee804c1eb0a6281af55ed13aff0f13fbc47d8f374851367329b9f066e",
+      "width": 1600,
+      "height": 1600,
+      "bytes": 245447,
+      "skuCandidates": [
+        "90878"
+      ],
+      "rights": "local-evaluation-only; redistribution not granted",
+      "catalogModelCorrespondence": "reference candidate only",
+      "photographicCapture": "unconfirmed; official packshot",
+      "includedInGit": false,
+      "includedInOTA": false,
+      "catalogMismatch": "SKU90878 gris/negro; contradice Blanco; enchufe plegado no totalmente visible.",
+      "localFileVerified": true
+    }
+  ],
+  "validation": {
+    "platform": "exported web on loopback; no Android test",
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "widths": [
+      412,
+      320
+    ],
+    "screenshots": 44,
+    "surfaces": [
+      "Inicio C",
+      "Buscar",
+      "UGREEN results",
+      "five product detail primary images"
+    ],
+    "ugreenResultCount": 11,
+    "productIdsAndOriginalPathsPreserved": true,
+    "catalogDataUnmodified": true,
+    "gallerySecondaryImages": "unchanged original paths; no duplicate/fake angles",
+    "returnToSearchPreservesQuery": true,
+    "horizontalOverflow": false,
+    "remoteMutationRoutes": "blocked before navigation",
+    "blockedPaths": [
+      "/rest/v1/payment_methods",
+      "/rest/v1/rpc/track_event"
+    ],
+    "authenticatedFavoritesCartCheckoutValidated": false,
+    "rightsVerifiedForRedistribution": false,
+    "photographicCaptureMethodVerified": false,
+    "commercialModelCorrespondenceApproved": false,
+    "assetRegistryRestoredSha256": "5dc6425665220d8589a14502171227cea4100497054a33292453552aa13ac5f8",
+    "pixelFilesInPublicRepository": 0,
+    "newOTA": null
+  },
+  "independentReview": {
+    "agent": "release_auditor",
+    "verdict": "APROBADO exclusivamente para evaluación local",
+    "correction": "Recapturar320 esperando respuesta search_products queryUGREEN y ausenciaSHEGLAM; comprobadas4 recapturas.",
+    "limits": "No aprueba derechos, correspondencia comercial, ventas, OTA, Android, TalkBack o pagos."
+  },
+  "privateArtifacts": ".local/catalog-exhibition/evaluacion-cinco-20261014",
+  "privateComparison": "comparacion.html (32 original screenshots embedded; ignored by Git)"
+}

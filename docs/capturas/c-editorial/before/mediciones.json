@@ -1,0 +1,38 @@
+[
+  {
+    "theme": "light",
+    "width": 320,
+    "firstProductTop": 432,
+    "completeProducts": 2,
+    "heroTop": 160,
+    "heroHeight": 218,
+    "overflow": false
+  },
+  {
+    "theme": "light",
+    "width": 412,
+    "firstProductTop": 429,
+    "completeProducts": 2,
+    "heroTop": 160,
+    "heroHeight": 215,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "width": 320,
+    "firstProductTop": 432,
+    "completeProducts": 2,
+    "heroTop": 160,
+    "heroHeight": 218,
+    "overflow": false
+  },
+  {
+    "theme": "dark",
+    "width": 412,
+    "firstProductTop": 429,
+    "completeProducts": 2,
+    "heroTop": 160,
+    "heroHeight": 215,
+    "overflow": false
+  }
+]

@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-30",
+  "surface": "Chromium web, backend local, no Android físico",
+  "source": "Build Next16.4.1 final de compra web; fuentes versionadas, sin editar PNG",
+  "data": "Fixtures locales example.com, productos y pagos en verificación; no fotografía comercial ni datos remotos reales",
+  "viewports": [
+    320,
+    1440
+  ],
+  "height": 960,
+  "colorSchemes": [
+    "light",
+    "dark"
+  ],
+  "tests": "27UI y4escenarios de captura de fases aprobados",
+  "files": [
+    {
+      "file": "1-dirección-1440-dark.png",
+      "sha256": "f23b84879953fcffc3404feb35783b7e9a8d5398bdd37e6e479ce50972c7422b"
+    },
+    {
+      "file": "1-dirección-1440-light.png",
+      "sha256": "abcdc6182f4bd11de6b465620509688ee64868206616a732cdea07d836247b32"
+    },
+    {
+      "file": "1-dirección-320-dark.png",
+      "sha256": "cb4fcbf16e4a62d2c59ded5c14f403e0728293a39d4056f88aa712619bc60b82"
+    },
+    {
+      "file": "1-dirección-320-light.png",
+      "sha256": "155334110c7436e9afd6065eede3029af0b0247110e44f295176f97b6512a315"
+    },
+    {
+      "file": "2-entregas-1440-dark.png",
+      "sha256": "0b3c0f1a00793b1cde1ba1ef691da0494554c623a6d985ee9fe56af059192be0"
+    },
+    {
+      "file": "2-entregas-1440-light.png",
+      "sha256": "eb62d9e9c142ec613308bece4687e8426b5f4e6bd7c401b3294002de486631bd"
+    },
+    {
+      "file": "2-entregas-320-dark.png",
+      "sha256": "c62021c2d6339e78b87bbf29eeb7a0fa9bac8092eb0943a28f4a4771fb42c370"
+    },
+    {
+      "file": "2-entregas-320-light.png",
+      "sha256": "14f62dcea619af4e9069f8fdab8f515616ee077e1d68d7abf05703475815a606"
+    },
+    {
+      "file": "3-plan-1440-dark.png",
+      "sha256": "3c480c7b4612f087c8d07a2ede83188acbeb5becfb714e8a7dbe91a4440b177c"
+    },
+    {
+      "file": "3-plan-1440-light.png",
+      "sha256": "8218b4746627b1041f3fa2c242c7a23843fac5cf2c548785aa901f1c9be52a62"
+    },
+    {
+      "file": "3-plan-320-dark.png",
+      "sha256": "ed0b20604c499915cfc6884327beba7cfd12f85f1d4327362eae042d134e6b2c"
+    },
+    {
+      "file": "3-plan-320-light.png",
+      "sha256": "4a36f89e421323230eb0d8326c437521a9c5ccc373f70f072ce64baffa1303ec"
+    },
+    {
+      "file": "4-revisión-1440-dark.png",
+      "sha256": "6efb2c9bdbc11dcbf9a9d4e304657e6de41a019bd1d2115f8c36e596568e36c7"
+    },
+    {
+      "file": "4-revisión-1440-light.png",
+      "sha256": "89073654a558e123f1a0635a0d2d3ff2662786dd934060b4fd7f79f5b17b1146"
+    },
+    {
+      "file": "4-revisión-320-dark.png",
+      "sha256": "944853d09e1c10e537b82c3214ccf2f08b9193c0dbf7eaa5f0cfcff94d6581e3"
+    },
+    {
+      "file": "4-revisión-320-light.png",
+      "sha256": "b62764c5df6f3aad66f511f91ccf1edae43096c69f937ec5ea62415c01ef272e"
+    },
+    {
+      "file": "cotizacion-renovada-1440-light.png",
+      "sha256": "ee82aa57d39e1415fa2b4f49a29b988e3b7bc0957e1e6f85bd68deeecf6284ad"
+    },
+    {
+      "file": "pago-1440-dark.png",
+      "sha256": "f2f2467c1c3af8310bad623db7858db3e3159c9b9499e7e2c302f3fc05fd3546"
+    },
+    {
+      "file": "pago-1440-light.png",
+      "sha256": "41ad93e023af9e98c5b12a54ed4263ab670da741d04f998cadccae34007dddd6"
+    },
+    {
+      "file": "pago-320-dark.png",
+      "sha256": "4b61e8e6e2f2bee944c799f0f90977f3967609fafdbdea6648ec1d798211bf22"
+    },
+    {
+      "file": "pago-320-light.png",
+      "sha256": "e89d746e4598ec17250abb7dd0089be3791c45691be840480bcec943c74c7333"
+    },
+    {
+      "file": "pago-recuperado-320-dark.png",
+      "sha256": "a75d7fab84412811dfb86e042588dfb41cdb2a8d124a5edc1a78e3b03c266592"
+    },
+    {
+      "file": "pedido-1440-dark.png",
+      "sha256": "b9e7442fc48f42030a599f469989d23b5729dfcf0e95e0e91c82c2b051445928"
+    },
+    {
+      "file": "pedido-1440-light.png",
+      "sha256": "fd6bfd59e94b4d37d2e84ac34a96c9bab5fc54d234a4a64597f86fe18aa59ba9"
+    },
+    {
+      "file": "pedido-320-dark.png",
+      "sha256": "d876ed34ef215012b4bbe61fa0585c078a8915af3979c16dd25b21d1750d3e5f"
+    },
+    {
+      "file": "pedido-320-light.png",
+      "sha256": "ca27e4562a8b503bdd5806bb2259f72aff1d00841e2ee37725c71a886888a9c3"
+    }
+  ],
+  "sourceCommit": "c579bc414ed61d286d2dd74fcdcc9bf21017ebaa",
+  "buildId": "Los4eYQdKash9kEdB9VsP"
+}

@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-05",
+  "environment": "Chromium local; app Expo web, Next storefront/panel; backend local",
+  "images": [
+    {
+      "file": "before-01-app-home-320-light.png",
+      "sha256": "18ab8c7b5d461f71198d0618d3dd645805b880f25bf98e51975362d7abf6530e",
+      "source": ".local/logo-original-20261105/review/before/01-app-home-320-light.png",
+      "surface": "App 320 px · claro",
+      "stage": "before"
+    },
+    {
+      "file": "after-01-app-home-320-light.png",
+      "sha256": "36b6af55a3b36e08bcf63ed0ced6cd5ac5aa1eaac82ec7c57637707686a4a385",
+      "source": ".local/logo-original-20261105/review/after/01-app-home-320-light.png",
+      "surface": "App 320 px · claro",
+      "stage": "after"
+    },
+    {
+      "file": "before-01-app-home-412-dark.png",
+      "sha256": "0af74c5da55ea6284afe51548afb8e30356d80b01c5d051f751e538b2e766a88",
+      "source": ".local/logo-original-20261105/review/before/01-app-home-412-dark.png",
+      "surface": "App 412 px · oscuro",
+      "stage": "before"
+    },
+    {
+      "file": "after-01-app-home-412-dark.png",
+      "sha256": "dc5f98bedce6371894cf27905e168873ef43ec7e80a4f59fdc7da247349015c7",
+      "source": ".local/logo-original-20261105/review/after/01-app-home-412-dark.png",
+      "surface": "App 412 px · oscuro",
+      "stage": "after"
+    },
+    {
+      "file": "before-02-web-home-1440-light.png",
+      "sha256": "5323bfd02aec52ed88d3171c0715b48e7d2f28b052a014ea63e7e5cd67804477",
+      "source": ".local/logo-original-20261105/review/before/02-web-home-1440-light.png",
+      "surface": "Web 1440 px · claro",
+      "stage": "before"
+    },
+    {
+      "file": "after-02-web-home-1440-light.png",
+      "sha256": "c939f90c9b196b76fb78979fce766e75ed7b6f9bcdef5247055b266041b7da37",
+      "source": ".local/logo-original-20261105/review/after/02-web-home-1440-light.png",
+      "surface": "Web 1440 px · claro",
+      "stage": "after"
+    },
+    {
+      "file": "before-04-web-signed-in-320-dark.png",
+      "sha256": "273cabe96b50e009f9a885b56ee60165153a67fa1925a32dbcaf7f8f78c2bc3b",
+      "source": ".local/logo-original-20261105/review/before/04-web-signed-in-320-dark.png",
+      "surface": "Web con sesión 320 px · oscuro",
+      "stage": "before"
+    },
+    {
+      "file": "after-04-web-signed-in-320-dark.png",
+      "sha256": "7c5262d0c21b9744ac05c9245e2a6af227bbc4c71b2e60680bdbb56a18938a52",
+      "source": ".local/logo-original-20261105/review/after/04-web-signed-in-320-dark.png",
+      "surface": "Web con sesión 320 px · oscuro",
+      "stage": "after"
+    },
+    {
+      "file": "before-05-panel-login-320-light.png",
+      "sha256": "e83df441f97f6906c50a2748d8ace1996f04244b48ae9cfb303a6f80003e6f60",
+      "source": ".local/logo-original-20261105/review/before/05-panel-login-320-light.png",
+      "surface": "Acceso panel 320 px · claro",
+      "stage": "before"
+    },
+    {
+      "file": "after-05-panel-login-320-light.png",
+      "sha256": "21b36e3afb3e2fdedb58b0ae10abd68d6ae36b67dfff84cc3b6c47979c9e601a",
+      "source": ".local/logo-original-20261105/review/after/05-panel-login-320-light.png",
+      "surface": "Acceso panel 320 px · claro",
+      "stage": "after"
+    },
+    {
+      "file": "before-07-panel-menu-320-dark.png",
+      "sha256": "5671576ff786bba0493d407acb017cee338485d5534f8439a142897830ebc726",
+      "source": ".local/logo-original-20261105/review/before/07-panel-menu-320-dark.png",
+      "surface": "Menú panel 320 px · oscuro",
+      "stage": "before"
+    },
+    {
+      "file": "after-07-panel-menu-320-dark.png",
+      "sha256": "7872756467950557a279347db56d05186b40f4ac5dda6e8272a90b52202444a0",
+      "source": ".local/logo-original-20261105/review/after/07-panel-menu-320-dark.png",
+      "surface": "Menú panel 320 px · oscuro",
+      "stage": "after"
+    },
+    {
+      "file": "revision1-checkout-320-light.png",
+      "sha256": "85371be4cda1fd9807ec77147b83a38097d14fba75dd769c37ad94c2003f72ee",
+      "source": ".local/logo-original-20261105/review/after-extra/13-web-focused-320-light.png",
+      "surface": "Checkout320 rechazado por fila extra",
+      "stage": "review"
+    },
+    {
+      "file": "revision2-checkout-320-light.png",
+      "sha256": "bb83fd97b5e8f06e3eec211a364df28743669ee34fbf287e10cf891306a223ee",
+      "source": ".local/logo-original-20261105/review/after-r2/13-web-checkout-focused-320-light.png",
+      "surface": "Checkout320 corregido",
+      "stage": "review"
+    },
+    {
+      "file": "revision2-payment-320-dark.png",
+      "sha256": "7e2fc825e6ffcc6e0400a3488a1a15263082950dfce376aeb5e241129f43549e",
+      "source": ".local/logo-original-20261105/review/after-r2/13-web-payment-focused-320-dark.png",
+      "surface": "Pago320 corregido",
+      "stage": "review"
+    },
+    {
+      "file": "app-sticky-type160-320-dark.png",
+      "sha256": "4314a160b3ec5529f376b9409be35f902bb86986bd81bf4cc3dd3c91b4da82f7",
+      "source": ".local/logo-original-20261105/review/after-app/11-app-sticky-type160-320-dark.png",
+      "surface": "App búsqueda sticky texto160%",
+      "stage": "review"
+    }
+  ]
+}

@@ -1,0 +1,393 @@
+diff --git a/apps/mobile/src/app/auth-callback.tsx b/apps/mobile/src/app/auth-callback.tsx
+index 2464dd4..83fb720 100644
+--- a/apps/mobile/src/app/auth-callback.tsx
++++ b/apps/mobile/src/app/auth-callback.tsx
+@@ -7,7 +7,7 @@ import { useAuthLinkSession } from '@/lib/auth-link';
+ import { useTheme } from '@/theme';
+ import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
+ 
+-// Opened from the "confirm your email" message: the link confirms the address and signs the buyer in.
++// Legacy email destination. Confirmation happens in verify-email after the buyer enters a code.
+ export default function AuthCallbackScreen() {
+   const t = useTheme();
+   const returnTo = useAuthReturn();
+@@ -28,8 +28,8 @@ export default function AuthCallbackScreen() {
+           icon="hourglass"
+           title="No pudimos confirmar tu correo"
+           body={link.reason === 'expired'
+-            ? 'El enlace venció o ya se usó. Inicia sesión con tu correo y contraseña: si aún falta confirmar, te enviaremos otro.'
+-            : 'Abre el enlace del correo en este teléfono, o inicia sesión si ya confirmaste.'}
++            ? 'El enlace venció o ya se usó. Inicia sesión y, si falta confirmar tu cuenta, te enviaremos un código nuevo.'
++            : 'Confirma tu correo con un código de 6 dígitos. Inicia sesión y, si falta verificar tu cuenta, te enviaremos uno nuevo.'}
+           action="Iniciar sesión"
+           onAction={() => router.replace(authTarget('/sign-in', returnTo))}
+         />
+diff --git a/apps/mobile/src/app/reset-password.tsx b/apps/mobile/src/app/reset-password.tsx
+index 44bd7a4..67c360c 100644
+--- a/apps/mobile/src/app/reset-password.tsx
++++ b/apps/mobile/src/app/reset-password.tsx
+@@ -9,8 +9,7 @@ import { useAuthLinkSession } from '@/lib/auth-link';
+ import { useTheme } from '@/theme';
+ import { authTarget, finishAuth, useAuthReturn } from '@/lib/auth-navigation';
+ 
+-// Opened from a "reset password" email link (emails sent before the six-digit codes, or link templates). The link
+-// signs the user in for this one purpose; the new password is saved with the session it created.
++// Legacy email destination. Recovery uses forgot-password and its explicitly entered six-digit code.
+ export default function ResetPasswordScreen() {
+   const t = useTheme();
+   const returnTo = useAuthReturn();
+@@ -30,10 +29,8 @@ export default function ResetPasswordScreen() {
+       <View testID="reset-link-invalid" style={{ flex: 1, justifyContent: 'center', backgroundColor: t.colors.background }}>
+         <EmptyState
+           icon="hourglass"
+-          title={link.reason === 'missing' ? 'Cambia tu contraseña con un código' : 'Este enlace ya no sirve'}
+-          body={link.reason === 'missing'
+-            ? 'Para cambiar tu contraseña, pide un código de 6 dígitos a tu correo.'
+-            : 'Los enlaces para cambiar la contraseña vencen y se pueden usar una sola vez. Pide un código de 6 dígitos a tu correo.'}
++          title="Cambia tu contraseña con un código"
++          body="Pide un código nuevo de 6 dígitos a tu correo y escríbelo en la app para crear tu contraseña nueva."
+           action="Pedir un código"
+           onAction={() => router.replace(authTarget('/forgot-password', returnTo))}
+         />
+diff --git a/apps/mobile/src/lib/auth-link.ts b/apps/mobile/src/lib/auth-link.ts
+index a792e6a..3e158b2 100644
+--- a/apps/mobile/src/lib/auth-link.ts
++++ b/apps/mobile/src/lib/auth-link.ts
+@@ -1,13 +1,10 @@
+ import * as Linking from 'expo-linking';
+-import { useEffect, useState } from 'react';
+ import { Platform } from 'react-native';
+-import { supabase } from './supabase';
+ 
+ /**
+- * Links from Supabase Auth emails (confirm sign-up, reset password) come back to the app as
+- * `kora://<route>#access_token=…&refresh_token=…&type=…`, as `?code=…` (PKCE), or with `error_code` when the
+- * link expired or was already used. The redirect only reaches the app when `kora://**` is in the project's
+- * allowed redirect URLs (docs/ENTORNO.md).
++ * Email authentication is completed with an explicitly entered six-digit code in the app.
++ * Legacy email destinations remain registered, but URLs never supply or confirm a session.
++ * This also rejects codes: this source does not initiate a correlated PKCE email-link flow.
+  */
+ export interface AuthLinkParams {
+   code?: string;
+@@ -38,8 +35,7 @@ export type AuthLinkState =
+   | { status: 'ready'; type: string | null }
+   | { status: 'invalid'; reason: 'expired' | 'missing' | 'failed' };
+ 
+-// On the web supabase-js reads (and clears) the URL fragment as soon as it starts, so keep the address the
+-// page was opened with to tell an expired link apart from a page opened by hand.
++// URL detection is disabled in the SDK on every platform; no URL is an authentication grant.
+ const webInitialUrl = Platform.OS === 'web' && typeof window !== 'undefined' ? window.location.href : null;
+ 
+ function linkError(p: AuthLinkParams): AuthLinkState | null {
+@@ -47,41 +43,13 @@ function linkError(p: AuthLinkParams): AuthLinkState | null {
+   return { status: 'invalid', reason: p.error_code === 'otp_expired' || /expired|invalid/i.test(p.error_description ?? '') ? 'expired' : 'failed' };
+ }
+ 
+-/** Turns the link the app was opened with into a session. Opening the screen without a link keeps a current session. */
++/** Legacy destinations only explain how to request a code; an existing session is not confirmation. */
+ export function useAuthLinkSession(): AuthLinkState {
+   const nativeUrl = Linking.useURL();
+-  const [state, setState] = useState<AuthLinkState>({ status: 'working' });
+   const url = Platform.OS === 'web' ? webInitialUrl : nativeUrl;
+-
+-  useEffect(() => {
+-    let cancelled = false;
+-    const done = (s: AuthLinkState) => !cancelled && setState(s);
+-    const p = parseAuthLink(url);
+-    (async () => {
+-      const failed = linkError(p);
+-      if (failed) return done(failed);
+-      try {
+-        if (Platform.OS !== 'web') {
+-          if (p.code) {
+-            const { error } = await supabase.auth.exchangeCodeForSession(p.code);
+-            if (error) return done({ status: 'invalid', reason: 'expired' });
+-          } else if (p.access_token && p.refresh_token) {
+-            const { error } = await supabase.auth.setSession({ access_token: p.access_token, refresh_token: p.refresh_token });
+-            if (error) return done({ status: 'invalid', reason: 'expired' });
+-          }
+-        }
+-        // the web client has already stored the session from the link by the time getSession resolves
+-        const { data } = await supabase.auth.getSession();
+-        if (data.session) return done({ status: 'ready', type: p.type ?? null });
+-        done({ status: 'invalid', reason: 'missing' });
+-      } catch {
+-        done({ status: 'invalid', reason: 'failed' });
+-      }
+-    })();
+-    return () => {
+-      cancelled = true;
+-    };
+-  }, [url]);
+-
+-  return state;
++  const p = parseAuthLink(url);
++  const failed = linkError(p);
++  if (failed) return failed;
++  // No async exchange or session read can outlive this screen or adopt a different actor.
++  return { status: 'invalid', reason: p.code || p.access_token || p.refresh_token ? 'failed' : 'missing' };
+ }
+diff --git a/apps/mobile/src/lib/supabase.ts b/apps/mobile/src/lib/supabase.ts
+index 230e72b..b961228 100644
+--- a/apps/mobile/src/lib/supabase.ts
++++ b/apps/mobile/src/lib/supabase.ts
+@@ -11,7 +11,8 @@ export const supabase = createKoraClient({
+   url: env.supabaseUrl || 'https://not-configured.invalid',
+   anonKey: env.supabaseAnonKey || 'missing-anon-key',
+   storage: sessionStorage,
+-  detectSessionInUrl: Platform.OS === 'web',
++  // Email access is explicit password/OTP; opening a URL must never replace the current actor.
++  detectSessionInUrl: false,
+   // the query client (lib/query) owns retries and knows which errors are worth repeating
+   retryReads: false,
+ });
+diff --git a/tools/auth/android-auth-boundary.test.mjs b/tools/auth/android-auth-boundary.test.mjs
+new file mode 100644
+index 0000000..1c332a1
+--- /dev/null
++++ b/tools/auth/android-auth-boundary.test.mjs
+@@ -0,0 +1,243 @@
++// Run from the candidate repository, or set MAYAMI_SOURCE_ROOT. Actual TS/SDK; no socket/network.
++// React/RN/Expo are controlled effect/form ports, not a renderer, Keystore or GoTrue implementation.
++import assert from 'node:assert/strict';
++import { test, after } from 'node:test';
++import { createRequire } from 'node:module';
++import { readFileSync, writeFileSync } from 'node:fs';
++import { resolve } from 'node:path';
++import { createHash } from 'node:crypto';
++
++const root = resolve(process.env.MAYAMI_SOURCE_ROOT || process.cwd());
++const require = createRequire(resolve(root, 'package.json'));
++const sdkRequire = createRequire(resolve(root, 'apps/mobile/package.json'));
++const coreRequire = createRequire(resolve(root, 'packages/core/package.json'));
++const ts = require('typescript'), sdk = sdkRequire('@supabase/supabase-js');
++const hashes = {}, receipts = [];
++const issuer = 'https://testonly.supabase.co', key = 'sb-testonly-auth-token';
++const A = '11111111-1111-4111-8111-111111111111', B = '22222222-2222-4222-8222-222222222222';
++const expiresAt = Math.floor(Date.now() / 1000) + 3600;
++const enc = value => Buffer.from(JSON.stringify(value)).toString('base64url');
++const jwt = id => `${enc({ alg: 'HS256', typ: 'JWT' })}.${enc({ sub: id, exp: expiresAt, role: 'authenticated', iss: issuer + '/auth/v1' })}.${Buffer.from('synthetic-signature').toString('base64url')}`;
++const user = id => ({ id, aud: 'authenticated', role: 'authenticated', email: `actor-${id === A ? 'a' : 'b'}@example.com`, app_metadata: {}, user_metadata: {}, identities: [{ id, identity_id: id, user_id: id, provider: 'email', identity_data: {} }], created_at: new Date().toISOString() });
++const session = id => ({ access_token: jwt(id), refresh_token: `synthetic-refresh-${id === A ? 'a' : 'b'}`, expires_in: 3600, expires_at: expiresAt, token_type: 'bearer', user: user(id) });
++const attack = 'kora://reset-password#' + new URLSearchParams({ access_token: jwt(A), refresh_token: session(A).refresh_token, type: 'recovery' });
++function source(path) { const text = readFileSync(resolve(root, path), 'utf8'); hashes[path] = createHash('sha256').update(text).digest('hex'); return text; }
++function compile(text, modules, fileName = 'module.ts') {
++  const compiled = ts.transpileModule(text, { fileName, reportDiagnostics: true, compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } });
++  assert.deepEqual((compiled.diagnostics || []).filter(d => d.category === ts.DiagnosticCategory.Error).map(d => ts.flattenDiagnosticMessageText(d.messageText, ' ')), [], 'Source syntax must be valid');
++  const js = compiled.outputText;
++  const module = { exports: {} };
++  new Function('require', 'exports', 'module', js)(name => { assert(name in modules, 'Unlisted import: ' + name); return modules[name]; }, module.exports, module);
++  return module.exports;
++}
++const apiClient = compile(source('packages/api/src/client.ts'), { '@supabase/supabase-js': sdk });
++const core = { ...compile(source('packages/core/src/auth.ts'), {}), ...compile(source('packages/core/src/validation.ts'), { zod: coreRequire('zod') }) };
++const jsx = { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) };
++function ports() {
++  const states = [], refs = [], previousEffects = [], pending = [], cleanup = [];
++  let stateIndex = 0, refIndex = 0, effectIndex = 0;
++  const react = {
++    useState(initial) { const index = stateIndex++; if (!(index in states)) states[index] = typeof initial === 'function' ? initial() : initial; return [states[index], value => { states[index] = typeof value === 'function' ? value(states[index]) : value; }]; },
++    useRef(initial) { const index = refIndex++; return refs[index] ?? (refs[index] = { current: initial }); },
++    useEffect(effect, deps) { const index = effectIndex++; if (!previousEffects[index] || deps.some((value, i) => !Object.is(value, previousEffects[index][i]))) { previousEffects[index] = deps; pending.push({ index, effect }); } },
++    useMemo: work => work(), createContext: () => ({ Provider: 'AuthContext.Provider' }), useContext() { throw new Error('Consumer must use the actual captured AuthState port'); },
++  };
++  return { react, states,
++    render(component, props = {}) { stateIndex = refIndex = effectIndex = 0; return component(props); },
++    flush() { pending.splice(0).forEach(({ index, effect }) => { cleanup[index]?.(); cleanup[index] = effect(); }); },
++    unmount() { cleanup.splice(0).forEach(fn => fn?.()); },
++  };
++}
++const find = (node, testID) => {
++  if (!node || typeof node !== 'object') return null;
++  if (node.props?.testID === testID) return node;
++  return [node.props?.children].flat(Infinity).map(child => find(child, testID)).find(Boolean) || null;
++};
++async function setup({ platform = 'android', url = attack, initial = B } = {}) {
++  const originals = new Map(['fetch', 'window', 'document', 'BroadcastChannel'].map(name => [name, Object.getOwnPropertyDescriptor(globalThis, name)]));
++  const values = new Map(initial ? [[key, JSON.stringify(session(initial))]] : []), requests = [], forbidden = [], counts = { getSession: 0, setSession: 0, exchange: 0 };
++  let link = url, handler = () => { throw new Error('No synthetic Auth response was configured'); };
++  const storage = { getItem: async k => values.get(k) ?? null, setItem: async (k, v) => { values.set(k, v); }, removeItem: async k => { values.delete(k); } };
++  const request = async (input, init = {}) => {
++    const target = new URL(typeof input === 'string' ? input : input.url);
++    if (target.origin !== issuer) { forbidden.push('external_origin'); throw new Error('External request forbidden'); }
++    const row = { method: init.method || 'GET', path: target.pathname, grant: target.searchParams.get('grant_type') };
++    requests.push(row);
++    return handler(target, init, init.body ? JSON.parse(init.body) : null);
++  };
++  for (const [name, value] of Object.entries({ fetch: request, BroadcastChannel: undefined,
++    ...(platform === 'web' ? { window: { location: new URL(url || 'https://mayami.test.invalid/reset-password'), localStorage: storage, addEventListener() {}, removeEventListener() {} }, document: { visibilityState: 'visible', addEventListener() {}, removeEventListener() {} } } : {}),
++  })) Object.defineProperty(globalThis, name, { value, writable: true, configurable: true });
++  const rn = { Platform: { OS: platform }, AppState: { addEventListener: () => ({ remove() {} }) }, View: 'View', Pressable: 'Pressable', ActivityIndicator: 'ActivityIndicator', TextInput: 'TextInput' };
++  const env = { supabaseUrl: issuer, supabaseAnonKey: 'synthetic-public-anon' };
++  const api = { ...apiClient, createKoraClient: options => apiClient.createKoraClient({ ...options, fetch: request }), createApi: () => ({}) };
++  const binding = compile(source('apps/mobile/src/lib/supabase.ts'), { 'react-native-url-polyfill/auto': {}, '@kora/api': api, 'react-native': rn, './env': { env }, './session-storage': { sessionStorage: storage } });
++  const client = binding.supabase;
++  const realGet = client.auth.getSession.bind(client.auth);
++  await realGet();
++  const realSet = client.auth.setSession.bind(client.auth), realExchange = client.auth.exchangeCodeForSession.bind(client.auth);
++  client.auth.getSession = (...args) => { counts.getSession++; return realGet(...args); };
++  client.auth.setSession = (...args) => { counts.setSession++; return realSet(...args); };
++  client.auth.exchangeCodeForSession = (...args) => { counts.exchange++; return realExchange(...args); };
++  const linking = { useURL: () => link, createURL: path => 'kora://' + path.replace(/^\//, '') };
++  const hookPorts = ports();
++  const hook = compile(source('apps/mobile/src/lib/auth-link.ts'), { 'expo-linking': linking, react: hookPorts.react, 'react-native': rn, './supabase': binding });
++  const actors = compile(source('apps/mobile/src/lib/actor-api.ts'), { '@kora/api': api, './env': { env }, './supabase': binding });
++  return { client, counts, requests, rn, env, binding, actors, api, hook, hookPorts,
++    handler(fn) { handler = fn; },
++    actor: async () => (await realGet()).data.session?.user.id ?? null,
++    navigate(next) { link = next; if (platform === 'web') window.location = new URL(next || 'https://mayami.test.invalid/reset-password'); },
++    async hookState() { hookPorts.render(hook.useAuthLinkSession); hookPorts.flush(); await new Promise(done => setImmediate(done)); return hookPorts.render(hook.useAuthLinkSession); },
++    async authValue() {
++      const p = ports(); p.states[0] = (await realGet()).data.session;
++      const provider = compile(source('apps/mobile/src/lib/auth.tsx'), {
++        react: p.react, 'react/jsx-runtime': jsx, '@tanstack/react-query': { useQueryClient: () => ({}) }, './auth-link': hook,
++        './guest-cart': { guestCart: {} }, './guest-favorites': { guestFavorites: {}, pendingFavoritesKey: () => 'unused' },
++        './push': { unregisterPush: async () => {} }, './query': { clearAccountCache() {} }, './supabase': binding,
++        './actor-api': actors, './ids': { intentKey: () => 'unused' }, '@kora/core': core,
++      }, 'auth.tsx');
++      // Run actual AuthProvider useMemo methods; guest/cache subscription effect is outside this focused boundary.
++      return p.render(provider.AuthProvider, { children: null }).props.value;
++    },
++    dispose() { hookPorts.unmount(); client.auth.stopAutoRefresh(); assert.deepEqual(forbidden, []); for (const [name, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, name, descriptor); else delete globalThis[name]; } },
++  };
++}
++function assertNoLinkAuth(env) { assert.deepEqual(env.counts, { getSession: 0, setSession: 0, exchange: 0 }); assert.deepEqual(env.requests, []); }
++function mountCode(env, auth, purpose, onVerified) {
++  const p = ports(), component = compile(source('apps/mobile/src/components/auth/EmailCodeStep.tsx'), {
++    '@kora/core': core, react: p.react, 'react/jsx-runtime': jsx, 'react-native': env.rn,
++    '@/components/ui/Button': { Button: 'Button' }, '@/components/ui/CodeInput': { CodeInput: 'CodeInput' }, '@/components/ui/Icon': { Icon: 'Icon' }, '@/components/ui/States': { Banner: 'Banner' }, '@/components/ui/Text': { Text: 'Text' },
++    '@/lib/auth': { useAuth: () => auth }, '@/lib/haptics': { haptics: { success() {}, warning() {} } }, '@/theme': { useTheme: () => ({ colors: {} }) },
++  }, 'EmailCodeStep.tsx');
++  const props = { email: 'actor-a@example.com', purpose, title: 'Confirmar', onVerified, onChangeEmail() {} };
++  let tree = p.render(component.EmailCodeStep, props); p.flush();
++  return { async submit(code) { await find(tree, 'code-input').props.onComplete(code); tree = p.render(component.EmailCodeStep, props); }, unmount: () => p.unmount() };
++}
++
++test('foreign token URL and replay never confer A or invoke Auth; B remains unchanged', async () => {
++  const env = await setup();
++  try {
++    for (let replay = 0; replay < 2; replay++) { assert.equal((await env.hookState()).status, 'invalid'); assertNoLinkAuth(env); assert.equal(await env.actor(), B); }
++    receipts.push({ case: 'foreign token URL plus replay', result: 'invalid; B preserved; zero Auth methods or requests' });
++  } finally { env.dispose(); }
++});
++test('empty URL, bare callback, code and expired marker are invalid without session inspection', async () => {
++  const env = await setup({ url: null });
++  try {
++    for (const link of [null, 'kora://reset-password', 'kora://reset-password?code=synthetic-code', 'kora://auth-callback#error_code=otp_expired']) {
++      env.navigate(link); assert.equal((await env.hookState()).status, 'invalid'); assertNoLinkAuth(env); assert.equal(await env.actor(), B);
++    }
++    receipts.push({ case: 'empty/code/error markers', result: 'invalid; no stored-session proof accepted' });
++  } finally { env.dispose(); }
++});
++test('cleanup and changed URL cannot revive an admission attempt or mutate B', async () => {
++  const env = await setup();
++  try {
++    env.hookPorts.render(env.hook.useAuthLinkSession); env.hookPorts.flush(); env.hookPorts.unmount();
++    env.navigate('kora://auth-callback?code=synthetic-code'); assert.equal((await env.hookState()).status, 'invalid');
++    assertNoLinkAuth(env); assert.equal(await env.actor(), B);
++    receipts.push({ case: 'unmount/change URL', result: 'no asynchronous Auth adoption to revive' });
++  } finally { env.dispose(); }
++});
++test('Expo Web factory also ignores implicit URL tokens before the hook mounts', async () => {
++  const env = await setup({ platform: 'web', url: attack.replace('kora://reset-password', 'https://mayami.test.invalid/reset-password') });
++  try { assert.equal(await env.actor(), B); assert.equal((await env.hookState()).status, 'invalid'); assertNoLinkAuth(env); receipts.push({ case: 'Expo Web factory', result: 'URL auto-detection disabled; B preserved' }); } finally { env.dispose(); }
++});
++test('actual AuthProvider password method still signs in through the installed SDK', async () => {
++  const env = await setup();
++  try {
++    env.handler((url, init, body) => { assert.equal(url.pathname, '/auth/v1/token'); assert.equal(url.searchParams.get('grant_type'), 'password'); assert.equal(body.email, 'actor-a@example.com'); assert.equal(body.password, 'SyntheticPassword123'); return Response.json(session(A)); });
++    const auth = await env.authValue(); await auth.signIn(' actor-a@example.com ', 'SyntheticPassword123'); assert.equal(await env.actor(), A);
++    assert.equal(env.requests.length, 1); receipts.push({ case: 'password', result: 'actual AuthProvider method and SDK password grant accepted' });
++  } finally { env.dispose(); }
++});
++test('actual signup method preserves both confirmation-required and already-confirmed project responses', async () => {
++  for (const needsConfirmation of [true, false]) {
++    const env = await setup({ initial: null });
++    try {
++      env.handler((url, init, body) => { assert.equal(url.pathname, '/auth/v1/signup'); assert.equal(body.email, 'actor-a@example.com'); assert.equal(body.data.full_name, 'Fixture Buyer'); assert.equal(new URL(url.searchParams.get('redirect_to')).protocol, 'kora:'); return Response.json(needsConfirmation ? { user: user(A), session: null } : session(A)); });
++      const result = await (await env.authValue()).signUp(' actor-a@example.com ', 'SyntheticPassword123', ' Fixture Buyer ');
++      assert.equal(result.needsConfirmation, needsConfirmation); assert.equal(await env.actor(), needsConfirmation ? null : A); assert.equal(env.requests.length, 1);
++    } finally { env.dispose(); }
++  }
++  receipts.push({ case: 'signup confirmation modes', result: 'both real AuthProvider branches preserved using explicit synthetic Auth responses' });
++});
++test('actual signup code form sends/accepts six digits with signup purpose', async () => {
++  const env = await setup({ initial: null }); let verified = 0, codeForm;
++  try {
++    env.handler((url, init, body) => {
++      if (url.pathname === '/auth/v1/resend') { assert.equal(body.type, 'signup'); return Response.json({}); }
++      assert.equal(url.pathname, '/auth/v1/verify'); assert.equal(body.type, 'signup'); assert.equal(body.token, '123456'); assert.equal(body.email, 'actor-a@example.com'); return Response.json(session(A));
++    });
++    const auth = await env.authValue(); await auth.sendEmailCode('actor-a@example.com', 'signup');
++    codeForm = mountCode(env, auth, 'signup', () => { verified++; }); await codeForm.submit('123456');
++    assert.equal(verified, 1); assert.equal(await env.actor(), A); assert.deepEqual(env.requests.map(r => r.path), ['/auth/v1/resend', '/auth/v1/verify']);
++    receipts.push({ case: 'signup OTP form', result: 'real form → AuthProvider → SDK verifyOtp; no callback adoption' });
++  } finally { codeForm?.unmount(); env.dispose(); }
++});
++test('actual recovery code and password forms require the explicit save action for the actor-bound PUT', async () => {
++  const env = await setup({ initial: null }); let verified = 0, completed = 0, puts = 0, codeForm, passwordPorts;
++  try {
++    env.handler((url, init, body) => {
++      if (url.pathname === '/auth/v1/recover') { assert.equal(body.email, 'actor-a@example.com'); return Response.json({}); }
++      if (url.pathname === '/auth/v1/verify') { assert.equal(body.type, 'recovery'); assert.equal(body.token, '123456'); return Response.json(session(A)); }
++      assert.equal(url.pathname, '/auth/v1/user'); assert.equal(init.method, 'PUT'); assert.equal(init.credentials, 'omit'); assert.equal(new Headers(init.headers).get('authorization'), 'Bearer ' + jwt(A)); assert.equal(body.password, 'NewSyntheticPassword123'); puts++; return Response.json(user(A));
++    });
++    let auth = await env.authValue(); await auth.sendEmailCode('actor-a@example.com', 'recovery');
++    codeForm = mountCode(env, auth, 'recovery', () => { verified++; }); await codeForm.submit('123456'); assert.equal(verified, 1); assert.equal(await env.actor(), A); assert.equal(puts, 0);
++    auth = await env.authValue(); const p = passwordPorts = ports();
++    const component = compile(source('apps/mobile/src/components/auth/NewPasswordForm.tsx'), {
++      '@kora/core': core, react: p.react, 'react/jsx-runtime': jsx, 'react-native': env.rn,
++      '@/components/ui/Button': { Button: 'Button' }, '@/components/ui/States': { Banner: 'Banner' }, '@/components/ui/TextField': { TextField: 'TextField' },
++      '@/lib/auth': { useAuth: () => auth, authErrorMessage: core.authErrorMessage }, '@/lib/actor-api': env.actors, '@/lib/haptics': { haptics: { success() {}, warning() {} } },
++    }, 'NewPasswordForm.tsx');
++    const inner = component.NewPasswordForm({ onDone: () => { completed++; } });
++    let tree = p.render(inner.type, inner.props); p.flush();
++    find(tree, 'reset-password').props.onChangeText('NewSyntheticPassword123'); find(tree, 'reset-password-repeat').props.onChangeText('NewSyntheticPassword123'); tree = p.render(inner.type, inner.props);
++    assert.equal(puts, 0); await find(tree, 'reset-submit').props.onPress(); assert.equal(puts, 1); assert.equal(completed, 1); assert.equal(await env.actor(), A);
++    receipts.push({ case: 'recovery OTP and explicit save', result: 'real forms/Provider/SDK; no password update from OTP alone; one actor-bound PUT after save' });
++  } finally { codeForm?.unmount(); passwordPorts?.unmount(); env.dispose(); }
++});
++
++
++test('legacy callback screens never confirm B or expose password editing; fallbacks keep safe routes', async () => {
++  for (const url of [null, attack]) {
++    const env = await setup({ url });
++    try {
++      for (const unsafeReturn of [false, true]) {
++        const routes = [];
++        const nav = compile(source('apps/mobile/src/lib/auth-navigation.ts'), { 'expo-router': {
++          router: { replace: path => routes.push(path) },
++          useLocalSearchParams: () => ({ returnTo: unsafeReturn ? 'https://foreign.invalid/checkout' : '/checkout' }),
++        } });
++        for (const [path, invalidId, target] of [
++          ['apps/mobile/src/app/auth-callback.tsx', 'confirm-invalid', '/sign-in'],
++          ['apps/mobile/src/app/reset-password.tsx', 'reset-link-invalid', '/forgot-password'],
++        ]) {
++          const p = ports();
++          const screen = compile(source(path), {
++            react: p.react, 'react/jsx-runtime': jsx,
++            'expo-router': { router: { replace: route => routes.push(route) } }, 'react-native': env.rn,
++            '@/components/auth/NewPasswordForm': { NewPasswordForm: 'NewPasswordForm' },
++            '@/components/ui/Button': { Button: 'Button' }, '@/components/ui/States': { EmptyState: 'EmptyState', Banner: 'Banner' },
++            '@/components/ui/Text': { Text: 'Text' }, '@/lib/auth-link': env.hook,
++            '@/lib/auth-navigation': nav, '@/theme': { useTheme: () => ({ colors: {} }) },
++          }, path);
++          const tree = p.render(screen.default); p.flush();
++          assert(find(tree, invalidId)); assert.equal(find(tree, 'confirm-done'), null); assert.equal(find(tree, 'reset-done'), null);
++          const pick = (node, type) => node && typeof node === 'object' ? node.type === type ? node : [node.props?.children].flat(Infinity).map(n => pick(n, type)).find(Boolean) : null;
++          assert.equal(pick(tree, 'NewPasswordForm'), undefined);
++          const fallback = pick(tree, 'EmptyState'); assert(fallback); assert.match(fallback.props.body, /código/);
++          fallback.props.onAction(); assert.deepEqual(routes.pop(), { pathname: target, params: unsafeReturn ? {} : { returnTo: '/checkout' } });
++          p.unmount();
++        }
++      }
++      assertNoLinkAuth(env); assert.equal(await env.actor(), B);
++    } finally { env.dispose(); }
++  }
++  receipts.push({ case: 'legacy views and safe fallback', result: 'no confirmation or password form from URL/session B; explicit code/login fallback only' });
++});
++
++after(() => {
++  if (process.env.MAYAMI_AUTH_RECEIPT) writeFileSync(resolve(process.env.MAYAMI_AUTH_RECEIPT), JSON.stringify({ recordedAt: new Date().toISOString(), sdkVersion: sdkRequire('@supabase/supabase-js/package.json').version, sourceSha256: hashes, scope: 'Actual candidate hook/native factory/AuthProvider methods/forms/actor-api and SDK. Controlled React/RN/Expo ports; no guest effects, Android renderer/Keystore, GoTrue, hosted email or external network.', receipts }, null, 2) + '\n');
++});

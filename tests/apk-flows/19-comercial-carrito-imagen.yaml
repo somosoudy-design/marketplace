@@ -1,0 +1,178 @@
+# APK5 preview: public reads and device-only visitor cart; no auth/order/quote/payment.
+# Only removes this flow's known Arena variant from the isolated emulator, never another cart line.
+appId: com.example.kora.preview
+name: Comercial — carrito visitante, tienda y fuentes de imagen
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000
+# Prove visitor mode before any cart action; a retained remote session must stop this flow.
+- openLink: kora://diagnostico
+- scrollUntilVisible:
+    element:
+      id: diag-Cuenta
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- assertVisible: sin sesión
+- openLink: kora://cart
+- runFlow:
+    when:
+      visible:
+        id: cart-remove-f984e205-a702-4f95-b0e2-c2249127a4a0
+    commands:
+      - tapOn:
+          id: cart-remove-f984e205-a702-4f95-b0e2-c2249127a4a0
+      - extendedWaitUntil:
+          visible:
+            id: cart-remove-sheet-confirm
+          timeout: 10000
+      - tapOn:
+          id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- openLink: kora://p/audifonos-anc-over-ear
+- extendedWaitUntil:
+    visible:
+      id: product-selection-summary
+    timeout: 20000
+- tapOn:
+    id: product-selection-summary
+- scrollUntilVisible:
+    element:
+      id: variant-Arena
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- tapOn:
+    id: variant-Arena
+- tapOn: Aumentar cantidad
+- assertVisible: Cantidad 2
+- tapOn:
+    id: product-cta
+- extendedWaitUntil:
+    visible:
+      id: cart-unit-f984e205-a702-4f95-b0e2-c2249127a4a0
+    timeout: 20000
+- assertVisible: 1 producto · 2 unidades
+- assertVisible: Cantidad 2
+- assertVisible:
+    id: cart-item-total-f984e205-a702-4f95-b0e2-c2249127a4a0
+- assertVisible:
+    id: cart-subtotal
+# Derive assertions from displayed prices; do not hardcode a changing remote catalogue price.
+- copyTextFrom:
+    id: cart-unit-f984e205-a702-4f95-b0e2-c2249127a4a0
+- evalScript: ${output.unitCents = Math.round(Number(maestro.copiedText.replace(/[^0-9,.-]/g, '').replace(/\./g, '').replace(',', '.')) * 100)}
+- assertTrue: ${isFinite(output.unitCents) && output.unitCents > 0}
+- copyTextFrom:
+    id: cart-item-total-f984e205-a702-4f95-b0e2-c2249127a4a0
+- evalScript: ${output.lineCents = Math.round(Number(maestro.copiedText.replace(/[^0-9,.-]/g, '').replace(/\./g, '').replace(',', '.')) * 100)}
+- assertTrue: ${output.lineCents === output.unitCents * 2}
+- copyTextFrom:
+    id: cart-subtotal
+- evalScript: ${output.subtotalCents = Math.round(Number(maestro.copiedText.replace(/[^0-9,.-]/g, '').replace(/\./g, '').replace(',', '.')) * 100)}
+- assertTrue: ${output.subtotalCents === output.lineCents}
+- takeScreenshot: comercial-normal-01-carrito-unidad-importe
+- tapOn:
+    id: cart-remove-f984e205-a702-4f95-b0e2-c2249127a4a0
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- assertNotVisible: .*No pudimos quitarlo.*
+- takeScreenshot: comercial-normal-02-quitar-sin-error
+- tapOn: Conservar producto
+- extendedWaitUntil:
+    notVisible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- assertVisible: Cantidad 2
+# Remove only the device-only fixture, leaving the next theme/OS-scale run deterministic.
+- tapOn:
+    id: cart-remove-f984e205-a702-4f95-b0e2-c2249127a4a0
+- extendedWaitUntil:
+    visible:
+      id: cart-remove-sheet-confirm
+    timeout: 10000
+- tapOn:
+    id: cart-remove-sheet-confirm
+- extendedWaitUntil:
+    visible: Tu carrito está vacío
+    timeout: 15000
+- openLink: kora://p/audifonos-anc-over-ear
+- extendedWaitUntil:
+    visible:
+      id: product-title
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      id: store-kora
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- assertVisible:
+    id: store-kora
+# StoreChip groups accessibility text under its link label. Inspect the PNG for the complete
+# visual "Aún sin opiniones"; do not pretend the child label proves absence of native clipping.
+- takeScreenshot: comercial-normal-03-store-kora
+# This attributed derivative exercises the real license/source links, not only a synthetic caption.
+- openLink: kora://p/ugreen-nexode-65w
+- extendedWaitUntil:
+    visible:
+      id: exhibition-photo-e7a91cd8-d3a2-4436-986c-71d1d95da813
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      id: product-image-info
+    direction: DOWN
+    centerElement: true
+    timeout: 25000
+- tapOn:
+    id: product-image-info
+- extendedWaitUntil:
+    visible:
+      id: product-image-info-sheet-close
+    timeout: 10000
+- assertVisible: "Fuente: Dinkun Chen"
+- assertVisible: CC BY-SA 4.0
+- takeScreenshot: comercial-normal-04-imagen-fuentes
+- tapOn:
+    id: product-image-info-sheet-close
+- extendedWaitUntil:
+    notVisible:
+      id: product-image-info-sheet
+    timeout: 10000
+- assertVisible:
+    id: product-image-info
+- takeScreenshot: comercial-normal-05-imagen-cerrada
+- openLink: kora://diagnostico
+- extendedWaitUntil:
+    visible:
+      id: diag-Código
+    timeout: 20000
+- assertVisible: preview
+- assertVisible: eb5ed1179b9c76c9c3cf27333aa48306728eb4ba
+- assertNotVisible: .*01a16be3-4827-77bc-bcf4-0f28d5895325.*
+- takeScreenshot: comercial-normal-06-diagnostico-codigo
+- scrollUntilVisible:
+    element:
+      id: diag-Conexión
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- extendedWaitUntil:
+    visible: responde en .* ms
+    timeout: 20000
+- takeScreenshot: comercial-normal-07-diagnostico-conexion
+- scrollUntilVisible:
+    element:
+      id: diag-Catálogo
+    direction: DOWN
+    centerElement: true
+    timeout: 15000
+- assertVisible: sin sesión
+- takeScreenshot: comercial-normal-08-diagnostico-contexto

@@ -1,0 +1,57 @@
+{
+  "observedAt": "2026-11-09T18:19:09.099Z",
+  "sourceHead": "d01787be07fd8e9983948654e6196f58f1d21497",
+  "success": true,
+  "results": [
+    {
+      "name": "Gateoff, cancel-before-send, self review and guest return never perform a hidden RPC",
+      "result": "PASS"
+    },
+    {
+      "name": "Actual report handlers preserve immutable UUID/payload through cancel/reopen and exercise all four targets",
+      "result": "PASS"
+    },
+    {
+      "name": "Block requires confirm, suppresses repeated taps, exposes failure and refreshes only after confirmed success",
+      "result": "PASS"
+    },
+    {
+      "name": "Unblock cancels without action, reconciles a vanished receipt and never repeats confirmed write after refresh failure",
+      "result": "PASS"
+    },
+    {
+      "name": "Review consent/version guards, failed-save draft, real Query mutation repeated taps and retry remain honest",
+      "result": "PASS"
+    },
+    {
+      "name": "A→B→A rejects stale completion and between-await submit; B does not inherit A report intent or draft",
+      "result": "PASS"
+    },
+    {
+      "name": "Policy refetch errors disable publishing and actor mismatch hides private UGC views",
+      "result": "PASS"
+    }
+  ],
+  "hashes": {
+    "packages/api/src/ugc-state.ts": "355016f30c43b1ad6c270897a9d36168fc1c1e1c9e8d81fc40f88a0adff6c52b",
+    "apps/mobile/src/lib/ugc-report-intents.ts": "02b98286b1e93340a56bb029381468b160f7845d290990888d2cfcf16903164a",
+    "apps/mobile/src/lib/auth-navigation.ts": "8c2655dee3ad39c162c16b18fc0adda17920d04db90c0c6d8cffd2405b0bb98f",
+    "apps/mobile/src/components/reviews/UgcConsent.tsx": "5b3eaa4dca76cabc82e0fb004bc2f896fa2bebab27018f0e02618e273ff55b79",
+    "apps/mobile/src/components/reviews/UgcControls.tsx": "9228d5a09547a1180ed149f79c9499b58a52aaa7ab5f6582e6792b1745a7641d",
+    "apps/mobile/src/components/reviews/ReviewSheet.tsx": "3326cdf61a13baf80ead2b501ff1e19a16e156538c30320ed990c0ec6241a85e",
+    "apps/mobile/src/app/blocked-users.tsx": "7b0d728260e70e62b2f7e541ca7e324881fe9238591e026bd9da0526dd5d9190"
+  },
+  "ports": [
+    "React hook lifecycle controlled state/ref/effect driver; no React renderer",
+    "RN/UI components as descriptors, visibility/disabled enforced by test driver",
+    "useUgc/capture/auth/API/router/theme/haptics controlled ports",
+    "Real TanStack QueryClient and MutationObserver for ReviewSheet mutation timing",
+    "Actual source TSX handlers plus actual ugc-report-intents, auth-navigation and ugc-state run/epoch helpers"
+  ],
+  "limits": [
+    "No DOM/native/visual/browser/emulator/build or real network/DB/auth",
+    "Does not execute useUgc React/query hook itself or prove physical persisted cache behavior",
+    "Synthetic API success/error/deferred responses; backend permission tests are separate",
+    "Pending reports are process-local, no restart durability"
+  ]
+}

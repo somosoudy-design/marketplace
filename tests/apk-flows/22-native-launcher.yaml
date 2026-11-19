@@ -1,0 +1,20 @@
+# Pixel launcher is kept enabled. This is a real Android screenshot, not a mask mockup.
+appId: com.example.kora.preview
+name: mayami launcher label and icon
+---
+- pressKey: HOME
+- swipe:
+    start: 50%, 85%
+    end: 50%, 15%
+    duration: 500
+- scrollUntilVisible:
+    element: mayami
+    direction: DOWN
+    timeout: 15000
+- assertVisible: mayami
+- takeScreenshot: ${MAYAMI_SHOT_PREFIX}-launcher
+- tapOn: mayami
+- extendedWaitUntil:
+    visible:
+      id: home-search
+    timeout: 60000

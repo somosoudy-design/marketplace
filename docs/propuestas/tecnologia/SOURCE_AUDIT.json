@@ -1,0 +1,139 @@
+{
+  "recordedAt": "2026-11-08T16:55:24.240748+00:00",
+  "sourceCommit": "884611780a1a3207aca9c3f3d8703b0324f65718",
+  "scope": "Local read-only assets/source/provenance audit, only tablet technology and HiTune audio. No generation/edit/original mutation/remote/publication.",
+  "sourceImages": [
+    {
+      "role": "reference",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-reference-20261108/IMG_1886.jpeg",
+      "sha256": "c61256aa0df968750ad186a3342a7a261195037536a79d931fc7194f81302995",
+      "bytes": 79078
+    },
+    {
+      "role": "servedTabletOriginal",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/originals/tablet-original.jpg",
+      "sha256": "bac462d0317a528b93ded4390311421c997d151f362e82537485641db524622a",
+      "bytes": 534625
+    },
+    {
+      "role": "cleanDownloadsMaster",
+      "path": "/Users/brandeastudio/Downloads/Tablet negra · 01 Portada.jpg",
+      "sha256": "0eb198ff2389e39568eff25de22c7ef0a4afe4898871c483584f53b713576ad8",
+      "bytes": 504851
+    },
+    {
+      "role": "audioComparison",
+      "path": "/Users/brandeastudio/marketplace/.local/tecnologia-fix-20261108/originals/audio-original.png",
+      "sha256": "354b541bf6e90889740d0547bc27eab355708f0580b3ec41d77871d31e2eeab4",
+      "bytes": 1043723
+    },
+    {
+      "role": "audioPriorReceiptSource",
+      "path": "/Users/brandeastudio/marketplace/.local/preventa-color-20261107/assets-review/originals/8ce01c8b-232b-4bba-a0ff-94c739b4d3bc/3866ab43-74c4-460a-bb77-eab78e52e880.png",
+      "sha256": "354b541bf6e90889740d0547bc27eab355708f0580b3ec41d77871d31e2eeab4",
+      "bytes": 1043723
+    }
+  ],
+  "metadataObservedWith": "macOS sips; no conversion",
+  "imageMetadata": {
+    "servedTabletOriginal": {
+      "format": "jpeg",
+      "width": 1600,
+      "height": 1600,
+      "hasAlpha": false,
+      "visual": "Exact complete tablet/keyboard/mouse/stylus kit with opaque pale-violet M pattern baked into background"
+    },
+    "cleanDownloadsMaster": {
+      "format": "jpeg",
+      "width": 1600,
+      "height": 1600,
+      "hasAlpha": false,
+      "visual": "Same visible complete kit/composition without M pattern; approved alpha status not asserted"
+    },
+    "audioComparison": {
+      "format": "png",
+      "width": 1600,
+      "height": 1600,
+      "hasAlpha": false,
+      "visual": "Purple UGREEN earbuds/case on near-white opaque background; visually integrated by existing multiply, not true alpha"
+    }
+  },
+  "boundedAlphaSearch": {
+    "nativeCategoryArt": "Existing tecnologia/audiowebp are generated laptop/headphones illustrations, separate provenance and object identity; not the reference tablet/UGREEN. Not appropriate substitution.",
+    "knownDownloadsFile": "Named master is JPEG opaque; no alpha cutout in that specific file",
+    "picturesTablets": {
+      "path": "/Users/brandeastudio/Pictures/TABLETS",
+      "extensionCounts": {
+        ".arw": 74,
+        ".jpg": 2,
+        ".xmp": 3,
+        "noExtension": 2
+      },
+      "pngWebpTiffAvifHeicPsdPaths": []
+    },
+    "exhibitionRegistryChecks": {
+      "manifest.json": {
+        "b1b4a794-c740-47e9-ae57-1c1e3089b80d": false,
+        "8ce01c8b-232b-4bba-a0ff-94c739b4d3bc": false
+      },
+      "studio-manifest.json": {
+        "b1b4a794-c740-47e9-ae57-1c1e3089b80d": false,
+        "8ce01c8b-232b-4bba-a0ff-94c739b4d3bc": false
+      },
+      "generated-manifest.json": {
+        "b1b4a794-c740-47e9-ae57-1c1e3089b80d": false,
+        "8ce01c8b-232b-4bba-a0ff-94c739b4d3bc": false
+      }
+    },
+    "commercialManifestCurrentIds": {
+      "b1b4a794-c740-47e9-ae57-1c1e3089b80d": false,
+      "8ce01c8b-232b-4bba-a0ff-94c739b4d3bc": false
+    },
+    "original147Count": 147,
+    "original147RowsForCurrentTwoIds": [],
+    "conclusion": "No reusable approved alpha for current tablet found within these known files/locations/registries. Not a global absence claim. No Photos Library retry.",
+    "legacyApprovalScope": "The40-product commercial/exhibition registry is historical; absence of these newly uploaded product IDs does not mean they lack current moderation/authorization to sell. It only shows this old asset pipeline has no registered alpha source for these two."
+  },
+  "pipeline": {
+    "home": "apps/storefront/src/app/page.tsx:38-50 selects first product photo by category, then non-demo category image; ProductPhoto exact=true",
+    "photo": "apps/storefront/src/components/photo.tsx:24 exact calls publicImageUrl directly; bypasses exhibition/commercial imageUrl mapping",
+    "css": "apps/storefront/src/app/marketplace-home.css:162 multiply blends category photo; near-white audio background becomes visually neutral but violet tablet background remains rectangular",
+    "privatePreparation": "tools/storefront/prepare-assets.mjs only copies exhibition originals when private preview env is explicitly on; public release excludes exhibition files, so modifying exhibition mapping is not the public-home fix",
+    "nativeUnrelated": {
+      "tecnologia": {
+        "category": "tecnologia",
+        "kind": "generated-illustration",
+        "usage": "category-navigation-only",
+        "sourceSha256": "8ccdca3078496ed89fadb4d6be77a2c634da87879273ab328401f0bdc62181aa",
+        "sha256": "a387649040c6acbca4a6eebe8c12ab8e1dbe69be100102af82c6a0d0a2184a97",
+        "bytes": 16922,
+        "width": 448,
+        "height": 448
+      },
+      "audio": {
+        "category": "audio",
+        "kind": "generated-illustration",
+        "usage": "category-navigation-only",
+        "sourceSha256": "073ff3dc4c5112356d6525e3430266f49eb004a496d8fe75d3a38efc75a95ac1",
+        "sha256": "5698c82c412181786ff880e896202174440d2b8050a23313ffe1c7c702bc5ae0",
+        "bytes": 9026,
+        "width": 448,
+        "height": 448
+      }
+    }
+  },
+  "minimumChangeProposal": [
+    "New transparent derivative from exact recorded original, category-navigation-only; preserve tablet, keyboard, mouse, stylus, screen, geometry, orientation, composition and complete margins. No catalog original replacement.",
+    "Root records actual imagegen input SHA, prompt/tool provenance and output SHA; do not claim pixel-exact preservation merely from prompt. Independent source/output comparison before accepting.",
+    "Home override only when category.slug===tecnologia AND current photo path matches reviewed tablet image path; otherwise preserve exact existing ProductPhoto fallback. Do not key to category alone or change gallery URLs.",
+    "Dedicated local static category asset/provenance; scoped class for this derivative only with normal blend/transparent background and contain; Audio/Odontologia/other categories and ProductPhoto global unchanged.",
+    "Verify actual alpha with transparent pixels, no opaque rectangle, entire four-part kit and no added details; compare clear/dark affected card and its neighboring Audio without declaring whole-site visual QA.",
+    "Preserve147 originals and native category-art by pre/post hash receipt; no global inventory, uploads or SQL needed for local integration."
+  ],
+  "integratorPlanReported": "Root plans a single imagegen background-removal call using servedTabletOriginal, solely category navigation; reviewer generated no image.",
+  "acceptancePending": [
+    "Derivative output not yet seen/reviewed",
+    "No pixel preservation or alpha success conclusion yet",
+    "No native/catalog/remote/publication validation in this audit"
+  ]
+}

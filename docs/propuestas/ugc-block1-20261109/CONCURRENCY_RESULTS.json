@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "case": "mark-read row lock then concurrent block completes without advisory-order deadlock",
+      "result": "PASS"
+    },
+    {
+      "case": "reply waits for concurrent block and emits no blocked notification",
+      "result": "PASS"
+    },
+    {
+      "case": "closure serializes with accept/block and leaves no resurrected private rows",
+      "result": "PASS"
+    },
+    {
+      "case": "exact ten new RPC ACLs: policy public, all other actions authenticated with internal authorization",
+      "result": "PASS"
+    }
+  ],
+  "success": true,
+  "migrationSha256": "c94d0794e6b2a1954bbcc710900cb8af61c17031f537935697bd5dc34c9d8c97",
+  "limits": [
+    "Local SQL auth stand-in, explicit overlapping transactions; no hosted or device execution.",
+    "Already delivered push or disconnected legacy caches cannot be withdrawn."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "scope": "Capturas originales Chromium del backend local y cuentas ficticias; sin edición. Export final con snapshot en estado. No son capturas Samsung ni Android nativo.",
+  "imagenes": {
+    "antes-respuesta-perdida.png": "dfb6bc500910df6b1878469b0aa5e6bd292d5ef698750712c16fa61c34914efe",
+    "pago-recuperado-dark.png": "017eeb3479c50c656555c00604776f8a7864058c34b71610b518c73c2669bfa1",
+    "pago-recuperado-light.png": "04cd4265ffb9998fdd74464bf504ae4b17202940fc97a13d5dcd032e8be5cff7",
+    "recuperacion-dark.png": "c2b14d44a51155f4ee87bc20291b324bf8de843bb06b448d538378c431d26aee",
+    "recuperacion-light.png": "00565b5d5dc4e07f0336d9923b0f0542988ac278a7c7953bb64beb28d74d7523"
+  }
+}

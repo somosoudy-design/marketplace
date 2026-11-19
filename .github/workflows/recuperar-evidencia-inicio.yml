@@ -1,0 +1,69 @@
+# Recovery of the already completed native journeys. No build, emulator, app update or backend mutation.
+# The original run uploaded its artifact but stalled while converting/publishing screenshots.
+name: Recuperar evidencia de Inicio
+
+on:
+  push:
+    branches: ['claude/marketplace-v1']
+    paths: ['.github/workflows/recuperar-evidencia-inicio.yml']
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - name: Verificar origen de los recorridos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source_sha=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/40004177228" --jq .head_sha)
+          test "$source_sha" = f9fe1a1d589f6c0233ea08bf451e5cd3224a61c7
+          native=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/40004177228/jobs" --jq '.jobs[].steps[] | select(.name=="Instalar, abrir y recorrer en Android 15") | .conclusion')
+          test "$native" = success
+      - uses: actions/download-artifact@v4
+        with:
+          name: capturas-emulador
+          run-id: 40004177228
+          github-token: ${{ github.token }}
+          path: recovered-shots
+      - name: Conservar PNG originales y resumen sin conversión
+        shell: bash
+        run: |
+          set -eu
+          branch="ci/evidencia-$GITHUB_RUN_ID"
+          target=$(mktemp -d)
+          git worktree add --detach "$target" HEAD
+          git -C "$target" checkout --orphan "$branch"
+          git -C "$target" rm -rf . >/dev/null
+          export EVIDENCE_TARGET="$target"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, shutil
+          source = pathlib.Path('recovered-shots')
+          out = pathlib.Path(os.environ['EVIDENCE_TARGET']) / 'ultima'
+          out.mkdir()
+          files = []
+          for photo in sorted(source.rglob('*.png')):
+              if 'inicio-v2' not in photo.name:
+                  continue
+              relative = str(photo.relative_to(source))
+              name = relative.replace('/', '__')
+              shutil.copyfile(photo, out / name)
+              files.append({'file': name, 'source': relative, 'sha256': hashlib.sha256(photo.read_bytes()).hexdigest(), 'edited': False})
+          assert len(files) >= 8, 'Expected original Home screenshots, not installation captures'
+          report = next(source.rglob('resumen.md'))
+          shutil.copyfile(report, out / 'resumen.md')
+          metadata = {'sourceRun': 40004177228, 'sourceSha': 'f9fe1a1d589f6c0233ea08bf451e5cd3224a61c7', 'artifactId': 12524101560, 'recoveryRun': int(os.environ['GITHUB_RUN_ID']), 'newJourneysExecuted': False, 'newUpdatePublished': False, 'files': files}
+          (out / 'evidencia.json').write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + '\n')
+          (out / 'LEEME.md').write_text('# Evidencia recuperada de Inicio\n\nOrigen: run40004177228, fuente f9fe1a1d589f6c0233ea08bf451e5cd3224a61c7, artefacto12524101560.\nPNG originales sin conversión. No se repitieron recorridos, compilaciones ni publicaciones.\n')
+          print('Original screenshots preserved:', len(files))
+          PY
+          git -C "$target" config user.name kora-ci
+          git -C "$target" config user.email kora-ci@users.noreply.github.com
+          git -C "$target" add ultima
+          git -C "$target" commit -m "Recuperar evidencia nativa original de Inicio: run40004177228"
+          git -C "$target" push origin "HEAD:$branch"

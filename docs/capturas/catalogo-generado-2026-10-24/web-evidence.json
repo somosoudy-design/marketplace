@@ -1,0 +1,130 @@
+{
+  "baselineCode": "058cb7b; app code unchanged through855b2ce, existing export used for fresh captures",
+  "currentCode": "85eac4e",
+  "platform": "web Chromium, not native Android",
+  "captureDate": "2026-10-24",
+  "note": "Wait for visible loaded images and finished transitions. ExpoImage invisible old buffers ignored; no DOM/capture manipulation.",
+  "screens": [
+    {
+      "file": "before/dark/320-buscar.png",
+      "sha256": "919e59dfd36e0a926263cdbdcf19db0109d6b321486d6bc71c57fabfb9b0079f",
+      "edited": false
+    },
+    {
+      "file": "before/dark/320-ficha.png",
+      "sha256": "ac59a6fc6d81e95f74a4b94d01f828b6715edc46772c844ca4336baf96f660b8",
+      "edited": false
+    },
+    {
+      "file": "before/dark/320-inicio.png",
+      "sha256": "c8bf7124dc2b77cc79cf6f43a9c6f5bd566e71ae745497b3c4168107ef0cf7c1",
+      "edited": false
+    },
+    {
+      "file": "before/dark/412-buscar.png",
+      "sha256": "204f7d0ae96bbeeedd27671c1f3f46268fd18f7d9a6070674a81df4bf5ae7a41",
+      "edited": false
+    },
+    {
+      "file": "before/dark/412-ficha.png",
+      "sha256": "2af657f8383f52b2e91f45532aafd3d4f411a54adad66da6bd0c5d37cef3a812",
+      "edited": false
+    },
+    {
+      "file": "before/dark/412-inicio.png",
+      "sha256": "16eb531d49178a3cb6c81bc5976bf4e0198a99f0da181cadd744defb60730c02",
+      "edited": false
+    },
+    {
+      "file": "before/light/320-buscar.png",
+      "sha256": "5eead51f6547fd2656f88d54f6b61ea0cf3ea5f729b277a0a255d4c4df61ed3b",
+      "edited": false
+    },
+    {
+      "file": "before/light/320-ficha.png",
+      "sha256": "296324145e79a37c14cdf5e876f957594e6c6b1a1a6099f433a9ef28343d3520",
+      "edited": false
+    },
+    {
+      "file": "before/light/320-inicio.png",
+      "sha256": "37537e3cf0b26a189fd0e3dd4fe50fe52aff78f643fd06a205dafefd0584055f",
+      "edited": false
+    },
+    {
+      "file": "before/light/412-buscar.png",
+      "sha256": "ba3de63074fc85ba844530a3e034022b05e798ce0d967ed305e344067899aaed",
+      "edited": false
+    },
+    {
+      "file": "before/light/412-ficha.png",
+      "sha256": "a9cf7a4830a5b432d05d4d31776b34fae4ebccb943530ce539d51fba940322ec",
+      "edited": false
+    },
+    {
+      "file": "before/light/412-inicio.png",
+      "sha256": "16f6d44173e6fb2def15aefdf9012be0ec02b7cb61d3339416e306623e06f3d9",
+      "edited": false
+    },
+    {
+      "file": "after/dark/320-buscar.png",
+      "sha256": "240a4a804ac4c2248f7c65175285f2ac4aa5c680d59626489eb36b5ec8cd0d8f",
+      "edited": false
+    },
+    {
+      "file": "after/dark/320-ficha.png",
+      "sha256": "a4393e98a1ec772f4481fc5b4ebd32504ec98a459cfc48c8c40b11c51abec2ea",
+      "edited": false
+    },
+    {
+      "file": "after/dark/320-inicio.png",
+      "sha256": "181be6f80c1635e8a46f8fcb25b23895b40647c3f8012e05c35b4ccb4178ae23",
+      "edited": false
+    },
+    {
+      "file": "after/dark/412-buscar.png",
+      "sha256": "57b5f606b491695f18fd0dc564be47a764f75ddab3fbe3bcb0ee867f3b7599cd",
+      "edited": false
+    },
+    {
+      "file": "after/dark/412-ficha.png",
+      "sha256": "7db76d90c3fa3ac07f57e0db3fc864bca9d54e88c7a32fe7b682060c2d9bf1b0",
+      "edited": false
+    },
+    {
+      "file": "after/dark/412-inicio.png",
+      "sha256": "975c8e2a96ed8bcebe41ed7c2ee8a5a7b01cfa4e9258fa6db195ed66f106d80e",
+      "edited": false
+    },
+    {
+      "file": "after/light/320-buscar.png",
+      "sha256": "f395731188981d179ead43ebca63fa98060a0f1a085ef640095d1b1d152888a3",
+      "edited": false
+    },
+    {
+      "file": "after/light/320-ficha.png",
+      "sha256": "f13f54f4cd8e03f27612b69c6b9b15786ae76562b490a1be02b64275e498f01f",
+      "edited": false
+    },
+    {
+      "file": "after/light/320-inicio.png",
+      "sha256": "8ac2fb50d8b50b31663a969518226b5b2a501cddadf1676df198e257b0105ce2",
+      "edited": false
+    },
+    {
+      "file": "after/light/412-buscar.png",
+      "sha256": "34c62cd798746d54c5ae5c9f2ace23a2f87c734306c8c87a5e7ce2c85a3574d4",
+      "edited": false
+    },
+    {
+      "file": "after/light/412-ficha.png",
+      "sha256": "e0df3a80350828cb0aa95b2dc1dd835567c5ee5e5a11da58bc34d9b8bdf257c8",
+      "edited": false
+    },
+    {
+      "file": "after/light/412-inicio.png",
+      "sha256": "088c67c8d22e710372d75d3f5d450ce69f1ada871522703d8119efb747b68d55",
+      "edited": false
+    }
+  ],
+  "qaCorrection": "Auditor rejected dark320 search with empty photo buffers and dark412 Home during fade. Recaptured only these states after each visible ProductImage had a loaded final-opacity image; app unchanged."
+}

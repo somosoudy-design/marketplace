@@ -1,0 +1,15 @@
+{
+  "baseline": "39ffbee1e9bfbaaaba771da35bfa1479bf6044ce",
+  "test": "tests/db-tests/test/db/privileges.test.ts",
+  "existingSuite": "4 PASS / 1 FAIL",
+  "discrepancy": "favorites_merge_intent exists in baseline but is absent from baseline EXPOSED allowlist",
+  "origins": [
+    {
+      "file": "supabase/migrations/20261107171748_guest_favorites_merge_intent.sql",
+      "baseSha256": "25856e3ad30f32c374a03ad6867f8f0951a340cd9c2c86530db489a08665a470",
+      "unchanged": true
+    }
+  ],
+  "newUgcExactAclTest": "PASS for ten exact public RPC names; anon only ugc_policy",
+  "allowlistNotRelaxedForThisDiscrepancy": true
+}

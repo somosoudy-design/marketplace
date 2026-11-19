@@ -1,0 +1,130 @@
+{
+  "personally_inspected_pngs": 25,
+  "evidence": [
+    {
+      "path": "review/before-favorite-race.png",
+      "bytes": 80710,
+      "sha256": "482676443a8cb61234087ac9dcd52743ab58adc70e27474b062ba3c35ddc0a46"
+    },
+    {
+      "path": "review/before-catalog-loading.png",
+      "bytes": 20976,
+      "sha256": "3db093d0b9e08f3df15af82d667d92a490d1bfc80e21f41b6363c06f2edcdb7d"
+    },
+    {
+      "path": "review/before-catalog-loaded.png",
+      "bytes": 94469,
+      "sha256": "74aa500ab8aa04a34cf848fba8452329b0e4014855a3426abed5c276d1f828f9"
+    },
+    {
+      "path": "review/after-favorite-guard.png",
+      "bytes": 80228,
+      "sha256": "9d34a264fe66a4333c7bda6d2711816a26444504796c0dd0e3a67be131bf8919"
+    },
+    {
+      "path": "review/after-favorite-error-dark.png",
+      "bytes": 59617,
+      "sha256": "48e7e0ced3d9d5b8265c95d0cd8ba54bd3637cb21494ab1abc203f4e6216d6c7"
+    },
+    {
+      "path": "review/after-catalog-loading-412.png",
+      "bytes": 21458,
+      "sha256": "6c901db666c7e1025dbfef424080d16db2ac5781fb0c84a91c0084a02f1f91f0"
+    },
+    {
+      "path": "review/after-catalog-loaded-412.png",
+      "bytes": 94547,
+      "sha256": "417052b5ffafa60b9054a62eb07c25604c25a67445eeb5592c1704b3a9edd979"
+    },
+    {
+      "path": "ux/before/01-cart-320-light.png",
+      "bytes": 69474,
+      "sha256": "99ec46df777b5a1de043040cacbe25d85a6153d3dbcf34109c61b025468eea55"
+    },
+    {
+      "path": "ux/before/02-review-320-light.png",
+      "bytes": 69644,
+      "sha256": "7cd0562c1f857e17058ca526bc076e5ab3d40b3285590c5c932bb69899cd4d85"
+    },
+    {
+      "path": "ux/before/06-app-review-text160-320-dark.png",
+      "bytes": 56098,
+      "sha256": "f2b0ee72695a728a26880deb58c2ed44d28415130f221c175ebdcd85fa209727"
+    },
+    {
+      "path": "ux/before/03-web-cart-320-dark.png",
+      "bytes": 72460,
+      "sha256": "0017022e1a60a715d1334aa800c103591ed88c04567f0921509c5eb6e82bdd81"
+    },
+    {
+      "path": "ux/before/04-web-review-1440-light.png",
+      "bytes": 127928,
+      "sha256": "7d4e93f6c553e3d67ecc761cb7abaadf07cff0b6c2be4d99971a15d4acefc8f4"
+    },
+    {
+      "path": "ux/after/01-cart-320-light.png",
+      "bytes": 62948,
+      "sha256": "6354f7ea8466d9c15dc54e61db58363df443df192497e3b716d946eafe19fed0"
+    },
+    {
+      "path": "ux/after/02-review-320-light.png",
+      "bytes": 64564,
+      "sha256": "f58bde6eafc0504a38cbfbfa830c5f28a420eecdc87a24f334f571ef2ad7bf0c"
+    },
+    {
+      "path": "ux/after/06-app-review-text160-320-dark.png",
+      "bytes": 55375,
+      "sha256": "2908bdfb4027412015dbf1823092d3af865665718120d6a5ea99accc90dd5558"
+    },
+    {
+      "path": "ux/after/01-cart-412-dark.png",
+      "bytes": 66912,
+      "sha256": "867295b0beb967b829180ef1513d505501968aa7fa0a713934c49e08e97a1e0a"
+    },
+    {
+      "path": "ux/after/03-web-cart-320-dark.png",
+      "bytes": 73934,
+      "sha256": "cede00109731b685e3c92cbe95577256ae32a2d8fcd828153a317299b863f405"
+    },
+    {
+      "path": "ux/after/04-web-review-1440-light.png",
+      "bytes": 130987,
+      "sha256": "50b2d72e5ce32c98df5634fee1073874af843df73d841fa88d90308b95e2bf3d"
+    },
+    {
+      "path": "ux/after/04-web-review-320-light.png",
+      "bytes": 103551,
+      "sha256": "c3ec652afa0bb58b42d6d84503e002319175ae4c9368a29fa6ca870cefe9ccd4"
+    },
+    {
+      "path": "ux/after/02-review-412-dark.png",
+      "bytes": 72309,
+      "sha256": "e14c1f9365170a146ddf2e9ed7320b0e1981a10c24bee69b2ac9492ffe64278b"
+    },
+    {
+      "path": "ux/complementary/after-07-review-bottom-320-dark.png",
+      "bytes": 65027,
+      "sha256": "7ad25a3c83b6bd167ca05c44226a31193d684a8cbfe5e2a0a48c9ada86664857"
+    },
+    {
+      "path": "ux/complementary/after-08-review-bottom-text160-320-dark.png",
+      "bytes": 57086,
+      "sha256": "c0229adfed37f3663eba0da61029a3a7c63470b3c87c983911874f81d6c8bb96"
+    },
+    {
+      "path": "ux/complementary/after-09-web-review-viewport-320-dark.png",
+      "bytes": 73932,
+      "sha256": "a9a1f87e337f1fb69522a98fdc7c8fb94ff6346046cd4dedf9a4a48ca552066f"
+    },
+    {
+      "path": "review/after-web-favorite-retry-dark.png",
+      "bytes": 61546,
+      "sha256": "89c0d0c7174303b809841ccc49033670e82569325f935897b07280111fdca6de"
+    },
+    {
+      "path": "review/after-web-favorite-remove-error.png",
+      "bytes": 44202,
+      "sha256": "bfe36e6302b44b7d294e9e23caac094eed3fb9f1fd9f3d17ea5321641a5b9842"
+    }
+  ]
+}

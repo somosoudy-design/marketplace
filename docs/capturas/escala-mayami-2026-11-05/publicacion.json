@@ -1,0 +1,25 @@
+{
+  "publishRun": 42072938991,
+  "receiptRun": 42073374420,
+  "update": {
+    "branch": "preview",
+    "channel": "preview",
+    "commit": "2b2c1a4f3c0405e1975b777b491c84b20a2b4f9b",
+    "createdAt": "2026-11-05T17:17:48.765Z",
+    "group": "894906dc-cdb0-43b1-ac14-1377036f685f",
+    "id": "01a1acb7-7d5d-7e21-8bd2-fa20a9da8c6b",
+    "isGitWorkingTreeDirty": false,
+    "isRollBackToEmbedded": false,
+    "latestCompatibleInBranch": true,
+    "matchingUpdates": 1,
+    "platform": "android",
+    "rollbackFlagPresent": true,
+    "rollbackState": "standard_update",
+    "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+    "workingTreeFlagPresent": true,
+    "workingTreeState": "clean"
+  },
+  "physicalReceptionVerified": false,
+  "nativeBrandApplied": false,
+  "webPanelDeployed": false
+}

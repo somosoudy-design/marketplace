@@ -1,0 +1,395 @@
+{
+  "date": "2026-10-24",
+  "platform": "Android emulator API 35",
+  "apk": "APK 5, build d1d10c28",
+  "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "channel": "preview",
+  "updateId": "01a16b56-46a9-7960-a239-4b2271e68d5a",
+  "publishedAtAsShownInDiagnostics": "2026-10-24 00:36 UTC",
+  "backend": "mimnotafmfasvwrclxan.supabase.co",
+  "accountState": "visitor, no session",
+  "easRun": 40045652185,
+  "releaseCode": "19a1329ebd9a9ab2a453f04766b016cee2dcbc9d",
+  "nativeRun": 40045853547,
+  "nativeRequestCode": "060828601e181e338e0f22ab4aeac8b026a34a92",
+  "evidenceSource": "ci/capturas@bba2bc6b3f7aee600f759b475d853f2d5d5763d2",
+  "sourceKind": "JPEG derivatives created by the existing CI publisher; copied byte-for-byte without further editing. Original PNG artifacts remain on GitHub.",
+  "results": {
+    "passed": 4,
+    "failed": 0,
+    "retries": 0
+  },
+  "diagnosticLatencyMs": {
+    "lightNormal": 344,
+    "lightFont1_6": 229,
+    "darkNormal": 306,
+    "darkFont1_6": 261
+  },
+  "journeyScreenshots": 36,
+  "installationScreenshotsExcluded": 4,
+  "ownerSamsungReceptionVerified": false,
+  "authenticatedCheckoutTestedInThisRun": false,
+  "talkBackTested": false,
+  "files": [
+    {
+      "file": "light/13-01-inicio.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-01-inicio.jpg",
+      "sha256": "a55b5c86e74df34eadf8292399b18f2d6b919684d385c4bb9aebd518446d6a80",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-02-apertura.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-02-apertura.jpg",
+      "sha256": "f5baa333f1e7f4089d2b58004411db7b57ad3be4e83952dacfe96053abf48ba1",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-03-editar.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-03-editar.jpg",
+      "sha256": "13689042e885cc4fc76890c0f80770fe6ca99c7644998a8062fcb323e9840278",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-04-arena-dos.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-04-arena-dos.jpg",
+      "sha256": "2d975fc62484612294d78bdc78399eab5304a2a494d47c2c4e790429de01231c",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-05-agregado.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-05-agregado.jpg",
+      "sha256": "ccee948282ac17526a74ee3a73a66be1ad47e0c991a42f0b89b6ed577b9d88a0",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-06-carrito.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-06-carrito.jpg",
+      "sha256": "8ddda539166b7dd0e5f748ddb5f2c8f5bb2d16bd1270fc5cb3b21989cc1f9690",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-07-contraste-sistema.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-07-contraste-sistema.jpg",
+      "sha256": "cab04b4fa7a745e13ee9e488f46766994a21a1d14401386a696088562bfd5939",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-08-regreso.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-08-regreso.jpg",
+      "sha256": "19ac12f445e3a508face5524ebf6083a5628345df13eaf48a6a4b6ca10485f65",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/13-09-recepcion.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004112_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-09-recepcion.jpg",
+      "sha256": "868b7ec87076cb8b2a68950971632601b854081e9e3e2f8b8cff94e904505dfe",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "light/14-01-inicio.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-01-inicio.jpg",
+      "sha256": "1c4d38a159aa7bdca134f4437cae5d386619dcde7f4edfd069fe9ea49a5dce43",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-02-apertura.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-02-apertura.jpg",
+      "sha256": "d58f5563562aa55c2af5ef7d41d4fc9ec26819752eb3c17cb46ef24acbf7bc12",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-03-editar.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-03-editar.jpg",
+      "sha256": "56c6b9f5d2a7d3943f6ceecec5c2de2c2a061ca3545a933fccc0e48686a62f59",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-04-arena-dos.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-04-arena-dos.jpg",
+      "sha256": "b31e7d3309ebbd1d75156077507f9a0ba6b9c98b761fcba34904c314203ff556",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-05-agregado.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-05-agregado.jpg",
+      "sha256": "185c4cfe502e2a16494e4723e81bf297687fdc536db77644b89846e150a3521a",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-06-carrito.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-06-carrito.jpg",
+      "sha256": "0f5aef2f42b7840109ca4d7b891bc72b1bbfee501189efa881831b6470dcf47d",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-07-contraste-sistema.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-07-contraste-sistema.jpg",
+      "sha256": "be9587533de1464c70378643a45819916a92ae56766afd8737698ef1611c92e1",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-08-regreso.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-08-regreso.jpg",
+      "sha256": "3f1c20c54701b585802598f7d6916f16e8df12f1a69f4c242b32bd8ea204cab9",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "light/14-09-recepcion.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004210_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-09-recepcion.jpg",
+      "sha256": "455699b8b172f24e17b64580b00076bca6a705349cfd6ed1b1b0a3e7299c6908",
+      "width": 540,
+      "height": 1200,
+      "theme": "light",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/13-01-inicio.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-01-inicio.jpg",
+      "sha256": "e2e346630d5595656035a23d0d524f3e70c15610d2e0e200aa05768212de4e34",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-02-apertura.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-02-apertura.jpg",
+      "sha256": "e1f8ffce38284577273b73a08f68c370df594ef485bda9b154142b6de95f445d",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-03-editar.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-03-editar.jpg",
+      "sha256": "0dc40d3406dda46d98fe52b358cdcfda6b8874f553df7cbd0df2367728bd0155",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-04-arena-dos.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-04-arena-dos.jpg",
+      "sha256": "651010a84835a1e50386c3fd7d7cecdfd30716e49e717e8f18ea5b98728a8d76",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-05-agregado.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-05-agregado.jpg",
+      "sha256": "43711a6a218c2f2f1cb855525cb7ada4473c1f2ba61f719c02641ca7d6f8aadb",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-06-carrito.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-06-carrito.jpg",
+      "sha256": "ff471253f7d2219281eeef2137f8f4bd0615c816b129b057e801f6d9ff7be005",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-07-contraste-sistema.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-07-contraste-sistema.jpg",
+      "sha256": "c8960283f90470d76a88e522dd01b7ffe5922677aa8ecf1e0d33cf13d038e6f8",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-08-regreso.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-08-regreso.jpg",
+      "sha256": "3fc31f8133e491e5650400012bca4117c3a500b720039dfc17f82f001851b5e1",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/13-09-recepcion.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004308_Ficha_—_editar_selección_y_comprar_con_contexto_takeScreenshot_ficha-seleccion-09-recepcion.jpg",
+      "sha256": "89af5331bc615e87d7f5b21b6a7af4fd3d78624e4d71746e503138a73e92e381",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "13-ficha-seleccion",
+      "androidFontScale": 1.0
+    },
+    {
+      "file": "dark/14-01-inicio.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-01-inicio.jpg",
+      "sha256": "ddc538c6a12db75cee7321d4cf653dc99ed37d9a4edaf3158db86180a3a700ca",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-02-apertura.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-02-apertura.jpg",
+      "sha256": "c35cc0d4de0d278e18758e0deaee091202aed39e612ebccf800d312dd1e33d2c",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-03-editar.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-03-editar.jpg",
+      "sha256": "7642ac20dbfd683614a9d1c10e8f78db4e881d4324a25f6953226e4104e87278",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-04-arena-dos.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-04-arena-dos.jpg",
+      "sha256": "21eed1af81936d50304c92219fb888a0f9231c9fc6a77bde847f02a27a606b48",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-05-agregado.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-05-agregado.jpg",
+      "sha256": "be8fab3d4be7802d14b630bc867e272297a06b8d22fec3d0e4c96e0cfd84a048",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-06-carrito.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-06-carrito.jpg",
+      "sha256": "dc4462d36bc5ab4a01d2ed99daa403723d5b5ab7e34e51be4c1a15610d5c397d",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-07-contraste-sistema.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-07-contraste-sistema.jpg",
+      "sha256": "24b3c8dbb3b5f09bb9ae5b0752b569d33a4ec57b2f63360f2931ebd9d7b0fda5",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-08-regreso.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-08-regreso.jpg",
+      "sha256": "98d81d1262e76bbff327d0480d2f19271bbe9b0532a76f7a79a926f3c166256b",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    },
+    {
+      "file": "dark/14-09-recepcion.jpg",
+      "sourceFile": "flujos_maestro_2026-10-24_004406_Ficha_—_selección_con_fuente_Android_ampliada_takeScreenshot_ficha-seleccion-09-recepcion.jpg",
+      "sha256": "1694288f573eb3e77d3e2ae5ea9f46150d73e98fe523721aedd3a4999c9f2199",
+      "width": 540,
+      "height": 1200,
+      "theme": "dark",
+      "flow": "14-ficha-seleccion-texto",
+      "androidFontScale": 1.6
+    }
+  ]
+}

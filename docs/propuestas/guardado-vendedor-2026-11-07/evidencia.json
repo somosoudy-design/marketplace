@@ -1,0 +1,35 @@
+{
+  "base_commit": "eee8d4d9dcdc89b6e33ba8d9f21b2b0b710b1ebd",
+  "status": "PREPARED_NOT_ACTIVATED",
+  "remote_operations": false,
+  "ui_changes": false,
+  "unit_tests": 74,
+  "db_new_tests": 30,
+  "db_total_including_previous_suites": 112,
+  "typecheck": [
+    "core",
+    "api",
+    "isolated_db_harness"
+  ],
+  "review": "Independent reviewer approved for inactive preparation only.",
+  "files_sha256": {
+    "packages/api/src/api.ts": "2017149e973fead7d7cb0bda5d7ad9727c203c58082b71c7efbf7a230e7f124f",
+    "packages/api/src/types.ts": "eff486a6cc130cb30b71f60634681d7e7d9a05171407251a0d36f154b3e0720b",
+    "packages/core/src/errors.ts": "f6432aad56ae763e7acfb4f316fca89d720ea104c7db239935100307992d4177",
+    "packages/core/src/index.ts": "fd35690d81c24a6becc2b549069e75283671d84e1beb370fe3c9a0e56934bc0d",
+    "packages/core/src/seller-authoring.ts": "41929c3cfd9cdd9fe0d3f8b214e2f5607879241fd045d5e5a056a8357b8c7360",
+    "packages/core/test/seller-authoring.test.ts": "0382a3f13d9292d0c814dfdbd7dab5814b82eca3d65bcb22dff533596511522e",
+    "packages/core/test/functional-api.test.ts": "4a9ac4dec99142cf8a60574140b010371627f51ab6b284ec582825d2140eaad3"
+  },
+  "proposal_sha256": {
+    "sql/04-seller-reviewed.sql": "959aa524beadb18c4b4a34c32242ce98a6a4c1887764860c9b6ce3e2cb7b56e2",
+    "tests/seller-reviewed.test.ts": "d5f43679d36398c824bf309cee0c8a648f8dfff2f589f3288bfbdfc00b295d10"
+  },
+  "logs_sha256": {
+    "final-apply.log": "459817a239b1b19976f6ce847656a13b99672acdb14496e26755680348553769",
+    "final-db.log": "1e7683bf2c99f33c7df8979c43745d679a055c124aa5b339c2bd7334b02930d0",
+    "final-seller.log": "d305f5b66f79b54a1bef286cf4270df78a1ab7b48d25006d0569104c776c26b4",
+    "main-core.log": "1e28404c7d933d69b5eb6e7f15be860440a3ae1a81d0bf4e439420d9ebe74c91",
+    "final-types.log": "b24dd7ee6a7f9ab642e2d489f6f98f5045754c776fa725b3eea1eb2d21c9e3fc"
+  }
+}

@@ -1,0 +1,16 @@
+Mayami
+
+Confirma tu correo
+
+Te falta un paso para verificar tu cuenta en Mayami. Escribe este código en la pantalla donde comenzaste tu registro.
+
+Código de verificación: {{ .Token }}
+
+El código solo se puede usar una vez. Si vence, solicita uno nuevo desde Mayami.
+
+Si no creaste una cuenta en Mayami, puedes ignorar este correo.
+
+No compartas este código por chat ni por teléfono.
+
+Ayuda: soporte@mayami.app
+https://mayami.app/contacto

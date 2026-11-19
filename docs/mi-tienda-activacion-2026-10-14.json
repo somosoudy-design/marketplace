@@ -1,0 +1,175 @@
+{
+  "execution": {
+    "projectRef": "mimnotafmfasvwrclxan",
+    "packageSha256": "7bebd4d2a99bda38a2b71f700a6f6cb0022f7f074ea4781de7d45aebc7c23ebd",
+    "executedAtCaracas": "2026-10-14T15:37:43.734246-04:00",
+    "httpStatus": 201,
+    "result": [
+      {
+        "catalog_supported": true,
+        "orders_supported": true
+      }
+    ]
+  },
+  "history": {
+    "httpStatus": 201,
+    "result": [
+      {
+        "version": "20261011172600",
+        "name": "seller_product_editor"
+      },
+      {
+        "version": "20261011174200",
+        "name": "seller_fulfillment_detail"
+      }
+    ]
+  },
+  "before": {
+    "httpStatus": 201,
+    "result": [
+      {
+        "business_counts": {
+          "images": 104,
+          "orders": 31,
+          "stores": 5,
+          "payments": 6,
+          "products": 44,
+          "variants": 63,
+          "fulfillments": 35
+        },
+        "advance_definition": "1f3c62f5e8ad0a88b233dd2d6b9f0136",
+        "costs_definition": "2ddea454ad3bab88b7bd3d8639fae282"
+      }
+    ]
+  },
+  "after": {
+    "httpStatus": 201,
+    "data": [
+      {
+        "business_counts": {
+          "images": 104,
+          "orders": 31,
+          "stores": 5,
+          "payments": 6,
+          "products": 44,
+          "variants": 63,
+          "fulfillments": 35
+        },
+        "advance_definition": "1f3c62f5e8ad0a88b233dd2d6b9f0136",
+        "costs_definition": "2ddea454ad3bab88b7bd3d8639fae282"
+      }
+    ]
+  },
+  "grants": {
+    "httpStatus": 201,
+    "data": [
+      {
+        "name": "seller_editor_ready",
+        "security_definer": false,
+        "anon_execute": false,
+        "authenticated_execute": true,
+        "service_role_execute": true
+      },
+      {
+        "name": "seller_fulfillment_detail",
+        "security_definer": true,
+        "anon_execute": false,
+        "authenticated_execute": true,
+        "service_role_execute": true
+      },
+      {
+        "name": "seller_orders_ready",
+        "security_definer": false,
+        "anon_execute": false,
+        "authenticated_execute": true,
+        "service_role_execute": true
+      },
+      {
+        "name": "seller_save_product",
+        "security_definer": false,
+        "anon_execute": false,
+        "authenticated_execute": true,
+        "service_role_execute": true
+      }
+    ]
+  },
+  "tests": {
+    "httpStatus": 201,
+    "data": [
+      {
+        "results": [
+          {
+            "case": "support flags authenticated",
+            "passed": true
+          },
+          {
+            "case": "create/retry without duplicates",
+            "passed": true
+          },
+          {
+            "case": "edit/stock/pause write and read",
+            "passed": true
+          },
+          {
+            "case": "invalid save rolls back entire edit",
+            "passed": true
+          },
+          {
+            "case": "own store write/foreign store denied",
+            "passed": true
+          },
+          {
+            "case": "foreign seller cannot save own-store product",
+            "passed": true
+          },
+          {
+            "case": "admin real role/review preserved/private isolation",
+            "passed": true
+          },
+          {
+            "case": "own detail/unpaid preparation blocked",
+            "passed": true
+          },
+          {
+            "case": "fulfillment isolated by store and ID",
+            "passed": true
+          },
+          {
+            "case": "preparation/dispatch/history/tracking/duplicate/admin-step guards",
+            "passed": true
+          },
+          {
+            "case": "buyer cannot access seller operation",
+            "passed": true
+          },
+          {
+            "case": "guest denied by actual grant",
+            "passed": true
+          }
+        ]
+      }
+    ]
+  },
+  "restGuards": [
+    {
+      "rpc": "seller_editor_ready",
+      "httpStatus": 401,
+      "code": "42501"
+    },
+    {
+      "rpc": "seller_orders_ready",
+      "httpStatus": 401,
+      "code": "42501"
+    }
+  ],
+  "projectRef": "mimnotafmfasvwrclxan",
+  "authorization": "Oliver: SIII; two exact migrations and controlled reversible verification",
+  "auditVerdict": "APROBADO",
+  "testsMethod": "New UUID fixtures, SQL authenticated/anon roles with database memberships; writes/reads in transaction then ROLLBACK; separate connection verifies original counts and protected definitions. Not a physical Android login test.",
+  "testSqlSha256": "4369088b114119fd6492f97f7263098928667a13061bf8ec982ea4db74f0c03a",
+  "realProductsOrdersModified": false,
+  "paymentsCollectedOrReviewed": false,
+  "fixtureRowsRetained": false,
+  "sequenceGapsPossible": true,
+  "easPublished": false
+}

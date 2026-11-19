@@ -1,0 +1,744 @@
+{
+  "before_source": "baeb39d",
+  "after_source": "d945797",
+  "before": [
+    {
+      "name": "412-light-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 561.5
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 298,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 589.5
+        },
+        "catalogHeightBeforeProducts": 298,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 561.5
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-empty",
+      "metrics": {
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -330,
+          "width": 184,
+          "height": 291.5,
+          "bottom": -38.5
+        },
+        "catalogHeightBeforeProducts": -330,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 561.5
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 298,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 589.5
+        },
+        "catalogHeightBeforeProducts": 298,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 561.5
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-empty",
+      "metrics": {
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -330,
+          "width": 184,
+          "height": 291.5,
+          "bottom": -38.5
+        },
+        "catalogHeightBeforeProducts": -330,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "320-light-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 138,
+          "height": 234,
+          "bottom": 504
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 298,
+          "width": 138,
+          "height": 234,
+          "bottom": 532
+        },
+        "catalogHeightBeforeProducts": 298,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 138,
+          "height": 234,
+          "bottom": 504
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-empty",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -330,
+          "width": 138,
+          "height": 234,
+          "bottom": -96
+        },
+        "catalogHeightBeforeProducts": -330,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 8,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 138,
+          "height": 234,
+          "bottom": 504
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 298,
+          "width": 138,
+          "height": 234,
+          "bottom": 532
+        },
+        "catalogHeightBeforeProducts": 298,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 270,
+          "width": 138,
+          "height": 234,
+          "bottom": 504
+        },
+        "catalogHeightBeforeProducts": 270,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 2,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-empty",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -330,
+          "width": 138,
+          "height": 234,
+          "bottom": -96
+        },
+        "catalogHeightBeforeProducts": -330,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 8,
+        "catalogViewportBottom": 700
+      }
+    }
+  ],
+  "after": [
+    {
+      "name": "412-light-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 455.5
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 208,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 499.5
+        },
+        "catalogHeightBeforeProducts": 208,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 455.5
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-empty",
+      "metrics": {
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-light-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -436,
+          "width": 184,
+          "height": 291.5,
+          "bottom": -144.5
+        },
+        "catalogHeightBeforeProducts": -436,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 8,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 455.5
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 208,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 499.5
+        },
+        "catalogHeightBeforeProducts": 208,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 184,
+          "height": 291.5,
+          "bottom": 455.5
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-empty",
+      "metrics": {
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "412-dark-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -436,
+          "width": 184,
+          "height": 291.5,
+          "bottom": -144.5
+        },
+        "catalogHeightBeforeProducts": -436,
+        "viewport": {
+          "width": 412,
+          "height": 892
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 8,
+        "catalogViewportBottom": 812
+      }
+    },
+    {
+      "name": "320-light-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 138,
+          "height": 234,
+          "bottom": 398
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 208,
+          "width": 138,
+          "height": 234,
+          "bottom": 442
+        },
+        "catalogHeightBeforeProducts": 208,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 138,
+          "height": 234,
+          "bottom": 398
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-empty",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-light-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -436,
+          "width": 138,
+          "height": 234,
+          "bottom": -202
+        },
+        "catalogHeightBeforeProducts": -436,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 8,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-catalog",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 138,
+          "height": 234,
+          "bottom": 398
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-category",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 208,
+          "width": 138,
+          "height": 234,
+          "bottom": 442
+        },
+        "catalogHeightBeforeProducts": 208,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 4,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-sort",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": 164,
+          "width": 138,
+          "height": 234,
+          "bottom": 398
+        },
+        "catalogHeightBeforeProducts": 164,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 6,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-empty",
+      "metrics": {
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 0,
+        "partiallyVisible": 0,
+        "catalogViewportBottom": 700
+      }
+    },
+    {
+      "name": "320-dark-scroll",
+      "metrics": {
+        "firstCard": {
+          "x": 16,
+          "y": -436,
+          "width": 138,
+          "height": 234,
+          "bottom": -202
+        },
+        "catalogHeightBeforeProducts": -436,
+        "viewport": {
+          "width": 320,
+          "height": 780
+        },
+        "fullyVisible": 4,
+        "partiallyVisible": 8,
+        "catalogViewportBottom": 700
+      }
+    }
+  ]
+}

@@ -1,0 +1,767 @@
+{
+  "files": [
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-dark-320-font1.6.png",
+      "sha256": "27c57022c8c79a34544efde8e13bbff54b8d81b62ae8903e389354e4b3bc7370",
+      "bytes": 71550,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-dark-320-font1.png",
+      "sha256": "518d9e750e798c150834d92a9bcde4a9b1a4bf7fd2caa1607835afc1d1b7e1ba",
+      "bytes": 57835,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-dark-412-font1.6.png",
+      "sha256": "07528d9d9f0406d4646c090ddfaa53acb93c82366a08c96cd01df5ca8879b93a",
+      "bytes": 76809,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-dark-412-font1.png",
+      "sha256": "265e59cabcf31892d03e2cb56fc774ccd30015f90c95926776fc08ceb10a8146",
+      "bytes": 61285,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-light-320-font1.6.png",
+      "sha256": "234a8977299f539b30c9019ba1daa0e75377ead4f83e62198cd7ea7b0888b322",
+      "bytes": 69108,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-light-320-font1.png",
+      "sha256": "51da97be73e2caf619e9d8a4e1cb81deac42b3b4b65c61c4f0b4e7c1feb73906",
+      "bytes": 56027,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-light-412-font1.6.png",
+      "sha256": "2408de8e5d8c36983e7583897f604331e7eb05c598fa156fa3ba1b1e67b893ea",
+      "bytes": 74469,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-multi-light-412-font1.png",
+      "sha256": "87dcef1d8dced93983abd937d6d7f1a3956de91ce3fc1de6c5dfdada8cb9f5cc",
+      "bytes": 59429,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-dark-320-font1.6.png",
+      "sha256": "ecbd1031c90e37d083a27b70677c3687910de838cedf2db8db185f8349c1c997",
+      "bytes": 63887,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-dark-320-font1.png",
+      "sha256": "09bc7879672a254975335a6ace36fd5be16c8a6b974c7a57661b5b6e9b087b09",
+      "bytes": 48305,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-dark-412-font1.6.png",
+      "sha256": "b6bea7bf2a612567b65bd16b3ed9654457b0af1355b9e577be9b596d6a0b6d18",
+      "bytes": 70245,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-dark-412-font1.png",
+      "sha256": "fecc787ea5736de34c17ee3f458ecd735f874166399c0c84423b613eab6ccfb9",
+      "bytes": 51783,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-light-320-font1.6.png",
+      "sha256": "33d90ef9e09d4e89c61d6f4a7338fbc056f6253c18c94b25cbcdcee7a1aca716",
+      "bytes": 61657,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-light-320-font1.png",
+      "sha256": "5f145493268eede0542556bb49c4aac93d8608c07704a249611c91f964914b2a",
+      "bytes": 46635,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-light-412-font1.6.png",
+      "sha256": "bf15c9fc677be4c516820388cd25f26a12d532fb4bc91d9ff6c4b6a50ff7817b",
+      "bytes": 67962,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/01-cart-same-light-412-font1.png",
+      "sha256": "cb9d2c5dbd805de994129b5e2a26803590afa22e9ff74ebf0bad5f3297b038d1",
+      "bytes": 50215,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-dark-320-font1.6.png",
+      "sha256": "746782abbe618fcd16fdbb40a7c2d91d73d1c425ede9fda669da398698e697d3",
+      "bytes": 67555,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-dark-320-font1.png",
+      "sha256": "3f2da0253f3b65e14863ecd0ef224390e2fbd1d6d761e53a3569b88c4bd6ed5b",
+      "bytes": 64034,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-dark-412-font1.6.png",
+      "sha256": "87b2c25be0dcf864e1639122e72156e9bb0bb0dfcdfc63206a8523f9fce60647",
+      "bytes": 80217,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-dark-412-font1.png",
+      "sha256": "67aafbb6a88e56f56c08ece05a071635cf323f6a641e23011918da9b23d82548",
+      "bytes": 68011,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-light-320-font1.6.png",
+      "sha256": "278743d3f30b6ea374dc75f51104d8e2bbde0b13e69d4355926009222dbba74c",
+      "bytes": 65281,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-light-320-font1.png",
+      "sha256": "a1d204e9d7854d61973f5bb805dffdd551ffe8416f1f81868488137f3e1b6784",
+      "bytes": 62580,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-light-412-font1.6.png",
+      "sha256": "0fde9bbf99e9dd07dea8868aeb9ffa37d3223d2d2b0110e7039837b5805c74b0",
+      "bytes": 77561,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-empty-light-412-font1.png",
+      "sha256": "76eecb83187d5411e357f50289be1feb48e7d59b61b7d3dcbd205dcda3f34bee",
+      "bytes": 66517,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-dark-320-font1.6.png",
+      "sha256": "3d695eb5f5c2deb75652985462cde9bd341357d39de926c6d603ba1ada0e949f",
+      "bytes": 68429,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-dark-320-font1.png",
+      "sha256": "673291cf1a720d085b279b0af5e297444aca2533d08f9f535b5b253b9abd3513",
+      "bytes": 63041,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-dark-412-font1.6.png",
+      "sha256": "0f17a3acbb49ffff368f19c0a80339d393818b6b93358077b626d44fc93e00b2",
+      "bytes": 76735,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-dark-412-font1.png",
+      "sha256": "29ecf1d3bf42f3839c1b3fcc6e04687cae9254937e2a2825bc98b39b75793d0a",
+      "bytes": 67212,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-light-320-font1.6.png",
+      "sha256": "d2de0ae60a0608cda457bc7b0464db3ae5cc63270adff4065264752b1076bffc",
+      "bytes": 66489,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-light-320-font1.png",
+      "sha256": "b9b23ecf404e26c21b1a52d66240e83b3dc4a7b0fb4ded718db120c005a7a5b8",
+      "bytes": 61636,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-light-412-font1.6.png",
+      "sha256": "3936426153cb8481221e014c114495396a144db38bad19f4f632329cab6fb80b",
+      "bytes": 74956,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before/02-store-rated-light-412-font1.png",
+      "sha256": "2b009ad0a9227291195549fa45cc0886c9b15c83424e10b548f935266a96b1bb",
+      "bytes": 65689,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-dark-320-font1.6.png",
+      "sha256": "3e26fc8c3fdc01ac8d8c99391bc2fa7c76bbdc05ffcdcb5d743d77c83024010b",
+      "bytes": 82240,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-dark-320-font1.png",
+      "sha256": "605436711ae087d6f68c32a456eae2e81a3f726c1e3e2ec9b154bf58617f5394",
+      "bytes": 82868,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-dark-412-font1.6.png",
+      "sha256": "c1b31c9ffbfc7df10c9cfa9fa34d5072a887fa4aa441958e875891c629abc273",
+      "bytes": 102100,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-dark-412-font1.png",
+      "sha256": "3ac383236face24b5f81b71d66706b1084a303c3ed1481576d6088c0a4470c8b",
+      "bytes": 101352,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-light-320-font1.6.png",
+      "sha256": "327e455424eb608a6f977d322fdcc059c30da6c2621b442e7bdf91ef44a69bd7",
+      "bytes": 80183,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-light-320-font1.png",
+      "sha256": "9e8d7da84bff4ab638b225950ffefb7e46de0e3a276f589bb96fe1c789a45944",
+      "bytes": 80565,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-light-412-font1.6.png",
+      "sha256": "f744278332e6fb2745743bdca914148c354977714832a2cd6da381c936488305",
+      "bytes": 99910,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/before-home-stores/03-home-stores-light-412-font1.png",
+      "sha256": "eb9b481e96f79911efe400066e64a4c5b9d0161cdd37c0f1fae49d8097681a92",
+      "bytes": 99320,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-dark-320-font1.6.png",
+      "sha256": "8a63a8d264f62dec52813e5a47473af4be9bb4178a5bd2b639ea44c1bb089dad",
+      "bytes": 71006,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-dark-320-font1.png",
+      "sha256": "b609f0175906bde0407f576135bfa2aa345cc00e9a7bf591e9a812c5f099e785",
+      "bytes": 60584,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-dark-412-font1.6.png",
+      "sha256": "71232669f3be4ff608ddeb7799b148c4856b36a98a84cf909c31a151f570677a",
+      "bytes": 78637,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-dark-412-font1.png",
+      "sha256": "9fb5b36810a423e33c5919d8f1069e680e07c7796b5dfd54675986b6ccfd02f9",
+      "bytes": 64201,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-light-320-font1.6.png",
+      "sha256": "b351f01cffb16d51b12eb42f27269a06312336fc7517f97d523cd12dbef41882",
+      "bytes": 68638,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-light-320-font1.png",
+      "sha256": "77d617ac06c748c2baa4b357fd2824411a3290089aa9de414fd88451c606d20f",
+      "bytes": 58900,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-light-412-font1.6.png",
+      "sha256": "6d04be077507bd5bb07b785f6da51e5e37eb6ed0278a57206e2a7fe3ea8f440c",
+      "bytes": 76330,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-multi-light-412-font1.png",
+      "sha256": "4f4ebd3a215d3bf9d09e546afed9e5267ffff23671732df3c13c9fad4401ed37",
+      "bytes": 62537,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-dark-320-font1.6.png",
+      "sha256": "175c1a3ca31d9bb97efbf0d50f7b96b9f3b7735d13e5dfed242cbaf29efec8d1",
+      "bytes": 72462,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-dark-320-font1.png",
+      "sha256": "1539fe9e0a0be55923818eadcf489171fe25d9c959d219a1e9c073647a2fb75b",
+      "bytes": 52893,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-dark-412-font1.6.png",
+      "sha256": "ae2cd8b4be742c72f9404a98282fcb7ce66b7d2214004f7c4ed5ae0b0edb0c47",
+      "bytes": 78893,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-dark-412-font1.png",
+      "sha256": "49aa7f77b4ffb5503988c2a26bd1f46915a55dd62029b241e4bc8e3945fb6724",
+      "bytes": 56438,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-light-320-font1.6.png",
+      "sha256": "500b8726fb48814334d3d7c281b6ee811b929003d3098434e382a40071e6d778",
+      "bytes": 70330,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-light-320-font1.png",
+      "sha256": "e4fbdc9588baae31e58484f2134e6c1f5733b118523406f21de91a8e6e9becd2",
+      "bytes": 51367,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-light-412-font1.6.png",
+      "sha256": "06be2ec47be7b357c73cbd3102e3165b107ce1d5e6efe23af22ad4d32acd1da5",
+      "bytes": 76744,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/01-cart-same-light-412-font1.png",
+      "sha256": "6f9c2cb818c5b37294a880677355aa5b505eb3981618a626e46148fb28b12ee1",
+      "bytes": 54944,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-dark-320-font1.6.png",
+      "sha256": "bbf16e52c35b42a1bf48fc971c09099ce0b558d9842c6a5e4ef4dcf6e31acf78",
+      "bytes": 67431,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-dark-320-font1.png",
+      "sha256": "7ae19ced2e36ace76242bba0033fdcca72f58346d0fdf39692202cf2819ab756",
+      "bytes": 64031,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-dark-412-font1.6.png",
+      "sha256": "7906bf8ac77b3f5cee13b537d68e088ea11876f0d8397c8cbe0b3a9a264717a0",
+      "bytes": 80145,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-dark-412-font1.png",
+      "sha256": "2ab73d56bab600d56b5eba2c32558c31a4ed1a087d10d61e80982f52b4c1a9ad",
+      "bytes": 68014,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-light-320-font1.6.png",
+      "sha256": "f93dd37fd20f29cb2548d8c2a11e6273c49a137c93d5729e8c81ad1cb85b2fab",
+      "bytes": 65514,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-light-320-font1.png",
+      "sha256": "77b58a9cff7a143766bddd59fb5b7641d8f4ca447ee11d0cbe8b09064ca0d399",
+      "bytes": 62593,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-light-412-font1.6.png",
+      "sha256": "253d0a1cc44979b06fc34418a9b5d62275dcd1ede04941236046609bd0863e01",
+      "bytes": 77738,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-empty-light-412-font1.png",
+      "sha256": "8141e8d266084a56ad9f3cc44d18a630984b6b067c39bf919b4935efd5a04055",
+      "bytes": 66524,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-dark-320-font1.6.png",
+      "sha256": "0f6503105b27f4a9c6f5fb591838c428b24c05c17373100abacf89e9db866c06",
+      "bytes": 67848,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-dark-320-font1.png",
+      "sha256": "b4fc62f45cea0109c5b770ebdea6f84d0ffc34aeaa7ab882eb165a53db312df7",
+      "bytes": 59618,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-dark-412-font1.6.png",
+      "sha256": "e69e0711a11cc7ae308820d7977eebd6509a599f61e6ad46c2c8e6fd68d2a499",
+      "bytes": 77035,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-dark-412-font1.png",
+      "sha256": "b2c4a000755cddba89c827cafc8d94bb633358d1664b6d5a21267247634451cd",
+      "bytes": 64349,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-light-320-font1.6.png",
+      "sha256": "2194e5e887c9b9840470011d4f0c614aa613ae6de823e927c76a34aba577845a",
+      "bytes": 66290,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-light-320-font1.png",
+      "sha256": "611cfcf6a313e7f899d4316b12cbabda72a52b2609cb7a053febf2f45ba31e5f",
+      "bytes": 58414,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-light-412-font1.6.png",
+      "sha256": "148089ad53981f0b96610f5f48e124217bc7b016e0fa1999515d86d784a05898",
+      "bytes": 74951,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after/02-store-rated-light-412-font1.png",
+      "sha256": "af237f00d6ca91727cfab0df26d47bbabbd2c0b3f14d020244f4da11d97eee0f",
+      "bytes": 63037,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-dark-320-font1.6.png",
+      "sha256": "d76aeb5ef89bc16e584a3be494afbe7cbdeaa73b3bb539bbae6694baa57b7165",
+      "bytes": 79075,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-dark-320-font1.png",
+      "sha256": "921d119dc7dc7c532369c3d43f18d0039d0b215fe564226c3aebee330d15c22c",
+      "bytes": 81458,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-dark-412-font1.6.png",
+      "sha256": "41a6fd28298a91a31f2f13904b2c696376ec17aa872058dd439af95a475cfed5",
+      "bytes": 99721,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-dark-412-font1.png",
+      "sha256": "2204a3b860b45786a920119234234469eb07385499d6254d9384afb13c87174e",
+      "bytes": 100383,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-light-320-font1.6.png",
+      "sha256": "11e35f37354ec0e44326b2a773931f537b33dc8abb7bbbc46bd73a5f8fc6ea84",
+      "bytes": 77184,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-light-320-font1.png",
+      "sha256": "eaba857add275e57c39de62356e1fb9e15ffbfe6611f225d8ddf6befbbf8096d",
+      "bytes": 79442,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-light-412-font1.6.png",
+      "sha256": "780334db4b2fd8838ada990562e99188935b2bba99d81a8a2a95b611f6ca5be7",
+      "bytes": 97587,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-home-stores/03-home-stores-light-412-font1.png",
+      "sha256": "153a46a074b1db643841db753a1285912532eac4fe38f932f5fa398f2e844859",
+      "bytes": 98340,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/04-cart-quantity-error-dark-320.png",
+      "sha256": "cb8e59fb3ed517b44ae312283a6547d5c9927d4924c7cacc485e536e5546386b",
+      "bytes": 65222,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/04-cart-quantity-error-light-320.png",
+      "sha256": "d415a29a06b1e057d3dd7fe8103b3dc1174b092a2bd91bc47fc41dd6eacef9f4",
+      "bytes": 63317,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/05-cart-remove-dark-320.png",
+      "sha256": "4672258ec0b5409db59d6326468a37b2058dd1588711bedccb5bc7eb880f1b2a",
+      "bytes": 55566,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/05-cart-remove-light-320.png",
+      "sha256": "f3c8fce65265144899dd761cb2db39de41d7090934fe43874f412ab840f774db",
+      "bytes": 56911,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/06-cart-load-error-dark-320.png",
+      "sha256": "5a3507197fa0c1b8676e59cbd01f3f28769c2c5221293a4fe804e2967e70bb02",
+      "bytes": 22575,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/06-cart-load-error-light-320.png",
+      "sha256": "38d3ee25e336bc9bab1f4b8fdf9132f25c780570a1e0d9a3c806c641ce709d1b",
+      "bytes": 21141,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/07-cart-empty-dark-320.png",
+      "sha256": "d3e3e5e942b05ce7c123c0a057961c28f94c47bd21dc19c5e88cf04fba8ae939",
+      "bytes": 24813,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "carrito-tiendas/after-final-states/07-cart-empty-light-320.png",
+      "sha256": "c14634ad16b69fb3ef8c4714e309daec236287438c7050ca30231070eea2d784",
+      "bytes": 23324,
+      "context": "Chromium local320/412; CSS1/1,6 no equivale a fuente Android; fixtures locales comparables, no operaciones remotas"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/attributed-fallback-no-credit.png",
+      "sha256": "f386891eb6f4aacae243e147012ff4f610c9c33c169c0c46c26ae60200a05e6a",
+      "bytes": 140383,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/variant-credit-recovery-sheet.png",
+      "sha256": "f91029e33ccc4ac3d2fa57c10baee6708ff6e5101ff3d4aa30969b132f8d69c7",
+      "bytes": 53921,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-16eff-nt-recovers-its-own-sources/variant-credit-recovery.png",
+      "sha256": "279abab217a97ada36588a08aa58de330f5f60cf56fa37eaebc54439356bd8b0",
+      "bytes": 62939,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-1e668-low-the-active-gallery-page/mapped-photo-sources-sheet.png",
+      "sha256": "8d081d7c7e7f8f7db5aee88e342b83ed60190349885ff40f8c6102c80323b3e1",
+      "bytes": 52581,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-1e668-low-the-active-gallery-page/own-storage-photo-active.png",
+      "sha256": "eeb6d7eddfdfbeade52e3f806a02f5e0cffcb046751b6d822c9daf738ea67709",
+      "bytes": 140955,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-4dde0--opens-and-closes-on-demand/commercial-cart.png",
+      "sha256": "228d74df71117dd89989dfcc9a6a812544660308806f0bd523fc50f12aec6376",
+      "bytes": 38934,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-4dde0--opens-and-closes-on-demand/commercial-info-keyboard.png",
+      "sha256": "7a2e94c4df33f654b99267dc9fd7dd1e65203f125816f55726d9fea3b72f24d3",
+      "bytes": 54130,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-5d0d2-low-the-active-gallery-page/mapped-photo-sources-sheet.png",
+      "sha256": "ff92555eb37aa7d681d79cc3990e5615343dcab40f4c354421310968d3138499",
+      "bytes": 53907,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-5d0d2-low-the-active-gallery-page/own-storage-photo-active.png",
+      "sha256": "e35658e1e55085dd0a9ad412c8a43ffee6a7fa02dd6b47814c3c4a59b5ee2a89",
+      "bytes": 140524,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/attributed-fallback-no-credit.png",
+      "sha256": "53f4598c0473efcbf572dbbe7c37be3fa9e68f2782ff79be9cdce3891e0aaf14",
+      "bytes": 140780,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/variant-credit-recovery-sheet.png",
+      "sha256": "6ff0eda07a98802a9478751ba7c9cde6d9d954bbc548b0f0769b4af188f13668",
+      "bytes": 52594,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-b6df7-nt-recovers-its-own-sources/variant-credit-recovery.png",
+      "sha256": "eb935592d0c713aa792d7cb600925a624ce5fda2c3585eb05aac1d6dd39f28ef",
+      "bytes": 64084,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-bdc70--opens-and-closes-on-demand/commercial-cart.png",
+      "sha256": "44b8818cfcc71dda7f37d22da14533a182f08e5b5dc67e3dc93a47651f71687f",
+      "bytes": 40476,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/commercial-gallery-commerc-bdc70--opens-and-closes-on-demand/commercial-info-keyboard.png",
+      "sha256": "b042af6d43e8bc49ca3548e865e30de3e7977aed30cd5200ed25bd7122d94433",
+      "bytes": 52160,
+      "context": "Expo8102; DTO/Storage interceptados localmente; no auth/mutaciones; fallo y variante explícitos"
+    },
+    {
+      "file": "galeria/FINAL_EVIDENCE.json",
+      "sha256": "bc76e88154bb28c4250f648fedaff9f718ecc5364bd9982971b0fba9f1df87d5",
+      "bytes": 7515,
+      "context": "Manifiesto original agente verificador"
+    },
+    {
+      "file": "tiendas/kora-dark-01-description.png",
+      "sha256": "e7f1934427e88953a407960da230707baf30d91f9e3ff5b74cff63144b73b653",
+      "bytes": 92212,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/kora-dark-02-products.png",
+      "sha256": "46aae75180dc2f03a25d365407fe5578d80a66cf6d31d93bf082912a32611398",
+      "bytes": 93705,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/kora-light-01-description.png",
+      "sha256": "9d44b3330b4f5a816e26a6dd9344b957e2351419c0e6b362a672e860b6297f09",
+      "bytes": 91144,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/kora-light-02-products.png",
+      "sha256": "6ec63d019103e44157eb22eff57ab9cee4715a03c7ed25d1a6991db4cfb6a78e",
+      "bytes": 92341,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/patitas-dark-01-description.png",
+      "sha256": "0952fde17075791e5392ca631528da81fc5070b62a1714fe773b23c8f3749a0b",
+      "bytes": 104902,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/patitas-dark-02-products.png",
+      "sha256": "3954dbaa23fb3b6c53b067db3e71c3964f3f39bbecce4a1aa3e94b97f2abe025",
+      "bytes": 104080,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/patitas-light-01-description.png",
+      "sha256": "516a4e77c5a0037f90e6ea715f2645e29d60452e9a7e0bd94724b7d47f679d15",
+      "bytes": 104194,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "tiendas/patitas-light-02-products.png",
+      "sha256": "df9dfd1774caf72e2240977eb7b68f8736779d6655fb0a256937db21e0548106",
+      "bytes": 103565,
+      "context": "Smoke sólo lectura Expo8103; Kora y Patitas, ambos temas; fix de scope aislado tras pruebas8102"
+    },
+    {
+      "file": "voz-comercial/after/320-dark-home.png",
+      "sha256": "bd92fdf14ba86505f712bac8abef01437d799466d9e6e28b4f18c6d506cd13d6",
+      "bytes": 94216,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/320-light-home.png",
+      "sha256": "a128b1877033d0e6750eac78189872593fb3dd92086840b07435a83bc491729a",
+      "bytes": 92935,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/412-dark-detail.png",
+      "sha256": "043bb20ca916d974e870f2ee8978356dbdb840a0d11d7c9c207129f8a6d8a160",
+      "bytes": 64093,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/412-dark-home.png",
+      "sha256": "0c316f0f03d3ad29f53f69433eb6c915a22dc4dc1efc59f1bd3d131161f469d1",
+      "bytes": 92590,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/412-dark-search.png",
+      "sha256": "b9adf70ca7ad6cc3c06b4455b4c2988cc1db8da54249d7fdd59befb3bb634ac6",
+      "bytes": 94444,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/412-light-detail.png",
+      "sha256": "4e401c0f91c8981273a71d8c2070751d1165c8dc98dbdb3b3bb1b0c9ac825fda",
+      "bytes": 63614,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/412-light-home.png",
+      "sha256": "03f70a5f6e43c399f3d9559b792e961b9e885ade933912d8c13acf6d06f9ba2a",
+      "bytes": 91299,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/after/412-light-search.png",
+      "sha256": "ddb4ffea938ca1c89373fb01d628a73dbdfba9c4d6f2facd35e771d36214c8a1",
+      "bytes": 92443,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/320-dark-home.png",
+      "sha256": "1e098b4fd09b79538b10ea62ba0f1ecebd7bdc29033f1f35508aa6a47b587f53",
+      "bytes": 93756,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/320-light-home.png",
+      "sha256": "006cd581afbbdc3426992aa14a585635395ba9a68a25b216e207740453794a75",
+      "bytes": 92459,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/412-dark-detail.png",
+      "sha256": "739ee5bbe3ef9db61d6f6916f0d7d309280193b0934f689844ba90458f5ae46b",
+      "bytes": 67536,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/412-dark-home.png",
+      "sha256": "612b058202f19a8ad073ea010bb0e4debd8f3915d7e2c1185250c63edb1b2dbc",
+      "bytes": 94187,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/412-dark-search.png",
+      "sha256": "e3ffe84dfcc73c520b705a19d73e18b27907976ee07624083f7cbae2f50fde85",
+      "bytes": 96389,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/412-light-detail.png",
+      "sha256": "276bdb9d46066a83435d4ec8d321b97deb0b7eaf1bdaf4179482354c6f74c27d",
+      "bytes": 67185,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/412-light-home.png",
+      "sha256": "450d0e8b7280ec1cb3608f7ea673bba78a47a610387e04762f5cb0e214966ff9",
+      "bytes": 92863,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    },
+    {
+      "file": "voz-comercial/before/412-light-search.png",
+      "sha256": "f08e23757b8cce349eb17e9fc6280f8f8f90d0490c32cf5f7b86728ce2f154ea",
+      "bytes": 94290,
+      "context": "8 pares/16PNG; backend local real con DTO iguales. No prueba de fotografías renovadas remotas: seed local tiene UUID distintos a registro privado"
+    }
+  ],
+  "limits": "Expo web local. CSS1,6 no es Android. Catálogo local UUID distintos del registro remoto; no acreditar renovación de fotos con estos pares. Recepción Android pendiente."
+}

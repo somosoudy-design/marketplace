@@ -1,0 +1,65 @@
+{
+  "source": "bb3de95871419ac35afb213067d02c9e6cd02835",
+  "tree": "1f5498524cba222639cc39e2749a9ebbcda13744",
+  "base": "59e88a07a53338678c29aaf16a824daa7b31d58c",
+  "publishedAndroidEquivalentSource": "73fc75ef124121693d8fc42efa77dd11dcf370f6",
+  "changedPaths": [
+    "apps/mobile/app.config.ts",
+    "apps/mobile/eas.json",
+    "apps/mobile/src/app/(tabs)/account.tsx",
+    "apps/mobile/src/app/settings.tsx",
+    "apps/mobile/src/app/sign-up.tsx",
+    "apps/mobile/src/components/account/LegalLinks.tsx",
+    "apps/mobile/src/lib/legal-links.ts",
+    "tests/mobile/legal-links.test.ts",
+    "tools/eas/android-production-source.test.cjs"
+  ],
+  "packageProposal": "app.mayami.marketplace",
+  "packageConfirmed": false,
+  "scheme": "kora",
+  "tests": {
+    "realExpoNode": 3,
+    "legalVitest": 5,
+    "mobileTypes": true,
+    "focalLint": true,
+    "independentReview": true
+  },
+  "preview": {
+    "sharedActiveFilesChanged": false,
+    "localHashBefore": "ccbac2f55b3a72ea6cf04871d415813c4ff6690e",
+    "localHashAfter": "ccbac2f55b3a72ea6cf04871d415813c4ff6690e",
+    "fingerprintSources": 66,
+    "googleServicesJsonIncluded": false,
+    "installedApkRuntimeNotClaimed": true
+  },
+  "sourcePatchSha256": "335f5bc3018cb2de799ae4836c27302600aec6725ee2e33e8ac6e4addb35e4a3",
+  "sourceBundleSha256": "5ad391b3a2d08c9643b2b9f4b48409a538bb2b3e97f9a2f68680c457b3fb3f8e",
+  "remoteBuild": false,
+  "signingOrCredentialsCreated": false,
+  "published": false,
+  "metadataReadOnly": {
+    "provider": "Expo EAS",
+    "organization": "marketplacebrand",
+    "projectId": "9f629f10-d679-4a99-9965-8a9e588afc85",
+    "applicationIdentifiersObserved": [
+      "com.example.kora.preview"
+    ],
+    "productionIdentityInPlay": "Account verification pending; Create app disabled; package and certificates not visible in the observed account",
+    "privateKeyFieldsRequested": false
+  },
+  "playAccountObservation": {
+    "source": "Direct Chrome UI observation reported by coordinating chat; not repeated by this agent",
+    "reportedOn": "2026-11-08",
+    "developerAccountName": "MAYAMI",
+    "accountType": "personal",
+    "identityVerification": "in review",
+    "physicalAndroidVerification": "required",
+    "phoneVerification": "pending after identity",
+    "createApp": "disabled until account verification completes",
+    "applicationIdentifierVisible": false,
+    "signingCertificatesVisible": false,
+    "packageGlobalAvailabilityClaimed": false,
+    "otherAccountsChecked": false,
+    "configurationChanged": false
+  }
+}

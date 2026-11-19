@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-11-09T18:22:45.424640+00:00",
+  "dataDir": "/Users/brandeastudio/.codex/worktrees/mayami-play-privacy/marketplace/.local/ugc-block2-20261109/cluster/data",
+  "postgresStopped": true,
+  "postgrestPid": 54337,
+  "validatedTaskCommandOrAlreadyExited": true,
+  "loopbackPortsClosed": {
+    "56539": true,
+    "56540": true
+  },
+  "otherResourcesTargeted": false,
+  "vc3Sha256Unchanged": "eb8243732509e141fb3e4211be539a702afd063bbb21dcde49872362a3570f23"
+}

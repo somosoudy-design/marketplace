@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-30",
+  "surface": "Chromium web; Marketplace an\u00f3nimo s\u00f3lo lectura; no Android",
+  "source": "Next16.4.1; cat\u00e1logo de exhibici\u00f3n existente; original PNG sin editar",
+  "viewportHeight": 960,
+  "geometry": [
+    {
+      "width": 1440,
+      "theme": "light",
+      "firstProductY": 739.6875
+    },
+    {
+      "width": 412,
+      "theme": "light",
+      "firstProductY": 813.3125
+    },
+    {
+      "width": 320,
+      "theme": "light",
+      "firstProductY": 832.28125
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "firstProductY": 739.6875
+    },
+    {
+      "width": 412,
+      "theme": "dark",
+      "firstProductY": 813.3125
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "firstProductY": 832.28125
+    }
+  ],
+  "files": [
+    {
+      "file": "buscar-1440-dark.png",
+      "sha256": "93efaf0fc2c469a90c84677d18b8cfaba5937d5332df78d52ea6e212a0828523"
+    },
+    {
+      "file": "buscar-1440-light.png",
+      "sha256": "7e55fc8a028402d6b61fb1ea5ada01d18a826709149030e5b5521767bdbb5fff"
+    },
+    {
+      "file": "buscar-320-dark.png",
+      "sha256": "fb09f537f948419d2db2414545987d51c9a8ddd428686a13ea4231f942c102fc"
+    },
+    {
+      "file": "buscar-320-light.png",
+      "sha256": "64d74f2e2747c74e392175412ba615b68cbd21f7ae9cccc94a089fada9790b53"
+    },
+    {
+      "file": "ficha-1440-dark.png",
+      "sha256": "ce3df95b78a8de60d33d047d4c0cd25b62f94deab75e3f5bd8a74b13b84dd969"
+    },
+    {
+      "file": "ficha-1440-light.png",
+      "sha256": "721cc09f662d8959eb43e52572e3f8a00b4b7d4ee4c8945921e9111db8cb1d9f"
+    },
+    {
+      "file": "ficha-320-dark.png",
+      "sha256": "29f93701961c68ec14cdb5cecc4f97b8faaf5e0929746e8f27f943e3f2caf2b5"
+    },
+    {
+      "file": "ficha-320-light.png",
+      "sha256": "43c9d2105b017240d3fc9000faa30658c5120880ce091d4c031e85be7a541f18"
+    },
+    {
+      "file": "inicio-1440-dark.png",
+      "sha256": "debc18b49c28f04bd704fa1439aaa649a25e099d736f81d2e70fc5f642d8cd17"
+    },
+    {
+      "file": "inicio-1440-light.png",
+      "sha256": "0a0de92d36e2ff139aa836b0bc2824119b6c1edada333e927c5e455eecd4ae84"
+    },
+    {
+      "file": "inicio-320-dark.png",
+      "sha256": "986563e441cfb0fc7737c3c5d506fea04a80e81712dabb9ee3e94a181abc80eb"
+    },
+    {
+      "file": "inicio-320-light.png",
+      "sha256": "e9f63f3ed37b2ddf5ed459bd950cf2e43f925b169989d2deef2ac4c7540b9f87"
+    },
+    {
+      "file": "inicio-412-dark.png",
+      "sha256": "b14ef2597169862ffea0fe37e6ca0bff1ee0ce6362d1a01917a4883af6d80243"
+    },
+    {
+      "file": "inicio-412-light.png",
+      "sha256": "c8c9e8675fe09d1ef76c00e6a06b293f0dd06bfe8604e10bb63289437375aaa4"
+    }
+  ]
+}

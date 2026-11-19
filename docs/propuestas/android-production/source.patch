@@ -1,0 +1,360 @@
+diff --git a/apps/mobile/app.config.ts b/apps/mobile/app.config.ts
+index a5ea1eb..46bb5a9 100644
+--- a/apps/mobile/app.config.ts
++++ b/apps/mobile/app.config.ts
+@@ -1,10 +1,22 @@
++// CANDIDATO: no activar en la fuente del preview. Ver README.md.
+ import type { ExpoConfig, ConfigContext } from 'expo/config';
+ import brand from '../../config/brand.json';
+ import expo from '../../config/expo.json';
++// Valores públicos confirmados en brand-presentation.ts y en HTTPS; sólo para esta copia Android.
++const publicBrand = { name: 'mayami', webDomain: 'mayami.app', supportEmail: 'soporte@mayami.app' };
+ 
+ // APP_VARIANT is set per EAS build profile (eas.json) so development, preview and production builds
+ // can be installed side by side with different identifiers.
+ const variant = (process.env.APP_VARIANT ?? 'development') as 'development' | 'preview' | 'production';
++// Propuesta desconectada: sólo se copia a una fuente Android de producción aislada.
++// No resolver/build/OTA preview desde esa copia; conservar sus archivos activos originales.
++if (variant !== 'production' || process.env.EAS_BUILD_PLATFORM !== 'android') {
++  throw new Error('Este candidato es exclusivo de Android production; usa la fuente original para preview/iOS.');
++}
++const productionPackage = process.env.MAYAMI_ANDROID_APPLICATION_ID;
++if (!productionPackage || !/^[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+$/.test(productionPackage) || /^com\.example(?:\.|$)/.test(productionPackage)) {
++  throw new Error('Falta MAYAMI_ANDROID_APPLICATION_ID confirmado por Oliver; no construir con un identificador provisional.');
++}
+ const suffix = variant === 'production' ? '' : `.${variant}`;
+ const nameSuffix = variant === 'production' ? '' : variant === 'preview' ? ' (Preview)' : ' (Dev)';
+ 
+@@ -19,7 +31,7 @@ const native = {
+ 
+ export default ({ config }: ConfigContext): ExpoConfig => ({
+   ...config,
+-  name: `${brand.name}${nameSuffix}`,
++  name: `${publicBrand.name}${nameSuffix}`,
+   slug: expo.slug,
+   version: '0.1.0',
+   orientation: 'portrait',
+@@ -39,7 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
+   android: {
+     // Native Android identity; apply only with an authorized new APK.
+     icon: './assets/images/mayami/android-icon.png',
+-    package: `${brand.androidPackage}${suffix}`,
++    package: productionPackage,
+     // Firebase Cloud Messaging (push on Android). EAS injects the file from an environment variable of type
+     // "file" named GOOGLE_SERVICES_JSON (expo.dev › project › Environment variables); without it the key is absent and
+     // the build is the same as today (docs/SERVICIOS_EXTERNOS.md, «Notificaciones push»).
+@@ -59,7 +71,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
+       {
+         action: 'VIEW',
+         autoVerify: true,
+-        data: [{ scheme: 'https', host: brand.webDomain, pathPrefix: '/p/' }, { scheme: 'https', host: brand.webDomain, pathPrefix: '/tienda/' }],
++        data: [{ scheme: 'https', host: publicBrand.webDomain, pathPrefix: '/p/' }, { scheme: 'https', host: publicBrand.webDomain, pathPrefix: '/tienda/' }],
+         category: ['BROWSABLE', 'DEFAULT'],
+       },
+     ],
+@@ -71,7 +83,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
+     lang: 'es',
+   },
+   plugins: [
+-    ['expo-router', { origin: `https://${brand.webDomain}` }],
++    ['expo-router', { origin: `https://${publicBrand.webDomain}` }],
+     ['./plugins/withMayamiAndroidLabel.cjs', { name: 'mayami' }],
+     [
+       'expo-splash-screen',
+@@ -108,7 +120,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
+   },
+   extra: {
+     variant,
+-    supportEmail: brand.supportEmail,
++    supportEmail: publicBrand.supportEmail,
+     eas: expo.projectId ? { projectId: expo.projectId } : undefined,
+   },
+   owner: expo.owner,
+diff --git a/apps/mobile/eas.json b/apps/mobile/eas.json
+index dafca28..7a0d6a1 100644
+--- a/apps/mobile/eas.json
++++ b/apps/mobile/eas.json
+@@ -8,44 +8,22 @@
+       "node": "22.22.0",
+       "pnpm": "10.28.0"
+     },
+-    "development": {
+-      "extends": "base",
+-      "developmentClient": true,
+-      "distribution": "internal",
+-      "environment": "development",
+-      "env": {
+-        "APP_VARIANT": "development"
+-      },
+-      "channel": "development"
+-    },
+-    "preview": {
++    "production": {
+       "extends": "base",
+-      "distribution": "internal",
+-      "environment": "preview",
++      "distribution": "store",
++      "environment": "production",
++      "autoIncrement": true,
+       "env": {
+-        "APP_VARIANT": "preview",
+-        "EXPO_PUBLIC_CATALOG_PRESENTATION": "private-preview",
++        "APP_VARIANT": "production",
++        "MAYAMI_ANDROID_APPLICATION_ID": "app.mayami.marketplace",
+         "EXPO_PUBLIC_SUPABASE_URL": "https://mimnotafmfasvwrclxan.supabase.co",
+         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pbW5vdGFmbWZhc3Z3cmNseGFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1MzkzNzIsImV4cCI6MjEwNzExNTM3Mn0.NC9YnaOFEgPdwSBp4bzaRT8t47aHPWtzPO1CfRszoEA",
+         "EXPO_PUBLIC_PANEL_URL": "https://kora-panel.expo.app"
+       },
+       "android": {
+-        "buildType": "apk"
+-      },
+-      "channel": "preview",
+-      "autoIncrement": true
+-    },
+-    "production": {
+-      "extends": "base",
+-      "environment": "production",
+-      "autoIncrement": true,
+-      "env": {
+-        "APP_VARIANT": "production"
++        "buildType": "app-bundle"
+       },
+       "channel": "production"
+     }
+-  },
+-  "submit": {
+-    "production": {}
+   }
+ }
+diff --git a/apps/mobile/src/app/(tabs)/account.tsx b/apps/mobile/src/app/(tabs)/account.tsx
+index 2fe35e0..550ecb8 100644
+--- a/apps/mobile/src/app/(tabs)/account.tsx
++++ b/apps/mobile/src/app/(tabs)/account.tsx
+@@ -1,3 +1,4 @@
++import { LegalLinks } from '@/components/account/LegalLinks';
+ import Constants from 'expo-constants';
+ import * as Updates from 'expo-updates';
+ import { router } from 'expo-router';
+@@ -100,6 +101,7 @@ export default function AccountScreen() {
+           onPress={() => Linking.openURL(`mailto:${support.data?.email ?? brand.supportEmail}`)}
+         />
+       </Card>
++      <LegalLinks />
+       {/* the bolívar reference rate lives here and next to prices, not on the store front */}
+       <RatePill testID="account-rate" />
+       {user ? <Button title="Cerrar sesión" variant="ghost" icon="log-out" onPress={() => signOut()} /> : null}
+diff --git a/apps/mobile/src/app/settings.tsx b/apps/mobile/src/app/settings.tsx
+index 948c81c..28eb0fd 100644
+--- a/apps/mobile/src/app/settings.tsx
++++ b/apps/mobile/src/app/settings.tsx
+@@ -1,3 +1,4 @@
++import { LegalLinks } from '@/components/account/LegalLinks';
+ import { useMutation, useQueryClient } from '@tanstack/react-query';
+ import { useEffect, useState } from 'react';
+ import { Platform, ScrollView, Switch, View } from 'react-native';
+@@ -76,20 +77,22 @@ export default function SettingsScreen() {
+         <Text variant="title">Privacidad</Text>
+         <ToggleRow
+           title="Recomendaciones personalizadas"
+-          body="Usamos lo que ves y compras en esta tienda para ordenar sugerencias. No compartimos tu actividad con terceros."
++          body="Usamos lo que ves y compras en esta tienda para ordenar sugerencias. Puedes desactivar estas recomendaciones."
+           value={p?.personalization_enabled !== false}
+           onChange={(v) => update.mutate({ personalization_enabled: v })}
+         />
+         <Button title={clear.isSuccess ? 'Historial borrado' : 'Borrar mi historial de navegación'} variant="secondary" size="sm" disabled={clear.isSuccess} loading={clear.isPending} onPress={() => clear.mutate()} />
+       </Card>
+ 
++      <LegalLinks />
++
+       <Card style={{ gap: 12 }}>
+         <Text variant="title">Eliminar cuenta</Text>
+         {deletionRequested || del.isSuccess ? (
+-          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Revisaremos que no tengas pedidos ni pagos pendientes y luego eliminaremos tus datos personales. Hasta entonces tu cuenta sigue funcionando." />
++          <Banner tone="success" icon="circle-check" title="Solicitud recibida" body="Recibimos tu solicitud para revisión. Enviarla no elimina los datos de inmediato. Te informaremos del resultado y de cualquier conservación necesaria. Consulta Eliminar cuenta y datos." />
+         ) : (
+           <>
+-            <Text variant="bodySmall" color="textSecondary">Puedes pedir que eliminemos tu cuenta y tus datos personales. Los registros de pedidos y pagos se conservan de forma anonimizada cuando la ley lo exige.</Text>
++            <Text variant="bodySmall" color="textSecondary">Puedes solicitar la eliminación de tu cuenta y sus datos. La solicitud se revisa antes de procesarse. Consulta Eliminar cuenta y datos para conocer el alcance y la información que permanece después del cierre.</Text>
+             <TextField label="Motivo (opcional)" value={reason} onChangeText={setReason} />
+             <Button testID="request-deletion" title="Solicitar eliminación" variant="danger" onPress={() => setConfirmDeletion(true)} />
+           </>
+@@ -99,7 +102,7 @@ export default function SettingsScreen() {
+         visible={confirmDeletion && !del.isSuccess}
+         testID="request-deletion-sheet"
+         title="¿Solicitar la eliminación de tu cuenta?"
+-        body="Revisaremos que no tengas pedidos o pagos pendientes y eliminaremos tus datos personales. Conservamos solo lo que la ley exige, sin datos que te identifiquen."
++        body="Esta acción envía una solicitud para revisión; no borra los datos de inmediato. Puede haber operaciones pendientes e información que permanezca tras el cierre. Consulta Eliminar cuenta y datos antes de continuar."
+         confirm="Solicitar eliminación"
+         cancel="Conservar mi cuenta"
+         loading={del.isPending}
+diff --git a/apps/mobile/src/app/sign-up.tsx b/apps/mobile/src/app/sign-up.tsx
+index dda5518..07401f2 100644
+--- a/apps/mobile/src/app/sign-up.tsx
++++ b/apps/mobile/src/app/sign-up.tsx
+@@ -1,3 +1,4 @@
++import { LegalLinks } from '@/components/account/LegalLinks';
+ import { validatePassword } from '@kora/core';
+ import { Link, router } from 'expo-router';
+ import { useEffect, useRef, useState } from 'react';
+@@ -56,8 +57,9 @@ export default function SignUpScreen() {
+         <TextField testID="sign-up-password" label="Contraseña" value={password} onChangeText={setPassword} secureToggle autoComplete="new-password" textContentType="newPassword" helper="Mínimo 8 caracteres, con letras y números." error={pwError} />
+         <Button testID="sign-up-submit" title="Crear cuenta" size="lg" full loading={busy} onPress={submit} />
+         <Text variant="caption" color="textMuted" align="center">
+-          Al crear tu cuenta aceptas los términos y la política de privacidad. Puedes pedir la eliminación de tu cuenta cuando quieras.
++          Al crear tu cuenta aceptas los términos y la política de privacidad. Consulta los documentos antes de continuar. Puedes solicitar la eliminación de tu cuenta.
+         </Text>
++        <LegalLinks compact />
+         <Link href={authTarget('/sign-in', returnTo)} replace style={{ alignSelf: 'center', padding: 8 }}>
+           <Text variant="label" color="brand">Ya tengo cuenta</Text>
+         </Link>
+diff --git a/apps/mobile/src/components/account/LegalLinks.tsx b/apps/mobile/src/components/account/LegalLinks.tsx
+new file mode 100644
+index 0000000..0ae73ff
+--- /dev/null
++++ b/apps/mobile/src/components/account/LegalLinks.tsx
+@@ -0,0 +1,28 @@
++import { useState } from 'react';
++import { Linking, View } from 'react-native';
++import { Card, Divider, ListRow } from '@/components/ui/Layout';
++import { ScalePressable } from '@/components/ui/Pressable';
++import { Text } from '@/components/ui/Text';
++import { legalDocuments, openLegalDocument, type LegalDocument } from '@/lib/legal-links';
++
++export function LegalLinks({ compact = false }: { compact?: boolean }) {
++  const [error, setError] = useState<string | null>(null);
++  const documents: LegalDocument[] = compact ? ['terms', 'privacy'] : ['privacy', 'terms', 'deletion'];
++  const open = async (document: LegalDocument) => setError(await openLegalDocument(document, url => Linking.openURL(url)));
++  const failure = error ? <View style={{ padding: compact ? 0 : 16 }}><Text testID="legal-link-error" variant="bodySmall" color="danger" accessibilityRole="alert" selectable>{error}</Text></View> : null;
++  if (compact) return <View style={{ gap: 8 }}>
++    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 8 }}>
++      {documents.map(document => <ScalePressable key={document} testID={`legal-${document}`} accessibilityRole="link" accessibilityLabel={legalDocuments[document].title} onPress={() => void open(document)} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 4 }}>
++        <Text variant="caption" color="brand" style={{ textDecorationLine: 'underline' }}>{legalDocuments[document].title}</Text>
++      </ScalePressable>)}
++    </View>
++    {failure}
++  </View>;
++  return <Card padded={false} testID="legal-documents">
++    {documents.map((document, index) => <View key={document}>
++      {index > 0 ? <Divider inset={68} /> : null}
++      <ListRow testID={`legal-${document}`} icon={document === 'privacy' ? 'shield-check' : document === 'terms' ? 'file-text' : 'trash'} title={legalDocuments[document].title} onPress={() => void open(document)} />
++    </View>)}
++    {failure}
++  </Card>;
++}
+diff --git a/apps/mobile/src/lib/legal-links.ts b/apps/mobile/src/lib/legal-links.ts
+new file mode 100644
+index 0000000..74a6caf
+--- /dev/null
++++ b/apps/mobile/src/lib/legal-links.ts
+@@ -0,0 +1,17 @@
++export const legalDocuments = {
++  privacy: { title: 'Política de privacidad', url: 'https://mayami.app/privacidad' },
++  terms: { title: 'Términos y condiciones', url: 'https://mayami.app/terminos' },
++  deletion: { title: 'Eliminar cuenta y datos', url: 'https://mayami.app/eliminar-cuenta' },
++} as const;
++export type LegalDocument = keyof typeof legalDocuments;
++
++/** An accepted URL dispatch is not a claim that the remote document loaded. */
++export async function openLegalDocument(document: LegalDocument, open: (url: string) => Promise<unknown>): Promise<string | null> {
++  try {
++    const result = await open(legalDocuments[document].url);
++    if (result === false) throw new Error('URL dispatch refused');
++    return null;
++  } catch {
++    return `No pudimos abrir ${legalDocuments[document].title.toLowerCase()}. Puedes abrir esta dirección en tu navegador: ${legalDocuments[document].url}`;
++  }
++}
+diff --git a/tests/mobile/legal-links.test.ts b/tests/mobile/legal-links.test.ts
+new file mode 100644
+index 0000000..7e9b46a
+--- /dev/null
++++ b/tests/mobile/legal-links.test.ts
+@@ -0,0 +1,17 @@
++import { describe, expect, it, vi } from 'vitest';
++import { legalDocuments, openLegalDocument } from '../../apps/mobile/src/lib/legal-links';
++describe('mobile public legal documents', () => {
++  it.each(['privacy', 'terms', 'deletion'] as const)('opens the canonical HTTPS %s document without an account or app scheme', async document => {
++    const open = vi.fn().mockResolvedValue(undefined);
++    expect(await openLegalDocument(document, open)).toBeNull();
++    expect(open).toHaveBeenCalledOnce();
++    expect(open).toHaveBeenCalledWith(legalDocuments[document].url);
++    expect(new URL(legalDocuments[document].url).origin).toBe('https://mayami.app');
++  });
++  it.each([false, new Error('no browser available')])('gives a usable public address when opening fails: %s', async result => {
++    const open = result instanceof Error ? vi.fn().mockRejectedValue(result) : vi.fn().mockResolvedValue(result);
++    const message = await openLegalDocument('privacy', open);
++    expect(message).toContain('No pudimos abrir'); expect(message).toContain('https://mayami.app/privacidad');
++    expect(message).not.toContain('no browser available');
++  });
++});
+diff --git a/tools/eas/android-production-source.test.cjs b/tools/eas/android-production-source.test.cjs
+new file mode 100644
+index 0000000..dbd627a
+--- /dev/null
++++ b/tools/eas/android-production-source.test.cjs
+@@ -0,0 +1,65 @@
++// Reuses the real Expo config checks from docs/propuestas/android-production/verify.test.cjs.
++// Runs only locally; the package below is a proposal, not a Play reservation or signing decision.
++const { test } = require('node:test');
++const assert = require('node:assert/strict');
++const { readFileSync } = require('node:fs');
++const path = require('node:path');
++const { createRequire } = require('node:module');
++const { spawnSync } = require('node:child_process');
++const root = path.resolve(__dirname, '../..');
++const mobile = path.join(root, 'apps/mobile');
++const requireMobile = createRequire(path.join(mobile, 'package.json'));
++const cli = path.join(path.dirname(requireMobile.resolve('expo/package.json')), 'bin/cli');
++const profile = JSON.parse(readFileSync(path.join(mobile, 'eas.json')));
++const brand = JSON.parse(readFileSync(path.join(root, 'config/brand.json')));
++function resolveConfig(overrides = {}) {
++  return spawnSync(process.execPath, [cli, 'config', '--type', 'public', '--json'], {
++    cwd: mobile, encoding: 'utf8', timeout: 30000,
++    env: { PATH: process.env.PATH, HOME: process.env.HOME, TMPDIR: process.env.TMPDIR,
++      EXPO_NO_DOTENV: '1', EXPO_NO_TELEMETRY: '1', EXPO_OFFLINE: '1', CI: '1',
++      ...profile.build.production.env, EAS_BUILD_PLATFORM: 'android', ...overrides },
++  });
++}
++test('the isolated Android proposal resolves with the original payment scheme, permissions and Expo project', () => {
++  const result = resolveConfig();
++  assert.equal(result.status, 0, result.stderr);
++  const c = JSON.parse(result.stdout);
++  assert.equal(c.name, 'mayami');
++  assert.equal(c.android.package, 'app.mayami.marketplace'); // unconfirmed local proposal
++  assert.equal(c.scheme, brand.scheme);
++  assert.equal(c.scheme, 'kora');
++  assert.equal(c.ios.bundleIdentifier, brand.iosBundleId);
++  assert.deepEqual(c.android.permissions, ['android.permission.POST_NOTIFICATIONS']);
++  assert.deepEqual(c.android.blockedPermissions, ['android.permission.RECORD_AUDIO', 'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.WRITE_EXTERNAL_STORAGE']);
++  assert.equal(c.android.predictiveBackGestureEnabled, false);
++  assert.equal(c.android.icon, './assets/images/mayami/android-icon.png');
++  assert.equal(c.extra.supportEmail, 'soporte@mayami.app');
++  assert.deepEqual(c.android.intentFilters[0].data.map(d => [d.host, d.pathPrefix]), [['mayami.app', '/p/'], ['mayami.app', '/tienda/']]);
++  assert.equal(c.owner, 'marketplacebrand');
++  assert.equal(c.extra.eas.projectId, '9f629f10-d679-4a99-9965-8a9e588afc85');
++  assert.equal(c.updates.url, 'https://u.expo.dev/9f629f10-d679-4a99-9965-8a9e588afc85');
++  assert.deepEqual(c.runtimeVersion, { policy: 'fingerprint' });
++});
++test('this source refuses preview, iOS and missing or provisional package identifiers', () => {
++  for (const env of [{ APP_VARIANT: 'preview' }, { EAS_BUILD_PLATFORM: 'ios' }, { MAYAMI_ANDROID_APPLICATION_ID: '' }, { MAYAMI_ANDROID_APPLICATION_ID: 'com.example.kora' }]) {
++    const result = resolveConfig(env);
++    assert.notEqual(result.status, 0);
++    assert.match(result.stdout + result.stderr, /exclusivo de Android production|MAYAMI_ANDROID_APPLICATION_ID/);
++  }
++});
++test('the sole store profile is an AAB proposal with only public Marketplace configuration', () => {
++  const p = profile.build.production;
++  assert.deepEqual(Object.keys(profile.build).sort(), ['base', 'production']);
++  assert.equal(p.distribution, 'store');
++  assert.equal(p.android.buildType, 'app-bundle');
++  assert.equal(p.channel, 'production');
++  assert.equal(p.environment, 'production');
++  assert.equal(p.env.MAYAMI_ANDROID_APPLICATION_ID, 'app.mayami.marketplace');
++  assert.equal(p.env.EXPO_PUBLIC_SUPABASE_URL, 'https://mimnotafmfasvwrclxan.supabase.co');
++  assert.equal(p.env.EXPO_PUBLIC_PANEL_URL, 'https://kora-panel.expo.app');
++  const claims = JSON.parse(Buffer.from(p.env.EXPO_PUBLIC_SUPABASE_ANON_KEY.split('.')[1], 'base64url'));
++  assert.equal(claims.role, 'anon');
++  assert.equal(claims.ref, 'mimnotafmfasvwrclxan');
++  assert.equal(p.env.EXPO_PUBLIC_CATALOG_PRESENTATION, undefined);
++  assert.equal(profile.submit, undefined);
++});

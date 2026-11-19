@@ -1,0 +1,82 @@
+{
+  "scope": "local integration, no external provider or publication",
+  "artifacts": {
+    "results-final-source/login-dark.png": {
+      "bytes": 36553,
+      "sha256": "809e4bd4a8d8bb94ad30a6210f1f0b7e1c921cbd2af20bc23a0ff1112c4681dc"
+    },
+    "results-final-source/login-light.png": {
+      "bytes": 37657,
+      "sha256": "cdb67310ff3f4d5d4c28d76f51d2abca9405057af3be051ea0c68f11f6a0f044"
+    },
+    "results-final-source/mobile-provider.png": {
+      "bytes": 12136,
+      "sha256": "34d038505d612ce22d06f05b2cdadfe8e7f7447c27e5c148ae717175fd1a4572"
+    },
+    "results-final-source/register-dark.png": {
+      "bytes": 44435,
+      "sha256": "131d4e9cc081f285dd053e53c012d1366944d03601db682306a5b95d0e0fa8ee"
+    },
+    "results-final-source/register-light.png": {
+      "bytes": 45909,
+      "sha256": "98ebfecf7e7b5e695e956773b5aca20e67f82aab974ec37de82e2e82c784d08b"
+    },
+    "results-final-source/results.json": {
+      "bytes": 5834,
+      "sha256": "fffd3f4d42e8f95ccd0f65e730377f8a0f8bf8e4a3a7df5a3e3c8e8d171bac0e"
+    },
+    "results-final-source/source-manifest.json": {
+      "bytes": 2970,
+      "sha256": "b9b7748fc5fd386b71791a554f2d5fb1bbf3931514b9d7c02867207eb68c141c"
+    },
+    "results-final-source/source-stability.json": {
+      "bytes": 2848,
+      "sha256": "185739aab1a2078da9fa61c1404721d35e4944c9c97ec9074a64d7442047770a"
+    },
+    "run.mjs": {
+      "bytes": 26409,
+      "sha256": "2bab8f5436322c2046a6da8bb221aa6a90887ca8cd56481f41a2462254a19ce2"
+    },
+    "harness.tsx": {
+      "bytes": 2210,
+      "sha256": "bbfdc92f7162ce2bf1781cabdc7ea11a1b72ae202c7f69311e6879dd70a95aff"
+    },
+    "browser-shim.ts": {
+      "bytes": 598,
+      "sha256": "ce6250e95b06adfd8951248f3879f275be0654680d7be391d392007c8cb612c4"
+    },
+    "router-shim.tsx": {
+      "bytes": 1392,
+      "sha256": "2037efd464d50f4e945cd0393536543042d12a5b957e1e890f3874b699f08a76"
+    },
+    "mobile-harness.tsx": {
+      "bytes": 2044,
+      "sha256": "afb286e412fa787df1667e3e0751f4f81301f6d42c6c56c6da4c08b76b1f1960"
+    },
+    "mobile-storage.ts": {
+      "bytes": 578,
+      "sha256": "3b1b22adfd1439c9009ed5551996371aa52bf121335776bf7e8b3523bb7f37e1"
+    },
+    "mobile-ports.ts": {
+      "bytes": 285,
+      "sha256": "5c9db4e4ac7d470352c8b38ecf8e8a809dd2bf5795226a9af95a6eb7e935fe25"
+    },
+    "index.html": {
+      "bytes": 513,
+      "sha256": "3703bc2957687a3b1fb804ca2b73a13e6c9a3ca1b1eba4511f6fa0b600638dbc"
+    },
+    "RESULTADO_FINAL.md": {
+      "bytes": 5184,
+      "sha256": "1e248c9bc0539dc603c99111b191886c68733639f48c97947e5af1cf7e579d4a"
+    },
+    "INDEPENDENT_VISUAL_REVIEW.md": {
+      "bytes": 1666,
+      "sha256": "5b02145ef242e3120680f51ca317449aa4cf90b32c87bf7b0f9fc8fc1ae34442"
+    }
+  },
+  "httpRequests": 29,
+  "webGroupsPassed": 4,
+  "mobileProviderGroupsPassed": 1,
+  "sourceFilesStable": 25,
+  "sourceStable": true
+}

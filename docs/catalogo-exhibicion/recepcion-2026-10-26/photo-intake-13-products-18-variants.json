@@ -1,0 +1,556 @@
+{
+  "atUtc": "2026-10-26T21:24:25.235005+00:00",
+  "scope": "Private local operational photo intake, no commercial/source data mutation",
+  "products": 13,
+  "variants": 18,
+  "readyForIntegration": 0,
+  "priorityBasis": "First single-variant candidates without an existing explicit mismatch; last rejected color/content/form candidates. Priority is operational, not product sales priority.",
+  "requirements": [
+    {
+      "priority": 1,
+      "productId": "1003a685-601c-4806-9e24-007db516e7c0",
+      "catalogTitle": "UGREEN Nexode cargador GaN 100 W",
+      "originalPath": "demo/ugreen-nexode-100w-1.webp",
+      "candidateSkuNotConfirmed": "40737",
+      "currentVariants": [
+        {
+          "id": "2fa942f9-ac75-4eca-9340-fab52f2fc063",
+          "title": "Gris",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Faltan SKU real, revisión, número/tipo de puertos y enchufe/mercado de la unidad de catálogo."
+      ],
+      "exactUnlockStep": "Faltan SKU real, revisión, número/tipo de puertos y enchufe/mercado de la unidad de catálogo.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-nexode-100w-40737-original.png",
+      "localReferenceSha256": "f855fb40260a25ce2a9ed234dd57644fd425a1e4cd2bd9667a877d7a80586c29",
+      "localReferenceDimensions": [
+        600,
+        600
+      ],
+      "localReferenceSourceUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-nexode-100w-usb-c-gan-charger-4-ports-wall-charger-676996.png?v=1692790967",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 2,
+      "productId": "0e4494b7-b93f-4e69-b39f-64486dd85b2e",
+      "catalogTitle": "UGREEN soporte de aluminio para laptop",
+      "originalPath": "demo/ugreen-soporte-laptop-1.webp",
+      "candidateSkuNotConfirmed": "40289",
+      "currentVariants": [
+        {
+          "id": "477f3514-1998-409a-ab80-a65b0a451c40",
+          "title": "Plata",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Faltan SKU real y geometría/revisión de bisagras/apoyos; Plata por sí solo no fija modelo."
+      ],
+      "exactUnlockStep": "Faltan SKU real y geometría/revisión de bisagras/apoyos; Plata por sí solo no fija modelo.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-soporte-laptop-40289-original.png",
+      "localReferenceSha256": "868cb37e5a5427657c90d19f734f65ec67a2384930ff7b9c6db1c7350944f7d7",
+      "localReferenceDimensions": [
+        600,
+        600
+      ],
+      "localReferenceSourceUrl": "https://cdn.shopify.com/s/files/1/0573/0979/0291/products/ugreen-laptop-stand-for-desk-adjustable-793286.png?v=1697187385",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 3,
+      "productId": "d727246f-decd-4c7e-8060-385f78d8ac04",
+      "catalogTitle": "UGREEN cable USB-C a Lightning",
+      "originalPath": "demo/ugreen-cable-usb-c-lightning-1.webp",
+      "candidateSkuNotConfirmed": "60759",
+      "currentVariants": [
+        {
+          "id": "b6794122-c95b-4355-8d5b-3d4203485e49",
+          "title": "1 m",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Faltan SKU real, acabado/color y presentación de una unidad. La foto no acredita certificación/potencia."
+      ],
+      "exactUnlockStep": "Faltan SKU real, acabado/color y presentación de una unidad. La foto no acredita certificación/potencia.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-cable-usb-c-lightning-60759-original.png",
+      "localReferenceSha256": "35ef82410708da55952c94d00ff4643d901d6a01535a2bbaf39ce8d4d6548d0e",
+      "localReferenceDimensions": [
+        600,
+        600
+      ],
+      "localReferenceSourceUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/products/ugreen-20w-usb-c-to-lightning-cable-445068.png?v=1692790940",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 4,
+      "productId": "1cb658e6-5f4a-4d13-83e4-97a5af667920",
+      "catalogTitle": "SHEGLAM rubor líquido",
+      "originalPath": "demo/sheglam-rubor-liquido-1.webp",
+      "candidateSkuNotConfirmed": "sb2402227745578144",
+      "currentVariants": [
+        {
+          "id": "aa4199ef-cc1f-46e4-9767-6a3b275b7cc8",
+          "title": "Coral",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Línea/SKU real",
+        "Correspondencia oficial de Coral"
+      ],
+      "exactUnlockStep": "Acreditar la línea real y SKU del rubor y su tono; confirmar o descartar Hot Topic con documento/etiqueta del producto previsto, sin deducirlo del color de pantalla.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-rubor-liquido-sb2402227745578144-official-original.jpg",
+      "localReferenceSha256": "fa907629badc7557eb6ec289436a9597a4ccad7be115c0f1a8d14f0d57ec74dd",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/v4/j/pi/2026/07/09/17/1783584498024b362f27b72986df465d8c24e9320a.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 5,
+      "productId": "c36a2f27-0634-45cf-aa96-2fe0a693476d",
+      "catalogTitle": "SHEGLAM set de brochas",
+      "originalPath": "demo/sheglam-set-brochas-1.webp",
+      "candidateSkuNotConfirmed": "sb2306055918004384",
+      "currentVariants": [
+        {
+          "id": "1a104f54-e971-41bf-a1de-331aa3284491",
+          "title": "Set",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Línea/SKU del kit",
+        "Número de herramientas y composición",
+        "Acabado/color comercial"
+      ],
+      "exactUnlockStep": "Acreditar línea/SKU y contenido real del set; confirmar o descartar Pro Core de ocho herramientas con una doble punta. No se cuentan nueve piezas por sus nueve extremos.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-set-brochas-sb2306055918004384-official-original.jpg",
+      "localReferenceSha256": "3db67fcff0bdd9a4c6fedb2e2da0d1b0a66ae5fa7ce386a4932adfcb26b3df6d",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/images3_pi/2024/06/04/c5/17174867566aea57e070ab22cc0eeb170c71360e6e.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 6,
+      "productId": "97157db3-7c15-467d-b9a6-03d7a43fb25a",
+      "catalogTitle": "UGREEN power bank magnético 10.000 mAh",
+      "originalPath": "demo/ugreen-power-bank-magnetico-1.webp",
+      "candidateSkuNotConfirmed": "65958",
+      "currentVariants": [
+        {
+          "id": "6e8b77f6-ae45-49c6-b083-7f7527764a28",
+          "title": "Azul",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Faltan SKU real, potencia/protocolo y cable integrado.25208crema rechazado;65958Azul es otro modelo, nunca variante25208."
+      ],
+      "exactUnlockStep": "Faltan SKU real, potencia/protocolo y cable integrado.25208crema rechazado;65958Azul es otro modelo, nunca variante25208.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-power-bank-magnetico-65958-original.png",
+      "localReferenceSha256": "ecb3bca4af333e8b2210e74dff6211eea6c68573eb2425f39c9c4d2d3c399d3e",
+      "localReferenceDimensions": [
+        2048,
+        2048
+      ],
+      "localReferenceSourceUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/files/ugreen-magflow-magnetic-wireless-power-bank-10000mah-qi2-25w-magsafe-compatible-5144609.png?v=1763994040",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 7,
+      "productId": "5abf4366-e062-41e5-966e-1c7908ca2a7a",
+      "catalogTitle": "SHEGLAM labial líquido mate",
+      "originalPath": "demo/sheglam-labial-liquido-mate-1.webp",
+      "candidateSkuNotConfirmed": "sbbeauty03200817648",
+      "currentVariants": [
+        {
+          "id": "cda87461-a64b-498c-b311-adea913a04a2",
+          "title": "Rosa nude",
+          "options": {
+            "Tono": "Rosa nude"
+          }
+        },
+        {
+          "id": "8ee86f11-cfaf-4c34-8130-53b8fc991461",
+          "title": "Terracota",
+          "options": {
+            "Tono": "Terracota"
+          }
+        },
+        {
+          "id": "e8d0ee55-4d21-455a-9ede-7508fcba47ea",
+          "title": "Rojo clásico",
+          "options": {
+            "Tono": "Rojo clásico"
+          }
+        }
+      ],
+      "missingIdentity": [
+        "Línea/SKU real del artículo del catálogo",
+        "Asignación oficial de cada variante Rosa nude, Terracota y Rojo clásico"
+      ],
+      "exactUnlockStep": "Acreditar SKU/línea mediante etiqueta o referencia de inventario vinculada al UUID y asignar cada variantId a un tono oficial. True Faith no se equipara por apariencia.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-labial-liquido-mate-sbbeauty03200817648-official-original.jpg",
+      "localReferenceSha256": "edf40b71375f8b6eda1cfba6eeddeba027469721b1807269f519902b82a28e87",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/v4/j/pi/2026/03/25/9e/17744116693e4fdf5d86114e235100266a393cb5cd.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 8,
+      "productId": "04e929cf-0be8-45db-a957-aa418599b572",
+      "catalogTitle": "SHEGLAM base de maquillaje fluida",
+      "originalPath": "demo/sheglam-base-fluida-1.webp",
+      "candidateSkuNotConfirmed": "sb2406284202626862",
+      "currentVariants": [
+        {
+          "id": "355ca171-81c1-4b52-8de6-bd3b96ecf690",
+          "title": "Claro",
+          "options": {
+            "Tono": "Claro"
+          }
+        },
+        {
+          "id": "b5982486-3fac-492e-9913-5f83368c3e89",
+          "title": "Medio",
+          "options": {
+            "Tono": "Medio"
+          }
+        },
+        {
+          "id": "64713b70-8fcf-42c4-bcab-413adec8eb8c",
+          "title": "Profundo",
+          "options": {
+            "Tono": "Profundo"
+          }
+        }
+      ],
+      "missingIdentity": [
+        "Línea/SKU real de base",
+        "Tono oficial y subtono para cada Claro, Medio y Profundo"
+      ],
+      "exactUnlockStep": "Acreditar línea y SKU por variante del producto previsto; Linen no sirve como muestra de los tres tonos.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-base-fluida-sb2406284202626862-official-original.jpg",
+      "localReferenceSha256": "8819544c92147650bff9525c37670a8f07378f8a557265da537195bbe07b7793",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/v4/j/dps/PS202608282203/947af1e2eacd2543fac95249d82aa05d3ec133aab2eb636260c752712dc3c5cc.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 9,
+      "productId": "96f52279-bb49-4d5c-a47d-495611d67191",
+      "catalogTitle": "SHEGLAM brillo labial",
+      "originalPath": "demo/sheglam-brillo-labial-1.webp",
+      "candidateSkuNotConfirmed": "sb2407220579666515",
+      "currentVariants": [
+        {
+          "id": "0782aae9-7fcb-4c9f-97f2-655c8741984a",
+          "title": "Rosado",
+          "options": {
+            "Tono": "Rosado"
+          }
+        },
+        {
+          "id": "01b52cfb-de49-4611-963f-0785c16fc972",
+          "title": "Baya",
+          "options": {
+            "Tono": "Baya"
+          }
+        }
+      ],
+      "missingIdentity": [
+        "Línea/SKU real",
+        "Si pertenece a Powerpuff Girls",
+        "Correspondencia Rosado/Baya con tonos oficiales",
+        "Unidad o contenido del kit"
+      ],
+      "exactUnlockStep": "Acreditar colaboración, SKU/tono y unidad de venta; la palabra Super Trio no acredita tres unidades. Blossom sigue siendo sólo candidato de categoría oficial.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-brillo-labial-sb2407220579666515-official-original.jpg",
+      "localReferenceSha256": "1d9f384bce4fac0ec5333721cedc20c48bde7eb71a905ba4498d0640ae964988",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/images3_pi/2024/08/19/65/1724065447d41534b5edca3ee7cc35c8a265871241.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 10,
+      "productId": "e38df4e4-9633-4e67-82a7-c4f581607fbc",
+      "catalogTitle": "SHEGLAM paleta de sombras",
+      "originalPath": "demo/sheglam-paleta-sombras-1.webp",
+      "candidateSkuNotConfirmed": "sb2207191171232773",
+      "currentVariants": [
+        {
+          "id": "a78cb1e6-6e8c-4c51-b2c5-4c2bd03b93cc",
+          "title": "Cálidos",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Línea/SKU real de paleta",
+        "Confirmación de colaboración Wonka o de otra línea",
+        "Gama y número de tonos reales"
+      ],
+      "exactUnlockStep": "Acreditar SKU y línea/paleta prevista por inventario o etiqueta; la gama Cálidos no acredita Wonka Bar ni ocho tonos.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-paleta-sombras-sb2207191171232773-official-original.jpg",
+      "localReferenceSha256": "4a6ad626bfbdd104c9863cf1bf4370aede7da57f9da2539dd1a3bb952ee2a49c",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/v4/j/pi/2026/02/09/f1/17706240343d9c5803acfbc24ebc9f69eb38c32150.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 11,
+      "productId": "3d0aae18-6668-4b5a-b094-7b322e67b6e4",
+      "catalogTitle": "UGREEN hub USB-C 10 en 1",
+      "originalPath": "demo/ugreen-hub-usb-c-10-en-1-1.webp",
+      "candidateSkuNotConfirmed": "45366",
+      "currentVariants": [
+        {
+          "id": "a67a8203-b5bd-4588-a774-ad37cd168141",
+          "title": "Plata",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Faltan SKU exacto y lista de puertos/funciones, modelo acabadoPlata y contenido real. No asignar45366 por similitud."
+      ],
+      "exactUnlockStep": "Faltan SKU exacto y lista de puertos/funciones, modelo acabadoPlata y contenido real. No asignar45366 por similitud.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-hub-usb-c-10-en-1-45366-original.png",
+      "localReferenceSha256": "aa1c542513e21be46ca3f3b2f5c9c18018040f0eaa5ccfa4cd173e7c401e7e57",
+      "localReferenceDimensions": [
+        1080,
+        1080
+      ],
+      "localReferenceSourceUrl": "https://cdn.shopify.com/s/files/1/0257/5246/9566/files/ugreen-revodok-pro-2102-10-in-1-usb-c-docking-station-707465.png?v=1740094255",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 12,
+      "productId": "648be3ae-6ce1-4293-af7a-0cae15648c09",
+      "catalogTitle": "UGREEN cargador de auto USB-C",
+      "originalPath": "demo/ugreen-cargador-auto-1.webp",
+      "candidateSkuNotConfirmed": "90314",
+      "currentVariants": [
+        {
+          "id": "5a9fccb0-17d3-42c7-8e15-32b9067f29a1",
+          "title": "Negro",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "Faltan SKU real, potencia/puertos y contenido. No confundir con25845 del otroUUID."
+      ],
+      "exactUnlockStep": "Faltan SKU real, potencia/puertos y contenido. No confundir con25845 del otroUUID.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-01-ugreen/ugreen-cargador-auto-90314-original.png",
+      "localReferenceSha256": "e1c7d5e9583ebcc3261f872d86a7edcf3d15261b2317e8f59885af381618dff2",
+      "localReferenceDimensions": [
+        600,
+        600
+      ],
+      "localReferenceSourceUrl": "https://cdn.shopify.com/s/files/1/0697/8207/7746/products/ugreen-30w-pd-car-charger-2-ports-with-60w-usb-c-cable-631505.png?v=1692927221",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    },
+    {
+      "priority": 13,
+      "productId": "791b9673-d6b4-4f5a-a9b3-4019f2094fb3",
+      "catalogTitle": "SHEGLAM polvo sellador",
+      "originalPath": "demo/sheglam-polvo-sellador-1.webp",
+      "candidateSkuNotConfirmed": "sbbeauty03200727122",
+      "currentVariants": [
+        {
+          "id": "c3d0784f-0379-4fb3-a668-1b3a68def040",
+          "title": "Translúcido",
+          "options": {}
+        }
+      ],
+      "missingIdentity": [
+        "SKU/línea de un polvo compacto",
+        "Tono oficial Translúcido y envase real"
+      ],
+      "exactUnlockStep": "Conseguir la referencia exacta del compacto previsto. El Baked Glow suelto no puede desbloquearse sólo obteniendo permiso ni por compartir Translucent.",
+      "localReferenceFile": "/workspace/marketplace/.local/arte-20261023/catalogo-restante/lote-02-sheglam/sheglam-polvo-sellador-sbbeauty03200727122-official-original.jpg",
+      "localReferenceSha256": "3e0789b6ab1b67d749f18067a7b0d5ee901682cd671ed6483dc5f583ecbd957f",
+      "localReferenceDimensions": [
+        1340,
+        1785
+      ],
+      "localReferenceSourceUrl": "https://img.ltwebstatic.com/images3_pi/2024/05/28/95/1716883466cc29e3763186c359ecf7e67dd18a1d3d.jpg",
+      "license": null,
+      "redistributionPermissionConfirmed": false,
+      "requiredPhotoMaterial": [
+        "Whole exact commercial unit, clean studio hero, no accessories not included.",
+        "Readable manufacturer model/SKU and exact shade/finish label as identity evidence.",
+        "Whole actual selling contents, if kit or cable included; otherwise product alone."
+      ],
+      "requiredRightsEvidence": [
+        "Photographer/rights holder name and original source file.",
+        "Documented permission covering app, Androidpreview OTA, screenshots and public repository if those bytes will be committed.",
+        "Any attribution/license conditions and whether ordinary crop/resize is allowed."
+      ],
+      "uploadReady": false
+    }
+  ]
+}

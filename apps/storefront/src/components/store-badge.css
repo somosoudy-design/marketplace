@@ -1,0 +1,50 @@
+.store-identity {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+.store-identity-label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+}
+.store-identity-name {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.store-identity-caption { flex: none; }
+.store-seal {
+  --store-seal-fill: var(--amber);
+  --store-seal-mark: #271a0d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  min-width: 24px;
+  min-height: 24px;
+  flex: none;
+  border: 0;
+  background: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.store-seal[data-tier=verified] { --store-seal-fill: var(--brand); --store-seal-mark: var(--surface); }
+.store-seal[data-tier=partner] { --store-seal-fill: var(--text-muted); --store-seal-mark: var(--surface); }
+.store-seal svg { width: var(--store-seal-size, clamp(13px, 1.08em, 21px)); height: var(--store-seal-size, clamp(13px, 1.08em, 21px)); }
+.store-seal svg > path:first-child { fill: var(--store-seal-fill); stroke: var(--store-seal-fill); }
+.store-seal svg > path:last-child { stroke: var(--store-seal-mark); }
+.store-seal:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.store-seal-note {
+  position: fixed; inset: 0; margin: auto; width: min(300px, calc(100% - 32px));
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px; box-shadow: 0 10px 35px #110b2350;
+  font-size: 14px; text-align: start; white-space: normal;
+}
+.store-identity .store-seal-note p { margin: 6px 0 14px; color: var(--text-secondary); font-size: 13px; }
+.store-seal-note::backdrop { background: #110b2360; }
+.store-seal-note .button { min-height: 44px; }

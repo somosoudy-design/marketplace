@@ -1,0 +1,16 @@
+{
+  "name": "@kora/app-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:web": "pnpm --filter @kora/mobile export:web",
+    "test:ui": "playwright test --project=app",
+    "test:panel": "playwright test --project=panel"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@types/pg": "8.23.1",
+    "pg": "8.23.1"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "evidencia": "Chromium web con fixture local, no Android físico",
+  "viewport": "320x720",
+  "comparacion": "mismo fixture, viewport y estado; scroll real 18px ajustado para alinear la tarjeta, PNG sin editar",
+  "limites": "El fixture usa recomendaciones archivadas como recientes; los datos y marcas no acreditan fotografías nuevas ni la sesión del propietario.",
+  "sha256": {
+    "recientes-antes-light-320.png": "3bc68ddeff1147595488f5335a18865eee87debe4f885f27b7ea0cd3c7a1da6e",
+    "recientes-despues-light-320.png": "cc325cd3a9b69bf792bb3a7a5971c967ab5cba17ca3f5a5ff6c2c4faec6be7ab",
+    "foco-card-light-320.png": "ec26327d433d3ec445ec0359e5ffc636025203787fc6d87f615b1ebd79cea605",
+    "foco-favorite-light-320.png": "b639dcf3f0b81969da564778ec49ee55348eb07dd6c08dedff6964901dc3f4dd",
+    "recientes-antes-dark-320.png": "04e864ab7f2cc48f8f32d7253a6b8dce00db17caa14bbbbd285933a6452f6ca7",
+    "recientes-despues-dark-320.png": "ca958f1d8b2f38e2cc56c4fcdec1b598493dc5135a7c7f883867a4971aa02165",
+    "foco-card-dark-320.png": "4c080ace9ae0aced77a95200c084b1ddda8b14ce900cae3f98e8e34df243e14e",
+    "foco-favorite-dark-320.png": "8900d23e6a3e386aaf70cea208a6c41f3e5ce5950a9be990ce3049e696d69579"
+  }
+}

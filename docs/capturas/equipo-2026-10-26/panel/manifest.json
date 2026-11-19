@@ -1,0 +1,230 @@
+{
+  "context": "Navegador Chromium local. Backend local54321; export estático3101; no prueba Android físico.",
+  "files": [
+    {
+      "file": "admin/despues/applied-01-detail-390-light.png",
+      "sha256": "fa60c568180cfe4efed4337cc193be72d265eff5441d02c81c655d5fdf5f469c",
+      "bytes": 49559
+    },
+    {
+      "file": "admin/despues/applied-01-detail-1360-light.png",
+      "sha256": "51cc0bab4b15d01805ceae5a30747d96d6ce159710756e7182431bd37cf089c6",
+      "bytes": 165289
+    },
+    {
+      "file": "admin/despues/applied-01-detail-390-dark.png",
+      "sha256": "3681d817f9627110d675fc34bbce759472f385f4d7b6a05426be64acc3fa0dee",
+      "bytes": 51129
+    },
+    {
+      "file": "admin/despues/applied-01-detail-1360-dark.png",
+      "sha256": "0a6edd6dce922b3415d1579a6ffea3725d3a6756ef6ea680e93e3f30e8837270",
+      "bytes": 168818
+    },
+    {
+      "file": "admin/despues/applied-04-ledger-error-390-light.png",
+      "sha256": "0c6eb372580b6a720e3c2044b3478d36ac3942701183dd72f5c0d00cb74a91b5",
+      "bytes": 47123
+    },
+    {
+      "file": "admin/despues/applied-04-ledger-error-1360-light.png",
+      "sha256": "735b5dfd2e2b8e5890c407f9be764ca0ed172cbfec4942157ceb380c4e527b52",
+      "bytes": 159822
+    },
+    {
+      "file": "admin/despues/applied-04-ledger-error-390-dark.png",
+      "sha256": "e7d93d72ed915083efb9ff29c40f5f2863c99977ce21061b9e26042d43210678",
+      "bytes": 49227
+    },
+    {
+      "file": "admin/despues/applied-04-ledger-error-1360-dark.png",
+      "sha256": "e9287eef7a85f6f6ce7e427b946f3140b11a9fb70e1460c75828ecb3f3fdd85c",
+      "bytes": 162793
+    },
+    {
+      "file": "admin/despues/applied-03-ledger-loading-390-light.png",
+      "sha256": "9cbc4060066bc023a88afaa1fa9016186494153cf0815c41be9dd046a760eac0",
+      "bytes": 34837
+    },
+    {
+      "file": "admin/despues/applied-03-ledger-loading-1360-dark.png",
+      "sha256": "8a992cd0ed9660871b042c1691d6f21c4bf11292be663d618429aa70bee364e0",
+      "bytes": 154330
+    },
+    {
+      "file": "admin/despues/applied-05-ledger-recovered-390-dark.png",
+      "sha256": "e279a7f828239d60ef8a9e16ec2debd2ad85d07c16c7efc44a4b0afbe94cb288",
+      "bytes": 51782
+    },
+    {
+      "file": "admin/despues/applied-05-ledger-recovered-1360-light.png",
+      "sha256": "1d761ce7c01de485600e6dfa7a38a3ca99466d408bcacb2a8ada708ef7a45258",
+      "bytes": 165233
+    },
+    {
+      "file": "admin/static-confirm-390-light.png",
+      "sha256": "fa60c568180cfe4efed4337cc193be72d265eff5441d02c81c655d5fdf5f469c",
+      "bytes": 49559
+    },
+    {
+      "file": "admin/static-confirm-1360-dark.png",
+      "sha256": "0a6edd6dce922b3415d1579a6ffea3725d3a6756ef6ea680e93e3f30e8837270",
+      "bytes": 168818
+    },
+    {
+      "file": "admin/evidencia-estatica.json",
+      "sha256": "b80da4e54df0da11cf9c24e1c9f246783ca832251e94e4177d8ae156b8752e7b",
+      "bytes": 1701
+    },
+    {
+      "file": "admin/evidencia-aplicada.json",
+      "sha256": "3a04e2a863c8bcf0840fd05c29c191d4a7cdefcd834190919f9275540e6204df",
+      "bytes": 2688
+    },
+    {
+      "file": "admin/antes/before-03-ledger-normal-1360-dark.png",
+      "sha256": "716c4c73ee45f5ed9d7d0921df139683c901353518bcc42fe7f57ac1e3e6d1eb",
+      "bytes": 170515
+    },
+    {
+      "file": "admin/antes/before-03-ledger-normal-1360-light.png",
+      "sha256": "672fe2a4946fbad868d8ff595461add42fa94d8f8e8d6d188bebd303b1c6b1bd",
+      "bytes": 167756
+    },
+    {
+      "file": "admin/antes/before-07-ledger-error-390-dark.png",
+      "sha256": "f6f094286405c2f9c2bbf3c391682b7af15e3072a22a0f54f5f34dd081c58940",
+      "bytes": 113078
+    },
+    {
+      "file": "admin/antes/before-07-ledger-error-390-light.png",
+      "sha256": "cc8bd06602ef4572c02db8c437fcd8ac1d6813a61f8415b83bf1fa4a1eeb07ae",
+      "bytes": 109480
+    },
+    {
+      "file": "admin/antes/before-08-ledger-error-1360-dark.png",
+      "sha256": "1a43a46ce504401b4bdc70dd840586c4b5972a3c08a5fc5da081b73690f0483c",
+      "bytes": 114753
+    },
+    {
+      "file": "admin/antes/before-08-ledger-error-1360-light.png",
+      "sha256": "7acb53050130726f4df3d8e45db904ec5320f3f11ad878b15e4ffe39c149142f",
+      "bytes": 112471
+    },
+    {
+      "file": "vendedor/despues/1280-dark-edit-inicio.png",
+      "sha256": "67b166210511575fd28beb43fea195b0d79e346977fccea3e92ea9012ad6429d",
+      "bytes": 104218
+    },
+    {
+      "file": "vendedor/despues/1280-dark-validacion-inicio.png",
+      "sha256": "f088e6c31a4ab65ffeb64b8b7676ead450aedfdef02aec3afd1220b400c4c49b",
+      "bytes": 92771
+    },
+    {
+      "file": "vendedor/despues/1280-light-edit-inicio.png",
+      "sha256": "7186c7673bd8fa73b47ff21d60c0420f62fc4fcff2019b641054fdbb01a905c0",
+      "bytes": 102550
+    },
+    {
+      "file": "vendedor/despues/1280-light-validacion-inicio.png",
+      "sha256": "2239fbdc89a8899c4ad3a6afdbe8f6cbf513b1e0e809059608a3e21294f6b47e",
+      "bytes": 91392
+    },
+    {
+      "file": "vendedor/despues/375-dark-edit-fotos-guardar.png",
+      "sha256": "0742c959cfbe57a5adc8781ea9c2125f3893d2df192b944b27b5adcca70b45c8",
+      "bytes": 49940
+    },
+    {
+      "file": "vendedor/despues/375-dark-edit-inicio.png",
+      "sha256": "d9ca92efeb0279fbc8192a5f470ea7b924a3d5d87f64006e04571bddc07680d7",
+      "bytes": 43963
+    },
+    {
+      "file": "vendedor/despues/375-dark-edit-variantes.png",
+      "sha256": "34433ae140404f68673163b8f6f5160af3538844858a5dd4f85f00ced3888b41",
+      "bytes": 45874
+    },
+    {
+      "file": "vendedor/despues/375-dark-validacion-inicio.png",
+      "sha256": "7760218441da604dd0101d6e2f57f75410c0938f180234dc686a7c2beb6215e4",
+      "bytes": 38141
+    },
+    {
+      "file": "vendedor/despues/375-dark-validacion-variantes.png",
+      "sha256": "8015cfe33abcda5611cb23a8f6dc3a27794702edf089b776fa20cbde2c2edf24",
+      "bytes": 53017
+    },
+    {
+      "file": "vendedor/despues/375-light-edit-fotos-guardar.png",
+      "sha256": "30222243db17aea9bef1e1562a563e5191d9eebde276ba7b9f68803e604a995f",
+      "bytes": 48327
+    },
+    {
+      "file": "vendedor/despues/375-light-edit-inicio.png",
+      "sha256": "f4f5d814d62760e13ed020107cd5220f402cf17337d39f7a2dedf7b8be8a1112",
+      "bytes": 43138
+    },
+    {
+      "file": "vendedor/despues/375-light-edit-variantes.png",
+      "sha256": "d3a32edf43be61760c9fde64645bdfa841612f6c0348671aa1258c76d7d1c109",
+      "bytes": 43880
+    },
+    {
+      "file": "vendedor/despues/375-light-validacion-inicio.png",
+      "sha256": "6286c20568396d4faa932a2c8fc1fedf128f251f5636d94aa0b26b11e14969b2",
+      "bytes": 37416
+    },
+    {
+      "file": "vendedor/despues/375-light-validacion-variantes.png",
+      "sha256": "2d00186a906000e54fa369db08908d5e0c4ee4c183221d640ab5a433a8d61f9e",
+      "bytes": 50711
+    },
+    {
+      "file": "vendedor/estatico/375-light-edit-inicio.png",
+      "sha256": "f4f5d814d62760e13ed020107cd5220f402cf17337d39f7a2dedf7b8be8a1112",
+      "bytes": 43138
+    },
+    {
+      "file": "vendedor/estatico/1280-light-edit-inicio.png",
+      "sha256": "7186c7673bd8fa73b47ff21d60c0420f62fc4fcff2019b641054fdbb01a905c0",
+      "bytes": 102550
+    },
+    {
+      "file": "vendedor/estatico/summary.json",
+      "sha256": "a0c4ba48f4fa46d51aac6450f027a257bffa3797aca2e55636de3d170e88a353",
+      "bytes": 726
+    },
+    {
+      "file": "vendedor/estatico/cleanup.json",
+      "sha256": "175b0fade89a7cf3af43564f19d21f0c2f9121995759971fc9b3299bbef5511a",
+      "bytes": 430
+    },
+    {
+      "file": "vendedor/antes/01-producto.png",
+      "sha256": "a7269f5ceb0bfd3e56268a0a2ee329e3248ea6b1ee5cca3d8db053b1ccd0d9f3",
+      "bytes": 251650
+    },
+    {
+      "file": "vendedor/antes/02-primer-guardado.png",
+      "sha256": "025dcc91ce140b66aed7b900765c5f34c67a7fdb08da1d7fee72bbb53a72f4a9",
+      "bytes": 255594
+    },
+    {
+      "file": "vendedor/antes/03-segundo-guardado.png",
+      "sha256": "025dcc91ce140b66aed7b900765c5f34c67a7fdb08da1d7fee72bbb53a72f4a9",
+      "bytes": 255594
+    },
+    {
+      "file": "vendedor/antes/04-borrador-cambia-tienda.png",
+      "sha256": "03045337a61b76377790bb1caecb36f190e1a1002393e4533016713e02ad5a88",
+      "bytes": 144914
+    },
+    {
+      "file": "DICTAMEN_PANEL_RELEASE.md",
+      "sha256": "2405d23f36332ab2620658822878e7569ddd43ad1f9d55e15b36e551fcd039f8",
+      "bytes": 3336
+    }
+  ]
+}

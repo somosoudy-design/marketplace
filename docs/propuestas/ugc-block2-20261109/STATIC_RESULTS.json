@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "check": "mobile-types",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@kora/mobile",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "mobile-types-artifact.log",
+      "sha256": "a7f8c11960212ceee5d6805c13c84a4ec8c928e75ffcbf426c5d56a46a3ddd5d"
+    },
+    {
+      "check": "mobile-lint",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@kora/mobile",
+        "lint"
+      ],
+      "exitCode": 0,
+      "log": "mobile-lint-artifact.log",
+      "sha256": "4f4ceeccfdff4390a685b8ef9e4f70747d26264234d597b601f34c2e1133d711"
+    },
+    {
+      "check": "admin-types",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@kora/admin",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "admin-types-artifact.log",
+      "sha256": "b379c5f729c218c7a45b695481848bbd1bbec663d7c4dcf81a6d841ea66c484d"
+    },
+    {
+      "check": "admin-lint",
+      "command": [
+        "pnpm",
+        "--filter",
+        "@kora/admin",
+        "exec",
+        "eslint",
+        "src/components/Reviews.tsx",
+        "src/components/UgcReports.tsx",
+        "src/lib/ugc.ts",
+        "src/lib/ugc-owner.ts",
+        "src/lib/auth.tsx"
+      ],
+      "exitCode": 0,
+      "log": "admin-lint-artifact.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Current committed source; API/db types previously passed and their source files remained unchanged."
+}

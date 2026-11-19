@@ -1,0 +1,24 @@
+{
+  "fix": "Description constant defined inside StoreHeader, where it is read; only store smoke rerun, no cart/normal matrix rerun",
+  "head": "60aac8fb51b4c4218da287aceb4098cbcfea5191",
+  "sourcePath": "apps/mobile/src/app/store/[slug].tsx",
+  "sourceSha256": "2c0a21a8652535e13b2597311256cd5ae6284caf74dc5b641c5b46caf86e28c1",
+  "descriptionConstantLine": 97,
+  "bundleDirectory": "/workspace/marketplace/.local/equipo-20261026/mobile-store-final",
+  "baseURL": "http://127.0.0.1:8103",
+  "bundles": [
+    {
+      "path": "/_expo/static/js/web/entry-402fe1abd66763e2429e12c5f34d7291.js",
+      "sha256": "fb4059610e326d87fef018dbefe1e892e707e46e9b6e502a9110801f1e40d50b"
+    }
+  ],
+  "testFileSha256": "8b6463a3de39c7491ed82baf927894a3985995e163cf28975344d7a91b68b848",
+  "headFileMatchesTestedSource": false,
+  "isolatedScopeFixPatch": "store-header-scope-fix.patch",
+  "isolatedScopeFixPatchSha256": "ca09ca68c17101417ba452933bbdc2ff2b0a8f94361c17ed5022220b6a1368a0",
+  "isolatedScopeFixPatchBytes": 1000,
+  "fullWorkingTreePatch": "store-header-full-workingtree.patch",
+  "fullWorkingTreePatchSha256": "13f1176a705d36e22872e4aeaca7c08c089ce08b0033ff7cacec3d78c18b594c",
+  "isolatedScopeFixBase": "Previous source recovered exactly from final-tested-workingtree.patch against HEAD01baea95; only one constant moved between functions.",
+  "testGuards": "Skip unless KORA_CATALOG_PRESENTATION_TEST=private-preview; local app URL required; remote REST/auth/storage/functions/realtime requests aborted before continue."
+}

@@ -1,0 +1,102 @@
+{
+  "project_ref": "mimnotafmfasvwrclxan",
+  "deployment_commit": "2a7265e",
+  "verified_at_utc": "2026-10-14T20:48:25.492617+00:00",
+  "verification": "real PostgREST buyer JWT; temporary demo order and obligation; no payment submitted",
+  "base_usd": 25,
+  "quotes": [
+    {
+      "method_code": "pago_movil",
+      "currency": "VES",
+      "base_usd": 25.0,
+      "fee_usd": 0.0,
+      "rate_base": 877.9023,
+      "rate_applied": 877.9,
+      "rate_source": "dolarapi_oficial",
+      "rate_observed_at": "2026-10-14T04:00:00+00:00",
+      "amount_due": 21947.5,
+      "expires_at": "2026-10-14T21:18:26.589477+00:00",
+      "status": "open",
+      "http_status": 200
+    },
+    {
+      "method_code": "transferencia_ves",
+      "currency": "VES",
+      "base_usd": 25.0,
+      "fee_usd": 0.0,
+      "rate_base": 877.9023,
+      "rate_applied": 877.9,
+      "rate_source": "dolarapi_oficial",
+      "rate_observed_at": "2026-10-14T04:00:00+00:00",
+      "amount_due": 21947.5,
+      "expires_at": "2026-10-14T21:48:26.813144+00:00",
+      "status": "open",
+      "http_status": 200
+    }
+  ],
+  "rate_status": {
+    "base": 877.9023,
+    "pair": "USD/VES",
+    "rate": 877.9,
+    "source": "dolarapi_oficial",
+    "available": true,
+    "is_manual": false,
+    "is_fallback": true,
+    "observed_at": "2026-10-14T04:00:00+00:00"
+  },
+  "no_charge_assertion": {
+    "payment_status": "unpaid",
+    "paid_usd": "0.00",
+    "payments": 0,
+    "ledger_entries": 0
+  },
+  "success": true,
+  "cleanup": [
+    {
+      "users": 0,
+      "orders": 0,
+      "quotes": 0,
+      "payments": 0
+    }
+  ],
+  "migration": {
+    "version": "20261014202228",
+    "name": "bcv_effective_dates",
+    "http_status": 201,
+    "sql_bundle_sha256": "a144ab6b8895060dc806177d267ad0ea2322e29a2a28afaae2b4488cdbe0005c"
+  },
+  "edge_functions": [
+    {
+      "slug": "rates-sync",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "slug": "panel-api",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": true
+    }
+  ],
+  "tls": {
+    "verification_enabled": true,
+    "bcv_direct_known_error": "UnknownIssuer",
+    "fallback": "dolarapi_oficial",
+    "unsafe_tls_changes": false
+  },
+  "critical_financial_tests": 46,
+  "rollback": {
+    "script": "tools/supabase-remote/revertir-bcv-ves.sql",
+    "local_database": "kora_bcv_rollback_202610142044",
+    "payment_pricing_tests_passed": 21,
+    "retains_future_rate_exclusion": true,
+    "deletes_financial_data": false
+  },
+  "first_probe_cleanup": {
+    "users": 0,
+    "orders": 0,
+    "quotes": 0,
+    "payments": 0
+  }
+}

@@ -1,0 +1,1382 @@
+{
+  "observedAt": "2026-11-08T16:03:17.333Z",
+  "url": "https://supabase.com/dashboard/project/mimnotafmfasvwrclxan/sql/bb1c27f8-2d6e-45bf-8ca7-d78f120abf34",
+  "data": {
+    "context": {
+      "caller": "postgres",
+      "database": "postgres",
+      "read_only": "on",
+      "server_version_num": "170011",
+      "project_verification": "Operator must verify Marketplace/mimnotafmfasvwrclxan in the official dashboard.",
+      "project_verified_by_sql": false
+    },
+    "schemas": [
+      {
+        "name": "account_private",
+        "owner": "postgres",
+        "present": true,
+        "anon_usage": false,
+        "anon_create": false,
+        "acl_explicit": "{postgres=UC/postgres,authenticated=U/postgres}",
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "CREATE"
+          },
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "authenticated",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "USAGE"
+          }
+        ],
+        "service_role_usage": false,
+        "authenticated_usage": true,
+        "service_role_create": false,
+        "authenticated_create": false
+      },
+      {
+        "name": "checkout_private",
+        "owner": "postgres",
+        "present": true,
+        "anon_usage": false,
+        "anon_create": false,
+        "acl_explicit": "{postgres=UC/postgres}",
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "CREATE"
+          },
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "USAGE"
+          }
+        ],
+        "service_role_usage": false,
+        "authenticated_usage": false,
+        "service_role_create": false,
+        "authenticated_create": false
+      },
+      {
+        "name": "public",
+        "owner": "pg_database_owner",
+        "present": true,
+        "anon_usage": true,
+        "anon_create": false,
+        "acl_explicit": "{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner,postgres=U/pg_database_owner,anon=U/pg_database_owner,authenticated=U/pg_database_owner,service_role=U/pg_database_owner,supabase_auth_admin=U/pg_database_owner}",
+        "effective_acl": [
+          {
+            "grantee": "PUBLIC",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "pg_database_owner",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "CREATE"
+          },
+          {
+            "grantee": "pg_database_owner",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "postgres",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "anon",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "authenticated",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "service_role",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          },
+          {
+            "grantee": "supabase_auth_admin",
+            "grantor": "pg_database_owner",
+            "grantable": false,
+            "privilege": "USAGE"
+          }
+        ],
+        "service_role_usage": true,
+        "authenticated_usage": true,
+        "service_role_create": false,
+        "authenticated_create": false
+      }
+    ],
+    "functions": [
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "plpgsql",
+        "proconfig": [
+          "search_path=pg_catalog"
+        ],
+        "prosecdef": true,
+        "signature": "account_private.current_open_uid()",
+        "definition": null,
+        "provolatile": "v",
+        "acl_explicit": "{postgres=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "335d814eabb8127b91d45c56f332fe99",
+        "expected_after_md5": null,
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": true,
+        "service_role_execute": false,
+        "authenticated_execute": false,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "sql",
+        "proconfig": [
+          "search_path=pg_catalog"
+        ],
+        "prosecdef": true,
+        "signature": "account_private.session_open()",
+        "definition": null,
+        "provolatile": "s",
+        "acl_explicit": "{postgres=X/postgres,authenticated=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "authenticated",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "ab5d6a0584b8c11c2bffa324808564ac",
+        "expected_after_md5": null,
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": true,
+        "service_role_execute": false,
+        "authenticated_execute": true,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": true
+      },
+      {
+        "owner": null,
+        "present": false,
+        "language": null,
+        "proconfig": null,
+        "prosecdef": null,
+        "signature": "checkout_private.installment_plan_eligible(public.installment_plans,numeric,public.fulfillment_flow[],boolean)",
+        "definition": null,
+        "provolatile": null,
+        "acl_explicit": null,
+        "anon_execute": null,
+        "effective_acl": [],
+        "actual_body_md5": null,
+        "expected_after_md5": "e97402dedabb61fef26cc8ee7194c0b4",
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": false,
+        "service_role_execute": null,
+        "authenticated_execute": null,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "sql",
+        "proconfig": [
+          "search_path=public"
+        ],
+        "prosecdef": true,
+        "signature": "public._build_checkout_reviewed(uuid,uuid,jsonb,text)",
+        "definition": null,
+        "provolatile": "s",
+        "acl_explicit": "{postgres=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "79d1671c4a54bdde4220f76da1dd48b0",
+        "expected_after_md5": null,
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": false,
+        "service_role_execute": false,
+        "authenticated_execute": false,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "plpgsql",
+        "proconfig": [
+          "search_path=public"
+        ],
+        "prosecdef": true,
+        "signature": "public._build_checkout(uuid,uuid,jsonb,text)",
+        "definition": "CREATE OR REPLACE FUNCTION public._build_checkout(p_user uuid, p_address_id uuid, p_shipping jsonb, p_plan_code text)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\ndeclare\n v_addr public.addresses;\n v_groups jsonb := '[]'::jsonb;\n v_group record;\n v_options jsonb;\n v_selected jsonb;\n v_sel_id text;\n v_items numeric := 0;\n v_shipping numeric := 0;\n v_issues int := 0;\n v_needs_shipping boolean := false;\n v_seq int := 0;\n v_plan public.installment_plans;\n v_plans jsonb;\n v_total numeric;\n v_financing numeric := 0;\n v_schedule jsonb := '[]'::jsonb;\n v_flows public.fulfillment_flow[];\n v_count int := 0;\nbegin\n if p_address_id is not null then\n select * into v_addr from public.addresses where id = p_address_id and user_id = p_user;\n if not found then raise exception 'address not found' using errcode = 'P0002', hint = 'address_not_found'; end if;\n else\n select * into v_addr from public.addresses where user_id = p_user and is_default;\n end if;\n\n for v_group in\n select l.group_key, l.store_id, min(l.store_name) as store_name, min(l.store_slug) as store_slug,\n min(l.store_kind::text) as store_kind, l.flow,\n sum(case when l.issue is null then l.unit_price_usd * l.quantity else 0 end) as subtotal,\n sum(case when l.issue is null then l.weight_kg * l.quantity else 0 end) as weight,\n max(l.ready_min) as ready_min, max(l.ready_max) as ready_max,\n count(*) filter (where l.issue is not null) as issues,\n count(*) filter (where l.issue is null) as ok_lines,\n jsonb_agg(jsonb_build_object(\n 'variant_id', l.variant_id, 'product_id', l.product_id, 'title', l.title, 'variant_title', l.variant_title,\n 'image_path', l.image_path, 'availability', l.availability, 'unit_price_usd', l.unit_price_usd,\n 'quantity', l.quantity, 'line_total_usd', l.unit_price_usd * l.quantity,\n 'max_quantity', least(l.max_per_order, coalesce(l.stock, l.max_per_order)), 'issue', l.issue\n )) as lines\n from public._cart_lines(p_user) l\n group by l.group_key, l.store_id, l.flow\n order by case l.flow when 'local_stock' then 0 when 'import_order' then 1 else 2 end, min(l.store_name), l.group_key\n loop\n v_count := v_count + 1;\n v_issues := v_issues + v_group.issues;\n v_items := v_items + v_group.subtotal;\n v_options := null; v_selected := null;\n if v_group.ok_lines > 0 then\n v_seq := v_seq + 1;\n v_flows := array_append(v_flows, v_group.flow);\n if v_addr.id is not null then\n select coalesce(jsonb_agg(jsonb_build_object(\n 'method_id', o.method_id, 'code', o.method_code, 'name', o.method_name, 'kind', o.kind,\n 'carrier', o.carrier_name, 'cost_usd', o.cost_usd,\n 'min_days', v_group.ready_min + o.min_days, 'max_days', v_group.ready_max + o.max_days,\n 'eta_min_date', current_date + (v_group.ready_min + o.min_days),\n 'eta_max_date', current_date + (v_group.ready_max + o.max_days),\n 'is_demo', o.is_demo) order by o.cost_usd), '[]'::jsonb)\n into v_options\n from public.shipping_options(v_group.store_id, v_group.flow, v_addr.region_code, v_group.weight, v_group.subtotal, v_addr.country_code) o;\n v_sel_id := nullif(p_shipping ->> v_group.group_key, ''); -- method id or method code\n if v_sel_id is not null then\n select e into v_selected from jsonb_array_elements(v_options) e where e ->> 'method_id' = v_sel_id or e ->> 'code' = v_sel_id;\n if v_selected is null then\n raise exception 'shipping method not available for this delivery' using errcode = 'P0001', hint = 'shipping_invalid';\n end if;\n else\n v_selected := v_options -> 0; -- cheapest by default\n end if;\n if v_selected is null then v_needs_shipping := true; else v_shipping := v_shipping + (v_selected ->> 'cost_usd')::numeric; end if;\n else\n v_needs_shipping := true;\n end if;\n end if;\n v_groups := v_groups || jsonb_build_object(\n 'key', v_group.group_key, 'seq', case when v_group.ok_lines > 0 then v_seq end,\n 'store', jsonb_build_object('id', v_group.store_id, 'name', v_group.store_name, 'slug', v_group.store_slug, 'kind', v_group.store_kind),\n 'flow', v_group.flow, 'label', public._group_label(v_group.flow, v_group.group_key, v_group.store_name),\n 'subtotal_usd', v_group.subtotal, 'weight_kg', v_group.weight,\n 'ready_min_days', v_group.ready_min, 'ready_max_days', v_group.ready_max,\n 'shipping_options', v_options, 'selected_shipping', v_selected, 'lines', v_group.lines);\n end loop;\n\n v_total := v_items + v_shipping;\n\n -- plans available for this cart\n select coalesce(jsonb_agg(jsonb_build_object(\n 'code', code, 'name', name, 'description', description, 'down_payment_pct', down_payment_pct,\n 'installments', installments, 'interval_days', interval_days, 'surcharge_pct', surcharge_pct) order by sort), '[]'::jsonb)\n into v_plans\n from public.installment_plans\n where active and v_items >= min_order_usd and (v_flows is null or v_flows <@ allowed_flows);\n\n if p_plan_code is not null then\n select * into v_plan from public.installment_plans where code = p_plan_code and active;\n if not found or not exists (select 1 from jsonb_array_elements(v_plans) e where e ->> 'code' = p_plan_code) then\n raise exception 'plan not available for this cart' using errcode = 'P0001', hint = 'plan_invalid';\n end if;\n v_financing := round((v_total - round(v_total * v_plan.down_payment_pct / 100, 2)) * v_plan.surcharge_pct / 100, 2);\n v_total := v_total + v_financing;\n v_schedule := public._plan_schedule(v_total, v_plan);\n end if;\n\n return jsonb_build_object(\n 'groups', v_groups,\n 'address', case when v_addr.id is null then null else to_jsonb(v_addr) end,\n 'items_usd', v_items, 'shipping_usd', v_shipping, 'financing_usd', v_financing, 'total_usd', v_total,\n 'line_count', v_count, 'issues', v_issues, 'needs_address', v_addr.id is null,\n 'needs_shipping', v_needs_shipping, 'plans', v_plans,\n 'plan', case when v_plan.code is null then null else to_jsonb(v_plan) end,\n 'schedule', v_schedule,\n 'can_place', v_issues = 0 and v_seq > 0 and v_addr.id is not null and not v_needs_shipping and p_plan_code is not null\n );\nend $function$\n",
+        "provolatile": "s",
+        "acl_explicit": "{postgres=X/postgres,service_role=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "service_role",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "2052c218ca383e8366fd8bf85b27a833",
+        "expected_after_md5": "c0cdff602e045c6bc2a976b1ed5f57c7",
+        "expected_before_md5": "2052c218ca383e8366fd8bf85b27a833",
+        "before_guard_matches": true,
+        "raw_auth_uid_present": false,
+        "service_role_execute": true,
+        "authenticated_execute": false,
+        "reviewed_after_matches": false,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "sql",
+        "proconfig": [
+          "search_path=public"
+        ],
+        "prosecdef": true,
+        "signature": "public.cart_summary_reviewed(uuid)",
+        "definition": null,
+        "provolatile": "s",
+        "acl_explicit": "{postgres=X/postgres,authenticated=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "authenticated",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "789ba5f9c9c966055c34fe2fb4e59cef",
+        "expected_after_md5": null,
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": false,
+        "service_role_execute": false,
+        "authenticated_execute": true,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "plpgsql",
+        "proconfig": [
+          "search_path=public"
+        ],
+        "prosecdef": true,
+        "signature": "public.checkout_preview_reviewed(uuid,jsonb,text)",
+        "definition": null,
+        "provolatile": "s",
+        "acl_explicit": "{postgres=X/postgres,authenticated=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "authenticated",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "b65c6d27be925e341f5521ea192ace70",
+        "expected_after_md5": null,
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": false,
+        "service_role_execute": false,
+        "authenticated_execute": true,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "plpgsql",
+        "proconfig": [
+          "search_path=public, pg_temp"
+        ],
+        "prosecdef": false,
+        "signature": "public.product_detail_commercial(uuid)",
+        "definition": "CREATE OR REPLACE FUNCTION public.product_detail_commercial(p_id uuid)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE\n SET search_path TO 'public', 'pg_temp'\nAS $function$\ndeclare v_detail jsonb; v_meta jsonb; v_variants jsonb; v_images jsonb; v_links jsonb;\nbegin\n v_detail := public.product_detail(p_id);\n if v_detail is null then return null; end if;\n v_meta := public.catalog_metadata(array[p_id]) -> 0;\n if v_meta is null then return null; end if;\n -- STABLE functions share the calling query's snapshot; no second client round trip.\n select coalesce(jsonb_agg(v.value || jsonb_build_object(\n 'media_classified', (m.value->>'media_classified')::boolean, 'sku', m.value->'sku'\n ) order by v.ordinality), '[]'::jsonb) into v_variants\n from jsonb_array_elements(v_detail->'variants') with ordinality v(value, ordinality)\n join jsonb_array_elements(v_meta->'variants') m(value) on m.value->>'variant_id'=v.value->>'id';\n select coalesce(jsonb_agg(jsonb_build_object('id',i.id,'path',i.path,'alt',i.alt,\n 'width',i.width,'height',i.height) order by i.sort,i.id),'[]'::jsonb) into v_images\n from public.product_images i where i.product_id=p_id;\n select coalesce(jsonb_agg(jsonb_build_object('variant_id',m.variant_id,'image_id',m.image_id,'sort',m.sort)\n order by m.variant_id,m.sort),'[]'::jsonb) into v_links\n from public.product_variant_images m join public.product_variants v on v.id=m.variant_id and v.product_id=m.product_id\n where m.product_id=p_id and v.active and v.media_classified;\n return v_detail || jsonb_build_object('condition',v_meta->'condition','available_colors',v_meta->'colors',\n 'variants',v_variants,'images',v_images,'variant_image_links',v_links,'general_images',v_meta->'general_images',\n 'catalog_metadata',v_meta);\nend $function$\n",
+        "provolatile": "s",
+        "acl_explicit": "{postgres=X/postgres,anon=X/postgres,authenticated=X/postgres}",
+        "anon_execute": true,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "anon",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "authenticated",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "62fee35a611d6593055bad973f016d6b",
+        "expected_after_md5": "b8a5d5fc7b0699d66911a19cebecad53",
+        "expected_before_md5": "62fee35a611d6593055bad973f016d6b",
+        "before_guard_matches": true,
+        "raw_auth_uid_present": false,
+        "service_role_execute": false,
+        "authenticated_execute": true,
+        "reviewed_after_matches": false,
+        "matches_closure_rewrite_predicate_now": false
+      },
+      {
+        "owner": "postgres",
+        "present": true,
+        "language": "plpgsql",
+        "proconfig": [
+          "search_path=pg_catalog"
+        ],
+        "prosecdef": false,
+        "signature": "public.require_user()",
+        "definition": null,
+        "provolatile": "v",
+        "acl_explicit": "{postgres=X/postgres,service_role=X/postgres}",
+        "anon_execute": false,
+        "effective_acl": [
+          {
+            "grantee": "postgres",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          },
+          {
+            "grantee": "service_role",
+            "grantor": "postgres",
+            "grantable": false,
+            "privilege": "EXECUTE"
+          }
+        ],
+        "actual_body_md5": "03b48aa32e343e8f52465e4e66a10e4f",
+        "expected_after_md5": null,
+        "expected_before_md5": null,
+        "before_guard_matches": null,
+        "raw_auth_uid_present": true,
+        "service_role_execute": true,
+        "authenticated_execute": false,
+        "reviewed_after_matches": null,
+        "matches_closure_rewrite_predicate_now": false
+      }
+    ],
+    "three_parts": [
+      {
+        "code": "three_parts",
+        "sort": 3,
+        "active": true,
+        "installments": 3,
+        "allowed_flows": [
+          "local_stock",
+          "import_order"
+        ],
+        "interval_days": 15,
+        "min_order_usd": 60,
+        "surcharge_pct": 0,
+        "down_payment_pct": 0,
+        "exact_migration_terms_guard": true
+      }
+    ],
+    "default_acls": [
+      {
+        "acl": "{postgres=rwU/postgres,anon=rwU/postgres,authenticated=rwU/postgres,service_role=rwU/postgres}",
+        "owner": "postgres",
+        "schema": "public",
+        "defaclobjtype": "S"
+      },
+      {
+        "acl": "{postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+        "owner": "postgres",
+        "schema": "public",
+        "defaclobjtype": "f"
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "owner": "postgres",
+        "schema": "public",
+        "defaclobjtype": "r"
+      },
+      {
+        "acl": "{postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}",
+        "owner": "supabase_admin",
+        "schema": "public",
+        "defaclobjtype": "S"
+      },
+      {
+        "acl": "{postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}",
+        "owner": "supabase_admin",
+        "schema": "public",
+        "defaclobjtype": "f"
+      },
+      {
+        "acl": "{postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}",
+        "owner": "supabase_admin",
+        "schema": "public",
+        "defaclobjtype": "r"
+      }
+    ],
+    "plan_columns": [
+      {
+        "type": "text",
+        "attnum": 1,
+        "attname": "code",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "type": "text",
+        "attnum": 2,
+        "attname": "name",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "type": "text",
+        "attnum": 3,
+        "attname": "description",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "type": "numeric(5,2)",
+        "attnum": 4,
+        "attname": "down_payment_pct",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "type": "integer",
+        "attnum": 5,
+        "attname": "installments",
+        "attnotnull": true,
+        "default_expression": "0"
+      },
+      {
+        "type": "integer",
+        "attnum": 6,
+        "attname": "interval_days",
+        "attnotnull": true,
+        "default_expression": "30"
+      },
+      {
+        "type": "numeric(5,2)",
+        "attnum": 7,
+        "attname": "surcharge_pct",
+        "attnotnull": true,
+        "default_expression": "0"
+      },
+      {
+        "type": "numeric(12,2)",
+        "attnum": 8,
+        "attname": "min_order_usd",
+        "attnotnull": true,
+        "default_expression": "0"
+      },
+      {
+        "type": "fulfillment_flow[]",
+        "attnum": 9,
+        "attname": "allowed_flows",
+        "attnotnull": true,
+        "default_expression": "'{local_stock,import_order,seller_shipping}'::fulfillment_flow[]"
+      },
+      {
+        "type": "boolean",
+        "attnum": 10,
+        "attname": "active",
+        "attnotnull": true,
+        "default_expression": "true"
+      },
+      {
+        "type": "integer",
+        "attnum": 11,
+        "attname": "sort",
+        "attnotnull": true,
+        "default_expression": "0"
+      }
+    ],
+    "tables_and_rls": [
+      {
+        "name": "checkout_private.cart_intent_journal",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": false,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON checkout_private.cart_intent_journal FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.addresses",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "addresses_admin_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "is_admin()",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          },
+          {
+            "name": "addresses_own",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(user_id = auth.uid())",
+            "command": "*",
+            "permissive": true,
+            "with_check": "(user_id = auth.uid())"
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.addresses FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.cart_items",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "cart_own",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(user_id = auth.uid())",
+            "command": "*",
+            "permissive": true,
+            "with_check": "(user_id = auth.uid())"
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.cart_items FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.fulfillments",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "fulfillments_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(is_admin() OR is_store_member(store_id) OR (EXISTS ( SELECT 1\n FROM orders o\n WHERE ((o.id = fulfillments.order_id) AND (o.buyer_id = auth.uid())))))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.fulfillments FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.installment_plans",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "plans_admin",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "is_admin()",
+            "command": "*",
+            "permissive": true,
+            "with_check": "is_admin()"
+          },
+          {
+            "name": "plans_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(active OR is_admin())",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": true,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,anon=rDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.installment_plans FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.ledger_entries",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "ledger_admin",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "is_admin()",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.ledger_entries FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.order_items",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "order_items_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(is_admin() OR is_store_member(store_id) OR (EXISTS ( SELECT 1\n FROM orders o\n WHERE ((o.id = order_items.order_id) AND (o.buyer_id = auth.uid())))))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.order_items FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.orders",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "orders_buyer",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "((buyer_id = auth.uid()) OR is_admin())",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.orders FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.payment_obligations",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "obligations_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(is_admin() OR (EXISTS ( SELECT 1\n FROM orders o\n WHERE ((o.id = payment_obligations.order_id) AND (o.buyer_id = auth.uid())))))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payment_obligations FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.payment_quotes",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "quotes_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "((buyer_id = auth.uid()) OR is_admin())",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payment_quotes FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.payments",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "payments_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "((buyer_id = auth.uid()) OR is_admin())",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.payments FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.product_images",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "images_member_write",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(EXISTS ( SELECT 1\n FROM products p\n WHERE ((p.id = product_images.product_id) AND (is_store_member(p.store_id) OR is_admin()))))",
+            "command": "*",
+            "permissive": true,
+            "with_check": "(EXISTS ( SELECT 1\n FROM products p\n WHERE ((p.id = product_images.product_id) AND (is_store_member(p.store_id) OR is_admin()))))"
+          },
+          {
+            "name": "images_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(EXISTS ( SELECT 1\n FROM products p\n WHERE (p.id = product_images.product_id)))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": true,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,anon=rDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_images FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.product_variant_images",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "product_variant_images_visible",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(EXISTS ( SELECT 1\n FROM products p\n WHERE (p.id = product_variant_images.product_id)))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": true,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,anon=r/postgres,authenticated=r/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_variant_images FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.product_variants",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "variants_member_write",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(EXISTS ( SELECT 1\n FROM products p\n WHERE ((p.id = product_variants.product_id) AND (is_store_member(p.store_id) OR is_admin()))))",
+            "command": "*",
+            "permissive": true,
+            "with_check": "(EXISTS ( SELECT 1\n FROM products p\n WHERE ((p.id = product_variants.product_id) AND (is_store_member(p.store_id) OR is_admin()))))"
+          },
+          {
+            "name": "variants_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(EXISTS ( SELECT 1\n FROM products p\n WHERE (p.id = product_variants.product_id)))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": true,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,anon=rDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.product_variants FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.products",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "products_member_insert",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": null,
+            "command": "a",
+            "permissive": true,
+            "with_check": "(is_store_member(store_id) OR is_admin())"
+          },
+          {
+            "name": "products_member_update",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(is_store_member(store_id) OR is_admin())",
+            "command": "w",
+            "permissive": true,
+            "with_check": "(is_store_member(store_id) OR is_admin())"
+          },
+          {
+            "name": "products_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(((moderation_status = 'published'::moderation_status) AND (EXISTS ( SELECT 1\n FROM stores s\n WHERE ((s.id = products.store_id) AND (s.status = 'active'::store_status))))) OR is_store_member(store_id) OR is_admin())",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": true,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,anon=rDxtm/postgres,authenticated=arwDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.products FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.refunds",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "refunds_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(is_admin() OR (EXISTS ( SELECT 1\n FROM orders o\n WHERE ((o.id = refunds.order_id) AND (o.buyer_id = auth.uid())))))",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": false,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,authenticated=rDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.refunds FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      },
+      {
+        "name": "public.stores",
+        "owner": "postgres",
+        "present": true,
+        "policies": [
+          {
+            "name": "account_open_only",
+            "roles": [
+              "authenticated"
+            ],
+            "using": "( SELECT account_private.session_open() AS session_open)",
+            "command": "*",
+            "permissive": false,
+            "with_check": "( SELECT account_private.session_open() AS session_open)"
+          },
+          {
+            "name": "stores_admin_insert",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": null,
+            "command": "a",
+            "permissive": true,
+            "with_check": "is_admin()"
+          },
+          {
+            "name": "stores_member_update",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "(is_store_member(id) OR is_admin())",
+            "command": "w",
+            "permissive": true,
+            "with_check": "(is_store_member(id) OR is_admin())"
+          },
+          {
+            "name": "stores_read",
+            "roles": [
+              "PUBLIC"
+            ],
+            "using": "((status = 'active'::store_status) OR is_store_member(id) OR is_admin())",
+            "command": "r",
+            "permissive": true,
+            "with_check": null
+          }
+        ],
+        "anon_select": true,
+        "acl_explicit": "{postgres=arwdDxtm/postgres,anon=rDxtm/postgres,authenticated=arwDxtm/postgres,service_role=arwdDxtm/postgres}",
+        "relrowsecurity": true,
+        "relforcerowsecurity": false,
+        "authenticated_select": true,
+        "closure_statement_guard": [
+          {
+            "name": "account_00_open",
+            "enabled": "O",
+            "definition": "CREATE TRIGGER account_00_open BEFORE INSERT OR DELETE OR UPDATE ON public.stores FOR EACH STATEMENT EXECUTE FUNCTION account_private.guard_write()"
+          }
+        ]
+      }
+    ],
+    "migration_metadata": [
+      {
+        "rows": [
+          {
+            "name": "mayami_reviewed_catalog_cart_checkout_seller",
+            "statement_count": 1
+          }
+        ],
+        "version": "20261107130620",
+        "version_count": 1
+      },
+      {
+        "rows": [],
+        "version": "20261107203116",
+        "version_count": 0
+      },
+      {
+        "rows": [
+          {
+            "name": "account_closure_receipts",
+            "statement_count": 0
+          }
+        ],
+        "version": "20261107213544",
+        "version_count": 1
+      },
+      {
+        "rows": [
+          {
+            "name": "account_retention_minimum",
+            "statement_count": 0
+          }
+        ],
+        "version": "20261107221337",
+        "version_count": 1
+      }
+    ],
+    "preflight_guard_summary": {
+      "helper_absent": true,
+      "one_three_parts_row": true,
+      "reader_body_matches": true,
+      "checkout_body_matches": true,
+      "three_parts_terms_match": true,
+      "installments_version_absent": true
+    }
+  },
+  "dashboardVerified": {
+    "organization": "Marketplace",
+    "organizationId": "lspwtzxmraagilwwnqrl",
+    "project": "Marketplace",
+    "projectRef": "mimnotafmfasvwrclxan",
+    "branch": "main Production",
+    "profile": "somosoudy-design",
+    "browser": "Chrome extension ID 1"
+  },
+  "execution": {
+    "querySha256": "e1b4ef64f775d7be26a5192fc49c439dc22ab95fd56bf6794ddb3691cdcbd47e",
+    "queryMatchedClipboard": true,
+    "queryChars": 9062,
+    "successfulExecutions": 1,
+    "transaction": "BEGIN TRANSACTION READ ONLY / one SELECT / ROLLBACK",
+    "mutations": false,
+    "customerRowsRead": false
+  }
+}

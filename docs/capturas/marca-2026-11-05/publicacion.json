@@ -1,0 +1,32 @@
+{
+  "group": "e7437246-60e9-4f44-a80a-59d404e2a570",
+  "id": "01a1aabe-bbe5-71a4-9898-23a967d41a8f",
+  "platform": "android",
+  "runtimeVersion": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+  "channel": "preview",
+  "sourceCommit": "643dd2ff9e74268049644e770b3ccae359cf872b",
+  "workflowId": 41991694643,
+  "workflowUrl": "https://github.com/somosoudy-design/marketplace/actions/runs/41991694643",
+  "runtimeGuard": "passed",
+  "physicalReception": "not observed",
+  "observation": {
+    "branch": "preview",
+    "channel": "preview",
+    "commit": "643dd2ff9e74268049644e770b3ccae359cf872b",
+    "createdAt": "2026-11-05T08:06:29.093Z",
+    "group": "e7437246-60e9-4f44-a80a-59d404e2a570",
+    "id": "01a1aabe-bbe5-71a4-9898-23a967d41a8f",
+    "isGitWorkingTreeDirty": false,
+    "isRollBackToEmbedded": false,
+    "latestCompatibleInBranch": true,
+    "matchingUpdates": 1,
+    "platform": "android",
+    "rollbackFlagPresent": true,
+    "rollbackState": "standard_update",
+    "runtime": "eb5ed1179b9c76c9c3cf27333aa48306728eb4ba",
+    "workingTreeFlagPresent": true,
+    "workingTreeState": "clean"
+  },
+  "observationWorkflowId": 41992163529,
+  "observationWorkflowUrl": "https://github.com/somosoudy-design/marketplace/actions/runs/41992163529"
+}

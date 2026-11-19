@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "case": "Preparation refuses missing reviewed approval snapshot",
+      "result": "PASS"
+    },
+    {
+      "case": "Exact preparation records both migrations, sanitizes only legacy UGC notice and keeps gateoff/legacy panel",
+      "result": "PASS"
+    },
+    {
+      "case": "Repeated preparation refuses drift/schema without duplicating data or history",
+      "result": "PASS"
+    },
+    {
+      "case": "Preparation snapshot cannot approve activation phase",
+      "result": "PASS"
+    },
+    {
+      "case": "Separately approved local activation closes raw UGC reads atomically",
+      "result": "PASS"
+    },
+    {
+      "case": "Preparation first lock honors 5-second local lock timeout before any schema mutation",
+      "result": "PASS",
+      "elapsedMs": 5005
+    }
+  ],
+  "success": true,
+  "localOnly": true,
+  "limits": [
+    "Synthetic SQL-auth cluster; no hosted identity or approval established.",
+    "Compatible deployed clients are a manual prerequisite, not proven by this SQL test."
+  ],
+  "hashes": {
+    "PREPARE.review.sql": "97ce052a5df8f6a96d3352ce380bf74c2595c377d60acf82301c5f84e1623be5",
+    "ACTIVATION.review.sql": "6f8e6f1c8081f40adec1c5d611ad2cadbc7201daf4350113f9f4c03edb7c46ec",
+    "PRECHECK_PREPARE.sql": "164bd64ebfc575d93e2f4edeba35c7b174fee342ea922707699c0e0952f1459a",
+    "PRECHECK_ACTIVATE.sql": "2b446322f18e095e44cf6ca7a4812c9a39c0022f195e3207c181e27a021157ff"
+  }
+}
