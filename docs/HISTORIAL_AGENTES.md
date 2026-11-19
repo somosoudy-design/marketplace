@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Información de ficha publicada
+
+Publicada la fuente aprobada `bc321ab` en Cloudflare Free. Se verificaron dos fichas reales en móvil y los enlaces y el acordeón en escritorio. [Estado y pruebas](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · Codex · Información de ficha para revisión
 
 Se reordenó el bloque de identidad, precio, cuotas y despacho. Las comparaciones a un mismo ancho quedaron disponibles para revisión antes de desplegar. [Pruebas y capturas](ESTADO_ACTUAL.md).

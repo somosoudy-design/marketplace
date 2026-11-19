@@ -1,12 +1,14 @@
 # Estado actual de mayami
 
-## 18 noviembre 2026 · Información de la ficha para revisión
+## 18 noviembre 2026 · Información de la ficha publicada
 
-La candidata web agrupa título y tienda, presenta el precio con su equivalencia y coloca el calendario de cuotas junto al precio cuando hay una oferta. El despacho tiene su propio bloque de estimación. El enlace y el sello de la tienda, el acordeón, la galería y las acciones de compra conservan sus funciones.
+La ficha web agrupa título y tienda, presenta el precio con su equivalencia y coloca el calendario de cuotas junto al precio cuando hay una oferta. El despacho tiene su propio bloque de estimación. El enlace y el sello de la tienda, el acordeón, la galería y las acciones de compra conservan sus funciones.
 
 La comparación WebKit a 390 px usa la Logitech C920 y el cargador UGREEN Nexode Air de 65 W. La captura de la C920 corresponde al momento en que figuraba bajo MAYAMI. Se comprobó la PWA instalada en iPhone 18 Pro simulado a 402 px y se repitieron comprobaciones de WebKit a 320/390 px y Chrome a 1440 px. En una vista local con oferta simulada se comprobó el calendario y el recálculo para una y dos unidades. Pasaron 197 pruebas del storefront, typecheck y lint. Capturas en `~/Downloads/MAYAMI-ficha-informacion-20261118`.
 
-Próxima acción. Recibir la revisión de Oliver antes del despliegue.
+Oliver autorizó publicar la fuente `bc321ab`. Cloudflare Free sirve la versión `10f0b3f9-5252-45f7-9b71-2223f251b365` al 100 %. La versión anterior para reversión es `9e8d5664-6be9-40d9-8e5d-78e5d71913fb`.
+
+En producción, Chrome y WebKit móvil comprobaron la tablet YQ10S MAX y el cargador UGREEN Nexode Air de 65 W. Se verificaron el enlace a MAYAMI, el sello, los precios, el bloque con el plazo de despacho, la selección de foto y la apertura y el cierre del acordeón. Chrome de escritorio comprobó también las anclas de Calificaciones y Preguntas. La ficha FIFINE AM8 mostró 5–10 días por encargo frente a los 0–1 días de la tablet y el cargador. En la PWA oficial instalada en un iPhone simulado se abrieron la ficha UGREEN y su galería. Evidencia en `~/Downloads/MAYAMI-ficha-informacion-20261118/publicada`.
 
 ## 18 noviembre 2026 · Cabeceras de carrito y tienda publicadas
 
