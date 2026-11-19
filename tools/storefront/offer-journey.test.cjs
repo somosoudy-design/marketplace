@@ -270,6 +270,9 @@ beforeEach(() => {
 test('detail exposes the exact offered schedule while keeping a single primary cart action', () => {
   const tree = productModule.DetailSession(productProps()),
     html = render(tree);
+  const [pricing] = findAll(tree, (node) => node.props?.className === 'detail-pricing');
+  assert.ok(byTest(pricing, 'product-installments'));
+  assert.equal(byTest(pricing, 'product-buy-three-parts'), undefined);
   assert.match(html, /data-testid="product-installments"/);
   assert.match(html, /3 pagos en total/);
   assert.match(html, /\$50,00 USD/);

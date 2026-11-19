@@ -318,10 +318,10 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
           <header className="product-identity">
             <span className="eyebrow" data-category-only={!p.brand_name || undefined}>{p.brand_name || p.category_name}</span>
             <h1>{catalogText(p.title, p.is_demo, p.id)}</h1>
+            <SellerLink id={p.store.id} name={p.store.name} slug={p.store.slug} kind={p.store.kind} status={p.store_status} />
           </header>
           <div className="product-offer-panel">
             <div className="product-summary">
-              <SellerLink id={p.store.id} name={p.store.name} slug={p.store.slug} kind={p.store.kind} status={p.store_status} />
               <nav className="product-community-links" aria-label="Opiniones y consultas">
                 <a href="#opiniones"><Star size={15} aria-hidden="true" />Calificaciones</a>
                 <a href="#preguntas"><MessageCircle size={15} aria-hidden="true" />Preguntas</a>
@@ -330,39 +330,62 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
             </div>
 
             <div className="detail-purchase">
-              <div className="detail-price">
-                <CatalogPrice usd={resolved.price_usd} />
+              <div className="detail-pricing">
+                <div className="detail-price">
+                  <CatalogPrice usd={resolved.price_usd} />
+                </div>
+                {resolved.conditionLabel && (
+                  <p className="detail-condition" data-testid="product-condition">
+                    Condición: {resolved.conditionLabel}
+                  </p>
+                )}
+                {installmentPreview && displayedPayments && (
+                  <section
+                    className="payment-schedule"
+                    aria-label="Opción de pago del producto"
+                    data-testid="product-installments"
+                  >
+                    <h2>{displayedPayments.title}</h2>
+                    {displayedPayments.distribution && <p>{displayedPayments.distribution}</p>}
+                    {displayedPayments.rows.map(({ item, label, due }) => (
+                      <div key={item.seq}>
+                        <span>
+                          {label} · {due}
+                        </span>
+                        <strong>{money(Number(item.amount_usd))}</strong>
+                      </div>
+                    ))}
+                    <p>{installmentPreview.label}</p>
+                  </section>
+                )}
               </div>
-              {resolved.conditionLabel && (
-                <p className="detail-condition" data-testid="product-condition">
-                  Condición: {resolved.conditionLabel}
-                </p>
-              )}
               {!variant && (
                 <p className="notice" role="alert">
                   Esta opción ya no está disponible. Elige otra opción.
                 </p>
               )}
-              <div className="stock-status" role="status">
-                <OfferStatus
-                  availability={p.availability}
-                  stock={variant?.stock}
-                  issue={variant?.active ? undefined : 'unavailable'}
-                />
+              <div className="detail-delivery" data-estimate={stage ? '' : undefined}>
+                <div className="stock-status" role="status">
+                  <OfferStatus
+                    availability={p.availability}
+                    stock={variant?.stock}
+                    issue={variant?.active ? undefined : 'unavailable'}
+                  />
+                  {stage && (
+                    <DeliveryStage availability={p.availability} minimum={p.lead_min_days} maximum={p.lead_max_days} />
+                  )}
+                </div>
                 {stage && (
-                  <DeliveryStage availability={p.availability} minimum={p.lead_min_days} maximum={p.lead_max_days} />
+                  <p className="dispatch-explanation">
+                    {p.availability === 'reservable'
+                      ? 'Plazo del próximo lote.'
+                      : p.availability === 'in_transit'
+                        ? 'Plazo de disponibilidad.'
+                        : 'Preparación previa al transporte.'}{' '}
+                    El envío y la estimación de llegada se confirman al elegir tu dirección.
+                  </p>
                 )}
               </div>
-              {stage && (
-                <p className="dispatch-explanation">
-                  {p.availability === 'reservable'
-                    ? 'Plazo del próximo lote.'
-                    : p.availability === 'in_transit'
-                      ? 'Plazo de disponibilidad.'
-                      : 'Preparación previa al transporte.'}{' '}
-                  El envío y la estimación de llegada se confirman al elegir tu dirección.
-                </p>
-              )}
               {catalogSample(p.id, p.is_demo) && !localExhibition && (
                 <p className="notice">Producto de muestra. No es una oferta comercial pública.</p>
               )}
@@ -410,22 +433,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
                 </p>
               )}
               {installmentPreview && displayedPayments && (
-                <section
-                  className="payment-schedule"
-                  aria-label="Opción de pago del producto"
-                  data-testid="product-installments"
-                >
-                  <h2>{displayedPayments.title}</h2>
-                  {displayedPayments.distribution && <p>{displayedPayments.distribution}</p>}
-                  {displayedPayments.rows.map(({ item, label, due }) => (
-                    <div key={item.seq}>
-                      <span>
-                        {label} · {due}
-                      </span>
-                      <strong>{money(Number(item.amount_usd))}</strong>
-                    </div>
-                  ))}
-                  <p>{installmentPreview.label}</p>
+                <div className="detail-installment-action">
                   <button
                     type="button"
                     className="button secondary"
@@ -435,7 +443,7 @@ function DetailSession({ product: p, metadata, relatedMetadata, initialVariantId
                   >
                     {add.isPending ? 'Agregando…' : 'Comprar en 3 pagos'} <ArrowRight size={16} />
                   </button>
-                </section>
+                </div>
               )}
               <div className="purchase-action" ref={purchaseAction}>
                 <div className="purchase-context" role="group" aria-label="Oferta seleccionada">

@@ -59,7 +59,8 @@ function productProps({availability = 'on_order', stock = null, active = true, v
 const render = element => renderToStaticMarkup(element);
 test('seller link exposes the official name and canonical path', () => {
  const html=render(React.createElement(offers.SellerLink,{id:'5afbabbf-0678-40ee-a5d8-540f53efe114',name:'Mayami',slug:'kora',kind:'platform',status:'active'}));
- assert.match(html, /href="\/tienda\/mayami"/); assert.match(html, /MAYAMI/); assert.doesNotMatch(html,/Vendido por kora/);
+ assert.match(html, /href="\/tienda\/mayami"/); assert.match(html, /MAYAMI/); assert.doesNotMatch(html,/Vendido por/);
+ assert.match(html, /class="sr-only">Ver tienda /);
  assert.match(html, /data-tier="official"[^>]+aria-controls="[^"]+"/i);
  assert.match(html, /<dialog/);
 });

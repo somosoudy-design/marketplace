@@ -1,5 +1,9 @@
 # Historial de agentes
 
+## 18 noviembre 2026 · Codex · Información de ficha para revisión
+
+Se reordenó el bloque de identidad, precio, cuotas y despacho. Las comparaciones a un mismo ancho quedaron disponibles para revisión antes de desplegar. [Pruebas y capturas](ESTADO_ACTUAL.md).
+
 ## 18 noviembre 2026 · Codex · Cabeceras publicadas
 
 Publicada la candidata `a906469` en Cloudflare Free. El carrito y la portada se comprobaron en la PWA oficial instalada en simulador. En el Chrome de Oliver se comprobó el engranaje y el perfil de tienda en el panel. [Estado y pruebas](ESTADO_ACTUAL.md).

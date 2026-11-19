@@ -1,5 +1,13 @@
 # Estado actual de mayami
 
+## 18 noviembre 2026 · Información de la ficha para revisión
+
+La candidata web agrupa título y tienda, presenta el precio con su equivalencia y coloca el calendario de cuotas junto al precio cuando hay una oferta. El despacho tiene su propio bloque de estimación. El enlace y el sello de la tienda, el acordeón, la galería y las acciones de compra conservan sus funciones.
+
+La comparación WebKit a 390 px usa la Logitech C920 y el cargador UGREEN Nexode Air de 65 W. La captura de la C920 corresponde al momento en que figuraba bajo MAYAMI. Se comprobó la PWA instalada en iPhone 18 Pro simulado a 402 px y se repitieron comprobaciones de WebKit a 320/390 px y Chrome a 1440 px. En una vista local con oferta simulada se comprobó el calendario y el recálculo para una y dos unidades. Pasaron 197 pruebas del storefront, typecheck y lint. Capturas en `~/Downloads/MAYAMI-ficha-informacion-20261118`.
+
+Próxima acción. Recibir la revisión de Oliver antes del despliegue.
+
 ## 18 noviembre 2026 · Cabeceras de carrito y tienda publicadas
 
 El storefront muestra «Carrito (N)» en una sola línea. El conteo de invitado y comprador suma unidades y la primera línea de producto empieza unos 49 px antes en Chrome y WebKit móvil. En la portada de tienda, el engranaje comparte la fila del nombre y mantiene el destino y permisos de «Administrar tienda». El área táctil ocupa 44 × 44 px CSS. Seguir y Compartir conservan sus acciones.

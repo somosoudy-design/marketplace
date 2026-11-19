@@ -37,7 +37,8 @@ export function SellerLink({ id, name, slug, kind, status }: { id?: string; name
     <div className="seller-link">
       <Store size={17} aria-hidden="true" />
       <StoreIdentity store={{ id, name, kind, status }} href={publicStorePath({ id, slug })}
-        caption="Vendido por" as="strong" linkClassName="seller-profile-link" trailing={<ArrowRight className="seller-profile-arrow" size={15} aria-hidden="true" />} />
+        caption={<span className="sr-only">Ver tienda </span>} as="strong" linkClassName="seller-profile-link"
+        trailing={<ArrowRight className="seller-profile-arrow" size={15} aria-hidden="true" />} />
     </div>
   );
 }
